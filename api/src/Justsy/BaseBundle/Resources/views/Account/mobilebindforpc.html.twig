@@ -1,0 +1,100 @@
+<link href="{{ asset('bundles/fafatimewebase/css/home.css')}}" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+{% if (ds["we_staff"]["rows"][0]["mobile_bind"] | length > 0) %}
+<div class="alert alert-error">警告：你的帐号已与手机号（{{ ds["we_staff"]["rows"][0]["mobile_bind"] }}）绑定！重新绑定将清除原绑定信息。</div>
+{% else %}
+<div class="alert" style="display:none;"></div>
+{% endif %}
+<form class="form-horizontal" method="post">
+  <fieldset>
+  <div class="control-group">
+    <label class="control-label">手 机 号：</label>
+    <div class="controls">
+      <input type="text" id="txtmobile" name="txtmobile" tabindex="1" class="input-large" value="{{ ds["we_staff"]["rows"][0]["mobile"] }}" onblur="checkmobile(this)">
+      <div id="txtmobile_msg"></div>
+    </div>
+  </div>  
+  <div class="control-group">
+    <label class="control-label">验 证 码：</label>
+    <div class="controls">
+      <input type="text" id="txtvaildcode" name="txtvaildcode" tabindex="2" class="input-large" onblur="checkvaildcode(this)" onkeypress='$("#txtvaildcode_msg").text("");'>
+      <span class="getmobilevaildcode" onclick="getmobilevaildcode(this)" saveurl="{{ path("JustsyBaseBundle_account_getmobilevaildcode",{network_domain:curr_network_domain}) }}">点击获取验证码</span>
+      <div id="txtvaildcode_msg"></div>
+    </div>
+  </div>  
+  <div class="control-group"> 
+    <div class="controls">
+      <input type="button" style="width:138px" value="绑  定" class="inputsmall" onclick="btnSave_OnClick(this)" saveurl="{{ path("JustsyBaseBundle_account_savemobilebind",{network_domain:curr_network_domain}) }}"> 
+    </div>
+  </div> 
+  </fieldset>
+</form>
+
+<script type="text/javascript">
+function checkmobile(sender)
+{
+  var isvaild = (/^[\d\+][\d\+]+$/).test($(sender).val());
+  $("#txtmobile_msg").text("").css("color", "black");
+  if (!isvaild)
+  {
+    $("#txtmobile_msg").text("请输入正确的手机号！").css("color", "red");
+  }
+  
+  return isvaild;
+}
+function checkvaildcode(sender)
+{
+  var isvaild = $(sender).val().length > 0;
+  $("#txtvaildcode_msg").text("").css("color", "black");
+  if (!isvaild)
+  {
+    $("#txtvaildcode_msg").text("请输入验证码！").css("color", "red");
+  }
+  
+  return isvaild;
+}
+
+function btnSave_OnClick(sender)
+{
+  if (!checkmobile($("#txtmobile")[0])) return;  
+  if (!checkvaildcode($("#txtvaildcode")[0])) return;
+  
+  var $sender = $(sender);
+  var $alert = $(".alert");
+  $alert.removeClass("alert-error alert-success").text("正在绑定...").show();
+  $sender.attr("disabled", "disabled");
+  $.getJSON($(sender).attr("saveurl"), {txtmobile : $("#txtmobile").val(), txtvaildcode : $("#txtvaildcode").val(), t : new Date().getTime()}, function(data){
+    if (data.success == "1")
+    {
+      $alert.addClass("alert-success").text("绑定成功！").show();
+      $sender.removeAttr("disabled");
+    }
+    else
+    {
+      $alert.addClass("alert-error").text(data.msg).show();
+      $sender.removeAttr("disabled");        
+    }
+  });
+}
+
+function getmobilevaildcode(sender) 
+{
+  $("#txtvaildcode_msg").text("正在获取验证码...").css("color", "blue");
+  $.getJSON($(sender).attr("saveurl"), {txtmobile : $("#txtmobile").val(), t : new Date().getTime()}, function(data){
+    if (data.success == "1")
+    {
+      $("#txtvaildcode_msg").text("验证码已发送到你的手机！请接收").css("color", "blue");
+    }
+    else
+    {
+      $("#txtvaildcode_msg").text(data.msg).css("color", "red");
+    }
+  });  
+  
+}
+  
+$(document).ready(function(){
+  checkmobile($("#txtmobile")[0]);
+});
+  
+</script>

@@ -1,0 +1,683 @@
+##########################################################
+# 所有路由名称在定义时皆应与路由相关，避免重名
+# 如：
+# JustsyBaseBundle_component_cinputarea_publishTrend:
+#     pattern:  /component/cinputarea/publishtrend
+##########################################################
+
+
+####获取人员信息。不对第三方开放。不需要授权    
+JustsyOpenAPIBundle_api_getstaffcard:
+    pattern:  /api/baseinfo/getstaffcard
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getstaffcard }    
+    
+####获取当前登录人员信息。对第三方开放接口。    
+JustsyOpenAPIBundle_api_userinfo:
+    pattern:  /api/http/userinfo
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getuserinfo }     
+    
+####获取指定人员信息，只能获取本企业内的和好友信息。对第三方开放接口。    
+JustsyOpenAPIBundle_api_getenoandfriendstaffcard:
+    pattern:  /api/http/getstaffcard
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getstaffcard }
+    
+JustsyOpenAPIBundle_api_bizporxy_getenoandfriendstaffcard:
+    pattern:  /api/http/bizproxy/getstaffcard
+    defaults: { _controller: JustsyOpenAPIBundle:Api:bizProxy_getstaffcard }  
+JustsyOpenAPIBundle_api_bizporxy_mypoint:
+    pattern:  /api/http/bizproxy/mypoint
+    defaults: { _controller: JustsyOpenAPIBundle:Api:bizProxy_mypoint }   
+    
+JustsyOpenAPIBundle_api_bizporxy_restquery:
+    pattern:  /api/http/bizproxy/query21
+    defaults: { _controller: JustsyOpenAPIBundle:Api:bizProxy_restquery }
+    
+JustsyOpenAPIBundle_api_bizporxy_payquery:
+    pattern:  /api/http/bizproxy/m22
+    defaults: { _controller: JustsyOpenAPIBundle:Api:bizProxy_payquery }
+    
+JustsyOpenAPIBundle_api_bizporxy_pwdreset:
+    pattern:  /api/http/bizproxy/pwdreset
+    defaults: { _controller: JustsyOpenAPIBundle:Api:bizProxy_pwdreset }     
+    
+####获取指定人员信息，获取人员的好友列表。对第三方开放接口。    
+JustsyOpenAPIBundle_api_getmyrelation:
+    pattern:  /api/http/getmyrelation
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getmyrelation }
+    
+####获取指定人员信息，获取人员的群组列表。对第三方开放接口。    
+JustsyOpenAPIBundle_api_getgroups:
+    pattern:  /api/http/getgroups
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getgroups }
+    
+####获取指定人员信息，获取人员的圈子列表。对第三方开放接口。    
+JustsyOpenAPIBundle_api_getcircles:
+    pattern:  /api/http/getcircles
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getcircles }    
+     
+####获取指定群组的详细信息。对第三方开放。
+JustsyOpenAPIBundle_api_getgroupinfo:
+    pattern:  /api/http/getgroupinfo
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getgroupinfo }   
+        
+JustsyOpenAPIBundle_api_getdepartment:
+    pattern:  /api/http/getdepartment
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getdepartment }   
+    
+JustsyOpenAPIBundle_api_getenostaff:
+    pattern:  /api/http/getenostaff
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getenostaff }
+    
+JustsyOpenAPIBundle_api_getgroupmember:
+    pattern:  /api/http/getgroupmember
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getgroupmember }
+    
+JustsyOpenAPIBundle_api_getcirclemember:
+    pattern:  /api/http/getcirclemember
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getcirclemember }        
+
+###创建圈子接口
+JustsyBaseBundle_api_createcircle:
+    pattern:  /api/http/createcircle
+    defaults: { _controller: JustsyOpenAPIBundle:Api:createCircle}
+#####加入指定圈子接口
+JustsyBaseBundle_api_joincircle:
+    pattern:  /api/http/joincircle
+    defaults: { _controller: JustsyOpenAPIBundle:Api:joincircle}
+
+######分享接口     
+JustsyOpenAPIBundle_api_newconvtrend:
+    pattern:  /api/http/newtrend
+    defaults: { _controller: JustsyOpenAPIBundle:Api:newtrend }
+######分享接口     
+JustsyOpenAPIBundle_api_privateconvtrend:
+    pattern:  /api/http/privatetrend
+    defaults: { _controller: JustsyOpenAPIBundle:Api:privatetrend }
+####同步组织机构
+JustsyOpenAPIBundle_api_sync_org:
+    pattern:  /api/http/sync/org
+    defaults: { _controller: JustsyOpenAPIBundle:Api:syncOrganization}
+####创建群组
+JustsyOpenAPIBundle_api_create_group:
+    pattern:  /api/http/create/group
+    defaults: { _controller: JustsyOpenAPIBundle:Api:createGroup}
+####根据ad数据同步用户
+JustsyOpenAPIBundle_api_sync_user_byad:
+    pattern:  /api/http/syncuser/ad
+    defaults: {_controller: JustsyOpenAPIBundle:Api:syncUserByAdInfo}
+
+JustsyOpenAPIBundle_api_sync_org_byad:
+    pattern:  /api/http/syncorg/ad
+    defaults: {_controller: JustsyOpenAPIBundle:Api:syncOrgByAdInfo}
+
+####根据接口数据同步用户
+JustsyOpenAPIBundle_api_sync_user_byinf:
+    pattern:  /api/http/syncuser/inf
+    defaults: {_controller: JustsyOpenAPIBundle:Api:syncStaffInf}
+
+JustsyOpenAPIBundle_api_sync_org_byinf:
+    pattern:  /api/http/syncorg/inf
+    defaults: {_controller: JustsyOpenAPIBundle:Api:syncOrgInf}
+
+JustsyOpenAPIBundle_api_sync_user_bydb:
+    pattern:  /api/http/syncuser/db
+    defaults: {_controller: JustsyOpenAPIBundle:Api:syncStaffDB}
+
+JustsyOpenAPIBundle_api_sync_org_bydb:
+    pattern:  /api/http/syncorg/db
+    defaults: {_controller: JustsyOpenAPIBundle:Api:syncOrgDB}
+#####检查用户是否存在
+JustsyOpenAPIBundle_api_sync_user_check:
+    pattern: /api/http/syncuser/check
+    defaults: {_controller: JustsyOpenAPIBundle:Api:checkAdUser}
+####添加群组成员
+JustsyOpenAPIBundle_api_add_group_user:
+    pattern: /api/http/group/adduser
+    defaults: { _controller: JustsyOpenAPIBundle:Api:addGroupUser}
+####文档管理接口
+JustsyOpenAPIBundle_api_doc_newdir:
+    pattern:  /api/http/newdir
+    defaults: { _controller: JustsyOpenAPIBundle:Api:docNewDir }
+    
+JustsyOpenAPIBundle_api_doc_uploadfiletodir:
+    pattern:  /api/http/fileupload
+    defaults: { _controller: JustsyOpenAPIBundle:Api:fileupload }    
+        
+JustsyOpenAPIBundle_api_getUnreadCircleConversNumByUser:
+    pattern:  /api/convinfo/getunreadcircleconversnumbyuser
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getUnreadCircleConversNumByUser }
+
+JustsyOpenAPIBundle_api_getunreadgroupconversnumbyuser:
+    pattern:  /api/convinfo/getunreadgroupconversnumbyuser
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getUnreadGroupConversNumByUser }
+
+JustsyOpenAPIBundle_api_getuser_directory:
+    pattern: /api/http/get/userdir
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getUserDirectory}
+JustsyOpenAPIBundle_api_getshare_directory:
+    pattern: /api/http/get/sharedir
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getShareDirectory}
+JustsyOpenAPIBundle_api_getuserfiles:
+    pattern: /api/http/get/userfiles
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getUserFiles}
+JustsyOpenAPIBundle_api_getsharefiles:
+    pattern: /api/http/get/sharefiles
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getShareFiles} 
+
+##############
+##发送及时消息.主要用于第三方应用服务端发送消息
+##############    
+JustsyOpenAPIBundle_api_sendmsg:
+    pattern:  /api/http/sendmsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendMsg }
+    
+JustsyOpenAPIBundle_api_senddeptmsg:
+    pattern:  /api/http/senddeptmsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendDeptMsg }
+
+JustsyOpenAPIBundle_api_sendgroupmsg:
+    pattern:  /api/http/sendgroupmsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendGroupMsg }
+    
+JustsyOpenAPIBundle_api_sendcirclemsg:
+    pattern:  /api/http/sendcirclemsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendCircleMsg }
+
+JustsyOpenAPIBundle_api_sendmicromsg:
+    pattern:  /api/http/sendmicromsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendMicroMsg }
+    
+JustsyOpenAPIBundle_api_sendmsg2:
+    pattern:  /api/http/sendmsg2
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendMsg2 }    
+
+##############
+##采用出席方式发送特殊消息.主要用于第三方应用服务端发送消息
+##############    
+JustsyOpenAPIBundle_api_sendpresence:
+    pattern:  /api/http/sendpresence
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendPresence } 
+    
+JustsyOpenAPIBundle_api_senddeptpresence:
+    pattern:  /api/http/senddeptpresence
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendDeptPresence }
+
+JustsyOpenAPIBundle_api_sendgrouppresence:
+    pattern:  /api/http/sendgrouppresence
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendGroupPresence }
+    
+JustsyOpenAPIBundle_api_sendcirclepresence:
+    pattern:  /api/http/sendcirclepresence
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendCirclePresence }    
+    
+JustsyOpenAPIBundle_api_sendmicropresence:
+    pattern:  /api/http/sendmicropresence
+    defaults: { _controller: JustsyOpenAPIBundle:Api:sendMicroPresence }      
+    
+##############
+##发送定时提醒消息/通知.主要用于第三方应用服务端发送定时提醒消息/通知
+##############    
+JustsyOpenAPIBundle_api_sendremindmsg:
+    pattern:  /api/http/sendremindmsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:timerRemindTask }     
+    
+JustsyOpenAPIBundle_api_sendremindmsg2:
+    pattern:  /api/http/sendonceremindmsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:runonceRemindTask }        
+
+JustsyOpenAPIBundle_api_delremindmsg:
+    pattern:  /api/http/removeremindmsg
+    defaults: { _controller: JustsyOpenAPIBundle:Api:removeRemindTask }      
+##############
+##根据access_token和openid获取其jid和密码(返回时经过自加密)，主要用于第三方应用使用js消息库的登录
+##############
+JustsyOpenAPIBundle_api_getjid:
+    pattern:  /api/http/sendjid
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getJid }
+    
+##############
+##获取openid。仅支持post方式提交数据
+##############      
+JustsyOpenAPIBundle_api_getopenid:
+    pattern:  /api/http/getopenid
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getOpenid }
+##############
+##获取平台的一次性访问授权码（其实就是加密的当前时间戳），一次性访问授权有效期为30秒。
+##主要应用自动登录平台等场景
+##########################[已废弃]##############################
+##############    
+JustsyOpenAPIBundle_api_getauthcode:
+    pattern:  /api/http/getauthcode
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getTmpAuthCode }
+    
+JustsyOpenAPIBundle_api_ldapauth:
+    pattern:  /api/http/auth/ldap
+    defaults: { _controller: JustsyOpenAPIBundle:Api:ldapAuth }
+    
+#####################################
+############业务接口#################
+#####################################
+
+###业务代理用户绑定认证接口
+JustsyOpenAPIBundle_api_bizporxy_auth:
+    pattern:  /api/http/bizproxyAuth
+    defaults: { _controller: JustsyOpenAPIBundle:Api:bizProxyAuth }  
+
+###添加通讯录
+JustsyOpenAPIBundle_api_add_addrlist:
+    pattern:  /api/http/addAddressList
+    defaults: { _controller: JustsyOpenAPIBundle:Api:addAddress }  
+
+###############
+##获取指定的帐号当前出席状态信息
+###############
+JustsyOpenAPIBundle_api_get_presence:
+    pattern:  /api/http/getpresence
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getPresence } 
+
+JustsyOpenAPIBundle_api_get_microaccount_data:
+    pattern:  /api/http/microaccount/getdata
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getMicroaccount } 
+
+##公众号接口。不对外开放。只能微信平台使用
+#查询公众号，并返回粉丝数最多的前50个号。可按帐号精确查询，也可把名称模糊查询
+JustsyOpenAPIBundle_api_micraccount_query:
+    pattern: /api/http/microaccount/query
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:query}   
+    
+JustsyOpenAPIBundle_api_microaccount_list:
+    pattern: /api/http/microaccount/getlist
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:getmicroaccount}  
+    
+JustsyOpenAPIBundle_api_microaccount_isuse:
+    pattern: /api/http/microaccount/isuse
+    defaults: {_controller:JustsyOpenAPIBundle:Api:microaccountuse}
+    
+#---------------------错误报告-----------------------------------------
+JustsyOpenAPIBundle_api_erreport:
+    pattern:  /api/erreport
+    defaults: { _controller: JustsyOpenAPIBundle:Api:erreport}
+     
+    
+JustsyOpenAPIBundle_api_test_page:
+    pattern:  /api/http/testPage
+    defaults: { _controller: JustsyOpenAPIBundle:Api:test }        
+    
+    
+    
+JustsyInterfaceBundle_Api_OperateEnterpriseData:
+    pattern:  /api/http/enterprisedata
+    defaults: { _controller: JustsyOpenAPIBundle:Api:OperateEnterpriseData }
+    
+#手机号绑定    
+JustsyInterfaceBundle_api_mobilebind_getvaildcode:
+    pattern:  /api/http/mobilebind/getvaildcode
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getmobilevaildcode, network_domain:fafacn.com }
+JustsyInterfaceBundle_api_mobilebind_save:
+    pattern:  /api/http/mobilebind/save
+    defaults: { _controller: JustsyOpenAPIBundle:Api:savemobilebind, network_domain:fafacn.com }
+JustsyInterfaceBundle_api_mobilebind_remove:
+    pattern:  /api/http/mobilebind/remove
+    defaults: { _controller: JustsyOpenAPIBundle:Api:savemobileunbind, network_domain:fafacn.com }    
+#通过手机号码注册企业
+JustsyInterfaceBundle_api_registerEnterprise:
+    pattern:  /api/http/enterprise/register
+    defaults: { _controller: JustsyOpenAPIBundle:Api:registerEnterprise }
+#通过手机号码批量注册成员
+JustsyInterfaceBundle_api_registerStaff:
+    pattern:  /api/http/staff/register
+    defaults: { _controller: JustsyOpenAPIBundle:Api:registerStaff }
+
+#员工离职
+JustsyInterfaceBundle_api_resignationStaff:
+    pattern:  /api/http/staff/resignation
+    defaults: { _controller: JustsyOpenAPIBundle:Api:resignationStaff }
+#变更管理员
+JustsyInterfaceBundle_api_updEnterpriseManager:
+    pattern:  /api/http/enterprisemanager/change
+    defaults: { _controller: JustsyOpenAPIBundle:Api:updEnterpriseManager }
+#通过邮箱注册企业
+JustsyInterfaceBundle_api_mailregisterEnterprise:
+    pattern:  /api/http/enterprise/mail/register
+    defaults: { _controller: JustsyOpenAPIBundle:Api:mailregisterEnterprise }
+#通过邮箱批量注册成员
+JustsyInterfaceBundle_api_mailregisterStaff:
+    pattern:  /api/http/staff/mail/register
+    defaults: { _controller: JustsyOpenAPIBundle:Api:mailregisterStaff }
+JustsyInterfaceBundle_api_removeStaff:
+    pattern:  /api/http/staff/remove
+    defaults: { _controller: JustsyOpenAPIBundle:Api:removeStaff }
+JustsyInterfaceBundle_api_getAttenMicroStaff:
+    pattern:  /api/http/micro/staff/list
+    defaults: { _controller: JustsyOpenAPIBundle:Api:getAttenMicroStaff }
+JustsyInterfaceBundle_api_attention:
+    pattern:  /api/http/micro/attention
+    defaults: { _controller: JustsyOpenAPIBundle:Api:microAttention }
+#创建微应用帐号
+JustsyInterfaceBundle_api_micro_register:
+    pattern:  /api/http/micro/register
+    defaults: { _controller: JustsyOpenAPIBundle:Api:registerMicro }
+
+#微应用推送消息对应模块
+JustsyInterfaceBundle_microapp_index:
+    pattern:  /{network_domain}/microapp/index/{name}
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:Index }
+JustsyInterfaceBundle_microapp_error:
+    pattern:  /{network_domain}/microapp/error
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:Error }
+#内部系统文件上传
+JustsyInterfaceBundle_microapp_upload:
+    pattern:  /microapp/uploadimage
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:UploadFile }
+#编辑器文件上传
+JustsyInterfaceBundle_microapp_editor_uploadimage:
+    pattern:  /microapp/editor/uploadimage
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:EditorUploadImage }
+#内部消息发送
+JustsyInterfaceBundle_microapp_sendmsg:
+    pattern:  /microapp/sendmsg
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:SendMsg }
+#获取公众号分组集合
+JustsyInterfaceBundle_microapp_getgrouplist:
+    pattern:  /microapp/grouplist
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:getMicroGroupList }
+#文件上传 接口
+JustsyInterfaceBundle_microapp_uploadimage:
+    pattern:  /api/http/uploadimage
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:UploadImage }
+#文本消息发送 接口
+JustsyInterfaceBundle_microapp_textmsg:
+    pattern:  /api/http/textmsg
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:TextMsg }
+#图片流消息发送 接口
+JustsyInterfaceBundle_microapp_imagemsg:
+    pattern:  /api/http/imagemsg
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:ImageMsg }
+#图文消息发送 接口
+JustsyInterfaceBundle_microapp_picturemsg:
+    pattern:  /api/http/picturemsg
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:PictureMsg }
+#多图文消息发送 接口
+JustsyInterfaceBundle_microapp_textpicturemsg:
+    pattern:  /api/http/textpicturemsg
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:TextPictureMsg }
+#获取公众号发送的历史消息 接口
+JustsyInterfaceBundle_microapp_getmessagelist:
+    pattern:  /api/http/getmicromessage
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:GetMicroMessage }
+#通过文件标识获取文件地址
+JustsyInterfaceBundle_microapp_getPagePath:
+    pattern:  /api/http/getpagepath/{name}
+    defaults: { _controller: JustsyOpenAPIBundle:MicroApp:getPagePath }
+#获取当前企业的组织机构信息
+JustsyInterfaceBundle_get_organization:
+    pattern: /api/http/get/org
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getOrganization}
+#获取微应用token 
+JustsyInterfaceBundle_get_proxytoken:
+    pattern: /api/http/proxytoken
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getProxytoken}
+#获取微应用关注成员列表
+JustsyInterfaceBundle_get_micro_fanslist:
+    pattern: /api/http/micro/fanslist
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getMicroFansList}
+#获取微应用关注成员详细信息
+JustsyInterfaceBundle_get_micro_fansinfo:
+    pattern: /api/http/micro/fansinfo
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getMicroFansInfo}
+
+#######################移动应用平台路由配置############################
+
+#获取门户配置
+JustsyInterfaceBundle_mapp_portalconfig:
+    pattern: /api/http/mapp/portalconfig/{openid}
+    defaults: {_controller:JustsyOpenAPIBundle:Mapp:getPortalConfig,openid:null}
+
+JustsyInterfaceBundle_mapp_portalversion:
+    pattern: /api/http/mapp/portalversion/{openid}
+    defaults: {_controller:JustsyOpenAPIBundle:Mapp:getPortalVersion,openid:null}
+#获取我的移动应用
+JustsyInterfaceBundle_mapp_myapplist:
+    pattern: /api/http/mapp/myapp/{openid}
+    defaults: {_controller:JustsyOpenAPIBundle:Mapp:getMyAppList,openid:null}
+
+JustsyInterfaceBundle_mapp_getappconfig:
+    pattern: /api/http/mapp/getconfig/{appid}
+    defaults: {_controller:JustsyOpenAPIBundle:Mapp:getAppConfig,appid:null}
+
+JustsyInterfaceBundle_mapp_bindapp:
+    pattern: /api/http/mapp/bind/{openid}/{appid}
+    defaults: {_controller:JustsyOpenAPIBundle:Mapp:appBind}
+
+JustsyInterfaceBundle_mapp_unbindapp:
+    pattern: /api/http/mapp/unbind/{openid}/{appid}
+    defaults: {_controller:JustsyOpenAPIBundle:Mapp:appUnBind}
+
+##########################单点登录绑定################################
+
+JustsyInterfaceBundle_sso_bind:
+    pattern: /api/http/sso/bind/{openid}/{appid}
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:bind}
+
+JustsyInterfaceBundle_sso_unbind:
+    pattern: /api/http/sso/unbind/{openid}/{appid}
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:unbind}
+
+JustsyInterfaceBundle_sso_getbindinfo:
+    pattern: /api/http/sso/getauth/{openid}/{appid}
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:getauth}
+
+JustsyInterfaceBundle_sso_authlogin:
+    pattern: /api/http/sso/login
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:sso}
+
+JustsyInterfaceBundle_sso_token:
+    pattern: /api/http/sso/token
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:token}
+JustsyInterfaceBundle_sso_direct_login:
+    pattern: /api/http/sso/direct
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:direct}
+JustsyInterfaceBundle_sso_bindbat:
+    pattern: /api/http/sso/bindbat
+    defaults: {_controller:JustsyOpenAPIBundle:Sso:bindBat}
+
+##########################测试用######################################
+JustsyOpenAPIBundle_api_test_listdata:
+    pattern: /api/http/test/listdata
+    defaults: {_controller:JustsyOpenAPIBundle:Test:getListData}
+
+JustsyOpenAPIBundle_api_test_wordpress_item:
+    pattern: /api/http/test/wordpress/list
+    defaults: {_controller:JustsyOpenAPIBundle:Test:getWordpressList}
+
+JustsyOpenAPIBundle_api_test_wordpress_content:
+    pattern: /api/http/test/wordpress/detail
+    defaults: {_controller:JustsyOpenAPIBundle:Test:getWordpressDetail}
+
+
+JustsyOpenAPIBundle_api_testtmp_baoxiao_list:
+    pattern: /api/http/test/baoxiao/list/{eno}
+    defaults: {_controller:JustsyOpenAPIBundle:Test:getBaoXiao_tmp}
+
+JustsyOpenAPIBundle_api_testtmp_baoxiao_get:
+    pattern: /api/http/test/baoxiao/get/{id}
+    defaults: {_controller:JustsyOpenAPIBundle:Test:getBaoXiaoDetail_tmp}
+
+JustsyOpenAPIBundle_api_testtmp_baoxiao_add:
+    pattern: /api/http/test/baoxiao/add
+    defaults: {_controller:JustsyOpenAPIBundle:Test:addBaoXiao_tmp}
+
+JustsyOpenAPIBundle_api_testtmp_baoxiao_check:
+    pattern: /api/http/test/baoxiao/check
+    defaults: {_controller:JustsyOpenAPIBundle:Test:checkBaoXiao_tmp}
+JustsyOpenAPIBundle_api_testtmp_makepassword:
+    pattern: /api/http/test/makepassword
+    defaults: {_controller:JustsyOpenAPIBundle:Test:makePwd}
+#修改密码
+JustsyOpenAPIBundle_api_updatepassword:
+    pattern: /api/http/updatepassword
+    defaults: {_controller:JustsyOpenAPIBundle:Api:updatepassword}
+#修改帐号555
+JustsyOpenAPIBundle_api_changeaccount:
+    pattern: /api/http/changeloginaccount
+    defaults: {_controller:JustsyOpenAPIBundle:Api:changeLoginAccount}
+
+JustsyOpenAPIBundle_api_get_staffs_by_role:
+    pattern: /api/http/get/staffs/byrole
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getStaffsByRole}
+JustsyOpenAPIBundle_api_get_staffinfo:
+    pattern: /api/http/get/staff/info
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getStaffInfoByOpenid}
+JustsyOpenAPIBundle_api_get_staff:
+    pattern: /api/http/get/info/bystaff
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getStaffInfoByStaff}
+JustsyOpenAPIBundle_api_copy_from_other:
+    pattern: /api/http/copy/from/other
+    defaults: {_controller:JustsyOpenAPIBundle:Api:newTrendAndEmails}
+JustsyOpenAPIBundle_api_test_wordpress9_product:
+    pattern: /api/http/test/wordpress/prolist
+    defaults: {_controller:JustsyOpenAPIBundle:Test:getProductList}
+#微博
+JustsyOpenAPIBundle_api_weibo_accounts:
+    pattern: /api/http/weibo/accounts
+    defaults: {_controller:JustsyOpenAPIBundle:Weibo:getWeiboAccounts}
+JustsyOpenAPIBundle_api_weibo_sina_publish:
+    pattern: /api/http/weibo/sina/publish
+    defaults: {_controller:JustsyOpenAPIBundle:Weibo:publishSinaWeibo}
+JustsyOpenAPIBundle_api_weibo_tencent_publish:
+    pattern: /api/http/weibo/tencent/publish
+    defaults: {_controller:JustsyOpenAPIBundle:Weibo:publishTencentWeibo}
+JustsyOpenAPIBundle_api_weibo_sina_get:
+    pattern: /api/http/weibo/sina/get
+    defaults: {_controller:JustsyOpenAPIBundle:Weibo:getMySinaWeibo}
+JustsyOpenAPIBundle_api_weibo_tencent_get:
+    pattern: /api/http/weibo/tencent/get
+    defaults: {_controller:JustsyOpenAPIBundle:Weibo:getMyTencentWeibo}
+    
+#第三方登录（微信weixin）
+JustsyOpenAPIBundle_api_thirdparty_weixinlogin:
+    pattern: /api/http/thirdparty/weixinlogin
+    defaults: {_controller:JustsyOpenAPIBundle:ThirdParty:WeiXinLogin}
+#第三方登录（腾讯tencent）
+JustsyOpenAPIBundle_api_thirdparty_tencentlogin:
+    pattern: /api/http/thirdparty/tencentlogin
+    defaults: {_controller:JustsyOpenAPIBundle:ThirdParty:TencentLogin} 
+
+#第三方注册
+JustsyOpenAPIBundle_api_thirdparty_register:
+    pattern: /api/http/thirdparty/register
+    defaults: {_controller:JustsyOpenAPIBundle:ThirdParty:ThirdpartyRegister }
+
+JustsyOpenAPIBundle_api_gettasklist:
+    pattern: /api/http/gettasklist
+    defaults: {_controller:JustsyOpenAPIBundle:Api:gettasklist } 
+    
+#第三方账号登录
+JustsyOpenAPIBundle_api_thirdparty_login:
+    pattern: /api/http/thirdparty/login
+    defaults: {_controller:JustsyOpenAPIBundle:ThirdParty:ThirdpartyLogin}
+    
+#校验用户是否在版本更新
+JustsyOpenAPIBundle_api_version_check:
+  pattern: /api/http/version/check
+  defaults: {_controller:JustsyOpenAPIBundle:Api:check_Version}
+
+#最新版本二维码下载
+JustsyOpenAPIBundle_api_soft_download:
+  pattern: /home/download
+  defaults: {_controller:JustsyOpenAPIBundle:Api:dowload}  
+  
+#下载地址
+JustsyOpenAPIBundle_api_softdownload:
+  pattern: /home/download/index
+  defaults: {_controller:JustsyOpenAPIBundle:Api:dowloadindex}
+
+#ios特殊下载
+JustsyOpenAPIBundle_api_softdownloadiosplist:
+  pattern: /home/download/ios.plist
+  defaults: {_controller:JustsyOpenAPIBundle:Api:downiosplist}
+
+JustsyOpenAPIBundle_api_softdownloadios:
+  pattern: /home/download/ios
+  defaults: {_controller:JustsyOpenAPIBundle:Api:downios}
+#绑定值获取
+JustsyOpenAPIBundle_api_app_get_key_value:
+    pattern: /api/http/app/get/key_value
+    defaults: {_controller:JustsyOpenAPIBundle:Api:getValueOfKey}
+
+#人员属性同步接口
+#供第三方调用
+JustsyOpenAPIBundle_api_staffattr_sync:
+  pattern: /api/http/staffattr/sync
+  defaults: {_controller:JustsyOpenAPIBundle:Api:staffAttrSync}
+
+##万家在使用该路由，不要删除
+JustsyInterfaceBundle_api_staff_del_2:
+    pattern:  /api/http/staff/del
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:deletestaff }
+
+#同步删除用户账号
+JustsyInterfaceBundle_api_staff_del:
+    pattern:  /api/http/staff/remove_phy
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_del }
+#同步注册用户账号
+JustsyInterfaceBundle_api_staff_add:
+    pattern:  /api/http/staff/new
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_add }
+#同步禁用用户账号
+JustsyInterfaceBundle_api_staff_disabled:
+    pattern:  /api/http/staff/disabled
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_disabled }
+#同步启用用户账号
+JustsyInterfaceBundle_api_staff_enabled:
+    pattern:  /api/http/staff/enabled
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_enabled }
+#同步修改用户密码
+JustsyInterfaceBundle_api_staff_modifypassword:
+    pattern:  /api/http/staff/change/password
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_modifypassword }
+#同步修改用户昵称
+JustsyInterfaceBundle_api_staff_modifyNickname:
+    pattern:  /api/http/staff/change/nickname
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_modifyNickname }
+#同步修改用户部门
+JustsyInterfaceBundle_api_staff_deptChange:
+    pattern:  /api/http/staff/change/dept
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_deptChange }
+#同步修改用户手机
+JustsyInterfaceBundle_api_staff_mobileChange:
+    pattern:  /api/http/staff/change/mobile
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_mobileChange }
+#同步修改用户帐号
+JustsyInterfaceBundle_api_staff_loginAccount:
+    pattern:  /api/http/staff/change/loginaccount
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:staff_loginAccountChange }
+#同步创建部门
+JustsyInterfaceBundle_api_org_add:
+    pattern:  /api/http/org/new
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:org_add }
+#同步删除部门
+JustsyInterfaceBundle_api_org_del:
+    pattern:  /api/http/org/remove
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:org_del }
+#同步编辑部门
+JustsyInterfaceBundle_api_org_edit:
+    pattern:  /api/http/org/edit
+    defaults: { _controller: JustsyOpenAPIBundle:ApiHR:org_edit }
+
+#统一数据接口
+JustsyOpenAPIBundle_dataaccess_inf:
+    pattern:  /api/http/dataaccess
+    defaults: { _controller: JustsyOpenAPIBundle:DataInterface:dataAccess }
+
+JustsyOpenAPIBundle_getdataaccess_inf:
+    pattern:  /api/http/exec_dataaccess
+    defaults: { _controller: JustsyOpenAPIBundle:DataInterface:getDataAccess }
+##登录腾讯企业邮箱
+JustsyOpenAPIBundle_tencentexmail_inf:
+    pattern:  /api/http/tencentexmail/login
+    defaults: { _controller: JustsyOpenAPIBundle:DataInterface:tencentexmaillogin }
+##二维码统一处理接口
+JustsyOpenAPIBundle_qrcode_inf:
+    pattern:  /qr/{type}/{code}
+    defaults: { _controller: JustsyOpenAPIBundle:DataInterface:qrcode }

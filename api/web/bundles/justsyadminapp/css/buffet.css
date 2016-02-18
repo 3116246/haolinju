@@ -1,0 +1,35 @@
+.buffet_editconten { height:380px;max-height:380px;padding:10px;+height:340px;+max-height:340px; }
+.buffet_editconten_row { float:left;width:100%;padding-left:10px;padding-right:10px;margin-bottom:10px; }
+.buffet_editconten_row>span { float: left;line-height:22px;padding-right: 5px;text-align: right;width: 65px;}
+.buffet_hint { float: left;font-size: 12px;height: 25px;padding-left: 10px;width: 305px; }
+.hotline_area { height:520px;left:-50px;max-height:520px;top:20px;width:800px; }
+.hotline_content_area { float:left;max-height:440px;height:440px;+height:390px;+max-height:390px;}
+.hotline_row {float: left;margin-bottom:10px;padding-left: 10px;padding-right: 10px;width:100%;}
+.hotline_rowfield { float: left;padding-right: 5px;text-align: right;width: 100px;}
+.hotline_hint { color: #cc3300;float:left;font-size: 12px;height: 25px;line-height:25px;padding-left:40px;width: 305px;text-align:left;}
+.hotline_textbox { border:1px solid #aba;float: left;font-size:12px;height:22px;padding:2px 5px;width:150px;}
+.hotline_combox { border: 1px solid #aaa;float: left;font-size: 12px;height: 22px;line-height: 20px;vertical-align: middle;width: 80px;}
+.hotline_spandate { float:left;width:30px;text-align: center; padding: 0px;}
+.hotline_group{ border-top: 1px solid #ddd;float: left;height: 10px;margin-top: 8px;position: relative;width: 100%;z-index: 1;}
+.hotline_grouptext { background: linear-gradient(to right, rgb(237, 201, 103) 0px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0);color: #cc3300; float: left;margin-top: -12px;padding: 0 10px; }
+.hotline_search_row1 { float:left;width:100%;height:50px;line-height:50px;}
+.hotline_search_row2 { float: left;font-size: 12px;height: 30px;line-height:30px;width: 100%;}
+.hotline_number { float: left;text-align: center;width: 100px;}
+.hotline_date { float: left;text-align: center;width: 100px;}
+.hotline_name { float: left;text-align: center;width: 80px;}
+.hotline_content { float: left;padding-left:10px;width: 623px;}
+.hotline_label { float:left;padding-left:20px;display:block;width:165px;color:#bbb;font-size:12px;}
+.hotline_label>span {	color:#54b82a; }
+.hotline_scheme_number { padding-left:5px;padding-right:5px;cursor:pointer;}
+.hotline_scheme_edit { float:left;display:none;width:100%;}
+.hotline_view_scheme {float: left;height: 265px;overflow-x: hidden;overflow-y: auto;padding-left: 30px;padding-right: 20px;width: 100%;}
+.hotline_schemeContent { float:left;width:100%;padding:5px 0;}
+.hotline_desc { float:left;margin-top: 5px;min-height: 80px;padding-left:30px;width: 100%;color:black;}
+.hotline_scheme_add { background: linear-gradient(to right, #ddd 0px, #ddd 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0);border-radius: 10px;color: #0088cc;cursor: pointer;float: right;margin-right:20px;margin-top: -12px;padding: 0 10px; }
+.hotline_scheme_add:hover { background: linear-gradient(to right, rgb(237, 201, 103) 10px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0); }
+.hotline_bottom { float:left;height:40px;padding:7px 0;width:100%; }
+.hotline_content_TextBox { float:left;font-size:14px;height:160px;line-height:20px;margin-left:30px;margin-top: 10px;width:722px;resize:none; }
+.hotline_scheme_visit { float:left;display:none;height:300px;max-height:300px;width:100%;}
+.hotline_visit_row { float: left;margin:8px 0px;padding-left:10px;padding-right:10px;width:100%;}
+.visit_field { float:left;padding-right:8px;text-align:right;width:150px;}
+.scheme_visit_style { color: #0088cc;cursor: pointer;display: block;float: left;font-size: 12px;text-align: center;width: 160px; }

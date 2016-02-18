@@ -1,0 +1,55 @@
+{% extends 'JustsyBaseBundle::master.html.twig' %}
+
+{% block stylesheets %} 
+    <link href="{{ asset('bundles/fafatimeweopenapi/css/error.css')}}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block javascriptsref %}
+   <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+   <script language="javascript" type="text/javascript">
+       var returnurl='{{returnurl}}';
+       if(returnurl =='microaccount') window.location.href="{{ path('JustsyBaseBundle_enterprise_setting_microaccount', {'network_domain' : curr_network_domain}) }}";
+       else if (returnurl =='microapp') window.location.href="{{ path('JustsyBaseBundle_micro_app_list', {'network_domain' : curr_network_domain}) }}";
+   </script>
+{% endblock %}
+
+{% block main_content %}
+    <form id="form1" runat="server">
+    <div id="content">
+        <!-- error page ontent -->
+        <div id="error-divider">
+        </div>
+        <div id="error-bd">
+            <div id="error-notice">
+                <div class="error-notice-text" style="text-align: left;">
+                    <div class="error-notice-text-wrap error1">
+                        <div class="error-notice-hd">
+                            {{errorMsg}}
+                        </div>
+                        <div class="error-notice-info">
+                        </div>
+                        <div class="error-notice-advice">
+                            <div class="you-can">
+                                温馨提示：企业微信推送平台只能是企业管理员或企业公众号才能使用
+                            </div>
+                        </div>
+                        <div class="error-notice-advice">
+                            <div class="you-can">
+                                您可以：
+                            </div>
+                            <ol>
+                                <li>确认您是不是企业管理人员</li>
+                                <li><a href="{{microPage}}" title="去Wefafa官方网站,创建企业自己的公众号">立即创建</a>属于企业自己的公众号</li>
+                                <li>请确保您的网络是否正常,是否能正常访问网站</li>
+                                <li>您可以去: <a href="{{helpPage}}" title="Wefafa网站所有功能的使用帮助" target="_block">Wefafa使用页面</a>寻求帮助</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="ant-emotion">
+                    <img title="" alt="" src="{{ asset('bundles/fafatimeweopenapi/images/cdx.png')}}"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock %}

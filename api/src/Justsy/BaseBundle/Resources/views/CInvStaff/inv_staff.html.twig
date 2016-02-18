@@ -1,0 +1,280 @@
+<div class="modal" data-backdrop=false id="dlgInvStaff" style="display:none;width:650px;margin-left: -325px;" show=false>
+  <input type="hidden" id="groupid" value="{{ groupid }}" />
+  <input type="hidden" id="gname" value="{{ gname }}" />
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal" id="icoClose">×</a>    
+  	<h5>{% if groupid %}邀请成员{% else %}邀请同事{% endif %}</h5>  
+  </div>
+  <div class="modal-body">
+    <div class="invite-title">邀请您熟悉的同事加入 <span class="invitecompany">{{ename}}</span> 与您协同工作</div>
+    <div class="control-group">邮箱：
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+      <span class="hints" style="color:red"></span>
+    </div>
+    <div class="control-group">邮箱：
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+      <span class="hints" style="color:red"></span>
+    </div>
+    <div class="control-group">邮箱：
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+      <span class="hints" style="color:red"></span>
+    </div>
+    <div class="control-group">邮箱：
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+      <span class="hints" style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <textarea name="" cols="" rows="" class="input-xlarge" style="margin-left:39px;" id="invMsg">想对被邀请的同事说点什么吗？</textarea>
+    </div>
+  </div>
+  <div class="modal-footer">    
+  	<a id="btnSubmit" class="btn" disabled="true" >邀请</a>  
+  	<a id="btnClose" class="btn" data-dismiss="modal" >关闭</a>   
+  </div>	
+</div>
+
+<script language="javascript">
+var dlgInvStaff = $("#dlgInvStaff");
+var btnSubmit = $("#btnSubmit");
+var btnClose = $("#btnClose");
+var btnClose = $("#btnClose");
+var isValid = [true,true,true,true];
+var ipts = $(".RegFormIpttwo,.input-xlarge");
+var mailDivs = $(".control-group");
+mailDivs = mailDivs.slice(0,mailDivs.length-1);
+var hintMsg = 
+{
+  "mail01":"您输入的邮件地址不正确，请检查！",
+  "mail02":"邮箱地址重复输入，请重新输入！",
+  "mail03":"您不能邀请自己！",
+  "mail04":"该用户已注册！",
+  "mail05":"该用户已加入该群组！"
+};
+var defaultInvMsg = "想对被邀请的同事说点什么吗？";
+var mailChanged = false;
+
+$(document).ready(function()
+{
+  $("#btnInvStaff").click(function()
+  {
+    dlgInvStaff.modal();
+    ipts.eq(0).focus();
+  });
+  btnClose.click(function()
+  {
+    dlgInvStaff.modal("hide");
+  });
+  ipts.blur(function()
+  {
+    var pn = $(this).parent();
+    var idx = ipts.index(this);
+    var cns = pn.children();    
+    if (this.className == "RegFormIpttwo")
+    {
+      if (this.value.length==0) return;
+      if (!checkMailValid(cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail01);
+      }
+      else if (this.value+"@"+cns[2].value == "{{account}}")
+      {
+        setErrInfo(cns,idx,hintMsg.mail03);
+      }
+      else if (!checkMailUnique(pn,cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail02);
+      }
+      else
+      {
+        if (mailChanged)
+        {
+          setCheckInfo(cns,idx);
+          checkMailRegistered(this.value,cns,idx,"{{groupid}}".length);
+        }
+      }
+    }
+    else if ($(this).is("#invMsg"))
+    {
+      if (this.value == "") this.value = defaultInvMsg;
+    }
+    //enableSubmit(); 由ajax验证后设置按钮是否可点击
+  }).keypress(function(ev)
+  {
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm();
+        return;
+      }
+      moveToNext(ipts,this);
+    }
+  }).change(function()
+  {
+    if (this.className=="RegFormIpttwo")
+    {
+      mailChanged = true;
+    }
+  });
+  
+  $("#invMsg").focus(function()
+  {
+    if (this.value == defaultInvMsg) this.value = "";
+  });
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm();
+  });
+  //close
+  btnClose.click(function()
+  {
+    clearInputInfo();
+    if ("undefined"!=typeof(loadUnActiveStaff)) loadUnActiveStaff();
+  });
+  $("#icoClose").click(function()
+  {
+    clearInputInfo();
+    if ("undefined"!=typeof(loadUnActiveStaff)) loadUnActiveStaff();
+  });
+});
+//提交
+function submitForm()
+{
+  if (btnSubmit.attr("disabled")) return;
+  btnSubmit.attr("disabled",true);
+  var mails = "", invMsg = "";
+  $.each(mailDivs,function(i,n)
+  {
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      mails += s + ",";
+    }
+  });
+  if ($("#invMsg").val() != defaultInvMsg) invMsg = $("#invMsg").val();
+  var groupid = $("#groupid").val();
+  var gname = $("#gname").val();
+  $.post("{{path('JustsyBaseBundle_component_invstaffsave')}}",
+    {mails:mails,invMsg:invMsg,groupid:groupid,gname:gname},
+    function(data)
+    {
+      clearInputInfo();
+      dlgInvStaff.modal("hide");
+      if ("undefined"!=typeof(loadUnActiveStaff)) loadUnActiveStaff();
+    },"text");
+}
+//显示错误信息
+function setErrInfo(cns, idx, info)
+{
+  isValid[idx] = false;
+  cns.last().text(info);
+}
+//清除错误信息
+function clearErrInfo(cns, idx)
+{
+  isValid[idx] = true;
+  cns.last().text("");
+}
+//后台检查
+function setCheckInfo(cns, idx)
+{
+  btnSubmit.attr("disabled",true);
+  isValid[idx] = false;
+  cns.last().text("");
+  var sr = "{{ asset('bundles/fafatimewebase/images/loading.gif') }}";
+  cns.last().html('<img src="'+sr+'" class="joinimg" width="16" height="16">');
+}
+//验证邮箱有效性
+function checkMailValid(cns)
+{
+  if (cns[0].value.length < 1) return true;
+  var mail = cns[0].value + "@" + cns[2].value;
+  var reg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+  return reg.test(mail);
+}
+//检查邮箱是否重复
+function checkMailUnique(pn,cns)
+{
+  var re = true;
+  var idx = mailDivs.index(pn);
+  var mail = cns[0].value + "@" + cns[2].value;
+  $.each(mailDivs,function(i,n)
+  {
+    if (idx == i) return;
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      return re = !(mail == s);
+    }
+  });
+  return re;
+}
+//设置submit键
+function enableSubmit()
+{
+  var suc = true;
+  for (i in isValid)
+  {
+    suc &= isValid[i];
+  }
+  btnSubmit.attr("disabled",!suc);
+}
+//移至下一个控件
+function moveToNext(ipts, n)
+{
+  var nxt = ipts.index(n)+1;
+  var nxtNode = ipts.eq(nxt);
+  if (nxtNode == null) return;
+  if (nxtNode.attr("disabled"))
+  {
+    moveToNext(ipts, nxtNode);
+  }
+  else
+  {
+    ipts.eq(nxt).focus();
+  }
+}
+//清空输入框输入内容
+function clearInputInfo()
+{
+  btnSubmit.attr("disabled",true);
+  $.each(mailDivs,function(i,n)
+  {
+    var cn = $(n).children();
+    cn[0].value = "";
+  });
+  $("#invMsg").val(defaultInvMsg);
+  $.each($(".hints"),function(i,n)
+  {
+    $(n).text("");
+  });
+}
+//检查邀请的邮箱是否已注册 checktype:0邮箱是否注册，否则邮箱是否加入群组
+function checkMailRegistered(v, cns, idx, checktype)
+{
+  var mail = v+"@"+cns[2].value;
+  var groupid = $("#groupid").val();
+  var posturl = checktype==0 ? "{{path('JustsyBaseBundle_active_checkinvmail')}}" : "{{path('JustsyBaseBundle_group_checkinvmail')}}";
+  var para = checktype==0 ? {mail:mail} : {mail:mail,groupid:groupid};
+  $.post(posturl,para,function(data) 
+  {
+    cns.last().text("");
+    if (data > 0)
+    {
+      cns.last().text(checktype==0 ? hintMsg.mail04 : hintMsg.mail05);
+    }
+    else
+    {
+      isValid[idx] = true;
+    }
+    mailChanged = false;
+    enableSubmit();
+  },"text");
+}
+</script>

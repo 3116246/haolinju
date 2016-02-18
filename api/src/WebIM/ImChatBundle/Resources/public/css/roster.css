@@ -1,0 +1,200 @@
+@charset "utf-8";
+
+#fafaHint
+{
+   background-attachment: fixed;
+   background-color: #999999;
+   color: #333333;
+   font-family: microsoft yahei,Arial,Helvetica,sans-serif;
+   font-size: 12px;
+   height: 50px;
+   line-height: 22px;
+   position:absolute;
+   margin: 0 auto;
+   padding: 0;
+   width: 200px;
+}
+
+#fafaocsfontbox {
+    background-attachment: fixed;
+    background-color: #FFFFFF;
+    color: #333333;
+    font-family: microsoft yahei,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 380px;
+    line-height: 22px;
+    position:absolute;
+    margin: 0 auto;
+    padding: 0;
+    width: 235px;
+    z-index: 9200;
+}
+#fafaocsboxtop {
+    background-color: #0555C3;
+    height: 25px;
+    width: 100%;
+}
+#fafaocsmaititle {
+    background-color: #0555C3;
+    color: White;
+    height: 25px;
+    width: 100%;
+}
+#fafaocssubtitle {
+    background-color: #999999;
+    cursor: pointer;
+    height: 30px;
+    width: 100%;
+}
+#fafaocstopleft {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    text-indent: 8px;
+}
+.nar {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+.nar:hover {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+.nar_max {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+.nar_max:hover {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+#fafaocsmax {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+#fafaocsmax:hover {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+#fafaocsclose {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+#fafaocsclose:hover {
+    display: block;
+    float: left;
+    height: 17px;
+    text-indent: -9999px;
+    width: 21px;
+}
+#fafaocstopright {
+    float: right;
+    padding-right: 9px;
+    text-align: left;
+}
+#fafaocstitle {
+    font-size: 12px;
+    font-weight: bold;
+    height: 30px;
+    padding-top: 10px;
+    text-align: center;
+    text-indent: 22px;
+    width: 100%;
+}
+#fafaocsboxcenter {
+    min-height: 30px;
+    width: 100%;
+    height:98%;
+    background-color:red;
+}
+#fafaocscontent {
+    height: 240px;
+    margin: auto;
+    overflow: scroll;
+    padding-bottom: 3px;
+    padding-top: 0;
+    width: 100%;
+}
+#fafaocscontent A:link {
+    color: #0057A0;
+    text-decoration: none;
+}
+#fafaocscontent A:visited {
+    color: #0057A0;
+    text-decoration: none;
+}
+#fafaocscontent A:hover {
+    color: #0093D8;
+    text-decoration: none;
+}
+#fafaocscontent A:active {
+    color: #0057A0;
+    text-decoration: none;
+}
+#fafaocscontent ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+#fafaocscontent li {
+    border-bottom: 1px solid #EEEEEE;
+    height: 28px;
+    line-height: 28px;
+    list-style: none outside none;
+    width: 100%;
+}
+#fafaocscontent li span.status {
+    display: block;
+    float: right;
+    padding-top: 3px;
+}
+#fafaocscontent li span {
+    cursor: pointer;
+}
+#fafaocscontent li span.phone {
+    display: block;
+    float: left;
+    padding-right: 3px;
+    padding-top: 5px;
+}
+#fafaocsboxfooter {
+    height: 37px;
+    width: 235px;
+}
+.ContentHover {
+    background: none repeat scroll 0 0 #3291B9;
+}
+.ContentOut {
+    background: none repeat scroll 0 0 white;
+}
+.ContentClick {
+    background: none repeat scroll 0 0 #A5AF19;
+}
+#fafagroupcontent {
+    cursor: default;
+    height: 325px;
+    overflow: scroll;
+    width: 100%;
+}

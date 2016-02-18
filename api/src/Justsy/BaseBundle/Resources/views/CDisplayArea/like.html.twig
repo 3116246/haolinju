@@ -1,0 +1,8 @@
+<div class="like_outbox praise-box clearfix" style="display:{{ we_convers_likes|length > 0 ? "block" : "none" }};float:left;width:100%;">
+  <div class="likebox praise-box" style="padding-left:25px;"> 
+    <span class="likeboxpart praise-icon" style="position: absolute; left: 0px; margin-top: -3px;"></span>
+    {% for item in we_convers_likes %}
+    <span class="likename" staff="{{ item["like_staff"] }}"><a class="employee_name" login_account="{{ item["like_staff"] }}" href="#">{{ item["nick_name"] }}</a></span> 
+    {% endfor %}
+  </div>
+</div>

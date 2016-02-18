@@ -1,0 +1,41 @@
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}"></script>
+<div id="doc_open_img" style="text-align: center;padding:1px;min-height:1px;width:585px;line-height: 425px;height:425px;overflow:auto;border: 1px solid #CCCCCC;font-size: 12px;">
+    文件太大或者浏览器不支持直接打开该文件。<a href="{{downpath}}">下载到本地</a>
+</div>
+<div id="doc_view_image_tool" style="padding:1px;min-height:1px;width:590px;height:25px;line-height:25px;font-size: 12px;text-align: center;">
+<span onclick="$('#doc_open_img').html('加载中...');$('#filefrm').attr('src','about:blank');$('#doc_open',window.parent.document).hide();" style="margin-left: 300px;background-color: #F9F9F9;border: 1px solid #B7BABB;cursor: pointer;display: block;text-align: center;width: 50px;">关闭</span>
+</div>
+<div style="display:none">
+	      <iframe id="filefrm" name="filefrm"  frameborder='no' border='0' marginwidth='0' marginheight='0'></iframe>
+</div>
+<script type="text/javascript">
+	  var path ="{{path}}",down="{{downpath}}",type="{{type}}";
+	  $("#doc_open_img").html("加载中...");
+	  if(path!="")
+	  {
+		  $.get("{{path}}?r_f=text","",function(d){
+		     if(type=="text/html")
+		     {
+		         $("#doc_open_img").html("<div readOnly style='text-align:left;line-height:16px;overflow:auto;width:583px;height:423px;border:0px'></div>");
+		         $("#doc_open_img div").html(d);
+		     }
+		     else
+		     {
+		         $("#doc_open_img").html("<textarea readOnly style='width:583px;height:423px;border:0px'></textarea>");
+		         $("#doc_open_img textarea").val(d);
+		     }
+		     
+		  });
+	  }
+	  else if(down!="")
+	  {
+	  	$("#doc_open_img").html("文件太大或者浏览器不支持直接打开该文件。<a href='{{downpath}}'>下载到本地</a> 打开");
+	  	//$('#filefrm').attr('src','{{downpath}}')
+	  }
+	  else if(down=="")
+	  {
+	  	 $("#doc_open_img").html("文件损坏或已被提交者删除");
+	  }
+</script>
+  
+

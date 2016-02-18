@@ -1,0 +1,12 @@
+WebIMImMainBundle_webim_loginpage:
+    pattern:  /api/webim/loginpage
+    defaults: { _controller: WebIMImMainBundle:Default:loginpage } 
+WebIMImMainBundle_webim_autologinpage:
+    pattern:  /api/webim/autologinpage
+    defaults: { _controller: WebIMImMainBundle:Default:autologinpage }    
+WebIMImMainBundle_webim_rosterpage:
+    pattern:  /api/webim/rosterpage
+    defaults: { _controller: WebIMImMainBundle:Default:rosterpage }
+WebIMImMainBundle_webim_chatwin:
+    pattern:  /api/webim/chatwindow
+    defaults: { _controller: WebIMImMainBundle:Default:chatwindow }    

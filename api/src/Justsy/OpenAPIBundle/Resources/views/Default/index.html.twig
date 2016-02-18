@@ -1,0 +1,28 @@
+<html>
+<head>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+  <script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/fapresence.js"></script>
+</head>
+<body>
+  Hello !
+  <span id="presence1"></span>
+</body>
+</html>
+<script>
+    if(window.MessageAPI!=null){
+		    window.MessageAPI.init=function(){	    
+				    FaFaMessage.Connection("t4@fafacn.com","t4");
+				    //FaFaChatMain.Connection("10010@100156.fafacn.com","888888");
+    		}
+    }
+    //页面上总是应该执行下面的判断，由于在IE9下的js与docment加载顺序的原因，可能会导致api库文件比documnet先加载完并执行，这时MessageAPI.init方法得不到调用
+    if(typeof(FaFaMessage)=="object" && !FaFaMessage._conning)
+    {
+       //页面加载完，但未进行im连接时，手动调用连接
+       window.MessageAPI.init();
+    }
+    FaFaPresence.ready=function(){
+    	FaFaPresence.AddBind("presence1","liuzd@fafatime.com");
+    }
+</script>

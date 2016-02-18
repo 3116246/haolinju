@@ -1,0 +1,78 @@
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/Role.css')}}" />
+{% endblock %}
+{% block javascriptsref %}
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/sysrole.js')}}"></script>
+{% endblock %}
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" style="margin-left: 0px;overflow: hidden; height: 565px;">
+  <ol style="margin-top:15px" class="breadcrumb">
+      <li class="active">权限管理</li>
+  </ol>      
+  <div class="menu_left">
+    <div class="role_title">用户角色</div>
+    <ul  class="menu_nav"></ul>
+  </div>
+  <div style="width:100%; padding-left:240px; height:100px;">
+    <div class="tab-content">
+      <div id="functionid" class="tab-pane active" role="tabpanel">
+        <div class="panel panel-default" style="height:498px;">
+          <div class="panel-heading">超级管理员</div>
+          <div style="line-height:22px;" class="panel-body">
+            <div style="line-height:30px;font-weight:bold">
+            <span style="padding: 0px 20px; height: 20px; line-height: 20px;">用&nbsp;&nbsp;户</span>
+            <span onclick="Role.viewWindow();" style="float: right; margin-right: 30px; color: rgb(0, 136, 204); cursor: pointer;">添加用户</span>
+            </div>
+            <div class="role_user"></div>
+            <div style="line-height:30px; font-weight: bold; border-top: 1px solid #efefef; float: left; width: 100%;">
+                <span style="padding: 0px 20px; height: 20px; line-height: 20px;">权&nbsp;&nbsp;限</span>
+            </div>
+            <div style="margin-left:20px" id="functionlist"></div>
+            <div class="role_bottom">
+                <div class="role_save_msg"></div>
+                <span onclick="Role.saveRole();" class="btn-success btn_search">保存设置</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--选择人员-->
+<div style="display:none;" id="setManager" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="cursor:default;width:800px;top:80px;left:65px;">
+    	<div class="title">选择人员</div> 
+      <span class="close-tip-icon" onclick="$('#setManager').hide();" title="关闭"></span>
+      <div class="content" id="hint_content" style="background-color:white;padding:5px 10px;";>
+           <div class="search_left">
+    		 	      <div class="search_head">
+          	        <span>用户账号/昵称：</span>
+        		 	      <input type="text" placeholder="用户账号/名称" id="textAccount" />
+        		 	      <span class="btn-success btn_search"  onclick="Role.search_staff();">查&nbsp;&nbsp;询</span>
+    		 	      </div>
+    		 	      <ul class="staff_list" style="overflow:auto;" ></ul>
+    		 	  </div>
+    		 	  <div class="search_right">
+    		 	     <div class="search_head" style="padding-left:0px;">
+          	       <div class="option_area">
+                  		<span>选择的用户</span>
+                     </div>
+    		 	     </div>
+    		 	     <ul class="staff_list" style="width:98%;padding-left:15px;border-right:1px solid #fff;overflow:auto;"></ul>
+    		 	  </div>
+      </div>
+      <div style="height: 50px;margin-left:auto;margin-right:auto;padding:10px 0px;width:170px;background-color:transparent;" class="operation">
+         <button class="btn btnGreen default_button" style="width:65px;"  onclick="Role.staff_option();">确&nbsp;定</button>    
+         <button class="btn btnGray default_button" style="width:65px;"  onclick="$('#setManager').hide();">取&nbsp;消</button>
+      </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        Role.common_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+        Role.loadRoleList();
+    });    
+</script>

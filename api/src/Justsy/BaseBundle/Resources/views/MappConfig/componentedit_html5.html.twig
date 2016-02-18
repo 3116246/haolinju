@@ -1,0 +1,136 @@
+<div id="component_html5_attribute_list" style="margin: 20px; line-height: 60px;">
+		<div>
+			<span style="margin-right:7px;">插件标识：</span><input name="plugin_id" id="plugin_id" maxlength=10  type="text" style="width:350px;">
+		</div>
+		<div>
+			<span style="margin-right:10px;margin-left: 20px;">版本：</span><input name="plugin_version" id="plugin_version" maxlength=7  type="text" style="width:100px;">
+		</div>
+		<div>
+			<span style="margin-right:10px;margin-left: 10px;">启动页：</span><input name="plugin_starpage" id="plugin_starpage" maxlength=200  type="text" style="width: 350px;">
+		</div>
+		<div>
+		 	<label style="margin-left:68px;width:120px;">
+			  <input type="checkbox" id="check_encrypt" style="float:left;margin-right: 4px;"><span style="font-size:12px;">加密用户认证信息</span>
+	    </label>
+		</div>
+		<div>
+			<span style="margin-right:10px">插件地址：</span><input name="plugin_url" id="plugin_url" maxlength=200  type="text" style="width: 350px;">
+		</div>
+		<div>
+			<span style="margin-right:10px">本地上传：</span><span id='uploadhint'></span><input onchange="uploadplugin(this)" name="componentImage" id="componentImage" maxlength=200  type="file" style="width:240px;"><span>* 只支持上传20M以内,zip类型的插件包。</span>
+		</div>
+		<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px; border-top: 1px solid rgb(204, 204, 204); ">
+			<div class="component_switch_error" style="width: 405px;">
+   	    <img src="{{ asset('/bundles/fafatimewebase/images/errow.gif')}}" class="component_switch_hint_img"><span></span>
+   	  </div>
+	   <span class="btn save_app_html5" onclick="save_app_html5()" style="margin-left: 200px; width: 80px; margin-top: 20px;" >保存</span>	     	
+	 </div>		
+</div>
+<script type="text/javascript">
+	$(".save_app_html5").removeAttr("disabled");
+	//填充数据
+	fullData();	
+	var savehtms5falg=false;
+	function save_app_html5(){
+		 if(savehtms5falg) return;
+		 savehtms5falg=true;
+		 $("#save_app_html5").html("保存中...");
+		 var root=oneApp.getRootFunctionid();
+		 
+		 var check = $("#check_encrypt").attr("checked");
+		 check = check==null ? 0:1;
+		 //启动页
+		 var startpage = $.trim($("#plugin_starpage").val());
+		 startpage = "<![CDATA["+startpage+"]]>";
+		 //插件地址
+		 var dowurl = $.trim( $("#plugin_url").val());
+		 dowurl = "<![CDATA["+dowurl+"]]>";
+		 var data = {
+		 	"plugin":{
+		 		"id":$.trim( $("#plugin_id").val()),
+		 		"version":$.trim( $("#plugin_version").val()),
+		 		"downurl":dowurl
+		 	},
+		 	"startpage":startpage,
+		 	"encrypt":check
+		 };
+		 if(data.plugin.id=="" || data.plugin.version=="" || data.plugin.downurl=="" || data.plugin.startpage=="")
+		 {
+		 	savehtms5falg=false;
+		 	$("#save_app_html5").html("保存");
+		 	alert("请将以上信息填写完整！");
+		 	return;
+		 }
+		 oneApp.setInterHTML5(root,data);
+		 SaveApplicationConfig(oneApp);
+		 $("#save_app_html5").html("保存");
+		 savehtms5falg=false;
+	}
+	
+	function uploadplugin(v)
+	{
+		var filename = $(v).val();
+		var position = filename.lastIndexOf(".");
+		if (position==-1) return;
+		filename = filename.substr(position+1);
+		if ( filename!="zip"){
+			 	 $(".component_switch_error").children().show();
+				$(".component_switch_error>span").text("只支持上传zip类型的插件包。");
+				setTimeout("$('.component_switch_error').children().hide();",5000);
+			 	 return;
+		}
+		$(".save_app_html5").attr("disabled","disabled");
+		$("#uploadhint").html("正在上传插件...");
+		$(v).hide();
+			 var appid = $("#content_template").attr("appid");
+			 $.ajaxFileUpload({
+		        url: "{{path('JustsyBaseBundle_mappconfig_component_fileupload',{"appid":"appid"})}}".replace("appid",appid)+"?saveres=0",
+		        secureuri:false,
+		        fileElementId:'componentImage',
+		        dataType: 'json',
+		        success: function (data) {
+		           if(data.succeed && data.fileid!="")
+		           {
+		          	  	$(".component_switch_error>img").hide();
+		          	  	$(".component_switch_error>span").show();
+		              	$(".component_switch_error>span").text("插件包上传成功");
+		              	$(".save_app_html5").removeAttr("disabled");	              	
+		              	setTimeout("$('.component_switch_error').children().hide();",2000);
+		          	  	$("#plugin_url").val(file_webserver_url+data.fileid).attr("readonly",true);
+		          	  	$(v).show();
+		          	  	$("#uploadhint").html("");
+		           }
+		           else{
+		              	$(".component_switch_error").children().show();
+					    $(".component_switch_error>span").text(data.msg);
+					    setTimeout("$('.component_switch_error').children().hide();",2000);           	
+		           }
+		        },
+		        error: function (data, status, e) {
+					    $(".component_switch_error").children().show();
+					    $(".component_switch_error>span").text(data.msg);
+					    setTimeout("$('.component_switch_error').children().hide();",2000);
+				}
+		   })
+	}
+	
+  function fullData() {
+    var funid =oneApp.getRootFunctionid();
+    var data = oneApp.getHtml5Data(funid);
+    if ( data != null && typeof(data)=="object"){
+ 	    if ( data.startpage != null)
+ 	      $("#plugin_starpage").val(data.startpage);
+ 	    if (data.encrypt!=null && data.encrypt=="1")
+ 	       $("#check_encrypt").attr("checked",true);
+ 	    else
+ 	    	 $("#check_encrypt").attr("checked",false); 	      
+ 	    var plugin = data.plugin;
+ 	    if (plugin != null && typeof(plugin)=="object"){
+ 	    	$("#plugin_id").val(plugin.id);
+ 	    	$("#plugin_version").val(plugin.version);
+ 	    	$("#plugin_url").val(plugin.downurl);
+ 	    }
+    }
+  }
+	    
+</script>

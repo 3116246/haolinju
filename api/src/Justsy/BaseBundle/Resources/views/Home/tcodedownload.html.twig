@@ -1,0 +1,92 @@
+﻿<!DOCTYPE plist PUBLIC '-//Apple//DTD PLIST 1.0//EN'>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>应用下载中心</title>
+<script type="text/javascript" src="{{ asset('bundles/justsybase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/justsybase/js/jquery.qrcode.min.js')}}"></script>
+<style type="text/css">
+	.download_area { margin-left:auto;margin-right: auto;margin-top:100px;width:580px;}
+	.apptype_icon{ float:left;width:24px;height:24px;}
+	.dowload_desc {	float:left;width:200px;	}
+	.version { cursor: default;display: block;float: left;font-size: 18px;letter-spacing: 5px;margin-top: 0;padding-left: 10px;text-align: center;text-shadow: 2px 0 1px #ccc; }
+	.down_button { background-color: #5aaa4b;background-image: linear-gradient(to bottom, #60b452 0px, #56a447 100%);
+    border: 1px solid #3d810c;border-radius: 3px;color: #ffffff;cursor: pointer;display: inline;float: left;font-size: 16px;font-weight: bold;height: 45px;letter-spacing: 3px;line-height: 45px;margin-top: 10px;overflow: visible;text-align: center;text-decoration: none;width: 200px; }
+	.down_head { float:left;height:24px;line-height:24px; }	
+</style>
+</head>
+<body>
+	<div class="header">	   
+	</div>
+	<div class="download_area">
+		<div id="android" class="dowload_desc" >
+			 <div class="down_head">
+				 <img class="apptype_icon" />
+				 <span class="version"></span>
+			 </div>
+			 <a class="down_button">下载Android应用</a>
+    </div>
+		<div id="ios" class="dowload_desc" style="margin-left:180px;" >
+			 <div class="down_head">
+				 <img class="apptype_icon" />
+				 <span class="version"></span>
+			 </div>
+			 <a class="down_button">下载IOS应用</a>
+    </div>
+	</div>
+	<div id="info">
+	    
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	 $(document).ready(function(){
+	 	 var list = {{downlist|raw}};
+     LoadList(list);
+     
+//     var xy = navigator.userAgent;
+//     var html = Array();
+//     html.push("<span>浏览器:"+xy+"</span></br>");
+//     html.push("<span>宽度:"+document.body.offsetWidth+"</span></br>");
+//     html.push("<span>高度:"+document.body.offsetHeight+"</span></br>");
+//     $("#info").html(html.join(""));
+   });
+   //加载列表
+	 function LoadList(data){
+	 	 if ( data.length==0){
+	 	 	 var html ="<span class='version' style='width:100%;font-weight:bold;font-size:20px;margin-top:50px;'>未找到下载内容，请联系客服！</span>";
+	 	 	 $(".download_area").html(html);
+	 	 }
+	 	 else{
+	 	 	 for(var i=0;i<data.length;i++){
+	 	 	 	 var version = data[i]["version"];
+	 	 	 	 var content = data[i]["tcode"];
+	 	 	 	 var dow_url = data[i]["dow_url"];
+	 	 	 	 var type = data[i]["type"];
+	 	 	 	 
+	 	 	 	 if ( data[i]["type"]=="1"){
+	 	 	 	 	 $("#android .down_head .apptype_icon").attr("src","/bundles/justsybase/images/homepage/icon_android.png"); 	 	 	 	 
+	 	 	 	 	 $("#android .down_button").attr("href",dow_url);
+	 	 	 	 	 $("#android .down_head .version").text(version);
+	 	 	 	 	 if ( data.length==1){
+	 	 	 	 	 	 $(".download_area").css("width","210px");
+	 	 	 	 	 	 $(".download_area #ios").remove(); 
+	 	 	 	 	 }
+	 	 	 	 }
+	 	 	 	 else if ( data[i]["type"]=="2")
+	 	 	 	 {	 	 	 	    
+	 	 	 	 	 $("#ios .down_head .apptype_icon").attr("src","/bundles/justsybase/images/homepage/icon_ios.png");
+	 	 	 	 	 $("#ios .down_button").attr("href",dow_url);
+	 	 	 	 	 $("#ios .down_head .version").text(version);
+	 	 	 	 	 if ( data.length==1)
+	 	 	 	 	 {
+	 	 	 	 	 	  $(".download_area #android").remove();
+	 	 	 	 	 }
+	 	 	 	 }
+	 	   }
+	 	 }
+	 }
+	 
+	 
+</script>	

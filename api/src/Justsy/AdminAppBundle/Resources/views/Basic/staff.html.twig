@@ -1,0 +1,98 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/staffinfo.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/pageControl.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/staffinfo.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container mb_content_area">
+  <div class="containerBox" style="padding:15px 10px;">
+  	  <div class="mb_title_area">
+  			 <img class="logo" src="{{ asset('bundles/fafatimembapp/images/toplogo.png') }}" >
+  			 <span>个人信息审核管理</span>
+  		</div>
+  		<div class="staffinfo_area">
+  			 <div class="staffinfo_search">
+  			 	 <span>处理状态：</span>
+  			 	 <select class="mb_combox" onchange="staffManage.search();">
+  			 	 	 <option value="2">所有</option>
+  			 	 	 <option value="0">代办</option>
+  			 	 	 <option value="1">已处理</option>
+  			 	 </select>
+  			</div> 
+  			<!--表格区域-->
+  		  <div class="mb_table" style="display:block;">
+  	 	    <div class="mb_table_title">
+  	 	 	    <span class="mb_rightLing" style="width:22%;" >提交日期</span>
+  	 	 	    <span class="mb_rightLing" style="width:20%;" >姓名</span>
+  	 	 	    <span class="mb_rightLing" style="width:22%;" >员工号</span>
+  	 	 	    <span class="mb_rightLing" style="width:20%;" >修改内容</span>
+  	 	 	    <span class="mb_rightLing" style="border-right:none;width:120px;" >状态</span>
+  	 	    </div>
+  	 	    <div class="mb_table_content">
+  	 	    </div>
+  	    </div>
+  	 </div> 	 
+	</div>
+</div>
+
+ <div  class="dialogBox " id="viewMessage" style="display:none;" >
+ 	  <div class="background"></div>
+    <div class="dialog" style="width:500px;top:70px;left:-50px;">
+    	<div class="title">
+    		<span style="float:left;">姓名：</span>
+    		<span style="float:left;width:120px;height:100%;" id="staffname"></span>
+    		<span style="float:left;">员工号：</span>
+    		<span style="float:left;" id="staffsapid"></span>
+    	</div>
+      <div style="min-height: 150px; cursor: default; width: 100%; padding: 5px 20px; overflow-x: hidden; overflow-y: auto; max-height: 321px;" class="content">
+      	 <div class="mb_table" style="display:block;">
+  	 	    <div class="mb_table_title">
+  	 	 	    <span class="mb_rightLing" style="width:40%;text-align:center;" >字段</span>
+  	 	 	    <span class="mb_rightLing" style="width:60%;border-right:none;text-align:center;" >修改后内容</span>
+  	 	    </div>
+  	 	    <div class="mb_table_content"></div>
+  	    </div>
+      </div>
+      <div style="padding:8px;height:52px;" class="operation">
+	        <button style="width:80px;" class="btn btnGreen" onclick="$('#viewMessage').hide();">关&nbsp;闭</button>
+      </div>
+    </div>
+ </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	 var listdata = {{data|raw}};
+	 $(document).ready(function(){
+	   staffManage.fullData(listdata);	 
+	   staffManage.search_url = "{{path('JustsyAdminAppBundle_mb_basic_staff_search')}}"; 
+	   staffManage.update_url = "{{path('JustsyAdminAppBundle_mb_basic_staff_audit')}}"; 
+	   staffManage.search_url_byid = "{{path('JustsyAdminAppBundle_mb_basic_staff_searchbyid')}}";
+	   staffManage.xy_url = "{{path('JustsyAdminAppBundle_mb_staffinfo_update')}}";
+	   
+   });
+</script>
+
+{% endblock %}

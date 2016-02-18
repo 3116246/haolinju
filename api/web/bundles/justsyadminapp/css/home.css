@@ -1,0 +1,15 @@
+html, body {height: 100%; width:100%;margin:0;}
+#topDiv {height: 40px; border-bottom: 1px solid #ccc;}
+#mainDiv {height: 600px;}
+#leftDiv {width:200px; height: 100%; float: left;}
+#mainContentDiv {margin: 0 0 0 210px; height: 100%; border-left: 1px solid #ccc;}
+
+#topDiv .logo {float:left; height: 30px; margin: 5px 10px;}
+#topDiv .title {float:left; font-size: 20px; font-weight: bold; height: 40px; line-height: 40px;}
+#topDiv .item {float: right; line-height: 40px; margin-right: 10px;}
+
+.ui-corner-all {border-radius: 0;}
+.ui-widget-content {background: none;}
+#MainTabs {border-radius: 0; border: none;}
+#MainTabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+

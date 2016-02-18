@@ -1,0 +1,100 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/js/KindEditor/themes/default/default.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/buffet.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/image.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/buffet.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container" style="float:left;padding:10px 0;">
+	<div class="containerBox">
+			<div style="width:100%;">
+				<div class="search_area">
+					<span style="float:left;margin-left:100px;">搜索自助关键字：</span>
+				  <input type="text" class="mb_textbox" id="searchKeyword" style="width:300px;margin-top:13px;" placeholder="请输入自助关键字" onkeypress="if (event.keyCode==13){Setting.buffet_search(1);}" />
+	        <span class="btnGreen mb_button"  onclick="Setting.buffet_search(1);" style="margin-left:20px;">查&nbsp;&nbsp;询</span>
+	        <span class="btnGreen mb_button" style="width:90px;margin-left:175px;" onclick="Setting.showedit(0);">设置关键字</span>
+		    </div>
+	      <table align="center" id="table_search" class="mb_common_table" style="width:880px;margin-left:25px;">
+	  	 	 <thead>
+		   	 	  <tr>
+						  <td align="center" width="140">创建日期</td>
+							<td align="left" width="550"><span style="padding-left:8px;" >自助关键字</span></td>
+							<td align="center" width="90">创建人员</td>
+							<td align="center" width="98" style="border-right:none;">数据操作</td>
+						</tr> 
+				 </thead>
+				 <tbody></tbody>
+			  </table>
+			  <div id="Pagination" class="pagination" style="float:left;padding:0px;margin:8px 0px 5px 25px;"></div>
+	    </div>		
+	</div>
+</div>
+
+	<!--自助编辑-->
+	<div  class="dialogBox " id="edit_dialog" style="display:none;cursor:default;">
+		<div class="background"></div>
+    <div style="width:800px;top:25px;left:-50px;" class="dialog">
+    	<div class="title">自助管理 / 问题设置</div> 
+      <span title="关闭" onclick="$('#edit_dialog').hide();" class="close-tip-icon"></span>
+      <div class="content buffet_editconten" style="overflow:hidden;">
+        <div class="buffet_editconten_row">
+        	 <span>关键字：</span>
+        	 <input id="textKey" type="text" class="mb_textbox" style="width:675px;+width:650px;">
+        </div>
+        <div class="buffet_editconten_row">
+        	 <span>标&nbsp;&nbsp;题：</span>
+        	 <input id="textTitle" type="text" class="mb_textbox" style="width:675px;+width:650px;">
+        </div>        
+        <div class="buffet_editconten_row">
+        	 <span>内&nbsp;&nbsp;容：</span>
+        	 <textarea id="textContent" class="mb_textbox" style="width:675px;height:265px;+width:650px;"></textarea>
+        </div>
+
+      </div>
+      <div class="operation" style="float:left;height:50px;width:100%;padding:10px 0px 0px;+height:40px;">
+      	 <div class="buffet_hint"></div>
+      	 <div>
+	          <button onclick="Setting.edit();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	          <button onclick="$('#edit_dialog').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+         </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	Setting.edit_url = "{{path('JustsyAdminAppBundle_mb_buffet_settingedit')}}";
+	Setting.search_url = "{{path('JustsyAdminAppBundle_mb_buffet_settingsearch')}}";
+	Setting.searchbyid_url = "{{path('JustsyAdminAppBundle_mb_buffet_searchbyid')}}";
+	Setting.delete_url = "{{path('JustsyAdminAppBundle_mb_buffet_delete')}}";
+	Setting.buffet_search(1);
+</script>
+
+{% endblock %}

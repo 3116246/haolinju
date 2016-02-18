@@ -1,0 +1,7 @@
+parameters:
+#    fa_fa_web_im_im_chat.example.class: WebIM\ImChatBundle\Example
+
+services:
+#    fa_fa_web_im_im_chat.example:
+#        class: %fa_fa_web_im_im_chat.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图片查看－微发发，一个由工作圈子交织而成的企业社交网络</title>
+<script src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+</head>
+<body style="margin:0;">
+  <div id="titleArea" style="background-color: #FCF9F1; padding:5px 10px;">微发发-图片查看器
+    <span style="margin-left: 20px;">
+      <a href="#" targetid="orginalImage" onclick="switchImage(this)">原图</a>
+      <a href="#" targetid="middleImage" onclick="switchImage(this)">中图</a>
+      <a href="#" targetid="smallImage" onclick="switchImage(this)">小图</a>
+    </span>
+  </div>
+  <div id="contentArea" style="overflow:auto;margin: auto 10px;">
+    <img id="orginalImage" style="display: block;" src="{{ FILE_WEBSERVER_URL }}image/original/{{ id }}"/>
+    <img id="middleImage" style="display: none;" src="{{ FILE_WEBSERVER_URL }}image/middle/{{ id }}"/>
+    <img id="smallImage" style="display: none;" src="{{ FILE_WEBSERVER_URL }}image/small/{{ id }}"/>
+  </div>
+</body>
+</html>
+
+<script type="text/javascript">
+function switchImage(sender) 
+{
+  var $sender = $(sender);
+  
+  $("#"+$sender.attr("targetid")).show().siblings().hide();
+}
+
+$(document).ready(function() {
+  function setcontentAreaHeight() 
+  {
+    $("#contentArea").height($(window).height() - $("#titleArea").outerHeight());
+  }
+  $(window).resize(setcontentAreaHeight);
+  setcontentAreaHeight();
+}); 
+</script>

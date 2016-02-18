@@ -1,0 +1,179 @@
+<div id="component_userprofile_attribute_list" style="cursor:default;color:rgb(153, 153, 153);float:left;margin:10px 0 20px 10px;">
+	<div class="component_tabs_colorRow">
+	  <span>字体颜色：</span>
+	  <span id="fontcolor" class="component_tabs_defaultcolor" onclick="showcolor(this)"></span>
+	  <span style="margin-left:55px;">背景颜色：</span>
+	  <span id="bgcolor" class="component_tabs_activecolor" onclick="showcolor(this)" style="margin-left:10px;"></span>
+	</div>
+	<div class="component_tabs_colorRow">
+	  <span>背景图片：</span>
+	  <span class="userprofile_img" style="margin-left:10px;width:65px;">
+	  	<img id="userbgimg" data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg"  onclick="component_userprofile.selectIcon(this)" class="component_userprofile_img">
+	  	<span class="icon-remove" style="margin-top:-5px;cursor:pointer;display:none;" title="取消背景图片"></span>
+	  </span>
+	  <span style="margin-left:40px;">用户头像：</span>
+	  <span class="userprofile_img" style="margin-left:10px;">
+	  	 <img id="userheader" data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg" onclick="component_userprofile.selectIcon(this)" class="component_userprofile_img">
+	  	 <span class="icon-remove" style="margin-top:-5px;cursor:pointer;display:none;" title="默认用户头像"></span>
+	  </span>
+	</div>	
+	<div class='component_color' style="margin-top:-10px;" ></div>
+	<div style="float:left;width:100%">
+		 <div style="width:445px; height:50px;line-height:50px;margin-bottom:5px;">
+		 <div style="float:left; border-bottom:1px solid #dddddd;width:100%;">
+		   <span style="margin-left:30px;">序号</span>
+		   <span style="margin-left:20px;">图标</span>
+		   <span style="margin-left:30px;">名称</span>
+       <span style="margin-left:80px;">数据接口</span>
+		   <span style="margin-left:95px;">功能</span>
+		 </div>
+		 </div>
+		 <!--内容添加到userprofile_area处-->
+		 <div style="width:445px" id="userprofile_area"></div>
+		 <div class="component_nvar_bottom" id="addItem" style="margin-left:25px;display:none;">
+			 <span onclick="addNewItems()" class="component_item_add"></span>
+			 <span style="color:#0077CC;">添加新项</span>
+	   </div>
+	</div>
+	<!--每行数据样式-->
+	 <div id="userprofileitem" class="component_newslist_item" style="display:none;" >
+	   <span style="float:left;display:block;width:25px;height:100%;margin-left:5px;">
+		    <span class="component_tools_delete component_menuitem_delete" onclick="component_userprofile.remove(this);" title="删除该项"></span>
+		 </span>
+		 <span class="component_newslist_no">1</span>
+		 <span class="userprofile_img" style="float:left;margin-left:20px;width:60px;">
+	  	 <img class="component_menuitem_img" style="margin-left:0px;border:1px solid;" title="点击更改图标" onclick="component_userprofile.selectIcon(this)" href="#app_res_selecetDlg" data-backdrop="static" data-toggle="modal" />
+	  	 <span class="icon-remove" style="margin-top:-15px;cursor:pointer;display:none;" title="取消图标"></span>
+	   </span>
+		 <input class="itemname" type="text" maxlength="20"  style="margin-left:0px;width:50px;">
+		 <input class="dataurl" type="text"  maxlength="100" style="margin-left:10px;width:160px;">
+		 <span style="float:right;margin-left:0px;margin-right:5px;" class="component_nav_function userprofile_item">页面定制</span>
+	 </div>
+	 <div class="clearfix"></div>
+</div>
+
+<script type="text/javascript">
+	 //添加新项
+   function addNewItems(){
+   	 var count = $("#userprofile_area").children().length;
+   	 $("#userprofileitem .component_newslist_no").text(count+1);
+	 	 $("#userprofileitem .component_menuitem_img").attr("id","t"+Math.random().toString().replace(".",""));
+	 	 $("#userprofileitem .component_menuitem_img").removeAttr("src");
+	 	 $("#userprofileitem>input").attr("value","");
+   	 var html = $("#userprofileitem").html(); 
+   	 html = "<div class='component_newslist_item' functionid='' target='self'>" + html + "</div>";
+   	 $("#userprofile_area").append(html);
+   	 count = $("#userprofile_area").children().length;   	
+   	 if ( count >= component_userprofile.itemcount){
+   	 	 $("#addItem").hide();
+   	 }
+   	 else{
+   	 	 $("#addItem").show();
+   	 }
+   }
+
+	 //绑定已有数据
+	 function BundleAttr(attr){
+	 	 if ( attr.color!=null && attr.color!="")
+	 	   $("#component_userprofile_attribute_list #fontcolor").css("background-color",attr.color);
+	 	 if ( attr.bgcolor!=null && attr.bgcolor!="")
+	 	 	 $("#bgcolor").css("background-color",attr.bgcolor);
+	 	 if ( attr.bgpic!=null && attr.bgpic!="")
+	 	   $("#userbgimg").attr("src",attr.bgpic);	 	 	 
+	 	 if ( attr.header !=null && attr.header!="")
+	 	   $("#userheader").attr("src",attr.header);
+	 	 else
+	 	 	 $("#userheader").attr("src","/bundles/fafatimewebase/images/no_photo.png");
+	 	 var items = attr.items;
+	 	 if ( items.length==0)
+	 	    addNewItems();
+	 	 else {
+	 	 	 for(var i=0;i<items.length;i++){
+	 	 	 	 $("#userprofileitem .component_newslist_no").text(i+1);
+	 	 	 	 
+	 	 	 	 if ( items[i].itemicon!=null && items[i].itemicon!="")
+	 	 	 	   $("#userprofileitem .component_menuitem_img").attr("src",items[i].itemicon);	 	 	 	 
+	 	 	 	 $("#userprofileitem .component_menuitem_img").attr("id","t"+Math.random().toString().replace(".",""));
+	 	 	 	 
+	 	 	 	 if ( items[i].itemname!=null && items[i].itemname!="")
+	 	 	 	   $("#userprofileitem .itemname").attr("value",items[i].itemname);
+	 	 	 	 if ( items[i].dataurl!=null && items[i].dataurl!="")
+	 	 	 	   $("#userprofileitem .dataurl").attr("value",items[i].dataurl); 	 	 	   
+	 	 	 	 var functionid = items[i].functionid.text;
+	 	 	 	 functionid = functionid==null ?"": functionid;
+	 	 	 	 var _target = items[i].functionid.target;
+	 	 	 	 _target = (_target==null || _target=="") ? "blank":_target; 	 	 	 
+	 	 	 	 var html = $("#userprofileitem").html(); 
+	   	   html = "<div class='component_newslist_item' functionid='" + functionid + "' target='" + _target +"'>" + html + "</div>";
+	   	   $("#userprofile_area").append(html);
+	   	   //清空操作
+	   	   $("#userprofileitem .component_menuitem_img").removeAttr("src");
+	   	   $("#userprofileitem>input").attr("value","");
+	 	 	 }
+	 	 	 if ( items.length < parseInt(component_userprofile.itemcount))
+	 	 	   $("#addItem").show();
+	 	 	 else
+	 	 	 	 $("#addItem").hide();
+	 	 }
+	 }   
+   
+   $(".component_newslist_item").live("mouseover",function(){
+   	  $(this).find(".component_menuitem_delete").show();
+   });
+   
+   $(".component_newslist_item").live("mouseout",function(){
+   	 $(this).find(".component_menuitem_delete").hide();
+   });
+   
+   $(".userprofile_img").live("mouseover",function(){
+   	 var imgsrc = $(this).find("img").attr("src");
+   	 if ( imgsrc == null || imgsrc=="") return;
+   	 $(this).find(".icon-remove").show();
+   });
+   
+   $(".userprofile_img").live("mouseout",function(){
+   	 $(this).find(".icon-remove").hide();
+   });
+   
+   //清除图片地址
+   $(".userprofile_img>.icon-remove").live("click",function(){
+   	  if ( $(this).prev().attr("id")=="userheader")
+   	    $(this).prev().attr("src","/bundles/fafatimewebase/images/no_photo.png");
+   	  else
+   	  	$(this).prev().removeAttr("src");
+   });
+   
+   var _class = "";
+   //显示控件
+	 function showcolor(ev){
+     componentColor.Init($(".component_color"));
+     componentColor.beforeColor = $(ev).css("background-color");
+   	 _class = $(ev).attr("class");
+   	 if ( _class == "component_tabs_defaultcolor"){
+   	 	  componentColor.setTitle("选择字体颜色");
+   	 	  $(".component_color").css("margin-left","70px");
+   	 }
+   	 else{
+   	 	 componentColor.setTitle("选择背景颜色");
+   	 	 $(".component_color").css("margin-left","242px");
+   	 }
+   	 $(".component_color").css("margin-top","65px");
+   	 componentColor.onSelected=function(vColorValue){   	 	 
+ 		   $("."+ _class).css("background-color",vColorValue);
+ 	   };
+ 	   componentColor.onMouseMove = function(color){
+ 	   	 $("."+ _class).css("background-color",color);
+ 	   };
+ 	   componentColor.onClose = function(beforecolor){
+ 	   	 $("."+ _class).css("background-color",beforecolor);	   	 
+ 	   };
+   }
+   //详细页面定制
+   $("#component_userprofile_attribute_list .userprofile_item").live("click",function(){
+   	 var functionid = $(this).parents(".component_newslist_item").attr("functionid");
+   	 if ( functionid==null || functionid=="")
+   	 	 component_userprofile.customizebyempty(this);
+   	 else
+   	 	 component_userprofile.customize(this);
+   });    
+</script>

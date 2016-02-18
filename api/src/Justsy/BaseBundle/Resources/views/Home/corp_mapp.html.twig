@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://www.wefafa.com/home?p=feature -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>商务合作——Wefafa移动应用平台</title>	
+  <meta name="description" content="Wefafa移动应用平台，帮助合作伙伴快速开发各种移动应用，实现移动信息化">
+  <meta name="keywords" content="Wefafa移动应用平台|移动信息化">
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+	<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" />
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var topMain=$("#features_ad").height()//是头部的高度加头部与nav导航之间的距离
+	var feanav=$(".features_nav");
+	var feaw=$(".feawrap");
+	$(window).scroll(function(){
+		if ($(window).scrollTop()>topMain){//如果滚动条顶部的距离大于topMain则就nav导航就添加类.nav_scroll，否则就移除
+			feaw.addClass("feawrap_scroll");
+			feanav.addClass("feanav_scroll");
+		}else{
+			feaw.removeClass("feawrap_scroll");
+			feanav.removeClass("feanav_scroll");
+		}
+	});
+})
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="nav clearfix" id="featop">
+	<div class="nav-content">
+		<h1 class="left" href="javascript:;">Wefafa移动应用平台</h1>
+		
+		<div class="right line-li" style="display:none">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+				<li class="we_btn"><a href="{{path('JustsyBaseBundle_default')}}">登录</a></li> 
+<!--				<li><a href="reg.html">注册</a></li>
+					<else/>
+                <li><a href="{weixin::U('User/Index/index')}">管理中心</a></li>
+				<li><a href="/javascript:;" onClick="Javascript:window.open('{weixin::U('System/Admin/logout')}','_blank')" >退出</a></li>
+				</if>	
+-->                
+			</ul>
+		</div>
+	</div>
+</div>
+	<div class="corp_main" style="margin-left:auto;margin-right:auto;">
+		<div class="corp_left">
+			<div class="corp_left_title"></div>
+			<div class="help_left_menu">
+				<h3>应用合作</h3>
+				<p>联系人：李领</p>
+				<p>E-mail：liling@fafatime.com</p>
+				<h3>代理合作</h3>
+				<p>联系人：陈永军</p>
+				<p>E-mail：chenyj@fafatime.com</p>
+				<h3>推广合作</h3>
+				<p>联系人：董南</p>
+				<p>E-mail：dongnan@fafatime.com</p>
+				<h3>投资合作</h3>
+				<p>联系人：汪斌</p>
+				<p>E-mail：wangbin@fafatime.com</p>
+				<hr>
+				<h3>联系方式</h3>
+				<p>地址：北京市朝阳区东三环南路19号联合国际大厦甲段7层</p>
+				<p>电话：010-87665176</p>
+				<p>传真：010-87665172</p>
+			</div>
+		</div>
+		<div class="corp_right">
+			<div class="corp_right_title"></div>
+			<div class="corp_app">
+				<div class="corp_app_l1"></div>
+				<div class="corp_app_r1"></div>
+			</div>
+			<div class="corp_app">
+				<div class="corp_app_l2"></div>
+				<div class="corp_app_r2"></div>
+			</div>
+		</div>
+   	</div>
+
+
+<!-- footer -->
+{% render "JustsyBaseBundle:Home:footer"%}
+
+</body></html>

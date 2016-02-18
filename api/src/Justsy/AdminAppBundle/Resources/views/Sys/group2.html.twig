@@ -1,0 +1,246 @@
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/group.css')}}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/groupManager.js')}}"></script>
+{% endblock %}
+{% block body %}
+<div class="group_area" style="float:left;margin-left:50px;">
+	<div>
+		 <span style="padding-left: 5px;">群组名称：</span>
+		 <input type="text" class="mb_textbox" id="textgroupname" onkeypress="if (event.keyCode==13) { group.Search(1); }" placeholder="请输入群组名称" style="width:340px;"/>
+		 <span class="btnGreen group_button" onclick="group.Search(1);" style="padding:0px 15px;">查&nbsp;&nbsp;询</span>
+		 {% if manager == 'manager' %}
+		   <button class="label bg-primary btnCreate" style="border:none;" onclick="group.create_goup('add');">创建默认群组</button>
+		 {% else %}
+		   <button class="label bg-primary btnCreate" style="border:none;background-color:#999;color:#ccc;cursor:default;">创建默认群组</button>
+		 {% endif %}													
+  </div>
+  <table align="center" class="group_table" style="width:100%;">
+     <thead>
+   	 	  <tr>
+				  <td width="220" align="center">群组名称</td>
+				  <td width="90"  align="center">群组类型</td>
+				  <td width="85"  align="center">成员数量</td>
+				  <td width="85"  align="center">最大成员数</td>
+          <td width="105" align="center">最后发言时间</td>
+					<td width="302" align="center"><span style="color:#0088cc">默认群组创建者</span>及<span style="color:#cc3300;">管理人员</span></td>
+					<td width="112" align="center">群组管理</td>
+				</tr>
+		 </thead>
+		 <tbody>
+		 </tbody>
+  </table>
+  <div class="pagination pagestyle" id="search_page"></div>
+</div>
+
+<div style="display: none;" id="viewCreate" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:665px;top:90px;left:90px;">
+    	<div class="title" id="group_title"></div> 
+      <span class="close-tip-icon" onclick="$('#viewCreate').hide();" title="关闭"></span>
+      <div style="cursor:default;overflow:hidden;padding:2px 0px;background-color:#fff;height:420px;" class="content">
+           <!--菜单管理-->
+            <div class="group_menu_bar">
+             	  <span onclick="group.menu_click(this);" class="menu_item_active" state="info">群组基本信息</span>
+             	  <span onclick="group.menu_click(this);" class="menu_item" state="member">群组成员管理</span>
+             	  <span onclick="group.menu_click(this);" class="menu_item" state="maxnumber">成员上限设置</span>
+             </div>            
+            <!--群信息管理-->
+            <div class="group_set_info">
+              <div class="fields_row">
+              	 <ul class="content_left">
+              	 	  <li>
+             	  	 	  <span>群组名称：</span>
+             	  	    <input groupname="" type="text" class="mb_textbox" maxlength="15" id="group_name" onchange="group.groupname_change(this);" onkeyup="group.check_group(this.value);" />
+             	  	    <span class="group_hint_area" style="padding-right:0px;">
+             	  	    	 <img src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}" />
+             	  	    	 <span id="check_icon" class="group_success_icon"></span>
+             	  	    	 <span id="check_msg"></span>
+             	  	    </span>
+              	    </li>
+              	    <li>
+              	      <span>群组描述：</span>
+              	      <textarea class="mb_textarea" maxlength="200" id="group_desc" type="text" style="width:300px;font-size:14px;height:60px;"></textarea>
+              	    </li>
+              	 	  <li style="margin-bottom: 8px;">
+             	  	 	  <span>成员上限：</span>	    	 	  	 	  
+             	  	    <input type="text" onpaste="enableNaN(this)" onkeyup="enableNaN(this)" maxlength="5" class="mb_textbox"  maxlength="15" id="max_val" min_member="{{min_member}}"  max_member="{{max_member}}"  value="{{max_member}}"/>
+              	    </li>    	 	  	    
+              	 </ul>   
+              	 <div class="img_box">
+              	 	 <img  id="group_logo" fileid="" onclick="group.selectedImg();" src="{{asset('bundles/fafatimewebase/images/default_group.png')}}" title="上传群组Logo" data-toggle="modal" show=false />
+              	 	 <span onclick="group.selectedImg();" >点击上传</span>
+              	 </div>
+              </div>
+              <div class="fields_row">
+              	 <ul style="width:100%;" class="content_left">
+              	 	  <li style="margin-bottom:0px">
+              	 	  	<span>允许部门：</span>
+              	 	  	<div style="width: 530px; height: 26px;" class="selected_area" state="1" id="selected_department"></div>
+             	  	    <i id="add_dept" class="glyphicon glyphicon-plus-sign group_selected" state="1" onclick="groupTree.viewTree(this);" style="margin-top:-21px;" ></i>
+              	    </li>
+              	    <li style="margin-bottom:0px">
+              	    	<span>允许人员：</span>
+             	  	    <div class="selected_area" id="selected_staff"></div>
+             	  	    <i class="glyphicon glyphicon-plus-sign group_selected" state="2"  onclick="groupTree.viewTree(this);" ></i>
+              	    </li>
+                     <li style="margin-bottom:1px">
+                     	<span>排除人员：</span>
+                     	<div class="selected_area" id="selected_remove"></div>
+             	  	    <i class="glyphicon glyphicon-plus-sign group_selected" state="3"  onclick="groupTree.viewTree(this);" ></i>
+              	    </li>
+              	 </ul>
+              </div>
+              <div class="group_bottom">
+      	        <span id="create_hint" class="group_hint"></span>
+                <button style="float:left;margin-right:10px;padding:4px 20px;" class="btn btnGreen" onclick="group.Save(this);">确&nbsp;定</button>
+                <button style="float:left;padding:4px 20px;" class="btn btnGray" onclick="$('#viewCreate').hide();">取&nbsp;消</button>
+              </div>
+            </div>
+            <!--群成员管理-->            
+            <div class="group_set_member">
+                <div style="float:left;width:100%;padding:10px;">
+                    <span style="float:left;line-height:26px;">群成员名称：</span>
+                    <input type="text" style="float:left;width:342px;" placeholder="请输入群成员名称" onkeypress="if (event.keyCode==13) { groupMember.search_groupmember(1); }" id="text_nickname" class="mb_textbox">
+                    <button onclick="groupMember.search_groupmember(1);" class="btn btnGreen" style="float:left;padding:2px 15px;margin-top:-1px;margin-left:20px;">查&nbsp;&nbsp;询</button>
+                </div>
+                <div style="float:left;width:100%;height:305px;">
+                    <table align="center" style="width:100%;margin-top:0px;" id="table_member" class="mb_common_table">
+                         <thead>
+                       	 	  <tr>
+                    				  <td width="170" align="center">成员名称</td>
+                    				  <td width="265" align="center">组织机构</td>
+                    				  <td width="100" align="center">成员权限</td>
+                    					<td width="100" align="center">数据操作</td>
+                    				</tr>
+                    		 </thead>
+                    		 <tbody>
+                    		 </tbody>
+                    </table>
+                </div>
+                <div class="group_loadding">
+                    <img src="/bundles/fafatimewebase/images/loading.gif" />
+                    <span>正在查询，请稍候……</span>
+                </div>
+                <div class="pagination pagestyle" style="margin-top:5px;" id="search_member"></div>
+      	    </div>
+      	    <!--最大成员设置-->
+      	    <div class="group_set_maxnumber">
+          	 	  <div style="float:left;width:100%;">
+    	      	 	  <span>成员上限数量：</span>
+    	      	 	  <input type="text" onpaste="enableNaN(this)" onkeyup="enableNaN(this)" maxlength="5" class="mb_textbox" id="max_number" min_member="{{min_member}}"  max_member="{{max_member}}"  value="{{max_member}}"/>
+    	      	 	  <span style="padding:0px 10px;" onclick="group.setMaxNumber();" class="btnGreen group_button">确认设置</span>
+          	 	  </div>
+          	 	  <span id="setMaxNumber_hint" style="float:left;margin-top:10px;color:#cc3300;"></span>
+      	    </div>      	 
+      </div>
+    </div>
+</div>
+
+<!--选择组织机构-->
+<div style="display: none;" id="selectdept" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:665px;left:90px;top:90px;cursor:default;">
+    	<div class="title">选择组织机构</div> 
+      <span class="close-tip-icon" onclick="$('#selectdept').hide();" title="关闭"></span>
+      <div class="content" style="cursor: default; overflow: hidden; background-color:#fff; padding: 0px 10px;height:370px;">
+    	 	  {% include 'JustsyAdminAppBundle:Sys:selectdept.html.twig' %}
+      </div>
+      <div style="padding:10px;height:50px;" class="operation">
+      	 <span class="group_hint"></span>
+         <button class="btn btnGreen default_button" style="width:65px;"  onclick="groupTree.selectedDept();">确&nbsp;定</button>    
+         <button class="btn btnGray default_button" style="width:65px;"  onclick="$('#selectdept').hide();">取&nbsp;消</button>
+      </div>
+    </div>
+</div>
+
+<!--删除对话框-->
+<div style="display:none;" id="delete_group" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:400px;left:-50px;top:150px;cursor:default;">
+    	<div class="title">解散群组</div> 
+      <span class="close-tip-icon" onclick="$('#delete_group').hide();" title="关闭"></span>
+      <div class="content" id="hint_content"></div>
+      <div style="height: 50px;margin-left:auto;margin-right:auto;padding:10px 0px;width:170px;background-color:transparent;" class="operation">
+         <button class="btn btnGreen default_button" style="width:65px;"  onclick="group.remove();">确&nbsp;定</button>    
+         <button class="btn btnGray default_button" style="width:65px;"  onclick="$('#delete_group').hide();">取&nbsp;消</button>
+      </div>
+    </div>
+</div>
+
+<!--上传图片-->
+<div  class="modal selected_pic_box" data-backdrop="static" show=false style="overflow:hidden;">
+  <div class="modal-body selected_pic_content">
+  	{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}
+  </div>
+	<div class="modal-footer" style="position: relative; background-color: white; margin-top: -90px;">
+      <img id="uplod_loading" style="float:left;width:32px;height:32px;margin-left:20px;display:none;" src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}">
+  	  <span class="upload_hint" style="float:left;margin-left:5px;margin-top:4px;color:#006BD9;" ></span>
+  	  <span style="padding:0px 15px;" onclick="group.uploadfile();" class="btnGreen group_button">确&nbsp;&nbsp;定</span>
+  	  <span style="padding:0px 15px;" onclick="group.window_close();" class="btnGray group_button">关&nbsp;&nbsp;闭</span>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	var uploadObj=null;	
+	$(document).ready(function(){
+		 $(".loading").remove();
+		 var obj = $($(".selected_pic_box .modal-body")[0].children[0].children[0]);
+     var obj_ff = obj.find("embed");
+     uploadObj = document.all==null? obj_ff : obj;
+     uploadObj.css({"height":"490px","width":"665px"});  
+     
+     groupTree.url = "{{path('JustsyAdminAppBundle_department_tree')}}";
+     groupTree.getstaff_url = "{{path('JustsyAdminAppBundle_default_group_getstaff')}}";
+	   group.edit_url = "{{path('JustsyAdminAppBundle_default_group_create')}}";
+	   group.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+     group.Search(1);
+	});	
+	//禁止输入非数字
+  function enableNaN(evn){
+   var tmptxt= $.trim($(evn).val());
+   if ( tmptxt != "")
+     $(evn).val(tmptxt.replace(/\D|^0/g,'')); 
+  }	
+  //上传默认群组logo
+	function avatar_success()
+	{
+		var groupid = group.groupid;
+		var url = "{{ path('JustsyAdminAppBundle_default_group_logo')}}";
+    $.post(url,{ "groupid":groupid },function(returndata){
+       if (returndata.success)
+       {
+       	  $(".selected_pic_box").modal("hide");
+       	  var getfile = "{{path('JustsyMongoDocBundle_getfile')}}"+"/";
+       	  var fileid = returndata.fileid;
+       	  $("#group_logo").attr("src",getfile + fileid);
+       	  $("#group_logo").attr("fileid",fileid);
+
+          if (groupid != null && groupid !="")
+            $(".group_tr[groupid='" + groupid + "']").find(".group_img").attr("src",getfile+fileid);
+       	    	  
+		  	 	$("#uplod_loading").hide();
+		  	 	$(".upload_hint").text("");
+       }
+       else
+       {
+       	 $("#uplod_loading").attr("src","/bundles/fafatimewebase/images/errow.gif");
+       	 $("#uplod_loading").show();
+   	   	 $(".upload_hint").text("默认群组Logo上传失败");
+       }
+    });
+	}
+	
+
+		   
+</script>
+{% endblock %}

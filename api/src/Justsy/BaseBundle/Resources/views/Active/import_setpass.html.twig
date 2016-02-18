@@ -1,0 +1,151 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}Wefafa密码设置{% endblock %}
+
+{% block main_content %}
+<div class="c_reg">
+  <div class="c_reg_l" style="height:150px;padding-left: 390px;">
+  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_account_importemployeesave') }}" >
+      <input type="hidden" id="account" name="account" value="{{account}}" /> 
+      <input type="hidden" id="isNew" name="isNew" value="0" /> 
+      <input type="hidden" id="eno" name="eno" value="{{eno}}" />
+      <input type="hidden" id="import" name="import" value="1" />
+      <input type="hidden" id="realName" name="realName" value="{{realName}}" />
+     <dt style="font-size: 12px;font-weight: bold;height: 30px;">欢迎加入Wefafa！在开始使用wefafa前，请设置您的登录密码</dt>
+      <dt>&nbsp;&nbsp;&nbsp;登录密码：</dt>
+    	<dd class="reg_input_parent">
+        <input type="password" class="RegFormIpt" id="passWord" name="passWord" maxlength=16 value="" /> 
+			  <span class="alert reg_alert alert-error" style="display:none;left:0px">
+			  	<div>错误!</div>
+			  	<span class="alert_content"></span>
+        </span>
+			  <img style="display:none" class="alert-ico" width="16" height="16">
+    	</dd>
+    	<dt>&nbsp;&nbsp;&nbsp;确认密码：</dt>
+    	<dd class="reg_input_parent">
+    	  <input type="password" class="RegFormIpt" id="confirmPassWord" maxlength=16 value="" /> 
+			  <span class="alert reg_alert alert-error" style="display:none;left:0px">
+			  	<div>错误!</div>
+			  	<span class="alert_content"></span>
+        </span>
+			  <img style="display:none" class="alert-ico" width="16" height="16">
+    	</dd>
+      </dl>
+    </div>    
+    <div class="c_regenter" style="float:left;padding-left: 480px;">
+    	<input type="button" id="btnSubmit" disabled=true value="确定" class="allinput" name="input">
+    </div>
+  </form>
+  </div>
+  
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var btnSubmit = $("#btnSubmit");
+var enameChanged = false, realNameChanged = false, eshortChanged = true;
+var setFocus = false;
+var ipts = $("form .RegFormIptone,.RegFormIpt,.allinput");
+var hintMsg = 
+{
+  "passWord01":"密码长度不能小于6位！",
+  "passWord02":"两次密码输入不一致！",
+  "confirmPassWord":"请输入确认密码！"
+};
+
+$(document).ready(function()
+{
+  $.each(ipts.slice(0, 6),function(i,n)
+  {
+    if (n.disabled) return true;
+    $(n).parent().addClass("non-validated");
+    if (!setFocus)
+    {
+      n.focus();
+      setFocus = true;
+    }
+  });
+  ipts.blur(function()
+  {
+    var pn = $(this).parent();
+    
+    if ($(this).is("#passWord"))
+    {
+      var pwd = $("#confirmPassWord");
+      if (this.value.length < 6)
+      {
+        setErrInfo(pn,hintMsg.passWord01);
+      }
+      else if (pwd.val().length > 0 && this.value != pwd.val())
+      {
+        setErrInfo(pn,hintMsg.passWord02);
+      }
+      else
+      {
+        allSuc(pwd,pn);
+      }
+    }
+    else if ($(this).is("#confirmPassWord"))
+    {
+      var pwd = $("#passWord");
+      if (this.value.length == 0)
+      {
+        setErrInfo(pn,hintMsg.confirmPassWord);
+      }
+      else if (this.value != pwd.val())
+      {
+        setErrInfo(pn,hintMsg.passWord02);
+      }
+      else
+      {
+        allSuc(pwd,pn);
+      }
+    }
+    enableSubmit();
+  }).keypress(function(ev)
+  {
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm(this);
+        return;
+      }
+      focusMoveToNext(ipts,this);
+    }
+  }).keyup(function(ev)
+  {
+    if (ev.keyCode==8) btnSubmit.attr("disabled",true);
+  });
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm(this);
+  });
+});
+//提交
+function submitForm(btn)
+{
+  btn.disabled = true;
+  $("#contentForm").submit();
+}
+//设置submit键
+function enableSubmit()
+{
+  btnSubmit.attr("disabled",$(".non-validated").length>0);
+}
+//验证输入密码
+function allSuc(pwd, pn)
+{
+  clearErrInfo(pn);
+  if (pwd.val().length == 0) return;
+  clearErrInfo(pwd.parent());
+}
+
+var ds =null,thinkAjax=null;
+
+</script>
+{% endblock %}

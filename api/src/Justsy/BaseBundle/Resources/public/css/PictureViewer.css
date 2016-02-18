@@ -1,0 +1,255 @@
+.pcview_conver_div{
+	background-color: #111111;
+  height: 100%;
+  left: 0;
+  opacity: 0.7;
+  filter:Alpha(Opacity=70);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index:10000;
+}
+.win_conv{
+	float: right;
+  width: 380px;
+  padding-left:5px;
+  padding-right:5px;
+  position:relative;
+}
+.pcview_win{
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    width:1300px;
+    position:absolute;
+    z-index:20000;
+    background-color:#FFF;
+ }
+ .win_buttons{
+ 	 padding-top: 5px;
+ }
+ .win_head{
+ 	 height: 32px;
+   position: absolute;
+   right: 455px;
+   top: 0;
+   z-index: 1;
+   display:none;
+ }
+ .win_center{
+ 	 border: 1px solid #CCCCCC;
+    border-radius: 4px;
+ }
+ .win_bottom{
+    height: 56px;
+    position:absolute;
+    bottom:0px;
+    width:900px;
+    opacity: 0;
+  	filter:Alpha(Opacity=0);
+ }
+ .win_buttons a{
+ 	 margin-left:10px;
+ }
+ .win_sheet_ul{
+ 	 list-style:none outside none;
+ 	 margin:0;
+ 	 padding:0;
+ }
+ .win_sheet_ul li{
+ 	 float:left;
+ 	 border: 1px solid #CCCCCC;
+ 	 width:40px;
+ 	 height:40px;
+ 	 min-height:40px;
+ 	 padding:0;
+ 	 margin:0;
+ 	 margin-left:10px;
+ }
+ .win_sheet_ul img{
+ 	 max-width:40px;
+ 	 max-height:40px;
+ }
+ .win_pic_box{
+ 	 position:relative;
+ 	 background-color:#000;
+   float: left;
+   width: 900px;
+ }
+ .win_pic_img{
+ 	 display:block;
+ 	 margin-left:auto;
+ 	 margin-right:auto;
+ 	 max-width:900px;
+ 	 position:absolute;
+ }
+ .win_pic_load{
+ 	 display: block;
+    height: 20px;
+    left: 50%;
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: -10px;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    width: 20px;
+    z-index:999;
+ }
+ .win_thumb_pre{
+ 		border-color: rgba(0, 0, 0, 0) #FFFFFF rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid solid none;
+    border-width: 20px 10px 20px medium;
+    display: block;
+    float: left;
+    position: relative;
+    cursor:pointer;
+ }
+ .win_thumb_pre:hover{
+ 		border-color: rgba(0, 0, 0, 0) #CCC rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid solid none;
+    border-width: 20px 10px 20px medium;
+    display: block;
+    float: left;
+    position: relative;
+    cursor:pointer;
+ }
+ .win_thumb_nex{
+ 		border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFFFFF;
+    border-style: solid none solid solid;
+    border-width: 20px medium 20px 10px;
+    display: block;
+    float: right;
+    position: relative;
+    margin-left:5px;
+    cursor:pointer;
+ }
+ .win_thumb_nex:hover{
+ 	 border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #CCC;
+    border-style: solid none solid solid;
+    border-width: 20px medium 20px 10px;
+    display: block;
+    float: right;
+    position: relative;
+    margin-left:5px;
+    cursor:pointer;
+ }
+.pcview_inset{
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    min-height: 450px;
+    background-color: #f2f2f2;  
+ }
+ .inset_buttons{
+ 	 padding-top: 5px;
+ }
+ .inset_head{
+ 	 height: 32px;
+   top: 0;
+ }
+ .inset_center{
+ 	 border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    background-color: #FFF;
+ }
+ .inset_bottom{
+    height: 56px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left:20px;
+    margin-right:20px;
+ }
+ .inset_buttons a{
+ 	 margin-left:10px;
+ }
+ .inset_sheet_ul{
+ 	 list-style:none outside none;
+ 	 margin:0;
+ 	 padding:0;
+ }
+ .inset_sheet_ul li{
+ 	 float:left;
+ 	 border: 1px solid #CCCCCC;
+ 	 width:40px;
+ 	 height:40px;
+ 	 min-height:40px;
+ 	 padding:0;
+ 	 margin:0;
+ 	 margin-left:10px;
+ }
+ .inset_sheet_ul img{
+ 	 max-width:40px;
+ 	 max-height:40px;
+ }
+ .inset_pic_box{
+ 	 min-height:350px;
+ 	 position:relative;
+ 	 background-color:#000;
+ }
+ .inset_pic_img{
+ 	 display:block;
+ 	 margin-left:auto;
+ 	 margin-right:auto;
+ 	 max-width:391px;
+ 	 position:absolute;
+ }
+ .inset_pic_load{
+ 	 display: block;
+    height: 20px;
+    left: 50%;
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: -10px;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    width: 20px;
+    z-index:999;
+ }
+ .inset_thumb_pre{
+ 		border-color: rgba(0, 0, 0, 0) #FFFFFF rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid solid none;
+    border-width: 20px 10px 20px medium;
+    display: block;
+    float: left;
+    position: relative;
+    cursor:pointer;
+ }
+ .inset_thumb_pre:hover{
+ 		border-color: rgba(0, 0, 0, 0) #CCC rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid solid none;
+    border-width: 20px 10px 20px medium;
+    display: block;
+    float: left;
+    position: relative;
+    cursor:pointer;
+ }
+ .inset_thumb_nex{
+ 		border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFFFFF;
+    border-style: solid none solid solid;
+    border-width: 20px medium 20px 10px;
+    display: block;
+    float: right;
+    position: relative;
+    margin-left:5px;
+    cursor:pointer;
+ }
+ .inset_thumb_nex:hover{
+ 	 border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #CCC;
+    border-style: solid none solid solid;
+    border-width: 20px medium 20px 10px;
+    display: block;
+    float: right;
+    position: relative;
+    margin-left:5px;
+    cursor:pointer;
+ }
+ .close_win_img{
+    cursor: pointer;
+    position: absolute;
+    right: -18px;
+    top: -18px;
+    width: 36px;
+ }

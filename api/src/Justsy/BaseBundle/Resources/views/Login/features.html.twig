@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>移动信息化|移动开发平台|移动中间件|Wefafa-移动信息化专家</title>
+	<meta name="keywords" content="移动应用平台，移动开发平台，移动应用开发平台，移动中间件，企业移动中间件，移动办公，移动OA，移动CRM，企业微信，企业微博，Wefafa "/>
+	<meta name="description" content=" Wefafa移动信息化应用平台，通过统一移动门户与企业后端信息系统相连帮助企业快速实现移动信息化，提供最佳体验，最低成本，最高安全的移动信息化方案。"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" /> 
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js" defer></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服" defer></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var topMain=$("#features_ad").height()//是头部的高度加头部与nav导航之间的距离
+	var feanav=$(".features_nav");
+	var feaw=$(".feawrap");
+	$(window).scroll(function(){
+		if ($(window).scrollTop()>topMain){//如果滚动条顶部的距离大于topMain则就nav导航就添加类.nav_scroll，否则就移除
+			feaw.addClass("feawrap_scroll");
+			feanav.addClass("feanav_scroll");
+		}else{
+			$(".feawrap a").removeAttr('style');
+			feaw.removeClass("feawrap_scroll");
+			feanav.removeClass("feanav_scroll");
+		}
+	});
+
+	$(".fnav_main a").on("click",function(){
+		var $this = $(this);
+		var $tagertlst = $(".feawrap a");
+		$tagertlst.removeAttr('style');
+		$(".feawrap a[name='"+$this.attr("for")+"']").attr("style","display:block;height:140px");
+		$(".features_nav a[for]").css('color','#666666');
+     	$this.css('color','#059BC6');		
+	})
+})
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="nav clearfix" id="featop">
+	<div class="nav-content">
+		<h1 class="left" href="javascript:;">Wefafa移动应用平台</h1>		
+		<div class="right line-li">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature" class="hover">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+				<li class="we_btn"><a target="_blank" href="{{path('JustsyBaseBundle_default')}}">登录</a></li>  
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="features_ad">
+	<div class="features_wrap">
+		<h2 class="fea1">通过移动门户与企业后端信息系统相连</h2><h1 class="fea2">帮助企业快速实现<br>移动信息化</h1>
+		<div class="f_b_app"><a class="btn_app" target="_blank" href="{{path('JustsyBaseBundle_regpage')}}" title="定制企业移动门户"></a></div>
+	</div>	
+</div>
+<div class="features_nav">
+	<div class="features_navwrap">
+		<div class="featurenav">
+			<div class="featurenav_1">
+				<div class="fnav_main">优化体验
+				<p style="float:left; font-size:12px; font-weight:normal"><a for="feature1" href="#feature1" style="color: rgb(5, 155, 198);">统一门户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a for="feature2" href="#feature2" style="color: rgb(102, 102, 102);">原生体验</a>&nbsp;&nbsp;&nbsp;&nbsp;<a for="feature3" href="#feature3" style="color: rgb(102, 102, 102);">个性化定制</a></p>
+				</div>
+			</div>
+			<div class="featurenav_2">
+				<div class="fnav_main">降低成本
+				<p style="font-size:12px; font-weight:normal"><a for="feature4" href="#feature4" style="color: rgb(102, 102, 102);">手机端0开发</a>&nbsp;&nbsp;&nbsp;&nbsp;<a for="feature5" href="#feature5" style="color: rgb(102, 102, 102);">可视化</a>&nbsp;&nbsp;&nbsp;&nbsp;<a for="feature6" href="#feature6" style="color: rgb(102, 102, 102);">丰富组件</a></p>
+				</div>
+			</div>
+			<div class="featurenav_3">
+				<div class="fnav_main">保障安全
+				<p style="float:left; font-size:12px; font-weight:normal"><a for="feature7" href="#feature7" style="color: rgb(102, 102, 102);">内网部署</a>&nbsp;&nbsp;&nbsp;&nbsp;<a for="feature8" href="#feature8" style="color: rgb(102, 102, 102);">MDM/MAM</a>&nbsp;&nbsp;&nbsp;&nbsp;<a for="feature9" href="#feature9" style="color: rgb(102, 102, 102);">加密传输</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="feawrap">
+	<a name="feature1"></a>
+	<div for="feature1" class="feacontent">		
+		<div class="feaimg_l feaimg3">
+		</div>
+		<div class="featext_r featext">
+		<h1>统一门户</h1>
+		  <h2>通过一个APP，即可接入企业内外所有信息系统</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Wefafa移动应用平台，首次实现企业移动应用门户的功能，企业只需一个APP，即可对接所有企业内部或外部的信息系统，所有功能可以在手机端无需进行升级的情况下，通过模块化的方式动态加载，能够灵活适应企业不断变化的业务需求。</h3>
+		</div>
+	</div>
+	<a name="feature2"></a>
+	<div for="feature2" class="feacontent">	
+		<div class="featext_l featext">
+		<h1>原生体验</h1>
+		  <h2>跨平台移动应用，全部可以通过原生代码实现</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Wefafa移动应用平台是可以同时兼顾跨平台的快速实现和原生的用户体验效果，即使是动态加载的模块或界面，也是采用原生效果的语言编写，代码效率及功能实现完全媲美原生的开发语言，彻底消除html5耗流量、不流畅、功能受限等弊端。</h3>
+		</div>	
+		<div class="feaimg_r feaimg2">	
+		</div>
+	</div>
+	<a name="feature3"></a>
+	<div for="feature3" class="feacontent">		
+		<div class="feaimg_l feaimg1">	
+		</div>
+		<div class="featext_r featext">
+		  <h1>个性化定制</h1>
+		  <h2>让每位员工都可以自由定制自己的企业APP</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;将企业大量的移动应用按员工个人所需的订阅到自己的移动终端上，让每位员工在企业移动门户上只看到自己相关并且有权限的应用，可以极大的提升员工的工作效率和用户体验，在移动互联网时代，真正实现按需配置、主动推送的高效移动办公。</h3>
+		</div>		
+	</div>
+	<a name="feature4"></a>
+	<div for="feature4" class="feacontent">		
+		<div class="featext_l featext">
+		<h1>手机端0开发</h1>
+		  <h2>不会移动开发语言，一样可以创建移动APP</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;企业无需为实现移动信息化而招聘各种手机平台的开发人员，无需花费大量时间在手机平台的适配、测试、打包及发布上，而只需借助企业原有的技术力量专注于企业业务流程的设计及业务接口的开发，极大的降低人工及时间成本，并且确保手机端的稳定性。</h3>
+		</div>
+		<div class="feaimg_r feaimg4">	
+		</div>
+	</div>
+	<a name="feature5"></a>
+	<div for="feature5" class="feacontent">		
+		<div class="feaimg_l feaimg5">
+		</div>
+		<div class="featext_r featext">
+		<h1>可视化</h1>
+		  <h2>通过Web后台，所见即所得的配置手机端APP</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Wefafa移动应用平台包含一个快速配置移动应用的Web后台，通过该后台，企业开发人员无需具备手机应用的开发能力，仅需通过所见即所得的配置界面即可实现一个APP从应用图标、启动画面、引导图到业务功能的可视化开发。</h3>	
+		</div>
+	</div>
+	<a name="feature6"></a>
+	<div for="feature6" class="feacontent">		
+		<div class="featext_l featext">
+		<h1>丰富的功能组件</h1>
+		  <h2>平台本身包含丰富的应用功能组件</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;为满足企业实时沟通与社会化分享的需求，Wefafa移动应用平台本身内置企业微信和企业微博的功能，实现包括语音对讲、IP通话、移动会议、分享、转发、圈子等沟通与协作功能。此外，还有企业组织机构、通讯录、签到、投票、活动等丰富的应用功能组件。</h3>
+		</div>
+		<div class="feaimg_r feaimg6">	
+		</div>
+	</div>
+	<a name="feature7"></a>
+	<div for="feature7" class="feacontent">		
+		<div class="feaimg_l feaimg7">	
+		</div>
+		<div class="featext_r featext">
+		  <h1>物理安全：内网部署</h1>
+		  <h2>独有的公有云+私有云混合部署方式确保物理安全</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;业务系统无需固定公网IP地址，部署在企业防火墙内网Trust区域，通过Wefafa消息网关和业务代理即可实现信息系统的移动化应用，彻底消除企业在实现移动信息化时，对业务系统暴露在外网可能遭受外部攻击的担忧，从物理上真正保障了企业信息安全。</h3>
+		  <h4>支持公有云、私有云及混合云等多种部署方式</h4>
+		</div>
+	</div>
+	<a name="feature8"></a>
+	<div for="feature8" class="feacontent">	
+		<div class="featext_l featext">
+		  <h1>设备安全：MDM/MAM</h1>
+		  <h2>自带移动设备管理及移动应用管理系统</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;MDM(移动设备管理)支持10万级并发的移动设备集中统一管理，通过了SOC 2 Type1, Privacy, 以及EU Safe Harbor compliance的审核，可以实现远程锁屏、应用隔离及远程数据销毁等集中安全管控；MAM(移动应用管理)不仅可以集中管理企业所有应用，同时可以通过安全策略，对应用内的各种文件及信息进行加密、防拷贝、防转发、防粘贴及打印屏幕等安全措施。
+</h3>
+		</div>
+		<div class="feaimg_r feaimg8">	
+		</div>
+	</div>
+	<a name="feature9"></a>
+	<div for="feature9" class="feacontent">	
+		<div class="feaimg_l feaimg9">	
+		</div>
+		<div class="featext_r featext">
+		  <h1>链路安全：加密传输</h1>
+		  <h2>采用高强度全程加密传输方式，确保企业信息的传输安全</h2>
+		  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Wefafa移动端与企业后端信息系统间，通过Wefafa大并发消息网关来传输数据，全程采用256位SSL/TLS加密机制，确保数据传输过程中不被截取及窃听。同时Wefafa业务代理与企业信息系统间的数据传输完全在企业内网环境下完成，使得整个数据链路更加安全可控。</h3>
+		</div>
+	</div>
+</div>
+
+<!-- footer -->
+{% render "JustsyBaseBundle:Home:footer"%}
+<script type="text/javascript">
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+
+     $(document).ready(function(){
+     	 $(window).scroll(function(){
+     		var ts=$(".feacontent");
+     		for(var i=0;i<ts.length;i++){
+     			var top = $(ts[i]).offset().top-120;
+     			if(top<$(document).scrollTop() && top+$(ts[i]).height()>$(document).scrollTop()){
+     				$("a[for]").css('color','#666666');
+     				$("a"+"[for='"+$(ts[i]).attr('for')+"']").css('color','#059BC6');
+     				return;
+     			}
+     		}
+     	});
+     	$("a[for]").css('color','#666666');
+     	$("a[for]:first").css('color','#059BC6');
+     });     
+</script><div class="backToTop" title="返回顶部" style="display: none;"></div><div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body></html>

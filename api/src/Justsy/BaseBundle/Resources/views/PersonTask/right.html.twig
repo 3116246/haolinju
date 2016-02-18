@@ -1,0 +1,31 @@
+<div style="width:auto;height:510px;">
+<table class="table">
+    <caption style="font-weight:700;font-size:16px;">本周计划</caption>
+    <thead><tr><th></th><th></th><th></th></tr></thead>
+    <tbody>
+           {% if next7daystask|length>0 %}
+              {% for i in next7daystask %}
+              <tr>
+              	  <td><a class="task_card" id="{{i.id}}" href="#"  {% if(i.is_after_start_time>=0 or i.is_after_end_time>=0)%} style="color:#5199CB;"{% endif %}>{{ i.title }}</a></td>
+                  <td style="text-align:right;">{{i.is_finish|raw}}</td>	
+              </tr>
+              {% endfor %}
+           {% else %}
+			        <tr><td style="height:26px;" clospan="2">您本周没有计划</td></tr>
+           {% endif %}
+    </tbody>
+</table>
+</div>
+{%if (pagecount>1) %}
+	<div class="pagination" style="text-align:right">
+	<ul>
+		<li><a {%if(pageindex!=0)%} class='active' {%endif%} href='javascript:get_right_page(1)'>首页</a></li>
+	{% set pagestart= pageindex<=2?1:pageindex-2 %}
+		{% set pageend=pagestart+3>pagecount?pagecount:pagestart+3%}
+		{%for i in pagestart..pageend%}
+	  <li><a {%if(pageindex==i)%} class='active' {%endif%} href='javascript:get_right_page({{i}})'>{{(i)}}</a></li>
+	{%endfor%}
+	  <li><a {%if(pageindex!=pagecount)%} class='active' {%endif%} href='javascript:get_right_page({{pagecount}})'>末页</a></li>
+</ul>
+</div>
+{%endif%}

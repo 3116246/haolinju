@@ -1,0 +1,106 @@
+<p>向所有关注人员、指定分组或指定人员推送多图文消息</p>
+<h5>接口地址（HTTP请求方式：POST）</h5>
+<p>https://www.wefafa.com/api/http/textpicturemsg</p>
+<h5>参数列表</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>access_token</td>
+		<td>访问令牌，不能为空</td>
+	</tr>
+	<tr>
+		<td>micro_groupid</td>
+		<td>微应用分组ID，可以为空<br/>
+说明：如果micro_groupid和openid都不传，则向全体关注成员发送，如果openid属性存在有效帐号会优先发送，
+同时分组如果存在有效帐号会一并发送
+</td>
+	</tr>
+	<tr>
+		<td>openid</td>
+		<td>接收人登录帐号的openid集合，
+多个用户帐号的openid使用逗号(,)分隔开
+</td>
+	</tr>
+	<tr>
+		<td>msg</td>
+		<td>消息内容对象 (JSON字符串，格式见下：msg属性说明)，不能为空
+</td>
+	</tr>
+</table>
+<h5>msg属性说明： JSON字符串</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>headitem</td>
+		<td>标题消息 (JSON字符串，格式见：headitem和items属性说明) <br>
+不能为空
+</td>
+	</tr>
+	<tr>
+		<td>items</td>
+		<td>子项消息 (JSON字符串，格式见：headitem和items属性说明) <br>
+子项范围规定为1-3个item 至少一个，最多3个 <br>
+不能为空
+</td>
+	</tr>
+</table>
+<h5>headitem和items属性说明： JSON字符串</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>title</td>
+		<td>消息标题 不能为空</td>
+	</tr>
+	<tr>
+		<td>image</td>
+		<td>通过图片上传的接口返回的图片名称  (图片上传接口) <br>
+headitem 图片规定大小 600px*400px <br>
+item     图片规定大小 80px*80px <br>
+不能为空
+</td>
+	</tr>
+	<tr>
+		<td>content</td>
+		<td>消息正文 <br>
+富文本内容，可以包含HTML标签的内容，自定义HTML内容以及样式 <br>
+如果存在图片可引用互联网图片地址，也可引用通过图片上传接口返回的完整URL地址 <br>
+不能为空
+</td>
+	</tr>
+</table>
+<h5>返回数据</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>发送成功时返回：{"returncode" : "0000"}</td>
+	</tr>
+    <tr>
+        <td>token过期：{ "returncode": "0001", "msg": "访问令牌已过期。" }</td>
+    </tr>
+	<tr>
+		<td>部分发送成功时返回：{"returncode" : "0000","nosend":"未发送的帐号集合"}</td>
+	</tr>
+	<tr>
+		<td>发送失败时返回：{“returncode” : “9999”,”msg”:”错误消息内容”}</td>
+	</tr>
+</table>
+<h5>案例</h5>
+<p>
+?micro_groupid=
+&amp;access_token =
+&amp;msg={"headitem":{"title":"","image":"","content":""}
+,"items":[{"title":"","image":"","content":""},{"title":"","image":"","content":""}]
+}
+
+</p>

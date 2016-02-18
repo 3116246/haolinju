@@ -1,0 +1,145 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_relation.html.twig' with {'network_domain' : curr_network_domain} %}
+{% endblock %}
+
+{% block main_content_center %}
+  <div>
+  	<span style="display: inline-block;"><h4 class="bigtitletext">{%if type=='atten_me'%}我的粉丝{%else%}我关注的{%endif%}：<span style='color:#999'>{{count}}人</span></h4></span>
+  	<span style='right:30px;top:8px;*position:inherit;*height:15px;*width:150px;*float:right;*right:50px;*top:-30px;' class='searcharea'><input type='text' placeholder='帐号/姓名/公司名称'/><div style='cursor:pointer;*top:-30px;*left:10px;' class='searchicon'></div></span>  	
+  </div>
+  <hr style="margin: 0px; width: 100%;">
+  <div class="membernavigator">
+		<div style='margin-left:0px;' class='navigator_1'><span class='orderby' style="color:#50abdc;" orderby='date'>按时间排序</span><span class='dropicon'></span>
+		<ul style='display:none;' class='orderlist'><li orderby='date'><span onclick="$(this).parent().attr('select','1');$(this).parent().siblings().attr('select','0');loadData();$('span.orderby').text($(this).text());">按时间排序</span></li><li orderby='name'><span onclick="$(this).parent().attr('select','1');$(this).parent().siblings().attr('select','0');loadData();$('span.orderby').text($(this).text());">按姓名排序</span></li></ul>
+		</div>
+  </div>
+  <div id="data_list">
+  </div>
+  <div style="clear:both"></div>
+  <div id="page" style="text-align: right;width:90%;height: 38px;"></div>
+	<script type="text/javascript">
+	var showpagecount=5,pagesize=30,_URL="",count={{count}},totalCount= Math.ceil(count/pagesize),dataall=[],currentPage=1,otherPage = "{{path('JustsyBaseBundle_interviewee_home',{'network_domain' : curr_network_domain})}}";
+	$(document).ready(function() {
+	    $(".left-menu .active").attr("class","");
+      $(".left-menu li[id='left_{{type}}']").attr("class","active");
+	    _URL = {%if type=='atten_me'%}"{{path('JustsyBaseBundle_relation_atten_me',{'network_domain' : curr_network_domain})}}"{%else%}"{{path('JustsyBaseBundle_relation_me_atten',{'network_domain' : curr_network_domain})}}"{%endif%};
+      loadData();
+      //排序列表
+		  $(".dropicon").bind('mouseover',function(event){
+		  	if(checkHover(event,this)){
+		  		if(typeof(orderlist_timer)!='undefined'){
+		  			clearTimeout(orderlist_timer);
+		  		}
+		  		orderlist_timer=setTimeout(function(){$("ul.orderlist").slideDown(200);},500);
+		  	}
+		  });
+		  $(".dropicon").bind('mouseout',function(event){
+		  	if(checkHover(event,this)){
+		  		if(typeof(orderlist_timer)!='undefined'){
+		  			clearTimeout(orderlist_timer);
+		  		}
+		  		orderlist_timer=setTimeout(function(){$("ul.orderlist").slideUp(200);},500);
+		  	}
+		  });
+		  $("ul.orderlist").bind('mouseover',function(event){
+		  	if(checkHover(event,this)){
+		  		if(typeof(orderlist_timer)!='undefined'){
+		  			clearTimeout(orderlist_timer);
+		  		}
+		  	}
+		  });
+		  $("ul.orderlist").bind('mouseout',function(event){
+		  	if(checkHover(event,this)){
+		  		orderlist_timer=setTimeout(function(){$("ul.orderlist").slideUp(200);},500);
+		  	}
+		  });
+		  $(".searchicon").bind('click',function(){
+		  	$(this).parent().attr('searchtext',$(this).siblings('input').val());
+		  	loadData();
+		  });
+		  $(".searcharea").find("input").bind('keyup',function(event){
+		  	var ev=event||window.event;
+		  	if(ev.keyCode==13){
+		  		$(this).parent().attr('searchtext',$(this).val());
+		  		loadData();
+		  	}
+		  });
+  });
+  function loadData()
+  {
+  	  $("#data_list").html("<div class='urlloading'><div></div></div>");
+      $.getJSON(_URL,{order:$("ul.orderlist li[select='1']").attr('orderby'),searchby:$(".searcharea").attr('searchtext')},function(data){
+      	  dataall=data;
+      	  makePage(1);
+          showdata(currentPage);
+      });
+  }
+  function showdata(pageno)
+  {      
+      //显示数据
+      var $datalist = $("#data_list");
+      $datalist.html("");
+      var outHtml = [];
+      for(var i=(pageno-1)*pagesize; i<Math.min(pageno*pagesize,dataall.length);i++)
+      {
+      	   var account = dataall[i].login_account;
+           outHtml.push("<div class='relation_member_card'>");
+           outHtml.push("   <div class='relation_member_card_photo'>");
+           outHtml.push("        <img class='employee_name' login_account='"+account+"' src='"+dataall[i].photo+"' onerror=\"this.src='/bundles/fafatimewebase/images/no_photo.png'\">");
+           outHtml.push("   </div>");
+           outHtml.push("   <div class='atten_relation_left'>");
+           outHtml.push("        <span class='atten_relation_left_name'><A target=_blank href='"+otherPage+"/"+account+"'>"+dataall[i].nick_name+"</A></span>");
+           if(dataall[i].state=="2")
+              outHtml.push("        <span style='margin-left:0px;margin-top:0px;cursor:default;' class='attention_mutual'>互相关注</span>");
+           else if("{{type}}"=='atten_me')
+           	  outHtml.push("        <span style='margin-left:0px;margin-top:0px' login_account='"+account+"' class='attention_concern'>关注TA</span>");
+           else
+           	  outHtml.push("        <span style='margin-left:0px;margin-top:0px;cursor:default;' class='attention_already'>已关注</span>");
+           outHtml.push("   </div>");
+           outHtml.push("   <div class='atten_relation_ename'>"+dataall[i].ename+"</div>");
+           outHtml.push("</div>");
+      }
+      $datalist.html(outHtml.join(""));
+  }
+  //生成分页栏
+  function makePage(startno)
+  {
+     var $page = $("#page");
+     var pageHtml=[];
+     $page.html("");
+     if(totalCount==1) return;
+     //生成上一页
+     if(currentPage>1 && totalCount>showpagecount) pageHtml.push("<a title='上一页' class='atten_relation_prev_a'><<</a>");
+     for(var i=startno;i<=Math.min(startno+showpagecount-1,totalCount);i++)
+     {
+     	   var p_class="";
+     	   if(currentPage==i)
+     	      p_class = "atten_relation_prev_a_curr";
+     	   else
+     	   	  p_class = "atten_relation_prev_a";
+     	   pageHtml.push("<a pageno="+i+" class='"+p_class+"'>"+i+"</a>");
+     }
+     //生成下一页
+     if(currentPage<totalCount && totalCount>showpagecount) pageHtml.push("<a title='下一页' class='atten_relation_prev_a'>>></a>");
+     $page.html(pageHtml.join(""));
+     $page.find("A").unbind("click").bind("click",page_click);
+  }
+  
+  function page_click(e)
+  {
+  	var txt = $(this).text();
+  	if(txt=="<<" && currentPage>1) currentPage--;
+  	else if(txt==">>" && currentPage<totalCount) currentPage++;
+  	else  currentPage = txt*1;
+  	$(".atten_relation_prev_a_curr").attr("class","atten_relation_prev_a");
+  	var $curr = $(".atten_relation_prev_a[pageno='"+currentPage+"']");
+  	if($curr.length==0) makePage(currentPage);
+  	else $curr.attr("class","atten_relation_prev_a_curr");  	
+  	showdata(currentPage);
+  }
+  </script>  
+{% endblock %}

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
+Version: 3.3.0
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>接洽企业微信系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="../assets/admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
+<!-- END PAGE LEVEL SCRIPTS -->
+<!-- BEGIN THEME STYLES -->
+<link href="../assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/admin/layout2/css/layout.css" rel="stylesheet" type="text/css"/>
+
+<link href="../assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body style="background: url('images/bg_02.png') repeat scroll 0 0 transparent;" class="login">
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGO -->
+<div class="copyright" style="font-size: 28px; margin-top: 30px;"> 接洽企业微信系统&mdash;系统初始化 </div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content"  style="width: 800px">
+	<div class="row">
+		<div class="col-md-12 col-sm-6">
+			<div class="portlet light " id="check_config">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-bar-chart font-green-sharp"></i>
+									<span class="caption-subject font-green-sharp bold uppercase">系统配置检查</span>									
+								</div>
+								<div class="actions">
+									<div data-toggle="buttons" class="btn-group btn-group-devided">
+										<label id="btn_refresh" class="btn btn-transparent grey-salsa btn-circle btn-sm"><i class="fa fa-refresh"></i></label>
+									</div>
+								</div>
+							</div>
+							<div id="sys_config" class="portlet-body" style="height:300px">	
+								<span class="caption-helper">正在获取配置信息...</span>
+							</div>
+			</div>
+			<div id="hint">请确定以上配置项没有<strong style='color:red'>ERROR</strong>项！</div>
+			<div class="col-md-offset-4 col-md-9" style="margin-top: 20px">
+				<button class="btn blue" id="btn_save" type="button" onclick="Init.in2()">OK，进入初始化配置</button>
+			</div>
+		</div>
+	</div>
+	<div class="row" style='display:none'>
+		<div class="col-md-12 col-sm-6">
+			<div class="portlet light" id="param_config">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-bar-chart font-green-sharp"></i>
+									<span class="caption-subject font-green-sharp bold uppercase">系统参数配置</span>
+									<span class="caption-helper">正在获取参数配置信息...</span>
+								</div>
+								<div class="actions">
+									<div data-toggle="buttons" class="btn-group btn-group-devided">
+										<label id="btn_refresh" class="btn btn-transparent grey-salsa btn-circle btn-sm"><i class="fa fa-refresh"></i></label>
+									</div>
+								</div>
+							</div>
+							<div class="portlet-body" style="height:300px">	
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">企业域</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label col-md-2">域名</label>
+											<div class="col-md-10">
+												<input type="text" id="server_domain" maxlength="50" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" value="justsy.com" placeholder=" eg:test.com">
+											</div>
+										</div>
+									</div>
+								</div>							
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">服务器地址</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label col-md-2">接口服务器</label>
+											<div class="col-md-10">
+												<input type="text" id="server_host" maxlength="50" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" placeholder="请输入完整的地址 eg:http://112.126.77.162:8000">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label col-md-2">IM服务器IP</label>
+											<div class="col-md-10">
+												<input type="text" id="im_host" maxlength="50" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" placeholder="eg:http://127.0.0.1">
+											</div>
+										</div>
+									</div>									
+								</div>
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">Mysql数据库</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">IP地址</label>
+																<div class="col-md-8">
+																	<input type="text" id="db_host" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" placeholder="eg:127.0.0.1">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">端口</label>
+																<div class="col-md-8">
+																	<input type="text" id="db_port" maxlength="5" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" value="3306">
+																</div>
+															</div>
+														</div>
+								</div>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label col-md-2">接口数据库</label>
+											<div class="col-md-10" style="margin-left: -5px;">
+												<input type="text" id="sns_user" maxlength="15" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255); float: left; width: 192px;" placeholder="用户名">
+												<input type="text" id="sns_pwd" maxlength="35" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255); float: left; width: 175px;" placeholder="密码">
+												<input type="text" id="sns_dbname" placeholder="库名" style="height: 34px; background-color: rgb(255, 255, 255); float: left; width: 186px;" class="form-control" maxlength="10">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label col-md-2">IM数据库</label>
+											<div class="col-md-10" style="margin-left: -5px;">
+												<input type="text" id="im_user" maxlength="15" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255); float: left; width: 192px;" placeholder="用户名">
+												<input type="text" id="im_pwd" maxlength="35" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255); float: left; width: 175px;" placeholder="密码">
+												<input type="text" placeholder="库名" style="height: 34px; background-color: rgb(255, 255, 255); float: left; width: 186px;" class="form-control" maxlength="10" id="im_dbname">
+											</div>
+										</div>
+									</div>
+								</div>
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">Mongodb数据库</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">IP地址</label>
+																<div class="col-md-8">
+																	<input type="text" id="mongodb_host" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" placeholder="eg:127.0.0.1">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">端口</label>
+																<div class="col-md-8">
+																	<input type="text" id="mongodb_port" maxlength="5" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" value="27017">
+																</div>
+															</div>
+														</div>
+								</div>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">数据库名</label>
+																<div class="col-md-8">
+																	<input type="text" id="mongodb_name" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" value="we">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">认证模式</label>
+																<div class="col-md-8">
+																开启 <input name="mongodb_auth" type=radio value=1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;不开启 <input name='mongodb_auth' type=radio checked value=0>
+																</div>
+															</div>
+														</div>
+								</div>									
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">用户名</label>
+																<div class="col-md-8">
+																	<input type="text" id="mongodb_user" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" placeholder="">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">密码</label>
+																<div class="col-md-8">
+																	<input type="text" id="mongodb_pwd" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);" value="">
+																</div>
+															</div>
+														</div>
+								</div>							
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">邮件服务器（可选）</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">协议类型</label>
+																<div class="col-md-8">
+																	<input type="text" id="mailer_transport" maxlength="20" value="smtp" class="form-control"style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">服务地址</label>
+																<div class="col-md-8">
+																	<input type="text" id="mailer_host" value="mail-server" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+									</div>
+								</div>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">用户名</label>
+																<div class="col-md-8">
+																	<input type="text" id="mailer_user" maxlength="20" value="" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">密码</label>
+																<div class="col-md-8">
+																	<input type="password" id="mailer_password" value="" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+									</div>
+								</div>								
+							</div>
+			</div>
+			<div id="hint">请确定以上配置项已正确填写！</div>
+			<div class="col-md-offset-4 col-md-9" style="margin-top: 20px">
+				<button class="btn blue" id="btn_save" type="button" onclick="Init.in3()">保存，去设置初始化数据</button>
+			</div>
+		</div>
+	</div>
+	<div class="row" style='display:none'>
+		<div class="col-md-12 col-sm-6">
+			<div class="portlet light" id="init_data">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-bar-chart font-green-sharp"></i>
+									<span class="caption-subject font-green-sharp bold uppercase">初始化数据</span>
+								</div>
+								<div class="actions">
+									<div data-toggle="buttons" class="btn-group btn-group-devided">
+										<label id="btn_refresh" class="btn btn-transparent grey-salsa btn-circle btn-sm"><i class="fa fa-refresh"></i></label>
+									</div>
+								</div>
+							</div>
+							<div class="portlet-body" style="height:300px">	
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">企业信息</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">企业名称</label>
+																<div class="col-md-8">
+																	<input type="text" id="en_name" maxlength="30" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">企业邮箱域</label>
+																<div class="col-md-8">
+																	<input type="text" id="en_domain" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+														</div>
+								</div>
+								<h3 class="form-section" style="font-size: 20px; padding: 5px; text-align: left; border-bottom: 1px dashed rgb(204, 204, 204);">默认管理员</h3>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">帐号</label>
+																<div class="col-md-8">
+																	<input type="text" id="admin_account" maxlength="20" value="" class="form-control"style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">密码</label>
+																<div class="col-md-8">
+																	<input type="text" id="admin_pwd" value="" maxlength="20" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+									</div>
+								</div>
+								<div class="row"  style="margin-bottom: 2px; margin-top: 2px; line-height: 34px;">
+									<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4">姓名</label>
+																<div class="col-md-8">
+																	<input type="text" id="admin_name" maxlength="10"  value="管理员" class="form-control" style="height: 34px; background-color: rgb(255, 255, 255);">
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="control-label col-md-4"></label>
+																<div class="col-md-8">
+																</div>
+															</div>
+									</div>
+								</div>								
+							</div>
+			</div>
+			<div id="hint">请正确填写以上内容，保存后无法更改！</div>
+			<div class="col-md-offset-4 col-md-9" style="margin-top: 20px">
+				<button class="btn blue" id="btn_save" type="button" onclick="Init.ok()">保存并完成初始化</button>
+			</div>
+		</div>
+	</div>
+	<div class="row" style='display:none'>
+		<div class="col-md-12 col-sm-6">
+			<div class="portlet light" id="init_success">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-bar-chart font-green-sharp"></i>
+									<span class="caption-subject font-green-sharp bold uppercase">初始化已完成</span>
+								</div>
+								<div class="actions">
+									<div data-toggle="buttons" class="btn-group btn-group-devided">
+										<label id="btn_refresh" class="btn btn-transparent grey-salsa btn-circle btn-sm"><i class="fa fa-refresh"></i></label>
+									</div>
+								</div>
+							</div>
+							<div class="portlet-body" style="height: 300px; line-height: 300px; font-weight: bold; margin-left: 22%;">	
+								已完成系统初始化，您可以进入系统进行日常管理工作了。
+							</div>
+			</div>
+			<div class="col-md-offset-4 col-md-9" style="margin-top: 20px">
+				<button class="btn blue" id="btn_save" type="button" onclick="Init.go()">进入系统</button>
+			</div>
+		</div>
+	</div>	
+</div>
+<div class="page-footer">
+	<div class="copyright">2014 &copy;  嘉兴嘉赛信息技术有限公司. All Rights Reserved.</div>
+</div>
+
+<script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="../assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+<script type="text/javascript" src="jscript/template.js"></script>
+<script type="text/javascript" src="jscript/jquery.cookie.js"></script>
+<script type="text/javascript" src="jscript/loader.js"></script>
+<script type="text/javascript" src="jscript/init.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+jQuery(document).ready(function() {
+	Metronic.init(); 
+	Init.init();
+});
+</script>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

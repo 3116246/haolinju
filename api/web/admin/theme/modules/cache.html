@@ -1,0 +1,147 @@
+<!-- END PAGE HEADER-->
+<div class="row">
+	<div class="col-md-12 coming-soon-content" style="margin-left: 50px;">
+			<h1>全局缓存管理</h1>
+			<br>
+			<form action="#" class="form-inline">
+				<div class="input-group input-large">
+					<input type="text" class="form-control" id="searchvalue" placeholder="请输入要查询的键值">
+					<span class="input-group-btn">
+					<button type="button" class="btn blue" id="getstaff">
+					<span>
+					查看缓存数据 </span>
+					<i class="m-icon-swapright m-icon-white"></i></button>
+					</span>
+				</div>
+				<div class="input-group input-large">					
+					<span class="input-group-btn">
+					<button type="button" class="btn blue" id="btn_remove_item">
+					<span>
+					删除该缓存数据 </span>
+					<i class="m-icon-swapright m-icon-white"></i></button>
+					</span>
+				</div>
+				<div class="input-group input-large">					
+					<span class="input-group-btn">
+					<button type="button" class="btn blue" id="btn_reset">
+					<span>
+					清空全部缓存数据 </span>
+					<i class="m-icon-swapright m-icon-white"></i></button>
+					</span>
+				</div>				
+			</form>
+			<br>
+			<div class=" col-md-10 alert alert-danger display-hide" id="page_alert_info" style="display: none;word-break: break-all;">
+				<button data-close="alert" class="close"></button>
+				<label></label>
+			</div>
+			<div class="col-md-12" id="list" style="margin-top: 20px; margin-left: -30px;">
+				
+			</div>			
+	</div>
+</div>
+<div class="clearfix"></div>
+<script>
+$(document).ready(function() {
+	Index.search.config(null);
+	$("#btn_reset").on('click',function(){		
+		var url = Index.server+'&module=enterprise&action=cache_flush_all&jsoncallback=?';
+		$('#getstaff').attr('disabled',true);
+		$("#btn_reset").attr("disabled",true);
+		$("#page_alert_info").show().find("label").html("正在清除缓存数据...");
+		$.getJSON(url,{},function(json){
+			$("#btn_reset").attr("disabled",false);
+			$('#getstaff').attr('disabled',false);
+			if(json.returncode=="0000")
+			{				
+				$("#page_alert_info").show().find("label").html("缓存数据已全部清除");
+			}
+			else
+			{
+				$("#page_alert_info").show().find("label").html("缓存数据清除失败："+json.msg);
+			}
+		});
+	});
+	$("#searchvalue").on('keypress',function(evt){
+		if(evt.which==13) $("#getstaff").trigger('click');
+	});
+	$("#getstaff").on('click',function(){
+		var $v = $.trim($("#searchvalue").val());
+		if($v=="")
+		{
+			$("#page_alert_info").show().find("label").html("请输入要查询缓存数据的键值");
+			$("#searchvalue").focus();
+			return;
+		}
+		var url = Index.server+'&module=enterprise&action=cache_getItem&jsoncallback=?';
+		$('#getstaff').attr('disabled',true);
+		$("#btn_reset").attr("disabled",true);
+		$("#page_alert_info").show().find("label").html('正在获取数据...');
+		$.getJSON(url,{params:{"cachekey":$v}},function(json){	
+			$('#getstaff').attr('disabled',false);	
+			$("#btn_reset").attr("disabled",false);
+			if(json["returncode"]=="0000")
+			{
+				if(json.data=="")
+				{
+					$("#page_alert_info").show().find("label").html("该键值还未缓存任何数据");
+					return;
+				}
+				$("#page_alert_info").show().find("label").html(json.data);	 
+			}
+			else
+			{
+				$("#page_alert_info").show().find("label").html("获取缓存数据异常:"+json.msg);
+			}
+		});		
+	});
+	$("#btn_remove_item").on('click',function(){
+		var $v = $.trim($("#searchvalue").val());
+		if($v=="")
+		{
+			$("#page_alert_info").show().find("label").html("请输入要删除的键值");
+			$("#searchvalue").focus();
+			return;
+		}
+		var url = Index.server+'&module=enterprise&action=cache_clearItem&jsoncallback=?';
+		$('#getstaff').attr('disabled',true);
+		$("#btn_remove_item").attr("disabled",true);
+		$("#page_alert_info").show().find("label").html('正在删除...');
+		$.getJSON(url,{params:{"cachekey":$v}},function(json){	
+			$('#getstaff').attr('disabled',false);	
+			$("#btn_remove_item").attr("disabled",false);
+			if(json["returncode"]=="0000")
+			{
+				$("#page_alert_info").show().find("label").html("该键值及缓存数据已清除");
+				
+			}
+			else
+			{
+				$("#page_alert_info").show().find("label").html("删除缓存数据异常:"+json.msg);
+			}
+		});		
+	});
+	var url = Index.server+'&module=enterprise&action=cache_getStat&jsoncallback=?';
+	$.getJSON(url,{},function(json){
+		if(json.returncode=='0000')
+		{
+			for (var i = 0; i < json.data.length; i++) {
+				for(var server in json.data[i])
+				{
+					var thead = '<thead class="flip-content"><tr><th colspan=2>'+server+'</th></tr></thead>';
+					var tds = [];
+					for (var attr in json.data[i][server]) {
+						 tds.push('<tr><td>'+attr+'</td><td>'+json.data[i][server][attr]+'</td></tr>');
+					};
+					var div='<div class="col-md-6" ><table class="table table-bordered table-striped table-condensed flip-content">'+thead+tds.join('')+'</table></div>';
+					$("#list").append(div);
+				}
+			};
+		}
+		else
+		{
+			$("#page_alert_info").show().find("label").html("获取缓存信息失败："+json.msg);
+		}
+	});
+});
+</script>

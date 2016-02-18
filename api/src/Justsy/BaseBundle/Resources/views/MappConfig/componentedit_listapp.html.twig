@@ -1,0 +1,97 @@
+<div id="component_listapp_attribute_list" style="float:left;margin-bottom:20px;cursor:default;">
+	<div class="component_fileds_row" id="listMode" style="margin-left: 50px; width: 400px;">
+	  <span>列表类型：</span>
+		<label style="margin-right:50px;">
+		 	<input name="listtype" type="radio" id="GRID3" for="GRID3" style="float:left;"> 
+		 	<span style="float:left;padding-left:5px;font-size:12px;">宫格3列</span>
+		</label>
+	  <label style="margin-right:10px;">
+		 	<input name="listtype" type="radio" id="GRID4" for="GRID4" style="float:left;"> 
+		 	<span style="float:left;padding-left:5px;font-size:12px;">宫格4列</span>
+		</label>		
+	</div>
+	<!--
+  <div class="component_fileds_row">
+	  <span>图标间距：</span>
+		<label class="component_applist_label">
+		   <input name="icon_space" value="space_none" type="radio"><span>无</span>
+		</label>
+		<label class="component_applist_label">
+		 	 <input name="icon_space" value="space_small" type="radio"> <span>小</span>
+		</label>
+    <label class="component_applist_label">
+		   <input name="icon_space" value="space_middle" type="radio" checked><span>中</span>
+		</label>		
+    <label class="component_applist_label">
+		 	 <input name="icon_space" value="space_big" type="radio"> <span>大</span>
+		</label>		
+	</div>
+  <div class="component_fileds_row">
+	  <span>列表边距：</span>
+		<label>
+		   <input name="border_space" id="border_none" type="radio" style="float:left;"> 
+		 	 <span style="float:left;padding-left:5px;font-size:12px;">无</span>
+		</label>
+		<label>
+		 	 <input name="border_space" id="border_small" type="radio" style="float:left;"> 
+		 	 <span style="float:left;padding-left:5px;font-size:12px;">小</span>
+		</label>
+    <label>
+		 	 <input name="border_space" id="border_middle" type="radio" style="float:left;" checked="checked" > 
+		 	 <span style="float:left;padding-left:5px;font-size:12px;">中</span>
+		</label>		
+    <label>
+		 	 <input name="border_space" id="border_big" type="radio" style="float:left;"> 
+		 	 <span style="float:left;padding-left:5px;font-size:12px;">大</span>
+		</label>
+	</div>	
+ <div class="component_fileds_row">
+	    <span>文字位置：</span>
+		<label>
+		 	   <input name="wordlocation" id="list_static" type="radio" style="float:left;" checked="checked" > 
+		 	   <span style="float:left;padding-left:5px;font-size:12px;">浮于图上</span>
+		</label>
+		<label>
+		 	   <input name="wordlocation" id="list_dynamic" type="radio" style="float:left;" > 
+		 	   <span style="float:left;padding-left:5px;font-size:12px;">位于图标下</span>
+		</label>
+ </div>
+	<div class="component_listapp_bottom">
+		 <span>不清楚上述样式定义?</span>
+		 <span style="color:#059BC6;cursor:pointer;" onclick="$('#select_template').modal('show');">从模板预览并选取相应配置</span>
+	</div>
+	-->
+	
+</div>
+
+<div  class="modal" data-backdrop=static style="display:none;width:580px;height:495px;" id="select_template" show=false >
+	 <div class="portals_staff_windowtitle">
+	   <span>选择列表模板</span>
+	   <span style="float:right;padding:2px;" title='关闭' onclick="$('#select_template').modal('hide');"  class="portals_staff_windowtitle_close">×</span>
+   </div>
+   <div class="component_list_template">
+  	 <div class="component_list_templateItem">
+  	 	  <img src="{{ asset('/bundles/fafatimewebase/images/default_circle_re.png')}}"><span>财经资讯</span>
+  	 </div>
+  	 <div class="component_list_templateItem">
+  	 	  <img src="{{ asset('/bundles/fafatimewebase/images/default_group.png')}}"><span>财经资讯</span>
+  	 </div>
+  	 <div class="component_list_templateItem">
+  	 	  <img src="{{ asset('/bundles/fafatimewebase/images/default_circle_we.png')}}"><span>财经资讯</span>
+  	 </div>
+  	 <span class="component_list_templateItem">
+  	 	  <img src="{{ asset('/bundles/fafatimewebase/images/default_micro_head.png')}}"><span>财经资讯</span>
+  	 </span>   	  	 
+   </div>
+   <div class="component_list_templatedesc">
+   </div>
+   
+   <div class="component_switch_dialog_bottom">
+   	  <div class="component_switch_error">
+   	  	  <img src="{{ asset('/bundles/fafatimewebase/images/errow.gif')}}"><span>请选择或上传轮换图片</span>
+   	  </div>
+   	   <span onclick="component_switch.add()"  class="app_apptype_botton_active">保存</span>
+   	   <span onclick="$('#select_switchpic').modal('hide');"  class="app_apptype_botton_default">取消</span>
+   </div>
+</div>
+

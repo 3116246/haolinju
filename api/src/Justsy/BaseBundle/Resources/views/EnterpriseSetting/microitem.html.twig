@@ -1,0 +1,314 @@
+
+{% for micro_item in micro_data %}
+<div id="micro{{micro_item['id']}}" class="relation_member_card" style="height: 135px;">
+  <div class="microaccount_delete" name="{{micro_item['name']}}" number="{{micro_item['number']}}" micro_id="{{micro_item['id']}}" title="删除公众号">ｘ</div>
+	<div class="relation_member_card_photo">
+		<img id="img{{micro_item['id']}}" micro_id="{{micro_item['id']}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_micro_head.png') }}'" src='{{micro_item["logo_path_big"]}}' title="编辑LOGO" class="micro_logo">
+	</div>
+	<div class="atten_relation_left" style="padding-top:5px;">
+			<span class="atten_relation_left_name" 
+			style="padding-bottom:0px;width:120px;cursor:default;" 
+			title='{{micro_item["number"]}}'>{{micro_item["number"]}}</span>
+			<span class="atten_relation_left_name" 
+			style="padding-bottom:0px;width:120px;cursor:default;font-weight: bold;"><a title="点击可查看或编辑详细信息" 
+			href="javascript:edit_micro('{{micro_item['id']}}')" >{{micro_item["name"]}}</a></span>
+			<span class="atten_relation_left_name" 
+			style="padding-bottom:0px;width:120px;cursor:default;">
+			{%if (micro_item['micro_use']=="0") %}
+			    {%if(micro_item["type"]==0)%}内部公众号({%if(micro_item["concern_approval"]==0)%}私密{%else%}开放{%endif%}){%else%}外部公众号({%if(micro_item["concern_approval"]==0)%}私密{%else%}开放{%endif%}){%endif%}
+			{%else%}			    
+			    微应用帐号
+			{%endif%}
+			</span>
+			{%if(micro_item["fans_count"]>999)%}
+				<span class="micro_fans" title="邀请员工或好友关注该公众号"  
+				micro_number='{{micro_item["number"]}}' micro_name='{{micro_item["name"]}}' 
+				state="0" onclick='micro_fans("{{micro_item["number"]}}","{{micro_item["name"]}}","{{micro_item["type"]}}","{{micro_item["concern_approval"]}}","{{micro_item["micro_use"]}}")'
+				style='text-align:right;'>
+	      粉丝[{{micro_item["fans_count"]}}]
+	    	</span>
+    	{%else%}
+    	  <span class="micro_fans" title="邀请员工或好友关注该公众号" 
+    	  micro_number='{{micro_item["number"]}}' micro_name='{{micro_item["name"]}}' 
+    	  state="0" onclick='micro_fans("{{micro_item["number"]}}","{{micro_item["name"]}}","{{micro_item["type"]}}","{{micro_item["concern_approval"]}}","{{micro_item["micro_use"]}}")'
+				style='text-align:center;'>
+	      粉丝[{{micro_item["fans_count"]}}]
+	    	</span>
+    	{%endif%}
+	</div>
+	<div class="atten_relation_ename" title='{{micro_item["introduction"]}}' style="height:44px;width: 204px;overflow:hidden;">
+      {{micro_item["introduction"]}}
+  </div> 
+</div>
+{% endfor %}
+<div style="clear:both"></div>
+<div id="micro_account" class="modal doc_create_content" style="display:none;z-index:999;width:800px;height:540px;">
+	<div class="doc_window_title">
+		<span id="micro_fans_title" style="height:28px;float:left;margin-left:10px">
+		</span>
+		<span style="height:28px;float:right;cursor:pointer;margin-right: 5px;" onclick="$('#micro_account').hide()" title="关闭窗口"> × </span>
+	</div>
+	<div id="div_search" style="margin-top:10px;display:block;">
+		<span style="float:right;">
+			<input id="txt_staff_search" name="txt_staff_search" type="text" placeholder="帐号/姓名"></input><div onclick="micro_search()" class="searchicon" style="cursor:pointer;*top:-30px;*left:10px;"></div>
+		</span>  
+	</div> 
+	<div style="padding:5px;border-bottom: 1px solid #CCCCCC;">
+	  <input type="text" id="messageReceiveObj" name="messageReceiveObj" placeholder="请输入姓名,帐号后选择邀请的对象"/>
+	  <span id="invit_micro" class="micro_akeyadd" onclick="micro_fans_save()">
+	    立即邀请
+	  </span>
+	  <span id="invitMsg" style="display:none;"></span>
+	</div>
+	<div id="micro_content" micro_number="" micro_name="" micro_concern_approval="" micro_type="" micro_fans_groupid="0"> 
+		 {% render 'JustsyBaseBundle:MicroAccount:microfans' with {"network_domain":curr_network_domain}%}
+	</div>
+</div>
+<div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+	<div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+	<div class="modal-footer"><span style='color:red' id="saveHint"></span><A class=btn id="btn_save" href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+</div>
+
+<div show="false" style="display:none;height: 139px; margin-left: -110px; margin-top: -60px; width: 300px;" 
+data-backdrop="false" id="doc_confirm" class="doc_confirm modal">
+  <div class="doc_window_title">
+  	<span>&nbsp;&nbsp;确认消息</span>
+  </div>
+  <div>
+    <div class="doc_rd_confirm_left"></div>
+    <div style="text-align:center;" class="doc_rd_confirm_right">
+        <div style="height: 60px; line-height: 60px;" id="div_fans_msg_info" class="doc_rd_confirm_text">确定要删除该公众号吗？</div>
+        <div style="float: right; margin-right: 90px;"><span class="doc_md_content_right_btn" micro_id="" number="" micro_name id="deleteDoc">确定</span>
+        <span class="doc_md_content_right_btn" id="cancelDelete">取消</span></div>
+    </div>	      
+  </div>
+</div>
+
+<script type="text/javascript"> 
+	var micro_account,old_search="",appid="a11299b8f2f6a91285d6f3ec6d5dd2e4",appkey="v}G(3!{X";
+	function checkmd5()
+	{
+		if(typeof(MD5)=="undefined")
+		{
+			setTimeout(function(){
+				checkmd5()
+			},500);
+		}
+		else
+		{
+			GetAuth2Info(appid,{code:MD5.hexdigest(appid+appkey),
+					appid:appid,
+					openid:g_curr_openid,
+					func:function(data){
+						WefafaFriend.init(data);					
+					}
+				}
+			);
+		}
+    	WefafaFriend.bind("messageReceiveObj");		
+	}
+	$(function(){
+		checkmd5();
+	});
+	$("#txt_staff_search").bind('keyup',function(e){
+		var zval = $(this).val();
+		if(e!=null && e.which==13 && old_search != zval) {
+			old_search = zval;
+			micro_search();
+		}
+	});
+	$(".microaccount_delete").live("click",function(e){
+		$this=$(this);
+		if($("#deleteDoc").text()=="确定"){
+		    $("#doc_confirm").show();
+		    $("#delete_msg_info").text("确定要删除公众号【"+$this.attr("name")+"】吗?");
+		    $("#deleteDoc").attr({
+		    	number: $this.attr("number"),
+		    	micro_id: $this.attr("micro_id"),
+		    	micro_name: $this.attr("name")
+		    });
+ 		}
+	});
+	$("#deleteDoc").bind("click",function(){
+		$this=$(this);
+		if($.trim($this.text())=="确定"){
+			$this.text("删除中");
+			$("#deleteDoc,#cancelDelete").attr({'disabled':'disabled'});
+			$("#delete_msg_info").text("正在删除公众号【"+$this.attr("micro_name")+"】，请耐心等待");
+			$.getJSON("{{ path('JustsyBaseBundle_enterprise_setting_delmicroaccount',{'network_domain':curr_network_domain})}}"
+			,{micro_id:$this.attr("micro_id"),r:Math.random()},function(data){
+	            window.location.reload();
+	    });
+    }
+	});
+	$("#cancelDelete").bind("click",function(){
+		$("#doc_confirm").hide();
+	});
+	var getMicroPage=function(micro_number,micro_name,micro_concern_approval,micro_type,txtsearch,pagesize,pageindex,groupid){
+		$("#micro_content").html(null);
+	  LoadComponent("micro_content", "{{ path('JustsyBaseBundle_enterprise_setting_microfans',{'network_domain':curr_network_domain})}}?micro_number="+micro_number+"&micro_name="+micro_name+"&micro_concern_approval="+micro_concern_approval+"&micro_type="+micro_type+"&micro_pagesize="+pagesize+"&txtsearch="+txtsearch+"&micro_pageindex="+pageindex+"&groupid="+groupid+"&r="+Math.random());
+  }
+  //管理粉丝 公众号帐号 名称 type(0/1)内部公众号或外部公众号 concern_approval(true/false)私密或公开
+  var micro_fans=function(micro_number,micro_name,micro_type,micro_concern_approval,micro_use){
+		$("#micro_fans_title").text("公众号粉丝管理 - "+micro_name);
+		if(micro_use=="8")
+		{
+		    $("#invit_micro").parent().hide();
+		}
+		else $("#invit_micro").parent().show();
+		$("#micro_account").show();
+		$("#micro_content").attr("micro_number",micro_number);
+		$("#micro_content").attr("micro_name",micro_name);
+		$("#micro_content").attr("micro_concern_approval",micro_concern_approval);
+		$("#micro_content").attr("micro_type",micro_type);
+		$("#txt_staff_search").val("");
+		$("#messageReceiveObj").val(""); 
+		//$("#div_search").hide();
+		micro_account=micro_number;
+		//处理JS组建
+		getMicroPage(micro_number,micro_name,micro_concern_approval,micro_type,"",10,1,0);
+	};
+	var akey_add=function(){
+			var micro_number=$("#micro_content").attr("micro_number");
+			var micro_name=$("#micro_content").attr("micro_name");
+			var micro_concern_approval=$("#micro_content").attr("micro_concern_approval");
+			var micro_type=$("#micro_content").attr("micro_type");
+			var micro_fans_save_url_path="{{path('JustsyBaseBundle_enterprise_setting_change_micro_fans')}}";
+			var obj_type="enterprise";
+			var obj="";
+			if($.trim($("#akeyadd").text())=="一键添加"){
+				$("#akeyadd").text("正在添加");
+				$.get(micro_fans_save_url_path,{obj:obj,obj_type:obj_type,micro_number:micro_number,r:Math.random()},function(r){
+					akeyaddSuccess(r);
+				}).fail(function(r){
+					r=eval("("+r.responseText+")");
+					akeyaddSuccess(r);
+				});
+			}
+	};
+	var akeyaddSuccess=function(r){
+		var micro_number=$("#micro_content").attr("micro_number");
+		var micro_name=$("#micro_content").attr("micro_name");
+		var micro_concern_approval=$("#micro_content").attr("micro_concern_approval");
+		var micro_type=$("#micro_content").attr("micro_type");
+		var groupid=$("#micro_content").attr("micro_fans_groupid");
+		switch (r.success) { 	
+    	case 1: $("#akeyadd").text("一键添加");
+    					$("#invitMsg").fadeIn("slow");
+    					$("#invitMsg").html("一键添加成功");
+    					//setTimeout(function() {
+    						//$("#invitMsg").html("");
+            		//$("#invitMsg").fadeOut("slow");
+        			//}, 5000);
+        			getMicroPage(micro_number,micro_name,micro_concern_approval,micro_type,"",10,1,groupid);break;
+    	case 0: getMicroPage(micro_number,micro_name,micro_concern_approval,micro_type,"",10,1,groupid);break; 	 
+    }
+	}
+	var micro_fans_save=function(){
+		if($("#messageReceiveObj").val()!=""){
+			var obj=WefafaFriend.selectedValues();
+			var obj_type=WefafaFriend.selectType();
+			var micro_number=$("#micro_content").attr("micro_number");
+			var micro_name=$("#micro_content").attr("micro_name");
+			var micro_concern_approval=$("#micro_content").attr("micro_concern_approval");
+			var micro_type=$("#micro_content").attr("micro_type");
+			var micro_fans_save_url_path="{{path('JustsyBaseBundle_enterprise_setting_change_micro_fans')}}";
+			
+			if(obj==""){
+				$("#invitMsg").fadeIn("slow");
+				$("#invitMsg").html("邀请成员不存在,请选择有效成员");
+				return;
+			}
+			if($.trim($("#invit_micro").text())=="立即邀请"){
+				$("#invit_micro").text("正在邀请");
+				$.get(micro_fans_save_url_path,{obj:obj,obj_type:obj_type,micro_number:micro_number,r:Math.random()},function(r){
+					saveDataSuccess(r);
+				}).fail(function(r){
+					r=eval("("+r.responseText+")");
+					saveDataSuccess(r);
+				});
+			}
+		}else{ 
+			$("#messageReceiveObj").focus();
+		}
+	};
+	var saveDataSuccess=function(r){
+		var micro_number=$("#micro_content").attr("micro_number");
+		var micro_name=$("#micro_content").attr("micro_name");
+		var micro_concern_approval=$("#micro_content").attr("micro_concern_approval");
+		var micro_type=$("#micro_content").attr("micro_type");
+		var groupid=$("#micro_content").attr("micro_fans_groupid");
+		switch (r.success) { 	
+    	case 0: $("#invitMsg").fadeIn("slow");
+    					if(r.msg!=null){$("#invitMsg").html(r.msg);}
+    					else { $("#invitMsg").html("邀请成功");}
+    					$("#invit_micro").text("立即邀请");
+    					//setTimeout(function() {
+    						//$("#invitMsg").html("");
+            		//$("#invitMsg").fadeOut("slow");
+        			//}, 5000);
+        			getMicroPage(micro_number,micro_name,micro_concern_approval,micro_type,"",10,1,groupid);
+        			break;
+    	case 1: getMicroPage(micro_number,micro_name,micro_concern_approval,micro_type,"",10,1,groupid);break; 	  
+    }
+	}
+	 
+	var micro_search=function(){
+		var txtsearch=$("#txt_staff_search").val();
+		var micro_number=$("#micro_content").attr("micro_number");
+		var micro_name=$("#micro_content").attr("micro_name");
+		var micro_concern_approval=$("#micro_content").attr("micro_concern_approval");
+		var micro_type=$("#micro_content").attr("micro_type");
+		var groupid=$("#micro_content").attr("micro_fans_groupid");
+		getMicroPage(micro_number,micro_name,micro_concern_approval,micro_type,txtsearch,10,1,groupid);
+	};
+	var keydown_micro_search=function(event){
+		var e =event|| window.event; 
+	 	 if (e!=null&&e.keyCode == "13") {//keyCode=13是回车键
+	 			micro_search();
+			}
+	 };
+	var uploadObj=null;  
+	$(document).on("click",".micro_logo",function(){
+			editHead($(this).attr("micro_id"));
+	});
+	$(function(){
+		var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+	    var obj_ff = obj.find("embed");
+	    uploadObj = document.all==null? obj_ff : obj;
+	    uploadObj.css({"height":"380px","width":"500px"});
+	    if($(".micro_logo").attr("src")==""){
+	    	$(".micro_logo").attr("src","{{ asset('bundles/fafatimewebase/images/no_photo.png') }}");
+	    }
+	});
+	var avatar_success=function (){
+	  $("#invitedphoto").modal("hide");
+	  submit_data();
+	};
+	var edit_url_path="{{path('JustsyBaseBundle_enterprise_setting_microaccount_add',{'network_domain' : curr_network_domain})}}";
+	var edit_micro=function(micro_id){
+		window.location.href=edit_url_path+"?micro_id="+micro_id;
+	};
+	var editHead=function (micro_id){
+	 	$("#invitedphoto").attr("micro_id",micro_id);
+	 	$("#invitedphoto").modal("show");
+	};
+	var change_micro_logo_path="{{path('JustsyBaseBundle_enterprise_setting_change_micro_logo')}}";
+	var saveHead=function (){
+		$("#btn_save").html("提交中..");
+		$("#saveHint").html("");
+	   	uploadObj[0].doSave(); 
+	};
+	var avatar_success=function (){		 
+		var micro_id=$("#invitedphoto").attr("micro_id");
+	   $.get(change_micro_logo_path,{micro_id:micro_id,r:Math.random()}).done(function(r){
+	   	  	if(r.logo_path!='') $("#img"+micro_id).attr("src",r.file_path);
+        	$("#btn_save").html("确定");
+			$("#invitedphoto").modal("hide");	   		
+	   }).fail(function(r){
+	   		r=eval("("+r.responseText+")");
+	   		$("#btn_save").html("确定");
+	   		$("#saveHint").html("保存失败，请重试！");
+	   });
+	};
+</script>

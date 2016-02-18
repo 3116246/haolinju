@@ -1,0 +1,291 @@
+<div id="component_publicstyle_list" style="float:left;line-height:30px;">
+		<div class='component_color' style="margin-top:82px;margin-left:70px;"></div>
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span style="margin-right:10px;float:left; display: block; width: 60px; text-align: right;">数据源：</span>
+			<div class="btn-group" style="display: block; border: 1px solid rgb(204, 204, 204); float: left; width: 330px; line-height: 28px;font-size: 12px;">
+				    <a  href="#" id="datasourceid" value="" style="display: block; float: left; padding-left: 10px; width: 263px;">---选择数据源---</a>
+				    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				    	<span style="border-radius: 0px; border-top: 0px none; border-bottom: 0px none;" class="btn">选择</span>
+				    </a>
+				    <ul class="dropdown-menu" style="border-radius: 0px; min-width: 60px; padding: 0px; position: relative; left: -100px; top: 0px; width: 429px;">
+						<li>				    		
+							<div>
+				    			<div style="min-height: 100px; background-color: rgb(243, 243, 243); float: left; font-size: 11px; width: 95px; padding-left: 5px;overflow: hidden;" id="datasource_module">
+				    				<div>所有数据源</div>  
+								</div>
+				    			<div id="datasource_list" style="min-height: 100px; float: left; font-size: 11px; padding-left: 5px; width: 314px; max-height: 300px; overflow: auto;">
+									<div>所有数据源</div>   
+								</div>
+				    		</div>
+				    	</li>
+				    </ul>
+			</div>				
+		</div>
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span style="margin-right:10px;float:left; display: block; width: 60px;">隐藏条件：</span>
+			<span style="float:left;display: block;">
+			    <div class="btn-group" id="set_display" value="" style="display: block; border: 1px solid rgb(204, 204, 204); float: left; width: 60px; line-height: 28px;font-size: 12px;">
+				    <a  href="#" style="display: block; float: left; padding-left: 10px; width: 40px;">条件名称</a>
+				    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret" style="vertical-align:middle;"></span></a>
+				    <ul class="dropdown-menu" style="border-radius: 0px; width: 60px; min-width: 60px;">
+				    	<li><a href="javascript:viod(0)"><i class="i"></i>9</a></li>
+				   		<li><a href="javascript:viod(10)"><i class="i"></i>10</a></li>
+				    	<li><a href="javascript:viod(12)"><i class="i"></i>12</a></li>
+				    	<li><a href="javascript:viod(14)"><i class="i"></i>14</a></li>
+				    	<li><a href="javascript:viod(16)"><i class="i"></i>16</a></li>
+				    	<li><a href="javascript:viod(18)"><i class="i"></i>18</a></li>
+				    	<li><a href="javascript:viod(20)"><i class="i"></i>20</a></li>
+				    </ul>
+			    </div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_display_value" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="条件值"></input>
+				</div>
+			</span>
+		</div>
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span style="margin-right:10px;float:left; display: block; width: 60px;">背景图片：</span>
+			<div id="background_upload" style="display:none">
+				<input id="component_background" name="component_background" onchange="component_background_uploadfile()" type="file">
+				<form enctype="multipart/form-data" method="post" class="switch_uploadfile" style="margin:0;line-height: 20px;">
+				<span style="color:#ccc">图片宽度不超过320px，高度不超过60px。只能为PNG透明图片，建议为白色。</span>
+				<div class="component_background_error" style="margin-left:10px;margin-top:10px;"></div>
+				</form>
+			</div>
+			<div id="background_info" style="float:left">
+				<span id="background_path" style="display: block; width: 274px; overflow: hidden; color: rgb(204, 204, 204); float: left;" value="">未设置背景图片</span><span class="btn" style="display: block;float: left;" onclick="$('#background_info').hide();$('#background_upload').show();">上传</span><span class="btn" style="display: none;float: left;">清除</span>
+			</div>		
+		</div>	
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span class="component_set_label">字体：</span>
+			<span style="float:left;display: block;">
+			    <div class="btn-group" style="display: block; border: 1px solid rgb(204, 204, 204); float: left; width: 60px; line-height: 28px;font-size: 12px;">
+				    <a  href="#" id="set_fontsize" value="" style="display: block; float: left; padding-left: 10px; width: 40px;">10</a>
+				    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret" style="vertical-align:middle;"></span></a>
+				    <ul class="dropdown-menu" style="border-radius: 0px; width: 60px; min-width: 60px;">
+				    	<li><a href="javascript:setsize(9)"><i class="i"></i>9</a></li>
+				   		<li><a href="javascript:setsize(10)"><i class="i"></i>10</a></li>
+				    	<li><a href="javascript:setsize(12)"><i class="i"></i>12</a></li>
+				    	<li><a href="javascript:setsize(14)"><i class="i"></i>14</a></li>
+				    	<li><a href="javascript:setsize(16)"><i class="i"></i>16</a></li>
+				    	<li><a href="javascript:setsize(18)"><i class="i"></i>18</a></li>
+				    	<li><a href="javascript:setsize(20)"><i class="i"></i>20</a></li>
+				    </ul>
+			    </div>	
+			    <div style="margin-right:10px;float:left;display: block;">
+					<span class="componnet_title_color" id="set_color" onclick="showcolor(this)" style="width: 45px; height: 28px; margin-left: 10px; padding-left: 5px; margin-top: 0px;">#ffffff</span>
+				</div>
+				<div style="margin-right:10px;float:left;display: block;">
+					<div class="btn" id="set_font_bold" onclick="set_true('set_font_bold')" style="margin-right:10px;float:left;display: block; line-height: 20px;border-radius: 0;">
+				    	<a href="javascript:void(0)"><i class="icon-bold"></i></a>
+				    </div>
+					<div class="btn-group" id="set_algin" value="" style="margin-right:10px;float:left;display: block;line-height: 20px;">
+				    	<a class="btn" id="set_font_aleft" href="javascript:set_align_true('set_font_aleft');" style="border-radius:0px"><i class="icon-align-left"></i></a>
+				    	<a class="btn" id="set_font_acenter" href="javascript:set_align_true('set_font_acenter');" style="border-radius:0px"><i class="icon-align-center"></i></a>
+				    	<a class="btn" id="set_font_aright" href="javascript:set_align_true('set_font_aright');" style="border-radius:0px"><i class="icon-align-right"></i></a>
+				    </div>
+				</div>				
+			</span>
+		</div>
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span class="component_set_label">内边距：</span>
+			<span style="margin-right:10px;float:left;display: block;">	
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_padding_left" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="左边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_padding_right" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="右边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_padding_top" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="上边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_padding_bottom" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="下边距"></input>
+				</div>
+			</span>
+		</div>
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span class="component_set_label">外边距：</span>
+			<span style="margin-right:10px;float:left;display: block;">	
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_left" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="左边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_right" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="右边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_top" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="上边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_bottom" maxlength="3" style="border-radius: 0px;color: #ccc;"  placeholder="下边距"></input>
+				</div>
+			</span>
+		</div>
+		<div style="float: left; border-bottom: 1px solid rgb(243, 243, 243); margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px; width: 100%;">
+			<span class="component_set_label">外边距：</span>
+			<span style="margin-right:10px;float:left;display: block;">	
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_left" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="左边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_right" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="右边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_top" maxlength="3" style="border-radius: 0px;color: #ccc;" placeholder="上边距"></input>
+				</div>
+			    <div style="margin-right:10px;float:left;display: block;">
+					<input type="text" class="componnet_set_input" id="set_margin_bottom" maxlength="3" style="border-radius: 0px;color: #ccc;"  placeholder="下边距"></input>
+				</div>
+			</span>
+		</div>		
+</div>
+<script type="text/javascript">
+var $datasource_module = $("#datasource_module"),$datasource_list = $("#datasource_list"), datasource = {"list":[{{datasource|raw}}],"module":{{module|raw}}};
+
+var component_publicstyle={};
+component_publicstyle.saveToXML=function()
+{
+	var tag_start = "<style>",tag_end = "</style>",xmlLst = [];
+	var attrid = ["background_path","datasourceid","set_fontsize","set_color","set_font_bold","set_algin","set_padding_left","set_padding_right","set_padding_top","set_padding_bottom","set_margin_left","set_margin_right","set_margin_top","set_margin_bottom","set_display"];
+	var attrcodes=["background","datasourceid","fontsize","color","fontweight","text_align","padding_left","padding_right","padding_top","padding_bottom","margin_left","margin_right","margin_top","margin_bottom","display"];
+	xmlLst.push(tag_start);
+	for (var i = 0; i <attrid.length; i++) {
+		var $attr_name = $("#"+attrid[i]),attr_value = $.trim($attr_name.attr("value")),xmlCode = attrcodes[i];
+
+		xmlLst.push("<"+xmlCode+">"+attr_value+"</"+xmlCode+">");
+	};	
+	xmlLst.push(tag_end);
+	return xmlLst.join("");
+};
+
+initDataSourceModule();
+
+function initDataSourceModule()
+{
+	$datasource_module.attr("innerHTML","");
+	var modules = [],len = datasource.module.length;
+
+	for(var i=0;i<len; i++)
+	{
+		modules.push('<div moduleid='+datasource.module[i].id+'>'+datasource.module[i].name+'</div>');		
+	}
+	$datasource_module.attr("innerHTML",modules.join(""));
+	initDataSource(datasource.module[0].id);
+}
+
+function initDataSource(moduleid)
+{
+	$$datasource_list.attr("innerHTML","");
+	var modules = [],len = datasource.list.length;
+
+	for(var i=0;i<len; i++)
+	{
+		if(datasource.list[i].moduleid == moduleid )
+			modules.push('<div datasourceid='+datasource.list[i].id+'>'+datasource.list[i].name+'</div>');
+	}
+	$datasource_list.attr("innerHTML",modules.join(""));	
+}
+
+function set_true(c_id)
+{
+	var $c = $("#"+c_id), classname = $c.hasClass("component_set_active");
+	if(!classname)
+		$c.addClass("component_set_active");
+	else
+		$c.removeClass("component_set_active");
+}
+function set_align_true(c_id)
+{
+	var $c = $("#"+c_id), classname = $c.hasClass("component_set_active");
+	if(!classname)
+	{
+		$c.parent().find(".btn").removeClass("component_set_active");
+		$c.addClass("component_set_active");
+	}
+	else
+		$c.removeClass("component_set_active");
+}
+
+function setsize(size)
+{
+	$("#set_fontsize").attr("innerHTML",size);
+}
+ function component_background_uploadfile(){
+	 	 var filename = $("#component_background").val();
+		 var position = filename.lastIndexOf(".");
+		 if (position==-1) return;
+		 filename = filename.substr(position+1);
+		 if ( filename!="png" && filename!="gif" && filename!="bmp" && filename!="jpg"){
+		 	  $("#component_hint").html("请选择图片文件");
+				setTimeout("$('#component_hint').html('');",2000);
+		 	  return;
+		 } 
+		 var appid = $("#content_template").attr("appid");
+		 component_background_hint("load","正在上传图片");
+		 $.ajaxFileUpload({
+	        url: "{{path('JustsyBaseBundle_mappconfig_component_fileupload',{"appid":"appid"})}}".replace("appid",appid),
+	        secureuri:false,
+	        fileElementId:'component_background',
+	        dataType: 'json',
+	        success: function (data) {
+	           if(data.succeed && data.fileid!="") {
+	           	  component_background_hint("succeed","图片上传成功");
+	          	  //$("#title_ico").attr("src",file_webserver_url+data.fileid);
+	           }
+	           else{
+	           	  component_background_hint("error",data.msg);   	
+	           }
+	        },
+	        error: function (data, status, e) {
+				     component_background_hint("scceed",data.msg);
+				 }
+	   })
+ }
+ //调用颜色控件
+ function showcolor(ev){
+   componentColor.hideTransparent = true;
+   componentColor.Init($(".component_color"));
+   componentColor.beforeColor = $(ev).css("color");
+ 	 componentColor.setobj=[];
+ 	 componentColor.type = false;
+ 	 componentColor.setobj.push($(ev));
+ 	 componentColor.setTitle("选择字体颜色");
+ 	 componentColor.onSelected=function(vColorValue){
+ 	   $(".componnet_title_color").text(vColorValue);
+ 	   $(".componnet_title_color").css("color",vColorValue);
+ 	 };
+ 	 componentColor.onMouseMove = function(vColorValue){
+ 		 $(".componnet_title_color").text(vColorValue);
+ 		 $(".componnet_title_color").css("color",vColorValue);
+ 	 };
+ 	 componentColor.onClose = function(beforecolor){
+ 	   $(".componnet_title_color").text(beforecolor);
+ 		 $(".componnet_title_color").css("color",beforecolor);
+ 	 };
+ } 
+ 
+  //显示提示信息
+  function component_swith_hint(type,hint){
+  	var img = "",_class="component_switch_hint_img";
+  	var color = "black";
+  	if ( type=="succeed")
+  	   img = "/bundles/fafatimewebase/images/zq.png";
+  	else if ( type=="error") {
+  		 img = "/bundles/fafatimewebase/images/errow.gif";
+  		 color = "red";
+  	}
+    else if ( type=="load") {
+    	 img = "/bundles/fafatimewebase/images/loading.gif";
+    	 _class="component_switch_loading_img";
+    }
+    $(".component_switch_error>img").attr("class",_class);
+    $(".component_switch_error>img").attr("src",img);
+    $(".component_switch_error>span").text(hint);
+    $(".component_switch_error>span").css("color",color);
+    $(".component_switch_error").children().show();
+    if ( type!="load"){
+    	//setTimeout(function(){ $(".component_switch_error").children().hide();},2000);
+    }
+  }
+
+ 
+</script>

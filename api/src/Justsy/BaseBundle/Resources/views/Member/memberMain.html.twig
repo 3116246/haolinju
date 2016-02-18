@@ -1,0 +1,36 @@
+{% set foo=1 %}
+{% set count=0 %}
+{% set pagecount=text.pagecount %}
+
+{% for account in text.accounts %}
+<div id="{{text.pagecount}}" class="relation_member_card">
+	<div class="relation_member_card_photo">
+		<img onerror="this.src='/bundles/fafatimewebase/images/no_photo.png'" src="{{text.photo_url}}{{account['photo_path']}}" login_account="{{account["login_account"]}}" class="employee_name">
+	</div>
+	<div class="atten_relation_left">
+			<span class="atten_relation_left_name"><a href="{{path('JustsyBaseBundle_interviewee_home',{'network_domain' : curr_network_domain})}}/{{account["login_account"]}}" target="_blank">{{account["nick_name"]}}</a></span>
+			<span class="attention" style="margin-left:0px;margin-top:0px;cursor:default;" login_account="{{account["login_account"]}}" state="{{account["attention"]}}">互相关注</span>
+	</div>   
+	<div class="atten_relation_ename" style="overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;" title="{{account["ename"]}}">{{account["ename"]}}</div>
+</div>
+	
+{% endfor %}
+<div style="clear:both"></div>
+{%if(pagecount>0)%}
+	<div class="pagination" style="text-align: right;width:90%;height: 38px;">
+	<ul>
+	{%for i in 1..pagecount %}
+	  <li><a {%if(pageno==i)%} class='active' {%endif%} href='javascript:getMemeberPage({{i-1}})'>{{(i)}}</a></li>
+	{%endfor%}
+</ul>
+</div>
+{%endif%}
+<script>   
+   $(document).ready(function() {
+	    Employees.attentionBind();
+	    $("#membertotalcount .bigtitletext span").text("{{text.recordcount}}人");
+  });
+</script>

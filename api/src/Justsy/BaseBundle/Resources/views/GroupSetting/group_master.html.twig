@@ -1,0 +1,11 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block main_content_left %}
+<div class="othertitle">我的群组信息</div>
+<ul class="left-menu">
+  <li {% block menuitemactive_detail %}{% endblock %}>
+   <a href="#", {'network_domain' : curr_network_domain}) }}"><i class="menu-detail"></i>修改信息</a></li>
+</ul>
+{% endblock %}

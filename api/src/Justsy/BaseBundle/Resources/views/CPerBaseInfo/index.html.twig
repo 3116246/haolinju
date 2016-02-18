@@ -1,0 +1,67 @@
+{% set ExprienceAround = this.getExprienceAround(app.user.total_point) %}
+<div class="clearfix">
+  <div class="myheadpic"><a href="{{ path('JustsyBaseBundle_account_basic', {'network_domain' : app.user.edomain})}}">
+  <img src="{{ this.photo_url }}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'"></a></div>
+  <div class="mybasicinfo">
+    <div><a href="{{ path('JustsyBaseBundle_account_basic', {'network_domain' : app.user.edomain})}}">
+    <span class="myname">{{ app.user.nick_name }}</span></a></div>
+    <div class="myinfolist"><a href="{{ path('JustsyBaseBundle_account_basic', {'network_domain' : app.user.edomain})}}">
+    {{ app.user.dept_name }}<br>{{ app.user.duty }}</a></div>
+	    <div style="padding-left: 22px;*padding-left: 0px;padding-bottom: 5px;padding-top: 5px;">
+	    <a href="{{ path('JustsyBaseBundle_account_mylevel', {'network_domain' : app.user.edomain})}}">
+	    <span title="加油，还差 {{ (ExprienceAround["NextLevelExperience"] - app.user.total_point)|number_format(2) }} 分到下一级！" 
+	    class="fafa_level_0" style="cursor:pointer;font-weight:700;{%if(app.user.IsCertification()=="J" or app.user.IsCertification()=="N")%}background:#cccccc;{%endif%}">{{ app.user.auth_level }}{{ app.user.vip_level }}</span></a></div>
+  </div>
+  {%if(app.user.IsCertification()=="J")%}
+  <div style=" width: 155px;float: left;height:65px;">
+	  <span style=" display: block; border: 1px solid rgb(204, 204, 204); background-color: #fbf9d4; padding: 5px;height: 45px;">
+	   <span style="color:#686868;display: block;float: left;width:100%">您还没有通过身份认证!</span>
+	   <a href="{{ path('JustsyBaseBundle_account_mylevel', {'network_domain' : app.user.edomain })}}" class="view_auth_comment" style="display:block;float:left;">为什么要认证?</a>
+	  <input type="button" value="认证" onclick="window.location.href='{{path('JustsyBaseBundle_identify_auth_user', {'network_domain' : app.user.edomain})}}'" 
+	  style="background-color: #ECF5F8; border: 1px solid #CCCCCC; border-radius: 6px 6px 6px 6px; color: #343434;font-size: 12px;height: 26px;width: 40px;float: left;">
+	 	<span class="topmenu_app_triangle" style="border-color: transparent transparent #cccccc; left: 111px; border-width: 7px; top: -42px;left:-25px; "></span>
+    <span class="topmenu_app_triangle" style="border-color: transparent transparent #fbf9d4; left: 111px; border-width: 7px; top: -55px;left:-25px; "></span>
+	</span>
+	</div>
+	{%else%}
+	{% if(app.user.IsCertification()=="N")%}
+	<div style="height: 25px; width: 155px;margin-bottom: 12px;float: left;height:65px;">
+	  <span style=" display: block; border: 1px solid rgb(204, 204, 204); background-color: #fbf9d4; padding: 5px;">
+	   <span style="color:#686868;">您还没有通过企业认证!</span><br />
+	   <a href="{{ path('JustsyBaseBundle_account_mylevel', {'network_domain' : app.user.edomain })}}" class="view_auth_comment" style="display:block;float:left;">为什么要认证?</a>
+	  <input type="button" value="认证" 
+	  onclick="window.location.href='{{path('JustsyBaseBundle_identify_auth_eno', {'network_domain' : app.user.edomain})}}'" 
+	  style="background-color: #ECF5F8;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px 6px 6px 6px;
+    color: #343434;
+    font-size: 12px;
+    padding: 2px;
+    width: 40px;">
+	 	<span class="topmenu_app_triangle" style="border-color: transparent transparent #cccccc; left: 111px; border-width: 7px; top: -42px;left:-25px; "></span>
+    <span class="topmenu_app_triangle" style="border-color: transparent transparent #fbf9d4; left: 111px; border-width: 7px; top: -64px;left:-25px; "></span>
+	  </span>
+	</div>
+	 {%endif%}
+	 {%endif%}
+</div>
+<!--<div title="个人资料完善程度" class="mydata">
+  <a href="{{ path('JustsyBaseBundle_account_basic', {'network_domain' : app.user.edomain})}}">
+  <div class="process-bar skin-green">
+    <div class="pb-wrapper">
+      <div class="pb-highlight"></div>
+      <div class="pb-container">
+        <div class="pb-text">{{ this.InfoCompletePercent }}%</div>
+        <div style="width: {{ this.InfoCompletePercent }}%" class="pb-value"></div>
+      </div>
+    </div>
+  </div>
+  </a>
+  </div>
+-->
+
+<div class="myNums">
+  <span class="myNumItem myNumItemRightBorder" style="background-color:#F9E6E9" onclick="window.location.href='{{path('JustsyBaseBundle_relation_atten',{'attentype':'atten_me','network_domain' : app.user.edomain})}}'"><div>粉丝</div><div class="myNumText">{{app.user.fans_num|number_format}}</div></span>
+  <span class="myNumItem myNumItemRightBorder" style="background-color:#FEF8E9" onclick="window.location.href='{{path('JustsyBaseBundle_relation_atten',{'attentype':'me_atten','network_domain' : app.user.edomain})}}'"><div>关注</div><div class="myNumText">{{app.user.attenstaff_num|number_format}}</div></span>
+  <span class="myNumItem myNumItemRightBorder" style="background-color:#daeec3;margin-right: 10px;" onclick="window.location.href='{{path('JustsyBaseBundle_my_trend')}}?network_domain={{app.user.edomain}}'"><div>动态</div><div class="myNumText">{{app.user.publish_num|number_format}}</div></span>
+</div>

@@ -1,0 +1,18 @@
+{# {% include 'JustsyBaseBundle:EnterpriseHome:right_calendar.html.twig' %} #}
+{% render "JustsyBaseBundle:EnterpriseHome:rightuserguid" with {'network_domain' : curr_network_domain} %}
+{% if (app.user.IsCertification()!="J") %}
+	{% if (app.user.IsCertification()=="S") %}
+	{%if app.user.IsShowWeiApp()%}
+{% render "JustsyBaseBundle:EnterpriseHome:rightMicroApp" with {'network_domain' : curr_network_domain} %}
+	{%endif%}
+	{% else %}
+{% render "JustsyBaseBundle:EnterpriseHome:rightVipFunction" with {'network_domain' : curr_network_domain} %}
+{# {% render "JustsyBaseBundle:EnterpriseHome:tipInvite" with {'network_domain' : curr_network_domain} %} #}
+	{% endif %}
+{% endif %}
+{% render "JustsyBaseBundle:EnterpriseHome:rightrecommcircle" with {'network_domain' : curr_network_domain} %}
+{% render "JustsyBaseBundle:Notice:getTopNotice" with {'network_domain' : curr_network_domain} %}
+{# {% render "JustsyBaseBundle:EnterpriseHome:rightevent" with {'network_domain' : curr_network_domain} %} #}
+{% if (DOC)%}
+{% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {'network_domain' : curr_network_domain, 'scope_type':'1'} %}
+{% endif %}

@@ -1,0 +1,92 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/js/KindEditor/themes/default/default.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/fafatimembapp/css/publish.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/image.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/publish.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/pageControl.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container publish_area" type="{{type}}">
+	<div class="containerBox">
+		<div class="publish_main">
+			<div class="publish_search_area">
+			  <span>发布日期：</span>
+			  <select class="publish_combox" id="search_date"></select>
+			  <span style="margin-left:40px;">标题内容：</span>
+			  <input type="text" class="publish_search_text" style="width:260px;margin-top:13px;" placeholder="请输入标题内容" onkeypress="if (event.keyCode==13){publish.searchData(1);}" />
+			  <select class="publish_combox" id="search_zdtype" style="width:100px;margin-top:-3px;margin-right:10px;"></select>
+        <span class="btnGreen mb_button"  onclick="publish.searchData(1);">查&nbsp;&nbsp;询</span>
+        <span class="btnGreen mb_button" onclick="publish.load('{{type}}',0)" >{{typename}}发布</span>
+        
+	    </div>
+	    <!--发布查询信息-->
+	    <div>
+	    	 <div class="publish_search_empty"></div>
+	    	 <div class="publish_table"></div>
+	    	 <div class="publish_search_page"></div>
+	    </div>
+    </div>
+    <!--用于内容发布编辑-->
+    <div class="publish_edit">
+    	{% include 'JustsyAdminAppBundle:Publish:publish_edit.html.twig' %}
+    </div>
+		
+	  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	 publish.type = "{{type}}";	
+	 publish.del_url = "{{path('JustsyAdminAppBundle_mb_publish_del')}}";
+	 publish.search_url="{{path('JustsyAdminAppBundle_mb_cmsmanage_publish_search')}}"
+	 publish.search_url_id = "{{path('JustsyAdminAppBundle_mb_cmsmanage_publish_searchbyid')}}";
+	 publish.init_url = "{{path('JustsyAdminAppBundle_mb_cmsmanage_publish_init')}}";
+	 publish.edit_url = "{{path('JustsyAdminAppBundle_mb_cmsmanage_publish_edit')}}";
+	 publish.icon.error = "{{ asset('bundles/fafatimeweopenapi/images/error.png')}}";
+	 publish.icon.warning = "{{ asset('bundles/fafatimeweopenapi/images/zq.png')}}";
+	 publish.icon.success = "{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}";
+	 publish.icon.loading =  "{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}";
+	 var editor_image_upload= "{{ path('JustsyInterfaceBundle_microapp_editor_uploadimage')}}";
+	 var ks= {{data|raw}};
+	 publish.InitData(ks);
+   
+</script>
+<script type="text/javascript">
+    var microaccount_change= function(zthis) {
+        microNumber = $(zthis).children('option:selected').val();
+        microName = $(zthis).children('option:selected').attr("name");
+        microJid = $(zthis).children('option:selected').attr("jid");
+        microType = $(zthis).children('option:selected').attr("type");
+        microUse = $(zthis).children('option:selected').attr("microuse");
+        microOpenid = $(zthis).children('option:selected').attr("openid");
+        microGroupId = "";
+    };
+</script>
+
+{% endblock %}

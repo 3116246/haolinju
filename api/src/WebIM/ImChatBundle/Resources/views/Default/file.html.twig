@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>文件发送</title>
+<script type="text/javascript" src="{{ asset('bundles/fafawebimimchat/js/jquery-1.7.1.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafawebimimchat/js/jquery.form.js') }}" type="text/javascript"></script>
+<style type="text/css">
+body {
+	font: 13px Arial, Helvetica, Sans-serif;
+}
+</style>
+</head>
+
+<body>
+<div>
+   <form id="webim_upload_file" name="webim_upload_file"  method="post" enctype="multipart/form-data">
+   <label for="xheImgUrl">本地文件: </label>
+   <span class="xheUpload">
+       <input type="text" tabindex="-1" style="visibility:hidden;">
+       <input type="text" class="xheText" readonly="" value="" id="xheImgUrl">
+       <input type="button" tabindex="-1" class="xheBtn" value="选择">
+       <input type="file" tabindex="-1" name="fafa_webim_filedata" id="fafa_webim_filedata" onchange="webim_fileSelect()" size="13" class="xheFile" multiple="">
+   </span>
+   </form>
+</div>
+</body>
+</html>
+<script>
+function webim_fileSelect()
+{
+    $("form#webim_upload_file").ajaxSubmit(
+              dataType: 'json',//返回的数据类型
+              url: "/webim/file",//表单的action
+              method: 'post',
+              success:function(r){
+                  
+              }
+    );
+}
+</script>

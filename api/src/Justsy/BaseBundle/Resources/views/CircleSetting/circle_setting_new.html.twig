@@ -1,0 +1,178 @@
+<div>
+<form id="div_create_circle_form">
+<div class='circle_create_center'>
+	<div>
+		<div class='circle_base_info'>
+			<div>
+				<table>
+					<tr><td style='vertical-align: top;'><b>圈子名称：</b></td><td style="width:320px;"><input type='text' style='margin-right:5px;' onblur="javascript:EditCircle.CheckCircleOrNetWork(this.value);" checkurl="{{ path('JustsyBaseBundle_circle_setting_checkcirclename',{'network_domain' : curr_network_domain})}}" onchange="$(this).attr('check','0');" check='0' value="{{circle_name}}" id='circle_name' name='circle_name'/><span class="errspan" style="color:red;display:none;"></span><img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style='display:none;width:16px;height:16px;' class='loading'/><img style='display:none;width:16px;height:16px;' src="{{asset('bundles/fafatimewebase/images/ok.png')}}" class='ok'/></td></tr>
+				<tr><td style='vertical-align: top;'><b>圈子分类：</b></td><td><div><select parent_classify_id="{{parent_classify_id}}" id='classify' name='classify'>
+																	 </select>
+																			<span style='display:inline-block;' onclick="EditCircle.seBntClick('classify')" class='classify_span'><span></span></span>
+																		</div>
+																		<div>
+																		 <select circle_class_id="{{circle_class_id}}" type='text' id='circle_class_id' name='circle_class_id'>
+																		</select>
+																		 <span style='display:inline-block;' onclick="EditCircle.seBntClick('circle_class_id')" class='classify_span'><span></span></span>
+																		 </div></td></tr>
+			 <tr><td style='vertical-align: top;'><b>圈子描述：</b></td><td><textarea id='circle_desc' name='circle_desc'>{{circle_desc}}</textarea></td></tr>
+			 <tr><td style='vertical-align: top;'><b>圈主：</b></td><td><input id='create_staff' type='text' name='create_staff' readonly='readonly' value='{{create_staff}}'/></td></tr>
+			 <tr><td style='vertical-align: top;'><b>管理员：</b></td><td>
+			 		<div class="controls">
+      	<div class="lib_notify ask_div1" style="width:194px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#sys_manager').focus()">
+				        <div id="InputNotifyArea" style="margin:0 4px;padding:0px;vertical-align:center;float:left;height:30px;line-height:30px;">
+				          {% for i in manager%}
+				             <span class="NotifyObj"><input  type="hidden" value="{{i.login_account}}"><span class="NotifyPerson">{{i.nick_name}}</span><span class="NotifyClose" onclick="NotifyClose_OnClick(this)">×</span></span>
+				          {% endfor %}
+				        </div>
+				        <input type="text" class="input-xlarge" value="" id="manager" name="manager" data-provide="typehead" style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:60px;font-size:12px;float:left;"/>
+        </div>
+        <script type="text/javascript">
+        var manager_query_url="{{path("JustsyBaseBundle_circle_setting_query_circle_manager")}}";
+        var network_domain="{{curr_network_domain}}";
+        var datasource;
+			  	 $("#manager").typeahead({
+			  	 	 menu : '<ul class="typeahead dropdown-menu" style="min-width:240px;margin-top:0px;z-index:30000;"></ul>',
+			  	   source :circle_setting.datasource,
+			  	   items:8,
+			  	   matcher:circle_setting.manager_matcher,
+			  	   sorter:circle_setting.manager_sorter,
+			  	   highlighter:circle_setting.manager_highlighter,
+			  	   updater:circle_setting.manager_updater
+			  	 }); 
+			  $("#manager").bind("keyup", txtNotify_OnKeyUp); 
+        </script>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+			 	</td></tr>
+			 	<tr><td style='vertical-align: top;'><b>创建时间：</b></td><td><input id='create_date' type='text' name='create_date' readonly='readonly' value='{{create_date}}'/></td></tr>
+			 	<tr><td style='vertical-align: top;'><b>外部域名：</b></td><td><input id='network_domain' type='text' name='network_domain' readonly='readonly' value='{{network_domain}}'/><span class="errspan" style="color:red;display:none;"></span><img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style='display:none;width:16px;height:16px;' class='loading'/><img style='display:none;width:16px;height:16px;' src="{{asset('bundles/fafatimewebase/images/ok.png')}}" class='ok'/></td></tr>
+				</table>
+			</div>
+			<div>
+			<p style="margin-bottom:0px;"><b>开放类型：</b></p>
+			<input type='hidden' for='iskaifang' value="{{ join_method }}" id='radjoin' name='join_method'/>
+			<table>
+				<tr>
+					<td><input p='0' {% if join_method ==0 %}checked='checked'{% endif %} for='iskaifang' type='checkbox'/>&nbsp;&nbsp;<span>完全开放</span></td>
+					<td style='padding-left:20px;color: #CCCCCC;'>任何人可以查看，搜索和申请加入</td>
+				</tr>
+				<tr>
+					<td><input p='1' {% if join_method ==1 %}checked='checked'{% endif %} for='iskaifang' type='checkbox'/>&nbsp;&nbsp;<span>私密</span></td>
+					<td style='padding-left:20px;color: #CCCCCC;'>只有圈子成员才可以查看和邀请成员加入</td>
+				</tr>
+			</table>
+			</div>
+			<div>
+				<p style="margin-bottom:0px;"><b>是否允许转发：</b></p>
+				<input type='hidden' value='{{allow_copy}}' for='iszhuanfa' id='allow_copy' name='allow_copy'/>
+				<table>
+					<tr>
+						<td><input p='0' {% if allow_copy !=1 %} checked='checked' {% endif %} for='iszhuanfa' type='checkbox'/>&nbsp;&nbsp;<span>允许</span></td>
+						<td style='padding-left:30px;color: #CCCCCC;'>任何人可以转发改圈子中的会话</td>
+					</tr>
+					<tr>
+						<td><input p='1' {% if allow_copy ==1 %} checked='checked' {% endif %} for='iszhuanfa' type='checkbox'/>&nbsp;&nbsp;<span>不允许</span></td>
+						<td style='padding-left:30px;color: #CCCCCC;'>任何人都禁止转发圈子中的会话</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class='circle_logo_upload'>
+			<div class="allphoto" style="background: none repeat scroll 0 0 rgba(0, 0, 0, 0);border: 1px solid #CCCCCC;border-radius: 6px;height: 128px;padding: 10px;width: 100px;margin-right:15px;" id="preview_fake" onclick="editHead()">
+         <img style="width:100px; height:100px;cursor:pointer;border:1px solid #CCC;" title="编辑头像" id="preview" src="{{logo_path_big}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/1_120.jpg') }}'">
+         <div id="loadlog" style="display:none;width:100px;height:100px;margin-top:-100px;"><img style="height: 25px;margin-left: 35px;margin-top: 35px;width: 25px;" src="{{asset('bundles/fafatimewebase/images/loadingsmall.gif')}}"/></div> 
+    		<div style='margin-top:8px;cursor:pointer;'><center><span class='clickupload'>点击上传</span></center></div>
+    	</div>
+		</div>
+	</div>
+	<div style='clear:both;'></div>
+	<div style='display:none;' class='circle_invite_member'>
+		<p style="margin-bottom:0px;"><b>邀请成员：</b><span id='memberloading' style='float:right;display:none;margin-right:240px;'>loading...</span></p>
+		<div id='circle_invite_container'><span class='pre' style="border: 0 none;font-size: 20px;font-weight: bold;" onclick="EditCircle.InviteManager.showPreMember()"><</span><ul style='margin:0;list-style:none outside none;'></ul><span class='nex' style='margin-left:10px;border: 0 none;font-size: 20px;font-weight: bold;' onclick="EditCircle.InviteManager.showNextMember()">></span></div>
+	</div>
+</div>
+<div style='clear:both;'></div>
+<div><center><span id='submiterror'></span></center></div>
+<div class='circle_create_foot'>
+	<center>
+		<div style='font-size:14px;cursor:pointer;' onclick="EditCircle.createSubmit(this)" class='createcirclebnt'><span>提交</span></div>
+		<div style='margin-left:20px;cursor:pointer;background-color:#cacaca;font-size:14px;' class='createcirclebnt' onclick="EditCircle.close();"><span>关&nbsp;闭</span></div>
+	</center>
+</div>
+<div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    <div class="modal-footer"><span><img class='modal_savelog' style='display:none;width:16px;height:16px;margin-right:5px;' src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/></span><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+</div>
+</form>
+</div>
+<script>
+	var image_default_path="";
+	var circletype={{circle_class|raw}};
+	var fileurl="{{fileurl}}";
+	var save_circle_logo_url="{{path('JustsyBaseBundle_circle_save_logo')}}";
+	var load_mind_url="{{path('JustsyBaseBundle_circle_get_mind_word')}}";
+	$(document).ready(function(){
+		var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+  	var obj_ff = obj.find("embed");
+  	uploadObj = document.all==null? obj_ff : obj;
+  	uploadObj.css({"height":"380px","width":"500px"});
+  	EditCircle.loadCircleType(circletype,"classify","circle_class_id");
+  	EditCircle.InviteManager.init({
+  		container:$("#circle_invite_container")[0],
+			prebnt:$("#circle_invite_container").find(".pre")[0],
+			nexbnt:$("#circle_invite_container").find(".nex")[0],
+			get_N_url:"{{path('JustsyBaseBundle_circle_get_invite')}}",
+			pagecount:0
+  	});
+  	EditCircle.setInputEvent($("#set_area_input")[0],load_mind_url);
+  	$("input[type='checkbox'][for]").click(function(){
+  		var p=$(this).attr('for');
+  		var val=$(this).attr('p');
+  		$(this).attr('checked',true);
+  		$("input[type='checkbox'][for='"+p+"'][p='"+Math.abs(parseInt(val)-1)+"']").attr('checked',false);
+  		$("input[type='hidden'][for='"+p+"']").val(val);
+  	});
+	});
+	function showtearea(e)
+	{
+		if($(".circle_invite_set").css('display').indexOf('none')>-1){
+			$(".circle_invite_set").css('display','block');
+			$(e).text('收起');
+		}
+		else
+			$(".circle_invite_set").css('display','none');
+		  $(e).text('通过邮箱邀请>>');
+	}
+	function saveLogo()
+	{
+		$("#loadlog").show();
+		$.post(save_circle_logo_url,{},function(d){
+			$("#loadlog").hide();
+			if(d.circle_photo_path!=''){
+				$('#preview').attr("src",fileurl+d.circle_photo_path);
+			}
+			else{
+				
+			}
+		});
+	}
+	function editHead()
+	{
+		$("#invitedphoto").modal("show");
+	}
+	function saveHead()
+	{
+		$(".modal_savelog").show();
+	   uploadObj[0].doSave();
+	}
+	function avatar_success()
+	{
+		$(".modal_savelog").hide();
+	  $("#invitedphoto").modal("hide");	
+	  var circlesdownphoto = $(".circles-downphoto");
+	  circlesdownphoto.html( "<a data-toggle=\"modal\" show=false href=\"#invitedphoto\"><img id='img1' width='120px' height='120px' src='{{path('JustsyBaseBundle_component_cavatareditor_getfileinfo',{'size':'120'})}}'/></a>");
+	  saveLogo();
+	}
+</script>

@@ -1,0 +1,219 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_mylevel %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">等级权限</div>
+<div style="margin-left: 10px; font-weight: bold;color:#515151;">
+	  {% if cur_level=="S1" %}
+	     <div style="height: 52px; line-height: 52px; margin-left: auto; margin-right: auto; width: 415px;">
+	     	  <span style="float:left;">您目前已是付费会员</span><div class="levle_bg1" style="margin-left:5px;">{{cur_level}}</div>
+	     	  <span style="float:left;margin-left:5px;">拥有所有的企业管理与业务接口功能。</span>
+	     </div>
+	  {%else%}
+	     <div>您的当前等级是<span>{{cur_level}}</span>，通过认证后直接升级为<span>{{next_level}}</span>，享有更多特权。	</div>
+       <div>您还可以直接升级到S1级付费会员，享有更多企业管理与业务接口功能。</div>
+    {%endif%}
+</div>
+
+<div id="level_content" style="display:none;">
+<div style="margin-top:10px;margin-left:65px;cursor:default;">
+	 
+	 {% if cur_level=="S1" %}
+	    <div style="border-right:1px solid;height:30px;margin-top: -12px;width:260px;"></div>
+	 {%else%}
+			 {% if level_1== cur_level  %}
+			    <div class="levle_bg1">{{level_1}}</div>
+			 {%else%}
+			   <div class="levle_bg4">{{level_1}}</div>
+			 {%endif%}
+			 
+			 
+			 <img src="{{ asset('bundles/fafatimewebase/images/level_line1.png')}}" style="float:left;margin-top:14px;" />
+			 
+			 {% if level_2== cur_level  %}
+			    <div class="levle_bg1">{{level_2}}</div>
+			 {%else%}
+			    {% if level_4 == cur_level %}
+			      <div class="levle_bg4">{{level_2}}</div>
+			    {%else%}
+			      <div class="levle_bg2">{{level_2}}</div>
+			    {%endif%}
+			 {%endif%} 
+			 
+			 <img src="{{ asset('bundles/fafatimewebase/images/level_line2.png')}}" style="float:left;margin-top:14px;" />
+			 <div class="levle_bg3">{{level_3}}</div>
+			 <img src="{{ asset('bundles/fafatimewebase/images/level_line3.png')}}" style="float:left;margin-top:14px;" />
+			 {% if level_4==cur_level %}
+			   <div class="levle_bg1">{{level_4}}</div>
+			 {% else %}
+			   <div class="levle_bg4">{{level_4}}</div>
+			 {% endif %}	 
+			 <div class="level_line1"><div></div></div>
+	 {%endif%}
+</div>
+<div style="float:left;" class="level_area">	
+    {% if cur_level=="S1" %}
+	     <div class="level_area1" style="float:left;margin-left:60px;width:580px;">
+			    	<ul id="levels1desc" style="margin:10px 0 10px 20px"></ul>
+			 </div>
+    {%else%}
+			 <div style="float:left;width:188px;">
+			    <div class="level_area1">
+			    	  <ul id="leveldesc1"></ul>
+			    </div>
+			    <div class="level_line2">
+			   	   <div class="level_line3"> 
+			   	   	  <div class="level_line3_1">
+			   	   	  	 <div class="level_line3_1_1">
+			   	   	  	 	 <span class="topmenu_app_triangle" style="border-color:rgba(0,0,0,0) rgba(0,0,0,0) #B6E1EA;left:5px;top:-10px;"></span>
+			   	   	  	 	</div>
+			   	   	  </div>
+			   	   	  <div class="level_line3_2">
+			   	   	  	 <span class="topmenu_app_triangle"  style="border-color:rgba(0,0,0,0) rgba(0,0,0,0) #B6E1EA;left:5px;top:-10px;"></span>
+			   	   	  </div>
+			   	   </div>
+			   	   <div class="level_line2_1">
+			   	   	  <span class="topmenu_app_triangle" style="border-color:rgba(0,0,0,0) rgba(0,0,0,0) #B6E1EA;left:5px;top:-10px;"></span>
+			   	   </div>
+			   </div> 		    
+		   </div>
+		 
+		   <div style="float:left;width:184px;margin-left:7px;">
+		 	  <div class="level_area2"> 
+		 	  	 <ul id="leveldesc2"></ul>
+		 	  </div>
+	     <div style="float:left;margin-top:44px;margin-left:-40px;width:100%;">
+		 	  	  <div class="level_image1">
+			 	  	  {% if level_1=="J1" %}
+			 	  	  	 <a style="color:white;" href="{{path('JustsyBaseBundle_identify_auth_user', {'network_domain' : app.user.edomain})}}" >立即认证</a>
+			 	  	  {%else%}
+			 	  	     立即升级
+			 	  	  {% endif %}
+		 	  	  </div>
+		 	  </div>
+		 	  
+		 	  <div style="float:left;margin-top:36px;">
+		 	  	  <div class="level_image2">立即升级</div>
+		 	  	  <span style="float left;margin-left:55px;height:20px;line-height: 20px;">(还需要<span style="color:red;">{{level_point}}</span>积分)</span>
+		 	  </div>
+		 	  
+		 	  <div style="float:left;margin-top:40px;">
+		 	  	  <img id="level_upgrade" src="/bundles/fafatimewebase/images/level_upgrade.png" style="float:left;margin-left:160px; cursor:pointer;;" />
+		 	  </div>	 	  	
+		 	 </div>
+		 	 
+		 	<div style="float:left;width:182px;margin-left:8px;">
+		  	 <div class="level_area3">
+		 	 	    <ul id="leveldesc3"></ul>
+		    </div>
+		  </div>
+		  
+	 	 	<div style="float:left;width:182px;margin-left:8px;">
+		  	 <div class="level_area4">
+		 	 	    <ul id="leveldesc4"></ul>
+		    </div>
+		  </div>
+	  {%endif%}
+</div>
+</div>
+
+<div style="float:left;margin-top:105px;display:block;margin-left:180px;" id="level_logding">
+	  	 <div style="float: left; margin-top: 0px; margin-left: 150px;" class="invite_loading"> </div>
+	  	 <span style="float: left; display: block; width: 100%; text-align: center;">正在努力为您获取用户权限说明。</span>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+  	 $(document).ready(function(){
+  	 	  $(".twomainright").css({"width":"765px","padding":"10px 0 0 10px"});
+  	 	  var url ="{{ path('JustsyBaseBundle_account_leveldesc')}}";
+  	 	  $.post(url,function(data){
+  	 	  	 var html = "";
+  	 	  	 if ( data!=null)
+  	 	  	 {
+  	 	  	 	  if ( "{{cur_level}}" !="S1")
+  	 	  	 	  {
+  	 	  	 	  for(var i=0;i<data.level1.length;i++)
+  	 	  	 	  {
+  	 	  	 	  	  html += "<li>"+ data.level1[i].name+"</li>";
+  	 	  	 	  }  	 	  	 	  
+  	 	  	 	  $("#leveldesc1").append(html);
+  	 	  	 	  html="";
+  	 	  	 	  for(var i=0;i<data.level2.length;i++)
+  	 	  	 	  {
+  	 	  	 	  	  html += "<li>"+ data.level2[i].name+"</li>";
+  	 	  	 	  }  	 	  	 	  
+  	 	  	 	  $("#leveldesc2").append(html);
+  	 	  	 	  
+  	 	  	 	  //计算最外层 level_line2
+  	 	  	 	  var h1 =  $("#leveldesc2").height() - $("#leveldesc1").height();
+  	 	  	 	  var h2 = h1 + 235; 	 	  	 	  
+  	 	  	 	  $(".level_line2").css("height",h2 + "px");
+  	 	  	 	  
+  	 	  	 	  h2 = h1 + 136; 	
+  	 	  	 	  $(".level_line3").css("height",h2 + "px");
+  	 	  	 	  h2 = h1 + 62; 	
+  	 	  	 	  $(".level_line3_1").css("height",h2 + "px");
+  	 	  	 	  //level_line3_1_1
+  	 	  	 	  h2 = h1 + 10;
+  	 	  	 	  $(".level_line3_1_1").css("margin-top",h2 + "px");
+  	 	  	 	  h2 = h1 - 10;
+  	 	  	 	  $(".level_line3_1_1").css("height","52px");  	 	 
+  	 	  	 	  
+  	 	  	 	  html="";  	 	 
+  	 	  	 	  for(var i=0;i<data.level3.length;i++)
+  	 	  	 	  {
+  	 	  	 	  	  html += "<li>"+ data.level3[i].name+"</li>";
+  	 	  	 	  }  	 	  	 	  
+  	 	  	 	  $("#leveldesc3").append(html);
+  	 	  	 	  
+  	 	  	 	   //计算level_line3_2
+  	 	  	 	  var h3 = $("#leveldesc3").height() - $("#leveldesc1").height();
+  	 	  	 	  h3 = h3 + 12;
+  	 	  	 	  $(".level_line3_2").css("margin-top",h3+"px");
+  	 	  	 	  h3 = $("#leveldesc3").height() - $("#leveldesc2").height();
+  	 	  	 	  h3 = 125 - h3;  	 	  	 	  
+  	 	  	 	  $(".level_line3_2").css("height",h3+"px");  	 	  	 	  
+  	 	  	 	  
+  	 	  	 	  html="";  	 	  	 	   	 	  
+  	 	  	 	  for(var i=0;i<data.level4.length;i++)
+  	 	  	 	  {
+  	 	  	 	  	  html += "<li>"+ data.level4[i].name+"</li>";
+  	 	  	 	  }  	 	  	 	  
+  	 	  	 	  $("#leveldesc4").append(html);
+  	 	  	 	  //level_line2_1
+  	 	  	 	  h1 = $(".level_area4").height()-$(".level_area1").height();
+  	 	  	 	  h1 = h1 + 12;
+  	 	  	 	  $(".level_line2_1").css("margin-top",h1+"px");
+  	 	  	 	  h1 = 222 - ($(".level_area4").height()-$(".level_area2").height());
+  	 	  	 	  $(".level_line2_1").css("height",h1 + "px");
+  	 	  	 	 }
+  	 	  	 	 else
+  	 	  	 	 {
+  	 	  	 	 	 for(var i=0;i<data.level4.length;i++)
+  	 	  	 	   {
+  	 	  	 	  	  html += "<li style='float:left;height:30px;line-height:30px;margin-left:20px;min-width:165px;'>"+ data.level4[i].name+"</li>";
+  	 	  	 	   }  	 	  	 	  
+  	 	  	 	   $("#levels1desc").append(html);
+  	 	  	 	 }
+  	 	  	 	 $("#level_logding").hide();
+  	 	  	 	 $("#level_content").show();
+  	 	  	 }
+  	 	  });	  	 	  
+  	 });
+  	 
+  	 $("#level_upgrade").live("mouseover",function(){
+  	 	  $(".level_area4").css({ "background-color":"#FFFCD7","border":"2px solid #F96A3E","opacity":"1"});
+  	 	  $(".level_area1").css({ "background-color":"#f3f3f3","border":"1px solid #999999","opacity":"1"});
+  	 });
+  	 
+  	 $("#level_upgrade").live("mouseout",function(){
+  	 	  $(".level_area4").removeAttr("style");
+  	 	  $(".level_area1").removeAttr("style");
+  	 });
+  	 
+  </script>
+{% endblock %}

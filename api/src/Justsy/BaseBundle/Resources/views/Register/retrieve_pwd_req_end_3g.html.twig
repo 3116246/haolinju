@@ -1,0 +1,13 @@
+{% extends 'JustsyBaseBundle::master_3g.html.twig' %}
+
+{% block main_content %}
+<div class="regok">
+	<h3 style="text-indent: 2em;">一封重置密码的邮件已发送至该邮箱：<b>{{login_account}}</b>。</h3>
+	<h3 style="text-indent: 2em;">请查收邮件并根据提示重新设置您的密码！</h3>
+	<br>
+	<br>
+	<a href="{{mailaddr}}">立即登录邮箱</a> 
+	<br>
+	<br>
+</div>
+{% endblock %}

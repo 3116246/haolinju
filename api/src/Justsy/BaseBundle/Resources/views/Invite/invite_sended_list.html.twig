@@ -1,0 +1,49 @@
+<table class="table" style="width: 700px;">
+  <thead>
+    <tr>
+      <th>被邀请人帐号</th>
+      <th>标题</th>
+      <th>最后邀请时间</th>
+      <th>邀请次数</th>
+      <th>&nbsp</th>
+      <th>&nbsp</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+    <tr>
+      <td width="25%"><a class="employee_name" login_account="{{ r.invite_recv_email }}">{{ r.invite_recv_email }}</a></td>
+      <td>{{ r.inv_title|raw }}</td>
+      <td width="15%">{{ r.last_invite_date }}</td>
+      <td width="10%">{{ r.invite_num }}</td>
+      {% if r.active_date %}
+      <td width="10%">&nbsp</td>
+      <td width="10%">已经加入</td>
+      {% else %}
+      <td width="10%">
+        <a style="cursor:pointer" id="{{ r.invite_recv_email }}" eno="{{ r.eno }}" onclick="reSend(this);">发送邀请</a>
+        <img style="display:none" src="{{ asset("bundles/fafatimewebase/images/loadingsmall.gif") }}" />
+      </td>
+      <td width="10%">
+        <a style="cursor:pointer" id="{{ r.invite_recv_email }}" eno="{{ r.eno }}" onclick="del(this);">取消邀请</a>
+        <img style="display:none" src="{{ asset("bundles/fafatimewebase/images/loadingsmall.gif") }}" />
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{%if(pagecount>1)%}
+<div class="pagination" style="text-align:right;margin-right: 40px;">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="getPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+  	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+  	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+  	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href='#' onclick="getPage({{i}})">{{(i)}}</a></li>
+	  {%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %}onclick="getPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}

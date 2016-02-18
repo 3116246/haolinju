@@ -1,0 +1,4 @@
+A less error occured trying to build your bundle. Please paste the error below in an issue for us at http://github.com/twitter/bootstrap! thanks!
+
+
+{"type":"Parse","message":"Syntax Error on line 1437","index":38701,"filename":"bootstrap.css","line":1437,"column":0,"extract":["}undefinedundefined//","// Tables","// --------------------------------------------------"]}

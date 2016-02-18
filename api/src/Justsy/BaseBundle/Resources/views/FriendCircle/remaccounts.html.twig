@@ -1,0 +1,112 @@
+<div style="background-color: #D5EAA5;border-radius: 5px 5px 5px 5px; left: 20px;top: -12px;position: relative;text-align: center; width: 75px;">
+<span class="titletext">推荐人脉</span>
+</div>
+<div>
+<ul style="margin: 0px;">      
+   <li id='AccContainer' style="margin: 0px;display:block;float:left; width: 100%;overflow:hidden;height:90px;list-style:none outside none;">
+   {%for row in rows%}
+   <div login_account='{{row['login_account']}}' attencall='attenusercallback' class='account_baseinfo'  style="width:62px;float:left;{%if loop.index0>7 %}display:none{%endif%}">
+		    <div style="margin: 6px;">
+					<img login_account='{{row['login_account']}}' style="cursor:pointer;width:50px;height:50px;float:left" onerror="this.src='{{asset('bundles/fafatimewebase/images/c_reg_t0.png')}}'" src="{{row['logo']}}" >
+					<!--
+					<span class="UIRoundedImage_Corners">
+						<img src="{{asset('bundles/fafatimewebase/images/UIRoundedImage.png')}}">
+					</span>
+					-->
+				</div>
+      
+      <span title='{{row['nick_name']}}' style="color:#0088CC;cursor:pointer;height:22px;overflow:hidden;display: block; width: 62px; text-align: center;">{{row['nick_name']}}</span>
+   </div>
+   {%endfor%}
+</li>
+</ul>
+</div>
+<script>
+	var rem_account_url="{{path('JustsyBaseBundle_friendcircle_get_recom_contacts')}}";
+	var RemAcountManager={
+		_root:AccContainer,
+		_curr:0,
+		_min:10,
+		_page:1,
+		_get:true,
+		_url:rem_account_url,
+		_getting:false,
+		len:function(){
+			return $(RemAcountManager._root).find("img[login_account]").length;
+		},
+		nextshow:function(){
+			var _curre=$(RemAcountManager._root).find("img:eq("+(RemAcountManager._curr)+")");
+			_curre.parent().parent().show();
+			RemAcountManager._curr++;
+		},
+		checkleave:function(){
+			var attened=$(RemAcountManager._root).find("img[atten='1']").length;
+			if(RemAcountManager.len()-attened<=RemAcountManager._min)
+				return true;
+			return false;
+		},
+		attenedhide:function(login_account){
+			var e=RemAcountManager.getElbyAccount(login_account);
+			if(e==$(RemAcountManager._root).find("img[login_account]:last"))
+			{
+				RemAcountManager.cantfind();
+				return;
+			}
+			$(e).attr('atten','1').parent().parent().hide('slow');
+			RemAcountManager.nextshow();
+			if(RemAcountManager.checkleave())
+			{
+				RemAcountManager.moredata();
+			}
+		},
+		getElbyAccount:function(login_account){
+			var _c=$(RemAcountManager._root).find("img[login_account='"+login_account+"']");
+			return _c.length>0?_c[0]:null;
+		},
+		moredata:function(){
+			if(!RemAcountManager._get)return;
+			if(RemAcountManager._getting)return;
+			$.post(RemAcountManager._url,{pageIndex:(RemAcountManager._page+1)},function(data){
+				if(data.length==0)
+					RemAcountManager._get=false;
+				else{
+					RemAcountManager.expend(data);
+					RemAcountManager._page++;
+				}
+				RemAcountManager._getting=false;
+			});
+			RemAcountManager._getting=true;
+		},
+		expend:function(_new){
+			var html=[];
+			for(var i=0;i<_new.length;i++)
+			{
+				html.push("<div style='width:62px;float:left;display:none;'><img login_account='"+_new[i].login_account+"' class='employee_name account_baseinfo' onerror=\"this.src='{{asset('bundles/fafatimewebase/images/no_photo.png')}}'\" src='"+_new[i].logo+"' style='cursor:pointer;margin: 6px;width:48px;height:48px;float:left'><span title='' style='color:#0088CC;cursor:pointer;height:22px;overflow:hidden;display: block; width: 62px; text-align: center;'>"+_new[i].nick_name+"</span></div>");
+			}
+			$(RemAcountManager._root).append(html.join(''));
+		},
+		cantfind:function(){
+			var html=[];
+			html.push("<span style='color:#CCC;'>没有更多人脉咯！</span>");
+			$(RemAcountManager._root).append(html.join(''));
+		}
+	};
+	$(document).ready(function(){
+	  //ContactCard.OnAttened = attencallback;  //关注事件委托
+	  
+		$divs=$("#RemAcounts ul div");
+//		for(var i=0;i< Math.min($divs.length,8);i++)
+//		{
+//			$($divs[i]).show();
+//		}
+		RemAcountManager._curr=Math.min($divs.length,8);
+	});
+	function attenusercallback(atten,d,login_account)
+	{
+		if(atten=='1' && d=='1'){
+			ContactCard.hide();
+			ShowInfoHint("您已成功关注了 "+$(".account_baseinfo[login_account='"+login_account+"']>span").text()+",当TA关注你后你们将成为好友。",5000);
+			RemAcountManager.attenedhide(login_account);
+		}
+	}
+</script>

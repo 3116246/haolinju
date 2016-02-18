@@ -1,0 +1,18 @@
+WebIMImOCSManagerBundle_admin:
+    pattern:  /admin/{eno}
+    defaults: { _controller: WebIMImOCSManagerBundle:Default:admin_seatassign}
+WebIMImOCSManagerBundle_save:
+    pattern:  /publicaccount/admin_save
+    defaults: { _controller: WebIMImOCSManagerBundle:Default:admin_seatasave}
+WebIMImOCSManagerBundle_saveAccount:
+    pattern:  /publicaccount/admin_save_account
+    defaults: { _controller: WebIMImOCSManagerBundle:Default:admin_saveAccount} 
+WebIMImOCSManagerBundle_wordadmin:
+    pattern:  /wordadmin/list
+    defaults: { _controller: WebIMImOCSManagerBundle:Word:amdin_word} 
+WebIMImOCSManagerBundle_wordadminsave:
+    pattern:  /wordadmin/save
+    defaults: { _controller: WebIMImOCSManagerBundle:Word:saveData}
+WebIMImOCSManagerBundle_wordlist:
+    pattern:  /wordadmin/listserveice
+    defaults: { _controller: WebIMImOCSManagerBundle:Word:getJsonData}      

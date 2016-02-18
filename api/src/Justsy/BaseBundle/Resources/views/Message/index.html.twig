@@ -1,0 +1,40 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+<div class="left">
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain, 'curr_sel_leftmenu' : '1'} %}
+		<!--<div class="menuother">我的消息</div>
+    <ul class="left-menu">
+						<li>
+							<a href="#" onclick="$('#messagebox').children().remove();LoadComponent('messagebox','{{path("JustsyBaseBundle_message_push",{"network_domain":curr_network_domain})}}');">
+							<div class="homeleft_down_sub_icon leftmenu_icon6"></div>
+							<span class="homeleft_menu_sub_txt">写消息</span>
+							</a>
+						</li>
+						
+						<li>
+							<a href="#" onclick="$('#messagebox').empty();LoadComponent('messagebox', '{{path("JustsyBaseBundle_message_getmsg",{"network_domain":curr_network_domain})}}/0');">
+							<div class="homeleft_down_sub_icon leftmenu_icon2"></div>
+							<span class="homeleft_menu_sub_txt">未读消息</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="$('#messagebox').empty();LoadComponent('messagebox', '{{path("JustsyBaseBundle_message_getmsg",{"network_domain":curr_network_domain})}}/1');">
+							<div class="homeleft_down_sub_icon leftmenu_icon2"></div>
+							<span class="homeleft_menu_sub_txt">已读消息</span>
+							</a>
+						</li>
+	  </ul>
+	  -->
+</div>   
+{% endblock %}
+
+{% block main_content_center%}
+<div id="messagebox" getmsgurl="{{path("JustsyBaseBundle_message_getmsg",{"network_domain":curr_network_domain })}}"
+  delmsgurl="{{path('JustsyBaseBundle_message_delete')}}"
+  detailurl="{{path('JustsyBaseBundle_message_one',{'network_domain':curr_network_domain})}}"
+  pushurl="{{path("JustsyBaseBundle_message_push",{"network_domain":curr_network_domain})}}">
+{% render 'JustsyBaseBundle:Message:getMsg' with{'network_domain':curr_network_domain,'type':'0','pageindex':'1'} %}
+</div>
+{% endblock %}

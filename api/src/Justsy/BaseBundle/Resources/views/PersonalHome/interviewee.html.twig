@@ -1,0 +1,89 @@
+{% extends 'JustsyBaseBundle:PersonalHome:index.html.twig' %}
+
+{% block main_content_center %}
+<div style="height:75px">
+  <table border=0 width=100%>
+  		<tr>
+				<td width="15%">
+				 <img src="{{photo_url}}"  width=50 heigth=50 onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'">
+				</td>
+				<td  width="80%">
+				 <div>&nbsp;<a style='cursor:pointer;color:#1A65A5' login_account="{{this.account}}">{{userinfo.nick_name}}</a></div>
+				 <div style="color:#666666;padding-left:16px">{{userinfo.duty}}</div>
+				</td>
+				<td align=right>
+				    {%if(self==false)%}<a href="javascript:FaFaChatWin.ShowRoster('{{userinfo.fafa_jid}}')" style='color:#0088cc' id='employee_card_dlag_sendmsg' class="pesonal_message">即时消息</a><span class="ecread_icon_sendmesage"></span><br><span class="attention" login_account="{{this.account}}" state="{{ state }}">+关注他</span>{%endif%}
+				</td>
+			</tr>
+  </table>
+</div>
+{% if view=='1'%}
+<div class="hometopic">
+	<div class="topicmenu" id="topicmenu">
+		<ul class="topic_top" id="menus">
+			<li style="width:480px;"><div class="line20" style="width:480px;"></div></li>
+			<li style="width:20px;"><a href="javascript:window.location.reload(true)" title="刷新"><div class="topic_flush"></div></a></li>
+		</ul>
+	</div>
+  <div class="tabbox" style="display:none">
+    <ul>
+      <li id="two1" onClick="setDisplayTab(this)" class="hover" loadurl="{{ path('JustsyBaseBundle_personal_get_conversvisitor',{'type':'all','network_domain':curr_network_domain,'account':this.account}) }}" >全部</li>
+    </ul>
+  </div>
+  <div class="contentbox">
+    <div id="con_two1" class="display_con_area hover"></div>
+  </div>
+  <script type="text/javascript">
+    var manager_trend={{trend}};
+    $(document).ready(function() {
+      setDisplayTab(document.getElementById("two1"));
+      window.OnPublished = EnterpriseHome_OnPublished;
+      $(window).scroll(EnterpriseHome_Document_OnScroll);
+      window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000*60);
+    });   
+  </script>
+</div>
+{%else%}
+<div id="invite_area" style="display:block;border: 1px solid #DCECF0;height: 30px;margin-bottom: 20px;">
+     <div class="rightbox-title">您还未获得相应权限，不能查看企业圈子更多动态！</div>
+  </div>
+{%endif%}
+{% endblock %}
+
+{% block main_content_right %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">电子名片</span>
+  </div>
+  <div style="padding-left: 15px;">
+		   <div class="dept_name">部门：{{ userinfo.dept_name }}</div>
+		   <div class="duty">职务：{{ userinfo.duty }}</div>
+		   <div class="phone">电话：{{ userinfo.work_phone }}</div>
+		   <div class="mobile">手机：{{ userinfo.mobile }}</div>
+		   <div class="birthday">出生日期：{{ userinfo.birthday }}</div>
+		   <div class="email">电子邮箱：<br>{{this.account}}</div>
+  </div>
+</div>
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">粉丝 (<span id="_attentionmecount">0</span>)</span>
+  </div>
+  <div>
+    {% render "JustsyBaseBundle:EmployeeCard:queryAttentionThis" with {"account" : app.user.username, topCount:-1} %}
+  </div>
+</div>
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">正在关注 (<span id="_meattentioncount">0</span>)</span>
+  </div>
+  <div>
+    {% render "JustsyBaseBundle:EmployeeCard:queryAttention" with {"account" : app.user.username, topCount:-1} %}
+  </div>
+</div>
+<script type="text/javascript">
+      $(document).ready(function() {
+          $("#_meattentioncount").text( $("#meattentioncount").text());
+          $("#_attentionmecount").text( $("#attentionmecount").text());
+      });
+</script>
+{% endblock %}

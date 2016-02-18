@@ -1,0 +1,24 @@
+.fafa_share_modal {
+    background-clip: padding-box;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    left: 50%;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    width: 560px;
+    z-index: 1050;
+    height: 195px;
+    margin-left: -210px;
+    margin-top: -90px;
+    width: 420px;    
+}
+
+.fafa_share_window_title {
+    background: url("../images/document_title_bg.jpg") repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CBCBCB;
+    height: 28px;
+    line-height: 28px;
+}

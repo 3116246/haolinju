@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}FaFa，开启企业社会化时代！{% endblock %}</title>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafawebimimocsmanager/images/favicon.ico') }}">
+<meta name="description" content="FaFa是一个依托于强大的FaFa即时消息平台、企业开放平台基础上的面向企业用户的社交网络平台。" />
+<meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafawebimimocsmanager/css/all.css') }}" />
+{% block stylesheets %}{% endblock %}
+<SCRIPT src="{{ asset('bundles/fafawebimimocsmanager/js/jquery-1.5.2.min.js') }}"></SCRIPT>
+<SCRIPT src="{{ asset('bundles/fafawebimimocsmanager/js/Util.js') }}"></SCRIPT>
+{% block javascriptsref %}{% endblock %}
+</head>
+<body id="index">
+<div id="main_header">
+  <div id="main_header_bg">
+    <div id="main_header_logo"><img src="{{ asset('bundles/fafawebimimocsmanager/images/head_04.jpg') }}" alt="FaFa，开启企业社会化时代！" width="274" height="87"/></div>
+    <div id="main_header_right">
+      <div id="main_header_quick">
+        <div id="quick">
+          <div id="quick_one"><a href="#">邀请</a></div>
+          <div id="quick_two"><a href="#">反馈</a></div>
+          <div id="quick_three"><a href="#">帮助</a></div>
+        </div>
+      </div>
+      <div id="main_header_menu">
+        <ul id="nav">
+          <li> <a href="{{ path('WebIMImOCSManagerBundle_admin',{'eno':''}) }}" onfocus="this.blur()">坐席管理</a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% block main_content %}
+
+{% endblock %}
+<div id="main_footer">
+  <div id="main_footer_bg">
+    <div id="main_footer_left">Copyright © 2012 Justsy Inc.All Rights Reserved. <a href="http://www.miibeian.gov.cn" target="_blank">京ICP备12029244号</a></div>
+    <div id="main_footer_right">
+      <ul>
+        <li><a href="about.html">关于我们</a></li>
+        <li><a href="help.html">使用帮助</a></li>
+        <li><a href="download.html">软件下载</a></li>
+        <li><a href="job.html">招贤纳士</a></li>
+        <li><a href="contact.html">联系我们</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

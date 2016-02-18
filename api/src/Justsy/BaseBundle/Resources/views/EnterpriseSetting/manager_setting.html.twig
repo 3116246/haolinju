@@ -1,0 +1,222 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_manager_setting %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<form id="formbasic"  method="post" class="form-horizontal">
+    <div class="grade-title">权限设置</div>
+    <div class="rightdetail clearfix">
+    </div>
+    <div class="control-group"  style="border-bottom: 1px solid rgb(243, 243, 243); padding-bottom: 20px;">
+        <label class="control-label" for="manager" style="width:120px;">管理员：</label>
+        <div class="controls">
+            <div class="lib_notify ask_div1" style="width:284px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#manager').focus()">
+                <input type="text" class="input-xlarge" value="" id="manager" name="manager" data-provide="typehead" style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:260px;font-size:12px;float:left;"/>
+            </div>
+            <div id="InputNotifyArea" style="margin:0px;padding:0px;width:620px;margin-left:40px;vertical-align:center;float:left;line-height:30px;background-color:white;">
+				{% for i in manager%}
+                <span class="NotifyObj">
+                    <input  type="hidden" value="{{i.login_account}}">
+                    <span class="NotifyPerson">{{i.nick_name}}</span>
+                    <span class="NotifyClose" onclick="NotifyClose_OnClick(this)">×</span>
+                </span>
+			    {% endfor %}
+            </div>
+            <script type="text/javascript">
+                function txtNotify_OnKeyUp_C(e) 
+				{
+					if (e.keyCode == 8) // backspace
+					{
+						return;
+						if ($(this).val() == "")
+							$("#InputNotifyArea_report_object .NotifyObj:last").remove();
+					}
+					else if (e.keyCode == 13)
+				    {
+						var $this = $(this),v = $this.val();
+						if (v == "") return;
+						if (v.indexOf("@") <= 0)
+						{ 
+							$this.val("");
+							return;
+						}
+						var $InputNotifyArea = $("#InputNotifyArea");
+						if ($("input[value='"+v+"']", $InputNotifyArea).length == 0)
+							$InputNotifyArea.append(GetNotifyTemplate(v, v));
+						$this.val("");
+					}
+				}
+                var manager_query_url = "{{path('JustsyBaseBundle_circle_setting_query_enterprise_manager')}}";
+                var network_domain = "{{curr_network_domain}}";
+                var datasource;
+                $("#manager").typeahead({
+                    source: enterprise_setting.datasource,
+                    items: 8,
+                    matcher: enterprise_setting.manager_matcher,
+                    sorter: enterprise_setting.manager_sorter,
+                    highlighter: enterprise_setting.manager_highlighter,
+                    updater: enterprise_setting.manager_updater
+                });
+                $("#manager").bind("keyup", txtNotify_OnKeyUp_C);
+            </script>
+
+            <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+            <span  class="help-line" style="color:red"></span>
+        </div>
+    </div>
+    <div class="control-group"  style="border-bottom: 1px solid rgb(243, 243, 243); padding-bottom: 20px;">
+        <label class="control-label" for="manager" style="width:120px;">会议管理专员：</label>
+        <div class="controls">
+            <div class="lib_notify ask_div1" style="width:284px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#meeting_manager').focus()">                                
+                <input type="text" class="input-xlarge" value="" id="meeting_manager" name="meeting_manager" data-provide="typehead" style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:260px;font-size:12px;float:left;"/>
+            </div>
+            <div id="meeting_InputNotifyArea" style="margin:0px;margin-left:40px;width:620px;padding:0px;vertical-align:center;float:left;line-height:30px;background-color:white;">
+				{% for i in meeting_manager%}
+                    <span class="NotifyObj">
+                        <input  type="hidden" value="{{i.login_account}}">
+                        <span class="NotifyPerson">{{i.nick_name}}</span>
+                        <span class="NotifyClose" onclick="NotifyClose_OnClick(this)">×</span>
+                    </span>
+                {% endfor %}
+            </div>
+            <script type="text/javascript">
+                var manager_query_url = "{{path('JustsyBaseBundle_circle_setting_query_enterprise_manager')}}";
+                var network_domain = "{{curr_network_domain}}";
+                var datasource;
+                $("#meeting_manager").typeahead({
+                    source: enterprise_setting.datasource,
+                    items: 8,
+                    matcher: enterprise_setting.manager_matcher,
+                    sorter: enterprise_setting.manager_sorter,
+                    highlighter: enterprise_setting.manager_highlighter,
+                    updater: enterprise_setting.manager_updater
+                });
+                $("#meeting_manager").bind("keyup", function(e) {
+                    if (e.keyCode == 8) // backspace
+                    {
+                    	return;
+                        if ($(this).val() == "")
+                            $("#meeting_InputNotifyArea .NotifyObj:last").remove();
+                    }
+                });
+            </script>
+
+            <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+            <span  class="help-line" style="color:red"></span>
+        </div>
+    </div>     
+    <div class="control-group"  style="border-bottom: 1px solid rgb(243, 243, 243); padding-bottom: 20px;">
+        <label class="control-label" for="manager" style="width:120px;">移动门户管理员：</label>
+        <div class="controls">
+            <div class="lib_notify ask_div1" style="width:284px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#mobile_manager').focus()">                                
+                <input type="text" class="input-xlarge" value="" id="mobile_manager" name="mobile_manager" data-provide="typehead" style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:260px;font-size:12px;float:left;"/>
+            </div>
+            <div id="mobile_InputNotifyArea" style="margin:0px;margin-left:40px;width:620px;padding:0px;vertical-align:center;float:left;line-height:30px;background-color:white;">
+                {% for i in mobile_manager%}
+                <span class="NotifyObj">
+                    <input  type="hidden" value="{{i.login_account}}">
+                    <span class="NotifyPerson">{{i.nick_name}}</span>
+                    <span class="NotifyClose" onclick="NotifyClose_OnClick(this)">×</span>
+                </span>
+                {% endfor %}
+            </div>
+            <script type="text/javascript">
+                var manager_query_url = "{{path('JustsyBaseBundle_circle_setting_query_enterprise_manager')}}";
+                var network_domain = "{{curr_network_domain}}";
+                var datasource;
+                $("#mobile_manager").typeahead({
+                    source: enterprise_setting.datasource,
+                    items: 8,
+                    matcher: enterprise_setting.manager_matcher,
+                    sorter: enterprise_setting.manager_sorter,
+                    highlighter: enterprise_setting.manager_highlighter,
+                    updater: enterprise_setting.manager_updater
+                });
+                $("#mobile_manager").bind("keyup", function(e) {
+                    if (e.keyCode == 8) // backspace
+                    {
+                        return;
+                        if ($(this).val() == "")
+                            $("#mobile_InputNotifyArea .NotifyObj:last").remove();
+                    }
+                });
+            </script>
+            <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+            <span  class="help-line" style="color:red"></span>
+        </div>
+    </div>     
+
+    <div class="control-group" style="display:none">
+        <label class="control-label" for="txtname"></label>
+        <div class="controls">
+            <input type="text" class="input-xlarge" id="array_manager" name="array_manager">
+            <input type="text" class="input-xlarge" id="array_meeting_manager" name="array_meeting_manager">
+            <input type="text" class="input-xlarge" id="array_mobile_manager" name="array_mobile_manager">
+            <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+            <span class="help-inline" style="color:red"></span> 
+        </div>
+    </div>
+    <div class="form-actions">
+        <input id="btnSave" type="button" onclick="submit_content();" style="width:138px" class="inputsmall" value="保存"/>
+        <span id="hint" class="help-inline" style="width:172px;display:none;">
+            <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16"/>
+            <a id="hint_msg" style="color:#db4800"></a>
+        </span>	
+    </div>
+    <div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+        <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+        <div class="modal-footer"><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+    </div>
+</form>
+<script language="javascript">
+      
+                //提交数据
+                function submit_content()
+                {
+                    var array_manager = $.unique(
+                        $("#InputNotifyArea input").map(function() {
+                            return $(this).val();
+                        }).toArray()
+                    ).join(";");
+
+                    var array_meeting_manager = $.unique(
+                        $("#meeting_InputNotifyArea input").map(function() {
+                            return $(this).val();
+                        }).toArray()
+                    ).join(";");
+                    var array_mobile_manager = $.unique(
+                        $("#mobile_InputNotifyArea input").map(function() {
+                            return $(this).val();
+                        }).toArray()
+                    ).join(";");                    
+                    $("#array_manager").val(array_manager);
+                    $("#array_meeting_manager").val(array_meeting_manager);
+                    $("#array_mobile_manager").val(array_mobile_manager);
+                    document.getElementById('btnSave').disabled = true;
+                    $('#btnSave').val("提交中...");
+                    $("form").ajaxSubmit({
+                        dataType: 'json', //返回的数据类型
+                        url: "{{ path('JustsyBaseBundle_enterprise_setting_savemanager_setting', {'network_domain' : curr_network_domain}) }}", //表单的action
+                        method: 'post',
+                        success: function(r) {
+                            if (r.success)
+                            {
+                                $('#hint').show();
+                                $('#hint_img').attr('src', "{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+                                $('#hint_msg').text('权限设置成功！');
+                                setTimeout("$('#hint').hide()", 2000);
+                            }
+                            else
+                            {
+                                $('#hint').show();
+                                $('#hint_img').attr('src', "{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+                                $('#hint_msg').text('权限设置失败！');
+                                setTimeout("$('#hint').hide()", 2000);
+                            }
+                            document.getElementById('btnSave').disabled = false;
+                            $('#btnSave').val("保存");
+                        }
+                    });
+                }
+    </script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'JustsyBaseBundle::master_3g.html.twig' %}
+
+{% block main_content %}
+<div>
+  <form id="contentForm" method="post" action="{{ path('JustsyBaseBundle_reg_saveretrievereq_3g') }}" >
+    <p style="font-size:1.2em;">请通过您的注册邮箱找回密码</p>
+    <div>注册帐号:</div>
+    <div>
+      <input type="text" style="font-size:1.2em;" id="login_account" name="login_account" value="{{login_account}}" />
+      <img class="imgclass" style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16" />
+    </div>
+  </form>
+  <span class="hint-msg" style="color:red;">{{err}}</span>
+  <br/>
+  <br/>
+  <div>
+    <input type="button" style="font-size:1.1em;" id="btnRePwd" value="下一步"/>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+$(document).ready(function()
+{
+  $("#btnRePwd").click(function()
+  {
+    var acc = $("#login_account").val();
+    if (!acc)
+    {
+      $(".hint-msg").text("请输入注册帐号");
+    }
+    else
+    {
+      $("#contentForm").submit();
+    }
+  });
+});
+</script>
+{% endblock %}

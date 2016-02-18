@@ -1,0 +1,126 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_preference %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">个人设置</div>
+<div class="rightdetail clearfix">
+  <style>
+  .checkbox input[type="checkbox"]{float:none; margin: -4px 5px 0 0}  
+  </style>
+  <h5>允许外部圈子人员查看我的下列信息</h5>
+  <label style="width:80px;" class="checkbox"><input type="checkbox" id="pref_externview_dept" {{ pref_externview_dept is defined and pref_externview_dept == "1" ? "checked" : "" }}>我的部门</label>
+  <label style="width:80px;" class="checkbox"><input type="checkbox" id="pref_externview_sex" {{ pref_externview_sex is defined and pref_externview_sex == "1" ? "checked" : "" }}>我的性别</label>
+  <label style="width:80px;" class="checkbox"><input type="checkbox" id="pref_externview_duty" {{ pref_externview_duty is defined and pref_externview_duty == "1" ? "checked" : "" }}>我的职务</label>
+  <label style="width:110px;" class="checkbox"><input type="checkbox" id="pref_externview_work_phone" {{ pref_externview_work_phone is defined and pref_externview_work_phone == "1" ? "checked" : "" }}>我的工作电话</label>
+  <label style="width:80px;" class="checkbox"><input type="checkbox" id="pref_externview_mobile" {{ pref_externview_mobile is defined and pref_externview_mobile == "1" ? "checked" : "" }}>我的手机</label>
+  <label style="width:80px;" class="checkbox"><input type="checkbox" id="pref_externview_hometown" {{ pref_externview_hometown is defined and pref_externview_hometown == "1" ? "checked" : "" }}>我的籍贯</label>
+  <label style="width:110px;" class="checkbox"><input type="checkbox" id="pref_externview_graduated" {{ pref_externview_graduated is defined and pref_externview_graduated == "1" ? "checked" : "" }}>我的毕业院校</label>
+  <label style="width:110px;" class="checkbox"><input type="checkbox" id="pref_externview_work_his" {{ pref_externview_work_his is defined and pref_externview_work_his == "1" ? "checked" : "" }}>我的工作经历</label>
+  <input type="hidden" id="SavePrefUrl" value="{{ path('JustsyBaseBundle_account_savepreference', {'network_domain' : curr_network_domain})}}">
+  <div class="form-actions"><button type="button" class="inputsmall" onclick="btnSavePref(this)">保存</button><span id="saveMsg" style="color:red;"></span></div>
+
+<script type="text/javascript" > 
+function btnSavePref(sender)
+{
+  var $sender = $(sender);
+  var $saveMsg = $sender.siblings("#saveMsg");
+  
+  $sender.text("保存中...").attr("disabled", "disabled");
+  $.post($sender.parent().siblings("#SavePrefUrl").val(),
+    { 
+      pref_externview_dept : $("#pref_externview_dept")[0].checked ? "1" : "0",
+      pref_externview_sex : $("#pref_externview_sex")[0].checked ? "1" : "0",
+      pref_externview_duty : $("#pref_externview_duty")[0].checked ? "1" : "0",
+      pref_externview_work_phone : $("#pref_externview_work_phone")[0].checked ? "1" : "0",
+      pref_externview_mobile : $("#pref_externview_mobile")[0].checked ? "1" : "0",
+      pref_externview_hometown : $("#pref_externview_hometown")[0].checked ? "1" : "0",
+      pref_externview_graduated : $("#pref_externview_graduated")[0].checked ? "1" : "0",
+      pref_externview_work_his : $("#pref_externview_work_his")[0].checked ? "1" : "0",
+      t: new Date().getTime()
+    },
+    function (data) 
+    {
+      if (data.success == "1")
+      {
+        $saveMsg.text("保存成功");
+      }
+      else
+      {
+        $saveMsg.text(data.msg);
+      }
+      
+      $sender.text("保存").removeAttr("disabled");
+    },
+    "json"
+  );  
+
+}
+  
+$(document).ready(function()
+{
+});
+</script>
+
+  {#
+  <div class="alllist">
+    <h5>请选择您想改变的电子邮件和短信通知的设置。</h5>
+    <b>通过邮件发送</b><br>
+    将所有认证邮箱的更新信息都发送至 <a href="mailto:">fafacn.com@yammer.com</a>
+    <label class="checkbox">
+    <input type="checkbox" checked>
+    发布更新前需要先确认我的邮件地址（防止欺骗） </label>
+    <label class="control-label" for="input01">向我发送消息动态摘要：</label>
+    <div class="controls">
+      <select style=" width:64px;">
+        <option selected>每天</option>
+        <option>从不</option>
+        <option>每周</option>
+      </select>
+    </div>
+    <b>向我发送以下信息的提醒邮件</b>
+    <label class="checkbox"><input type="checkbox" checked>有人在消息中@提到我</label>
+    <label class="checkbox"><input type="checkbox" checked>有新的粉丝</label>
+    <label class="checkbox"><input type="checkbox" checked>我通过电子邮件贴了一条信息</label>
+    <label class="checkbox"><input type="checkbox" checked>接收到回复和私信</label>
+    <label class="checkbox"><input type="checkbox" checked>有人赞了我发的信息</label>
+    <label class="checkbox"><input type="checkbox" checked>有人申请加入我管理的私密小组</label>
+    <label class="checkbox"><input type="checkbox" checked>当有新的推荐关注的人（每周）</label>
+    <label class="checkbox"><input type="checkbox" checked>有人在消息中@提到我</label>
+    <label class="checkbox"><input type="checkbox" checked>FaFa的新功能或重要更新</label>
+    <br>
+    <div class="subscription"> <b>实时订阅（通过电子邮件或SMS）</b>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th></th>
+            <th>电子邮件(liuzd@fafacn.com)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RSS</td>
+            <td><label class="checkbox">
+              <input type="checkbox" checked>
+            </label></td>
+          </tr>
+          <tr>
+            <td>研发中心</td>
+              <td><label class="checkbox">
+                <input type="checkbox" checked>
+              </label></td>
+            </tr>
+            <tr>
+              <td>设计群</td>
+              <td><label class="checkbox">
+                <input type="checkbox" checked>
+              </label></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-actions"><button type="submit" class="inputsmall" >保存</button></div>
+  </div>
+  #}
+</div>
+{% endblock %}

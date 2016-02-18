@@ -1,0 +1,193 @@
+<div class="rightbox-title">
+  <span class="titletext">热点人物</span>
+  <!--<span class="titlemore" title="查看更多"><a href="{{ path("JustsyBaseBundle_help_index") }}"><div class="more-img"></div></a></span>-->
+</div>
+<div>
+  <ul style="margin:0px;list-style:none outside none;">
+  	<li id='suppercontainer' style='overflow:hidden;padding-left:10px;height:165px;'>
+  	{%for row in rows%}
+  	<div class='i_supper account_baseinfo' style="{%if loop.index0>5 %}display:none;{%endif%}cursor:pointer;width:50px;margin: 7px;float: left;" title="{{row['nick_name']}}" login_account="{{row['login_account']}}">
+							<img login_account="{{row['login_account']}}" style="width:50px;height:50px;float:left" src="{{row['logo']}}" onerror="this.src='{{asset('bundles/fafatimewebase/images/no_photo.png')}}'">
+							<!--
+							<span class="UIRoundedImage_Corners">
+								<img src="{{asset('bundles/fafatimewebase/images/UIRoundedImage.png')}}">
+							</span>
+							-->
+							<span title='{{row['nick_name']}}' style="color:#0088CC;cursor:pointer;height:22px;overflow:hidden;display: block; width: 50px; text-align: center;">{{row['nick_name']}}</span>
+						</div> 
+  	{%endfor%}
+  	</li>
+  </ul>
+</div>
+<script>
+	var get_supper_url="{{path('JustsyBaseBundle_friendcircle_get_supper')}}";
+	var SupperManager={
+		_root:suppercontainer,
+		_curr:0,
+		_min:10,
+		_page:1,
+		_get:true,
+		_url:get_supper_url,
+		_getting:false,
+		len:function(){
+			return $(SupperManager._root).find("div.i_supper[login_account]").length;
+		},
+		nextshow:function(){
+			var _curre=$(SupperManager._root).find("div.i_supper("+(SupperManager._curr)+")");
+			_curre.show();
+			SupperManager._curr++;
+		},
+		checkleave:function(){
+			var attened=$(SupperManager._root).find("div.i_supper[atten='1']").length;
+			if(SupperManager.len()-attened<=SupperManager._min)
+				return true;
+			return false;
+		},
+		attenedhide:function(login_account){
+			var e=SupperManager.getElbyAccount(login_account);
+			if(e==$(SupperManager._root).find("div.i_supper:last"))
+			{
+				SupperManager.cantfind();
+				return;
+			}
+			$(e).attr('atten','1').hide('slow');
+			SupperManager.nextshow();
+			if(SupperManager.checkleave())
+			{
+				SupperManager.moredata();
+			}
+		},
+		getElbyAccount:function(login_account){
+			var _c=$(SupperManager._root).find("div.i_supper[login_account='"+login_account+"']");
+			return _c.length>0?_c[0]:null;
+		},
+		moredata:function(){
+			if(!SupperManager._get)return;
+			if(SupperManager._getting)return;
+			$.post(SupperManager._url,{pageIndex:(SupperManager._page+1)},function(data){
+				if(data.length==0)
+					SupperManager._get=false;
+				else{
+					SupperManager.expend(data);
+					SupperManager._page++;
+				}
+				SupperManager._getting=false;
+			});
+			SupperManager._getting=true;
+		},
+		expend:function(_new){
+			var html=[];
+			for(var i=0;i<_new.length;i++)
+			{
+				html.push("<div class='i_supper roundedimage account_baseinfo' style='cursor:pointer;margin: 7px;width:50px;float: left;' title='"+_new[i].nick_name+"' login_account='"+_new[i].login_account+"'>"+
+							"<img login_account='"+_new[i].login_account+"' style='width:50px;height:50px;float:left' src='"+_new[i].logo+"' onerror=\"this.src='{{asset('bundles/fafatimewebase/images/no_photo.png')}}'\">"+
+							"<span class='UIRoundedImage_Corners'>"+
+								"<img src=\"{{asset('bundles/fafatimewebase/images/UIRoundedImage.png')}}\"></span></div>");
+			}
+			$(SupperManager._root).append(html.join(''));
+		},
+		cantfind:function(){
+			var html=[];
+			html.push("<span style='color:#CCC;'>没有更多人脉咯！</span>");
+			$(SupperManager._root).append(html.join(''));
+		}
+	};
+		$(document).ready(function(){
+			$lis=$("div.i_supper");
+			SupperManager._curr=Math.min($lis.length,6);
+//			$("#suppercontainer1,#suppercontainer2").mouseover(function(event){
+//				if(checkHover(event,this)){
+//					SupperManager._root=this;
+//				}
+//			});
+		});
+		function attensuppercallback(atten,d,login_account)
+		{
+			if(atten=='1' && d=='1'){
+				ContactCard.hide();
+				SupperManager.attenedhide(login_account);
+			}
+		}
+		/*
+		var SupperManager={
+		_root:null,
+		_root1:suppercontainer1,
+		_root2:suppercontainer2,
+		_curr:0,
+		_min:10,
+		_le:2,
+		_page:1,
+		_get:true,
+		_url:get_supper_url,
+		_getting:false,
+		_container:{{json|raw}},
+		len:function(){
+			return SupperManager._container.length;
+		},
+		nextshow:function(){
+//			var _curre=$(SupperManager._root).find("img:eq("+(SupperManager._curr)+")");
+//			_curre.parent().show();
+			SupperManager._curr++;
+		},
+		checkleave:function(){
+			var attened=$(SupperManager._root1).find("div.i_supper[atten='1']").length+$(SupperManager._root2).find("div.i_supper[atten='1']").length;
+			if(SupperManager.len()-attened<=SupperManager._min)
+				return true;
+			return false;
+		},
+		attenedhide:function(login_account){
+			var e=SupperManager.getElbyAccount(login_account);
+//			if(e==$(SupperManager._root).find("div.i_supper:last"))
+//			{
+//				SupperManager.cantfind();
+//				return;
+//			}
+			//var _len=$(SupperManager._root).find("div.i_supper").length-$(SupperManager._root).find("div.i_supper[atten='1']").length;
+			SupperManager._root=$(e).parent()[0];
+			if(SupperManager._curr< SupperManager.len()){
+				var ts=[];
+				ts.push(SupperManager._container[SupperManager._curr]);
+				SupperManager.expend(ts);
+				SupperManager._curr++;
+				$(e).attr('atten','1').hide('slow');
+			}
+			if(SupperManager.checkleave())
+			{
+				SupperManager.moredata();
+			}
+		},
+		getElbyAccount:function(login_account){
+			var _c1=$(SupperManager._root1).find("div.i_supper[login_account='"+login_account+"']");
+			var _c2=$(SupperManager._root2).find("div.i_supper[login_account='"+login_account+"']");
+			return _c1.length>0?_c1[0]:(_c2.length>0?_c2[0]:null);
+		},
+		moredata:function(){
+			if(!SupperManager._get)return;
+			if(SupperManager._getting)return;
+			$.post(SupperManager._url,{pageIndex:(SupperManager._page+1)},function(data){
+				if(data.length==0)
+					SupperManager._get=false;
+				else{
+					SupperManager._container=SupperManager._container.concat(data);
+					SupperManager._page++;
+				}
+				SupperManager._getting=false;
+			});
+			SupperManager._getting=true;
+		},
+		expend:function(_new){
+			var html=[];
+			for(var i=0;i<_new.length;i++)
+			{
+				html.push("<div class='i_supper account_baseinfo' style='cursor:pointer;height:48px;width:48px;float:left;margin:7px;' title='"+_new[i].nick_name+"' login_account='"+_new[i].login_account+"'><img src='"+_new[i].logo+"' onerror=\"this.src='{{asset('bundles/fafatimewebase/images/no_photo.png')}}'\" style='width:48px;height:48px;'></div>");
+			}
+			$(SupperManager._root).append(html.join(''));
+		},
+		cantfind:function(){
+			var html=[];
+			html.push("<span style='color:#CCC;'>没有更多人点人物咯！</span>");
+			$(SupperManager._root).append(html.join(''));
+		}
+	};
+	*/
+</script>

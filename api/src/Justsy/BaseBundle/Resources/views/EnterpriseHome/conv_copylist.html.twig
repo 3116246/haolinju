@@ -1,0 +1,39 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+{% endblock %}
+
+{% block main_content_center %}
+  <div>
+  	<span style="display: inline-block;"><h3 class="bigtitletext">信息转发列表</h3></span>  	
+  </div>
+  <hr style="margin: 0px; width: 100%;">
+  <div>
+    {% if CanView == 1 %}
+    {% render "JustsyBaseBundle:CDisplayArea:getConv" with {"conv_root_ids" : [conv_root_id]} %}
+    
+    <div id="convcopylist" class="smalltopic"></div>
+    
+<script type="text/javascript">
+$(document).ready(function () 
+{
+  $(".comment").hide();
+  
+  var $convcopylist = $("#convcopylist");  
+  $convcopylist.empty().append("<br>");
+  LoadComponent("convcopylist", "{{ path("JustsyBaseBundle_component_cdisparea_getcopylist") }}", {conv_root_id: {{conv_root_id}}, pageindex: 1, t : new Date().getTime()});
+});
+</script>
+    
+    {% else %}
+    <br>
+    你没有权限查看这条信息哟！
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block main_content_right %}
+  {% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {'network_domain' : curr_network_domain,'scope_type':'1'} %}
+{% endblock %}

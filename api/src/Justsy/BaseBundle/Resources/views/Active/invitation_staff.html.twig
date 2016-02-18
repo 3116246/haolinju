@@ -1,0 +1,207 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}邀请同事加入{% endblock %}
+{% block main_content %}
+<div class="invite_l">
+  <form  id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_invitation_staff_save') }}" >
+  <input id="mails" name="mails" type="hidden" />
+  <input id="invMsgValue" name="invMsg" type="hidden" />
+  <div class="invite-title">邀请您熟悉的同事加入 <span class="invitecompany">{{ename}}</span> 与您协同工作</div>
+  <div class="control-group">邮箱：
+    <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+    <span style="color:red"></span>
+  </div>
+  <div class="control-group">邮箱：
+    <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+    <span style="color:red"></span>
+  </div>
+  <div class="control-group">邮箱：
+    <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+    <span style="color:red"></span>
+  </div>
+  <div class="control-group">邮箱：
+    <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 {%if mailtype=='1'%} disabled="true" {%endif%} value="{{emaildomain}}" />
+    <span style="color:red"></span>
+  </div>
+  <div class="control-group">
+    <textarea name="" cols="" rows="" class="RegFormIpttext" style="margin-left:59px;" id="invMsg">想对被邀请的同事说点什么吗？</textarea>
+  </div>
+  <div class="invite-actions">
+    <button type="button" class="allinput" id="btnSubmit" disabled="true" style="">提交</button>
+  </div>
+  </form>
+</div>
+<!--
+<div class="invite-right">您是北京发发时代信息技术有限公司<b>社交网络创始人</b> 
+  <br>
+  <b>还有很多同事等您邀请加入</b>
+  <br>
+  作为创始人，您至少需要邀请 <b>3</b> 位同事加入哦！ 
+</div>
+-->
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var btnSubmit = $("#btnSubmit");
+var isValid = [true,true,true,true,false];
+var ipts = $("form .RegFormIpttwo,.RegFormIpttext,.allinput");
+var mailDivs = $("form .control-group");
+mailDivs = mailDivs.slice(0,mailDivs.length-1);
+var hintMsg = 
+{
+  "mail01":"您输入的邮件地址不正确，请检查！",
+  "mail02":"邮箱地址重复输入，请重新输入！",
+  "mail03":"您不能邀请自己！"
+};
+var defaultInvMsg = "想对被邀请的同事说点什么吗？";
+$(document).ready(function()
+{
+  ipts.blur(function()
+  {
+    var pn = $(this).parent();
+    var idx = ipts.index(this);
+    var cns = pn.children();    
+    if (this.className == "RegFormIpttwo")
+    {
+      if (!checkMailValid(cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail01);
+      }
+      else if (this.value+"@"+cns[2].value == "{{account}}")
+      {
+        setErrInfo(cns,idx,hintMsg.mail03);
+      }
+      else if (!checkMailUnique(pn,cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail02);
+      }
+      else
+      {
+        clearErrInfo(cns, idx);
+        isValid[4] = checkMailCount($("form .RegFormIpttwo"))>0;
+      }
+    }
+    else if ($(this).is("#invMsg"))
+    {
+      if (this.value == "") this.value = defaultInvMsg;
+    }
+    enableSubmit();
+  }).keypress(function(ev)
+  {
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm(this);
+        return;
+      }
+      moveToNext(ipts,this);
+    }
+  });
+  $("#invMsg").focus(function()
+  {
+    if (this.value == defaultInvMsg) this.value = "";
+  });
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm(this);
+  });
+  ipts.eq(0).focus();
+});
+//提交
+function submitForm(btn)
+{
+  btn.disabled = true;
+  var mails = "";
+  $.each(mailDivs,function(i,n)
+  {
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      mails += s + ",";
+    }
+  });
+  $("#mails").val(mails);
+  if ($("#invMsg").val() != defaultInvMsg) $("#invMsgValue").val($("#invMsg").val());
+  $("#contentForm").submit();
+}
+//显示错误信息
+function setErrInfo(cns, idx, info)
+{
+  isValid[idx] = false;
+  cns.last().text(info);
+}
+//清除错误信息
+function clearErrInfo(cns, idx)
+{
+  isValid[idx] = true;
+  cns.last().text("");
+}
+//验证邮箱有效性
+function checkMailValid(cns)
+{
+  if (cns[0].value.length < 1) return true;
+  var mail = cns[0].value + "@" + cns[2].value;
+  var reg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+  return reg.test(mail);
+}
+//检查邮箱是否重复
+function checkMailUnique(pn,cns)
+{
+  var re = true;
+  var idx = mailDivs.index(pn);
+  var mail = cns[0].value + "@" + cns[2].value;
+  $.each(mailDivs,function(i,n)
+  {
+    if (idx == i) return;
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      return re = !(mail == s);
+    }
+  });
+  return re;
+}
+//验证邮箱数量
+function checkMailCount(mails)
+{
+  var re = 0;
+  $.each(mails,function(i,n)
+  {
+    if (n.value.length > 0) re++;
+  });
+  return re;
+}
+//设置submit键
+function enableSubmit()
+{
+  var suc = true;
+  for (i in isValid)
+  {
+    suc &= isValid[i];
+  }
+  btnSubmit.attr("disabled",!suc);
+}
+//移至下一个控件
+function moveToNext(ipts, n)
+{
+  var nxt = ipts.index(n)+1;
+  var nxtNode = ipts.eq(nxt);
+  if (nxtNode == null) return;
+  if (nxtNode.attr("disabled"))
+  {
+    moveToNext(ipts, nxtNode);
+  }
+  else
+  {
+    ipts.eq(nxt).focus();
+  }
+}
+</script>
+{% endblock %}

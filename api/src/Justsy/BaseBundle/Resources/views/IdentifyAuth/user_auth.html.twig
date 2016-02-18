@@ -1,0 +1,543 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_auth %}class="active"{% endblock %}
+{% block main_content_center %}
+<style>
+textarea:focus{}
+</style>
+<div class="grade-title">身份认证</div>
+<div class="gradebox clearfix">	
+	<div class="c_act_t0">
+				<span style=" font-size:12px;">你当前的认证等级为{{cur}}，通过认证后直接升级为{{up}}，享有更多特权。</span>
+	</div>
+	<div class="c_act_t0" style="padding-top: 15px;">
+				<span style=" font-size:12px;">当前状态：</span><span style=" font-size:12px;color:red">未认证</span><span style=" font-size:12px;">(至少还需要<font style="color:red"> {{m}} </font>位同事确认你的身份)</span>
+	</div>	
+	<form id="userauthform" style='margin-top:10px;'>
+	 	<div class='baseinfo' style="">
+	 				<input type="hidden" style='width:270px;margin:0;' value='{{nick_name}}' type='text' id='realname' name='realname'/>
+	 				<input type='hidden' id='num' name='num' value='{{n}}'/>
+	 	</div>
+	<div style="background:url({{asset('bundles/fafatimewebase/images/backauth.jpg')}});height:153px;width:645px;">
+		 <div style='padding:3px;padding-left:20px;font-size:15px;font-weight:700;color:#2886bc;'><span>已请求同事</span><span style='float:right;cursor:pointer;color:#00aad8;display:none;margin-right:25px;width:20px;text-align:center;border-radius: 2px 2px 2px 2px;background-color: #D0E6FB;border: 1px solid;' title='下一页' id='change_ul'>></span><span style='float:right;cursor:default;color:#00aad8;display:none;margin-right:10px;width:20px;text-align:center;border-radius: 2px 2px 2px 2px;background-color: #D0E6FB;border: 1px solid;' title='上一页' id='change_ul2'><</span></div>
+		<div style='padding-top:15px;'>							
+					<ul id='sendMember'  style='height:125px;list-style:none outside none;margin:0;padding:0;'></ul>
+					<p id='noneMember' style='margin-left:60px;display:none;'><span style='color:red;'>你还没有向任何同事发送身份认证请求！</span><br/>
+						<span>请从下面的企业成员列表中选择<span style='color:red;'>至少{{m}}位</span>同事，向他们发送协助您进行身份认证的请求。</span><br/>
+						<span>系统将通过邮件、站内消息、推送即时消息等方式向被选用户发送通知。</span></p> 
+     </div>		 
+  </div>
+  <br/>
+	<div class='applyto' style="background:url({{asset('bundles/fafatimewebase/images/backauth2.jpg')}});height:180px;width:645px;">
+		<div style='padding:3px;padding-left:20px;font-size:15px;font-weight:700;color:#2886bc;*width:625px;height:32px;'><span style='float:left;'>企业成员列表</span><span style='float:right;cursor:pointer;color:#00aad8;display:none;margin-right:25px;width:20px;text-align:center;border-radius: 2px 2px 2px 2px;background-color: #D0E6FB;border: 1px solid;' title='下一页' id='changeul'>></span><span style='float:right;cursor:default;color:#00aad8;display:none;margin-right:10px;width:20px;text-align:center;border-radius: 2px 2px 2px 2px;background-color: #D0E6FB;border: 1px solid;' title='上一页' id='changeul2'><</span></div>
+		<div>					
+					  <ul id='postMember' check='1' style='min-width:426px;list-style:none outside none;margin:0;padding:0;height:70px;margin-top:10px;'></ul>
+				    <div style='width:100%;margin-top:20px;'><div style='float:left;'><span id='suberror' style='color:red;'></span></div>
+				    	{% if mobile_bind=='' or mobile_bind==null%}
+				    	<div id='Submit' cansub='0' onclick="submitform()" style='background-color:#CCC;border-radius:6px 6px 6px 6px;height:32px;width:84px;float:right;margin-right:20px;cursor:pointer;color:#FFF;text-align:center;'><span style='line-height:32px;font-weight:700;'>请求认证</span></div><div style='float:right;margin-right:10px;line-height:32px;'><span>绑定手机号后才能进行身份认证，</span><a href='javascript:void(0);' id='firstbind' bind='0'  onclick='showbox()'>立即绑定</a></div></div>
+				    	{%else%}
+				    	<div id='Submit' cansub='1' onclick="submitform()" style='background-color:#F8B02A;border-radius:6px 6px 6px 6px;height:32px;width:84px;float:right;margin-right:20px;cursor:pointer;color:#FFF;text-align:center;'><span style='line-height:32px;font-weight:700;'>请求认证</span></div><a href='javascript:void(0);' mobile='{{mobile_bind}}' id='firstbind' bind='0' style='float:right;margin-right:10px;line-height:32px;' onclick='showbox()'>已绑定手机号</a></div>
+				    	{%endif%}
+     </div>
+		<input type='hidden' id='applyto' name='applyto' value=''/>
+	</div>
+	</form>
+	<div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    <div class="modal-footer"><a class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+  </div>
+  <div id='bindbox' style='display:none;width:400px;background-color:#FFF;position:absolute;left:35%;top:35%;z-index:999;height:200px;border-radius:4px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.3);border:1px solid #EEE;'>
+  	<div style='height:32px;background-color:#00AAD9;padding-left:10px;padding-right:10px;'>
+  		<span style='color:#FFF;font-size:18px;font-weight:700;line-height:32px;float:left;'>手机号绑定</span>
+  		<span onclick="$('#bindbox').hide();" style='cursor:pointer;color:#FFF;font-size:18px;float:right;font-weight:700;line-height:32px;'>×</span>
+  	</div>
+  	<div style='padding:10px;'>
+  		<table>
+  			<tr><td style='vertical-align:center;'>手机号:</td><td><input type='text' id='mobile' value='{{mobile_bind}}' name='mobile' style='width:200px;height:15px;margin:0;'/><a href='javascript:void(0);' id='unbind' style='margin-left:2px;' saveurl="{{ path("JustsyBaseBundle_account_savemobileunbind",{network_domain:curr_network_domain}) }}" onclick='unbind(this)'>解除绑定
+  				</a></td></tr>
+  			<tr style='height:22px;'><td></td><td><span class='binderror_mobile' style='color:red;'></span></td></tr>
+  			<tr><td style='vertical-align:center;'>验证码:</td><td><input id='code' name='code' type='text' style='width:200px;height:15px;margin:0;'/><a href='javascript:void(0);' id='getcode' style='margin-left:2px;' saveurl="{{ path("JustsyBaseBundle_account_getmobilevaildcode",{network_domain:curr_network_domain}) }}" onclick='getmobilevaildcode(this)'>点击获取验证码
+  				</a><span style='margin-left:10px;display:none;'><a id='reduce'>90</a>&nbsp;秒后可重新获取</span></td></tr>
+  			<tr style='height:22px;'><td></td><td><span class='binderror_code' style='color:red;'></span></td></tr>
+  		</table>
+  		<div><span id='txtvaildcode_msg'></span><div id='Submitbind' cansub='0' onclick='bindmobile(this)' saveurl="{{ path("JustsyBaseBundle_account_savemobilebind",{network_domain:curr_network_domain}) }}" style='background-color:#F8B02A;border-radius:6px 6px 6px 6px;height:32px;width:84px;float:right;margin-right:20px;cursor:pointer;color:#FFF;text-align:center;'><span style='line-height:32px;font-weight:700;'>立即绑定</span></div></div>
+  	</div>
+  </div>
+</div>
+<script type='text/javascript' language='javascript'>
+	var uploadObj=null;
+	var page=0;
+	var pageindex=0;
+	var pagecount=0;
+	var allpage=-1;
+	var lead={{m}};
+	var get_post_url="{{path('JustsyBaseBundle_identify_get_post_members')}}";
+	var get_selected_url="{{path('JustsyBaseBundle_identify_get_selected_members')}}";
+	var save_userauth_url="{{path('JustsyBaseBundle_identify_save_userauth')}}";
+	var save_logo_url="{{path('JustsyBaseBundle_identify_save_log')}}";
+	var fileurl="{{fileurl}}";
+$(document).ready(function(){
+	$("#to_auth_eno,#to_auth_user").hide();
+	getAttenMember();
+	getSelectedMember();
+	$("#changeul").click(function(){
+		if(page==allpage && allpage!=-1)return;
+		var currpage=(page+1);
+		if(currpage==allpage && allpage!=-1)
+		{
+			$(this).css('cursor','default');
+		}
+		$("#changeul2").css('cursor','pointer');
+		var $lis=$("#postMember").find("li[page='"+currpage+"']");
+		if($lis.length>0)
+		{
+			$("#postMember").find("li").hide();
+			$lis.show();
+			page=currpage;
+		}
+		else
+			getAttenMember();
+	});
+	$("#changeul2").click(function(){
+		if(page==1)return;
+		var currpage=(page-1);
+		if(currpage==1){
+			$(this).css('cursor','default');
+		}
+		$("#changeul").css('cursor','pointer');
+		var $lis=$("#postMember").find("li[page='"+currpage+"']");
+		if($lis.length>0)
+		{
+			$("#postMember").find("li").hide();
+			$lis.show();
+			page=currpage;
+		}
+		else
+			getAttenMember();
+	});
+	$("#change_ul").click(function(){
+		if(pageindex=pagecount)return;
+		var currpage=(pageindex+1);
+		if(currpage==pagecount)
+		{
+			$(this).css('cursor','default');
+		}
+		$("#change_ul2").css('cursor','pointer');
+		var $lis=$("#sendMember").find("li[page='"+currpage+"']");
+		if($lis.length>0)
+		{
+			$("#sendMember").find("li").hide();
+			$lis.show();
+			pageindex=currpage;
+		}
+		else
+			getSelectedMember();
+	});
+	$("#change_ul2").click(function(){
+		if(pageindex==1)return;
+		var currpage=(pageindex-1);
+		if(currpage==1){
+			$(this).css('cursor','default');
+		}
+		$("#change_ul").css('cursor','pointer');
+		var $lis=$("#sendMember").find("li[page='"+currpage+"']");
+		if($lis.length>0)
+		{
+			$("#sendMember").find("li").hide();
+			$lis.show();
+			pageindex=currpage;
+		}
+		else
+			getselectedMember();
+	});
+});
+function getmobilevaildcode(sender) 
+{
+	if(typeof(getcodeajax)!='undefined' && getcodeajax!=null)return;
+	if (!checkmobile($("#mobile")[0]))return;
+  $("#txtvaildcode_msg").text("正在获取验证码...").css("color", "blue");
+  getcodeajax=$.getJSON($(sender).attr("saveurl"), {txtmobile : $("#mobile").val(), t : new Date().getTime()}, function(data){
+    if (data.success == "1")
+    {
+      $("#txtvaildcode_msg").text("验证码已发送到你的手机！请接收").css("color", "blue");
+      $("#getcode").hide();
+      $("#reduce").parent().show();
+      reducetimer=setInterval(function(){
+      	var t=parseInt($("#reduce").text());
+      	if(t==1){
+      		$("#reduce").text('90').parent().hide();
+      		$("#getcode").show();
+      		clearInterval(reducetimer);
+      		return;
+      	}
+      	$("#reduce").text((t-1).toString());
+      },1000);
+    }
+    else
+    {
+      $("#txtvaildcode_msg").text(data.msg).css("color", "red");
+    }
+    setTimeout(function(){$("#txtvaildcode_msg").text("");},2000);
+    getcodeajax=null;
+  });  
+  
+}
+function unbind(e)
+{
+	if(typeof(unbindajax)!='undefined' && unbindajax!=null)return;
+	$("#txtvaildcode_msg").text("正在解除绑定...").css("color", "blue");
+	unbindajax=$.post($(e).attr('saveurl'),{},function(d){
+		if(d.success=='1')
+		{
+			$("#txtvaildcode_msg").text("已成功解除绑定!").css("color", "blue");
+			$("#firstbind").text('请先绑定手机号').attr({'bind':'0','mobile':''});
+			$("#Submit").css('background-color','#CCC').attr('cansub','0');
+			$("#Submitbind").css('background-color','#F8B02A').attr('cansub','1');
+			$("#mobile").attr('readonly',false);
+			$("#unbind").hide();
+		}
+		else{
+			$("#txtvaildcode_msg").text("解除绑定失败!").css("color", "red");
+		}
+		unbindajax=null;
+	});
+}
+function checkmobile(sender)
+{
+  var isvaild = (/^(1[8|3|5][0-9]|15[0|3|6|7|8|9]|18[2|5|6|8|9])\d{8}$/).test($(sender).val());
+  $(".binderror_mobile").text("").css("color", "black");
+  if (!isvaild)
+  {
+    $(".binderror_mobile").text("请输入正确的手机号！").css("color", "red");
+    setTimeout(function(){$(".binderror_mobile").text("");},2000);
+  }
+  
+  return isvaild;
+}
+function checkvaildcode(sender)
+{
+  var isvaild = $(sender).val().length > 0;
+  $(".binderror_code").text("").css("color", "black");
+  if (!isvaild)
+  {
+    $(".binderror_code").text("请输入验证码！").css("color", "red");
+    setTimeout(function(){$(".binderror_code").text("");},2000);
+  }
+  
+  return isvaild;
+}
+function bindmobile(sender)
+{
+	if(typeof(bindajax)!='undefined' && bindajax!=null)return;
+	var $alert = $("#txtvaildcode_msg");
+	if($(sender).attr('cansub')=='0')return;
+  if (!checkmobile($("#mobile")[0]))return;  
+  if (!checkvaildcode($("#code")[0])) return;
+  
+  var $sender = $(sender);
+  $alert.css('color','blue').text("绑定中...");
+  $sender.attr("disabled", "disabled");
+  var mobilenum=$("#mobile").val();
+  bindajax=$.getJSON($(sender).attr("saveurl"), {txtmobile : $("#mobile").val(), txtvaildcode : $("#code").val(), t : new Date().getTime()}, function(data){
+    if (data.success == "1")
+    {
+      $alert.text("绑定成功！").css('color','blue');
+      $sender.removeAttr("disabled");
+      $("#bindbox").hide();
+      $("#firstbind").text('已绑定手机号').attr({'bind':'1','mobile':mobilenum});
+      $("#Submit").css('background-color','#F8B02A').attr('cansub','1');
+    }
+    else
+    {
+      $alert.text(data.msg).css('color','red');
+      $sender.removeAttr("disabled");        
+    }
+    setTimeout(function(){$alert.text('');},2000);
+    bindajax=null;
+  });
+}
+function getSelectedMember()
+{
+	if(pageindex>pagecount)return;
+	if(typeof(selectedajax)!='undefined' && selectedajax!=null)return;
+	selectedajax=$.post(get_selected_url,{'pageindex':(pageindex+1)},function(d){
+		if(d.page >0)
+		{
+			pagecount=d.page;
+			pageindex++;
+			if(pagecount >1){
+				$("#change_ul,#change_ul2").show();
+			}
+			addSelectedMember(d.json,pageindex);
+		}
+		else{
+			$("#sendMember").hide();
+			$("#noneMember").show();
+		}
+		selectedajax=null;
+	});
+}
+function editHead()
+{
+			  $("#invitedphoto").modal("show");
+}
+//保存图标
+function saveHead()
+{
+  uploadObj[0].doSave();
+}
+function showbox()
+{
+	if($("#firstbind").attr('bind')=='1')
+	{
+		$("#mobile").val($("#firstbind").attr('mobile')).attr('readonly','readonly');
+		$("#unbind").show();
+		$("#Submitbind").css('background-color','#CCC').attr('cansub','0');
+	}
+	else{
+		$("#mobile").attr('readonly',false);
+		$("#unbind").hide();
+		$("#Submitbind").css('background-color','#F8B02A').attr('cansub','1');
+	}
+	$("#bindbox").show();
+}
+function getAttenMember()
+{
+	if(typeof(attenajax)!='undefined' && attenajax!=null)return;
+  page++;
+  attenajax=$.post(get_post_url,
+    {page:page},
+    function(data) 
+    {
+      if (data.cnt > 0)
+      {
+        addAttenMember(data.json,data.page);
+        page = data.page;
+        if(data.cnt<8)
+        {
+        	if(page==1)$("#changeul,#changeul2").hide();
+        	allpage=page;
+        	$("#changeul").css('cursor','default');
+        }
+        else
+        	 $("#changeul,#changeul2").show();
+      }
+      else
+      {
+      	if(page==1) $("#changeul,#changeul2").hide();
+        allpage=page;
+      }
+      $("#changeul,#changeul2").attr("isclick","0");
+      attenajax=null;
+    },"json");
+}
+function vilidate(e)
+{
+//	if(e.id=='realname')
+//	{
+//		if($(e).val()==''){
+//			showerr(e,"请准确的填写真实姓名!");
+//			return false;
+//		}
+//	}
+	if(e.id=='deptname')
+	{
+		if($(e).val()==''){
+			showerr(e,"请准确填写部门名称!");
+			return false;
+		}
+	}
+	if(e.id=='duty')
+	{
+		if($(e).val()==''){
+			showerr(e,"请准确填写职务名称!");
+			return false;
+		}
+	}
+	if(e.id=='mobile')
+	{
+		if($(e).val().match(/^(1[8|3|5][0-9]|15[0|3|6|7|8|9]|18[2|5|6|8|9])\d{8}$/g)==null){
+			showerr(e,"手机格式不正确!");
+			return false;
+		}
+	}
+	if(e.id=='vilidateinfo_tmp')
+	{
+		if($(e).val().length<2)
+		{
+			showerr(e,"请正确输入验证信息");
+			return false;
+		}
+	}
+	if(e.id=="postMember")
+	{
+		if($(e).find("input[type='hidden'][select='1']").length< parseInt(lead))
+		{
+			showerr(e,"请选择至少{{m}}位协助认证的用户!");
+			return false;
+		}
+	}
+	$(e).siblings("img.alert-ico").show().siblings("img.error-ico").hide();
+	$(e).attr('cansub','1');
+	return true;
+}
+function showerr(e,err)
+{
+	$curr=$("#suberror");
+//	var le=$(e).offset().left;
+//	var to=$(e).offset().top;
+//	var wid=$(e).height();
+//	$curr.find('span').text(err);
+//	$curr.css({'position':'absolute','left':le.toString()+'px','top':(to+wid+10).toString()+'px'}).show();
+//	$(e).siblings("img.alert-ico").hide().siblings("img.error-ico").show().attr('title',err);
+	$curr.text(err);
+	var st=tttt($curr);
+	setTimeout(st,2000);
+}
+function tttt($curr)
+{
+	return function(){$curr.text('');};
+}
+function submitform()
+{
+		if($('#Submit').attr('cansub')=='0')return;
+		//数据校验
+		if(vilidate($("#postMember")[0]))
+		{
+			$lis=$("#postMember").find("input[type='hidden'][select='1']");
+			var str="";
+			for(var i=0;i<$lis.length;i++)
+			{
+				if(i==($lis.length-1))
+				{
+					str+=$($lis[i]).val();
+				}
+				else
+					str+=$($lis[i]).val()+",";
+			}
+			$("#applyto").val(str);
+			$("#Submit").find('span').text('提交中...');
+			$("#vilidateinfo").val("财务部同事中有【"+$("#vilidateinfo_tmp").val()+"】");
+			$("#userauthform").ajaxSubmit({
+				url:save_userauth_url,
+				dataType:'json',
+				type:'post',
+				success:function(d){
+					$("#Submit").find('span').text('请求认证');
+					if(d.s=='1')
+					{
+						window.location.href="{{path('JustsyBaseBundle_identify_apply_success')}}"+"?type=user";
+					}
+					else{
+						$("#Submit").attr("disabled",false);
+						$("#suberror").text(d.m);
+						setTimeout(function(){
+							$("#suberror").text("").hide();
+						},4000);	
+					}
+				}
+			});
+		}
+	}
+function avatar_success()
+{
+		  $("#invitedphoto").modal("hide");
+		  $.post(save_logo_url,{},function(d){
+		  	if(d.s=='1')
+		  	{
+		  		$("img#preview").attr('src',fileurl+d.file);
+		  	}
+		  	else{
+		  		$("#log_err").text("头像编辑失败！");
+		  		setTimeout(function(){
+		  			$("#log_err").text("");
+		  		},2000);
+		  	}
+		  });		  
+}
+function checkth(e)
+{
+	if(!!$(e).attr('checked')){
+		$(e).parent().parent().siblings().find("input[type='hidden']").attr('select','1');
+	}
+	else{
+		$(e).parent().parent().siblings().find("input[type='hidden']").attr('select','0');
+	}
+}
+function addSelectedMember(json,pageindex)
+{
+	if (json == null) return;
+  var pn = $("#sendMember");
+  pn.find("li").hide();
+  var html=[];
+  for(var i=0; i< json.length; i++)
+  {
+    var s='<li page="'+pageindex+'" class="list" style="text-align: center;padding-top:5px;margin-left:12px;float:left;list-style:none outside none;"><a><img src="';
+    if (json[i].photo_path==null || json[i].photo_path=='')
+    {
+      s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+    }
+    else
+    {
+    	//s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+      s+=json[i].photo_path;
+    }
+    s+='" width="50" height="50" onerror=\'this.src="{{ asset("bundles/fafatimewebase/images/tx.jpg") }}"\' title="'+json[i].nick_name+'"></a>';
+    s+='<span class="text" style="cursor:pointer;white-space: nowrap;width:50px;text-overflow: ellipsis; overflow: hidden; display: block;" title="'+json[i].nick_name+'"><a class="account_baseinfo" login_account="'+json[i].login_account+'">'+json[i].nick_name+'</a></span>';
+    s+='<span style="cursor:default;white-space: nowrap;width:50px;color:#F8B02A;text-overflow: ellipsis; overflow: hidden; display: block;">'+(json[i].result=='2'?'':(json[i].result=='1'?'(已同意)':'(已拒绝)'))+'</span>';
+    s+='<span><input type="hidden" value="'+json[i].login_account+'" /></span>';
+    html.push(s);
+  }
+  $s=$(html.join(''));
+  pn.append($s);
+}
+function addAttenMember(json,page)
+{
+  if (json == null) return;
+  var pn = $("#postMember");
+  pn.find("li").hide();
+  var html=[];
+  for(var i=0; i< json.length; i++)
+  {
+    var s='<li page="'+page+'" class="list" style="text-align: center;padding-top:5px;margin-left:10px;float:left;list-style:none outside none;"><div style="width:50px;height:50px;border:1px solid #CCC;padding-top:2px;"><a><img src="';
+    if (json[i].photo_path==null || json[i].photo_path=='')
+    {
+      s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+    }
+    else
+    {
+    	//s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+      s+=json[i].photo_path;
+    }
+    s+='" width="32" height="32" onerror=\'this.src="{{ asset("bundles/fafatimewebase/images/tx.jpg") }}"\' title="'+json[i].nick_name+'"></a>';
+    s+='<span class="text" style="cursor:pointer;white-space: nowrap;width:50px;text-overflow: ellipsis; overflow: hidden; display: block;" title="'+json[i].nick_name+'"><a class="account_baseinfo" login_account="'+json[i].login_account+'">'+json[i].nick_name+'</a></span></div>';
+    s+='<span style="cursor:pointer;white-space: nowrap;width:50px;text-overflow: ellipsis; overflow: hidden; display: block;"><center><input onclick="checkth(this)" type="checkbox" style="padding:0;margin:0"/></center></span>';
+    s+='<span><input type="hidden" value="'+json[i].login_account+'" /></span>';
+    html.push(s);
+  }
+  $s=$(html.join(''));
+  //增加点击事件
+    $s.find("a").bind("click",function()
+    {
+    	return;
+    	var $hidden=$(this).siblings().find("input[type='hidden']");
+    	var $img=$(this).find("img");
+    	if($hidden.attr('select')=='1')
+    	{
+    		$img.css({'border': '0'});
+    		$hidden.attr('select','0');
+    	}
+    	else{
+	    	$img.css({'border': '2px solid #00AAD9'});
+	    	$hidden.attr('select','1');
+	    }
+	    if(!vilidate($("#postMember")[0]))
+  		{
+  			$("#Submit").attr('disabled','disabled');
+  		}    	 
+    });
+    pn.append($s);
+}
+
+</script>
+{% endblock %}

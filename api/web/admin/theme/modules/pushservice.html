@@ -1,0 +1,153 @@
+<link href="../assets/admin/pages/css/todo.css" rel="stylesheet" type="text/css"/>
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">PUSH服务管理</h3>
+<div class="page-bar">
+	<div class="page-toolbar">
+	</div>
+</div>
+<!-- END PAGE HEADER-->
+<div class="clearfix"></div>
+<div class="alert alert-danger display-hide" id="page_alert_info" style="display: none;">
+	<button data-close="alert" class="close"></button>
+	<label></label>
+</div>
+<div class="row">
+	<div class=" col-md-12 tab-content">
+		<div class="todo-sidebar">
+			<div class="portlet light">
+								<div class="portlet-title">
+									<div data-target=".todo-project-list-content" data-toggle="collapse" class="caption">
+										<span class="caption-subject font-green-sharp bold uppercase">HTTP服务接口 </span>
+									</div>
+								</div>
+								<div class="portlet-body todo-project-list-content" style="height: auto;">
+									<div class="todo-project-list">
+										<ul class="nav nav-pills nav-stacked ver-inline-menu tabbable margin-bottom-10" id="wikidir">
+											<li href="wiki/inf_ready.html">
+												<a href="javascript:;"><span class="badge badge-default"> 5 </span>API调用说明</a>
+											</li>
+											<li href="wiki/inf_push.html">
+												<a href="javascript:;"><span class="badge badge-default"> 5 </span>推送接口</a>
+											</li>
+											<li href="wiki/inf_staff.html">
+												<a href="javascript:;"><span class="badge badge-default"> 5 </span>人员接口</a>
+											</li>
+											<li href="wiki/inf_org.html">
+												<a href="javascript:;"><span class="badge badge-default"> 6 </span>组织部门接口</a>
+											</li>											
+										</ul>
+									</div>
+								</div>
+			</div>
+		</div>
+		<div class="todo-content">
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption">
+						<span class="caption-helper">已注册PUSH应用</span>
+						<span class="caption-subject font-green-sharp bold uppercase"></span>
+					</div>
+					<div class="actions">
+						<div class="btn-group">
+							<a class="btn green-haze btn-sm" href="javascript:;" onclick="Pushservice.new()">注册新PUSH应用</a>
+						</div>
+					</div>					
+				</div>
+				<div class="portlet-body">
+					<div class="row" id="applist">					
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="word_wiki" class="portlet box green col-md-9" style="display:none">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-wordpress"></i>接口说明
+				</div>
+				<div class="tools">
+					<a href="javascript:;" id="btn_wiki_close" style="color: #fff"><i class="fa fa-times"></i></a>
+				</div>
+			</div>
+			<div class="portlet-body">
+			</div>
+		</div>	
+	</div>
+</div>
+<div class="portlet box green hide" id="newpushservice-dlg">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i>新PUSH应用
+				</div>
+				<div class="tools">
+					<a class="remove" href="javascript:;" data-original-title="" title="">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<!-- BEGIN FORM-->
+				<form class="form-horizontal" action="#">
+					<div class="form-body">
+						<div class="alert alert-danger display-hide" style="display: none;">
+							<button data-close="alert" class="close"></button>
+							<label></label>
+						</div>
+						<div class="alert alert-success display-hide" style="display: none;">
+							<button data-close="alert" class="close"></button>
+							<label></label>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">PUSH应用名称<span class="required" aria-required="true">* </span></label>
+							<div class="col-md-4">
+								<div class="input-group">
+								<input type="text" maxlength="30" placeholder="请输入" id="appname" class="form-control">
+								</div>
+								<span class="help-block">应用名称不能重复. </span>	
+							</div>							
+						</div>						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn blue" id="btn_save" type="button" onclick="Pushservice.save()">保存</button>
+								<button class="btn default" id="btn_cancel" type="button" onclick="$('#newpushservice-form').remove()">取消</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- END FORM-->
+			</div>
+</div>
+<script type="text/javascript" src="jscript/pushservice.js"></script>
+<script>
+$(document).ready(function() {
+	Pushservice.init({});
+});
+</script>
+<script type="text/html" id="applist-tmpl">
+<div class="box green col-md-12" >
+	<div class="portlet-body flip-scroll">
+		<table class="table table-bordered table-striped table-condensed flip-content">
+				<thead class="flip-content">
+									<tr>
+										<th width="20%">服务名称</th>
+										<th>服务标识</th>
+										<th>服务密钥</th>
+										<th></th>
+									</tr>
+				</thead>
+				<tbody>
+					{{each data}}
+						<tr id="{{$value.appid}}">
+										<td width="20%">{{$value.appname}}</td>
+										<td>{{$value.appid}}</td>
+										<td>{{$value.appkey}}</td>
+										<td>											
+										</td>
+						</tr>
+					{{/each}}
+						
+				</tbody>
+		</table>
+	</div>
+</div>
+</script>

@@ -1,0 +1,492 @@
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/staffManager.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/ajaxfileupload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/department.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/TreeMark.js')}}"></script>
+
+
+{% endblock %}
+
+{% block body %}
+<div class="html_body">
+  <div class="header">
+     <div class="header_left">
+        <span>组织架构</span>
+		<a href="#" onclick="$('#view_dept_import').show();" title="导入组织机构"><i class="iconfont" style="float:right;font-size:16px;margin-right:20px">&#xe634;</i></a>
+     </div>
+     <div class="header_right">
+        <div class="header_dept_name">
+            <span style="font-size:14px;"></span>
+            <input type="text" style="display:none;font-size:12px;width:260px;"  maxlength="15" class="mb_textbox" />
+            <a href="#" style="display:none;" onclick="department.view_dept(0);" title="编辑当前部门">
+    		       <i class="iconfont" style="float:left;font-size:18px;margin-left:20px">&#xe649;</i>
+    		    </a>
+        </div>
+    		<div style="display:none;" id="update_dept_button">
+        		<a href="#" onclick="department.view_dept(1);" style="text-decoration:none;">保存</a>
+        		<a href="#" onclick="department.view_dept(2);" style="text-decoration:none;">取消</a>
+    		</div>
+     </div>
+  </div>
+  <div class="table_body">
+     <div class="table_body_left">
+         <div class="search_dept">
+            <span onclick="department.searchTree(1,'search');"></span>
+            <input type="text" id="tree_deptname" maxlength="10" onkeypress="if(event.keyCode==13) { department.searchTree(1,'search');}" placeholder="请输入搜索的部门" />
+         </div>
+         <div class="dept_tree">
+             <div class="loadding_tree">
+                 <img src="{{ asset('/bundles/fafatimewebase/images/loading.gif')}}" />
+                 <span>正在加载组织机构</span>
+             </div>
+             <ul id="tree_department" class="ztree"></ul>
+         </div>
+         <div class="dept_search" style="display:none;">
+      	     <div class="loadding_tree1">
+                 <img src="{{ asset('/bundles/fafatimewebase/images/loading.gif')}}" />
+                 <span>正在加载组织机构</span>
+             </div>
+             <ul class="result_search"></ul>
+      	     <div class="dept_page">
+      	     </div>
+  	     </div>
+     </div>
+     <div class="table_body_right">
+        <div class="table_right_header">
+            <span class="option_menu_item_active">
+                <span><i class="iconfont we-icon-menu" style="float:left;">&#xe65c;</i></span>
+                <span style="line-height:14px">部门人员</span>
+            </span>
+            <span class="option_menu_item">
+               <span><i class="iconfont we-icon-menu" style="float:left;">&#xe673;</i></span>
+               <span style="line-height:14px">下级部门</span>
+            </span>
+        </div>
+        <div class="table_body_area" style="display:block;" id="staff_body">
+            <div class="condition_search">
+                <span style="margin-left:10px">搜索用户：</span>
+                <input type="text" class="mb_textbox" onkeypress="if(event.keyCode==13) { staff.query_staff();}" id="text_search_account" placeholder="姓名/手机号/邮箱">
+                <button class="btn btnGreen button_search" onclick="staff.query_staff();">搜 索</button>
+                <div style="float:right;">
+                    <button class="btn btnGray default_button add_staff" onclick="staff.viewdialog(this,'staff');" style="margin:6px;">
+					  <i class="iconfont" style="float:left;font-size:14px;margin-right:2px">&#xe634;</i>
+                        <span>添加</span>
+                    </button>
+                    <button class="btn btnGray default_button" onclick="staff_import.show_import();" style="margin:6px;">
+					  <i class="iconfont" style="float:left;font-size:14px;margin-right:2px">&#xe634;</i>
+                        <span>导入</span>
+                    </button>
+                </div>
+            </div>
+            <div class="search_staff_area">
+                <img src="{{ asset('/bundles/fafatimewebase/images/loading.gif')}}" />
+                <span>正在搜索部门人员……</span>
+            </div>
+            <table align="center" class="mb_common_table">
+                <thead>
+                   <tr>
+                        <td width="55" align="center" style="padding-left:0px;">
+                            <input onclick="staff.checkbox_selected(this);" id="all_selected" type="checkbox">
+                        </td>
+                        <td width="115" align="left">姓名</td>
+                        <td width="45" style="padding-left:0px;" align="center">性别</td>
+                        <td width="105" align="left">职务</td>
+                        <td width="115" align="left">手机号</td>
+                        <td width="222" align="left">用户邮箱</td>
+                        <td width="100" align="center">操作</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="staff_body_bottom">
+                <div id="Pagination" class="pagination" style="padding:0px;margin:0px;"></div>
+                <div class="batch_area" >
+                    <button class="staff_batch_button" onclick="staff.viewdialog(this,'movedept');">移动部门</button>
+                    <button class="staff_batch_button" onclick="$('#reset_pwd').show();$('#reset_pwd input').val('');$('#resetpwd_hind').html('');$('#resetpass1').focus();">重置密码</button>
+                    <button class="staff_batch_button" onclick="staff.remove(this,1);" >删除用户</button>
+                    <button class="staff_batch_button" onclick="staff.show_message();">发送消息</button>
+                    <div class="staff_sendMessage" >
+                        <div class="sendmessage_title">
+                            <span>向多个用户发送消息</span>
+                            <span title="关闭" onclick="$('.staff_sendMessage').hide();" style="float: right; font-weight:bold; font-size: 18px; margin-right: 8px; cursor: pointer;">X</span>
+                        </div>
+                        <textarea onclick="$('.sendmessage_hint').html('').hide();" class="sendmessage_content" maxlength="300"></textarea>
+                        <div class="sendmessage_hint"></div>
+                        <div style="margin-left:auto; margin-right: auto; background-color: red; width: 175px;">
+                            <button onclick="staff.sendMessage();" class="btnGreen mb_button" style="float: left; margin-top: 5px;">发&nbsp;送</button>
+                            <button onclick="$('.staff_sendMessage').hide();" class="btnGray mb_button" style="float: right; margin-top: 5px;">取&nbsp;消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table_body_area" id="dept_body">
+            <div class="condition_search">
+                <span>部门名称：</span>
+                <input type="text" class="mb_textbox" onkeypress="if(event.keyCode==13) { department.searchdata(); }" 
+                 id="text_search_deptname" placeholder="请输入部门名称">
+                <button class="btn btnGreen button_search" onclick="department.searchdata();">查&nbsp;&nbsp;询</button>
+                <div style="float:right;">
+                    <button class="btn btnGray default_button" onclick="department.dialog_hint(this,'number');" style="margin:6px;">更新顺序号</button>
+                    <button class="btn btnGray default_button" onclick="department.edit(this);" style="margin:6px;">
+                        <span class="mb_title_button_img"></span>
+                        <span>添加</span>
+                    </button>
+                </div>
+            </div>
+            <table align="center" class="mb_common_table">
+                <thead>
+                   <tr>
+                        <td width="350" align="left">部门名称</td>
+                        <td width="87" align="left">部门主管</td>
+                        <td width="70" align="center" style="padding-left: 0px">成员数(人)</td>
+                        <td width="100" align="left">顺序号</td>
+                        <td width="50" align="center" style="padding-left:0px;">显示</td>
+                        <td width="100" align="center">操作</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="dept_page" class="pagination" style="float: left; padding: 0px; margin: 8px 0px 0px;"></div>
+        </div>        
+     </div>     
+  </div>
+  
+</div>
+
+<!--导入用户数据-->
+<div  class="dialogBox " id="view_staff_import" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width: 1000px; top: 65px; left: 120px;" class="dialog">
+    	<div class="title">导入用户数据</div> 
+      <span title="关闭" onclick="$('#view_staff_import').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:white;overflow:hidden;padding:10px 25px;height:460px;max-height:460px;+height:410px;+max-height:410px;cursor:default;">
+      	 <div class="import_step2">
+      	 	  <div class="import_step2_setting">
+	      	 	  <!--excel上传设置-->
+	      	 	  <div style="height:25px;line-height:25px;padding-left:100px;" id="excel_setting1">
+	 	           	  <span style="float:left;width:100px;">请选择文件：</span>
+	 	           	  <form target="frm_import_submit" id="frm_staff_import" action="{{path('JustsyAdminAppBundle_staffmanager_import_excel')}}" method="post" enctype="multipart/form-data">
+	 	           	    <input class="mb_textbox import_selectfile" type="file" id="filedata" name="filedata"/>
+	 	           	    <span class="remove_file">
+	 	           	      <i class="glyphicon glyphicon-trash" onclick="$('#filedata').val('');" title="清除文件"></i>
+	 	           	    </span>
+	 	           	  </form>
+	 	           	  <button onclick="staff_import.uploadfile();" class="btnGreen mb_button" style="float:left;width:80px;margin-left:20px;">上传</button>
+	 	           	  <a style="text-decoration:none;float:right; margin-right:2px;cursor:pointer;" onclick="window.location.href='{{JS_OPEN_API_URL}}/WeFaFa_Employee_Template.xls'">模板下载</a>
+	 	           	  <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>
+		 	        </div>
+	 	        </div>
+	 	        <table class="mb_common_table" id="select_datasorce"><tbody></tbody></table>
+	 	        <div class="error_box">
+	 	        	 <div class="staff_field_title" style="margin-bottom:0px;">
+	 	        	 	 <span style="float: left; padding-left: 10px; color: red;">导入数据错误提示</span>
+	 	        	 	 <span title="关闭" onclick="$('.error_box').hide();" class="staff_field_colse"></span>
+	 	        	 </div>
+	 	        	 <div class="error_content"></div>
+	 	        </div>
+	 	        <div class="staff_field_setting" onclick="staff_import.viewField();">
+	 	            <span style="float:left;color:red;width:100%;">※</span><span>设置字段映射</span><span style="float:left;width:100%;color:red;">※</span>
+	 	        </div>
+	 	        <div class="staff_field_content">
+	 	        	 <div class="staff_field_title">
+	 	        	 	 <span style="float:left;padding-left:10px;"> 指定字段映射关系</span>
+	 	        	 	 <span class="staff_field_colse" onclick="$('.staff_field_content').hide();" title="关闭"></span>
+	 	        	 </div>
+	 	        	 <div id="setcontent"></div>
+	 	        	 <div class="setfield_hint"></div>
+	 	        	 <button onclick="staff_import.setField();" class="btnGreen mb_button" style="width:80px;margin-left:140px;">确&nbsp;定</button>  	 	        	 
+	 	        </div>
+	 	        <div class="register_progress">
+	 	        	 <span class="register_progress_number">&nbsp;</span>
+	 	        	 <span class="register_progress_percent">&nbsp;</span>
+	 	        </div>
+      	 </div>
+      </div>
+      <div class="operation" style="width: 100%; float: left; background-color: transparent; padding: 10px 0px;">
+      	 <div class="staffmanager_hint"></div>
+      	 <button onclick="staff_import.start(1);" id="btn_start_import" class="btnGreen mb_button" style="float:left;width:80px;">导入数据</button>
+      </div>
+     </div>
+</div>
+
+<!--导入部门数据-->
+<div  class="dialogBox " id="view_dept_import" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:1000px;top:65px;left:120px;" class="dialog">
+    	<div class="title">导入部门数据</div> 
+      <span title="关闭" onclick="$('#view_dept_import').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:#fff;overflow:hidden;padding:10px 25px;height:460px;max-height:460px;+height:410px;+max-height:410px;cursor:default;">
+      	 <div class="import_step2">
+      	 	  <div class="import_step2_setting">
+	      	 	  <!--excel上传设置-->
+	      	 	  <div style="height:25px;line-height:25px;padding-left:30px;" id="excel_setting">
+	      	 	  	  <span style="float:left;">指定根部门ID：</span>
+	      	 	  	  <input class="mb_textbox import_selectfile" id="rootdeptid" type="text" style="width:100px;margin-right:20px;padding:0 2px;" id="filedata" name="filedata"/>
+	 	           	  <span style="float:left;width:90px;">请选择文件：</span>
+	 	           	  <form target="frm_import_submit" id="frm_dept_import" action="{{path('JustsyAdminAppBundle_department_uploadfile')}}" method="post" enctype="multipart/form-data">
+	 	           	    <input class="mb_textbox import_selectfile" type="file" id="filedata" name="filedata"/>
+	 	           	  </form>
+	 	           	  <button onclick="dept_import.uploadfile();" class="mb_button_style" style="float:left;width:60px;margin-left:20px;">上&nbsp;&nbsp;传</button>
+	 	           	  <a style="text-decoration:none;float:right; margin-right:2px;cursor:pointer;" onclick="window.location.href='{{JS_OPEN_API_URL}}/WeFaFa_Department_Template.xls'">模板下载</a>
+	 	           	  <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>
+		 	        </div>
+	 	        </div>
+	 	        <table class="mb_common_table" id="select_datasorce"><tbody></tbody></table>
+	 	        <div class="import_process">
+	 	        	 <span class="import_process_bar"></span>
+	 	        	 <span class="import_process_text"></span>
+	 	        </div>
+	 	        <div class="staff_field_setting" onclick="dept_import.viewField();"><span style="color:red;">※</span>设置字段映射<span style="color:red;">※</span></div>
+	 	        <div class="staff_field_content">
+	 	        	 <div class="staff_field_title">
+	 	        	 	 <span style="float:left;padding-left:10px;"> 指定字段映射关系</span>
+	 	        	 	 <span class="staff_field_colse" onclick="$('.staff_field_content').hide();" title="关闭"></span>
+	 	        	 </div>
+	 	        	 <div class="dept_setField_hint">
+	 	        	 	   <span style="float:left;margin-top:4px;">选择导入方式：</span>
+	 	        	 	   <label title="指定部门名称和上级部门名称">
+	 	                  <input onchange="dept_import.radio_change(this);" id="type1" type="radio" checked="checked" style="float:left;" name="radio_select_style" class="importtype"> 
+	 	  	              <span class="component_navtype">部门名称式</span>
+	 	               </label>	 	               
+	 	               <label title="指定部门ID、部门名称、上级部门ID" style="margin-left:20px;">
+	 	                 <input onchange="dept_import.radio_change(this);"  id="type2" type="radio" style="float:left;" name="radio_select_style" class="importtype"> 
+	 	  	              <span class="component_navtype">部门ID式</span>
+	 	                </label>
+	 	        	 </div>
+	 	        	  <div id="setcontent"></div>
+	 	        	 <div class="setfield_hint">&nbsp;</div>
+	 	        	 <button onclick="dept_import.setField();" class="btnGreen mb_button" style="width:80px;margin-left:145px;">确&nbsp;定</button>  	 	        	 
+	 	        </div>
+      	 </div>   	 
+      </div>
+      <div class="operation" style="width: 100%; float: left; background-color: transparent; padding: 10px 0px;">
+      	 <div class="staffmanager_hint"></div>
+         <button onclick="dept_import.start(1);" id="btn_start_import" class="btnGreen mb_button" style="float:left;width:80px;">开始导入</button>
+      </div>
+</div>
+</div>
+
+<!--编辑部门数据-->
+<div  class="dialogBox " id="dept_edit" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:500px;top:150px;" class="dialog">
+    	<div class="title">添加组织部门</div> 
+      <span title="关闭" onclick="$('#dept_edit').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:#fff;overflow: hidden; cursor: default; padding-left: 80px; min-height:310px; padding-top: 10px;">
+        <div class="staff_add_row"> 
+            <span>上级部门：</span>
+            <input id="text_parent_name" type="text" class="mb_textbox" readonly="readonly" onclick="LoadDept.showdept('dept_depttree',this);" style="float:left;margin-top:2px;width:240px;background-color:#eee;" />
+	          <ul id="dept_depttree" onmouseout="$(this).hide();" onmouseover="$(this).show();" class="ztree selected_dept_area"></ul>
+        </div>
+	      <div class="staff_add_row"> 
+	      	  <span>部门名称：</span>
+	      	  <input type="text" class="mb_textbox" style="width:240px;" maxlength="15" id="text_dept_name">
+	      </div>
+	      <div class="staff_add_row"> 
+	      	  <span>部门主管：</span>
+	      	  <input type="text" class="mb_textbox" onclick="$('.search_manager_area').show();" style="width:240px;background-color:#eee;" jid="" id="text_dept_manager" readonly="readonly"  />
+	      	  <div class="search_manager_area" onmouseover="$(this).show();" onmouseout="$(this).hide();" >
+	      	     <div class="search_manager_header">
+    	      	     <input type="text" class="mb_textbox" placeholder="用户账号/昵称/手机号" onkeypress="if(event.keyCode==13) { department.search_manager(); }" />
+    	      	     <span onclick="department.search_manager();" ></span>
+	      	     </div>
+	      	     <ul style="overflow: auto;"></ul>
+	      	  </div>
+	      </div>
+	      <div class="staff_add_row" style="padding-left:90px;">
+	          <label style="font-weight:100;float:left;">
+	      	    <input type="checkbox" id="check_friend" style="float: left; margin-top: 8px; margin-right: 5px;">
+	      	    <span style="float:left;">成员互为好友</span>
+	      	  </label>
+	          <label style="font-weight:100;float:left;margin-left:83px;">
+	      	    <input type="checkbox" id="check_show" checked="" style="float: left; margin-top: 8px; margin-right: 5px;">
+	      	    <span style="float:left;">显示部门</span>
+	      	  </label>	      	       	  
+	      </div>		            
+        <ul class="depart_searchArea" style="overflow:auto;"></ul>
+        <div class="staff_add_hint"></div>
+      </div>
+      <div class="operation" style="width:100%;float:left;padding:10px 0px 10px 160px;">
+	      <button onclick="department.Save();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	      <button onclick="$('#dept_edit').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+ 
+<!--编辑用户数据-->
+<div  class="dialogBox " id="staff_edit" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:500px;top:150px;cursor:default;" class="dialog">
+    	<div class="title">添加新用户</div> 
+      <span title="关闭" onclick="$('#staff_edit').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="overflow:hidden;padding:10px 50px 0px 80px;cursor:default;background-color:#fff;">
+	      <div class="staff_add_row"> 
+	      	  <div style="float:left;width:90px;">部门名称：</div>
+	      	  <input type="text"  placeholder="部门名称" class="mb_textbox" deptid="" id="txtdept" onclick="LoadDept.showdept('staff_depttree',this);" readonly=""  style="cursor:text;width:240px;background-color:#eee;" />
+	          <ul id="staff_depttree" onmouseover="$(this).show();"  onmouseout="$(this).hide();"  class="ztree selected_dept_area"></ul>
+	      </div>
+	      <div id="staff_field" style="float: left; height: 222px; width: 100%;">
+    	      <div class="staff_add_row">
+    	      	  <span>员工姓名：</span>
+    	      	  <input type="text" name="realName"  maxlength="10"  placeholder="员工姓名"  class="mb_textbox" style="width:240px;" id="realName">
+    	      </div>
+            <div class="staff_add_row"> 
+                <span>用户邮箱：</span>
+                <input type="text" name="account" maxlength="50" placeholder="请输入用户邮箱" class="mb_textbox" style="width:240px;" id="account">
+            </div>        
+    	     <div class="staff_add_row" id="password_row"> 
+    	      	  <span>登录密码：</span>
+    	      	  <input type="password" name="pass" maxlength="20" placeholder="账号登录密码" class="mb_textbox" style="width:240px;" id="pass">
+    	     </div>
+    	      <div class="staff_add_row" style="height: 22px; line-height: 22px;"> 
+    	      	   <span>性别：</span>
+    	      	   <label style="float: left; margin-bottom: 0px;">
+    	      	   	  <input type="radio" style="float:left;" checked  id="checkboxsex1" name="checkboxsex" value="1">
+    	      	   	  <span style="float:left;padding-left:5px;">男</span>
+    	      	   </label>
+    	       	   <label style="float: left; margin-left: 45px; margin-bottom: 0px;">
+    	      	   	  <input type="radio" style="float:left;" id="checkboxsex0" name="checkboxsex" value="0">
+    	      	   	  <span style="float:left;padding-left:5px;">女</span>
+    	      	   </label>
+    	      </div>        
+    	      <div class="staff_add_row"> 
+    	      	  <span>员工职务：</span>
+    	      	  <input type="text" name="duty" maxlength="10" placeholder="员工职务"  class="mb_textbox" style="width:240px;" id="duty">
+    	      </div>
+    	      <div class="staff_add_row"> 
+    	      	  <span>手机号码：</span>
+    	      	  <input type="text" name="mobile" maxlength="11" placeholder="联系手机号码" onpaste="department.enableNaN(this)" onkeyup="department.enableNaN(this)" maxlength="11"  class="mb_textbox" style="width:240px;" id="mobile">
+    	      </div>
+	      </div>
+	      <div id="movedept_staff" style="float:left;height:222px;width:100%;display:none;">
+	      </div>	      
+        <div class="staff_add_hint"></div>
+      </div>
+      <div class="operation" style="width:100%;float:left;padding:10px 0px 10px 160px;">
+	      <button id="btnSave" onclick="staff.Save();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	      <button id="btnCancle" onclick="$('#staff_edit').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+<!--删除对话框-->
+<div style="display:none;" id="window_hint" class="dialogBox ">
+ 	  <div class="background"></div>
+    <div class="dialog" style="left:260px; top:260px;width:420px;cursor:default;">
+    	<div class="title">确认信息</div> 
+      <span class="close-tip-icon" style="cursor:pointer;" onclick="$('#window_hint').hide();" title="关闭"></span>
+      <div style="overflow:hidden;cursor:default;background-color:#fff;text-align:center;" class="content">
+          <div class="showmessage"></div>
+          <div class="delete_hint"></div>
+      </div>
+      <div style="width:100%;float: left; padding: 10px 0px 10px 132px;" class="operation">
+	      <button style="float:left;width:60px;" class="btnGreen mb_button" onclick="DeleteData();" id="btnSave">确&nbsp;定</button>    
+	      <button style="float:left;width:60px;" class="btnGray mb_button" onclick="$('#window_hint').hide();" id="btnCancle">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+<!--重置密码对话框-->
+<div style="display:none;" id="reset_pwd" class="dialogBox ">
+ 	  <div class="background"></div>
+    <div class="dialog" style="top:230px;width:400px;cursor:default;">
+    	<div class="title">重置密码</div> 
+      <span class="close-tip-icon" style="cursor:pointer;" onclick="$('#reset_pwd').hide();" title="关闭"></span>
+      <div style="overflow: hidden; cursor: default; background-color: rgb(255, 255, 255); text-align: center; padding: 30px 0px 0px 10px; height: 135px;" class="content">
+          <div style="margin-bottom:20px;">
+              <span>用户密码：</span>
+              <input onclick="$('#resetpwd_hind').html('');" id="resetpass1" type="password" style="width:240px;" class="mb_textbox" placeholder="请输入新密码" maxlength="20" />
+          </div>
+          <div>
+              <span>确认密码：</span>
+              <input onclick="$('#resetpwd_hind').html('');" id="resetpass2" type="password" style="width:240px;" class="mb_textbox" placeholder="请输入确认密码" maxlength="20" />
+          </div>
+          <div id="resetpwd_hind" style="float:left;margin:10px 0px 0px 105px;color:#cc3300;"></div>
+      </div>
+      <div style="width:100%;float: left; padding: 10px 0px 10px 132px;" class="operation">
+	      <button  style="float:left;width:60px;" class="btnGreen mb_button" onclick="staff.ResetPass();">确&nbsp;定</button>    
+	      <button id="resetpass2" style="float:left;width:60px;" class="btnGray mb_button" onclick="$('#reset_pwd').hide();">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+<!--变更邮件询问框-->
+<div style="display:none;" id="change_email" class="dialogBox ">
+ 	  <div class="background"></div>
+    <div class="dialog" style="top:260px;width:420px;cursor:default;">
+    	<div class="title">确认信息</div> 
+      <span class="close-tip-icon" style="cursor:pointer;" onclick="$('#change_email').hide();" title="关闭"></span>
+      <div style="overflow:hidden;cursor:default;background-color:#fff;text-align:center;" class="content">
+          <div class="showmessage"></div>
+          <div class="delete_hint"></div>
+      </div>
+      <div style="width:100%;float: left; padding: 10px 0px 10px 132px;" class="operation">
+	      <button style="float:left;width:60px;" class="btnGreen mb_button" onclick="DeleteData();" id="btnSave">确&nbsp;定</button>    
+	      <button style="float:left;width:60px;" class="btnGray mb_button" onclick="$('#change_email').hide();" id="btnCancle">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+	 $(document).ready(function(){
+	    department.search_url = "{{path('JustsyAdminAppBundle_departmentmanager_search')}}";
+	    department.getdepart_url = "{{path('JustsyAdminAppBundle_department_tree')}}";
+	    department.add_url ="{{path('JustsyAdminAppBundle_departmentmanager_adddept')}}";
+	    department.editorder_url ="{{path('JustsyAdminAppBundle_departmentmanager_editorder')}}";
+	    department.dele_url = "{{path('JustsyAdminAppBundle_departmentmanager_delete')}}";
+	    
+	    dept_import.import_url = "{{path('JustsyAdminAppBundle_departmentmanager_import')}}";	    
+	    dept_import.sql_url = "{{path('JustsyAdminAppBundle_staffmanager_query')}}";
+	    dept_import.statistics_url = "{{path('JustsyAdminAppBundle_department_dept_statistics')}}";
+	    dept_import.search_url = "{{path('JustsyAdminAppBundle_departmentmanager_search')}}";
+	    dept_import.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";	    
+	    
+	    staff_import.import_url = "{{path('JustsyAdminAppBundle_staffmanager_import_start')}}";
+	    staff_import.sql_url = "{{path('JustsyAdminAppBundle_staffmanager_query')}}";
+	    staff_import.search_url = "{{path('JustsyAdminAppBundle_staffmanager_searchstaff')}}";
+	    staff.search_staff_url = "{{path('JustsyAdminAppBundle_staffmanager_searchstaff')}}";
+	    staff.dele_url = "{{path('JustsyAdminAppBundle_staffmanager_delete')}}";
+	    staff.update_url ="{{path('JustsyAdminAppBundle_staffmanager_update_staff')}}";
+	    department.loadTree();
+	    
+	    $(".header_dept_name>span").html(enterprise_shortname);
+	    $(".header_dept_name>span").attr("deptid","v"+enterprise_eno);
+	    
+	    
+   });
+   $(".table_right_header>span").bind("click",function(){
+      if ( $(this).attr("class")=="option_menu_item_active") return;
+      $(".table_right_header>span").attr("class","option_menu_item");
+      $(this).attr("class","option_menu_item_active");
+      var index = $(this).index();
+      $(".table_body_area").hide();
+      if ( index==0)
+      {
+         $("#staff_body").show(); 
+      }
+      else
+      {
+        $("#dept_body").show();
+      }      
+   });
+</script>
+{% endblock %}

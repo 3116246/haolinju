@@ -1,0 +1,8 @@
+{% if ds["we_convers_notify"]["recordcount"] > 0 %}
+<div class="cc_outbox">
+  抄送：
+  {% for row in ds["we_convers_notify"]["rows"] %}
+  <a href="#" class="employee_name" login_account="{{ row["cc_login_account"] }}" >{{ row["nick_name"] }}</a>
+  {% endfor %}
+</div>
+{% endif %}

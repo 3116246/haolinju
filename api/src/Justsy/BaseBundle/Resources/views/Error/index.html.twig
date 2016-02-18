@@ -1,0 +1,99 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block main_content %}
+<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+<div align='center'>
+<div style="background:url({{asset('bundles/fafatimewebase/images/activeback.jpg')}});width:960px;height:520px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.3);border:1px solid #EEE;">
+<div style='text-align: left;height: 45px;padding-left: 20px;cursor: default;'><span style="color: #999999;font-family: 微软雅黑;font-size: 16px;line-height: 42px;"><b>Oops，出错啦！</b></span></div>
+    <div class="regok" style="cursor: default;">
+			<br>
+			<h3><span style="color:#ff8400;">{{error}}</span></h3>
+			<br>
+			<a class="btn-reg" style="border: 0 none; color: #FFFFFF; cursor: pointer;display: inline-block;font-size: 14px;font-weight: 700; height: 37px;line-height: 37px;outline: 0 none;  padding: 0; text-align: center;vertical-align: baseline;width: 110px;border-radius: 4px 4px 4px 4px;" href="javascript:;" onclick="$('#errorInput').modal('show')">我要反馈错误</a> 
+			<div style="height:50px"></div>
+			<hr style="width:80%; height:1px;border:none;border-top:1px dashed #aaa;margin:auto">
+			<div style="float:left; padding-left:230px; text-align:left; line-height:20px;padding-top: 20px"><font color="#993300">您还可以：</font> 
+		  		<br>1.按 <b>F5</b> 试试刷新页面查 
+		  		<br>2.<a style="color:#06C;" href="https://www.wefafa.com">返回首页</a>
+			</div>    
+		<div class="modal" id="errorInput" data-backdrop=false style="display:none;width:450px;margin-left: -225px;height:300px;margin-top: -150px;" show=false>
+		    <div class="modal-header">    
+		    	<a class="close" data-dismiss="modal">×</a>    
+		    	<h5 style="text-align: left;">问题反馈</h5>  
+		    </div>
+		    <div id="files" class="modal-body" style="padding:1px;height:179px">    
+		    	  <div id="con_one1" class="input_con_area text_div" style="margin-bottom: 0px;">
+            <textarea id="Trend" cols="" rows="" style="height:177px;margin: 0; padding: 0;width: 99%;" class="text_input" placeholder="请在此描述问题现象及结果，谢谢！" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'></textarea>
+            </div>
+		    </div>  
+		    <div class="modal-footer">   
+		      <img style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16">
+		      <span class="alert reg_alert alert-error" style="display:none">提交成功！</span>		    	
+		    	<a href="javascript:;" onclick="send()" class="btn-reg" style="border: 0 none; color: #FFFFFF; cursor: pointer;display: inline-block;font-size: 14px;font-weight: 700; height: 30px;line-height: 30px;outline: 0 none;  padding: 0; text-align: center;vertical-align: baseline;width: 50px;border-radius: 4px 4px 4px 4px;">发送</a>  
+		    	<A class="btn-reg"  style="border: 0 none; color: #FFFFFF; cursor: pointer;display: inline-block;font-size: 14px;font-weight: 700; height: 30px;line-height: 30px;outline: 0 none;  padding: 0; text-align: center;vertical-align: baseline;width: 50px;border-radius: 4px 4px 4px 4px;" href="#" data-dismiss="modal" >关闭</A>   
+    </div>	
+</div>
+</div>    
+{% endblock %}
+{% block javascripts %}
+<script>
+var hint = $(".modal-footer");
+var saveing = false;
+
+function send()
+{
+    if(saveing) return;
+    var txt = $("#Trend").val().replace(/ /g,"");
+    if(txt.length==0  || txt=="请在此描述问题现象及结果，谢谢！")
+    {
+        hint.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/error.png') }}");
+        hint.find("img").show();
+        hint.find("span").text("请填写问题现象及结果");
+        hint.find("span").show();
+        setTimeout("hideHint()",5000);
+        saveing=false;
+        return;
+    }
+    if(txt.length>200)
+    {
+        hint.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/error.png') }}");
+        hint.find("img").show();
+        hint.find("span").text("请在200字内描述问题");
+        hint.find("span").show();
+        setTimeout("hideHint()",5000);
+        saveing=false;
+        return;        
+    }
+    saveing=true;
+    hint.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}");
+    hint.find("img").show();
+    hint.find("span").text("提交中...");
+    hint.find("span").show();    
+    $.post("{{ path('JustsyBaseBundle_feedback_save',{'network_domain' : 'foo'}) }}",
+           "txt="+txt,
+           function(d){
+                saveing=false;
+                if(d=="1")
+                {
+                    hint.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/ok.png') }}");   
+                    hint.find("span").text("反馈信息已提交！");
+                    setTimeout("hideHint();$('#errorInput').modal('hide')",3000);
+                }
+                else
+                {
+                   hint.find("span").text(d);
+                   hint.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/error.png') }}");
+                   setTimeout("hideHint()",5000);
+                }  
+           }
+    );
+}
+
+function hideHint()
+{
+        hint.find("img").hide();
+        hint.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/ok.png') }}");
+        hint.find("span").hide(); 
+        hint.find("span").text("");
+}
+</script>
+{% endblock %}

@@ -1,0 +1,42 @@
+.staffmanager_hint{ float: left; height: 25px; padding-left: 20px;text-align: left;width:420px; }
+.import_step1 { margin-left: auto;margin-right: auto;margin-top:80px;width:200px; }
+.import_step1_row { float:left;width:100%;margin-top:15px; }
+.import_step1_row>label { float:left;margin-left:50px; }
+.import_step2 { float:left;width:100%;display:none; }
+.register_progress { display:none;background-color: #999999; float: left; height: 25px; margin-left: 270px;margin-top: -220px;width: 350px;}
+.register_progress_percent { background-color: #0088cc;display: block;float: left;height: 25px;margin-top: -25px; }
+.register_progress_number { color: #ffffff;float: left;height: 25px;line-height: 25px;position: relative;text-align: center;width: 100%;text-shadow: 0 0 0; }
+.import_selectfile { float:left;background-color: white;font-size: 12px;line-height: 20px;padding:0px;width: 450px; }
+.import_input_row { float:left;height:25px;line-height:25px;margin-top:5px; }
+.import_step2_setting { float:left;width:100%;max-heigh:70px; }
+.staff_table { border: 1px solid #ddd;cursor: default;float: left;height: 200px;margin-top: 10px;overflow-x: hidden;overflow-y: auto;width: 100%; }
+.staff_table>tbody {float: left;height: 400px;overflow-x: hidden;overflow-y: auto; }
+.staff_table_head { background-color: #eee;float: left;height: 30px;line-height:30px;text-align: center;width: 100%; }
+.staff_table_head>td { border-bottom: 1px solid #ddd;border-right: 1px solid #ddd;height: 30px; }
+.staff_table_row { background-color: white;float: left;height: 25px;width: 100%; }
+.staff_table_row>td { border-bottom: 1px solid #ddd;border-right: 1px solid #ddd;height: 25px;overflow: hidden;padding-left: 10px;text-overflow: ellipsis;white-space: nowrap;}
+.staff_field_row { float: left;height:45px;padding-left:20px;width: 100%; }
+.staff_field_row>div { float:left;width:200px; }
+.staff_fieldname { display: block;float: left;width: 100%; }
+.staff_fieldname>span { font-weight:bold;color:#cc3300;} 
+.staff_field_desc { color: blue;display: block;float: left;font-size: 12px;margin-top: -4px;width: 100%; }
+.staff_filed_name { float:left; }
+.staff_field_hint { color: #cc3300;float: left;height: 25px;line-height: 25px;padding-left: 30px;text-align: left;width: 200px; }
+.staff_field_content { background-clip: padding-box;background-color: white;border: 1px solid rgba(0, 0, 0, 0.3);border-radius: 6px;box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);cursor: default;display: none;float: right;margin-top: -402px;+margin-top:-200px;overflow:hidden;width: 360px;z-index: 100;padding-bottom:20px; }
+.staff_field_title { background-image:url("/bundles/fafatimewebase/images/document_title_bg.jpg");border-bottom: 1px solid #cbcbcb;height: 28px;font-weight:bold;line-height: 28px;margin-bottom:15px; }
+.staff_field_colse { background-image: url("/bundles/fafatimeweopenapi/images/icon_popup_close.png");background-position: -15px 0; cursor: pointer;float: right;height: 16px;margin-right: 10px;margin-top: 8px;right: 13px;width: 16px; }
+.setfield_hint { color: #cc3300;display: block;float: left;font-size: 12px;height: 22px;line-height: 22px;margin-top: -5px;padding-left: 20px;width: 100%; }
+.staff_execute_icon {	float:left;width:18px;height:18px;margin:10px 0px 0px 30px;cursor:pointer; }
+.staff_add_row { height:28px;line-height: 28px;float:left;margin-top: 10px; }
+.staff_add_row>span  { float:left;width:90px; }
+.staff_add_org { float: left;margin-left:83px;margin-top: -18px;max-height: 255px;overflow:hidden; width: 240px; }
+.staff_add_org>ul { max-height: 252px;width: 100%;overflow:hidden; }
+.staff_add_hint { color: #cc3300;float: left;height: 35px;line-height: 35px;padding-left: 90px;width:100%;}
+.staff_search_area{ color: black;float: left;font-weight: 100;height: 25px;line-height:28px;padding-left:10px;margin-top: 5px; }
+.depart_searchArea { background-clip: padding-box;background-color: white;box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);cursor: default;display: none;height: 252px;margin-left: 75px;+margin-left:-665px;margin-top: 27px;max-height: 252px;overflow: hidden;position: absolute;width: 285px;z-index: 100;}
+
+
+.error_box { background-clip: padding-box;background-color: white;border: 1px solid rgba(0, 0, 0, 0.3);border-radius: 6px;box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);cursor: default;display: none;float: left;height: 440px;margin-top: -440px;overflow-y: auto;width: 100%;position:relative;}
+.error_content {  float: left;height: 405px;min-height: 405px;overflow-x: hidden;overflow-y: auto;padding: 0 10px;width: 100%; }
+.error_content>span { float: left;width: 100%; }
+.error_text { color: red;cursor: pointer;font-weight: bold;padding: 0 5px; }

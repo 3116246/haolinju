@@ -1,0 +1,437 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}Wefafa激活{% endblock %}
+
+{% block main_content %}
+<div class="active_main">
+  <div class="active_nav">
+    <ul>
+      <li class="out">1. 基本信息</li>
+      <li class="in2">2. 加入圈子</li>
+      <li class="next">3. 上传头像</li>
+      <li class="next2">4. 开始使用</li>
+    </ul>
+  </div>
+</div>
+<div class="active_detail">
+  <div class="control-group-title">圈子名称：<span style="color:#888;">{{this.circleName}}</span></div>
+  <div class="control-group-title"><b>圈子现有成员</b><span class="control-line"></span><span id="changeAtten" style="cursor:pointer">换一组</span></div>
+  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_active_end') }}/inv" >
+  <input name="account" type="hidden" value="{{ this.account }}" />
+  <input name="realName" type="hidden" value="{{ this.realName }}" />
+  <input name="passWord" type="hidden" value="{{ this.passWord }}" />
+  <input name="ename" type="hidden" value="{{ this.ename }}" />
+  <input name="mailtype" type="hidden" value="{{ this.mailtype }}" />
+  <input name="isNew" type="hidden" value="{{ this.isNew }}" />
+  <input name="circleId" type="hidden" value="{{ this.circleId }}" />
+  <input id="invstaff" name="invstaff" type="hidden" value="{{ this.invstaff }}" />
+  <input id="eno" name="eno" type="hidden" value="{{ this.eno }}" />
+  <input id="mails" name="mails" type="hidden" />
+  <input id="attens" name="attens" type="hidden" />
+  <input id="invMsgValue" name="invMsg" type="hidden" />
+  <ul class="contentright clearfix" id="attenMember">
+    <!-- 成员循环 -->
+  </ul>
+  <div class="invitedrightone">
+    <div class="control-group-title"><span style="color:#888;" id="txtDec">关注或邀请至少3位同事就可以加入企业圈子了！</span></div>
+    <div class="control-group-title"><b>邀请同事</b></div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo"  maxlength=32 value="" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail"  maxlength=32 value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <textarea id="invMsg" name="" cols="" rows="" class="RegFormIpttext">想对被邀请的同事说点什么吗？</textarea>
+    </div>
+    <div class="form-actionssmall">
+      <button type="button" class="allinput" id="btnSubmit">下一步 ></button>
+    </div>
+  </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var jso = {{rows|raw}};
+var page = 0;
+var arrAtten = ["{{this.invstaff}}"];
+var btnSubmit = $("#btnSubmit");
+var isValid = [true,true,true,true,true];
+var ipts = $("form .RegFormIpttwo,.RegFormIpttext,.allinput");
+var mailDivs = $("form .control-group");
+mailDivs = mailDivs.slice(0,mailDivs.length-1);
+var hintMsg = 
+{
+  "mail01":"您输入的邮件地址不正确，请检查！",
+  "mail02":"邮箱地址重复输入，请重新输入！",
+  "mail03":"您不能邀请自己！",
+  "mail04":"该用户已注册！"
+};
+var defaultInvMsg = "想对被邀请的同事说点什么吗？";
+var txtDec = $("#txtDec");
+var mailChanged = false;
+var mailUnRegister = [true,true,true,true];
+
+$(document).ready(function()
+{
+  txtDec.hide();
+  addAttenMember(jso);
+  setDecText();
+  $("#changeAtten").click(function()
+  {
+    var n = $("#changeAtten");
+    if ({{ pages }}<1 || n.attr("isclick")=="1") return;
+    n.attr("isclick","1");
+    getAttenMember();
+  });
+  ipts.blur(function()
+  {
+    var ajaxValid = false;
+    var pn = $(this).parent();
+    var idx = ipts.index(this);
+    var cns = pn.children();    
+    if (this.className == "RegFormIpttwo")
+    {
+      if (!checkMailValid(cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail01);
+      }
+      else if (this.value+"@"+cns[2].value == "{{this.account}}")
+      {
+        setErrInfo(cns,idx,hintMsg.mail03);
+      }
+      else if (!checkMailUnique(pn,cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail02);
+      }
+      else
+      {
+        if (mailChanged && this.value.length>0)
+        {
+          ajaxValid = true;
+          setCheckInfo(cns,idx);
+          checkMailRegistered(this.value,cns,idx);
+        }
+        else
+        {
+          //isValid[4] = checkMailCount($("form .RegFormIpttwo"))>2;
+          isValid[4] = true;
+        }
+      }
+    }
+    else if ($(this).is("#invMsg"))
+    {
+      if (this.value == "") this.value = defaultInvMsg;
+    }
+    if (!ajaxValid)
+    {
+      setDecText();
+      enableSubmit();
+    }
+  }).keypress(function(ev)
+  {
+    if ($(this).is("#circleName"))
+    {
+      btnSubmit.attr("disabled",true);
+    }
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm(this);
+        return;
+      }
+      moveToNext(ipts,this);
+    }
+  }).change(function()
+  {
+    if (this.className=="RegFormIpttwo")
+    {
+      mailChanged = this.value.length>0;
+    }
+  });
+  
+  $("#invMsg").focus(function()
+  {
+    if (this.value == defaultInvMsg) this.value = "";
+  });
+  
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm(this);
+  });
+  ipts.eq(0).focus().select();
+});
+//生成关注对象
+function addAttenMember(json)
+{
+  if (json == null) return;
+  var pn = $("#attenMember");
+  for(var i=0; i< json.length; i++)
+  {
+    var s='<li class="list"><a><img src="';
+    if (json[i].photo==null || json[i].photo=='')
+    {
+      s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+    }
+    else
+    {
+      s+=json[i].photo;
+    }
+    var cls = "attention_concern";
+    var txt = "关注";
+    if ($.inArray(json[i].account,arrAtten)>=0)
+    {
+      cls = "attention_already";
+      txt = "已关注";
+    }
+    s+='" width="60" height="60" title="'+json[i].nickname+'" style="cursor:pointer"></a>';
+    s+='<span class="text" title="'+json[i].nickname+'" style="cursor:pointer"><a>'+json[i].nickname+'</a></span>';
+    s+='<span class="attention"><a class="'+cls+'" style="color:#888;">'+txt+'</a></span>';
+    s+='<span><input type="hidden" value="'+json[i].account+'" /></span>';
+    pn.append(s);
+  }
+  //增加点击事件
+  var attList = $(".list");
+  $.each(attList,function(i,n)
+  {
+    $(n).find("a").bind("click",function()
+    {
+      var acc = $(n).find("input").val();
+      if (acc=="{{this.invstaff}}") return;
+      var a = $($(n).find("a")[2]);
+      if (a.text() == "关注")
+      {
+        a.text("已关注");
+        a.attr("class","attention_already");
+        arrAtten.push(acc);
+      }
+      else
+      {
+        a.text("关注");
+        a.attr("class","attention_concern");
+        arrAtten = $.grep(arrAtten,function(n,i)
+        {
+          return !(acc==n);
+        });
+      }
+      setDecText();
+      //isValid[4] = checkMailCount($("form .RegFormIpttwo"))>2;
+      isValid[4] = true;
+      enableSubmit();
+    });
+  });
+}
+//提交
+function submitForm(btn)
+{
+  btn.disabled = true;
+  var mails = "", attens = "";
+  $.each(mailDivs,function(i,n)
+  {
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      mails += s + ",";
+    }
+  });
+  $("#mails").val(mails);
+  $.each(arrAtten,function(i,n)
+  {
+    attens += n + ",";
+  });
+  $("#attens").val(attens);
+  if ($("#invMsg").val() != defaultInvMsg) $("#invMsgValue").val($("#invMsg").val());
+  $("#contentForm").submit();
+}
+//显示错误信息
+function setErrInfo(cns, idx, info)
+{
+  isValid[idx] = false;
+  cns.last().text(info);
+}
+//清除错误信息
+function clearErrInfo(cns, idx)
+{
+  isValid[idx] = true;
+  cns.last().text("");
+}
+//后台检查
+function setCheckInfo(cns, idx)
+{
+  isValid[idx] = false;
+  cns.last().text("");
+  var sr = "{{ asset('bundles/fafatimewebase/images/loading.gif') }}";
+  cns.last().html('<img src="'+sr+'" class="joinimg" width="16" height="16">');
+}
+//设置邀请提示
+function setDecText()
+{
+  /*
+  var mailcnt = getMailCount($("form .RegFormIpttwo"));
+  if (arrAtten.length > 0 && arrAtten.length+mailcnt < 3)
+  {
+    txtDec.show();
+    txtDec.text("您已经关注了"+arrAtten.length+"位同事，再邀请"+(3-arrAtten.length-mailcnt)+"位同事就可以加入企业圈子了。");
+  }
+  else if (arrAtten.length+mailcnt >= 3)
+  {
+    txtDec.hide();
+    txtDec.text("");
+  }
+  else
+  {
+    var c = 3-mailcnt;
+    txtDec.show();
+    if (c==3 && arrAtten.length==0)
+    {
+      txtDec.text("关注或邀请至少3位同事就可以加入企业圈子了！");
+    }
+    else
+    {
+      if (arrAtten.length==0)
+      {
+        txtDec.text("再邀请"+c+"位同事加入企业圈子");
+      }
+      else
+      {
+        txtDec.text("至少邀请"+c+"位同事加入企业圈子");
+      }
+    }
+  } */
+}
+//验证邮箱有效性
+function checkMailValid(cns)
+{
+  if (cns[0].value.length < 1) return true;
+  var mail = cns[0].value + "@" + cns[2].value;
+  var reg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+  return reg.test(mail);
+}
+//检查邮箱是否重复
+function checkMailUnique(pn,cns)
+{
+  var re = true;
+  var idx = mailDivs.index(pn);
+  var mail = cns[0].value + "@" + cns[2].value;
+  $.each(mailDivs,function(i,n)
+  {
+    if (idx == i) return;
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      return re = !(mail == s);
+    }
+  });
+  return re;
+}
+//验证邮箱数量
+function checkMailCount(mails)
+{
+  return getMailCount(mails)+arrAtten.length;
+}
+//获取邀请邮箱数
+function getMailCount(mails)
+{
+  var re = 0;
+  $.each(mails,function(i,n)
+  {
+    if (n.value.length > 0) re++;
+  });
+  return re;
+}
+//检查邀请的邮箱是否已注册
+function checkMailRegistered(v, cns, idx)
+{
+  var mail = v+"@"+cns[2].value;
+  $.post("{{path('JustsyBaseBundle_active_checkinvmail')}}",{mail:mail},function(data) 
+  {
+    cns.last().text("");
+    if (data > 0)
+    {
+      mailUnRegister[idx] = false;
+      cns.last().text(hintMsg.mail04);
+    }
+    else
+    {
+      mailUnRegister[idx] = true;
+      isValid[idx] = true;
+      setDecText();
+    }
+    mailChanged = false;
+    //isValid[4] = checkMailCount($("form .RegFormIpttwo"))>2;
+    isValid[4] = true;
+    enableSubmit();
+  },"text");
+}
+//设置submit键
+function enableSubmit()
+{
+  var suc = true;
+  for (i in isValid)
+  {
+    suc &= isValid[i];
+  }
+  for (i in mailUnRegister)
+  {
+    suc &= mailUnRegister[i];
+  }
+  btnSubmit.attr("disabled",!suc);
+}
+//移至下一个控件
+function moveToNext(ipts, n)
+{
+  var nxt = ipts.index(n)+1;
+  var nxtNode = ipts.eq(nxt);
+  if (nxtNode == null) return;
+  if (nxtNode.attr("disabled"))
+  {
+    moveToNext(ipts, nxtNode);
+  }
+  else
+  {
+    ipts.eq(nxt).focus();
+  }
+}
+//获取关注人员
+function getAttenMember()
+{
+  var eno = $("#eno").val();
+  var invstaff = $("#invstaff").val();
+  page++;
+  $.post("{{path('JustsyBaseBundle_active_getattenmember')}}",
+    {eno:eno,page:page,invstaff:invstaff},
+    function(data) 
+    {
+      if (data.cnt > 0)
+      {
+        $("#attenMember").empty();
+        addAttenMember(data.json);
+        page = data.page;
+      }
+      else
+      {
+        page = 0;
+      }
+      $("#changeAtten").attr("isclick","0");
+    },"json");
+}
+</script>
+{% endblock %}

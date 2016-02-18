@@ -1,0 +1,15 @@
+parameters:
+#    fa_fa_web_im_im_online_service.example.class: WebIM\ImOnlineServiceBundle\Example
+
+services:
+#    fa_fa_web_im_im_online_service.example:
+#        class: %fa_fa_web_im_im_online_service.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    we_data_access:
+        class: WebIM\ImChatBundle\DataAccess\DataAccess
+        arguments: [@service_container,"default"]
+        scope: request
+    we_data_access_im:
+        class: WebIM\ImChatBundle\DataAccess\DataAccess
+        arguments: [@service_container,"im"]
+        scope: request

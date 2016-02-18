@@ -1,0 +1,52 @@
+<table class="table" id="groupmaintable">
+          <tr>
+          	<td></td>
+            <td><h5>群组名称</h5></td>
+            <td><h5>创建时间</h5></td>
+            <td><h5>操作</h5></td>
+          </tr>
+{% for row in rows %}
+	<tr>
+				<td width=50 height=55>
+				 <img src="{{row.group_photo_path}}" style="width:50px;height:50px;line-height:50px;">
+				</td>
+				<td width=50 height=55>
+				 <div style="color:#666666;line-height:50px;">{{row.group_name}}</div>
+				</td>
+				<td width=50 height=55>
+				 <div style="line-height:50px;">{{row.create_date}}</div>
+				</td>
+				<td width=50 height=55>
+					<div style="line-height:50px;">
+				   <a group_id="{{row.group_id}}"
+				   	  href="{{path('JustsyBaseBundle_group_setting_group',{'network_domain':curr_network_domain})}}?group_id={{row.group_id}}"
+				   >修改群组信息</a>
+				  </div>
+				</td>
+</tr>
+{% endfor %}
+</table>
+
+{% if pageNum>0 %}
+   <div class="pagination" style="text-align:right">
+   	<ul>
+   	<li><a title="首页" onclick="getPage(1)"><</a></li>
+   	<li {% if pageIndex<_step %} class="disabled" {% endif %}><a  title="前一页" {% if pageIndex>=_step %} onclick="getPage({{pageIndex-1}})" {% endif %}><<</a></li>
+     {% for i in pageIndex..pageEnd %}
+       <li {% if pageIndex==i%} class="active" {% endif %}><a  onclick="getPage({{i}})">{{i}}</a></li>
+     {% endfor %}	
+    <li {% if pageIndex==pageNum %} class="disabled" {% endif %}><a  title="下一页" {% if pageIndex!=pageNum %} onclick="getPage({{pageEnd+1}})" {% endif %}>>></a></li>
+    <li><a title="末页" onclick="getPage({{pageNum}})">></a></li>
+    </ul>
+   
+   </div>
+{% endif %}
+
+<script type="text/javascript">
+  function getPage(pageIndex)
+  {
+  	alert(pageIndex);
+  	$(".pagination").remove();
+		$("#groupmaintable").load("{{path('JustsyBaseBundle_group_setting_groupmain',{'network_domain':curr_network_domain})}}",{pageIndex:pageIndex});
+  }
+</script>

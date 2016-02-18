@@ -1,0 +1,176 @@
+
+<div class="resourceToolbar">
+	<span onclick="uploadnow()"><span style="color:black;font-weight:bold;">上传资源文件</span>(将应用中要用到的图标、图片等文件统一上传到这儿管理)</span>
+	<span id="shouqi" style='margin-left:180px;display:none' onclick="$('#uploadfilecontainer').slideUp();$(this).hide();">收起</span>
+</div>
+<div id="uploadfilecontainer" class='uploadfilecontainer' style="display:none;">
+<span class='tranparent_span'></span>
+</div>
+<div id="uploadfileerror" style="color:red;padding-left:20px;padding-top:5px;"></div>
+<div id="reslist">
+    <div class="application_template_list application_template_list_box" type="system">     	  
+     	    <span style='background-color:#aaaaaa; height: 50px; width: 50px; padding-right: 3px;'>
+     	    	<img style="margin-top: 10px;" src="/bundles/fafatimewebase/images/icons2/index.png" />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">首页</span>
+     	  	{% if dlg=='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="index.png" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>
+    <div class="application_template_list application_template_list_box" type="system">     	  
+     	    <span style='background-color:#aaaaaa;height: 50px; width: 50px; padding-right: 3px;'>
+     	    	<img style="margin-top: 10px;" src="/bundles/fafatimewebase/images/icons2/org.png" />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">通讯录</span>
+     	  	{% if dlg=='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="org.png" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>	 
+    <div class="application_template_list application_template_list_box" type="system">     	  
+     	    <span style='background-color:#aaaaaa;height: 50px; width: 50px; padding-right: 3px;'>
+     	    	<img style="margin-top: 10px;" src="/bundles/fafatimewebase/images/icons2/msgcenter.png" />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">消息中心</span>
+     	  	{% if dlg=='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="msgcenter.png" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>
+    <div class="application_template_list application_template_list_box" type="system">     	  
+     	    <span style='background-color:#aaaaaa;height: 50px; width: 50px; padding-right: 3px;'>
+     	    	<img style="margin-top: 10px;" src="/bundles/fafatimewebase/images/icons2/appcenter.png" />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">应用中心</span>
+     	  	{% if dlg=='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="appcenter.png" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>	
+    <div class="application_template_list application_template_list_box" type="system">     	  
+     	    <span style='background-color:#aaaaaa;height: 50px; width: 50px; padding-right: 3px;'>
+     	    	<img style="margin-top: 10px;" src="/bundles/fafatimewebase/images/icons2/sns.png" />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">企业微博</span>
+     	  	{% if dlg=='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="sns.png" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>
+    <div class="application_template_list application_template_list_box" type="system">     	  
+     	    <span style='background-color:#aaaaaa;height: 50px; width: 50px; padding-right: 3px;'>
+     	    	<img style="margin-top: 10px;" src="/bundles/fafatimewebase/images/icons2/set.png" />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">设置</span>
+     	  	{% if dlg=='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="set.png" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>
+{%for item in list %}
+    <div class="application_template_list application_template_list_box" type="{{item['restype']}}">     	  
+     	    <span style='padding-left:0px;background-color: rgb(243, 243, 243);'>
+     	    	<img style="width:50px;height:50px;" src="{{FILE_WEBSERVER_URL}}{{item['fileid']}}" onerror="this.src='/bundles/fafatimewebase/images/3.jpg'"  />
+     	    </span>
+     	  	<span style="padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{item['name']}}</span>
+     	  	{% if dlg!='1' %}
+     	  	<span style='padding-left:0px;cursor:pointer;' class="delres" onclick="delres(this,'{{item['fileid']}}')">删除</span>
+     	  	{% else %}
+     	  	<span style='padding-left:0px;cursor:pointer;' ><input value="{{item['fileid']}}" name="app_res_radio" type="radio"></span>
+     	  	{% endif %}
+	 </div>
+{% endfor %}
+</div>
+<div id="nodatahint" style="display:none;color: rgb(204, 204, 204); text-align: center; line-height: 50px; height: 50px; font-weight: bold;">您暂时还未为该应用上传任何资源文件！</div>
+
+<script type="text/javascript">	
+	var appid = "{{appid}}",isdlg = "{{dlg}}";
+	var Aurl = "{{path('JustsyBaseBundle_basic_saveresfile',{'appid':appid})}}";
+	var fileurl="{{FILE_WEBSERVER_URL}}";	
+	if(isdlg!=null && isdlg=="1" )
+	{
+		//选择框 模式
+		//$(".resourceToolbar").hide();
+		//$(".delres").remove();
+		$("#reslist div").off().on("click",function(){
+			var $this = $(this).find('input');
+			$this.attr("checked",!$this.attr("checked"));
+		})
+		
+		$("#reslist input").on("click changed",function(event){
+			event.stopPropagation();
+		})
+	}
+	var $menuc = $("#app_resource"), l = $menuc.offset().left-$("#template_right").offset().left+10+($menuc.width()/2);
+	$("#app_resource_mgr .topmenu_app_triangle").css("left",l+"px");
+
+	if($("#reslist div").length==0)
+	{
+		$("#nodatahint").show();
+	}	
+	
+	function uploadnow(){
+		if(typeof(ResComFileUpload)=='undefined' || ResComFileUpload==null){
+		  if(typeof(ResComFileUpload)=='undefined'){
+		  	ResComFileUpload=new ComFileUpload();
+		  	ResComFileUpload.registerEvent();
+		  }
+		  else{
+		  	ResComFileUpload=new ComFileUpload();
+		  }
+		}
+		  ResComFileUpload.init({
+		  	container:$("#uploadfilecontainer")[0],
+		  	upload_url:Aurl,
+		  	FileUploadError:function(msg){
+		  		$("#uploadfileerror").text(msg).slideDown();
+		  		setTimeout(function(){
+		  			$("#uploadfileerror").slideUp();
+		  		},2000);
+		  	},
+		  	FileUploadSucess:function(fileid){
+		  		$.post("{{path('JustsyBaseBundle_basic_getres')}}",{"appid":appid,"fileid":fileid},function(d){
+		  			if(d){
+		  				if ( typeof(d.name) =="undefined"){
+		  					 $("#uploadfileerror").text("上传文件失败，请重试！").show();
+		  		       setTimeout(function(){
+		  			        $("#uploadfileerror").slideUp();
+		  		        },3000);
+		  					 return false;
+		  				}
+		  				$("#nodatahint").hide();
+		  				var html=[];
+		  				html.push("<div style='float:left;width:60px;height:100px;margin-top:10px;margin-right:0px;margin-left:20px;' class='application_template_list' type='"+d.restype+"' >");
+		  				html.push("<span style='padding-left:0px;background-color: rgb(243, 243, 243);'>");
+		  				html.push("<img style='width:50px;height:50px' src='"+fileurl+d.fileid+"' onerror=\"this.src='/bundles/fafatimewebase/images/3.jpg'\"  />");
+		  				html.push("</span>");
+		  				if(isdlg=="1")
+		  				{
+		  					html.push("<span style='padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"+d.name+"</span>");
+		  					html.push("<span style='padding-left:0px;cursor:pointer;' ><input value='"+d.fileid+"' name='app_res_radio' type='radio'></span>");
+		  				}
+		  				else
+		  				{
+		  					html.push("<span style='padding-left:0px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"+d.name+"</span><span style='cursor:pointer;padding-left:0px;' onclick=\"delres(this,'"+d.fileid+"')\">删除</span>");
+		  				}		  				
+		  				html.push("</div>");
+		  				$("#reslist").append(html.join(''));
+		  			}
+		  		});
+		  		return true;
+		  	}
+		  });
+		  $("#uploadfilecontainer").slideDown();
+		$("#shouqi").show();
+	}
+
+	function delres(e,fileid){
+		$(e).text('删除中...');
+		$.post("{{path('JustsyBaseBundle_basic_delres')}}",{"appid":appid,"fileid":fileid},function(d){
+			$(e).text('删除');
+			if(d.s=='1'){
+				$(e).parent().remove();
+				if($("#reslist div").length==0)
+				{
+					$("#nodatahint").show();
+				}				
+			}
+		});
+	}
+	
+</script>

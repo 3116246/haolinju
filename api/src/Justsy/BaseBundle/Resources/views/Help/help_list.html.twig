@@ -1,0 +1,21 @@
+<div class="help_right_title">{{title_name}}</div>
+<ul>
+  {% for r in rows %}
+  <li><a href="#">{{r.faq_title}}</a></li>
+  <div class="help_right_text">{{r.faq_content|raw}}</div>
+  {% endfor %}
+</ul>
+
+{%if(pagecount>1)%}
+<div class="pagination pagination-right">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }} style="background:none;padding-left:0px"><a href="#" {% if pageindex > 1 %}onclick="getPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+  	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+  	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+  	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }} style="background:none;padding-left:0px"><a href='#' onclick="getPage({{i}})">{{(i)}}</a></li>
+	  {%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }} style="background:none;padding-left:0px"><a href="#" {% if pageindex < pagecount %}onclick="getPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}

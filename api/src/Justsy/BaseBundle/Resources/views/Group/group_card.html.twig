@@ -1,0 +1,19 @@
+<div id="group_card_detail" style="width:385px;height: 235px;">
+  <div class="group_card_detail_title"><a class="group_card_detail_close" data-dismiss="modal">×</a></div>
+  <div class="group_card_leftlayout"> 
+     <span class="groupphoto">
+     <a href="javascript:void(0)"><img style="border:1px solid #EEEEEE;width:90px;height:90px" src="{% if we_groups is defined %}{{ FILE_WEBSERVER_URL }}{{ we_groups["group_photo_path"] }}{% else %}{{ asset('bundles/fafatimewebase/images/no_photo.png') }}{% endif %}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'">
+     </a>
+     </span>
+  </div>
+  <div class="group_card_baseinfo">
+      <div class="groupname"><span class="menu-group" style="margin-top: 8px;"></span>{{ we_groups is defined ? we_groups["group_name"] : "无此群组" }}</div>
+      <div style="text-align:left;margin: 10px 0 0 50px; ">
+        <div>群　　主：{{ we_groups is defined ? we_groups["create_staff_name"] : "无" }}</div>
+        <div>创建日期：{{ we_groups is defined ? we_groups["create_date_d"] : "无" }}</div>
+      </div>
+  </div> 
+  <div style="clear:both;"></div>
+  <div class="group_card_desc">{{ we_groups is defined ? we_groups["group_desc"] : "这里什么都没有..." }}</div>
+  <div class="group_card_url">===============★★★★★===============</div>
+</div>

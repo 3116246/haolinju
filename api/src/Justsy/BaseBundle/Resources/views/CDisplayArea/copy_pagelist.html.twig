@@ -1,0 +1,30 @@
+<ul>
+  {% for row in ds["we_convers_list"]["rows"] %}
+  <li class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
+    <div class="topiclayout"><span class="smallportrait"><a href="#"><img src="{{ row["photo_url"] }}" title="{{ row["nick_name"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></a></span>
+      <span class="topicdetail">
+        <p class="news news_maxheight"><a href="#" class="employee_name" login_account="{{ row["login_account"] }}">{{ row["nick_name"] }}</a>：{{ this.replaceFaceEmote(row["conv_content"])|raw|nl2br }}</p>
+        <div>
+          <span style="color: #5199CB; margin-bottom: 0px;">{{ row["post_date_d"] }}</span>
+          {% if row["comefrom"] != "00" %}
+          <span class="comefrom">来自{{ row["comefrom_d"] }}</span>
+          {% endif %}
+        </div>
+      </span>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{%if(pagecount>1)%}
+<div class="copylist_pager pagination pagination-right" url="{{ path("JustsyBaseBundle_component_cdisparea_getcopylist") }}" conv_root_id="{{ copy_id }}">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="CopyList.getPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href='#' onclick="CopyList.getPage({{i}})">{{(i)}}</a></li>
+	{%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %}onclick="CopyList.getPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}

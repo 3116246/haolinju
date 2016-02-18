@@ -1,0 +1,10 @@
+{{ title|raw }}</br>
+<div style="width:100%;height:100%;text-indent:20px;">{{ content|raw }}</div>
+ <ul class="button_ul">
+     <li onclick="edit_journal('{{id}}','{{content|raw}}')" title="修改日志">修改</li>
+ 	   <li>邮件</li>
+ 	   <li onclick="delete_journal({{id}})">删除</li>
+ </ul>
+
+
+

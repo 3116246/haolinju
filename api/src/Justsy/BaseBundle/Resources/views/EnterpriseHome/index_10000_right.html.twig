@@ -1,0 +1,40 @@
+<div>
+  <div class="rightbox">
+    <div class="rightbox-title">
+      <span class="titletext">粉丝圈简介</span>
+    </div>
+    <div>　　所有Wefafa成员的共同家园，大家畅享交流的公共平台。</div>
+  </div>
+
+  <div class="rightbox">
+    <div class="rightbox-title">
+      <span class="titletext">官方成员</span>
+    </div>
+    <div>
+      <ul class="personalhomelist" style="margin-top: 10px;">
+       {% for i in we_staff %}
+        <li style="margin-right: 10px;display: inline-block;float:none;">
+          	<img width="48" height="48" src="{{i.photo_path}}"  onerror="javascript:this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'">
+          	<span><a login_account="{{i.login_account}}" class="employee_name" target="_blank">{{i.nick_name}}</a></span>
+        </li>
+  		 {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="rightbox" style="">
+    <div class="rightbox-title">
+      <span class="titletext">热点问题</span>
+      <span class="titlemore" title="查看更多"><a href="{{ path("JustsyBaseBundle_help_index") }}"><div class="more-img"></div></a></span>
+    </div>
+    <div>
+      <table class="table">
+        <tbody>
+          {% for r in faq_title %}
+          <tr><td title="{{r.faq_title}}"><a href="{{ path('JustsyBaseBundle_help_index', {'id':r.id}) }}" style="white-space: nowrap;width:185px;text-overflow: ellipsis; overflow: hidden; display: block;">{{r.faq_title}}</a></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="disp_attachs">
+  {% if ds["we_convers_attach_copy"]["recordcount"] > 0 %}
+  <div class="disp_attachs_imgs">
+    {% for item in ds["we_convers_attach_copy"]["rows"] if this.getFileType(item["file_name"]) == "2" %}
+    <span class="attach_item"><img src="{{ FILE_WEBSERVER_URL }}image/small/{{ item["attach_id"] }}" alt="{{ item["file_name"] }}" class="imgzoomsmall" onclick="conv_img_zoomout_OnClick(this)"/></span>
+    {% endfor %}
+  </div>
+  <div class="disp_attachs_medias">
+    {% for item in ds["we_convers_attach_copy"]["rows"] if this.getFileType(item["file_name"]) == "3" %}
+    <span class="attach_item"><a href="{{ FILE_WEBSERVER_URL }}{{ item["attach_id"] }}" title="{{ item["file_name"] }}" target="_blank">
+      <img src="{{ asset('bundles/fafatimewebase/images/media.png') }}"/>
+      <div>{{ item["file_name"] }}</div>    
+    </a></span>
+    {% endfor %}
+  </div>
+  <div class="disp_attachs_otherfiles">
+    {% for item in ds["we_convers_attach_copy"]["rows"] if this.getFileType(item["file_name"]) == "1" %}
+    <span class="attach_item"><a href="{{ FILE_WEBSERVER_URL }}{{ item["attach_id"] }}" title="{{ item["file_name"] }}" target="_blank">
+      <img src="{{ asset('bundles/fafatimewebase/images/') }}{{ this.getFileIcon(item["file_name"]) }}"/>
+      <div>{{ item["file_name"] }}</div>    
+    </a></span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

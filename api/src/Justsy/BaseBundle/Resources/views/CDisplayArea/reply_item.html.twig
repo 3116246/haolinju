@@ -1,0 +1,34 @@
+<li class="clearfix" style="margin-bottom: 0px; padding-bottom: 0px;">
+  <div class="topiclayout"><span class="smallportrait"><a><img src="{{ row["photo_url"] }}" title="{{ row["nick_name"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></a></span>
+    <span class="topicdetail">
+      <p class="news news_maxheight reply_content"><a href="#" class="employee_name" login_account="{{ row["login_account"] }}">{{ row["nick_name"] }}</a>{% if row["reply_to"]|length > 0 %} 对 <a href="#" class="employee_name" login_account="{{ row["reply_to"] }}">{{ row["reply_to_name"] }}</a> 说{% endif %}：{{ this.replaceFaceEmote(row["conv_content"])|raw|nl2br }}</p>
+      {% set we_replyitem_attachs = this.filterLikeRows(row["conv_id"], ds["we_convers_attach_reply"]["rows"]) %}
+      {% include 'JustsyBaseBundle:CDisplayArea:attachs_reply.html.twig' with {'we_replyitem_attachs': we_replyitem_attachs, 'this' : this} %}
+      {% set we_convers_like_replys = this.filterLikeRows(row["conv_id"], ds["we_convers_like"]["rows"]) %}
+      {% include 'JustsyBaseBundle:CDisplayArea:like.html.twig' with {'we_convers_likes' : we_convers_like_replys} %}
+      <div class="replyfunbox">
+        <span class="functiontext">
+          {% if (row["login_account"] == app.user.username )or (app.user.is_in_manager_circles(row["post_to_circle"])==1)%}
+          <a href="javascript:void(0);" onclick="DelReply(this, '{{ path("JustsyBaseBundle_component_cdisparea_delreply") }}', '{{ row["conv_id"] }}', '{{ asset("bundles/fafatimewebase/images/loading.gif") }}')"><span >删除</span></a>｜
+          {% endif %}
+          <a href="javascript:void(0);">
+            {% if we_convers_like_replys|length > 0 and we_convers_like_replys[0]["like_staff"] == app.user.username %}
+            <span  likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="ReplyUnLikeConv(this, '{{ row["conv_id"] }}')">取消赞</span>
+            {% else %}
+            <span  likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="ReplyLikeConv(this, '{{ row["conv_id"] }}')">赞</span>
+            {% endif %}
+            <img class="liking" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+            {%if(trend)%}
+            <a href="javascript:void(0)" onclick="reply_to_link_OnClick(this)"><span >评论</span></a>
+            {%else%}
+              <a title="您还未获取该功能使用权限" href="javascript:void(0)" ><span >评论</span></a>
+            {%endif%}
+        </span>
+        <span  class="comefrom">{{ row["post_date_d"] }}</span>
+        {% if row["comefrom"] != "00" %}
+        <span class="comefrom">来自{{ row["comefrom_d"] }}</span>
+        {% endif %}
+      </div>
+    </span>
+  </div>
+</li>

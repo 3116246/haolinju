@@ -1,0 +1,73 @@
+<p>通过该接口，可取得该微应用关注成员的详细信息</p>
+<h5>接口地址（HTTP请求方式：POST）</h5>
+<p>https://www.wefafa.com/api/http/micro/fansinfo</p>
+<h5>参数列表</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>access_token</td>
+		<td>访问令牌，不能为空</td>
+	</tr>
+	<tr>
+		<td>staff</td>
+		<td>用户帐号。支持Wefafa帐号/绑定手机号/openid</td>
+	</tr>
+</table>
+<h5>返回数据</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>发生错误时返回如下JSON格式串：
+    {"returncode":"9999","code":"错误码","msg":"错误描述"}</td>
+	</tr>
+    <tr>
+        <td>token过期：{ "returncode": "0001", "msg": "访问令牌已过期。" }</td>
+    </tr>
+	<tr>
+		<td>访问非关注成员信息时返回如下JSON格式串：
+    {"returncode":"0005"}，0005表示“无数据访问权限”。</td>
+	</tr>
+	<tr>
+		<td>正确返回如下JSON格式串：
+{"returncode":"0000",
+"staff_full":
+    {"login_account":"Wefafa帐号",
+        "jid":"IM通讯帐号",
+        "nick_name":"姓名/昵称",
+        "photo_path":"48*48头像文件标识编号",
+        "photo_path_small":"24*24头像文件标识编号",
+        "photo_path_big":"120*120头像文件标识编号",
+        "dept_id":"当前所在部门号",
+        "dept_name":"部门名称",
+        "eno":"企业号",
+        "ename":"企业全称",
+        "eshortname":"企业简称",
+        "self_desc":"个性签名",
+        "duty":"职务",
+        "birthday":"生日",
+        "specialty":"特长",
+        "sex_id":"性别",
+        "hometown":"籍贯",
+        "we_level":"Wefafa等级",
+        "work_his":"工作经历",
+        "graduated":"毕业院校",
+        "hobby":"兴趣爱好",
+        "work_phone":"联系电话",
+        "mobile":"手机号",
+        "mobile_is_bind":"是否绑定手机号登录",
+        "total_point":"积分",
+        "register_date":"注册日期",
+        "active_date":"激活时间",
+        "attenstaff_num":"关注人数",
+        "fans_num":"粉丝人数",
+        "publish_num":"动态总数"}} 
+        <br>
+		其中：头像文件可通过 https://www.wefafa.com/getfile/头像文件标识编号 取得	
+        </td>
+	</tr>
+</table>

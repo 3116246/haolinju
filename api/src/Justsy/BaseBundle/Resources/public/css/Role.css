@@ -1,0 +1,52 @@
+﻿.role_staff_content { height:405px;overflow:hidden;padding:0; }
+.role_user { margin-bottom:20px;margin-left:10px;min-height:20px;cursor:default;}
+.role_user_info { float: left;height: 16px;line-height: 16px;padding-right: 5px;padding-bottom:25px;}
+.menu_left { background-color: #f8f8f8;cursor: default;float: left;min-height: 640px;width: 220px;}
+.role_title { background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(237, 201, 103) 0px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0;color: #cc3300;font-size: 14px;font-weight: bold;padding:10px 5px; }
+.menu_nav { list-style: outside none none;margin-bottom: 0;padding-left: 0;}
+.menu_nav>li { border-bottom: 1px solid transparent;height: 35px;line-height: 35px;cursor:pointer;padding-left:20px; }
+.menu_nav>li:hover { background-color:#eee;color:#333;}
+.menu_nav_active { background-color:#00a9d9;color:#fff;}
+.checkbox_role { float: left;font-weight: 100;margin-bottom: 10px;margin-right: 15px;position: relative;vertical-align: middle;width: 95px;cursor:pointer; }
+.checkbox_role>span { float:left;padding-left:5px;}
+.btn_search { border-radius: 2px;margin-left: 10px;padding:5px 10px;cursor:pointer; }
+.staff_body,.staff_option { float:left;width:100%;height:200px; }
+.staff_info { cursor:pointer;background-color: white;float: left;margin-bottom: 10px;margin-right: 10px;width: 65px; }
+.staff_info>img { border-radius: 4px;height: 45px;margin-left: 10px;width: 45px;}
+.staff_info>span { display: block;float: left;height: 15px;line-height: 15px;overflow: hidden;text-align: center;width: 100%; }
+.role_bottom { width: 100%; float: left; margin-top: 20px;display:none; }
+.role_save_msg { float: left;height: 32px;line-height: 32px;padding-left:22px; }
+.role_bottom>span { float:right;margin-right:355px; }
+.role_loadding { float: left;height: 16px; margin-top:120px;text-align: center;width: 100%;}
+.role_loadding>span { padding-left:5px;}
+.role_delstaff { cursor:pointer;color:red;margin-top:-18px;float:left;display:none; }
+.role_animation { float:left;width:100%;height:16px;line-height:16px; }
+.role_animation>img { float:left;width:16px;height:16px;}
+.role_animation>span { float:left;padding-left:2px;color:#0088cc;}
+.hint_success { background: #b4e3b4 none repeat scroll 0 0;border-radius: 2px;color: #008200;display: inline-block;min-width: 200px;padding: 0 10px; }
+.hint_error { background: #f2dede none repeat scroll 0 0;border-radius: 2px;color: #b94a48;display: inline-block;min-width: 200px;padding: 0 10px;}
+.search_left,.search_right { float: left;height: 100%;padding-top: 8px;width: 50%; }
+.staff_list { float:left;border-right:1px solid #ddd;height: 350px;list-style: outside none none;margin-top: 5px;overflow: auto;padding-left: 20px;width: 100%; }
+.staff_list>li { 
+       background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+.staff_list>li:hover { background-color:#0088cc;color:#fff; }
+.staff_list>li>img {   float: left;
+    height: 34px;
+    margin-top: 2px;
+    width: 34px;
+}
+.staff_list>li>span { float:left;padding-left:5px; }
+.search_head { border-bottom: 1px solid #eee;float: left;height:35px;width: 100%;padding-left:20px;}
+.search_head>input { border: 1px solid #aba;height: 25px;width:165px;line-height: 25px;padding: 2px 5px;}
+.option_area {  border-top: 1px solid #ddd;float: left;height: 10px;margin-top: 13px;position: relative;width: 100%; }
+.option_area > span { background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(237, 201, 103) 0px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0;color: #cc3300;float: left;margin-left:140px;margin-top:-10px;padding:1px 10px; }
+.search_loadding { float: left;margin-top: 100px;padding-left: 80px;width: 100%;}
+.search_loadding>img { height: 32px;margin-right: 5px;width: 32px; }

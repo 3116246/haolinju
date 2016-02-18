@@ -1,0 +1,38 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block main_content_center%}
+<div class="grade-title">取消手机绑定</div>
+<div class="alert">提示：你的帐号已与手机号（{{ ds["we_staff"]["rows"][0]["mobile_bind"] }}）绑定！确定要取消绑定吗？</div>
+<form class="form-horizontal" method="post">
+  <fieldset>
+  <div class="control-group"> 
+    <div class="controls">
+      <input type="button" style="width:138px" value="取消绑定" class="inputsmall" onclick="btnSave_OnClick(this)" saveurl="{{ path("JustsyBaseBundle_account_savemobileunbind",{network_domain:curr_network_domain}) }}"> 
+    </div>
+  </div> 
+  </fieldset>
+</form>
+
+<script type="text/javascript">
+
+function btnSave_OnClick(sender)
+{  
+  var $sender = $(sender);
+  var $alert = $(".alert");
+  $alert.removeClass("alert-error alert-success").text("正在取消绑定...").show();
+  $sender.attr("disabled", "disabled");
+  $.getJSON($(sender).attr("saveurl"), {t : new Date().getTime()}, function(data){
+    if (data.success == "1")
+    {
+      $alert.addClass("alert-success").text("取消绑定成功！").show();
+    }
+    else
+    {
+      $alert.addClass("alert-error").text(data.msg).show();
+      $sender.removeAttr("disabled");        
+    }
+  });
+}
+  
+</script>
+{% endblock %}

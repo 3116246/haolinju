@@ -1,0 +1,92 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+{% block stylesheets %}
+  <link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+	<style type="text/css">
+	 .app_role_table   { float: left;margin-left: 130px;margin-top: 20px;max-height:470px;overflow:hidden;margin-top:25px;width:700px;}
+	 .app_role_rows    { border: 1px solid transparent;float: left;height: 110px;width: 110px;}  
+   .app_role_rows:hover { border: 1px solid #0088cc;cursor:pointer;}
+	 .app_role_info    { float: left; width:100%;cursor:default;}
+	 .app_role_applog  { border-radius: 5px;float: left;height: 60px;margin-top:5px;margin-left: 25px;width: 60px;}
+	 .app_role_appname { float: left;margin-top: 2px;text-align: center;width: 100%;}
+	 .app_role_appversion { color: #aaaaaa;float: left;font-size: 11px;text-align: center;width: 100%;}
+   .app_role_editrole   { margin: 10px auto auto;width:90%;display:none; }
+	 .app_role_black      { float: right; cursor: pointer; margin: 30px 10px 0px 0px;}
+	 .app_role_hint       { float: left;line-height: 30px; margin-top: 2px; max-width: 360px; width: 360px; }
+   .reset_user_account { background-color: #fff;border: 1px solid #0088cc;float: left;height: 30px;width: 265px;}
+	 .reset_user_account>input { border: none;float: left;padding-left: 5px;padding-right: 5px;width: 225px;height:28px;line-height:28px;}
+	 .reset_account_icon  { background-image: url("/bundles/fafatimembapp/images/homeicon.png");background-position: -224px -28px;float:left;height:20px;margin:5px;width: 20px; }
+	 .search_botton { display: inline; float: left; width:70px; padding: 0px; line-height:26px; height: 30px; margin-left:50px; }
+	 .search_hint { float:left; margin-top:0px;height:25px;text-align:left; padding-left:10px; font-size: 12px; line-height:18px;display:none;width:265px;+width:252px;+margin-top:2px;+line-height:25px;}
+	 .app_role_edit { width: 100%; height: 65px; margin-top: 10px; }
+	 .app_role_edit>img {  border-radius: 5px;float: left;height: 50px;width: 50px;}
+	 .app_role_edit_name {   float: left;font-size: 20px;font-weight: bold;line-height: 50px;padding-left: 10px;}
+	 .app_role_edit_version {  color: #ccc; float: left;font-size: 12px;line-height: 55px;padding-left: 5px;
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+	<script type="text/javascripsrc="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+	<script type="text/javascript" t" src="{{ asset('bundles/fafatimembapp/js/pageControl.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/sysManage.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container" style="float:left;margin-top:10px;padding:0px;">
+  <div class="containerBox" style="margin:0px;">
+  	<div class="applist">
+      <div class="search_area" style="padding-top: 10px; line-height: 30px; padding-left:150px;">
+      	 <span style="float:left;padding-right:5px;" >请输入用户账号查询所拥有的应用：</span>
+      	 <div style="margin:0px;" class="reset_user_account">
+		  		 	 <span class="reset_account_icon"></span>
+		  		 	 <input type="text" onkeypress="if (event.keyCode==13){AppRole.Search();}" style="font-weight:bold;" id="userAccount">
+		  		 	 <div class="search_empty search_hint"></div>
+	  		   </div>
+	  		   <span onclick="AppRole.Search();" class="btnGreen search_botton">查&nbsp;&nbsp;询</span>
+      </div>
+	  	<div class="app_role_table"></div>
+	  	<div class="pagecontainer" style="float:left;margin:10px 0px 0px 155px;width:800px;"></div>
+  	</div>
+  	<div class="app_role_editrole">
+  	   <div id="appinfo">
+  	   </div>
+  		 {% include 'JustsyAdminAppBundle:Publish:selectstaff.html.twig' %}
+  		 <div>
+  		 	  <div class="app_role_hint"></div>
+  		 	  <span class="btnGreen" style="float:left;width:70px;display:block;padding:4px;" onclick="AppRole.Save();">保&nbsp;&nbsp;存</span>
+  		 	  <span class="btnGreen" style="float:left;width:70px;display:block;padding:4px;margin-left:10px;" onclick="AppRole.black();">返&nbsp;&nbsp;回</span>
+  		 </div>
+    </div>
+	</div>
+	
+</div>
+<div class="divclear"></div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	 var data= {{AppList|raw}};
+	 AppRole.fulldata(data);
+	 AppRole.icon.error = "{{ asset('bundles/fafatimeweopenapi/images/error.png')}}";
+	 AppRole.icon.warning = "{{ asset('bundles/fafatimeweopenapi/images/zq.png')}}";
+	 AppRole.icon.success = "{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}";
+	 AppRole.icon.loading =  "{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}";
+	 AppRole.save_url = "{{path('JustsyAdminAppBundle_mb_save_approle')}}";
+	 AppRole.get_url = "{{path('JustsyAdminAppBundle_mb_get_approle')}}";
+	 AppRole.search_url = "{{path('JustsyAdminAppBundle_mb_approle_search')}}";
+	 
+</script>
+
+{% endblock %}

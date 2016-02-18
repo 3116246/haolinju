@@ -1,0 +1,231 @@
+
+<div style="float:left;width:680px;" id="App_Area">
+	 <div class="application_main_menu" id="appmain_menu">
+  	 	<span id="enterprise_defined" class="application_main_menu_active">企业应用</span>
+  		<!--<span id="function_defined">功能模块</span>
+  	  	<span id="app_defined">应用中心</span>-->
+  	</div>
+  	<!--应用列表-->
+  	<div class="app_applist_box">
+  		 <div class="app_title_box" id="app_title1" >
+          <span>当前共有<span id="aapcount" style="padding:0 5px;">&nbsp;</span>个企业应用</span>
+          <div class="app_addapp" onclick="$('.app_apptype_item_active').attr('class','app_apptype_item');$('#selectApptype').modal('show');" url="{{path('JustsyBaseBundle_appelayout')}}">
+  		 	    <img src="{{ asset('bundles/fafatimewebase/images/menu_icon_add_active.png') }}">
+  		 	    <span>创建应用</span>
+  		    </div>
+  		    <div  class="modal" data-backdrop=static style="display:none;width:750px;height:370px;" id="selectApptype" show=false >
+  		       <div class="portals_staff_windowtitle">
+  		       	  <span>选择要创建的应用类型</span>
+  		       	  <span style="float:right;padding:2px;" title='关闭' onclick="$('#selectApptype').modal('hide');"  class="portals_staff_windowtitle_close">×</span>
+  		       </div>
+  		       <div class="app_apptype_box" apptype="99" onclick="ApplicationMgr.selectApptype(this)">
+		       	    <div class="app_apptype_item">
+		       	  	  <img src="{{ asset('bundles/fafatimewebase/images/icon_apptype1.png')}}" ><span>模板化应用</span>
+		       	    </div>
+		       	    <span>根据业务需要，通过组件选取，结合业务模板来设计及开发应用功能。</span>
+  		       </div>
+
+ 		        <div class="app_apptype_box" apptype="9903" onclick="ApplicationMgr.selectApptype(this)">
+		       	    <div class="app_apptype_item">
+		       	  	  <img src="{{ asset('bundles/fafatimewebase/images/icon_apptype1.png')}}" ><span>第三方移动应用</span>
+		       	    </div>
+		       	    <span>集成现有的第三方移动应用。</span>
+  		       </div>
+
+ 		        <div class="app_apptype_box" apptype="9904" onclick="ApplicationMgr.selectApptype(this)">
+		       	    <div class="app_apptype_item">
+		       	  	  <img src="{{ asset('bundles/fafatimewebase/images/icon_apptype1.png')}}" ><span>Web应用</span>
+		       	    </div>
+		       	    <span>集成现有的Web应用。</span>
+  		       </div>  		       
+  		         		       
+  		       <div class="app_apptype_box" apptype="9901" title="暂时不支持创建该类型的应用"  onclick=""  style="cursor:default;opacity: 0.2;display:none;">
+	  		       <div class="app_apptype_item">
+	         	     <img src="{{ asset('bundles/fafatimewebase/images/icon_apptype2.png')}}" ><span>平台化应用</span>
+	  		       </div>
+	  		       <span>企业可以从应用中心统一订阅第三方开发并发布到Wefafa平台的应用。</span>
+  		       </div>
+  		       
+  		       <div class="app_apptype_box" apptype="9902" onclick="ApplicationMgr.selectApptype(this)">
+	  		        <div class="app_apptype_item">
+	  		       	   <img src="{{ asset('bundles/fafatimewebase/images/icon_apptype3.png')}}" ><span>Html5应用</span>
+	  		       	</div>
+	  		       	<span>上传企业自主开发的html5应用，平台内置html5解析引擎。</span>
+  		       </div>
+  		       <div class="app_apptype_box_bottom">
+  		       	  <div class="app_apptype_error">
+  		       	  	<img src="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" /><span style="float:left;">请选择要创建的应用类型！</span>
+  		       	  </div>
+  		       	  <span class="app_apptype_botton_active"  onclick="ApplicationMgr.createApplication()" >选取</span>
+  		       	  <span class="app_apptype_botton_default" onclick="$('#selectApptype').modal('hide');">取消</span>
+  		       </div>
+  		    </div>
+  	   </div>
+  	   <div id="appitem"></div>
+  	</div>
+  	<div class="app_create_box">
+  		<div class="app_title_box" id="app_title2" >
+  		   <span style="float:left;color:#0077CC;font-weight:bold;">企业应用<span style="color:black;padding-left:10px;">>&nbsp;创建应用</span> </span>
+         <span style="float:right;cursor:pointer;color:#0077CC;margin-right:30px;">查看帮助</span>
+  	  </div>
+  	  <div id="createApp">
+  	  </div>
+  	</div>
+  	<div id="viewApp" style="float: left; width: 100%; display: none;" viewurl="{{path('JustsyBaseBundle_basic')}}"  url="{{path('JustsyBaseBundle_appelayout')}}">
+  		 <div class="app_title_box" id="app_title3" >
+  		    <div class="application_tool" onclick="ApplicationMgr.showedit()" >
+          	 	  <img src="{{ asset('bundles/fafatimewebase/images/ico_edit.png')}}"  style="float: left; height: 16px; width: 16px; padding-right: 5px; margin-top: 8px;">
+          	    <span style="float:left;color:#059BC6;">编辑</span>
+          </div>
+          <div class="application_tool" onclick="ApplicationMgr.deleteedit(this)" >
+                <img src="{{ asset('bundles/fafatimewebase/images/delete.png')}}"  style="float: left; height: 16px; width: 16px; padding-right: 5px; margin-top: 8px;">
+                <span style="float:left;color:#059BC6;">删除</span>
+          </div>          
+          <img src="{{ asset('bundles/fafatimewebase/images/leftcursor.png')}}" onclick="AppConfigMgr.backpage(this)" class = "application_botton_back" title="返回" status="applist">
+  	   </div>
+  	   <div class="application_view"></div>
+    </div>
+    <div style="float:left;width:100%;display:none;" id="applist_update" >
+    	 <div class="app_title_box" id="app_title2" >
+  		   <span style="float:left;color:#0077CC;font-weight:bold;">企业应用<span style="color:black;padding-left:10px;">>&nbsp;修改应用</span> </span>
+  	   </div>
+  	   <div style="float:left;width:100%;" id="appdata_update"></div>
+  	</div>
+  	<!--用户管理页面-->
+  	<div class="modal app_role_window" data-backdrop="static">
+	    <div class="portals_staff_windowtitle">
+	      	<div class="app_role_title_area">应用权限管理</div>
+	      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin:5px 10px 0 0">&times;</button>
+	    </div>
+	    <div class="modal-body app_role_body">
+    	 	  <div class="app_role_menu_area">
+    	 	  	 <span class="app_role_selected_menu" search=1 value="dev">开&nbsp发&nbsp;者</span>
+    	 	  	 <span class="app_role_default_menu"  search=0 value="user">普通用户</span>
+    	 	  	 <span class="app_role_default_menu"  search=0 value="role">角色用户</span>
+    	 	  	 <span class="app_role_default_menu"  search=0 value="org" >组织机构</span>
+    	 	  </div>
+    	 	  <div class="app_role_add_area">
+    	 	  	  <span class="app_role_roletype">
+    	 	  	  	<span id="role_type" style="float:left;">开&nbsp;发&nbsp;者</span>
+    	 	  	  	<span id="role_recordcount" style="color:#bbbbbb;font-size:12px;float:left;line-height:24px;padding-left:2px;"></span>
+    	 	  	  </span>
+    	 	  	  <div>
+    	 	  	 	  <input type="text" placeholder="请输入姓名或账号" class="text_sarch" onkeypress="if (event.keyCode==13){AppRoleManager.search()}" >
+	              <div class="app_role_search_button" onclick="AppRoleManager.search()">
+	            	   	<img src="/bundles/fafatimewebase/images/icon_search.png">
+	              </div>
+	              <span class="app_role_addstaff" onclick="AppRoleManager.show();">
+	              	<span>添加用户</span>
+	              </span>	              
+	            </div>
+    	 	  </div>
+    	 	  <div class="app_role_area">
+    	 	  	 <!--条件搜索-->
+    	 	  	 <div state="dev"  class="app_role_userlist"></div>
+    	 	  	 <div state="user" class="app_role_userlist"></div>
+    	 	     <div state="role" class="app_role_userlist" style="display:none;"></div>
+    	 	     <div state="org"  class="app_role_userlist" style="display:none;"></div>
+    	 	     <!--分页控件-->
+             <div class='pagebyrole' type="dev"  style="margin-left:0px;"></div>
+             <div class='pagebyrole' type="user" style="margin-left:0px;"></div>
+             <div class='pagebyrole' type="role" style="margin-left:0px;"></div>
+             <div class='pagebyrole' type="org"  style="margin-left:0px;"></div>
+    	 	  </div>
+	    </div>
+	    <!--选择用户、角色、组织机构部分-->
+	    <div class="app_role_showaccount">
+	    	<div class="app_role_add_area" style="margin-top:0px;">
+    	 	  	  <span class="app_role_add_hint">为应用指定开发者</span>
+    	 	  	  <div style="float:left;">
+    	 	  	 	  <input type="text" class="searchaccount" onkeypress="if (event.keyCode==13){AppRoleManager.keysarch()}" placeholder="请输入姓名或账号">
+	              <div onclick="AppRoleManager.keysarch()" class="app_role_search_button">
+	            	   <img src="/bundles/fafatimewebase/images/icon_search.png">
+	              </div>
+	            </div>
+	            <img src="{{ asset('bundles/fafatimewebase/images/prev.png') }}" title="返回" onclick="prev()">
+    	 	</div>
+    	 	<div class="app_role_userlist" id="accountlist" style="height:240px;margin-bottom:0px;max-height:240px;margin-left: 8px;"></div>
+    	 	<div class="app_role_page_area"></div>
+    	 	<div class="app_role_selectArea">
+      	 	 <div class="app_role_pageLeft" onclick="AppRoleManager.pageleft()" >
+    	 		 	 <img src="{{ asset('bundles/fafatimewebase/images/left.jpg') }}">
+    	 		 </div>
+    	 		 <div id="selectlist" class="app_role_selectListArea"></div>
+    	 		 <div class="app_role_pageRight" onclick="AppRoleManager.pageright()" >
+    	 		 	 <img src="{{ asset('bundles/fafatimewebase/images/right.jpg') }}">
+    	 		 </div>
+    	 	</div>    	  
+    	  <div style="height:30px;line-height:30px;width:100%;float:left;">
+    	  	 <div class="app_role_hint_area">
+    	  	 	 <img src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}">
+    	  	 	 <span class="app_role_erroricon"></span>
+    	  	 	 <span id="app_role_message"></span>
+    	  	 </div>
+    	     <span style="float:none;margin:auto;" class="application_botton_active" onclick="AppRoleManager.saveRole()">确认选择</span>
+    	  </div>
+	    </div>
+    </div>
+        
+</div>
+<script>
+		var applist={"list":[{{list|raw}}]};
+		//路由地址设置
+		AppRoleManager.geturl = "{{path('JustsyBaseBundle_mappconfig_roleaccount_get')}}";
+		AppRoleManager.saveurl = "{{path('JustsyBaseBundle_mappconfig_roleaccount_save')}}";
+		AppRoleManager.applyurl = "{{path('JustsyBaseBundle_mappconfig_roleaccount_apply')}}";
+		AppRoleManager.removeurl = "{{path('JustsyBaseBundle_mappconfig_roleaccount_remove')}}";
+		AppRoleManager.getaccount = "{{path('JustsyBaseBundle_mappconfig_getaccount')}}";
+		
+		$(".app_role_default_menu").live("click",function(){
+			 $(".app_role_menu_area>.app_role_selected_menu").attr("class","app_role_default_menu");
+			 $(this).attr("class","app_role_selected_menu");
+			 var type = $(this).attr("value");
+			 $(".app_role_area").children().hide();
+			 $(".app_role_area div[state='"+type+"']").show();
+			 $(".app_role_area div[type='"+type+"']").show();
+			 AppRoleManager.type = type;
+			 var recordcount = 0,addname="";
+			 if (type=="dev" || type=="user"){
+			   $(".text_sarch").attr("placeholder","请输入用户姓名或账号");
+			   if (type=="dev"){
+			     $("#role_type").text("开 发 者");
+			     recordcount = parseInt(AppRoleManager.totalcount.dev);
+			     addname = "添加开发者";
+			   }
+			   else {
+			   	 $("#role_type").text("普通用户");
+			   	  recordcount = parseInt(AppRoleManager.totalcount.user);
+			   	  addname = "添加用户";
+			   }
+			 }
+			 else if ( type=="role"){
+			 	 $(".text_sarch").attr("placeholder","请输入角色名称");
+			 	 $("#role_type").text("角色用户");
+			 	 addname = "添加角色";
+			 	 recordcount = parseInt(AppRoleManager.totalcount.role);
+			   
+			 }
+			 else if (type="org"){
+			 	 $(".text_sarch").attr("placeholder","请输入机构名称");
+			 	 $("#role_type").text("组织机构");
+			 	 addname = "添加组织";
+			 	 recordcount = parseInt(AppRoleManager.totalcount.org);
+			 }
+			 $("#role_recordcount").html("( "+recordcount+" )");
+			 
+			 $(".app_role_addstaff>span").text(addname);
+			 
+			 $(".text_sarch").val("");
+			 if ($(this).attr("search")=="0"){
+			 	 $(this).attr("search",1);
+			   AppRoleManager.getRole(1,"");
+			 }
+		});
+		
+		function prev()
+		{
+			$(".app_role_showaccount").hide();
+			$(".app_role_body").show();
+		}
+		
+</script>

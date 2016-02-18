@@ -1,0 +1,20 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block main_content %}
+<div align='center'>
+<div style="background:url({{asset('bundles/fafatimewebase/images/activeback.jpg')}});width:960px;height:520px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.3);border:1px solid #EEE;">
+<div style='text-align: left;height: 45px;padding-left: 20px;'><span style="color: #999999;font-family: 微软雅黑;font-size: 16px;line-height: 42px;cursor: default;"><b>注册成功！</b></span></div>
+<div class="regok" style="cursor: default;">
+	<br>
+	<h1><span style="color:#ff8400;">您已经成功的注册了Wefafa！</span></h1><br>
+	<h3 style="font-family: 微软雅黑;">一封关于“如何启用Wefafa”的邮件已发送至该邮箱：<b style="color:#06C">{{email}}</b></h3><br>
+	<h3 style="font-family: 微软雅黑;">请查收邮件并根据提示开始启用Wefafa！</h3><br><br>
+	<a class="btn-reg btn" style="width: 110px;border-radius: 4px 4px 4px 4px;" href="{{mailaddr}}">立即登录邮箱</a> 
+	<div style="height:50px"></div>
+	<hr style="width:80%; height:1px;border:none;border-top:1px dashed #aaa;">
+	<div style="float:left; padding-left:230px; text-align:left; line-height:20px;padding-top: 20px"><font color="#993300">没有收到邮件？</font> 
+  		<br>1.是否被投递到了垃圾邮件箱里？请检查 <br>2.是否邮件地址有误？<a href="{{ path('JustsyBaseBundle_login') }}" style="color:#06C;">更换邮件地址</a><br>3.邮箱出了问题？<a href="{{ path('JustsyBaseBundle_save') }}/{{ type }},{{ email }}" style="color:#06C;">重新发送</a>
+	</div>
+</div>
+</div>
+</div>
+{% endblock %}

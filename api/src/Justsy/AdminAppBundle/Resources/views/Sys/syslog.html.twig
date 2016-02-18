@@ -1,0 +1,93 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+
+<style type="text/css">
+  .syslog_area { float:left;padding-top:20px;width:1000px;margin-left:20px;cursor:default;}
+  .pagestyle { cursor:default;display:none;float:left;margin: 8px 0 0;padding: 0;}
+  .syslog_content { float: left;padding-left:5px;}
+  
+   /*美邦表格样式*/
+   .mb_common_table { border-color: #ddd;border-style:solid;border-width: 1px 1px 0;cursor: default;float: left;margin-top: 10px;overflow-x: hidden;overflow-y: auto;width: 100%; }
+   .mb_common_table > thead  { float:left;width:100%;height:30px;background:linear-gradient(to bottom, #f9f9f9 0px, #efefef 100%) repeat-x scroll 0 0 rgba(0, 0, 0, 0); }
+.mb_common_table > thead > tr { line-height:30px;text-align:center;width: 100%; }
+.mb_common_table > thead > tr > td { border-color: transparent #ddd #ddd transparent;border-style: none solid solid none;border-width: 0 1px 1px 0;float: left;height: 30px; }
+
+.mb_common_table > tbody { float:left;width:100%;}
+.mb_common_table > tbody > tr { background-color: white;
+    float: left;
+    min-height: 28px;
+    line-height:28px;
+    width: 100%;
+  }
+.mb_common_table > tbody > tr > td { border-color: transparent #ddd #ddd transparent;border-style: none solid solid none;border-width: 0 1px 1px 0;}
+.mb_common_table > tbody > tr:hover {background: none repeat scroll 0 0 #eaf2ff;}
+.mb_common_table_empty { background-color: rgb(249, 237, 184);color: #cc3300; display: block;padding: 2px;text-align: center;width: 100%;}
+.mb_button{ height: 25px;line-height: 22px;+line-height:20px;margin-left: 10px;padding: 0;width: 70px; }
+.mb_combox { border: 1px solid #aaa;font-size: 12px;height: 22px; line-height: 20px;vertical-align: middle; width: 120px; }
+.mb_textbox { border: 1px solid #aba;height: 25px;line-height: 25px;padding:2px 5px;+height:22px;+line-height:22px;}
+
+
+  
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/syslog.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/WdatePicker.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="syslog_area" >
+	<div>
+		 <span>日志类型：</span>
+		 <select id="combox_type" class="mb_combox" style="width:150px;"></select>
+		 <span style="margin-left:50px;">日期范围：</span>
+		 <input type="text" class="mb_textbox" readonly="readonly" id="input_start" onclick="syslog.sel_start()" onkeypress="if (event.keyCode==13) { syslog.SearchData(1); }" placeholder="访问起日" style="width:120px;background-color:#eee;" />
+		 <input type="text" class="mb_textbox" readonly="readonly" id="input_end"   onclick="syslog.sel_end()" onkeypress="if (event.keyCode==13) { syslog.SearchData(1); }" placeholder="访问止日" style="width:120px;background-color:#eee;" />
+		 <span style="margin-left:50px;">访问人员：</span>
+		 <input type="text" class="mb_textbox" id="input_staff" onkeypress="if (event.keyCode==13) { syslog.SearchData(1); }" placeholder="访问人员" style="width:150px;"/>
+		 <span class="btnGreen mb_button" onclick="syslog.SearchData(1);" style="float:right;">查&nbsp;&nbsp;询</span>
+  </div>
+  <table align="center" style="width:1000px;" class="mb_common_table" >
+	 	 <thead>
+   	 	  <tr>
+				  <td align="center" width="135">访问日期</td>
+				  <td align="center" width="80">日志类型</td>
+				  <td align="center" width="608">日志内容</td>
+				  <td align="center" width="90">员&nbsp;工&nbsp;号</td>
+					<td align="center" width="85" style="border-right:none;">访问人员</td>
+				</tr> 
+		 </thead>
+		 <tbody></tbody>
+  </table>
+  <div class="pagination pagestyle"></div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+  syslog.search_url="{{path('JustsyAdminAppBundle_mb_syslog_search')}}";
+  syslog.mindate = "{{mindate}}";
+  syslog.maxdate = "{{maxdate}}";  
+  var typedata = {{syslog_type|raw}};
+  syslog.init(typedata);
+  
+  
+  
+  
+  
+  syslog.SearchData(1);
+</script>
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain, 'dontshowofficial' : 1} %}
+    {% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}
+
+{% block main_content_center %}
+  {% render "JustsyBaseBundle:CInputArea:index" with {'network_domain' : curr_network_domain, 'name' : 'foo','publish':publish,'trend':trend} %}
+  {% render "JustsyBaseBundle:FriendCircle:recommend" %}
+  
+  <!--<div id="RemAcounts" style="margin-top: 20px; border-top: 1px solid rgb(204, 204, 204);">
+  </div> 
+  -->  
+  <div class="hometopic" style='margin-top:10px;'>
+		<div class="topicmenu" id="topicmenu">
+			<ul class="topic_top" id="menus">
+				<li style="width:463px;">
+					<div class="line20"></div>
+					<div class="topb"><span>全部</span></div>
+				</li>
+				<li style="width:20px;"><a href="javascript:setDisplayTab(null);" title="刷新"><div class="topic_flush"></div></a></li>
+				<li dropdownlist="1"><a href="javascript:void(0)"><div class="topic_list" title="筛选动态列表"></div></a>
+					<ul class="topic_options" style="margin-top: 0px;">
+						<li class="topic_in"><span class="squareico topic_in">■</span><a class="topic_a topic_in" href="javascript:void(0)" targetid="two1" onclick="ConvFilter_OnClick(this)">全部</a></li>
+						<li><span class="squareico">■</span><a class="topic_a" href="javascript:void(0)" targetid="two3" onclick="ConvFilter_OnClick(this)">问答</a></li>
+						<li><span class="squareico">■</span><a class="topic_a" href="javascript:void(0)" targetid="two4" onclick="ConvFilter_OnClick(this)">活动</a></li>
+						<li><span class="squareico">■</span><a class="topic_a" href="javascript:void(0)" targetid="two5" onclick="ConvFilter_OnClick(this)">投票</a></li>
+						<li><span class="squareico">■</span><a class="topic_a" href="javascript:void(0)" targetid="two6" onclick="ConvFilter_OnClick(this)">动态</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+    <div class="tabbox" style="display:none">
+        <ul>
+          <li id="two1" onClick="setDisplayTab(this)" class="hover" loadurl="{{ path('JustsyBaseBundle_friendcircle_getallconv',{'trend':trend}) }}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv',{'trend':trend}) }}" loadunreadurl="{{ path("JustsyBaseBundle_friendcircle_getallconvunread") }}?class=conv&trend={{trend}}">全部</li>
+          <li id="two3" onClick="setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_friendcircle_getallconv',{'class':'ask','trend':trend}) }}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv',{'trend':trend}) }}" loadunreadurl="{{ path("JustsyBaseBundle_friendcircle_getallconvunread") }}?class=ask&trend={{trend}}">问答</li>
+          <li id="two4" onClick="setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_friendcircle_getallconv',{'class':'together','trend':trend})}}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv',{'trend':trend}) }}" loadunreadurl="{{ path("JustsyBaseBundle_friendcircle_getallconvunread") }}?class=together&trend={{trend}}">活动</li>
+          <li id="two5" onClick="setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_friendcircle_getallconv',{'class':'vote','trend':trend}) }}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv',{'trend':trend}) }}" loadunreadurl="{{ path("JustsyBaseBundle_friendcircle_getallconvunread") }}?class=vote&trend={{trend}}">投票</li>
+          <li id="two6" onClick="setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_friendcircle_getallconv',{'class':'trend','trend':trend}) }}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv',{'trend':trend}) }}" loadunreadurl="{{ path("JustsyBaseBundle_friendcircle_getallconvunread") }}?class=trend&trend={{trend}}">动态</li>
+        </ul>
+    </div>
+    <div class="contentbox">
+      <div id="con_two1" type='conv' class="display_con_area hover"></div>
+      <div id="con_two3" type='ask' class="display_con_area" style="display:none"></div>
+      <div id="con_two4" type='together' class="display_con_area" style="display:none"></div>
+      <div id="con_two5" type='vote' class="display_con_area" style="display:none"></div>
+      <div id="con_two6" type='trend' class="display_con_area" style="display:none"></div>
+    </div>
+    <script type="text/javascript">
+    	var recom_account_url="{{path('JustsyBaseBundle_friendcircle_recom_account_page')}}";
+    	var circle_9999_url="{{path('JustsyBaseBundle_circle_9999')}}";
+    	function showAccountCard(e)
+    	{
+    		return function(){
+    			var login_account=$(e).attr('login_account');
+    		};
+    	}
+    		function marquee(_e,recom,direct,ishover,speed)
+				{
+					this._direct=direct;
+					this._type='scroll';
+					this.curr=0;
+					this._speed=speed;
+					this._resour=_e;
+					this._k=30;
+					this._ishover=ishover;
+					this.timer=null;
+					this.container=recom;
+					this.len=function(){
+						if(this._direct=='left')
+							return $(this._resour).width();
+						else if(this._direct=='top')
+							return $(this._resour).height();				
+					};
+					this.clen=function(){
+						if(this._direct=='left')
+							return $(this.container).width();
+						else if(this._direct=='top')
+							return $(this.container).height();
+					}
+					this.move=function(){
+						if(this._direct=='left')
+							this.lmove();
+						else if(this._direct=='top')
+							this.tmove();
+					};
+					this.lmove=function(){
+						var _m=this;
+						this.timer=setInterval(function(){
+							var le=parseInt($(_m._resour).css('margin-left').replace('px',''));
+							if(le+_m.len()<=0)
+								$(_m._resour).css('margin-left',_m.clen().toString()+'px');
+							else
+								$(_m._resour).css('margin-left',((le-_m._speed)).toString()+'px');
+						},this._k);
+					};
+					this.tmove=function(){
+						var _m=this;
+						this.timer=setInterval(function(){
+							var le=parseInt($(_m._resour).css('margin-top').replace('px',''));
+							if(le+_m.len()<=0)
+								$(_m._resour).css('margin-top',_m.clen().toString()+'px');
+							else
+								$(_m._resour).css('margin-top',((le-_m._speed)).toString()+'px');
+						},this._k);
+					};
+					this.hover=function(){
+						var _m=this;
+						$(this._resour).live('mouseover',function(event){
+							if(checkHover(event,this))
+							{
+								_m.quit();
+							}
+						});
+						$(this._resour).live('mouseout',function(event){
+							if(checkHover(event,this))
+							{
+								_m.move();
+							}
+						});
+					};
+					this.quit=function(){
+						clearTimeout(this.timer);
+					};
+					this.start=function(){
+						if(this._ishover==true)
+						{
+							this.hover();
+						}
+						var _m=this;
+						setTimeout(function(){
+							_m.move();
+						},2000);
+					}
+				}
+     var manager_trend='{{trend}}';
+      $(document).ready(function() {
+        setDisplayTab(document.getElementById("two1"));
+        window.OnPublished = EnterpriseHome_OnPublished;
+        $(window).scroll(EnterpriseHome_Document_OnScroll);
+        window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000*60);
+        //人脉卡片
+//        $(".account_baseinfo").live('mouseover',function(event){
+//        	if(checkHover(event,this))
+//        	{
+//        		var e=this;
+//        		var dofunc=showAccountCard(e);
+//        		setTimeout(dofunc,500);
+//        	}
+//        });
+        //判断是否第一次登录，是则加载向导
+        //var firstlogintime="{{app.user.prev_login_date}}";
+        //if(firstlogintime=="null" || firstlogintime=="")
+        //    LoadFirstWizard("{{ path('JustsyBaseBundle_account_updateLastLogintime') }}");
+        //加载推荐人脉
+        //$("#RemAcounts").hide().load(recom_account_url,{},function(d){
+        //	$("#RemAcounts").slideDown(200);
+        //});
+        $("#circle9999right").load(circle_9999_url,{},function(d){
+       	});   
+      });   
+    </script>
+  </div>
+{% endblock %}
+
+{% block main_content_right %}
+	<div id='circle9999right'>
+  </div>
+{% endblock %}

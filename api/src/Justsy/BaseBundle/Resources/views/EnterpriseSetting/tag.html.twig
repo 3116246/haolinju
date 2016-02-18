@@ -1,0 +1,111 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_tag %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<form id="formdetails" class="form-horizontal" method="post" class="form-horizontal">
+<div class="grade-title">标签管理</div>
+<div class="rightdetail clearfix">
+	 <div class="rightdetail_left">
+ 		<div class="control-group">
+ 			<input type="hidden" class="input-xlarge" id="tag" name="tag"/>
+	      	<label class="control-label" for="postcode" style="width:100px;">企业标签：</label>
+	      	<div class="controls">
+		      	<div style="height:30px;margin:0px;padding:0px;" class="lib_notify ">
+			        <input type="text" class="input-xlarge" value="" id="tagname" name="tagname" maxlength="20" />
+			        <img style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16"><span></span>
+		      	</div>
+		      	<div style="margin:5px 0px 0px 20px;padding:0px;width:400px;vertical-align:center;float:left;" id="InputTagArea">
+		      		{% for item in tagdata %}
+		      			<span id="tag{{item['tagid']}}" class="NotifyObj"><span class="NotifyPerson">{{item["tagname"]}}</span><span onclick="deltag({{item['tagid']}})" class="NotifyClose" title="删除当前标签">×</span></span>    
+		      		{% endfor %}
+		      	</div>
+	      	</div>
+	    </div>
+	    <div class="form-actions">
+   	        <input id="btnSave" type="button" style="width:138px" class="inputsmall" value="保存" onclick="tagsubmit()"/>
+            <span id="hint" class="help-inline" style="width:172px;display:none;">
+                   <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+                   <a id="hint_msg" style="color:#db4800"></a>
+            </span>	
+    	</div>
+	</div>
+</div>
+<script language="javascript">
+var deltag=function(tagid){
+	$.get("{{ path('JustsyBaseBundle_enterprise_setting_enterprisedeltag',{'network_domain' : curr_network_domain}) }}",{tagid:tagid},function(r){
+		if(typeof(r)!="object")r=eval("("+r+")");
+		if(r.success){
+			$('#hint').show();
+			$('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+		    $('#hint_msg').text('企业标签删除成功');
+		    setTimeout("$('#hint').hide()",2000);
+			$("#tag"+tagid).remove();
+		}else{
+			$('#hint').show();
+		    $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+		    $('#hint_msg').text('企业标签删除失败');
+		    setTimeout("$('#hint').hide()",2000);
+		}
+	}).fail(function() {
+		$('#hint').show();
+	    $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+	    $('#hint_msg').text('企业标签删除失败');
+	    setTimeout("$('#hint').hide()",2000);
+	});
+}; 
+var tagsubmit=function () {
+	var tagname=$.trim($("#tagname").val());
+	if(tagname==""){
+		$("#tagname").parent().find("img").attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}").show();
+		$("#tagname").parent().find("span").text("标签不能为空");
+		return;
+	}
+	$("#btnSave").attr('disabled','disabled');
+	$('#btnSave').val("提交中...");
+	$.get("{{ path('JustsyBaseBundle_enterprise_setting_enterprisesavetag', {'network_domain' : curr_network_domain})}}",{tagname:tagname},function(r){
+		if(typeof(r)!="object")r=eval("("+r+")");
+		if(r.success){
+		    if(r.data!=null){
+		    	$('#hint').show();
+				$('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    $('#hint_msg').text('企业标签保存成功');
+			    setTimeout("$('#hint').hide()",2000);
+		    	$("#InputTagArea").append('<span id="tag'+r.data["tagid"]+'" class="NotifyObj"><span class="NotifyPerson">'+r.data["tagname"]+'</span><span onclick="deltag('+r.data["tagid"]+')" class="NotifyClose" title="删除当前标签">×</span></span>');
+		    	$("#tagname").val("");
+		    }else{
+				$('#hint').show();
+				$('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    $('#hint_msg').text('企业标签已在列表中');
+			    setTimeout("$('#hint').hide()",2000);
+		    }
+		}else{
+			$('#hint').show();
+		    $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+		    $('#hint_msg').text('企业标签保存失败');
+		    setTimeout("$('#hint').hide()",2000);
+		}
+		$("#btnSave").removeAttr('disabled');
+		$('#btnSave').val("保存");
+	}).fail(function() {
+		$('#hint').show();
+	    $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+	    $('#hint_msg').text('企业标签保存失败');
+	    setTimeout("$('#hint').hide()",2000);
+	    document.getElementById('btnSave').disabled = false;
+		$('#btnSave').val("保存"); 
+	});
+}
+$(function(){
+	$("#tagname").bind("blur keyup",function(){
+		if($.trim($(this).val())==""){
+			$(this).parent().find("img").attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}").show();
+			$(this).parent().find("span").text("标签不能为空");
+		}else{
+			$(this).parent().find("img").attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}").show();
+			$(this).parent().find("span").text("");
+		}
+	});
+});
+</script>
+{% endblock %}

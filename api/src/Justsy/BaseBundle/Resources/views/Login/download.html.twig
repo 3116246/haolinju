@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>企业移动门户下载——Wefafa移动应用平台</title>	
+<meta name="keywords" content="企业移动门户下载，移动信息化，企业移动信息化，移动办公，企业移动办公，Wefafa "/>
+<meta name="description" content="通过统一的企业移动门户，接入企业后端所有信息系统。"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" /> 
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js" defer></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服" defer></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var topMain=$("#featop").height()+$("#features_ad").height()//是头部的高度加头部与nav导航之间的距离
+	var feanav=$(".features_nav");
+	var feaw=$(".feawrap");
+	$(window).scroll(function(){
+		if ($(window).scrollTop()>topMain){//如果滚动条顶部的距离大于topMain则就nav导航就添加类.nav_scroll，否则就移除
+			feaw.addClass("feawrap_scroll");
+			feanav.addClass("feanav_scroll");
+		}else{
+			feaw.removeClass("feawrap_scroll");
+			feanav.removeClass("feanav_scroll");
+		}
+	});
+})
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="nav clearfix" id="featop">
+	<div class="nav-content">
+		<h1 class="left" href="javascript:;">企业移动门户</h1>
+		
+		<div class="right line-li">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download" class="hover">下载</a></li>
+				<li class="we_btn"><a target="_blank" href="{{path('JustsyBaseBundle_default')}}">登录</a></li>             
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="down_ad">
+	<div class="down_wrap"><h1 class="down1">跨平台支持</h1><h2 class="down2">支持PC端和手机端，WebIM技术使得Wefafa可在任意平台上无需安装即可使用</h2>
+	</div>	
+</div>
+<div class="down_nav">
+	<div class="down_navwrap">
+		<div class="downnav">
+			<div class="downcon">
+				<div class="downnav_1 downclass"><h1 class="downh">Windows</h1><p>版本：{{pc["fileversion"]}}</p><p>大小：{{pc["filesize"]}}</p></div>
+				<div class="downbtn"><a href="{{pc["url"]}}"><div class="downimgclass downimg1">立即下载</div></a></div>
+				<div class="down2text"><h2 style="color:#70b437; line-height:36px">相关下载：</h2>
+				Microsoft .Net Framework<br>
+				<a href="http://download.microsoft.com/download/c/6/e/c6e88215-0178-4c6c-b5f3-158ff77b1f38/NetFx20SP2_x86.exe" target=_blank>For 32位系统</a><br>
+				<a href="http://download.microsoft.com/download/c/6/e/c6e88215-0178-4c6c-b5f3-158ff77b1f38/NetFx20SP2_x64.exe" target=_blank>For 64位系统</a>
+				</div>
+				<div class="downtext">
+				<h2 style="color:#f7b52c; line-height:36px">更新内容：</h2>
+				{{pc["versionmemo"]|raw}}
+				</div>
+			</div>
+			<div class="downcon">
+				<div class="downnav_2 downclass"><h1 class="downh">Android</h1><p>版本：{{android["fileversion"]}}</p><p>大小：{{android["filesize"]}}</p></div>
+				<div class="downbtn"><a href="{{android["url"]}}"><div class="downimgclass downimg1">立即下载</div></a></div>
+				<div class="down2code"><img src="https://www.wefafa.com/bundles/fafatimewebase/images/homepage/2code_android.png"></div>
+				<div class="downtext">
+				<h2 style="color:#f7b52c; line-height:36px">更新内容：</h2>
+				{{android["versionmemo"]|raw}}
+				</div>
+			</div>
+			<div class="downcon">
+				<div class="downnav_3 downclass"><h1 class="downh">iOS</h1><p>版本：{{ios["fileversion"]}}</p><p>大小：{{ios["filesize"]}}</p></div>
+				<div class="downbtn"><a target=_blank href="{{ios["url"]}}"><div class="downimgclass downimg1">立即下载</div></a></div>
+				<div class="down2code"><img src="https://www.wefafa.com/bundles/fafatimewebase/images/homepage/2code_ios.png"></div>
+				<div class="downtext">
+				<h2 style="color:#f7b52c; line-height:36px">更新内容：</h2>
+				{{ios["versionmemo"]|raw}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% render "JustsyBaseBundle:Home:footer"%}
+<script type="text/javascript">
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+</script><div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body></html>

@@ -1,0 +1,47 @@
+<link href="{{ asset('bundles/fafatimembapp/bootstrap-3.2.0-dist/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet"> 
+<style type="text/css">
+	.upload_row { float: left;margin: 10px 0;width:100%;}
+	.upload_row>span {float:left;width:125px;}
+	.upload_row>input {	border: 1px solid rgb(221, 221, 221);float: left; font-size: 12px;height: 24px;line-height: 24px;width: 300px;}
+	.remove_icon { cursor: pointer;float: left;margin-top: 4px;text-align: center;}
+	.hint_message {float: left; height: 25px; display: block; line-height: 25px; padding-left: 5px;}
+</style>
+
+<div style="float:left;margin-top:100px;margin-left:-10px;width:100%;" id="app_portals_mgr">
+    <div style="float:left;width:100%;">
+    	  <span style='float:left;margin-left:50px;'>应用配置文件：</span>
+    	  <span style="float:left;margin-right:5px;" >
+    	  	 <div id="config_area" style="float:left;"></div>
+    	  	 <a id="configure_export" style="margin-left:20px;cursor:pointer;" onclick="XMLConfigPage.portals_mgr.exportFile(this);" url="{{path('JustsyBaseBundle_mappconfig_export')}}">导&nbsp;出</a>
+    	  	 <iframe id="down_file" style="display:none;"> </iframe>
+    	  </span>
+    </div>
+    <form enctype="multipart/form-data" method="post" action="{{path('JustsyBaseBundle_mappconfig_uploadPortalsfile')}}" id="fromportals" target="frm_portals_submit">
+    	<input type="hidden" id="filetype" name="filetype" />
+	 	  <div style="float:left;width:100%;">
+	 	  	 <span onclick="XMLConfigPage.portals_mgr.showupdload()" style="float:left;margin-top:10px;margin-left:145px;height: 30px; line-height: 30px; cursor: pointer;color:#0088CC;">上传应用配置文件</span>
+	 	  	 <div id="upload_area" style="display:none;margin-top:10px;padding-left:137px;">
+	 	  	 	  <div class="upload_row">
+	 	  	 	  	 <input type="hidden" id="filetype">
+	 	  	 	  	 <span>Android配置文件：</span>
+	 	  	 	  	 <input type="file" name="file_android" id="file_android" url2="{{path('JustsyBaseBundle_mappconfig')}}">
+	 	  	 	  	 <span aria-hidden="true" class="glyphicon glyphicon-trash remove_icon" style="width:35px;" onclick="XMLConfigPage.portals_mgr.removefile(this);" title="移除" ></span>
+	 	  	 	  </div>
+	 	  	 	  <div class="upload_row">
+	 	  	 	  	 <span>IOS配置文件：</span>
+	 	  	 	  	 <input type="file" name="file_ios" id="file_ios">
+	 	  	 	  	 <span aria-hidden="true" class="glyphicon glyphicon-trash remove_icon" style="width:35px;" onclick="XMLConfigPage.portals_mgr.removefile(this);" title="移除" ></span>
+	 	  	 	  </div>
+            <div class="upload_row" style="margin-top: 20px">
+            	 <span class="hint_message" style="width:200px;"></span>
+	 	  	 	  	 <span class="appconfig_button" state="1" onclick="XMLConfigPage.portals_mgr.uploadProtals()" id="btnuploadProtals" style="width: 60px;">上&nbsp;传</span>
+               <span class="appconfig_button" onclick="XMLConfigPage.portals_mgr.cancelupload()" style="width: 60px; margin-left: 20px;">取&nbsp;消</span>
+	 	  	 	  </div>
+          </div>
+	 	  </div>
+ 	  </form>
+   <div style="width:300px;margin:auto;display:none;" id="export_area">
+   	  <img src="{{ asset('/bundles/fafatimewebase/images/loading.gif')}}" />
+   	  <span>正在导出配置文件，请稍候……</span>
+   </div>
+</div>

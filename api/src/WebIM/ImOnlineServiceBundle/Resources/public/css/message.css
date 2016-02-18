@@ -1,0 +1,174 @@
+@charset "utf-8";
+/* CSS Document */ 
+.fafa_webim_ocs_online
+ {    
+    background-image: url("../images/WebIM_Status.png");
+    background-position: -1px -19px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: -6px;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 5px;    
+ }
+
+.fafa_webim_ocs_leave
+ {    
+    background-image: url("../images/WebIM_Status.png");
+    background-position:-18px -19px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: -6px;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 5px;     
+ }
+ 
+.fafa_webim_ocs_busy
+ {    
+    background-image: url("../images/WebIM_Status.png");
+    background-position:-35px -19px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: -6px;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 5px;     
+ }
+ 
+.fafa_webim_ocs_disturb
+ {    
+    background-image: url("../images/WebIM_Status.png");
+    background-position: -52px -19px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: -6px;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 5px;    
+ }
+ 
+ .fafa_webim_ocs_offline
+ {
+    background-image: url("../images/WebIM_Status.png");
+    background-position: -70px -19px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: -6px;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    top: 5px;      
+ }
+
+.fafa_webim_ocsfontbox_parent{
+   position:fixed;
+   z-index:9200;
+   bottom:0px;
+   right:0px;
+   left:100%;
+   width:145px; 
+   margin-left:-145px;
+}
+#fafa_webim_ocsfontbox{
+   width:145px; 
+   margin:0px auto; 
+   PADDING-BOTTOM: 0px;PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px;LINE-HEIGHT: 22px; BACKGROUND-COLOR: #fff; BACKGROUND-ATTACHMENT: fixed; FONT-FAMILY: microsoft yahei,Arial, Helvetica, sans-serif; COLOR: #333; FONT-SIZE: 12px;
+}
+#fafa_webim_ocsboxtop{ width:145px; height:64px; }
+#fafa_webim_ocsfunction{ width:100%; height:24px;background:url(../images/t_01.png) no-repeat;}
+#fafa_webim_ocstopleft{ float:left; font-size:12px; font-weight:bold; text-indent:8px;}
+.fafa_webim_ocs_nar{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tb_01.gif); float:left;}
+.fafa_webim_ocs_nar:hover{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tbh_01.gif); float:left;}
+.fafa_webim_ocs_nar_max{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tb_03.gif); float:left;}
+.fafa_webim_ocs_nar_max:hover{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tbh_03.gif); float:left;}
+#fafa_webim_ocsmax{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tb_03.gif); float:left;}
+#fafa_webim_ocsmax:hover{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tbh_03.gif); float:left;}
+#fafa_webim_ocsclose{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tb_02.gif); float:left;}
+#fafa_webim_ocsclose:hover{ width:21px; height:17px; display:block; text-indent:-9999px; background:url(../images/tbh_02.gif); float:left;}
+#fafa_webim_ocstopright{float:right; text-align:left; padding-right:9px;}
+#fafa_webim_ocstitle{ width:100%; padding-top:10px; height:30px;text-align:center; text-indent:22px;font-size:12px; font-weight:bold;background:url(../images/t_02.png) no-repeat;}
+#fafa_webim_ocsboxcenter{ width:145px; background:url(../images/kf_02.png) repeat-y center top; min-height:30px; _height:30px;}
+#fafa_webim_ocscontent{ width:80%; margin:auto; padding-top:3px; padding-bottom:3px;}
+#fafa_webim_ocscontent A:link{color: #0057a0;text-decoration: none;}
+#fafa_webim_ocscontent A:visited{color: #0057a0;text-decoration: none;}
+#fafa_webim_ocscontent A:hover{color: #0093d8;text-decoration: none;}
+#fafa_webim_ocscontent A:active{color: #0057a0;text-decoration: none;}
+#fafa_webim_ocscontent ul{ width:100%; list-style:none;margin:0px;padding:0px}
+#fafa_webim_ocscontent li{ width:100%; list-style:none; height:22px; border-bottom:#eee 1px solid; text-align:left;}
+#fafa_webim_ocscontent li span.fafa_webim_ocs_status{float:left;width:11px; display:block; padding-top:3px;}
+#fafa_webim_ocscontent li span{cursor:pointer;width:60px;float:left;padding-top:3px;}
+#fafa_webim_ocscontent li span.fafa_webim_ocs_phone{float:left;width:16px; display:block; padding-top:5px; padding-right:3px;}
+#fafa_webim_ocsboxfooter{ width:145px; height:37px;}
+.fafa_webim_ocs_employee_name{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fafa_webim_ocs_100082_window
+{
+   position:fixed;
+   z-index:9200;
+   bottom:17%;
+   right:0px;
+   left:100%;
+   width:45px;
+   margin-left:-45px;   
+   margin-bottom: -7px;
+   height:140px;
+   background-image:url(../images/onlineservice.png);
+   cursor:pointer;
+}
+.fafa_webim_ocs_100082_window2
+{
+   position:fixed;
+   z-index:9200;
+   bottom:17%;
+   right:0px;
+   left:100%;
+   width:155px;
+   margin-left:-155px; 
+   margin-bottom: -7px;  
+   height:140px;
+   background-image:url(../images/onlineservice_bg.png);
+}
+#fafa_webim_ocs_100082_onlineuser {margin-top:58px; margin-left:20px; width:80px; height:70px;}
+#fafa_webim_ocs_100082_onlineuser ul{ width:100%; list-style:none;margin:0px;padding:0px}
+#fafa_webim_ocs_100082_onlineuser li{ width:100%; list-style:none; height:22px; line-height:22px; border-bottom:#eee 1px solid; text-align:left;}
+#fafa_webim_ocs_100082_onlineuser li span.fafa_webim_ocs_status{ float:right; display:block;position: relative;}
+#fafa_webim_ocs_100082_onlineuser li span{cursor:pointer;float:left;}
+#fafa_webim_ocs_100082_onlineuser li span.fafa_webim_ocs_phone{ float:left; display:block; padding-top:4px; padding-right:3px;}
+
+/*在线客服新*/
+.fafa_webim_ocs_100082_window3{
+	background-color: #CCEEF7;
+  bottom: 70px;
+  cursor: pointer;
+  margin: 0;
+  overflow: hidden;
+  padding-left: 3px;
+  position: fixed;
+  right: -97px;
+  transition: all 0.5s ease-in-out 0s;
+  width: 137px;
+  z-index: 999999;
+}
+.service-sidec{float:right;width:96px;}
+.service-sideb{float:left;width:25px;}
+.service-sideb .b{height:auto;}
+.service-name {font-size:15px; font-weight:bold; padding-top:3px; padding-left:5px; color:#2282bf}
+.service-memo {padding-left:5px; color:#999; line-height:14px;}
+.fafa_webim_ocs_100082_window3:hover{right:0px;}
+.fafa_webim_ocs_100082_window3:hover .service-sideb .b{opacity:0;filter:alpha(opacity=0);}
+.service-resource {float:left; width:24px; height:24px; margin-top:26px;position:absolute}
+#fafa_webim_ocs_100082_users li{
+	height:50px;
+}
+#fafa_webim_ocs_100082_users .someli{
+	border-bottom:1px solid #CCC;
+}

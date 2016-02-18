@@ -1,0 +1,75 @@
+#!/usr/bin/env php
+<?php
+
+	set_time_limit(0);
+
+	function getUrlContent($url,$post_string,$logger=null) 
+	{
+	      $ch = curl_init();
+	      curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+	      curl_setopt($ch, CURLOPT_URL, $url);
+	      curl_setopt($ch, CURLOPT_REFERER, 'http://127.0.0.1');
+	      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	      curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT,10);
+	      curl_setopt($ch, CURLOPT_FORBID_REUSE, true); //处理完后，关闭连接，释放资源
+	      $content = curl_exec($ch);
+	      return $content;
+	}
+	$type = $argv[1] ;
+	$rundata =  $argv[2];
+	$weburl =  $argv[3];
+	$openid =  $argv[4];
+	if(empty($rundata)) exit('数据不能为空');
+	$staffdata = json_decode($rundata,true);
+	if(empty($staffdata)) exit('数据格式不正确，请传入json格式数据');
+	$c_count = count($staffdata);
+	$now=date("y-m-d h:i:s",time());
+	$runnum = $type=='staff' ? 150 : 500;
+	$threadsCount= (int)ceil($c_count/$runnum);
+	$threads = array();
+	for($t_p=0;$t_p<$threadsCount;$t_p++)
+	{
+		$threadTask = $t_p==$threadsCount-1? $c_count:(($t_p+1)*$runnum);
+		if($threadTask<=0) continue;
+		
+		$pid = pcntl_fork();
+		if($pid == -1)
+		{
+			continue;
+		}
+		elseif ($pid==0) {
+			 $threads[] = $pid;
+		}
+		else
+		{
+
+			$start_i = $t_p*$runnum;
+
+			$info =array();
+			for ($i=$start_i; $i < $threadTask; $i++) 
+			{
+				$info[] = $staffdata[$i];
+			}
+			if($type=='staff')
+			{
+				$url = $weburl.'/api/http/exec_dataaccess?openid='.$openid.'&module=ApiHR&action=staff_add';
+				$re =getUrlContent($url,array('staffinfo'=>json_encode($info)));
+			}
+			else if($type=='dept')
+			{
+				$url = $weburl.'/api/http/exec_dataaccess?openid='.$openid.'&module=ApiHR&action=org_batch_add';
+				$re =getUrlContent($url,array('deptinfo'=>json_encode($info)));
+			}
+			exit(0);//子进程要exit否则会进行递归多进程，父进程不要exit否则终止多进程
+		}
+	}
+	while(count($threads) > 0) {
+	    foreach($threads as $key => $pid) {
+	        $res = pcntl_waitpid($pid, $status, WNOHANG);	       
+	        // If the process has already exited
+	        if($res == -1 || $res > 0)
+	            unset($threads[$key]);
+	    }
+	    sleep(1);
+	}
+	exit('0000');

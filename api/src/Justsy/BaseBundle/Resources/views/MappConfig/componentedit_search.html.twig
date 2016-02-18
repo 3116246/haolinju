@@ -1,0 +1,20 @@
+<div id="component_search_attribute_list" style="cursor: default; float: left; margin-bottom: 20px;">
+    <div class="component_editor_content_iconrow" style="margin-left:10px;">
+       <span style="float: left;">获取数据URL：</span>
+       <input type="text" style="width:425px;height:20px;line-height:20px;" maxlength="100"  id="component_search_url" >
+    </div>
+    <div class="component_editor_content_iconrow" style="margin-left:10px;">
+       <span style="float: left;">URL参数名称：</span>
+       <input type="text" style="width:425px;height:20px;line-height:20px;" maxlength="20" onclick="parameter_mouseclick();" id="component_search_parameter">
+    </div>
+    <div class="component_editor_content_iconrow" style="margin-left:10px;margin-bottom:0px;">
+    	<span style="float:left;color:#0077CC;cursor:pointer;" onclick="component_search.customize(this)">详细页面定制</span>
+	  </div>
+</div>
+<script type="text/javascript">
+	 function parameter_mouseclick(){
+	 	 var text = $.trim($("#component_search_parameter").val());
+	 	 if ( text=="请输入查询关键字")
+	 	   $("#component_search_parameter").val("");
+	 }
+</script>

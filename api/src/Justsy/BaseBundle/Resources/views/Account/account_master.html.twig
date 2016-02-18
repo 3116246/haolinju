@@ -1,0 +1,29 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+<div class="othertitle">帐户设置</div>
+<ul class="left-menu">
+  <li {% block menuitemactive_basic %}{% endblock %}><a href="{{ path('JustsyBaseBundle_account_basic', {'network_domain' : curr_network_domain})}}"><i class="menu-basics"></i>基本信息</a></li>
+  <li {% block menuitemactive_mobile %}{% endblock %}><a href="{{ path('JustsyBaseBundle_account_mobilebind', {'network_domain' : curr_network_domain})}}"><i class="menuset-mobile"></i>手机绑定</a></li>
+  <li {% block menuitemactive_detail %}{% endblock %}><a href="{{ path("JustsyBaseBundle_account_detail", {'network_domain' : curr_network_domain}) }}"><i class="menu-entdetail"></i>详细资料</a></li>
+  <li {% block menuitemactive_password %}{% endblock %}><a href="{{ path("JustsyBaseBundle_account_pwd", {'network_domain' : curr_network_domain}) }}"><i class="menu-password"></i>密码修改</a></li>
+  <li {% block menuitemactive_preference %}{% endblock %}><a href="{{  path("JustsyBaseBundle_account_preference", {'network_domain' : curr_network_domain})}}"><i class="menu-userright"></i>隐私保护</a></li>
+</ul>
+<div class="othertitle">微发发等级</div>
+<ul class="left-menu">
+   <li {% block menuitemactive_mylevel %}{% endblock %}><a href="{{ path('JustsyBaseBundle_account_mylevel', {'network_domain' : curr_network_domain})}}"><i class="menu-mygrade"></i>我的等级</a></li>
+   <li {% block menuitemactive_levelrule %}{% endblock %}><a href="{{ path('JustsyBaseBundle_account_levelrule', {'network_domain' : curr_network_domain})}}"><i class="menu-graderule"></i>等级规则</a></li>
+   {%if app.user.auth_level=="J"%}
+   <li {% block menuitemactive_auth %}{% endblock %}><a href="{{ path('JustsyBaseBundle_identify_auth_user', {'network_domain' : curr_network_domain})}}"><i class="menu-mygrade"></i>身份认证</a></li>
+   {%else%}
+		   {%if app.user.auth_level=="N"%}
+		   <li {% block menuitemactive_auth_eno %}{% endblock %}><a href="{{ path('JustsyBaseBundle_identify_auth_eno', {'network_domain' : curr_network_domain})}}"><i class="menu-mygrade"></i>企业认证</a></li>
+		   {%endif%}
+   {%endif%}
+</ul>
+<div class="othertitle">动态提醒设置</div>
+<ul class="left-menuset">
+   <li {% block menuitemactive_circle %}{% endblock %}><a href="{{ path('JustsyBaseBundle_account_circle', {'network_domain' : curr_network_domain})}}"><i class="menuset-set"></i>圈子动态</a></li>
+   <li {% block menuitemactive_group %}{% endblock %}><a href="{{ path('JustsyBaseBundle_account_group', {'network_domain' : curr_network_domain})}}"><i class="menuset-set"></i>群组动态</a></li>
+</ul>
+{% endblock %}

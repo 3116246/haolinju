@@ -1,0 +1,38 @@
+<div class="othertitle">企业设置</div>
+<ul class="left-menu">
+  <li {% block menuitemactive_basic %}{% endblock %}> <a href="{{ path('JustsyBaseBundle_enterprise_setting_basic', {'network_domain' : curr_network_domain})}}"><i class="menu-basics"></i>基本信息</a></li>
+  <li {% block menuitemactive_detail %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_detail", {'network_domain' : curr_network_domain}) }}"><i class="menu-entdetail"></i>详细资料</a></li>
+  <li {% block menuitemactive_tag %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_enterprisetag", {'network_domain' : curr_network_domain}) }}"><i class="menu-elogo" ></i>标签管理</a></li>
+  <li {% block menuitemactive_dept %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_mgr_dept", {'network_domain' : curr_network_domain}) }}"><i class="menu-orgchart"></i>组织机构</a></li>
+  <li {% block menuitemactive_employee %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_mgr_employee_two", {'network_domain' : curr_network_domain}) }}"><i class="menu-emp"></i>员工管理</a></li>
+  <li {% block menuitemactive_manager_setting %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_manager_setting", {'network_domain' : curr_network_domain}) }}"><i class="menu-userright"></i>权限设置</a></li>
+  <li {% block menuitemactive_weibo_mgr %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprisesetting_weibo_mgr", {'network_domain' : curr_network_domain}) }}"><i class="menu-userright"></i>微博管理</a></li>
+    <li {% block menuitemactive_bind %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_plus_bind", {'network_domain' : curr_network_domain}) }}"><i class="menu-emp"></i>账户绑定</a></li>
+  
+  <!--<li {% block menuitemactive_online_service %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_online_service", {'network_domain' : curr_network_domain}) }}"><i class="menu-service-onlie"></i>在线服务人员管理</a></li>-->
+  
+</ul>
+<ul class="left-menuset">
+<li {% block menuitemactive_micromanager %}{% endblock %}><a href="javascript:void(1)"><i class="menuset-micro-account"></i>公众号管理</a>
+  <ul  {% block menuitemactive_microul1 %}{% endblock %}>
+  <li {% block menuitemactive_microaccount %}{% endblock %}><a href="{{ path("JustsyBaseBundle_enterprise_setting_microaccount", {'network_domain' : curr_network_domain}) }}"><i class="menuset-app"></i>公众号申请</a></li>
+  <li><a href="{{ path('JustsyInterfaceBundle_microapp_index',{'network_domain' : curr_network_domain,'name':0})}}"><i class="menuset-send-msg"></i>推送消息</a></li>
+  </ul>
+  </li>
+  <li {% block menuitemactive_microappmanager %}{% endblock %}><a href="javascript:void(1)"><i class="menuset-micro-app"></i>微应用管理</a>
+  <ul {% block menuitemactive_microul2 %}{% endblock %}>
+  <li {% block menuitemactive_microapp %}{% endblock %}><a href="{{ path("JustsyBaseBundle_micro_app_list", {'network_domain' : curr_network_domain}) }}"><i class="menuset-app"></i>微应用申请</a></li>
+  <li><a href="{{ path('JustsyInterfaceBundle_microapp_index',{'network_domain' : curr_network_domain,'name':1})}}"><i class="menuset-send-msg"></i>推送消息</a></li>  
+  <li><a href="{{ path('JustsyBaseBundle_micro_app_webizproxy',{'network_domain' : curr_network_domain})}}"><i class="menuset-send-msg"></i>业务代理</a></li>
+  <li><a href="{{ path('JustsyBaseBundle_help_microapp') }}"><i class="menuset-app"></i>开发者文档</a></li>
+  </ul>
+  </li>
+  <li>
+  	<a ><i class="menu-basics"></i>人员组织同步</a>
+  	<ul>
+  		<li><a href="{{ path('JustsyBaseBundle_ldap_data',{'network_domain' : curr_network_domain})}}"><i class="menu-orgchart"></i>LDAP集成</a></li>  
+  		<li><a href="{{ path('JustsyBaseBundle_syncstafforg_data',{'network_domain' : curr_network_domain})}}"><i class="menu-orgchart"></i>接口同步</a></li>
+  		<li><a href="{{ path('JustsyBaseBundle_syncdbstafforg_data',{'network_domain' : curr_network_domain})}}"><i class="menu-orgchart"></i>数据库同步</a></li>
+  	<ul>
+  </li>
+</ul>

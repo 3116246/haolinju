@@ -1,0 +1,53 @@
+<div id="circle_card_detail" style="width:411px;height: 265px;cursor:default;">
+  <div class="circle_card_detail_title"><a class="circle_card_detail_close" data-dismiss="modal">×</a></div>
+  <div class="circle_card_leftlayout"> 
+     <span class="circlephoto">
+     <a href="javascript:void(0)"><img style="border:1px solid #EEEEEE;width:90px;height:90px" src="{{row['logo']}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle_en.png') }}'">
+     </a>
+     </span>
+     <div style="padding-top: 3px;">热度：<span>{{row['staff_num']}}</span></div>
+		 <div class="myNums" style="margin-bottom:0px">
+		     <input type="hidden" class="circle_id" >
+		    {%if(row['eno_atten']!='1')%}
+		      <div id="btn_circle_apply" class='atten_eno_ornot' atten='1'>关注</div>
+		    {%endif%}
+		 </div>
+  </div>
+  <div class="circle_card_baseinfo" >
+      <div class="circlename" style="text-align:left;font-size:16px;min-height: 44px;">{{row['ename']}}</div>
+      <div style="text-align:left;margin-top: 15px;">
+        <div style="width: 250px; white-space: nowrap; overflow: hidden; float: left;">行&nbsp;&nbsp;业：{{row['classify_parent_name']}}&nbsp;&nbsp;{{row['classify_name']}}</div>
+        <div style="width: 250px; white-space: nowrap; overflow: hidden; float: left;">所在地：{{row['province']}}&nbsp;&nbsp;{{row['city']}}&nbsp;&nbsp;{{row['area']}}</div>
+        <div style="float: left; width: 40px;">标&nbsp;&nbsp;签：</div>
+        <div style="float: left; width: 80%; height: 40px;padding-left: 5px;">
+		  	{%if tag|length>0%}
+		       {% for item in tag %}
+		           <span style="color:#0061D9;margin-right: 15px;">{{item["tag_name"]}}</span>
+		       {% endfor %}
+		  	{%else%}
+		  	   <span style="color:#CCCCCC">暂未添加任何标签</span>
+		  	{%endif%}        
+        </div>
+        <div style="float: left; width: 100%;">
+            <span style="padding-left: 20px;padding-top: 1px;background:url('{{ asset('bundles/fafatimewebase/images/mycard.png')}}')  no-repeat scroll 0 0 rgba(0, 0, 0, 0)"><a href="javascript:void(0)">详细信息</a></span>
+            {%if row["ewww"]!=""%}
+            <span style="padding-left:20px;padding-top: 1px;margin-left: 40px;background:url('{{ asset('bundles/fafatimewebase/images/qz_home.png')}}')  no-repeat scroll 0 0 rgba(0, 0, 0, 0)"><a target=_blank href="{{row["ewww"]}}">官方网站</a></span>
+            {%endif%}
+        </div>
+      </div>
+  </div>
+  <div style="clear:both;"></div>
+  <div class="emp_card_detail_desc" style="background-color:#fff;color:#000;height: 52px;margin-top:0px"> 
+  	<div style="float: left; height: 25px; width: 100%;"><span style="float: left; display: block; margin-left: 15px;">他们都在关注</span><hr style="float: left; margin-top: 15px; width: 300px;"></div>
+  	<div style="float: left; width: 100%; height: 27px; line-height: 27px;margin-left: 15px;color: #666666;">
+  	{%if atten|length>0%}
+       {% for staff in atten %}
+           <span style="color:#0061D9;margin-right: 15px;">{{staff["nick_name"]}}</span>
+       {% endfor %}
+  	{%else%}
+  	   <span style="color:#CCCCCC">&nbsp;&nbsp;</span>
+  	{%endif%}
+  	</div>
+  </div>  
+  <div class="circle_card_url" title="{{row['edesc']}}">&nbsp;&nbsp;{{row['edesc']}}</div> 
+</div>

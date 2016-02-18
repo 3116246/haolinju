@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>企业微信</title>	
+  	<script src="/bundles/fafatimewebase/js/jquery.js" type="text/javascript"></script>
+	<script src="/bundles/fafatimeweopenapi/js/fafriendapi.js" type="text/javascript"></script>	
+	<script src="/bundles/fafatimeweopenapi/js/faapi.js?server=http://123.57.78.51:5280&v=2.0" type="text/javascript"></script>
+	<script src="/bundles/fafawebimimchat/js/fachat_window.js" type="text/javascript"></script>
+	<script src="/bundles/fafawebimimchat/js/fachat_main.js" type="text/javascript"></script>
+</head>
+<body id="entvalue" style="background-color:#f6f6f6">
+</body>
+</html>
+<script type="text/javascript">
+    var timerindex = 0;
+    var account = "18888888888";
+    var pwd="888888";
+    function linke_webim()
+    {
+		  if ( typeof(FaFaMessage)=="object")
+		  {
+		  	 if ( FaFaMessage._conn!=null && FaFaMessage._conn.connected)
+		  	 {
+		  	 	  clearInterval(timerindex);
+		  	 	  $(".wefafa_chat_box").hide();
+		  	 	  document.cookie= "webim_chat=true";
+		  	 }
+		  }
+    }
+    
+    $(".wefafa_chat_login").live("click",function(){
+    	  login_webim();
+    	  timerindex = setInterval(linke_webim,1000);
+    });    
+   
+    
+   function login_webim()
+    {
+    	$(".wefafa_chat_box>div:first").hide();
+    	$(".wefafa_chat_box>div:last").show();
+    	window.MessageAPI.init=function(){
+    		/*
+	      	$.getScript("/bundles/fafawebimimchat/js/fachat_window.js", function() {
+						  if(typeof(FaFaChatWin)=="undefined") 
+						     setTimeout(function(){FaFaChatWin.init();FaFaChatWin.SetOwnerOpenid(g_curr_openid)},200); 
+							  else{ FaFaChatWin.init();FaFaChatWin.SetOwnerOpenid(g_curr_openid);}
+			});
+			$.getScript("/bundles/fafawebimimchat/js/fachat_main.js", function() {
+		      if(typeof(FaFaChatMain)=="undefined")
+		      {
+		        setTimeout(function(){FaFaChatMain.init();FaFaChatMain.Connection(account,pwd);},200);
+		      }
+		      else
+		      {
+		        FaFaChatMain.init();
+		        FaFaChatMain.Connection(account,pwd);
+		      }
+		    });*/
+			FaFaChatWin.init();
+			FaFaChatMain.init();
+		    //FaFaChatMain.Connection(account,pwd);
+	    };
+	    //页面上总是应该执行下面的判断，由于在IE9下的js与docment加载顺序的原因，可能会导致api库文件比documnet先加载完并执行，这时MessageAPI.init方法得不到调用
+      if(typeof(FaFaMessage)=="object" && !FaFaMessage._conning)
+      {
+        //页面加载完，但未进行im连接时，手动调用连接
+        window.MessageAPI.init();
+      }
+    }  
+    
+    //读取cooke
+    function readCookie()
+    {
+    	 var result = "";
+	     if (document.cookie.length>0)
+	     {
+	       var c_start = document.cookie.indexOf("webim_chat=");
+	       if (c_start >-1)
+	       { 
+	       	  c_start = c_start + "webim_chat".length + 1;
+            var c_end=document.cookie.indexOf(";",c_start)
+            if (c_end==-1) c_end = document.cookie.length
+            result = unescape(document.cookie.substring(c_start,c_end));
+	       }
+	     }
+	     return result;
+    }
+    $(document).ready(function() {
+    	
+	    login_webim();
+	    timerindex = setInterval(linke_webim,1000);
+	    
+    });
+ 
+   //WefafaFriend.init({"server":"http://we.fafatime.com","appid":"c5845cf3331c833cf5d9","openid":"8EA9DEA50D37FF46899E30028504B29E","access_token":"s0U3wGRieYwZxq9kgqZh5OFvQ9eqmUKT2ZrUL5D5"});	
+   //WefafaFriend.bind("testInput");
+</script>

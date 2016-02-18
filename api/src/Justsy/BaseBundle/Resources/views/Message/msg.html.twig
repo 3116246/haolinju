@@ -1,0 +1,47 @@
+<input type="hidden" class="msgtype" value="{{ type }}"/>
+<input type="hidden" class="pageindex" value="{{ pageindex }}"/>
+<ul class="messagemenu clearfix">
+  <li class="{{type=="0" ? "messagemenu-active" : "messagemenu-link"}}"><a href="#" onclick="{{type=="0" ? "" : "$('#messagebox').empty();LoadComponent('messagebox', '" ~ path("JustsyBaseBundle_message_getmsg",{"network_domain":curr_network_domain, "type":0}) ~ "');"}}">未读消息<span class="message-number">( {{ unreadnum }} )</span></a></li>
+  <li class="{{type=="1" ? "messagemenu-active" : "messagemenu-link"}}"><a href="#" onclick="{{type=="1" ? "" : "$('#messagebox').empty();LoadComponent('messagebox', '" ~ path("JustsyBaseBundle_message_getmsg",{"network_domain":curr_network_domain, "type":1}) ~ "');"}}">已读消息<span class="message-number">({{ readnum }})</span></a></li>
+  <li style='display:none;' class="messagemenu-write"><a href="#" onclick="$('#messagebox').children().remove();LoadComponent('messagebox','{{path("JustsyBaseBundle_message_push",{"network_domain":curr_network_domain})}}');">写消息</a></li>
+</ul>
+{% if num == 0 %}
+<div class="no-messages"><img width="26" height="27" class="prompticon" src="{{ asset("bundles/fafatimewebase/images/prompt.png") }}">没有消息</div>
+{% else %}
+<div class="message-function">
+  <input type="button" value="删除" class="messagebutton" onclick="Message.deleteAll()">
+  <span class="message-funciton-sum">共 {{ num }} 条 {{ pageindex }}/{{ pagecount }}页</span>
+</div>
+<ul class="messagecate">
+  <li>
+  <span class="message-select"><input type="checkbox" onclick='$(".messagelist input:checkbox").attr("checked", this.checked)'></span>
+  <span class="message-person">发送人</span>
+  <span class="message-title">主题</span>
+  <span class="message-date">时间</span>
+  </li>
+</ul>
+<ul class="messagelist">
+{% for item in msg['rows']%}
+  <li>
+  <input type="hidden" class="msg_id" value="{{item['msg_id']}}"/>
+  <span class="list-select"><input type="checkbox"></span>
+  <span class="list-person" style="display:block;width:175px;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;"><img width="48" height="48" src="{{item['photo_url']}}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"><a href="#" class="employee_name" login_account="{{item['login_account']}}">{{item["nick_name"]}}</a></span>
+  <span class="list-title" style="cursor: pointer;" onclick="Message.toShowDetail(this)"><a>{{ item["title"] }}</a></span>
+  <span class="list-date">{{item["send_date"]|date('m月d日 H:i')}}</span>
+  </li>
+{% endfor %}
+</ul>
+{%if(pagecount>1)%}
+<div class="pagination pagination-right" style="margin:0px">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="Message.getPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href='#' onclick="Message.getPage({{i}})">{{(i)}}</a></li>
+	{%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %}onclick="Message.getPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}
+{% endif %}

@@ -1,0 +1,83 @@
+{% extends 'JustsyBaseBundle:PersonalHome:home.html.twig' %}
+
+{% block main_content_center %}
+     <div style="height:75px;padding-top:10px">
+        <table border=0 width=100%>
+        		<tr>
+							<td width=50 height=55>
+							 <img style="width:48px;height:48px" src="{{path}}{{groupinfo["group_photo_path"]}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/1_48.jpg') }}'">
+							</td>
+							<td align=left>
+							 <div>
+							      <img src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width=12 heigth=12>&nbsp;
+							      <a style='cursor:pointer;color:#1A65A5;font-size:18px;font-weight:bold'>{{groupinfo["group_name"]}}</a>
+							 </div>
+							 <div style="color:#666666;padding-left:26px">{{groupinfo["group_desc"]}}</div>
+							</td>							
+						</tr>
+        </table>
+     </div>
+    {% render "JustsyBaseBundle:CInputArea:index" with {'network_domain':curr_network_domain,'name' : 'group','groupid':groupinfo['group_id']} %}
+     <div class="hometopic">
+			<div class="topicmenu" id="topicmenu">
+				<ul class="topic_top" id="menus">
+					<li style="width:463px;"><div class="line20"></div></li>
+					<li style="width:20px;"><a href="#" title="刷新"><div class="topic_flush"></div></a></li>
+					<li dropdownlist="1"><a href="#"><div class="topic_list" title="筛选动态列表"></div></a>
+						<ul class="topic_options">
+						<li class="topic_in"><a href="javascript:void(0)" targetid="two1" onclick="ConvFilter_OnClick(this)">全部动态</a></li>
+						<li><a href="javascript:void(0)" targetid="two2" onclick="ConvFilter_OnClick(this)">我关注的</a></li>
+						<li><a href="javascript:void(0)" targetid="two3" onclick="ConvFilter_OnClick(this)">我发布的</a></li>
+						</ul>
+					</li>
+					
+				</ul>
+			</div>     
+      <div class="tabbox"  style="display:none">
+        <ul>
+          <li id="two1" onClick="setDisplayTab(this)" class="hover" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_personal_group_convers',{ 'type':'all','groupid':groupinfo['group_id'] }) }}">全部</li>
+          <li id="two2" onClick="setDisplayTab(this)" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_personal_group_convers',{ 'type':'atten','groupid':groupinfo['group_id'] }) }}">我的关注</li>
+          <li id="two3" onClick="setDisplayTab(this)" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_personal_group_convers',{ 'type':'publish','groupid':groupinfo['group_id'] }) }}">我发布的</li>
+        </ul>
+      </div>
+      <div class="contentbox">
+        <div id="con_two1" class="display_con_area hover"></div>
+        <div id="con_two2" class="display_con_area" style="display:none"></div>
+        <div id="con_two3" class="display_con_area" style="display:none"></div>
+      </div>
+      <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EnterpriseHome.js') }}"></script>
+      <script type="text/javascript">
+      $(document).ready(function()
+      {
+        setDisplayTab(document.getElementById("two1"));
+        window.OnPublished = EnterpriseHome_OnPublished;
+        $(document).scroll(EnterpriseHome_Document_OnScroll);
+        window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000*60);
+      });
+      </script>
+    </div>
+{% endblock %}
+
+{% block main_content_right %}
+  <A href="{{path('JustsyBaseBundle_invitation_staff')}}?groupid={{groupinfo['group_id']}}"><div class="invitetitle" style="cursor:hand"></div></A>
+  <div class="rightbox"></div>
+  <div class="menutitle">最新活动</div>
+   <div class="rightbox">
+    {% render "JustsyBaseBundle:Together:getTop" with {"groupid":groupinfo['group_id'],"network_domain":curr_network_domain} %}
+   </div>
+  <div class="menutitle">最新文件</div>
+  <div class="rightbox">
+    {% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {"network_domain":curr_network_domain,"scope_type" : "2","scope_id":groupinfo['group_id']} %}
+  </div>
+  <div class="menutitle">成员列表</div>
+  <div class="rightbox">
+    <table class="table">
+    {%for staff in staffs%}
+       <tr>
+       	  <td width=50px><img src="{{path}}{{staff["photo_path"]}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" style="width:48px;height:48px"></td>
+       	  <td style="vertical-align:middle">{%if(staff["login_account"]==groupinfo["create_staff"])%}<img title="创建者" src="{{ asset('bundles/fafatimewebase/images/reg_title.png') }}" style="width:16px;height:16px"> {%endif%}<a class="employee_name" login_account="staff["login_account"]">{{staff["nick_name"]}}</A></td>
+       </tr>
+    {%endfor%}
+    </table>
+  </div>  
+{% endblock %}

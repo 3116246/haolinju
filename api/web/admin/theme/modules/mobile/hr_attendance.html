@@ -1,0 +1,226 @@
+<style>
+.text-overflow{
+	width:100px;
+	overflow:hidden;;/* 内容超出宽度时隐藏超出部分的内容 */
+	text-overflow:ellipsis;;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+	white-space:nowrap;/* 不换行 */
+}
+.atten-td{
+		vertical-align: middle;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align:left;
+        padding-left:5px; 
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-bottom: 0px;
+	}
+</style>
+<div class="alert alert-danger display-hide" id="page_alert_info" style="display: none;">
+	<button data-close="alert" class="close"></button>
+	<label></label>
+</div>
+<div class="row">
+	<div class=" col-md-12 tab-content" id="list">
+		<div class="todo-content">
+					<div class="portlet light">
+						<div class="portlet-title">
+							<div class="caption" style="width: 300px;">
+								<span class="caption-helper" style="word-wrap: normal;width:100%">全员—考勤统计—2016-01-05</span>
+								<span class="caption-subject font-green-sharp bold uppercase"></span>
+							</div>					
+						</div>
+						<div class="portlet-body">
+							<div class="row">
+								<div class="box green col-md-12" >
+									<div class="portlet-body flip-scroll">
+										<div class="col-lg-12" id="all_atten">
+											<a href="javascript:;" onclick="Attendance.queryAllByDate()" class="dashboard-stat dashboard-stat-light green-soft">
+											<div class="visual">
+												<i></i>
+											</div>
+											<div class="details" style="width: 300px;">
+												<div class="number" id="allStaffCount">
+													 
+												</div>
+												<div class="desc" >
+													 应考勤人数
+												</div>
+											</div>
+											</a>
+										</div>
+										<div class="col-lg-12" id="ed_atten">
+											<a href="javascript:;" onclick="Attendance.queryAllAttenByDate()" class="dashboard-stat dashboard-stat-light green-soft">
+											<div class="visual">
+												<i></i>
+											</div>
+											<div class="details" style="width: 300px;">
+												<div class="number" id="allAttenCount">
+													 
+												</div>
+												<div class="desc" >
+													 实际考勤人数
+												</div>
+											</div>
+											</a>
+										</div>		
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="box green col-md-12">
+									<div class="portlet-body flip-scroll">
+										<div class="col-lg-12" id="not_atten">
+											<a href="javascript:;" onclick="Attendance.queryNoAtten()" class="dashboard-stat dashboard-stat-light red-soft">
+											<div class="visual">
+												<i></i>
+											</div>
+											<div class="details" style="width: 300px;">
+												<div class="number" id="allNoAttenCount">
+													 
+												</div>
+												<div class="desc" >
+													未考勤
+												</div>
+											</div>
+											</a>
+										</div>
+										<div class="col-lg-12" id="delay_atten">
+											<a href="javascript:;" onclick="Attendance.queryAllLate()" class="dashboard-stat dashboard-stat-light red-soft">
+											<div class="visual">
+												<i></i>
+											</div>
+											<div class="details" style="width: 300px;">
+												<div class="number" id="allLateCount">
+													 
+												</div>
+												<div class="desc" >
+													迟到
+												</div>
+											</div>
+											</a>
+										</div>									
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="box green col-md-12">
+									<div class="portlet-body flip-scroll">
+										<div class="col-lg-12" id="leave_atten">
+											<a href="javascript:;" class="dashboard-stat dashboard-stat-light  purple-soft">
+											<div class="visual">
+												<i></i>
+											</div>
+											<div class="details" style="width: 300px;">
+												<div class="number">
+													 —
+												</div>
+												<div class="desc">
+													请假中
+												</div>
+											</div>
+											</a>
+										</div>
+										<div class="col-lg-12" id="travel_atten">
+											<a href="javascript:;" class="dashboard-stat dashboard-stat-light  purple-soft">
+											<div class="visual">
+												<i></i>
+											</div>
+											<div class="details" style="width: 300px;">
+												<div class="number">
+													 —
+												</div>
+												<div class="desc">
+													出差中
+												</div>
+											</div>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>						
+						</div>
+					</div>
+		</div>
+	</div>
+
+	<div class=" col-md-12 tab-content" id="detal_list" style="display:none">		
+		<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption" style="width: 300px;">
+						<span class="caption-helper">考勤明细列表</span>
+						<span class="caption-subject font-green-sharp bold uppercase"></span>
+					</div>
+					<div class="tools">
+						<a style="color:green" id="btn_wiki_close" href="javascript:;"><i class="fa fa-times"></i></a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<table class="table table-striped table-bordered table-advance table-hover" id="atten-list">
+						<thead>
+							<tr>
+								<th>
+									
+								</th>
+								<th>
+									 姓名
+								</th>
+								<th>									
+								</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<div id="atten-pagination">
+        			</div>
+				</div>
+			</div>
+		</div>
+		
+    </div>	
+</div>
+<div class="clearfix"></div>
+<script type="text/html" id="atten-list-tmpl">
+	{{each data}}	
+	<tr style="vertical-align:middle;">
+					<td>
+					{{if $value.photo_path==""}}
+						<img style="width:32px;height:32px;" src="../../../assets/admin/pages/media/profile/avatar.png">
+						{{else}}
+							<img style="width:32px;height:32px;" src="{{$value.photo_path}}">
+						{{/if}}
+					</td>
+					<td style="vertical-align:middle;" class='fafa_webim_ocs_presence' account='{{$value.staff_id}}'>
+						 {{$value.nick_name}} <span class='text-overflow' style='color:#ccc'>({{$value.dept_name}})</span><br>
+						 <a href="tel://{{$value.mobile_bind}}">{{$value.mobile_bind}}</a>
+					</td>
+					<td title="{{$value.atten_date}}" style="vertical-align: middle; margin-bottom: 0px; background-color: #3faba4; color: #fefefe;">
+						{{$value.state}}
+					</td>
+	</tr>
+	{{/each}}
+</script>
+<script>
+$(document).ready(function() {
+	$("#btn_wiki_close").off('click').on('click',function(){
+		$("#detal_list").hide();
+		$("#list").show();
+	});
+	Attendance.deptid = getQueryString('deptid');
+	Attendance.ymd = getQueryString('ymd');
+	if(Attendance.ymd==null || Attendance.ymd=="")
+	{
+		var myDate = new Date();
+		Attendance.ymd = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
+	}
+	var deptname = '';
+	if(Attendance.deptid==null || Attendance.deptid=='')
+	{
+		deptname='全员';
+	}
+	$(".caption-helper").text(deptname+'—考勤统计—'+Attendance.ymd);
+	Attendance.init();
+	//Attendance.queryAllAttenByDate();
+	Attendance.queryAllCount();	
+});
+</script>

@@ -1,0 +1,69 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+  {% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+  {% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+  {% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_group.html.twig' with {"this" : this,'network_domain' : curr_network_domain,'group_s':group_s,'group_c':group_c}%}
+  {% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}
+
+{% block main_content_center %}
+  {% render "JustsyBaseBundle:CInputArea:index" with {'network_domain' : curr_network_domain, 'name' : 'foo'} %}
+  <div class="hometopic">
+		<div class="topicmenu" id="topicmenu">
+			<ul class="topic_top" id="menus">
+				<li style="width:480px;"><div class="line20" style="width:480px;"></div></li>
+				<li style="width:20px;"><a href="javascript:window.location.reload(true)" title="刷新"><div class="topic_flush"></div></a></li>
+			</ul>
+		</div>
+    <div class="tabbox" style="display:none">
+      <ul>
+        <li id="two1" onClick="setDisplayTab(this)" class="hover" loadurl="{{ path('JustsyBaseBundle_personal_get_convers',{'type':'all','network_domain':curr_network_domain}) }}" >全部</li>
+      </ul>
+    </div>
+    <div class="contentbox">
+      <div id="con_two1" class="display_con_area hover"></div>
+    </div>
+    <script type="text/javascript">
+      var manager_trend=true;
+      $(document).ready(function() {
+        setDisplayTab(document.getElementById("two1"));
+        window.OnPublished = EnterpriseHome_OnPublished;
+        $(window).scroll(EnterpriseHome_Document_OnScroll);
+        window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000*60);
+      });   
+    </script>
+  </div>
+{% endblock %}
+
+{% block main_content_right %}
+  <div id="btnInvStaff" class="invitetitle" style="cursor:pointer"></div>
+  {% render "JustsyBaseBundle:CInvStaff:invStaff" with {'id':null} %}
+  <div class="rightbox" style="display:none;"></div>
+  <div class="menutitle">最新活动</div>
+  <div class="rightbox">
+    {% render "JustsyBaseBundle:Together:getTop" with {'network_domain' : curr_network_domain} %}
+  </div>
+ 
+ <div class="modal" id="togetherdetails" style="display:none;width:480px;height:400px margin-left: -450px;" show=false>
+     <div class="modal-header">    
+    	<a class="close" data-dismiss="modal" onclick="javascript:$('#togetherdetails').hide();">×</a> 
+    </div>
+    <div align="center" id="loadimg"><img src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}"></div>
+    <div style="padding-left:20px; padding-top:10px;" id = "viewtogether"></div>
+ </div>
+ 
+  <div class="modal" id="Viewreply" style="display:none;width:650px; margin-left: -300px;" show=false>
+       <div>    
+    	   <a class="close" data-dismiss="modal" onclick="javascript:$('#Viewreply').hide();">×</a> 
+       </div>
+       <div id = "together_content" name="together_content"> </div>
+       <div align="center" id="load_img"><img src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}"></div>
+       <div id = "replay_content" name="replay_content" style="height:400px;"></div>
+       <div id = "pagecontrol" name="pagecontrol"></div>
+ </div>
+  <div class="menutitle">最新文件</div>
+  <div class="rightbox">
+  {% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {'network_domain' : curr_network_domain,'scope_type':'1'} %}
+  </div>
+{% endblock %}

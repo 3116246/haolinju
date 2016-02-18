@@ -1,0 +1,99 @@
+{% extends 'JustsyBaseBundle::master_help.html.twig' %}
+{% block main_topnav_title %}｜微应用开放平台文档{% endblock %}
+{% block main_content %}
+	<style type="text/css">
+	#ulmenu > li > a { border-bottom: 1px solid #bbb; font-weight: bold;}
+	</style>
+	<div class="twomain" style="padding-top: 0;padding-bottom: 0px; font-size:14px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+	  <div class="homeleft">
+	  	<ul id="ulmenu" class="nav nav-list" style="margin-top:10px;">
+		    {# <li class="active"><a href="#" data-toggle="collapse" data-target="#sss"><i class="icon-chevron-right"></i>首页</a></li>
+		    <li>
+		    	<ul id="sss" class="nav nav-list collapse" style="margin-left:3px;">
+				    <li><a href="#">首页</a></li>
+				    <li><a href="#">台文档</a></li>
+			    </ul>
+			</li>
+		    <li><a href="#"><i class="icon-chevron-right"></i>台文档</a></li> #}
+	    </ul>
+	  </div>
+	  <div class="twomainright">
+	  	<div class="grade-title">{{title}}</div>
+		{% include helptwig %}
+	  </div>
+	  <div class="clearBoth"></div>
+	</div>  
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+	var menudata = [
+		{title:"快速接入", submenu: [
+			{title:"微应用简介"},
+			{title:"业务系统接入"},
+			{title:"典型案例"},
+			{title:"接入流程"},
+			{title:"微应用注册"}
+		]}, 
+		{title:"基础功能", submenu: [
+			{title:"token获取"},
+			{title:"图片上传"}
+		]},
+		{title:"基础信息", submenu: [
+			{title:"关注成员列表"},
+			{title:"人员详细信息"}
+		]},
+		{title:"消息发送", submenu: [
+			{title:"纯文本消息"},
+			{title:"单图文消息"},
+			{title:"单图文消息(文件流)"},
+			{title:"多图文消息"}
+		]},
+		{title:"业务代理", submenu: [
+			{title:"业务代理简介"}
+		]},
+		{title:"示例", submenu: [
+			{title:"微应用示例"}
+		]}
+	];
+	var menu_tp1 = '<li><a href="?title=[TITLE]"><i class="icon-chevron-right"></i>[TITLE]</a></li>';
+	var menu_tp2_1 = '<li><a href="#" data-toggle="collapse" data-target="#[SUBMENUID]"><i class="icon-chevron-right"></i>[TITLE]</a></li><li><ul id="[SUBMENUID]" class="nav nav-list in collapse" style="margin-left:3px;">';
+	var menu_tp2_2 = '<li><a href="?title=[TITLE]">[TITLE]</a></li>';
+	var menu_tp2_3 = '</ul></li>';
+	var $ulmenu = $("#ulmenu");
+	for (var i=0; i<menudata.length; i++)
+	{
+		var menuitem = menudata[i];
+		var menuid = new String(i);
+		if (menuitem.submenu)
+		{
+			var submenustr = "";
+			submenustr += menu_tp2_1.replace("[SUBMENUID]", "menuitem_"+menuid)
+									.replace("[SUBMENUID]", "menuitem_"+menuid)
+									.replace("[TITLE]", menuitem.title);
+			for (var j = 0; j < menuitem.submenu.length; j++) {
+				var menuitem2 = menuitem.submenu[j];
+				submenustr += menu_tp2_2.replace("[TITLE]", menuitem2.title).replace("[TITLE]", menuitem2.title);
+			};
+			submenustr += menu_tp2_3;
+			$ulmenu.append(submenustr);
+		}
+		else
+		{
+			$ulmenu.append(menu_tp1.replace("[TITLE]", menuitem.title).replace("[TITLE]", menuitem.title));
+		}
+	}
+
+	var ptitle = "{{ title }}";
+	$a = $("li>a:contains('"+ptitle+"')");
+	if ($a.has("i").length == 0)
+	{
+		$a.parent("li").parent("ul").parent("li").prev().addClass('active');//.children('a').click();
+	}
+	else
+	{
+		$a.parent("li").addClass('active');
+	}
+});
+</script>
+{% endblock %}

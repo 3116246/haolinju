@@ -1,0 +1,64 @@
+<div style="text-align:center;"><img id="staffloading" style="display:none" src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}" /></div>
+<table id="unactivestaff" class="table"></table>
+<script language="javascript">
+$(document).ready(function()
+{
+  loadUnActiveStaff();
+});
+//载入未激活的人员
+function loadUnActiveStaff()
+{
+  var eno = "{{ app.user.eno }}";
+  var account = "{{ app.user.username }}";
+  var circleid = "{% if circleid is defined %}{{ circleid }}{% endif %}";
+  $("#staffloading").show();
+  $.post("{{path('JustsyBaseBundle_component_invunactivelist')}}",
+    {eno:eno,account:account,circleid:circleid},
+    function(data) 
+    {
+      $("#unactivestaff").empty();
+      var htm = '';
+      for(var i=0; i< data.length; i++)
+      {
+        htm += '<tr><td title="'+data[i].show_email+'">'+data[i].invite_recv_email+'</td>';
+        htm += '<td><a style="cursor:pointer" onclick="cinvStaffDel(this)">删除</a></td>';
+        htm += '<td><img style="display:none" src="'+'{{ asset("bundles/fafatimewebase/images/loadingsmall.gif") }}'+'" />';
+        htm += '<a style="cursor:pointer" onclick="cinvStaffReinv(this)">邀请</a></td></tr>';
+      }
+      $("#staffloading").hide();
+      $("#unactivestaff").html(htm);
+    },"json");
+}
+//删除未激活人员
+function cinvStaffDel(n)
+{
+  var cns = $(n).parent().parent().children();
+  var invrec = cns.eq(0).attr("title");
+  var account = "{{ app.user.username }}";
+  $.post("{{path('JustsyBaseBundle_component_invdelstaff')}}",
+    {invrec:invrec,account:account},
+    function(data) 
+    {
+      $(n).parent().parent().remove();
+    },"text");
+}
+//重新邀请
+function cinvStaffReinv(n)
+{
+  if ($(n).attr("isclick")=="1") return;
+  $(n).attr("isclick","1");
+  var cns = $(n).parent().parent().children();
+  var invrec = cns.eq(0).attr("title");
+  var account = "{{ app.user.username }}";
+  cns.eq(2).find("img").show();
+  cns.eq(2).find("a").hide();
+  $.post("{{path('JustsyBaseBundle_component_invreinvite')}}",
+    {invrec:invrec,account:account},
+    function(data) 
+    {
+      cns.eq(2).find("img").hide();
+      cns.eq(2).find("a").show();
+      $(n).attr("isclick","0");
+    },"text");
+}
+</script>

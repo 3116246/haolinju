@@ -1,0 +1,16 @@
+#upload_portal_icon { cursor: default;max-height: 285px;overflow: hidden;padding-left: 80px;padding-top:15px;background-color:#fff; }
+.up_icon_msg { float:left;width:100%;height:45px;line-height: 45px; padding: 0px 10px; color: black; font-size: 14px;}
+.up_icon_msg>img { float:left;width:35px;height:35px;padding-right:5px; }
+.up_icon_msg>span { float:left; }
+.mb_textbox { border: 1px solid #aba;height: 25px;line-height: 25px;padding:2px 5px;+height:22px;+line-height:22px;}
+.mb_button{ height: 25px;line-height: 22px;+line-height:20px;margin-left: 10px;padding: 0;width: 70px; }
+.provision_area { margin-left:30px; float:left;width:535px;  }
+.provision_area>textarea { background-color: #fff;float: left;height: 145px;resize: none;width: 500px; }
+.provision_area>a { float: left;margin-top: 65px;padding-left:5px; }
+.provision_area>span {  background-color: #eee;border: 1px solid #ccc;border-radius: 0 0 5px 5px;color: red;float: left;height: 30px;line-height: 30px;margin-top: -30px;padding-left: 10px;width: 500px; }
+.select_img_title { color:#cc3300;padding-right:10px;font-weight:bold; }
+.mobile_backgroudimg { margin-top:23px; margin-left:13px; width:320px;height:480px; background-image:url(/bundles/fafatimewebase/images/home/default_destop.jpg); }
+.mobile_backgroudimg>img { flat:left;width:100%;height:100%; }
+.portal_icon { cursor:default;color: #ccc;float: left;font-size: 14px;height:80px;margin-left:168px;margin-top: 290px;width: 60px; }
+.portal_icon>img { border-radius: 10px;float: left;height: 60px;width: 60px; }
+.portal_icon>span { float: left;line-height: 22px;text-align: center;width: 100%; }

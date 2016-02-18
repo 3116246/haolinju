@@ -1,0 +1,5 @@
+{% if wefafalogo|length == 0 %}
+<img src="{{ asset('bundles/fafatimewebase/images/we.png') }}">
+{% else %}
+<img src="{{ FILE_WEBSERVER_URL }}{{ wefafalogo }}" style="max-height:35px;height:35px; max-width:76px;width:76px;">
+{% endif %}

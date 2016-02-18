@@ -1,0 +1,115 @@
+
+<style type="text/css">
+	.mgmt{
+		margin-top:10px;
+		margin-left:2px;
+		border: 0px solid #dddddd;
+		display: inline-table; 
+		text-align:center;
+		width: 100px;
+		position: relative;
+	}
+</style>
+
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">当前管理员</h3>
+
+<!-- END PAGE HEADER-->
+<div class="clearfix"></div>
+
+<div class="row">
+
+	<div style="border-bottom: 1px solid #dddddd;width:100%;height:160px;overflow:auto;" id="mgmtor" >
+	</div>
+
+	<div style="margin: 30px;">
+
+		<div class="alert alert-danger display-hide" style="display: none;">
+			<button data-close="alert" class="close"></button>
+			<label></label>
+		</div>
+						
+		<div class="alert alert-success display-hide" style="display: none;">
+			<button data-close="alert" class="close"></button>
+			<label></label>
+		</div>
+
+		<div class="form-group;">
+			<label class=" control-label col-md-3" style="margin-top: 4px;width: 100px;">查找： </span></label>
+			
+			<input type="text" id="staff"  placeholder="请输入姓名或手机或邮箱" style="display: inline;margin-top: -10px;
+   									width: 50%;" class="form-control">		
+			<button class="btn green" id="btn_search" maxlength=20 style="display: inline;position: relative;margin-top: -4px;" onclick="Mgmt.query();" type="button">搜索并添加</button>
+			
+		</div>	
+
+		<div class="table-responsive" style="margin-top:10px;min-height:400px">
+				<table class="table table-striped table-bordered table-advance table-hover" id="getstaffList">
+				<thead>
+				<tr>
+					<th>
+						 用户账号
+					</th>
+					<th>
+						 昵称
+					</th>
+					<th>
+						 所属部门
+					</th>
+					<th>
+						 职务
+					</th>
+					<th>
+						 手机号
+					</th>
+					<th>
+						 操作
+					</th>
+				
+				</tr>
+				</thead>
+				<tbody>
+				</tbody>
+				</table>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+<script type="text/javascript" src="jscript/form_icheck.js"></script>
+
+<script type="text/javascript">
+	Mgmt.init();
+</script>
+
+<script type="text/html" id="get_stafflist-tmpl">
+	{{each data}}
+	<tr style="vertical-align:middle;">
+					<td>
+					{{if $value.photo_path==""}}
+						<img style="width:45px;height:45px;" class="img-circle" src="../assets/admin/pages/media/profile/avatar.png">
+						{{else}}
+							<img style="width:45px;height:45px;" class="img-circle" src="{{$value.photo_path}}">
+						
+						{{/if}}
+					
+						{{$value.login_account}}
+					</td>
+					<td style="vertical-align:middle;">
+						 {{$value.nick_name}}
+					</td>
+					<td style="vertical-align:middle;">
+						 {{$value.dept_name}}
+					</td>
+					<td style="vertical-align:middle;">
+						 {{$value.duty}}
+					</td>
+					<td style="vertical-align:middle;">
+						 {{$value.mobile}}
+					</td>
+					<td style="vertical-align:middle;">
+						<a href="javascript:;" class="btn purple-plum" onclick="Mgmt.setMgmtor(this,'{{$value.photo_path}}','{{$value.login_account}}','{{$value.nick_name}}')" > 设为管理员</a>
+					</td>
+				</tr>					
+			
+			{{/each}}
+	</script>

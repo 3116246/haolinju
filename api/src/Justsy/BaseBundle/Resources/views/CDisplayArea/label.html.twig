@@ -1,0 +1,16 @@
+{% if ds["we_convers_list"]["rows"][0]["atten_id"] > 0 %}
+<div class="label_outbox">
+  <span class="label_title">标签：</span>
+  <span class="label_box">
+    <span class="label_allname">{% for row in ds["we_convers_label"]["rows"] %}<span class="label_name">{{ row["label_name"] }}</span>{% endfor %}</span>
+    <span class="label_delname"></span>
+    <span class="label_edit">
+      <span class="label_add" onclick="CollectLabel.label_add_OnClick(this)"> + 加标签</span>
+      <input class="label_input" type="text" onfocus="CollectLabel.label_input_OnFocus(this)"/>
+      <input class="label_save" type="button" value="保存" onclick="CollectLabel.label_save_OnClick(this)" atten_id="{{ ds["we_convers_list"]["rows"][0]["atten_id"] }}"/>
+      <input class="label_cancel" type="button" value="取消" onclick="CollectLabel.label_cancel_OnClick(this)" />
+    </span>
+  </span>
+  <span class="label_date">收藏：{{ ds["we_convers_list"]["rows"][0]["atten_date_d"] }}</span>
+</div>
+{% endif %}

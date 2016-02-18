@@ -1,0 +1,830 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}启用Wefafa{% endblock %}
+{% block stylesheets %}
+<style>
+	.share_eno_list{
+		background-clip: padding-box;
+    background-color: #F9F9F9;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 1px 1px 5px 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    float: left;
+    left: 0;
+    list-style: none outside none;
+    margin: 2px 0 0;
+    min-width: 160px;
+    padding-bottom: 5px;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+	}
+	.share_eno_list a{
+		clear: both;
+    color: #333333;
+    display: block;
+    font-weight: normal;
+    line-height: 20px;
+    padding: 3px 20px;
+    white-space: nowrap;
+    cursor:pointer;
+	}
+	.share_eno_list li{list-style:none,outside,none;height:22px;padding-left:5px;width:240px;overflow:hidden;cursor:default;}
+</style>
+{% endblock %}
+{% block main_content %}
+<div class='c520' align='center' style="min-height:500px">
+<div style="background:url({{asset('bundles/fafatimewebase/images/activeback.jpg')}});width:960px;height:500px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.3);border:1px solid #EEE;">
+	<div style='float:left;height: 45px;padding-left: 20px;'><span style="color: #999999;font-size: 16px;font-family: 微软雅黑;font-weight: 700;line-height: 45px;">完善资料,启用Wefafa</span></div>
+	<div style='float:left;width:100%;'>
+		  <div class="c_reg_l" style="float:left;padding-left:0px;padding-top:30px;">
+		  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_active_dosave') }}" >
+		    <input name="account" type="hidden" value="{{ account }}" />
+		    <input name="mailtype" type="hidden" value="{{ this.mailtype }}" />
+		    <input name="circleId" type="hidden" value="{{ this.circleId }}" />
+		    <input name="invstaff" type="hidden" value="{{ this.invstaff }}" />
+		    <input id="circleName" name="circleName" type="hidden" value="{{ this.circleName }}" />
+		    <input id="isNew" name="isNew" type="hidden" value="{{ this.isNew }}" />
+		    <input id="enoValue" name="eno" type="hidden" value="{{ this.eno }}" />
+		    <input id="enameValue" name="ename" type="hidden" value="{{ this.ename }}" />
+		    <input id="eshortnameValue" name="eshortname" type="hidden" value="{{ this.eshortname }}" />
+		    <div class="c_regdetail">
+		      <dl class="inputbox">
+		      <dt>&nbsp;&nbsp;&nbsp;登录帐号：</dt>
+		    	<dd style='height:55px;' class="reg_input_parent">
+		        <input type="text" class="RegFormIptone" style="color:#999" disabled="true" maxlength=32 value="{{ account }}" />
+		    	</dd>
+		    	<dt>&nbsp;&nbsp;&nbsp;登录密码：</dt>
+		    	<dd style='height:55px;' class="reg_input_parent">
+		        <input type="password" class="RegFormIpt" id="passWord" name="passWord" maxlength=16 value="{{ this.passWord }}" /> 
+					  <span class="alert reg_alert alert-error" style="display:none;left:85px;*left:0px;height:22px;padding:0;padding-left:20px;">
+					  	<span class="alert_content"></span>
+		        </span>
+					  <img style="display:none" class="alert-ico" width="16" height="16">
+		    	</dd>
+		    	<dt>&nbsp;&nbsp;&nbsp;确认密码：</dt>
+		    	<dd style='height:55px;' class="reg_input_parent">
+		    	  <input type="password" class="RegFormIpt" id="confirmPassWord" maxlength=16 value="{{ this.passWord }}" /> 
+					  <span class="alert reg_alert alert-error" style="display:none;left:85px;*left:0px;height:22px;padding:0;padding-left:20px;">
+					  	<span class="alert_content"></span>
+		        </span>
+					  <img style="display:none" class="alert-ico" width="16" height="16">
+		    	</dd>
+		    	<dt>&nbsp;&nbsp;&nbsp;真实姓名：</dt>
+		    	<dd style='height:55px;' class="reg_input_parent">
+		    	  <input type="text" class="RegFormIptone" id="realName" name="realName" maxlength=12 value="{{ this.realName }}" />
+					  <span class="alert reg_alert alert-error" style="display:none;left:85px;*left:0px;height:22px;padding:0;padding-left:20px;">
+					  	<span class="alert_content"></span>
+		        </span>
+					  <img style="display:none" class="alert-ico" width="16" height="16">
+		    	</dd>
+		    	<dt>&nbsp;&nbsp;&nbsp;所属企业：</dt>
+		    	<dd style='height:55px;' class="reg_input_parent">
+		    	  <input type="text" class="RegFormIptone" maxlength=64 id="ename" value="{{ this.acinfo['ename'] }}" autocomplete="off" />
+					  <span class="alert reg_alert alert-error" style="display:none;left:85px;*left:0px;padding:0;height:auto;padding-left:20px;">
+					  	<span class="alert_content"></span>
+		        </span>
+		        <div class='alert-warn' style="display:none;left:85px;z-index:999;*left:0px;padding:0;height:auto;position:absolute;background-color:#d5effe;padding-bottom:5px;">
+		        	<div style='padding-left:5px;padding-right:10px;'><span style='color:#00A9D9;font-weight:700;'>警告:</span><span onclick="$(this).parent().parent().hide();" style='float:right;font-size:18px;cursor:pointer;'>×</span></div>
+					  	<div class="warn_content" style='padding-left:20px;'><p>抱歉，您的企业邮箱与该企业不匹配，无法加入，若您确信您的企业被非法抢注，请进行企业申诉。</p></div>
+					  	<div style='padding-left:20px;padding-right:20px;'><a style='color:red;float:right;cursor:pointer;'>立即申诉</a><a onclick='$(this).parent().parent().hide();enowarn=true;' style='cursor:pointer;display:none;color:red;float:right'>确定加入</a></div>
+		        </div>
+					  <img style="display:none" class="alert-ico" width="16" height="16">
+					  <img style="display:none" src="{{asset('bundles/fafatimewebase/images/ts.png')}}" class="warn-ico" width="16" height='16'>
+		    	</dd>
+		    	<dt>&nbsp;&nbsp;&nbsp;您的职位：</dt>
+		    	<dd style='height:55px;' class="reg_input_parent">
+		    	  <input type="text" class="RegFormIptone" maxlength=20 id="duty" name="duty" autocomplete="off" />
+					  <span class="alert reg_alert alert-error" style="display:none;left:85px;*left:0px;padding:0;height:22px;padding-left:20px;">
+					  	<span class="alert_content"></span>
+		        </span>
+					  <img style="display:none" class="alert-ico" width="16" height="16">
+		    	</dd>
+		      </dl>
+		    </div>
+		    <div style="">
+		      <label class="checkbox">
+		        <input id="chkTerms" style="height:12px;" type="checkbox" class="allinput" checked="true">
+		        我已阅读并接受<a href="/userlic.htm" target="_blank">《Wefafa服务条款》</a>
+		      </label>
+		    </div>
+		    <div class="c_regenter" style='padding-left:0px;padding-top:10px;width:100%;height:32px;'>
+		    	<div style="width:110px;border-radius:4px 4px 4px 4px; float: right; margin-right: 38px;" type="button" id="btnSubmit" cansub='0' value="启用Wefafa" class="btn btn-reg" name="input"><span style='font-family: 微软雅黑;'>启用Wefafa</span></div>
+		    </div>
+		    <input type='hidden' value='{{this.acinfo['actype']}}' name='actype'/>
+		  </form>
+		  </div>
+		  <div class="c_reg_r" style="float:left;margin-left:85px;padding-top:30px;width:420px;">
+		    <div style='width:410px;height:245px;float:left;border:1px solid #CCC;border-radius:5px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.7);'>
+		      <div id="emp_card_detail" style="width:355px;padding:45px;">
+					  <div class="emp_card_detail_title"></div>
+					  <div style='width:385px;float:left;'>
+					  <div class="pesonallayout" style='float:left;'> 
+					     <span class="pesonalphoto">
+					     <a href="javascript:void(0)" id='employee_card_dlag_personweb'><img style="border:0px;width:78px;height:78px" src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'/>
+					     </a>
+					     </span>
+					  </div>
+					  <div class="pesonalother">
+					    <span class="pesonaldetail">
+					      <div id='t_ename' style="padding-bottom: 8px;display:block;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:200px;" class='emp_card_detail_orgname'>所属企业名称</div>
+					      <div style="padding-bottom: 8px;"><a id='t_realname' href="javascript:void(0)" style='width:200px;display:block;font-size:25px;color:#013dab;font-weight:700;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;height:25px;height:32px\9;line-height:32px\9;' class="pesonalname">真实姓名</a></div>
+					      <div id='t_duty' style="cursor:default;display:block;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:200px;">职位</div>
+					     </span>
+					  </div>
+					</div>
+					  <div style='float:left;margin-left:10px;margin-top:40px;'>
+					  	<p style=''>电子邮箱：{{account}}</p>
+					  	<p style='float:left;'>手机号：</p>
+					  </div>
+		      </div>
+		    </div>
+		    <div style="margin-top:20px;background:url({{asset('bundles/fafatimewebase/images/activeback2.jpg')}});width:415px;height:140px;float:left;">		    	
+		    </div>
+		  </div>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var _account="{{account}}";
+var actype="{{this.acinfo['actype']}}";
+var btnSubmit = $("#btnSubmit");
+var toSubmit=false;
+var enameChanged = false, realNameChanged = false, eshortChanged = true;
+var getEnoUrl="{{path('JustsyBaseBundle_active_searchbyname')}}";
+var setFocus = false;
+var enowarn=false;
+var ipts = $("form .RegFormIptone,.RegFormIpt,.allinput");
+var hintMsg = 
+{
+  "ename01":"企业名称为必填项！",
+  "ename02":"企业名称长度不能小于6！",
+  "ename03":"您输入的企业名有重名，请重新输入！",
+  "ename04":"请输入与营业执照相符的企业全称，一旦填写将不得更改。",
+  "ename05":"您输入的企业名称与邀请人的企业名称重复，请重新输入！",
+  "ename06":"该企业设置为只允许 ? 的企业邮箱注册，请重新输入正确的企业名称。",
+  "eshortname01":"企业简称为必填项！",
+  "eshortname02":"您的企业简称重复，请重新输入！",
+  "realName01":"真实姓名必须大于2个字符！",
+  "realName02":"您输入的姓名有重名，请重新输入！",
+  "passWord01":"密码长度不能小于6位！",
+  "passWord02":"两次密码输入不一致！",
+  "confirmPassWord":"请输入确认密码！"
+};
+
+$(document).ready(function()
+{
+	if($("#ename").val()!='')$("#t_ename").text($("#ename").val());
+  $.each(ipts.slice(0, 6),function(i,n)
+  {
+    if (n.disabled) return true;
+    $(n).parent().addClass("non-validated");
+    if (!setFocus)
+    {
+      n.focus();
+      setFocus = true;
+    }
+  });
+  ipts.blur(function()
+  {
+  	if($(this).is("#ename")){
+  		$t=this;
+  		setTimeout(function(){
+  			validate($t);
+  		},200);
+  	}
+  	else
+  		validate(this);
+  }).change(function()
+  {
+    if ($(this).is("#ename"))
+    {
+      enameChanged = true;
+    }
+    else if ($(this).is("#realName"))
+    {
+      realNameChanged = true;
+    }
+    else if ($(this).is("#eshortname"))
+    {
+      eshortChanged = true;
+    }
+    else if ($(this).is("#chkTerms"))
+    {
+      if (this.checked)
+      {
+        $(this).parent().removeClass("non-validated");
+      }
+      else
+      {
+        $(this).parent().addClass("non-validated");
+      }
+      enableSubmit();
+    }
+  }).keypress(function(ev)
+  {
+    if ($(this).is("#ename") || $(this).is("#realName") || $(this).is("#eshortname"))
+    {
+      //btnSubmit.attr("disabled",true);
+    }
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm(this);
+        return;
+      }
+      focusMoveToNext(ipts,this);
+    }
+  }).keyup(function(ev)
+  {
+    //if (ev.keyCode==8) btnSubmit.attr("disabled",true);
+  });
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm(this);
+  });
+  if($("#isNew").val()=='0')
+  	$("#ename,#eshortname").attr('disabled','disabled').parent().removeClass('non-validated');
+  if(actype=='1' || actype=='2')
+  {
+  	$("#ename").keydown(function(event){
+  		var ev=event||window.event;
+  		if(ev.keyCode==13)
+  		{
+  			$ul=$(".share_eno_list");
+  			if($ul.length >0)
+  				check($ul.find("li[sel='1']")[0]);
+  		}
+  	});
+  	//联想事件
+  	$("#ename").keyup(function(event){
+  		var ev=event||window.event;
+  		var $this=$(this);
+  		//上下键
+  		if(ev.keyCode==38 || ev.keyCode==40)
+  		{
+  			$ul=$(".share_eno_list");
+  			if($ul.find('li').length>1)
+  			{
+  				$li=$ul.find("li[sel='1']");
+  				var $curr;
+  				if(ev.keyCode==40){
+	  				$curr=$li.next().length==0?$ul.find("li:first"):$li.next();
+	  			}
+	  			else{
+	  				$curr=$li.prev().length==0?$ul.find("li:last"):$li.prev();
+	  			}
+	  			selectli($curr[0]);
+  			}
+  		}
+  		//Enter键
+      if (typeof(keyword) != 'undefined' && keyword == $this.val())
+          return;
+      keyword = $this.val();
+      //var el = keyword.match(/^[A-Za-z0-9]{1,}$/), nchar = keyword.match(/^[A-Za-z0-9\u4e00-\u9fa5]{1,}$/);
+//      if (keyword=='') {
+//          $(".share_eno_list").remove();
+//          return;
+//      }
+      if (typeof(enocontainter) == 'undefined') {
+          window.enocontainter = new HashTable();
+      }
+      if (true) {
+          LoadData(null, getEnoUrl + "?ename=" + encodeURI(keyword)+"&size=10", function(d) {
+              if (d.length > 0) {
+              		enocontainter.clear();
+                 	for(var i=0;i<d.length;i++)
+                 	{
+                 		enocontainter.push(d[i].enoname,d[i].eshortname);
+                 	}
+                  createEnoList(keyword);
+              }
+              else{
+              	$(".share_eno_list").remove();
+              }
+          });
+      }
+  	});
+  }
+  else if(actype=='3')
+  {
+  	$("#ename,#eshortname").attr('disabled','disabled').parent().removeClass('non-validated');
+  }
+});
+function validate(e)
+{
+	$(".share_eno_list").remove();
+	$("span.alert-error").hide();
+    var pn = $(e).parent();
+    if ($(e).is("#ename") && !e.disabled)
+    {
+    	//if($(".share_eno_list").length>0)return;
+      var tn = e;
+        if (tn.value.length < 1)
+        {
+        	$("#t_ename").text('所属企业名称');
+        	clearWarnInfo($("#ename")[0]);
+          setErrInfo(pn,hintMsg.ename01);
+          enableSubmit();
+          return false;
+        }
+        else if (tn.value.length < 6)
+        {
+        	$("#t_ename").text('所属企业名称');
+        	clearWarnInfo($("#ename")[0]);
+          setErrInfo(pn,hintMsg.ename02);
+          enableSubmit();
+          return false;
+        }
+        else if(!(/^[A-Za-z0-9\u4e00-\u9fa5\@\,\.\(\)]{6,}$/).test(tn.value) || !(/[A-Za-z\u4e00-\u9fa5]{1,}/).test(tn.value))
+        {
+        	clearWarnInfo($("#ename")[0]);
+        	setErrInfo(pn,'企业名称格式不正确！');
+        	return false;
+        }
+//        else if ("{{this.inv_ename}}"==tn.value)
+//        {
+//          //邀请非同事加入wefafa不允许加入邀请人的企业
+//          setErrInfo(pn,hintMsg.ename05);
+//          enableSubmit();
+//          return false;
+//        }
+        else
+        {
+          if (enameChanged)
+          {
+          	clearWarnInfo($("#ename")[0]);
+          	btnSubmit.attr("cansub",'0');
+            pn.find(".alert-ico").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}").show();
+            checkEnterpriseName(tn.value,pn);
+          }
+        }
+      setTimeout(function()
+      {
+      	$(".share_eno_list").remove();
+      },200);
+    }
+    else if ($(e).is("#eshortname") && !e.disabled)
+    {
+      if (e.value.length < 1)
+      {
+        setErrInfo(pn,hintMsg.eshortname01);
+        enableSubmit();
+        return false;
+      }
+      else
+      {
+        if (eshortChanged)
+        {
+        	btnSubmit.attr("cansub",'0');
+          pn.find(".alert-ico").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}").show();
+          checkEshortName(e.value,pn);
+        }
+      }
+    }
+    else if ($(e).is("#realName"))
+    {
+      if (e.value.length < 2)
+      {
+      	$("#t_realname").text('真实姓名');
+        setErrInfo(pn,hintMsg.realName01);
+        enableSubmit();
+        return false;
+      }
+      else if(!(/^[A-Za-z0-9\u4e00-\u9fa5]{2,}$/).test(e.value)){
+      	$("#t_realname").text('真实姓名');
+        setErrInfo(pn,"真实姓名由汉字、字符或数字组成！");
+        enableSubmit();
+        return false;
+      }
+      else
+      {
+      	if($("#isNew").val()=='')
+      		clearErrInfo(pn);
+        else if(realNameChanged)
+        {
+        	btnSubmit.attr("cansub",'0');
+          pn.find(".alert-ico").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}").show();
+          checkRealName(e.value,pn);
+        }
+      }
+    }
+    else if ($(e).is("#passWord"))
+    {
+      var pwd = $("#confirmPassWord");
+      if (e.value.length < 6)
+      {
+        setErrInfo(pn,hintMsg.passWord01);
+        enableSubmit();
+        return false;
+      }
+      else if (pwd.val().length > 0 && e.value != pwd.val())
+      {
+        setErrInfo(pn,hintMsg.passWord02);
+        enableSubmit();
+        return false;
+      }
+      else
+      {
+        allSuc(pwd,pn);
+      }
+    }
+    else if ($(e).is("#confirmPassWord"))
+    {
+      var pwd = $("#passWord");
+      if (e.value.length == 0)
+      {
+        setErrInfo(pn,hintMsg.confirmPassWord);
+        enableSubmit();
+        return false;
+      }
+      else if (e.value != pwd.val())
+      {
+        setErrInfo(pn,hintMsg.passWord02);
+        enableSubmit();
+        return false;
+      }
+      else
+      {
+        allSuc(pwd,pn);
+      }
+    }
+    else if($(e).is("#duty"))
+    {
+    	if(e.value.length==0)
+    	{
+    		
+    	}
+    }
+    if($(e).is("#duty"))
+    {
+    	$("#t_duty").text(e.value==''?'职位':e.value);
+    }
+    if($(e).is("#realName")){
+   		$("#t_realname").text($("#realName").val());
+   	}
+    return true;
+}
+function createEnoList(keyword)
+{
+	$(".share_eno_list").remove();
+	var html=[];
+	html.push("<ul class='share_eno_list'>");
+	for(var i=0;i<enocontainter.length;i++)
+	{
+		html.push("<li><a>"+enocontainter.array[i].key+"</a></li>");
+	}
+	html.push("</ul>");
+	$ul=$(html.join(''));
+	var $ename=$("#ename");
+	var le= $ename.offset().left;
+	var to= $ename.offset().top;
+	var wid= $ename.height();
+	$ul.css({left:le.toString()+'px',top:(to+wid+8).toString()+'px'});
+	$ul.find('li').mouseover(function(event){
+		if(checkHover(event,this))
+		{
+			selectli(this);
+		}
+	});
+	$ul.find("li").click(function(){
+		check(this);
+	});
+	selectli($ul.find('li:first')[0]);
+	//$ul.find('li:first').css({'background-color':'#0080c0'});
+	$(document.body).append($ul);
+}
+function selectli(e)
+{
+	$(e).siblings().css({'background-color':''}).attr('sel','0');
+	$(e).css({'background-color':'#0080c0'}).attr('sel','1');
+}
+function check(e)
+{
+	enameChanged=true;
+	$("#ename").val($(e).find('a').text());
+	var shortname=enocontainter.get($(e).find('a').text());
+	$("#eshortname").val(shortname);
+	$(".share_eno_list").remove();
+	validate($("#ename")[0]);
+}
+var HashTable=function(){
+	this.length=0;
+	this.array=new Array();
+	this.get=function(key){
+		for(var i=0;i<this.array.length;i++){
+			if(this.array[i].key==key){
+				return this.array[i].val;
+			}
+		}
+		return null;
+	};
+	this.push=function(key,val){
+		var obj={'key':key,'val':val};
+		this.array.push(obj);
+		this.length++;
+	};
+	this.clear=function(){
+		this.array=[];
+		this.length=0;
+	};
+}
+function LoadData(e_curr, url, callback) {
+    var loadimg = arguments[3] ? arguments[3] : '/bundles/fafatimewebase/images/loading.gif';
+    //var loadcontainter = arguments[4] ? arguments[4] : e_curr;
+    if(typeof(searchajax)!='undefined')
+  		searchajax.abort();
+    searchajax=$.post(url, {}, function(data) {
+        //$(loadcontainter).siblings('.LoadPage_loadcontainter').remove();
+        //$(e_curr).show();
+        callback(data);
+    });
+    //$(loadcontainter).after("<div class='LoadPage_loadcontainter' style='width:auto;height:auto;text-align:center;'><img align='center' src='" + loadimg + "'/></div>");
+    //$('.LoadPage_loadcontainter').css({width: $(e_curr).width() + 'px', height: $(e_curr).height()});
+}
+//提交
+function submitForm(btn)
+{
+	var $v=$("form .RegFormIptone,.RegFormIpt,.allinput");
+	for(var i=0;i<$v.length;i++)
+	{
+		if(!validate($v[i]))
+			return false;
+	}
+	if($(btn).attr('cansub')=='0'){
+		toSubmit=true;
+		return;
+	}
+  btn.disabled = true;
+  $(btn).find('span').text('提交中...');
+  $("#enameValue").val($("#ename").val());
+  $("#eshortnameValue").val($("#eshortname").val());
+  $("#contentForm").submit();
+}
+//设置submit键
+function enableSubmit()
+{
+  btnSubmit.attr("disabled",false);
+}
+//验证输入密码
+function allSuc(pwd, pn)
+{
+  clearErrInfo(pn);
+  if (pwd.val().length == 0) return;
+  //clearErrInfo(pwd.parent());
+}
+//检查姓名在企业中是否有重名
+function checkRealName(realname, pn)
+{
+	btnSubmit.attr("cansub",'0');
+	pn=$(pn);
+  pn.find(".alert-ico").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}").show();
+	btnSubmit.attr("disabled",true);
+  var eno = $("#enoValue").val();
+  
+  clearErrInfo(pn);
+  $("#t_realname").text($("#realName").val());
+  btnSubmit.attr("cansub",'1');
+  if( toSubmit )
+      submitForm(btnSubmit[0]);
+  realNameChanged = false;
+  enableSubmit();
+//  $.post("{{path('JustsyBaseBundle_active_checkstaffname')}}",{realname:realname,eno:eno},function(data) 
+//  {
+//    if (realname == data)
+//    {
+//      setErrInfo(pn,hintMsg.realName02);
+//    }
+//    else
+//    {
+//      clearErrInfo(pn);
+//      $("#t_realname").text($("#realName").val());
+//      btnSubmit.attr("cansub",'1');
+//      if(toSubmit)submitForm(btnSubmit[0]);
+//    }
+//    realNameChanged = false;
+//    enableSubmit();
+//  },"text");
+}
+//检查企业是否重名
+function checkEnterpriseName(ename, pn)
+{
+	if(typeof(checkEnameajax)!='undefined' && checkEnameajax!=null)return;
+	btnSubmit.attr("disabled",true);
+  checkEnameajax=$.post("{{path('JustsyBaseBundle_active_checkenterprisename')}}",{ename:ename,'actype':actype},function(data) 
+  {
+    var flag = false;
+    if(actype=='2' && data.is_public_mail.toString()=='false')
+    {
+    	if(data.auth=='1'){//data.auth=='1'
+    		clearWarnInfo($("#ename")[0]);
+	    	setErrInfo(pn,hintMsg.ename06.replace('?',data.edomain));
+	    	checkEnameajax=null;
+	      return;
+	    }
+    }
+    if(actype=='2' && data.identify=='1'){
+		   //警告
+		   showWarnInfo($("#ename")[0]);
+		   if(enowarn==false){
+		   		checkEnameajax=null;
+		   		return;
+		   }
+    }
+    if(actype=='1' && data.is_public_mail.toString()=='false' && data.ename!=ename && data.yename==ename)
+    {
+    	clearWarnInfo($("#ename")[0]);
+	    setErrInfo(pn,"请使用企业邮箱注册企业！");
+	    checkEnameajax=null;
+	    return;
+    }
+    if ("{{ this.circleId }}".length>0) //通过邀请 加入圈子或注册企业
+    {
+      if (data.eno.length>0) //找到有企业
+      {
+//        if ("{{this.mailtype}}"=="1")
+//        {
+//          if (data.is_public_mail || "{{account}}".split("@")[1]!=data.edomain)
+//          {
+//          	clearWarnInfo($("#ename")[0]);
+//            setErrInfo(pn,hintMsg.ename03);
+//            return;
+//          }
+//        }
+//        else
+//        {
+//          if (!data.is_public_mail)
+//          {
+//          	clearWarnInfo($("#ename")[0]);
+//            setErrInfo(pn,hintMsg.ename03);
+//            return;
+//          }
+//        }
+        $("#enoValue").val(data.eno);
+        $("#ename").val(data.ename);
+        $("#circleName").val(data.circle_name);
+        //$("#eshortname").val(data.eshortname);
+        //$("#eshortname").attr("disabled",true);
+        //$("#eshortname").parent().removeClass("non-validated");
+        flag = true;
+        $("#isNew").val("0");        
+	      clearErrInfo(pn);
+	      clearWarnInfo($("#ename")[0]);
+        //clearErrInfo($("#eshortname").parent());
+       	$("#t_ename").text($("ename").val());
+       	btnSubmit.attr("cansub",'1');
+       	//checkRealName($("#realName").val(),$("#realName").parent());
+       	validate($("#realName")[0]);
+       	//if(toSubmit)submitForm(btnSubmit[0]);
+      }
+      else //未找到，新注册企业
+      {
+        $("#isNew").val("1");
+        //$("#eshortname").attr("disabled",false);
+        //$("#eshortname").val("");
+        //$("#eshortname").parent().addClass("non-validated");
+        clearErrInfo(pn);
+        clearWarnInfo($("#ename")[0]);
+        $("#t_ename").text($("#ename").val());
+        btnSubmit.attr("cansub",'1');
+        if(toSubmit)submitForm(btnSubmit[0]);
+      }
+    }
+    else
+    {
+      //正常注册创建企业
+      if (ename == data.ename)
+      {
+      	//$("#eshortname").val(data.eshortname).attr("disabled",true);
+	      clearErrInfo(pn);
+	      clearWarnInfo($("#ename")[0]);
+      	//clearErrInfo($("#eshortname").parent());
+      	$("#isNew").val("0");
+      	$("#enoValue").val(data.eno);
+      	//$("#eshortname").parent().removeClass("non-validated");
+        //setErrInfo(pn,hintMsg.ename03);
+       	$("#t_ename").text($("#ename").val());
+       	btnSubmit.attr("cansub",'1');
+       	//if(toSubmit)submitForm(btnSubmit[0]);
+       	//checkRealName($("#realName").val(),$("#realName").parent());
+       	validate($("#realName")[0]);
+      }
+      else
+      {
+      	$("#isNew").val("1");
+      	$("#enoValue").val('');
+      	if(data.yename==ename)
+      	{
+      		//$("#eshortname").val(data.eshortname).attr("disabled",true);
+      		//$("#eshortname").parent().removeClass("non-validated");
+      	}
+      	else{
+	      	//$("#eshortname").attr("disabled",false);
+	      	//$("#eshortname").parent().addClass("non-validated");
+	      }
+        clearErrInfo(pn);
+        clearWarnInfo($("#ename")[0]);
+        $("#t_ename").text($("#ename").val());
+        btnSubmit.attr("cansub",'1');
+        if(toSubmit)submitForm(btnSubmit[0]);
+      }
+    }
+    /*
+    if ($("#isNew").val()=='1' && data.yename!=ename && !flag)
+    {
+      var eshort = ename.substring(0,6);
+      $("#eshortname").val(eshort);
+      $("#eshortname").parent().find(".alert-ico").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}").show();
+      checkEshortName(eshort,$("#eshortname").parent());
+    }
+    */
+    enameChanged = false;
+    enableSubmit();
+    checkEnameajax=null;
+  },"json");
+}
+function showWarnInfo(e)
+{
+	$(e).siblings('.alert-ico').hide();
+	$(e).siblings('.warn-ico').show();
+	if(enowarn==false)
+		$(e).siblings('.alert-warn').show();
+}
+function clearWarnInfo(e)
+{
+	$(e).siblings('.warn-ico').hide();
+	$(e).siblings('.alert-warn').hide();
+}
+//检测企业简称
+function checkEshortName(eshort, pn)
+{
+	btnSubmit.attr("disabled",true);
+  $.post("{{path('JustsyBaseBundle_active_checkeshort')}}",{eshort:eshort},function(data) 
+  {
+    if (data>0)
+    {
+    	if($("#isNew").val()=='1')
+       setErrInfo(pn,hintMsg.eshortname02);
+      else{
+      	clearErrInfo(pn);
+      	btnSubmit.attr("cansub",'1');
+      	if(toSubmit)submitForm(btnSubmit[0]);
+      }
+    }
+    else
+    {
+    	if($("#isNew").val()=='0')
+    		setErrInfo(pn,"该企业的简称不可更改！");
+    	else{
+    		btnSubmit.attr("cansub",'1');
+      	clearErrInfo(pn);
+      	if(toSubmit)submitForm(btnSubmit[0]);
+      }
+    }
+    eshortChanged = false;
+    enableSubmit();
+  },"text");
+}
+var ds =null,thinkAjax=null;
+//$("#ename").typeahead(
+//{
+//  menu : '<ul class="typeahead dropdown-menu" style="min-width: 272px;"></ul>',
+//  minLength:2,
+//  source : function(query,process)
+//  {
+//  	if(thinkAjax!=null) thinkAjax.abort();
+//    thinkAjax=$.post(getEnoUrl, {ename:query}, function(data) 
+//    {
+//      ds = data;
+//      thinkAjax=null;
+//      for (var i=0; i< data.length; i++)
+//      {
+//        ds[i].index = i; 
+//        ds[i].toString = function(){return this.index;};
+//      }
+//      process(ds);  
+//    }, "json");
+//  },
+//  matcher: function(item)
+//  {
+//    return true;
+//  },
+//  highlighter:function(item)
+//  {
+//    return item.ename;
+//  },
+//  sorter:function(item){return item;},
+//  updater : function(item)
+//  {
+//    return ds[item].ename;
+//  }
+//});
+</script>
+{% endblock %}

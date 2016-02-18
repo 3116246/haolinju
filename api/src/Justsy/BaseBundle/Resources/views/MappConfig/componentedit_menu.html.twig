@@ -1,0 +1,112 @@
+<div id="component_menu_attribute_list" style="float:left;margin-bottom:20px;cursor:default;">
+	<div class="component_fileds_row" id="menuMode">
+	    <span>菜单位置：</span>
+		<label>
+		 	   <input name="liststyle" type="radio" id="menu_left" value="L"  style="float:left;"> 
+		 	   <span style="float:left;padding-left:5px;font-size:12px;">左上角</span>
+		</label>
+		<label>
+		 	   <input name="liststyle" type="radio" id="menu_right" value="R" style="float:left;"> 
+		 	   <span style="float:left;padding-left:5px;font-size:12px;">右上角</span>
+		</label>
+	</div>	
+	<!--菜单项-->
+	<div style="float:left;">
+		<div class="component_menu_header">
+			 <span>菜&nbsp;单&nbsp;项：</span>
+			 <div class="component_menu_header_filed">
+			 	  <span style="text-align:right;width:40px;margin-right:15px;" >序号</span>
+			 	  <span style="width:70px;">菜单图标</span>
+			 	  <span style="width:130px;">菜单名称</span>
+			 	  <span>功能</span>
+			 </div>			 
+		</div>
+		<!--菜单项内容-->
+		<div id="component_menu_area"></div>
+		<div style="margin-left:75px;" class="component_nvar_bottom">
+			 <span class="component_item_add" onclick="addMenuItem()"></span>
+			 <span style="color:#0077CC;">添加新菜单项</span>
+	  </div>
+  </div>
+</div>
+  <div class="clearfix"></div> 
+  <!--菜单项样式-->
+  <div class="component_menuitem" id="menu_item" style="display:none;">
+	   <span style="float:left;display:block;width:25px; height: 100%;">
+			 	<span title="删除该项" onclick="component_menu.remove(this);" class="component_tools_delete component_menuitem_delete" style="display: none;"></span>
+		 </span>
+		 <span class="component_menuitem_no">&nbsp;</span>
+		 <img class="component_menuitem_img" data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg" onclick="component_menu.selectIcon(this)" title="点击更改图标" />
+		 <input type="text" maxlength="20">
+		<span class="component_nav_function menu_customize" >详细页面定制</span>
+	</div>
+  
+
+<script type="text/javascript">
+	 //添加菜单项	
+	 function addMenuItem() {
+	 	 var count = $("#component_menu_area .component_menuitem").length;
+	 	 if ( count >= component_menu.itemcount) {
+	 	   ComponentAttr.showMessage("最多允许 "+ component_menu.itemcount +" 个菜单项！");
+	 	 	 return;
+	 	 }
+	   var id = "t"+Math.random().toString().replace(".","");
+	   $("#menu_item>img").attr("id",id);
+	   $("#menu_item>img").attr("src","http://we.fafatime.com/getfile/534ba34c7c274a1445000000");
+	   $("#menu_item>input").attr("value","");
+	   $("#menu_item .component_menuitem_no").text(count+1);
+	   var html = $("#menu_item").html();
+	   html = "<div class='component_menuitem' functionid='' target='blank'>" + html + "</div>";
+	   $("#component_menu_area").append(html);
+   }
+   //绑定数据项
+   function BindMenuItem(Attrs){
+   	 var data = Attrs.menuitems;
+   	 var position = Attrs.position;
+   	 if ( data.length==0){
+   	 	 addMenuItem();
+   	 }
+   	 else {
+   	 	 $("#menu_left,#menu_right").attr("checked",false);
+   	 	 if(position=="L")
+   	 	    $("#menu_left").attr("checked","checked");
+   	 	 else
+   	 	 	  $("#menu_right").attr("checked","checked");
+   	 	 
+   	 	 var menuid = "";
+   	 	 $("#component_menu_area").html("");
+   	 	 for( var i=0;i< data.length;i++){
+   	 	 	  menuid = "t"+Math.random().toString().replace(".","");
+   	 	 	  $("#menu_item>img").attr("id",menuid);
+	        $("#menu_item>img").attr("src",data[i].itemicon);
+	        $("#menu_item>input").attr("value",data[i].itemname);
+	        $("#menu_item .component_menuitem_no").text(i+1);	        
+	        var html = $("#menu_item").html();
+	        var func = data[i].functionid;
+	        var _target = func.target;
+	        if ( _target==null || _target=="" )
+	           _target = "blank";
+	        html = "<div class='component_menuitem' functionid='" + func.text + "' target='"+_target+"'>" + html + "</div>";
+	        $("#component_menu_area").append(html);
+   	 	 }
+   	 }
+   }
+   
+   $(".component_menuitem").live("mouseover",function(){
+   	  $(this).find(".component_tools_delete").show();
+   });
+   $(".component_menuitem").live("mouseout",function(){
+   	  $(this).find(".component_tools_delete").hide();
+   });
+   //详细页面定制
+   $(".menu_customize").live("click",function(){
+   	 var functionid = $(this).parents(".component_menuitem").attr("functionid");
+   	 if ( functionid==null || functionid=="")
+   	 	 component_menu.customizebyempty(this);
+   	 else
+   	 	 component_menu.customize(this);
+   });
+   
+</script>
+
+

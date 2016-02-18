@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>Wefafa，企业移动社会化协作，微应用平台</title>	
+	<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+  <meta name="description" content="Wefafa，让工作更轻松、更高效。">
+  <meta name="keywords" content="FaFa,企业社交,企业协作,企业即时通讯,微应用,企业即时通讯,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心">
+	<meta property="wb:webmaster" content="e2fdb8d07a532c64"/>
+ <style type="text/css">
+    .clearboth 
+    {
+    clear: both;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+    width: 100%;
+    }
+ </style>
+<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{asset('bundles/fafatimewebase/css/homepage/index.css')}}">
+	<link rel="shortcut icon" href="/bundles/fafatimewebase/bundles/fafatimewebase/images/homepage/favicon.ico">	
+	<link href="{{asset('bundles/fafatimewebase/css/edit-table-default-style.css')}}" type="text/css" rel="stylesheet">
+	<script src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/bootstrap.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/component.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/slides.jquery.js') }}"></script>
+  <script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/Util.js')}}"></script> 
+  <script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/DetailTable.js')}}?t=1"></script>	
+	<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=981792452" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">	
+var provinces={{province|raw}},provincesMap=new HashMap(),bindComming = false;
+for(var i=0;i<provinces.provinces.length; i++)
+{
+     var cityMap = new HashMap();
+     for(var j=0;j<provinces.provinces[i].citys.length; j++)
+     {
+        for(var k in provinces.provinces[i].citys[j])
+        	cityMap.put(k,provinces.provinces[i].citys[j][k]);
+     }
+		 provincesMap.put(provinces.provinces[i].id,{name:provinces.provinces[i].name,citys:cityMap});
+}
+$(document).ready(function(){
+	var topMain=$("#featop").height()+$("#features_ad").height()//是头部的高度加头部与nav导航之间的距离
+	var feanav=$(".features_nav");
+	var feaw=$(".feawrap");
+	$(window).scroll(function(){
+		if ($(window).scrollTop()>topMain){//如果滚动条顶部的距离大于topMain则就nav导航就添加类.nav_scroll，否则就移除
+			feaw.addClass("feawrap_scroll");
+			feanav.addClass("feanav_scroll");
+		}else{
+			feaw.removeClass("feawrap_scroll");
+			feanav.removeClass("feanav_scroll");
+		}
+	});
+	
+	obj = new detailTable("data_list");
+	obj.count=50;
+	obj.edit=false;
+  obj.createDeleteColumn = false;
+	obj.selectByControl = false;
+	obj.setCloneRowIndex(0);	
+	obj.pageObject.init({parentNode:"page_area",callfunc:pagedata});
+	obj.pageObject.setPageSize(50);
+	obj.ColsName["gender"].callback=function(cell,data)
+	{
+
+		  if(data.gender=="m") cell.innerHTML = "男";
+		  else if(data.gender=="f"){
+		  cell.innerHTML = "女";
+		  }
+		  else cell.innerHTML = "未知";		  
+	}	
+	obj.ColsName["verified"].callback=function(cell,data)
+	{
+		  if(data.verified=="0") cell.innerHTML = "&nbsp;";
+		  else cell.innerHTML = "V";		  
+	}	
+	obj.ColsName["province"].callback=function(cell,data)
+	{
+		  if(data.province=="100") cell.innerHTML = "其他";
+		  else{
+       var prov = provincesMap.get(data.province);
+		   cell.innerHTML = prov.name+"&nbsp;&nbsp;"+prov.citys.get(data.city);		  
+		  }
+	}	
+	search(1);
+	var $province = $("#province");
+	for(var i=0;i<provinces.provinces.length; i++)
+	{
+		  $province.append("<option value='"+provinces.provinces[i].id+"'>"+provinces.provinces[i].name+"</option>");
+	}
+	
+	if("{{isbind}}"=="0")
+	{
+	   	$(".doc_createDir").modal({keyboard: false});
+	    $(".doc_createDir").on('hidden.bs.modal', function (e) {
+	    	   $("#hint").text("").hide();
+      });
+      $("#_login_account").bind("keypress", function(event) {
+			 if (event.keyCode==13)
+			    $("#_password").focus(); 
+      });
+      $("#_password").bind("keypress", function(event) {
+			 if (event.keyCode==13)
+			    $(".btn-primary").trigger("click");
+      });      
+		  $("#_login_account").focus(function(){
+		    if($(this).val()=="帐号不能为空!")$(this).css("color","#000000").val("");
+		   });
+		  $("#_password2").focus(function(){
+		    if($(this).val()=="请输入密码!"){
+		       $(this).hide();
+		       $("#_password").show().focus();
+		     }
+		   });
+		  $(".btn-default").bind("click",function(){
+		      if(bindComming) return;
+		  });
+		  $(".btn-primary").bind("click",function(){
+		      if(bindComming) return;
+		      $("#hint").text("").hide();
+		      var $usrename = $("#_login_account"),$pass = $("#_password");
+		      var u_v = $.trim($usrename.val());
+		      if(u_v=="帐号不能为空!" || $pass.css("display")=="none") return;
+		      if(u_v=="")
+		      {
+		          $usrename.css({"color":"red"});
+		          $usrename.val("帐号不能为空!");
+		          return;
+		      }
+		      if(($pass.val())=="")
+		      {
+		          $pass.hide();
+		          $("#_password2").css({"color":"red"}).val("请输入密码!").show();
+		          return;
+		      }
+		      bindComming=true;
+		      $(this).text("提交中...");
+		      $.post("{{path('JustsyBaseBundle_mul_account_bind')}}",{bind_type:"weibo_sina",login_account:u_v,pwd:$pass.val()},function(d){
+		          bindComming=false;
+		          $(".btn-primary").text("保存");
+		          if(d.s=="0")
+		          {
+		              $("#hint").text(d.msg).show();
+		              setTimeout(function(){$("#hint").text("").hide()},5000);
+		              return;
+		          }
+		          $(".doc_createDir").modal("hide");
+		          $("#opt_hint").text("绑定成功！").show();
+		          setTimeout(function(){$("#opt_hint").text("").hide()},5000);
+		      });
+		  });
+	}
+})
+
+function getcity()
+{
+    	var provid = $("#province").val(),$city = $("#city");
+    	var citys = provincesMap.get(provid).citys;
+    	$city.html("<option value=''>城市</option>");
+    	for(var k in citys.hashTable)
+    	{
+    		    if(typeof(k)=="function") continue;
+    	    	$city.append("<option value='"+k+"'>"+citys.get(k)+"</option>");
+    	}
+}
+
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="wrap">
+	<div class="head">
+		<div class="head_l">
+			<a href="http://www.wefafa.com" class="welogo" title="Wefafa，移动社会化协作，微应用平台"><img src="{{asset('bundles/fafatimewebase/images/homepage/wefafa_logo.png')}}" border="0"></a>
+		</div>
+		<div class="head_r" style=" padding-top: 30px; width: 300px;">
+			<wb:login-button type="3,2" onlogin="login" title="使用新浪微博帐号登录Wefafa" onlogout="logout">登录按钮</wb:login-button>
+			<span title="{{error_msg}}">{{error}}</span>
+		</div>
+	</div>
+</div>
+<div class="down_nav" style="border-top: 1px solid #CCCCCC;">
+	<div id="opt_hint" style="border: 1px solid rgb(236, 236, 236); display: none; background-color: rgb(255, 254, 238); margin:0 auto; width: 1000px; height: 25px; line-height: 25px; color: red; text-align: center;"></div>
+	<div class="down_navwrap" style="min-height: 460px;">
+   <div id="search_area" style="height: 45px;">
+       <table border=0>
+          <tr>
+       			<td>V认证：</td><td><select id="verified" style="height: 22px; width: 134px;"><option value="">不限</option><option value="1">已认证V</option><option value="0">未认证</option></select></td>
+       			<td>所在地区：</td><td><select id="province" style="height: 22px; width: 67px;" onchange="getcity()"><option value="">省份</option></select><select id="city" style="height: 22px; width: 67px;"><option value="">城市</option></select></td>
+       			<td>性别：</td><td><select id="gender" style="height: 22px; width: 67px;"><option value="">不限</option><option value="m">男</option><option value="f">女</option><option value="n">未知</option></select></td>
+       			<td>用户ID：</td><td><input id="uid" type="text" maxlength=20 style="width: 80px; padding: 0px; margin: 0px;"></td>
+       			<td>用户昵称：</td><td><input id="screen_name" type="text" maxlength=20 style="width: 80px; padding: 0px; margin: 0px;"></td>
+       			<td></td><td><input type="button" onclick="search()" value="搜索">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="getfans()" value="获取粉丝"></td>       		   
+       		</tr>
+       </table>
+   </div>
+   <div id="result_area">
+       <table border=0 style="BORDER-COLLAPSE: collapse;border: 1px solid #CCCCCC;" id="data_list">
+          <tr>
+       			<td align="center" style="background-color:#EEEEEE;width:100px" id="id">UID</td>
+       			<td align="center" style="background-color:#EEEEEE;width:130px" id="screen_name">昵称</td>
+       			<td align="center" style="background-color:#EEEEEE;width:40px" id="verified">认证</td>
+       			<td align="center" style="background-color:#EEEEEE;width:130px" id="name">显示名称</td>
+       			<td align="center" style="background-color:#EEEEEE;width:100px" id="province">所在城市</td>
+       			<td align="center" style="background-color:#EEEEEE;width:40px" id="gender">性别</td>
+       			<td align="center" style="background-color:#EEEEEE;width:60px" id="followers_count">粉丝数</td>
+       			<td align="center" style="background-color:#EEEEEE;width:60px" id="friends_count">关注数</td>
+       			<td align="center" style="background-color:#EEEEEE;width:60px" id="statuses_count">微博数</td>
+       			<td align="center" style="background-color:#EEEEEE;width:60px" id="favourites_count">收藏数</td>
+       			<td align="center" style="background-color:#EEEEEE;width:140px" id="created_at">注册时间</td>
+       		</tr>
+       </table>   
+   </div>
+   <div id="page_area"></div>
+   </br></br>
+	</div>
+	<div class="clearboth"></div>
+</div>
+<br>
+<br>
+<div class="clearboth"></div>
+<!--
+<div class="footer">
+	<div class="wrap">Copyright © 2011-2013 <a href="http://www.wefafa.com/" target="_blank">Justsy</a>&nbsp;发发时代 版权所有&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+</div>
+-->
+<div class="doc_createDir modal" id="doc_createDir" data-backdrop=true  show=false style="width:350px;margin-left: -200px;display:none">
+    <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">帐号绑定<span style="font-size: 12px; font-weight: normal;">（将当前微博帐号与Wefafa帐号绑定）</span></h4>
+      </div>
+      <div class="modal-body">
+		                   <div>
+		        	           <span for="username">Wefafa帐号：</span>
+		        	           <input id="_login_account" class="login-text" tabindex="1"  name="_login_account" maxlength="32" type="text"> 
+		                   </div>
+						           <div style="margin-left: 17px;">
+						           	  <span for="password">登录密码：</span>
+						           	  <span id="J_StandardPwd">
+								         <input id="_password" onpaste="return false;" class="login-text" tabindex="2" name="_password" maxlength="20" type="password"> 
+								         <input id="_password2" onpaste="return false;" style="display:none" class="login-text" tabindex="2" name="_password2" maxlength="20" type="text">
+							           </span>
+						           </div>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width:100px">以后绑定</button>
+        <button type="button" class="btn btn-primary" style="width:70px">保存</button>
+      </div>
+      <div id="hint" style="position: absolute; left: 0px; border: 1px solid rgb(236, 236, 236); display: none; background-color: rgb(255, 254, 238); top: 130px; width: 348px; height: 25px; line-height: 25px; color: red; text-align: right;"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var obj=null,data_list = $("#data_list"),conText="/",ajaxSync=null,timeoutTimer=null;
+    function logout()
+    {
+       window.location.href=document.location.protocol+"//"+document.location.host+"{{path('JustsyBaseBundle_default')}}";
+    }
+    function getfans()
+    {        
+        obj.Init(null);
+        data_list.append("<tr><td colspan='20' align=center width='1000px' height=50>正在从微博上同步粉丝数据...请稍等</td></tr>");
+        ajaxSync=$.getJSON("{{path('JustsyBaseBundle_weibo_getfans')}}?next_cursor=0",{},function(d){
+        	  ajaxSync=null;
+        	  clearTimeout(timeoutTimer);
+        	  //判断是否同步完所有粉丝，没有时，进行下一次同步。每同步完1000条后，服务器必须返回结果到客户端，否则可能会发生超过30秒未返回，发生超时的错误
+        	  if(d.cursor!=null && d.cursor>0)
+        	  {
+        	  	 $("#data_list tr:eq(1) td").html("正在从微博上同步粉丝数据["+d.count+"/"+d.total_number+"]...请稍等");
+        	  	 setTimeout(function(){getNextCursorFans(d.cursor)},200);
+        	     return;	
+        	  }
+            //清除表格
+            obj.Init(null);
+            if(d.error!=null && d.error!="")
+            {
+               data_list.append("<tr><td colspan=20 width='1000px'  align=center height=50>"+d.error+"</td></tr>");
+               return;
+            }
+            if(d.count==0)
+            {
+                data_list.append("<tr><td colspan=20 width='1000px'  align=center height=50>同步完成，但未同步到粉丝数据。</td></tr>");
+                return;
+            }
+			      obj.dataSource=d.list;
+			      obj.DataBind();
+			      obj.pageObject.setRecordCount(d.count);
+        });
+        timeoutTimer=setTimeout(function(){
+           if(ajaxSync!=null){
+           	 ajaxSync.abort();	
+             data_list.append("<tr><td colspan=20 width='1000px'  align=center height=50>连接微博超时或API调用发生错误！</td></tr>");
+           }
+        },60000*3);
+    }
+    
+    function getNextCursorFans(cursor)
+    {
+        ajaxSync=$.getJSON("{{path('JustsyBaseBundle_weibo_getfans')}}?next_cursor="+cursor,{},function(d){
+        	  clearTimeout(timeoutTimer);
+        	  ajaxSync=null;
+        	  //判断是否同步完所有粉丝，没有时，进行下一次同步。每同步完1000条后，服务器必须返回结果到客户端，否则可能会发生超过30秒未返回，发生超时的错误
+        	  if(d.cursor!=null && d.cursor>0)
+        	  {
+        	  	 $("#data_list tr:eq(1) td").html("正在从微博上同步粉丝数据["+d.count+"/"+d.total_number+"]...请稍等");
+        	  	 setTimeout(function(){getNextCursorFans(d.cursor)},200);
+        	     return;	
+        	  }
+        	  //清除表格
+            obj.Init(null);
+            if(d.error!=null && d.error!="")
+            {
+               data_list.append("<tr><td colspan=20 width='1000px'  align=center height=50>"+d.error+"</td></tr>");
+               return;
+            }
+			      obj.dataSource=d.list;
+			      obj.DataBind();
+			      obj.pageObject.setRecordCount(d.count*1);            
+        });
+        timeoutTimer=setTimeout(function(){
+           if(ajaxSync!=null){
+           	 ajaxSync.abort();	
+             data_list.append("<tr><td colspan=20 width='1000px' align=center height=50>连接微博超时或API调用发生错误！</td></tr>");
+           }
+        },60000*3);        
+    }
+    
+    function search(pno)
+    {
+         obj.Init(null);
+         data_list.append("<tr><td colspan=20 width='1000px' align=center height=50>正在查询粉丝列表...请稍等</td></tr>");
+         $.getJSON("{{path('JustsyBaseBundle_weibo_fanslist')}}",{
+         	   id:$.trim($("#uid").val()),
+         	   screen_name:$.trim($("#screen_name").val()),
+         	   verified:$.trim($("#verified").val()),
+         	   gender:$.trim($("#gender").val()),
+         	   province:$.trim($("#province").val()),
+         	   city:$.trim($("#city").val()),
+         	   page:pno
+         	},function(d){
+            obj.Init(null);
+            if(d.count==0)
+            {
+               data_list.append("<tr><td colspan=20 width='1000px'  align=center height=50>未查询到粉丝数据,你可试试点击【获取粉丝】按钮！</td></tr>");
+               return;
+            }
+			      obj.dataSource=d.list;			      
+			      obj.DataBind();
+			      obj.pageObject.setRecordCount(d.count);
+        });
+    }
+    
+    function pagedata()
+    {
+       var p=obj.pageObject.getPageBean();
+       search(p.currentpage);
+    }
+    
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+</script>

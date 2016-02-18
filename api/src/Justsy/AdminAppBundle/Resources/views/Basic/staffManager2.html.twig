@@ -1,0 +1,291 @@
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/staffManager.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/ajaxfileupload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/TreeMark.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/staffManager.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container mb_content_area" style="margin-top: 60px; margin-left: 25px;">
+  <div style="padding:10px;">
+  	  <div class="mb_title_area">
+  			<div class="staff_search_area">
+  				 <span style="float:left;padding-right:5px;">部门名称：</span>
+  				 <input type="text" placeholder="部门名称" id="text_parent_name" readonly="readonly" deptid=""  style="float:left;margin-top:2px;width:285px;background-color:#eee;" onclick="AddStaff.showdept('option_dept');" class="mb_textbox">
+  				 
+  				 <span class="del_pid" style="margin-top:6px;" tilte="清空部门名称">
+  				     <span title="删除上级部门" onclick="$('#text_parent_name').val('');$('#text_parent_name').attr('deptid','');" class="glyphicon glyphicon-remove del_pid_icon" style="display: inline;"></span>
+  				 </span>
+  				 
+  				 <span id="selected_dept_area" class="selected_dept_area" style="top:101px;left:130px;width:285px;">
+    	        <ul id="option_dept" class="ztree" style="background-color: #fff;border:none;float:left;height:225px;max-height: 225px;overflow-x: hidden;overflow-y: auto;width: 100%;"></ul>	
+    	        <div class="op_dept_area">
+	                <span onclick="AddStaff.selected_dept('text_parent_name');" style="margin-left:15px;" class="btn btnGreen">确&nbsp;&nbsp;定</span>
+	                <span onclick="$('#selected_dept_area').hide();"  class="btn btnGray">取&nbsp;&nbsp;消</span>
+    	        </div>	            
+           </span>
+  				 <span style="float:left;padding-right:5px;padding-left:40px;">账号昵称：</span>
+  				 <input type="text" placeholder="用户帐号或昵称" id="text_account" style="float:left;margin-top:2px;width:150px;" onkeypress="if(event.keyCode==13) { Import.searchStaff(1);}" class="mb_textbox">
+  				 <button onclick="Import.searchStaff(1);" class="btnGreen mb_button" style="float:left;width:80px;margin-left:10px;margin-top:2px;">确&nbsp;定</button>    
+  			</div>		
+  			<div style="float:right;margin-top:2px;">
+	  		  <div onclick="AddStaff.viewdialog(this);" class="mb_title_button_area" style="float:left;">
+	  			 	  <span class="mb_title_button_img"></span>
+	  			 	  <span class="mb_title_button_img_text">添加用户</span>
+	  			 </div>
+	  			 <div onclick="Import.viewdialog();" class="mb_title_button_area" style="margin-right:0px;">
+	  			 	  <span class="mb_title_button_img"></span>
+	  			 	  <span class="mb_title_button_img_text">导入用户</span>
+	  			 </div>
+  			 </div>  	  			 
+  		</div>
+     <table align="center" id="table_search" class="staff_table" style="width:938px;">
+  	 	 <thead>
+	   	 	  <tr class="staff_table_head" style="height:30px;">
+					  <td width="240" style="float:left;">用户账号</td>
+					  <td width="120"  style="float:left;">昵称</td>
+					  <td width="235" style="float:left;">所属部门</td>
+					  <td width="120"  style="float:left;">职务</td>
+					  <td width="120" style="float:left;">手机号</td>
+					  <td width="100" style="float:left;">数据操作</td>
+					</tr> 
+			 </thead>
+			 <tbody style="float:left;width:100%;"></tbody>
+		</table>
+  	<div id="Pagination" class="pagination" style="float: left; padding: 0px; margin: 8px 0px 0px;"></div>
+  	  		
+	</div>
+</div>
+
+<!--导入用户数据-->
+<div  class="dialogBox " id="viewImport" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:1000px;top:65px;left:100px;" class="dialog">
+    	<div class="title">导入用户数据</div> 
+      <span title="关闭" onclick="$('#viewImport').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:white;overflow:hidden;padding:10px 25px;height:460px;max-height:460px;+height:410px;+max-height:410px;cursor:default;">
+      	 <div class="import_step1">
+      	 	  <span>请选择以下几种数据导入类型：</span>
+	 	        <div class="import_step1_row">
+      	 	  	 <label>
+	 	            <input class="importtype" type="radio" name="radio_item" id="excel_type" style="float:left;" checked="checked"> 
+	 	  	        <span class="component_navtype">Excel数据导入</span>
+	 	           </label>
+	 	        </div>
+      	 	  <div class="import_step1_row">
+      	 	  	 <label>
+	 	            <input class="importtype"  type="radio" name="radio_item" id="ldap_type" style="float:left;"> 
+	 	  	        <span class="component_navtype">Ldap数据同步</span>
+	 	           </label>
+	 	        </div>
+	 	        <div class="import_step1_row">
+      	 	  	 <label>
+	 	            <input class="importtype" type="radio" name="radio_item" id="database_type" style="float:left;"> 
+	 	  	        <span class="component_navtype">数据库同步</span>
+	 	           </label>             
+	 	        </div>	 	        
+            <div class="import_step1_row">	 	           
+      	 	  	 <label>
+	 	            <input class="importtype" type="radio" name="radio_item" id="api_type" style="float:left;"> 
+	 	  	        <span class="component_navtype">接口数据同步</span>
+	 	           </label>	 	 	            	           
+      	 	  </div>
+      	 </div>
+      	 <div class="import_step2">
+      	 	  <div class="import_step2_setting">
+	      	 	  <!--excel上传设置-->
+	      	 	  <div style="height:25px;line-height:25px;padding-left:100px;" id="excel_setting">
+	 	           	  <span style="float:left;width:100px;">请选择文件：</span>
+	 	           	  <form target="frm_import_submit" id="frm_import" action="{{path('JustsyAdminAppBundle_staffmanager_import_excel')}}" method="post" enctype="multipart/form-data">
+	 	           	    <input class="mb_textbox import_selectfile" type="file" id="filedata" name="filedata"/>
+	 	           	    <span class="remove_file">
+	 	           	      <i class="glyphicon glyphicon-trash" onclick="$('#filedata').val('');" title="清除文件"></i>
+	 	           	    </span>
+	 	           	  </form>
+	 	           	  <button onclick="ImportExcel.uploadfile();" class="btnGreen mb_button" style="float:left;width:80px;margin-left:20px;">上传</button>
+	 	           	  <a style="text-decoration:none;float:right; margin-right:2px;cursor:pointer;" onclick="window.location.href='{{JS_OPEN_API_URL}}/WeFaFa_Employee_Template.xls'">模板下载</a>
+	 	           	  <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>
+		 	        </div>
+		 	        <!--Ldap-->
+	      	 	  <div style="height:25px;line-height:25px;display:none;" id="ldap_setting">
+	 	           	  <span style="float:left;width:100px;">ldap</span>
+		 	        </div>
+	            <div style="float:left;padding-left:40px;display:none;margin-top:-10px;" id="database_setting" >
+	            	    <div class="import_input_row">
+			 	           	  <span style="float:left;width:100px;">数据库类型：</span>
+			 	           	  <select  id="dbtype" class="mb_combox" style="float:left;width:760px;">
+			 	           	  	 <option value=""></option>
+				    	           <option value="oracle">Oracle</option>
+				    	           <option value="sqlserver2005">MSSQL2005</option>
+				    	           <option value="sqlserver2008">MSSQL2008</option>
+				    	           <option value="mysql">Mysql</option>
+				              </select>
+		 	           	  </div>
+	              	  <div class="import_input_row">
+			 	           	  <span style="float:left;width:100px;">数据库服务器：</span>
+			 	           	  <input class="mb_textbox" type="text" id="text_server" style="float:left;width:300px;" />
+		 	           	    <span style="float:left;margin-left:80px;padding-right:10px;">数据库名：</span>
+			 	           	  <input class="mb_textbox" type="text" id="text_database" style="float:left;width:300px;" />
+		 	           	  </div>
+		 	           	  <div class="import_input_row">
+		 	           	    <span style="float:left;width:100px;">用户账号：</span>
+			 	           	  <input class="mb_textbox" type="text" id="text_user" style="float:left;width:300px;" />
+		 	           	    <span style="float:left;margin-left:80px;padding-right:10px;">用户密码：</span>
+			 	           	  <input class="mb_textbox" type="password" id="text_password" style="float:left;width:300px;" />
+		 	           	  </div>	
+		 	           	  <div style="float:left;margin-top:5px;" >
+		 	           	    <span style="float:left;width:100px;">
+		 	           	    	 <span style="float:left;width:100%;display:block;">查询SQL语句：</span>
+		 	           	    	 <img onclick="Import.ExecSQL();" src="{{ asset('/bundles/fafatimembapp/images/icon_execute.png')}}" title="执行SQL语句"  class="staff_execute_icon" />
+		 	           	    </span>
+			 	           	  <textarea class="mb_textbox" type="text" id="text_sql" style="float:left;height:60px;width:760px;line-height:15px;max-width:760px;max-height:60px;min-width:760px;min-height:60px;"></textarea>
+		 	           	  </div>		 	           	  	 	           	          	  
+		 	        </div>
+	            <div style="height:25px;line-height:25px;float:left;padding-left:90px;" id="api_setting" >
+	           	  <span style="float:left;padding-right:5px;">接口地址：</span>
+	           	  <input class="mb_textbox" type="text" id="api_url" style="float:left;width:500px;" />
+	           	  <button onclick="Import_API.getData();" class="btnGreen mb_button" style="float:left;width:80px;margin-left:20px;">获得数据</button>    
+		 	        </div>	 		
+	 	        </div>
+	 	        <table class="staff_table" id="select_datasorce"><tbody></tbody></table>
+	 	        <div class="error_box">
+	 	        	 <div class="staff_field_title" style="margin-bottom:0px;">
+	 	        	 	 <span style="float: left; padding-left: 10px; color: red;">导入数据错误提示</span>
+	 	        	 	 <span title="关闭" onclick="$('.error_box').hide();" class="staff_field_colse"></span>
+	 	        	 </div>
+	 	        	 <div class="error_content"></div>
+	 	        </div>
+	 	        <div class="staff_field_setting" onclick="Import.viewField();">
+	 	            <span style="float:left;color:red;width:100%;">※</span><span>设置字段映射</span><span style="float:left;width:100%;color:red;">※</span>
+	 	        </div>
+	 	        <div class="staff_field_content">
+	 	        	 <div class="staff_field_title">
+	 	        	 	 <span style="float:left;padding-left:10px;"> 指定字段映射关系</span>
+	 	        	 	 <span class="staff_field_colse" onclick="$('.staff_field_content').hide();" title="关闭"></span>
+	 	        	 </div>
+	 	        	 <div id="setcontent"></div>
+	 	        	 <div class="setfield_hint"></div>
+	 	        	 <button onclick="Import.setField();" class="btnGreen mb_button" style="width:80px;margin-left:140px;">确&nbsp;定</button>  	 	        	 
+	 	        </div>
+	 	        <div class="register_progress">
+	 	        	 <span class="register_progress_number">&nbsp;</span>
+	 	        	 <span class="register_progress_percent">&nbsp;</span>
+	 	        </div>
+      	 </div>
+      </div>
+      <div class="operation" style="width: 100%; float: left; background-color: transparent; padding: 10px 0px;">
+      	 <div class="staffmanager_hint"></div>
+      	 <div>
+      	 	  <button onclick="Import.step('P');" class="btnGreen mb_button" id="btnPre"  style="float:left;width:80px;display:none;">上一步</button>   
+	          <button onclick="Import.step('N');" class="btnGreen mb_button" id="btnNext" style="float:left;width:80px;">下一步</button>
+	          <button onclick="Import.step('N');" class="btnGreen mb_button" id="btnsettingfield" style="float:left;width:100px;display:none;">设置字段映射</button>
+	          <button onclick="Import.start(1);" id="btn_start_import" class="btnGreen mb_button" style="float:left;width:80px;display:none;">开始导入</button>
+         </div>
+      </div>
+     </div>
+</div>
+ 
+<!--编辑用户数据-->
+<div  class="dialogBox " id="viewAdd" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:500px;top:150px;left:50px;" class="dialog">
+    	<div class="title">添加新用户</div> 
+      <span title="关闭" onclick="$('#viewAdd').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="overflow:hidden;padding:10px 50px 0px 80px;cursor:default;background-color:#fff;">
+	      <div class="staff_add_row"> 
+	      	  <div style="float:left;width:90px;">部门名称：</div>
+	      	  <input type="text"  placeholder="部门名称" class="mb_textbox" deptid="" id="txtdept" onclick="AddStaff.showdept('depttree');" readonly=""  style="cursor:text;width:240px;background-color:#eee;" />
+	          <span id="dept_area" class="selected_dept_area" style="width:324px;">
+	            <ul id="depttree" class="ztree" style="background-color: #fff;border:none;float: left;height: 225px;max-height: 225px;overflow-x: hidden;overflow-y: auto;width: 100%;"></ul>	
+	            <div class="op_dept_area">
+	                <span onclick="AddStaff.selected_dept('txtdept');" class="btn btnGreen">确&nbsp;&nbsp;定</span>
+	                <span onclick="$('#dept_area').hide();"  class="btn btnGray">取&nbsp;&nbsp;消</span>
+	            </div>	            
+            </span>
+	      </div>
+	      <div class="staff_add_row"> 
+	      	  <span>员工姓名：</span>
+	      	  <input type="text" name="realName"  maxlength="10"  placeholder="员工姓名"  class="mb_textbox" style="width:240px;" id="realName">
+	      </div>
+        <div class="staff_add_row"> 
+            <span>登录帐号：</span>
+            <input type="text" name="account" maxlength="50" placeholder="登录帐号" class="mb_textbox" style="width:240px;" id="account">
+        </div>        
+	     <div class="staff_add_row" id="password_row"> 
+	      	  <span>登录密码：</span>
+	      	  <input type="password" name="pass" maxlength="50" placeholder="账号登录密码" class="mb_textbox" style="width:240px;" id="pass">
+	      </div>
+	      <div class="staff_add_row" style="height: 22px; line-height: 22px;"> 
+	      	   <span>性别：</span>
+	      	   <label style="float: left; margin-bottom: 0px;">
+	      	   	  <input type="radio" style="float:left;" checked  id="checkboxsex1" name="checkboxsex" value="1">
+	      	   	  <span style="float:left;padding-left:5px;">男</span>
+	      	   </label>
+	       	   <label style="float: left; margin-left: 45px; margin-bottom: 0px;">
+	      	   	  <input type="radio" style="float:left;" id="checkboxsex0" name="checkboxsex" value="0">
+	      	   	  <span style="float:left;padding-left:5px;">女</span>
+	      	   </label>
+	      </div>        
+	      <div class="staff_add_row"> 
+	      	  <span>员工职务：</span>
+	      	  <input type="text" name="duty" maxlength="10" placeholder="员工职务"  class="mb_textbox" style="width:240px;" id="duty">
+	      </div>
+	      <div class="staff_add_row"> 
+	      	  <span>手机号码：</span>
+	      	  <input type="text" name="mobile" maxlength="11" placeholder="联系手机号码" onpaste="enableNaN()" onkeyup="enableNaN()" maxlength="11"  class="mb_textbox" style="width:240px;" id="mobile">
+	      </div>
+        <div class="staff_add_hint"></div>
+      </div>
+      <div class="operation" style="width:100%;float:left;padding:10px 0px 10px 160px;">
+	      <button id="btnSave" onclick="AddStaff.Save();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	      <button id="btnCancle" onclick="$('#viewAdd').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	 $(document).ready(function(){
+	 	  AddStaff.add_url ="{{path('JustsyBaseBundle_enterprise_setting_add_employee_noactive')}}";
+	 	  AddStaff.getdepart_url = "{{path('JustsyAdminAppBundle_department_tree')}}";
+	    Import.import_url = "{{path('JustsyAdminAppBundle_staffmanager_import_start')}}";
+	    Import.sql_url = "{{path('JustsyAdminAppBundle_staffmanager_query')}}";
+	    Import.search_url = "{{path('JustsyAdminAppBundle_staffmanager_searchstaff')}}";  
+	    Import.dele_url = "{{path('JustsyAdminAppBundle_staffmanager_delete')}}";
+	    Import.searchStaff(1);
+	    AddStaff.update_url ="{{path('JustsyAdminAppBundle_staffmanager_update_staff')}}";
+   });
+   
+   	//禁止输入非数字
+  function enableNaN(){
+   var tmptxt= $.trim($("#mobile").val());
+   if ( tmptxt != "")
+     $("#mobile").val(tmptxt.replace(/\D|^0/g,'')); 
+  }
+</script>
+
+{% endblock %}

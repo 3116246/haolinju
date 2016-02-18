@@ -1,0 +1,126 @@
+{% extends 'JustsyBaseBundle:Circle:index.html.twig' %}
+{%
+set IsJoin = app.user.IsExistsFunction("CIRCLE_JOIN_C")
+%}
+{% block main_content_center %}
+<!-- 右边开始 -->
+<div class="circlesmainright">
+  <!--无加入圈子权限提示-->
+  {%if (not IsJoin)%}
+    <div id="invite_area" style="display:block;border: 1px solid #DCECF0;height: 30px;margin-bottom: 20px;width: 738px;">
+     <div class="rightbox-title">您还未通过身份认证，不能加入其他外部圈子！</div>
+  </div>
+  {%endif%}	
+  {%if app.user.IsExistsFunction("CIRCLE_S")%}
+  <div class="search-circles-box">
+    <div class="search-circles-input" style="width:520px">
+      <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_circle_find', {'network_domain' : curr_network_domain}) }}" >
+      <input name="searchCondition" class="search-circles-input" type="text">
+      <div class="circles-search-box">
+        <input name="input" type="button" class=" circlessearch" value="搜索圈子" id="btnSearch">
+      </div>
+      </form>
+    </div>
+    <div class="search-circles-input">
+    {%if(createcircle)%}
+       <a id="createcircle" href="{{path('JustsyBaseBundle_circle')}}">创建圈子</a>
+     {%endif%}
+    </div>
+  </div>
+  {%endif%}
+  <div class="circlestitle">圈子分类</div>
+  <div class="circlesclass clearfix"><span class="classpart"></span>
+    <div class="cirlesclass-main">
+      {% for c in circleclass %}
+      <dl class=" cirlesclass-box">
+      <dt><a><img onerror="this.src='{{asset('bundles/fafatimewebase/images/default_circle_big.png')}}'" {% if c.parent.icon_path %} src="{{ c.parent.icon_path }}" {% else %} src="{{ asset('bundles/fafatimewebase/images/1_120.jpg') }}" {% endif %} width="120" height="120"></a></dt>
+      <dd>
+        {% for cld in c.child if loop.index0<6 %}
+        <p class="classname"><a href=#>{{ cld.classify_name }}</a></p>
+        {% endfor %}
+      </dd>
+      </dl>
+      {% endfor %}
+    </div>
+  </div>
+  <div class=" circlesclass-title">推荐圈子</div>
+  <div class="circlesclass-detail clearfix">
+  <!-- 推荐圈子循环开始 -->
+    {% for recmd in circlerecommend %}
+    <dl class=" commend-circles">
+      <input type="hidden" value="{{ recmd.create_staff }}">
+      <input type="hidden" value="{{ recmd.circle_id }}">
+      <input type="hidden" value="{{ recmd.circle_name }}">
+      {%if(IsJoin)%}
+      <span class="join" onclick="applyAdd(this);" isjoin="{{ recmd.isjoin }}" style="cursor: pointer;">
+        {% if recmd.isjoin=="0" %}<img src="{{ asset('bundles/fafatimewebase/images/join.png') }}" class="joinimg" width="8" height="8">申请加入{% else %}已经加入{% endif %}
+      </span>
+      {%endif%}
+      <dt><img onerror="this.src='{{asset('bundles/fafatimewebase/images/default_circle_big.png')}}'" {% if recmd.logo_path_big %} src="{{ recmd.logo_path_big }}" {% else %} src="{{ asset('bundles/fafatimewebase/images/default_circle_big.png') }}" {% endif %} width="75" height="75"></dt>
+      <dd>
+      <p class="commendname">{{ recmd.circle_name }}</p>
+      <p class="commendnameone">创始人：{{ recmd.nick_name }}</p>
+      <p class="commendnameone">成员数：{{ recmd.cnt }}</p>
+      </dd>
+    </dl>
+    {% endfor %}
+  <!-- 推荐圈子循环结束 -->
+  </div>
+   <div class=" commend-title">行业圈子</div>
+  <div class="circlesclass-detail clearfix">
+  <!-- 行业圈子循环开始 -->
+    {% for indst in circleindustry %}
+    <dl class=" commend-circles">
+      <input type="hidden" value="{{ indst.create_staff }}">
+      <input type="hidden" value="{{ indst.circle_id }}">
+      <input type="hidden" value="{{ indst.circle_name }}">
+      <span class="join" onclick="applyAdd(this);" isjoin="{{ indst.isjoin }}" style="cursor: pointer;">
+        {% if indst.isjoin=="0" %}<img src="{{ asset('bundles/fafatimewebase/images/join.png') }}" class="joinimg" width="8" height="8">申请加入{% else %}已经加入{% endif %}
+      </span>
+      <dt><img {% if indst.logo_path_big %} src="{{ indst.logo_path_big }}" {% else %} src="{{ asset('bundles/fafatimewebase/images/default_circle.png') }}" {% endif %} width="64" height="64"></dt>
+      <dd>
+      <p class="commendname">{{ indst.circle_name }}</p>
+      <p class="commendnameone">创始人：{{ indst.nick_name }}</p>
+      <p class="commendnameone">成员数：{{ indst.cnt }}</p>
+      </dd>
+    </dl>
+    {% endfor %}
+   <!-- 行业圈子循环结束 -->
+  </div>
+</div>
+<!-- 右边结束 -->
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+$(document).ready(function()
+{
+  $("#btnSearch").click(function()
+  {
+    this.disabled = true;
+    $("#contentForm").submit();
+  });
+});
+function applyAdd(n)
+{
+  n = $(n);
+  if(n.attr("isjoin")=="1" || n.attr("isapply")=="1" || n.attr("isclick")=="1") return;
+  n.attr("isclick","1");
+  var sr = "{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}";
+  n.html('<img src="'+sr+'" class="joinimg" width="8" height="8">申请加入');
+  var chs = n.parent().children();
+  var createStaff = chs[0].value;
+  var circleId = chs[1].value;
+  var circleName = chs[2].value;
+  $.post("{{path('JustsyBaseBundle_circle_apply_join')}}",
+    {createStaff:createStaff,circleId:circleId,circleName:circleName},
+    function(data) 
+    {
+      n.html("已经申请");
+      n.attr("isclick","0");
+      n.attr("isapply","1");
+    },"text"
+  );
+}
+</script>
+{% endblock %}

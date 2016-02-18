@@ -1,0 +1,43 @@
+<div class="comment clearfix" style="display: {{ ds["we_convers_list"]["recordcount"] > 1 ? "block" : "none" }}">
+  <div class="commentbox clearfix"><span class="comarrow"></span>
+  {%if(trend)%}
+    <div class="replyinputarea_pre" onclick="replyinputarea_pre_OnClick(this)" style="border: 1px solid #ccc; padding: 0px 5px; cursor: text; margin: 0px 0px -1px; color: #888;">
+    {% if isask == 1 %}
+      我来回答
+    {% else %}
+      我来说两句
+    {% endif %}
+    </div>
+    <div class="detailinput replyinputarea" style="display:none;">
+      <div class="reply_to_box">
+        <span class="reply_to_close" onclick="reply_to_close_OnClick(this)">×</span>
+        <span>你对<a href="#" class="reply_to_staff employee_name"></a>说：</span>
+      </div>
+      <textarea rows="1" class="comtextarea userAutoTips FaceAutoTips" style="height:36px;" onkeyup="setReplyEnable(this)" onblur="_setReplyDisable(this)" title="小提示：输入“[”就可以选择表情了"></textarea>
+    </div>
+    <div class="lib_attachs ask_div1" style="margin-bottom: 0px;margin-top: 4px;padding-top: 4px; padding-bottom: 4px; display:none">    
+      <div class="lib_attachs_filesList">
+      </div>
+    </div>
+    <p class="cominput replyinputarea" style="display:none;">
+      <span title="插入表情" style="display: block; width: 25px; cursor: pointer;float:left;margin-right:10px;color:#0078B4;"><i class="ins_face icon16" onclick='reply_insertFace(this)'></i></span>
+      <span title="插入附件" style="display: block; width: 25px; cursor: pointer;float:left;color:#0078B4;" ><i class="ins_file icon16" onclick='reply_insertFile(this)'></i></span>
+      <input type="button" class="comenter" value="确 定" disabled="disabled" conv_root_id="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" replyurl="{{ path("JustsyBaseBundle_component_cdisparea_replyconv") }}" onclick="ReplyConv(this)">
+    </p>
+    {%endif%}
+    <div class="smalltopic relaydetail_list">
+      <ul>
+        {% for row in ds["we_convers_list"]["rows"] %}
+        {% if not loop.first  %}
+        {% include 'JustsyBaseBundle:CDisplayArea:reply_item.html.twig' with {'trend':trend} %}
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% if ds["we_convers_list"]["rows"][0]["reply_num"] > 5 %}
+    <div class="allfor">
+       <a target="_blank" href="{{ path('JustsyBaseBundle_view_oneconv', {'conv_root_id' : ds["we_convers_list"]["rows"][0]["conv_id"]})}}">查看所有<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>条评论»</a>
+    </div> 
+    {% endif %}
+  </div>
+</div>

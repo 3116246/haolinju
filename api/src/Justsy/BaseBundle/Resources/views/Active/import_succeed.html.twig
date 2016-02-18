@@ -1,0 +1,77 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}微发发，启用前的设置{% endblock %}
+
+{% block main_content %}
+<div class="c_reg">
+  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_login_check') }}" >
+    <input name="_username" type="hidden" value="{{ data["login_account"] }}" />
+    <input name="_password" type="hidden" value="{{ data["password"] }}" />
+  </form>
+	<div class="c_actsuc1" style="padding-top: 30px;">
+			<div class="c_act_t0" style="height: 120px;">
+				<span style="color:#2084d1; line-height:42px; font-size:24px; font-weight:bold">操作成功！</span>
+				<p style="height:26px; line-height:14px; color:#666; font-size:14px; font-weight:bold">请妥善保存以下WeFaFa登录信息：</p>
+				<p style="height:26px; line-height:14px; color:#666; font-size:12px; ">登录帐号：{{ data["login_account"] }}</p>
+				<p style="height:26px; line-height:14px; color:#666; font-size:12px; ">登录密码：{{ data["t_code"] }}</p>
+			</div>
+			<div class="c_act_t1">
+					<div ><img src="{{ asset('bundles/fafatimewebase/images/we32.png') }}">&nbsp;<span style="position:absolute; font-size:18px; font-weight:bold; padding-top:5px;">Wefafa快速入门</span></div>
+					<div style="padding-left:40px;">
+						<li><a href="#" flag="1" title="完善您的部门、职务、头像、签名等个人信息，有助于你的同事，好友更方便找到您。点击快速进入">完善您的个人信息</a></li>
+						<li><a href="#" flag="2" title="邀请更多的同事或好友加入到您的圈子，与他们一起分享、沟通、协同工作。点击快速进入">邀请同事、好友加入圈子</a></li>
+						<li><a href="#" flag="3" title="您可以建立起自己的圈子，同现实中的工作圈子一样，邀请您的同事、合作伙伴或好友进入。点击快速进入">建立自己的圈子</a></li>
+						<li><a href="#" flag="4" title="在圈子里，允许创建多个群组，将与您经常联系的好友聚焦到一起，进行工作沟通、分享与协同工作。点击快速进入">建立工作群组</a></li>
+						<li><a href="http://www.fafatime.com/downcenter" title="使用FaFa客户端，不仅可以让您在无需打开浏览器即可实时接收到新动态，并且FaFa客户端提供强大的语音会议、语音对讲等功能。点击立即下载">下载FaFa客户端</a></li>
+					</div>
+  			</div>
+			</div>
+    	<div class="c_actenter">
+    		<input type="button" id="btnSubmit" value="进入Wefafa" class="btn btn-act" name="input">
+    	</div>
+	</div>
+	<div class="c_actsuc2">
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+$(document).ready(function()
+{
+  $("#btnSubmit").click(function()
+  {
+    this.disabled = true;
+    $("#contentForm").submit();
+  });
+  $(".c_act_t1 a").click(function()
+  {
+    var flag = $(this).attr("flag");
+    $(this).css("cursor","wait");
+    $.post("{{path('JustsyInterfaceBundle_logincheck')}}",
+      {login_account:"{{ data["login_account"] }}", password:"{{ data["password"] }}"},
+      function(data) 
+      {
+        if (data.returncode=="0000")
+        {
+          switch (flag)
+          {
+            case "1":
+              $("#contentForm").attr("action","{{ path('JustsyBaseBundle_account_basic', {'network_domain':edomain}) }}");
+              break;
+            case "2":
+              $("#contentForm").attr("action","{{ path('JustsyBaseBundle_invite', {'network_domain':edomain}) }}");
+              break;
+            case "3":
+              $("#contentForm").attr("action","{{ path('JustsyBaseBundle_circle') }}?network_domain={{edomain}}");
+              break;
+            case "4":
+              $("#contentForm").attr("action","{{ path('JustsyBaseBundle_group_create', {'network_domain':edomain}) }}");
+              break;
+          }
+          $("#contentForm").submit();
+        }
+      },"json");
+  });
+});
+</script>
+{% endblock %}

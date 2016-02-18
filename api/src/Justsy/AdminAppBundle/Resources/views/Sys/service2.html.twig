@@ -1,0 +1,610 @@
+{% block stylesheets %}
+    <link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fafatimembapp/css/service.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+    <link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/fafatimeweopenapi/js/KindEditor/themes/default/default.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block javascriptsref %}
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/service.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/KindEditor/kindeditor-min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/KindEditor/lang/zh_CN.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/image.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/push.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/pageControl.js')}}"></script>
+{% endblock %}
+{% block body %}
+<div class="body_content" style="float:left;margin-left:50px;">
+    <div class="group_menu_bar">
+     	  <span state="service_mrg" onclick="service.toggle(this);" class="menu_item_active">服务号管理</span>
+     	  <span state="revoke"      onclick="service.toggle(this);" class="menu_item">消息撤回管理</span>
+    </div>
+    <div id="revoke" style="display:none;">
+        <div style="float:left;width:100%;padding-top:15px;">
+		       <span>服务号名称/帐号：</span>
+		       <input type="text" class="mb_textbox" id="text_account" onkeypress="if (event.keyCode==13) { service.search_service(1); }" placeholder="请输入服务名称或帐号" style="width:218px;">
+		       <span class="btnGreen group_button" onclick="service.search_message(1);" style="margin-left:32px;padding:1px 15px;">查&nbsp;&nbsp;询</span>    
+        </div>
+        <div style="float:left;width:100%;margin-top:10px;height:395px;">
+            <table align="center" id="table_message" style="width:100%;margin-top:10px;" class="mb_common_table">
+                <thead>
+                    <tr>
+                        <td width="220" align="center">推送服务号</td>
+                        <td width="220" align="center">服务号名称</td>
+                        <td width="220" align="center">推送时间</td>                    
+                        <td width="182" align="center">推送类型</td>
+                        <td width="155" align="center">操&nbsp;&nbsp;作</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="pagination" id="page_message" style="float:left;padding: 0px;margin:10px 0px 0px;display:none;"></div>
+        <!--查看推送详细-->
+        <div style="display:none;z-index:99999;" id="send_detail" class="dialogBox ">
+        		<div class="background"></div>
+            <div class="dialog" style="width:645px;top:20px;cursor:default;">
+            	<div class="title">查看推送消息</div> 
+              <span class="close-tip-icon" onclick="$('#send_detail').modal('hide');" title="关闭"></span>
+              <div class="content" style="background-color: white;padding:10px 0 5px 25px;min-height:400px;overflow:hidden;">
+                  <div class="sendmsg_text">
+                        <div class="sendmsg_row">
+                           <span class="sendmsg_field">推送标题：</span>
+                           <input readonly="readonly" class="sendmsg_title" style="width:515px;" />
+                        </div>
+                        <div class="sendmsg_row">
+                            <span class="sendmsg_field">摘要信息：</span>
+                            <textarea class="sendmsg_content" style="height: 340px; overflow: auto; resize: none;" ></textarea>
+                        </div>
+                  </div>
+                  <div class="sendmsg_picture"></div>
+                  <div class="sendmsg_pager"></div>
+              </div>
+              <div class="fields_row" style="margin-bottom:0px;background-color:#fff;">
+                <button class="btn btnGray" style="width: 65px; margin: 10px auto 10px 300px; text-align: center; padding: 5px 0px;" onclick="$('#send_detail').modal('hide');">关&nbsp;闭</button>
+              </div>
+            </div>
+        </div>
+     </div>
+    <div id="service_mrg">
+        <div id="search_body">
+            <div style="float:left;width:100%;padding-top:15px;">
+    		       <span>服务号名称/帐号：</span>
+    		       <input type="text" id="text_servicename" style="width:218px;" placeholder="请输入服务名称或帐号" onkeypress="if (event.keyCode==13) { service.search_service(1); }" class="mb_textbox" />
+    		       <span style="margin-left:32px;padding:1px 15px;" onclick="service.search_service(1);" class="btnGreen group_button">查&nbsp;&nbsp;询</span>
+    		       {% if manager=='sys_manager' %}
+    		          <span class="btnGray btnCreate" onclick="service.viewCreateAccount('add');" style="float:right;margin-left:30px;padding:1px 10px;">创建服务号</span>
+    		       {% endif %}
+            </div>
+            <div style="float:left;width:100%;margin-top:10px;height:395px;">              
+                <table align="center" id="table_service" class="mb_common_table" style="width:100%;margin-top:0px;">
+                    <thead>
+                        <tr>
+                            <td width="435" align="center">服务号帐号</td>
+                            <td width="435" align="center">服务号名称</td>
+                            <td width="128" align="center">操&nbsp;&nbsp;作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" id="search_page" style="float:left;padding: 0px;margin:10px 0px 0px;display:none;"></div>
+        </div>
+        <!--创建服务帐号-->
+        <div style="display:none;z-index:2000;" id="create_service" class="dialogBox ">
+        		<div class="background"></div>
+            <div class="dialog" style="width:645px;cursor:default;left:95px;top:110px;">
+            	<div class="title">创建服务号</div> 
+              <span class="close-tip-icon" onclick="$('#create_service').hide();" title="关闭"></span>
+              <div class="content" id="hint_content">
+                 <div class="member_basic">
+                     <div class="fields_row" style="margin-bottom:8px">
+                         <span>服务号名称：</span>
+                         <input type="text" id="text_name" class="mb_textbox" placeholder="服务号名称" onkeyup="service.sevice_check(this.value);" onchange="service.service_change(this);" servicename=""  />
+                         <span class="service_check">
+                             <img src="/bundles/fafatimewebase/images/loading.gif" />
+                             <span class="common_success_icon" id="check_icon"></span>
+                             <span id="check_msg"></span>
+                         </span>
+                    </div>
+                     <div class="fields_row" style="margin-bottom:8px">
+                         <span>服&nbsp;务&nbsp;号：</span>
+                         <input type="text" id="textAccount" disabled="disabled" class="mb_textbox"  placeholder="服务号" />
+                     </div>    
+                    <div class="fields_row" style="margin-bottom:8px">
+                         <span>服务号简介：</span>
+                        <input type="text" id="textdesc" class="mb_textbox" placeholder="服务号简介" />
+                     </div>                                   
+                 </div>
+                 <div class="img_box">
+        	 	  	 	 <img  id="staff_image" fileid="" onclick="service.selectedImg();" src="{{asset('bundles/fafatimewebase/images/no_photo.png')}}" title="上传服务号图标" data-toggle="modal" show=false />
+            	 	 </div>
+                 <div class="fields_row">
+                     <span>管&nbsp;理&nbsp;员：</span>
+                     <div class="set_area" id="service_manager" style="height:25px;width:500px;line-height:25px;"></div>
+                     <i onclick="service.viewTree(this);" state="3" style="margin-top:-22px;" class="glyphicon glyphicon-plus-sign selected_area"></i>
+                 </div>
+                 <div class="fields_row" style="margin-bottom:15px">
+                     <span style="width:105px;">邀请/关注方式：</span>
+                     <div style="float:left;" id="set_role">
+                         <label>
+                          <input type="radio" id="private" checked value="0" name="approval"><span>仅管理员邀请</span>
+                        </label>
+                        <label style="margin-left:30px;">
+                          <input type="radio" id="public" value="1" name="approval"><span>允许所有用户关注</span>
+                        </label>
+                    </div>
+                    <div style="float:left;" id="show_role">
+                    </div>
+                 </div>
+                 <div id="role_manager">
+                	 	 <div class="option_area">
+                  		<span>邀请的默认组织及人员</span>
+                     </div>
+                     <div class="fields_row" style="margin-bottom:2px;margin-top:-5px;">
+                        <span style="width:100%;">组织机构：</span>
+                        <div class="set_area" id="dept_area"></div>
+                        <i onclick="service.viewTree(this);" state="1" class="glyphicon glyphicon-plus-sign selected_area"></i>
+                     </div>
+                     <div class="fields_row" style="margin-bottom:0px;">
+                        <span>人员范围：</span>
+                        <div class="set_area" id="staff_area"></div>
+                        <i onclick="service.viewTree(this);" state="2" class="glyphicon glyphicon-plus-sign selected_area"></i>
+                     </div>
+                 </div>
+              </div>
+              <div class="fields_row" style="margin-bottom:0px;">
+                <span class="hint_text" style="width:285px;"></span>
+                <button class="btn btnGray" id="btnSave" style="margin:10px 0px;" onclick="service.register();">确&nbsp;定</button>
+              </div>      
+            </div>
+        </div>
+        <!--选择组织机构-->
+        <div style="display:none;z-index:2001;" id="selectdept" class="dialogBox" >
+        		<div class="background"></div>
+            <div class="dialog" style="width: 665px; cursor: default; left: 95px; top: 100px;">
+            	<div class="title">选择组织机构</div> 
+              <span class="close-tip-icon" onclick="$('#selectdept').hide();" title="关闭"></span>
+              <div class="content" style="cursor: default; overflow: hidden; background-color:#fff; padding: 0px 10px;height:398px;">
+            	 	  {% include 'JustsyAdminAppBundle:Sys:selectdept.html.twig' %}
+              </div>
+              <div style="padding:10px;height:50px;" class="operation">
+              	 <span class="group_hint"></span>
+                 <button class="btn btnGreen default_button" style="width:65px;"  onclick="service.selectdept();">确&nbsp;定</button>    
+                 <button class="btn btnGray default_button" style="width:65px;"  onclick="$('#selectdept').hide();">取&nbsp;消</button>
+              </div>
+            </div>
+        </div>
+        <!--上传图片-->
+        <div  class="modal selected_pic_box" data-backdrop="static" show=false style="overflow: hidden;z-index:9999;">
+          <div class="modal-body" style="padding:0px;width:100%;">
+          	{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}
+          </div>
+        	<div class="modal-footer" style="position: relative; background-color: white; margin-top: -90px;">
+              <img id="uplod_loading" style="float:left;width:32px;height:32px;margin-left:20px;display:none;" src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}">
+          	  <span class="upload_hint" style="float:left;margin-left:5px;margin-top:4px;color:#006BD9;" ></span>
+          	  <span style="padding:0px 15px;" onclick="service.uploadfile();" class="btnGreen group_button">确&nbsp;&nbsp;定</span>
+          	  <span style="padding:0px 15px;" onclick="service.window_close();" class="btnGray group_button">关&nbsp;&nbsp;闭</span>
+        	</div>
+        </div>             
+        <div id="content" class="mesagesend">
+            <div class="tips" style="display: none;">
+            	 <div id="divmsgerror" class="tipContent">标题不能为空且长度不能超过64字</div>
+            </div>
+            <div class="container-wrapper" style="background-image:none;margin-bottom:5px;">
+                <div class="container" id="main" style="padding:0;width:100%;">
+                    <div class="containerBox" id="content_push" style="background-color:#fff;">
+                        <div class="boxHeader" style="background-color:white;background-image:none;padding:5px 15px 5px 5px;">
+                            <div id="sender_line" class="cLine sender_line" style="padding: 5px;">
+                                <span style="padding-left:10px;">发送对象：</span>
+                                <span class="micro_obj"></span>
+                                <span style="float:right;padding:1px 10px;" onclick="$('#search_body').show();$('.mesagesend').hide();" class="btnGray btnsendmessage">返&nbsp;&nbsp;回</span>
+                            </div>
+                        </div>
+                        <div class="sideBar" style="width:230px;">
+                            <div id="catalogList" class="catalogList">
+                                <ul>
+                                    <li id="li_text" class="selected"><a class="a-nav" href="javascript:void(1)">文字消息</a>
+                                    </li>
+                                    <li id="li_image" class="none"><a class="a-nav" href="javascript:void(1)">图片消息</a>
+                                    </li>
+                                    <li id="li_text_image"><a class="a-nav" href="javascript:void(1)">图文消息</a> </li>
+                                    <li id="li_text_images" class=""><a class="a-nav" href="javascript:void(1)">多图文消息</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="content" style="width: 768px;">
+                            <div class="msgSenderPlugin">
+                                <div id="div_text" class="msg_panel">
+                                    <div class="z oh " style="margin-top: 5px; padding-left: 100px;">
+                                        <div style="float: left; width: 67px; margin-left: 20px;">
+                                            标题：</div>
+                                        <div class="txtArea">
+                                            <input type="text" id="text_title" name="text_title" class="msg-input form-control input-sm" maxlength="25" style="margin-bottom:10px;width:405px;max-width:405px;" />
+                                        </div>
+                                        <div style="float: left; width: 67px; margin-left: 20px;">
+                                            正文：</div>
+                                        <div class="txtArea">
+                                            <textarea id="text_content" name="text_content" class="form-control" style="height: 260px;
+                                                max-height: 260px; resize: none; padding: 2px; max-width: 405px; width: 405px;"
+                                                maxlength="1000"></textarea>
+                                        </div>
+                                        <div class="btnArea">
+                                            <div class="c-gA cLine">
+                                                <div style="padding-left:82px;">*还能输入<span id="text_content_massSendTimesLeft">1000</span>文字</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="div_image" class="msg_panel none">
+                                    <div class="z oh msg-edit" style="padding:0px;">
+                                        <div class="left msg-preview">
+                                            <div class="msg-item-wrapper">
+                                                <div class="msg-item">
+                                                    <h4 class="msg-t">
+                                                        <span class="i-title"></span>
+                                                    </h4>
+                                                    <p class="msg-meta">
+                                                        <span class="msg-date"></span>
+                                                    </p>
+                                                    <div class="cover">
+                                                        <p style="" class="default-tip">
+                                                            封面图片</p>
+                                                        <h4 class="msg-t">
+                                                            <span id="image_title_preview" class="i-title">标题</span>
+                                                        </h4>
+                                                        <img id="image_img_preview" style="display: none;" class="i-img" src="">
+                                                    </div>
+                                                    <p class="msg-text">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="msg-edit-area">
+                                            <div class="rel">
+                                                <div class="msg-editer">
+                                                    <span class="block" for="">标题</span>
+                                                    <input type="text" id="image_title" class="msg-input" maxlength="22" />
+                                                    <span class="block" for=""><span class="upload-tip r">图片建议尺寸(小于等于)：<span style="color: blue;">600</span>
+                                                        * <span style="color: blue;">400</span>像素</span>封面</span>
+                                                    <div class="cover-area">
+                                                        <div class="oh z cover-hd">
+                                                            <form id="image_form" method="post" enctype="multipart/form-data">
+                                                            <a id="image_upload" class="icon28C upload-btn" href="javascript:void(0)">上传</a><span
+                                                                style="display: none;"><img id="image_upload_load_img" style="top: 5px;" src="{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}"
+                                                                    width="16" height="16"><span style="color: #1d9cbc;"></span></span>
+                                                            <input type="file" class="uploadFile" id="image_uploadFile" name="image_uploadFile"
+                                                                style="cursor: pointer; left: 0; filter: alpha(opacity = 0); opacity: 0; -moz-opacity: 0;
+                                                                height: 34px; line-height: 34px; position: absolute; top: 0; z-index: 1000002;
+                                                                width: 70px; outline: none;" value="" />
+                                                            </form>
+                                                        </div>
+                                                        <div class="cover-bd" id="image_p" style="display: none;">
+                                                            <img id="image_img" src="" style="max-height: 140px; max-width: 200px;" /><a id="image_delImg"
+                                                                class="vb cover-del" href="javascript:void(0)">删除</a></div>
+                                                    </div>
+                                                </div>
+                                                <span class="abs msg-arrow a-out" style="margin-top: 0px;"></span><span class="abs msg-arrow a-in"
+                                                    style="margin-top: 0px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="div_text_image" class="msg_panel none">
+                                    <div class="z oh msg-edit" style="padding:0px;">
+                                        <div class="left msg-preview">
+                                            <div id="msgEditArea_Preview" class="msg-item-wrapper">
+                                                <div class="msg-item">
+                                                    <h4 class="msg-t">
+                                                        <span id="text_image_title_preview" class="i-title">标题</span>
+                                                    </h4>
+                                                    <p class="msg-meta">
+                                                        <span id="text_image_date_preview" class="msg-date"></span>
+                                                    </p>
+                                                    <div class="cover">
+                                                        <p style="" class="default-tip">
+                                                            封面图片</p>
+                                                        <img id="text_image_img_preview" style="display: none" class="i-img" src="">
+                                                    </div>
+                                                    <p id="text_image_desc_preview" class="msg-text">
+                                                        摘要
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="msgEditArea" class="msg-edit-area">
+                                            <div class="rel">
+                                                <div class="msg-editer">
+                                                    <span class="block" for="">标题</span>
+                                                    <input type="text" value="" id="text_image_title" style="width:405px;max-width: 405px;" class="msg-input" maxlength="22" />
+                                                    <span class="block" for=""><span class="upload-tip r">图片建议尺寸(小于等于)：<span style="color: blue;">600</span>
+                                                        * <span style="color: blue;">800</span>像素</span>封面</span>
+                                                    <div class="cover-area">
+                                                        <div class="oh z cover-hd">
+                                                            <form id="text_image_form" method="post" enctype="multipart/form-data">
+                                                            <a id="text_image_upload" class="icon28C upload-btn" href="javascript:void(0)">上传</a><span
+                                                                style="display: none;"><img id="text_image_upload_load_img" style="top: 5px;" src="{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}"
+                                                                    width="16" height="16"><span style="color: #1d9cbc;"></span></span>
+                                                            <input type="file" class="uploadFile" name="image_uploadFile" id="text_image_uploadFile"
+                                                                style="cursor: pointer; left: 0; filter: alpha(opacity = 0); opacity: 0; -moz-opacity: 0;
+                                                                height: 34px; line-height: 34px; position: absolute; top: 0; z-index: 1000002;
+                                                                width: 70px; outline: none;" value="" />
+                                                            </form>
+                                                        </div>
+                                                        <p class="cover-bd" id="text_image_imgArea" style="display: none;">
+                                                            <img id="text_image_img" src="" style="max-height: 140px; max-width: 200px;" /><a
+                                                                id="text_image_delImg" class="vb cover-del" href="javascript:void(0)">删除</a></p>
+                                                    </div>
+                                                    <div style="display: block;">
+                                                        <label class="block">
+                                                            摘要</label>
+                                                        <textarea class="msg-txta" id="text_image_desc" name="text_image_desc" style="height: 80px; max-width: 405px; width: 405px; resize: none;" maxlength="140"></textarea>
+                                                    </div>
+                                                    <div class="btnArea">
+                                                        <div class="c-gA cLine" style="margin-bottom: 10px;">
+                                                            <div>
+                                                                *还能输入<span id="text_image_desc_massSendTimesLeft">140</span>文字</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sender_content" id="">
+                                                        <label>
+                                                            正文</label>
+                                                    </div>
+                                                    <div id="editor" class="editor edui-default">
+                                                        <textarea id="text_image_msgcount" name="text_image_msgcount" maxlength="2048"></textarea>
+                                                    </div>
+                                                    <div class="btnArea">
+                                                        <div class="c-gA cLine" style="margin-bottom: 10px;">
+                                                            <div>
+                                                                *还能输入<span id="text_image_msgcount_massSendTimesLeft">2048</span>文字</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="abs msg-arrow a-out" style="margin-top: 0px;"></span><span class="abs msg-arrow a-in"
+                                                    style="margin-top: 0px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                </div>
+                <div id="div_text_images" class="msg_panel none">
+                    <div class="z oh msg-edit" style="padding:0px;">
+                        <div class="left msg-preview">
+                            <div class="msg-item-wrapper">
+                                <div class="msg-item multi-msg">
+                                    <div id="appmsgItem" class="msg-item">
+                                        <p class="msg-meta">
+                                            <span id="text_images_date_preview" class="msg-date"></span>
+                                        </p>
+                                        <div class="cover" style="margin-top: 10px;">
+                                            <p style="" class="default-tip">
+                                                封面图片</p>
+                                            <h4 class="msg-t">
+                                                <span id="text_images_title_preview" class="i-title">标题</span>
+                                            </h4>
+                                            <ul class="abs tc sub-msg-opr" id="ul_edit_appmsgItem" title="编辑消息">
+                                                <li class="b-dib sub-msg-opr-item"><a title="编辑消息" id="edit_appmsgItem" class="th icon18 iconEdit"
+                                                    href="javascript:void(0)">编辑</a> </li>
+                                            </ul>
+                                            <img id="text_images_img_preview" style="display: none" class="i-img" src="">
+                                        </div>
+                                        <input type="text" style="display: none;" id="text_images_upload_preview" />
+                                        <div id="text_images_content_preview" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div id="appmsgItem1" class="rel sub-msg-item">
+                                        <span class="thumb"><span style="" class="default-tip">缩略图</span>
+                                            <img id="text_images_img1_preview" style="display: none" class="i-img" src="">
+                                        </span>
+                                        <h4 class="msg-t">
+                                            <span id="text_images_title1_preview" class="i-title"></span>
+                                        </h4>
+                                        <ul class="abs tc sub-msg-opr" id="ul_edit_appmsgItem1" title="编辑消息">
+                                            <li class="b-dib sub-msg-opr-item"><a title="编辑消息" id="edit_appmsgItem1" class="th icon18 iconEdit"
+                                                href="javascript:void(0)">编辑</a> </li>
+                                        </ul>
+                                        <input type="text" style="display: none;" id="text_images_upload1_preview" />
+                                        <div id="text_images_content1_preview" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div id="appmsgItem2" class="rel sub-msg-item">
+                                        <span class="thumb"><span style="" class="default-tip">缩略图</span>
+                                            <img id="text_images_img2_preview" style="display: none" class="i-img" src="">
+                                        </span>
+                                        <h4 class="msg-t">
+                                            <span id="text_images_title2_preview" class="i-title"></span>
+                                        </h4>
+                                        <ul class="abs tc sub-msg-opr" title="请选择操作">
+                                            <li class="b-dib sub-msg-opr-item"><a title="编辑消息" id="edit_appmsgItem2" class="th icon18 iconEdit"
+                                                href="javascript:void(0)">编辑</a> </li>
+                                            <li class="b-dib sub-msg-opr-item"><a title="删除消息" id="del_appmsgItem2" class="th icon18 iconDel"
+                                                href="javascript:void(0)">删除</a> </li>
+                                        </ul>
+                                        <input type="text" style="display: none;" id="text_images_upload2_preview" />
+                                        <div id="text_images_content2_preview" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div id="appmsgItem3" class="rel sub-msg-item" style="border-bottom: 0px;">
+                                        <span class="thumb"><span style="" class="default-tip">缩略图</span>
+                                            <img id="text_images_img3_preview" style="display: none" class="i-img" src="">
+                                        </span>
+                                        <h4 class="msg-t">
+                                            <span id="text_images_title3_preview" class="i-title"></span>
+                                        </h4>
+                                        <ul class="abs tc sub-msg-opr" title="请选择操作">
+                                            <li class="b-dib sub-msg-opr-item"><a title="编辑消息" id="edit_appmsgItem3" class="th icon18 iconEdit"
+                                                href="javascript:void(0)">编辑</a> </li>
+                                            <li class="b-dib sub-msg-opr-item"><a title="删除消息" id="del_appmsgItem3" class="th icon18 iconDel"
+                                                href="javascript:void(0)">删除</a> </li>
+                                        </ul>
+                                        <input type="text" style="display: none;" id="text_images_upload3_preview" />
+                                        <div id="text_images_content3_preview" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="sub-add">
+                                        <a id="add_appmsgItem" class="block tc sub-add-btn" href="javascript:void(0)"><span
+                                            class="vm dib sub-add-icon"></span>增加一条</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div_msg_edit_area" class="msg-edit-area">
+                            <div class="rel ">
+                                <div class="msg-editer">
+                                    <span class="block" for="">标题</span>
+                                    <input type="text" value="" id="text_images_title" class="msg-input" maxlength="22" style="max-width:405px;width:405px;">
+                                    <span class="block" for=""><span class="upload-tip r">图片建议尺寸(小于等于)：<span id="text_images_maxpx"
+                                        style="color: blue;">600</span> * <span id="text_images_minpx" style="color: blue;">
+                                            400</span>像素</span>封面</span>
+                                    <div class="cover-area">
+                                        <div class="oh z cover-hd">
+                                            <form id="text_images_form" method="post" enctype="multipart/form-data">
+                                            <a id="text_images_upload" class="icon28C upload-btn" href="javascript:void(0)" type="选择图片">
+                                                上传</a><span style="display: none;"><img id="text_images_upload_load_img" style="top: 5px;"
+                                                    src="{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}" width="16"
+                                                    height="16"><span style="color: #1d9cbc;"></span></span>
+                                            <input type="file" class="uploadFile" name="image_uploadFile" id="text_images_uploadfile"
+                                                style="cursor: pointer; left: 0; filter: alpha(opacity = 0); opacity: 0; -moz-opacity: 0;
+                                                height: 34px; line-height: 34px; position: absolute; top: 0; z-index: 1000002;
+                                                width: 70px; outline: none;" value="" />
+                                            </form>
+                                        </div>
+                                        <p class="cover-bd" id="text_images_imgArea" style="display: none;">
+                                            <img id="text_images_img" src="" style="max-height: 140px; max-width: 200px;" /><a
+                                                id="text_images_delImg" class="vb cover-del" href="javascript:void(0)">删除</a></p>
+                                    </div>
+                                    <div class="sender_content">
+                                        <label>
+                                            正文</label>
+                                    </div>
+                                    <div class="editor edui-default">
+                                        <textarea id="text_images_msgcount" name="text_images_msgcount" maxlength="2048"></textarea>
+                                    </div>
+                                    <div class="btnArea">
+                                        <div class="c-gA cLine" style="margin-bottom: 10px;">
+                                            <div>
+                                                *还能输入<span id="text_images_msgcount_massSendTimesLeft">2048</span>文字</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span id="text_images_out" class="abs msg-arrow a-out" style="margin-top: 0px;">
+                                </span><span id="text_images_in" class="abs msg-arrow a-in" style="margin-top: 0px;">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <span style="display: none;">
+                    <img id="send_msg_img" style="top: 5px;" src="{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}"
+                        width="16" height="16"><span style="color: #1d9cbc;"></span> 
+                </span>
+            </div>
+            <p class="tc msg-btn">
+                <a id="btnClear" href="javascript:void(1)" class="btnGreen">重置内容</a>
+                <a id="btnPublish" href="javascript:void(1)" class="btnGreen">发送消息</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="sendmsg_model" style="display:none;">
+      <div class="sendmsg_row">
+            <div>
+                <span class="sendmsg_field" style="line-height:85px;">封面图片：</span>
+                <img  class="sendmsg_icon" />
+            </div>
+            <div class="sendmsg_row" style="margin-left:15px;width:420px;margin-top:10px;">
+               <span class="sendmsg_field">推送标题：</span>
+               <input readonly="readonly" class="sendmsg_title" />
+            </div>
+            <div class="sendmsg_row" style="margin-left:15px;margin-top:5px; width:420px;">
+                <span class="sendmsg_field">摘要信息：</span>
+                <input readonly="readonly" class="sendmsg_summary" />
+            </div>
+      </div>
+     <div class="sendmsg_row" style="margin-bottom:0px;">
+            <span class="sendmsg_field">消息正文：</span>
+            <div class="sendmsg_content"></div>
+     </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+    var uploadObj=null;
+    $(document).ready(function(){
+		    var obj = $($(".selected_pic_box .modal-body")[0].children[0].children[0]);
+        var obj_ff = obj.find("embed");
+        uploadObj = document.all==null? obj_ff : obj;
+        uploadObj.css({"height":"475px","width":"515px","margin-left":"-10px","margin-top":"-15px" });  
+        service.sys_manager = "{{manager}}";
+        service.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+        $(".publish_area").hide();
+        service.search_service(1);
+    });
+    //上传默认群组logo
+    function avatar_success()
+    {
+        var parameter = {"module":"staff","action":"save_Photo","params":{"login_account":service.staffinfo.login_account }};
+        $.post(service.identical_url,parameter,function(returndata){
+            if (returndata.success)
+            {
+              $(".selected_pic_box").modal("hide");
+              var getfile = "{{path('JustsyMongoDocBundle_getfile')}}"+"/";
+              var fileid = returndata.fileid;
+              if ( fileid !="")
+                $("#staff_image").attr("src",getfile + fileid);
+              else
+                 $("#staff_image").attr("src","/bundles/fafatimewebase/images/no_photo.png");
+              $("#staff_image").attr("fileid",fileid);
+             	$("#uplod_loading").hide();
+             	$(".upload_hint").text("");
+            }
+            else
+            {
+             $("#uplod_loading").attr("src","/bundles/fafatimewebase/images/errow.gif");
+             $("#uplod_loading").show();
+             $(".upload_hint").text("默认群组Logo上传失败");
+            }
+        });
+    }
+    var isAuth = false;
+    var isManager = true;
+    var microNumber = '';
+    var microName = '';
+    var microOpenid='';
+    var microJid='';
+    var microType = '';
+    var microUse = '';
+    var microGroupId = "";
+    var msg_error_img = "{{ asset('bundles/fafatimeweopenapi/images/error.png')}}";
+    var msg_warning_img = "{{ asset('bundles/fafatimeweopenapi/images/zq.png')}}";
+    var msg_success_img = "{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}";
+    var msg_load_img = "{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}";
+    var content_file_upload= "{{ path('JustsyBaseBundle_enterprise_setting_check_micro_name')}}";
+    var image_upload= "{{ path('JustsyInterfaceBundle_microapp_upload')}}";
+    var editor_image_upload= "{{ path('JustsyInterfaceBundle_microapp_editor_uploadimage')}}";
+    var sendmsg_path= "{{ path('JustsyAdminAppBundle_mb_msgpush_sendmsg')}}";
+    var getgrouplist_path= "{{ path('JustsyInterfaceBundle_microapp_getgrouplist')}}";   
+</script>
+
+{% endblock %}

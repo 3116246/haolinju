@@ -1,0 +1,189 @@
+#div_create_circle{
+	background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  left: 50px;
+  padding: 10px 20px 0;
+  position: absolute;
+  top: 50px;
+  width: 570px;
+  border-radius:8px;
+  z-index:20000;
+}
+.div_transparent{
+	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFFFFF;
+  border-style: solid;
+  border-width: 20px;
+  display: block;
+  height: 0;
+  position: relative;
+  top: -80px;
+  width: 0;
+}
+.coverdivcircle{
+	background-color: #737373;
+  height: 100%;
+  left: 0;
+  opacity: 0.7;
+  filter:Alpha(Opacity=70);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index:10000;
+}
+.circle_base_info #txtcircle{
+	border: 1px solid #cacaca;
+  border-radius: 1px;
+  float: left;
+  height: 18px;
+  line-height: 18px;
+  outline-style: none;
+  padding-left: 5px;
+  width: 183px;
+}
+.circle_base_info{
+	float:left;
+}
+.circle_logo_upload{
+	float:right;
+}
+.circle_base_info select{
+	border: 1px solid #cacaca;
+  border-radius: 1px;
+  float: left;
+  height: 28px;
+  line-height: 18px;
+  outline-style: none;
+  padding-left: 5px;
+  width: 197px;
+  padding:0;
+  padding-top:3px;
+  margin-bottom:5px;
+}
+.classify_span{
+	background-color: #BEBEBE;
+  border: 1px solid #CCCCCC;
+  display: inline-block;
+  height: 25px;
+  position: relative;
+  width: 25px;
+  left:-27px;
+}
+.classify_span span{
+	border-color: #FFF;
+	border-left:transparent;
+	border-right:transparent;
+	border-bottom:transparent;
+	position:relative;
+	left:6px;
+	top:10px;
+	width:0;
+	height:0;
+	border-style: solid;
+	border-width:6px;
+	display:block;
+}
+.clickupload{
+	background-color: #F3FDFE;
+  border: 1px solid #B7D8E9;
+  padding: 2px 5px;
+}
+.createcirclebnt{
+	width:80px;
+	height:35px;
+	border-radius:4px;
+	background-color:#f5b426;
+	float:left;
+	text-align:center;
+	vertical-align: middle;
+}
+.createcirclebnt span{
+	font-size:13px;
+	font-weight:700;
+	color:#FFF;
+	line-height:32px;
+}
+#circle_invite_container{
+	height:80px;
+}
+#circle_invite_container .pre,#circle_invite_container .nex{
+	border: 1px solid #CCCCCC;
+  display: inline-block;
+  float: left;
+  height: 50px;
+  margin-top: 6px;
+	line-height: 50px;
+  width: 12px;
+  text-align:center;
+  cursor:pointer;
+}
+.circle_create_foot{
+	height:40px;
+	padding-left:190px;
+}
+.circle_invite_set .invite_set_area{
+	width:560px;
+	height:58px;
+	overflow:auto;
+	border:1px solid #cacaca;
+}
+#set_area_input{
+  float: left;
+  height: 18px;
+  line-height: 18px;
+  outline-style: none;
+  padding-left: 5px;
+	width:100%;
+	border:none;
+	background-color:#ecf5f8;
+	margin:0;
+	padding:0;
+}
+.div_circle_close{
+	font-size:18px;
+	font-weight:700;
+	float:right;
+	position:relative;
+	cursor:pointer;
+	top:-60px;
+}
+#set_area_input:focus{
+}
+#div_create_circle input[type="radio"]{
+	margin-top:-3px;
+}
+.share_invite_list{
+	background-clip: padding-box;
+  background-color: #F9F9F9;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 1px 1px 5px 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  float: left;
+  left: 0;
+  list-style: none outside none;
+  margin: 2px 0 0;
+  min-width: 160px;
+  padding-bottom: 5px;
+  position: absolute;
+  top: 100%;
+  z-index:30000;
+}
+.share_invite_list a{
+	clear: both;
+  color: #333333;
+  display: block;
+  font-weight: normal;
+  line-height: 20px;
+  padding: 3px 20px;
+  white-space: nowrap;
+  cursor:pointer;
+}
+.share_invite_list li{list-style:none,outside,none;height:22px;padding-left:5px;width:240px;overflow:hidden;cursor:default;}
+.share_invite_list li:hover{background-color:#ecf5f8;}
+.bordertransparent{
+	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFFFFF;
+  border-style: solid none solid solid;
+  border-width: 20px medium 20px 20px;
+  display: block;
+  float: right;
+  position: relative;
+}

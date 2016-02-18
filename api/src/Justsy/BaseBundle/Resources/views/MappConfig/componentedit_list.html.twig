@@ -1,0 +1,161 @@
+<div id="component_list_attribute_list" style="margin-bottom:20px;float:left;cursor:default;">
+	<div class="component_fileds_row" id="listMode">
+	   <span>列表方式：</span>
+		 <label>
+		    <input name="liststyle" type="radio" value="NORMAL" style="float:left;"> 
+		 	  <span style="float:left;padding-left:5px;font-size:12px;">普通列表</span>
+		 </label>
+		 <label>
+		 	  <input name="liststyle" type="radio" value="GRID3" style="float:left;"> 
+		 	  <span style="float:left;padding-left:5px;font-size:12px;">每行3列</span>
+		 </label>
+	   <label>
+		 	  <input name="liststyle" type="radio" value="GRID4" style="float:left;"> 
+		 	  <span style="float:left;padding-left:5px;font-size:12px;">每行4列</span>
+		 </label>
+	</div>
+  <div class="component_fileds_row" id="newslistType">
+	  <span>列表类型：</span>
+		<label>
+		 	 <input name="playtype" id="list_static" type="radio" style="float:left;" checked="checked"  value="1" onclick="selectType('static')" > 
+		 	 <span style="float:left;padding-left:5px;font-size:12px;">静态列表</span>
+		</label>
+		<label>
+		 	 <input name="playtype" id="list_dynamic" type="radio" style="float:left;"  value="2" onclick="selectType('dynamic')" > 
+		 	 <span style="float:left;padding-left:5px;font-size:12px;">动态列表</span>
+		</label>
+	</div>	
+	<div id="component_list_static" class="component_newslist_area">
+		 <span>列&nbsp;表&nbsp;项：</span>
+		 <div class="component_newslist_heard">
+		  	<span style="float: left; text-align: right; width: 45px; margin-right: 25px;">序号</span>
+		  	<span style="float:left">列表图标</span>
+		  	<span style="float: left; margin-left:40px;">列表名称</span>
+		  	<span style="margin-left:100px;">功能</span>
+		 </div>
+		  <!--静态列表填充区-->
+		 <div class="component_newslist_body"></div>
+		 <div class="component_nvar_bottom" style="margin-left:75px;">
+			   <span onclick="AddNewsItem()" class="component_item_add"></span>
+			   <span style="color:#0077CC;">添加新列表</span>
+	   </div>
+	</div>	
+	<!--动态列表-->
+	<div id="component_list_dynamic" class="component_editor_content" style="padding-left:0px;display:none;" >
+    <div style="margin-left:0px;" class="component_editor_content_iconrow">
+       <span style="float: left;">获取数据URL：</span><input type="text" style="width: 350px;" id="component_list_dynamic_dburl">
+    </div>
+    <div style="margin-left:0px;" class="component_editor_content_iconrow">
+       <span style="float: left;">URL参数名称：</span><input type="text" style="width: 350px;" maxlength="20" id="component_list_dynamic_paraname">
+    </div>
+    <span style="float:left;margin-left:80px;color:#0077cc;cursor:pointer;" onclick="component_list.dynamic_customize()">详细页面定制</span>
+	</div>
+	<!--静态列表-->
+  <div class="component_newslist_item" id="static_model"  style="display:none;" >
+	   <span style="float:left;display:block;width:25px;height:100%;">
+		    <span class="component_tools_delete component_menuitem_delete" onclick="component_list.remove(this);" title="删除该项"></span>
+		 </span>
+		 <span class="component_newslist_no">1</span>
+		 <img class="component_menuitem_img" style="margin-left:25px;" title="点击更改图标" onclick="component_list.selectIcon(this)" href="#app_res_selecetDlg" data-backdrop="static" data-toggle="modal" />
+		 <input type="text" maxlength="20" style="margin-left:20px;	" >
+		 <span style="margin-left:25px;" class="component_nav_function">详细页面定制</span>
+  </div>
+  <div class="clearfix"></div>  
+</div>
+	
+<script type="text/javascript">
+ //选择列表类型
+	 function selectType(type){
+	 	 if ( type=="static"){
+	 	 	  $("#component_list_dynamic").hide();
+	 	 	  $("#component_list_static").show();
+	 	 	  if ( $(".component_newslist_body .component_newslist_item").length==0)
+	 	 	     AddNewsItem();
+	 	 }
+	 	 else{
+	 	 	  var url = $.trim( $("#component_list_dynamic_dburl").val());
+	 	 	  if ( url=="")
+	 	 	      $("#component_list_dynamic_dburl").val("http://");
+	 	 	  $("#component_list_dynamic").show();
+	 	 	  $("#component_list_static").hide();
+	 	 	  $("#component_list_dynamic_dburl").focus();	 	 	  
+	 	 }	 	 	
+	 }	 
+	 //添加新项
+	 function AddNewsItem(){
+	 	 var count = $(".component_newslist_body").children().length
+	 	 if ( count >= component_list.itemcount) {
+	 	   ComponentAttr.showMessage("最多允许 "+ component_list.itemcount +" 项列表");
+	 	 	 return;
+	 	 }
+	 	 var id = "t"+Math.random().toString().replace(".","");
+	 	 $("#static_model>img").attr("id",id);
+	 	 $("#static_model>img").attr("src","http://we.fafatime.com/getfile/534ba34c7c274a1445000000");
+	 	 $("#static_model .component_newslist_no").text(count + 1);
+	 	 var html = $("#static_model").html();
+	   html = "<div class='component_newslist_item' functionid='' target='blank' >" + html + "</div>";
+	   $(".component_newslist_body").append(html);
+	 }
+   //绑定列表项(静态或动态)	 
+	 function BindListItem(attrs){
+	 	 var _type = attrs.type;
+		 var listmode = attrs.style.toUpperCase();
+		 //列表方式
+		 $("#listMode input[value='"+listmode+"']").attr("checked",true);
+		 if ( _type=="1"){  //静态
+				$("#component_list_dynamic").hide();
+				$("#component_list_static").show();
+			  $("#list_static").attr("checked","checked");
+			  //填充列表项
+			  var data = attrs.listitems;
+			  if ( data.length==0){
+			  	 AddNewsItem();
+			  	 return;
+			  }
+			  var id = "",html="";
+			  var htmls = new Array();
+			  for(var i=0;i< data.length;i++){
+			  	id = "t"+Math.random().toString().replace(".","");
+	 	      $("#static_model>img").attr("id",id);
+	 	      $("#static_model>img").attr("src",data[i].itemicon);
+	 	      $("#static_model>input").attr("value",data[i].itemname);
+	 	      $("#static_model .component_newslist_no").text(i+1);
+	 	      html = $("#static_model").html();
+	 	      var _target = data[i].functionid.target;
+	 	      if ( _target == null || _target == "")
+	 	         _target = "blank";
+	 	      html = "<div class='component_newslist_item' functionid='"+ data[i].functionid.text + "' target='" + _target +"'>" + html + "</div>";
+	        htmls.push(html);			  	
+			  }
+			  $(".component_newslist_body").html(htmls.join(''));
+			  //清空操作
+	 	    $("#static_model>img").removeAttr("src");
+	 	    $("#static_model>input").attr("value","")
+		 }
+		 else{
+				$("#component_list_static").hide();
+				$("#component_list_dynamic").show();
+				$("#list_dynamic").attr("checked","checked");
+				var url = $.trim( attrs.listurl );
+	 	 	  if ( url=="")
+	 	 	    $("#component_list_dynamic_dburl").val("http://");
+				else
+					$("#component_list_dynamic_dburl").val( url );
+				$("#component_list_dynamic_paraname").val(attrs.listurlpara);
+		 }
+	 }	 
+   $(".component_newslist_item").live("mouseover",function(){
+   	  $(this).find(".component_menuitem_delete").show();
+   });
+   $(".component_newslist_item").live("mouseout",function(){
+   	  $(this).find(".component_menuitem_delete").hide();
+   });
+   //详细页面定制
+   $(".component_nav_function").live("click",function(){
+   	 var functionid = $(this).parents(".component_newslist_item").attr("functionid");
+   	 if ( functionid==null || functionid=="")
+   	 	 component_list.customizebyempty(this);
+   	 else
+   	 	 component_list.customize(this);
+   });
+</script>

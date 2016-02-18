@@ -1,0 +1,33 @@
+<ul style="margin: 0px;">      
+   <li id='AccContainer' style="margin: 0px;display:block;float:left; width: 100%;overflow:hidden;height:90px;list-style:none outside none;">
+{% if list|length>0 %}
+   {%for row in list%}
+   <div login_account='{{row['login_account']}}'  class='employee_name'  style="width:62px;float:left;{%if loop.index0>6 %}display:none{%endif%}">
+			<img login_account='{{row['login_account']}}' style="margin-left: 6px;cursor:pointer;width:48px;height:48px;float:left" onerror="this.src='{{asset('bundles/fafatimewebase/images/c_reg_t0.png')}}'" src="{{path('JustsyMongoDocBundle_getfile',{'id':row['photo_path']})}}" >
+      <span title='{{row['nick_name']}}' style="color:#0088CC;cursor:pointer;height:22px;overflow:hidden;display: block; width: 62px; text-align: center;">{{row['nick_name']}}</span>
+   </div>
+   {%endfor%}
+   <div style="width:62px;float:left;" title="邀请同事加入企业圈子" onclick="invite_staff_in()">
+			<img style="cursor:pointer;width:48px;height:48px;float:left;margin-left: 6px;" src='{{asset('bundles/fafatimewebase/images/no_photo.png')}}'>
+      <span class="fafa_btn" style="margin-left: 8px; float: none;">邀请</span>
+   </div>
+{%else%}
+   <div style="text-align: center; height: 60px; margin-top: 20px;">
+       <span>没有找到我的小伙伴们？</span><span class="fafa_btn" style="float:none;" onclick="invite_staff_in()">立即邀请</span>
+   </div>
+{%endif%}
+</li>
+</ul>
+<script type="text/javascript">
+function cancel()
+{
+    
+}
+function invite_staff_in()
+{
+    $(".icon_invite").trigger("click");
+}
+$(document).ready(function(){
+   $("#invite_area").show();
+});
+</script>

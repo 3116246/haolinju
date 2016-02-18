@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}" type="text/javascript"></script>
+<link   rel="stylesheet" href="{{asset('bundles/fafatimewebase/css/share.css')}}?t=1" type="text/css">
+<script src="{{asset('bundles/fafatimewebase/js/faapishare.js')}}" type="text/javascript"></script>
+</head>
+<body style="padding:0px;margin:0px">
+<form target='iframe11' id="share_index" action="{{path('JustsyBaseBundle_share')}}" method="post" enctype="multipart/form-data">
+   <input type="hidden" name="ref_url" id="ref_url" value="{{ref_url}}">
+   <div id="wefafa_share_body" style='width:500px;height:320px;'>
+     <!--<div class="wefafa_share_modal in" id="div_share" style="width:580px;height:400px;top:42%;cursor:default;" show="false">-->
+     <div id="div_share" style="width:500px;height:320px;cursor:default;" show="false">
+       <div class="wefafa_share_title">
+         <img style="float:left;margin-left:12px;width:16px;heigth:16px;margin-top:6px;" src="{{asset('bundles/fafatimewebase/images/we16.png')}}">
+         <span id="windows_title" style="margin-left:5px;color:black;">分享给wefafa用户</span>
+       </div>
+       <div class="wefafa_share_forwards">
+         <div class="wefafa_share_contentbox">
+           <div id="content_box" class="hover">
+             <div style="font-size:12px;line-height:12px;height:25px;"> 
+               <span style="color:rgb(0,120,180);">分享内容</span> 
+               <span style="float:right;margin-right:2px;">
+                  <span style="color:rgb(255,102,0);font-weight:bold;" id="login_account">当前用户：{{nick}}</span><input type='hidden' id='text_id' value="{{account}}" /> <!--&nbsp;|&nbsp;<span style="cursor:pointer;" id="wefafa_change_account">更换账号</span>-->
+               </span>
+             </div>
+             <div class="wefafa_share_content">{{share_content}}</div>
+             <div style="font-size:12px;color:rgb(0,120,180);height:25px;margin-top:5px;">分享理由</div>
+             <div class="lib_Contentbox lib_tabborder">
+               <textarea hasinitfaceautotips="1" hasinituserautotips="1" id="wefafa_share_content" name="wefafa_share_content" style="padding:0px;overflow:auto;vertical-align:top;font-weight:normal;line-height:20px;border-radius:3px 3px 3px 3px;color:rgb(85,85,85);display: inline-block;resize:none;border:1px solid silver;box-shadow:0 0 0 transparent inset;font-size:12px;margin-bottom:4px;transition:border 0s linear 0s,box-shadow 0s linear 0s;width:480px;height:60px;"></textarea>
+             </div>
+             <div class="favinput" style="margin-top: 10px;height:35px;width:480px;line-height:32px;"> 
+               <span style="color:rgb(0,120,180);line-height:35px;margin-left:5px;">分&nbsp;享&nbsp;到：</span>    
+               <select id="sharecircle" style="font-size:12px;margin:0px;width:160px;">
+                 <optgroup label="我的公司" id="enterpriseIN"></optgroup>      
+                 <optgroup label="外部圈子" id="enterpriseOut"></optgroup>
+               </select>&nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+               <span id="wefafa_span_loading">
+                 <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style="width:32px;height:32px;" />
+                 <span id='wefafa_loading_word'>正在加载圈子</span>
+               </span>
+               <select id="selected_group" style="font-size:12px;margin:0px;width:100px;display:none;"></select>     
+               <span id="wefafa_write_share" class="wefafa_share_button" style="float:right;">立即分享</span> 
+             </div>
+           </div>
+         </div>
+         <div style='text-align:center;margin-top:60px;display:none;' id='share_succeed'>
+            <div><img src='{{asset('bundles/fafatimewebase/images/actsuc.png')}}' style='width:64px;height:64px;' /></div>
+            <div> 分享成功</div>
+         </div>
+        </div>
+     </div>
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+   $(document).ready(function(){
+     FaFaShare.LoadingCircleName();
+   });
+</script>

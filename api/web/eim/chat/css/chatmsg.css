@@ -1,0 +1,458 @@
+.webim_chatmsg_main_window {
+   background-clip:padding-box;border:1px solid rgba(0, 0, 0, 0.3);border-radius:6px;box-shadow:0 3px 7px rgba(0, 0, 0, 0.3);margin:-402px 0 0 -180px;
+   overflow:hidden;position: fixed;top: 100%;width:650px;height:400px;z-index: 1051;right:204px;
+}
+
+.webim_chatmsg_close {
+	 cursor:pointer;float:right;font-size:24px;font-weight:bold;height:100%;line-height:34px;margin-right:15px;
+}
+
+.webim_chagmsg_tool
+{
+    height:30px;
+    background-image: url("../images/ssbg.jpg");
+    cursor: default;
+}
+.webim_chatmsg_title_flag {
+    background-attachment: scroll;
+    background-image: url("../images/chatmsg.png");
+    background-repeat: no-repeat;
+    cursor: default;
+    float: left;
+    height:20px;width: 20px;
+    margin-top:6px;
+    margin-left:5px;
+    
+}
+
+.webim_chatmsg_title_word {
+  margin-left:2px;
+  position:relative;
+  float:left;
+}
+
+.modal-body.webim_chatmsg_body {
+    height: 335px;
+    overflow-y:hidden;
+    overflow-x:hidden;
+    padding: 1px;
+}
+
+.modal-header.webim_chatmsg_header
+{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    background-color: rgb(181, 231, 235);
+    height:30px;
+    line-height:30px;
+    padding:1px;
+    cursor:default;
+}
+.modal-header .close {
+    margin-top:5px;
+    margin-right:15px;
+    position:relative;
+}
+
+.modal-footer.webim_chatmsg_footer
+{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    height: 25px;
+    line-height: 25px;
+    padding: 2px;
+    text-align:left;
+}
+
+.webim_chatmsg_body
+{
+  height: 380px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+.webim_chatmsg_body_roster
+{
+  background-color:aliceblue;
+  height:335px;
+  padding:0px;
+  margin-top:-1px;
+  width:152px;
+  overflow-y:auto;
+	overflow-x:hidden;
+	position:relative;
+}
+
+.webim_chatmsg_body_org
+{
+  background-color:aliceblue;
+  margin-top:-1px;
+  display: none;
+  height:335px;width:152px;
+  overflow-y: auto;
+  overflow-x:hidden;
+}
+
+.webim_chatmsg_loading
+{
+  background-image: url("../images/loadingsmall.gif");
+  background-repeat: no-repeat;
+  width:16px;height:16px;
+  font-size:12px;color:black;
+  font-family: Microsoft YaHei;
+}
+
+.webim_chatmsg_line
+{
+    display: block;
+    height: 1px;
+    width: 200px;
+    float:left;
+    margin-top:9px;
+}
+
+.webim_chatmsg_body_right {
+   background-color:rgb(226,245,255);
+   height:305px;
+   margin-left: 152px;
+   margin-top: -338px;
+   overflow-x:hidden;
+   overflow-y:auto;
+   padding-top: 1px;
+   font-size:12px;
+   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.webim_chatmsg_body_right div{
+   float:left;
+   width:100%;
+}
+
+.webim_chatmsg_body_right_empty {
+   background-color:rgb(226,245,255);
+   height:305px;
+   margin-left: 152px;
+   margin-top: -338px;
+   overflow: hidden;
+   line-height:305px;
+   text-align: center;
+   font-size:18px;
+   font-family:KaiTi_GB2312;
+   color:rgb(204, 0, 0);
+}
+
+.webim_chatmsg_body_footer {
+  font-size:12px;height:30px;margin-left:152px;padding:2px;overflow:auto;text-align:left;
+}
+.webim_chatmsg_body_footer span{
+   float:left
+}
+.webim_chatmsg_body_roster ul
+{
+   width:100%;
+   list-style:none;
+   margin:0px;padding:0px;
+   cursor:default;
+   font-size:12px;
+   font-family: microsoft yahei,Arial,Helvetica,sans-serif;
+   line-height:25px;
+}
+
+.webim_chatmsg_body_roster li
+{ 
+  height:25px;
+  line-height:25px;
+  list-style:none;
+  text-align:left;
+  position: relative;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.webim_chatmsg_body_roster li:hover
+{ 
+  background-color:rgb(181, 231, 235);
+}
+
+
+.webim_chatmsg_list
+{
+  line-height: 25px;
+  margin-left: 5px;
+}
+
+.webim_chatmsg_img
+{
+  width:18px;
+  height:18px;
+  margin-left:12px;
+  margin-top:-2px;
+  position: relative;
+  
+}
+
+.webim_chatmsg_tool_roster
+{
+    background:url("../images/msg.png") no-repeat center center;
+    cursor:pointer;
+    float:left;
+    height:30px;
+    width:55px;   
+}
+.webim_chatmsg_tool_roster:hover
+{
+    background-color:#c9c9c9;
+}
+
+.webim_chatmsg_tool_roster_select
+{
+    background:url("../images/msghover.png") no-repeat center center;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_roster:hover
+{
+   background-color:#c9c9c9;   
+}
+
+.webim_chatmsg_tool_org
+{
+    background:url("../images/Org_Normal.png") no-repeat center center;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_org_select
+{
+    background:url("../images/Org_Select.png") no-repeat center center;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_org:hover
+{
+    background-color:#c9c9c9;
+}
+
+
+.webim_chatmsg_tool_group
+{
+    background:url("../images/qun.png") no-repeat center center;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_group_select
+{
+    background:url("../images/Group_Select.png") no-repeat center center;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_group:hover
+{
+   background-color:#c9c9c9;
+}
+
+.webim_chatmsg_tool_systemMsg
+{
+    background:url("../images/systemMsg.png") no-repeat center center;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_systemMsg:hover{
+  background-color:#c9c9c9;
+}
+
+.webim_chatmsg_tool_search
+{
+    background:url("../images/search.png") no-repeat center center;
+    cursor: pointer;
+    float: right;
+    height: 30px;
+    width:55px;
+}
+
+.webim_chatmsg_tool_search:hover
+{
+    background-color:#c9c9c9;
+}
+
+.webim_chatmsg_tool_export
+{
+   background:url("../images/export.png") no-repeat center center;
+   cursor: pointer;
+   float:right;
+   height: 30px;
+   width:55px;
+}
+.webim_chatmsg_tool_export_enable
+{
+   cursor:default;
+   float:right;
+   height: 30px;
+   width:55px;
+}
+
+.webim_chatmsg_tool_export:hover
+{
+    background-color:#c9c9c9;
+}
+
+.webim_chatmsg_tool_delete
+{
+   background: url("../images/error1.png") no-repeat scroll 40% center transparent;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 30px;
+    margin-right: 20px;
+    width: 55px;
+}
+
+.webim_chatmsg_tool_delete_enable
+{
+    cursor:default;
+    display: block;
+    float: left;
+    height: 30px;
+    margin-right: 20px;
+    width: 55px;
+}
+
+.webim_chatmsg_tool_delete:hover
+{
+    background-color:#c9c9c9;
+}
+
+
+.webim_chatmsg_tool_downdelete {
+    background: url("../images/qz_arrow.png") no-repeat scroll center center transparent;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 30px;
+    margin-left: -45px;
+    width: 20px;
+    z-index: 99999;
+}
+
+.webim_chatmsg_tool_downdelete_enable {
+    cursor: default;
+    display: block;
+    float: left;
+    height: 30px;
+    margin-left: -45px;
+    width: 20px;
+    z-index: 99999;
+}
+
+.webim_chatmsg_tool_deleteWord
+{
+    min-width: 50px;
+    left:-30px;
+    width: 80px;
+}
+
+.webim_chatmsg_searchCondition
+{
+    height:110px;width:230px;
+    display:none;
+    position: relative;
+    margin-left:426px;  
+}
+
+.webim_chatmsg_searchCondition_word
+{
+    font-size:12px;
+    height:30px;
+    position:relative;
+    line-height:30px;
+    padding:1px;
+}
+
+.webim_chatmsg_select
+{
+  background-color: rgb(239, 247, 254);
+  border: 1px solid rgb(156, 206, 253);
+}
+
+.webim_chatmsg_btn
+{
+   font-size: 12px;
+   height:14px;width:20px;
+   line-height: 14px;
+   position: relative;
+   top: 6px;
+}
+
+.webim_chatmsg_first_pager
+{
+  color:blue;
+  text-align: center;
+  font-size:14px;
+  cursor: pointer;
+  float: left;
+  width:30px;
+}
+
+.webim_chatmsg_prev_pager
+{
+  color:blue;
+  text-align: center;
+  font-size:14px;
+  cursor: pointer;
+  float: left;
+  width:30px;
+}
+
+.webim_chatmsg_next_pager
+{
+  color:blue;
+  text-align: center;
+  font-size:14px;
+  cursor: pointer;
+  float: left;
+  width:30px;
+}
+
+.webim_chatmsg_last_pager
+{
+  color:blue;
+  text-align: center;
+  font-size:14px;
+  cursor: pointer;
+  float: left;
+  width:30px;
+}
+
+.webim_chatmsg_pager_enable
+{
+  font-size:14px;
+  text-align: center;
+  color:black;
+  cursor:default;
+  float: left;
+  width:30px;
+}
+
+.webim_chatmsg_selected
+{
+  background-color:aliceblue;
+  border: 1px solid rgb(156,206,253);
+}

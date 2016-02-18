@@ -1,0 +1,88 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/><link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style stype="text/css">
+	#tree_depart { border:none;height: 500px;max-height: 500px;overflow-x: hidden;overflow-y: auto;width: 500px;background-color:#fff; }
+	#hint_content { background-color: #fff;cursor: default;height: 60px;line-height: 55px;overflow: hidden;padding: 0;text-align: center;}
+	#hint_content>span { float:left;}
+	.hint_message_error { font-weight:bold;padding:0px 2px;color:#cc3300;}
+	.portal_button  {  float: left;font-size: 12px;line-height: 20px;margin-left: 10px;margin-top: -2px;padding: 0;width: 70px; }
+	.portal_img {color: #0088cc;cursor: pointer;font-size: 22px;margin-top: 2px;	}
+	.pagestyle 	{ float: left;margin: 10px 0 0;padding: 0;}
+	.portal_icon 	{ float: left;height: 25px;margin:1px 5px 0;width: 25px; }
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/portal.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="body_content" >
+  <div style="float: left; padding-left: 5px;">
+		 <span>开发企业：</span>
+		 <input type="text" class="mb_textbox" id="textename" onkeypress="if (event.keyCode==13) { portal.Search(1); }" placeholder="请输入开发企业" style="width: 242px;">
+		 <span style="margin-left: 65px;">应用名称：</span>
+		 <input type="text" class="mb_textbox" id="textappname" onkeypress="if (event.keyCode==13) { portal.Search(1); }" placeholder="请输入应用名称" style="width: 242px;">
+		 <span class="btnGreen group_button" onclick="portal.Search(1);" style="padding-top: 0px; padding-right: 15px; padding-bottom: 0px; margin-left: 10px;">查&nbsp;&nbsp;询</span>
+  </div>
+	<table align="center" class="mb_common_table" style="width:100%;">
+	 	 <thead>
+   	 	  <tr>
+				  <td width="200" align="center">开发企业</td>
+				  <td width="120" align="center">应用名称</td>
+					<td width="70" align="center">版本号</td>
+					<td width="132" align="center">发布日期</td>
+					<td width="316" align="center">描述</td>
+					<td width="70" align="center">效果图</td>
+					<td width="90" align="center" style="border-right: medium none;">操作</td>
+				</tr>
+		 </thead>
+		 <tbody>
+		 </tbody>
+  </table>
+  <div class="pagination pagestyle" style="display:none;"></div>
+</div>
+
+<!--对话框-->
+<div style="display:none;" id="prompt" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:400px;left:-50px;top:150px;cursor:default;">
+    	<div class="title">提示！</div> 
+      <span class="close-tip-icon" onclick="$('#prompt').hide();" title="关闭"></span>
+      <div class="content" id="hint_content">
+      </div>
+      <div style="height: 50px;margin-left:auto;margin-right:auto;padding:10px 0px;width:170px;background-color:transparent;" class="operation">
+         <button class="btn btnGreen default_button" style="width:65px;"  onclick="$('#prompt').hide();">关&nbsp;闭</button>
+      </div>
+    </div>
+</div>
+
+<div style="display:none;" id="viewImage" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:400px;left:-50px;top:150px;cursor:default;">
+    	<div class="title">效果预览图</div> 
+      <span class="close-tip-icon" onclick="$('#viewImage').hide();" title="关闭"></span>
+      <div class="content" id="hint_content">
+      </div>
+      <div style="height: 50px;margin-left:auto;margin-right:auto;padding:10px 0px;width:170px;background-color:transparent;" class="operation">
+         <button class="btn btnGreen default_button" style="width:65px;"  onclick="$('#viewImage').hide();">关&nbsp;闭</button>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		portal.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+		portal.Search(1);
+	});
+	
+</script>
+{% endblock %}

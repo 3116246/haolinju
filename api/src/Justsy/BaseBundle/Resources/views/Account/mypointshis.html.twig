@@ -1,0 +1,26 @@
+<table width="100%" cellspacing="0" cellpadding="0" border="1" class="gradetable">
+  <tbody><tr>
+    <td class="gradetd"><span class="tabletitle">时间</span></td>
+    <td class="gradetd"><span class="tabletitle">得分描述</span></td>
+  </tr>
+  {% for row in ds["we_staff_points_his"]["rows"] %}
+  <tr>
+    <td class="gradetd">{{ row["point_date"] }}</td>
+    <td class="gradetd">{{ row["point_desc"] }}</td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>    
+{% if ds["we_staff_points_his"]["recordcount"] > ds["we_staff_points_his"]["rows"]|length %}
+<div class="pagination pagination-right">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="Account.getPointsHisPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href='#' onclick="Account.getPointsHisPage({{i}})">{{(i)}}</a></li>
+	{%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %}onclick="Account.getPointsHisPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}

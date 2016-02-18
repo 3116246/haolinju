@@ -1,0 +1,89 @@
+<div class='grouplist'>
+	{%set i=0%}
+	{% for r in rows%}
+	{% set i=i+1%}
+	{%if i%3==1%}
+	<div style='border:1px solid #EEE;border-radius:2px 2px 2px 2px;width:29.35%;float:left;margin-left:0px;padding:8px;margin-top:15px;' class='group_contenter'>
+	{%else%}
+	<div style='border:1px solid #EEE;border-radius:2px 2px 2px 2px;width:29.35%;float:left;margin-left:15px;padding:8px;margin-top:15px;' class='group_contenter'>
+	{%endif%}
+		<div style='float:left;margin-top:5px;'><image width='45' height='45' src='{{asset("/bundles/fafatimewebase/images/default_group.png")}}'/></div>
+		<div style='float:left;margin-left:5px;width:84px;'>
+			<p style='margin:0;color:#156e9c;font-weight:700;cursor:default;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:84px;' class='groupname'>{{ r.group_name }}</p>
+			<p style='margin:0' class='who_create'>群主:{{ r.nick_name }}</p>
+			<p style='margin:0' class='create_date'>{{ r.create_date }}</p>
+		</div>
+		<span id="{{r.group_id}}" create_staff="{{r.create_staff}}" onclick="spclick(this);" group_name='{{ r.group_name }}' style='height:22px;right:-5px;top:38px;cursor:pointer;color:#156E9C;width:64px;padding:4px;text-align:center;background-color:#F1FCFF;border:1px solid #ABDBF2;position:relative;' is_join="{{r.is_join}}" class='join_group'>{% if r.is_join==1 %}<span style='color:#CCC'>已经加入</span>{%else%}<img class='loadingsmall' width='8' height='8' style="display:none" src="{{ asset("bundles/fafatimewebase/images/loadingsmall.gif") }}" /><image width='8' height='8' class='joinimg' src='{{asset("/bundles/fafatimewebase/images/join.png")}}'/>申请加入{%endif%}</span>
+	</div>
+	{%endfor%}
+</div>
+<div show="false" style="display:none;height: 139px; margin-left: -110px; margin-top: -60px; width: 300px;" 
+data-backdrop="false" id="doc_confirm" class="doc_confirm modal">
+  <div class="doc_window_title">
+    <span>&nbsp;&nbsp;确认消息</span>
+  </div>
+  <div>
+    <div class="doc_rd_confirm_left"></div>
+    <div style="text-align:center;" class="doc_rd_confirm_right">
+        <div style="height: 60px; line-height: 60px;" id="div_fans_msg_info" class="doc_rd_confirm_text"></div>
+        <div style="float: right; margin-right: 90px;"><span class="doc_md_content_right_btn" id="deleteDoc">确定</span>
+        <span class="doc_md_content_right_btn" id="cancelDelete" onclick="$('#doc_confirm').hide();">取消</span></div>
+    </div>        
+  </div>
+</div>
+
+<script type="text/javascript">
+var sp=null;
+
+var spclick=function(n){
+  if ($(n).attr("isclick")=="1" || $(n).attr("is_join")=="1" || $(n).text()=="已经申请") return;
+  sp=n;
+  $("#div_fans_msg_info").text('确认要申请加入［'+$(n).attr('group_name')+'］群吗？');
+  $("#doc_confirm").show();
+};
+
+//申请加入
+var joinGroup=function(n)
+{
+  //if(!confirm("确定要申请加入该群组吗？")) return;
+  $("#doc_confirm").hide();
+  $(n).attr("isclick","1");
+  $(n).find("img.loadingsmall").show();
+  $(n).find("img.joinimg").hide();
+  var group_id = n.id;
+  var group_name = $(n).parent().find(".groupname").text();
+  var create_staff = $(n).attr("create_staff");
+  $.post("{{path('JustsyBaseBundle_group_applyjoin')}}",
+    {group_id:group_id,group_name:group_name,create_staff:create_staff,network_domain:"{{curr_network_domain}}"},
+    function(data) 
+    {
+    	if(data=='-2'){
+    		$("#resmes_group").text('抱歉，您加入的群组过多，已达到了等级限制。').fadeIn(200);
+    		setTimeout(function(){
+    			$("#resmes_group").hide(200);
+    		},5000);
+    		$(n).find("img.loadingsmall").hide();
+	      $(n).find("img.joinimg").show();
+	      $(n).attr("isclick","0");
+    		return;
+    	}
+    	if(data=='-3'){
+    		$("#resmes_group").text('抱歉，该群组已满员。').fadeIn(200);
+    		setTimeout(function(){
+    			$("#resmes_group").hide(200);
+    		},5000);
+    		$(n).find("img.loadingsmall").hide();
+	      $(n).find("img.joinimg").show();
+	      $(n).attr("isclick","0");
+    		return;
+    	}
+      $(n).find("img.loadingsmall").hide();
+      $(n).find("img.joinimg").show();
+      $(n).attr("isclick","0");
+      $(n).text("已经申请");
+    },"text");
+};
+$("#deleteDoc").bind('click',function(){
+  if(sp!=null) joinGroup(sp);
+});
+</script>

@@ -1,0 +1,24 @@
+<div class="topicbox">
+    <ul type='normalbox' class="conv_box">
+        {% for row in we_convers_list %}
+            <li class="clearfix">
+                        {% render row["template_controller"] with {"conv_root_id" : row["conv_id"],'trend':trend} %}
+                        {% if loop.first %}
+                    <input type="hidden" class="maxid" value="{{ row["conv_id"] }}"/>
+                        {% endif %}
+                        {% if loop.last %}
+                    <input type="hidden" class="endid" value="{{ row["conv_id"] }}"/>
+                        {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+        </div>
+        <script>
+					var manager_trend='{{trend}}';
+            $(document).ready(function() {
+                loadtoplist();
+                overLengthAct();
+                setListAct();
+                registermoreoper();
+            });
+            </script>

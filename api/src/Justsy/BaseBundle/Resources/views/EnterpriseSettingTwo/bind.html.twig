@@ -1,0 +1,941 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+{% block menuitemactive_bind %}class="active"{% endblock %}
+{% block menuitemactive_microul1 %}style="position: relative;left: 23px;"{% endblock %}
+{% block menuitemactive_microul2 %}style="position: relative;left: 23px;"{% endblock %}
+{% block stylesheets %}
+ <link href="/bundles/fafatimewebase/css/edit-table-default-style.css" type="text/css" rel="stylesheet">
+ <link href="/bundles/fafatimewebase/css/pagination.css" type="text/css" rel="stylesheet">
+ <style type="text/css">
+ 	  .input-prepend{width:580px;}
+		#org_left { z-index:10000;display: none; width:180px; height:250px;position: absolute;top: 0;left:0px;}
+		#org_right {  width:740px; height:580px; margin-top:2px; background-color:#FFF;}
+		#org_left a:hover {background-color:#fefdea; text-decoration:none;}
+		ul{margin: 0;padding: 0;border: 0}
+		ul.ztree {padding:0px; border: 1px solid #ccc;background: #eefaf6;width:180px;height:250px;overflow-y:auto;overflow-x:auto;}
+.div_btn {
+	margin-top:2px;
+  line-height:21px;
+  width:69px;
+  height:21px;
+  cursor:pointer;
+  text-align:center;
+  overflow:hidden;
+  background:url('{{asset('bundles/fafatimewebase/images/btn_normal.png')}}');
+ }
+ #searchemployee{
+ 		background: url("{{asset('bundles/fafatimewebase/images/icon.png')}}") no-repeat scroll 0 -27px rgba(0, 0, 0, 0);
+    border: 0 none;
+    height: 18px;
+    line-height: 18px;
+    outline-style: none;
+    padding-left: 5px;
+    width: 195px;
+ }
+ .modal{margin:0}
+ .invalidpage{
+ 	background-color:#CCC;
+ 	border-color:#CCC;
+ 	cursor:default;
+ 	z-index:0;
+ 	color:#BBB;
+ }
+/*菜单模块 */
+.tab{
+ list-style:none;
+ padding:4px 5px 0px 5px;
+ margin-left:0px;
+ }
+.tab li{ 
+display:inline; /* 【重点】让li横向排列。*/
+ font-size:12px;
+ }
+.tab li a{ 
+padding:5px 10px; /* 因为没有固定高度，所以用填充来调整显示效果。 */
+border:1px solid #ccc;  /* 菜单项的边框 */
+color:#888; 
+border-bottom:none; /* 底部无边框 */
+text-decoration:none;
+background:#f7f7f7
+}
+/*鼠标经过时的样式 */
+.tab li a:hover{ 
+background:#fff;
+}
+/*选中时的样式 */
+.tab li.no a{ 
+background-color:#eefaf6;
+border-bottom:none; /*  隐藏菜单项的底部边框 */
+position:relative;  /* 【重点】菜单项里面的连接使用了相对定位 */
+top:1px;            /* 【重点】相对于外层顶部为1像素，正好是底部边框的像素。所以就遮住了ul的底部边框 */
+color:#000000; 
+font-weight:bold
+}		 	  
+.state_list{
+   z-index:10000;display: none; width:92px; height:100px;position: absolute;top: 0;left:0px;border:1px solid #7F9DB9;background-color:#FFF;
+}
+.state_item{
+   background-color:#FFF;
+   list-style: none outside none;
+   cursor:pointer;
+   padding-left: 10px;   
+}
+.state_item:hover{
+   background-color:#CCC;
+}
+.state_item_active{
+   background-color:#3399FF;
+   list-style: none outside none;
+   color:#FFF;
+   cursor:pointer;
+   padding-left: 10px;
+}
+.dropdown_btn{
+    background-color: #F0F0F0;
+    border: 1px solid #F0F0F0;
+    display: block;
+    float: right;
+    height: 18px;
+    width: 20px;
+    cursor:pointer;
+}
+.dropdown_btn:hover{
+   border: 1px solid #707070;
+}
+.importemps{
+     position: absolute;
+     top: 0;
+     left:0px;
+     z-index:10000;
+     display: none; 
+     width:250px; 
+     height:100px;
+     border: 1px solid #CCCCCC;
+     background: none repeat scroll 0 0 #FFF;
+}
+#privlist li:hover{
+	background-color:#afd7f0;
+	cursor:pointer;
+}
+.privselected{
+	background-color:#afd7f0;
+	cursor:pointer;
+}
+ul li{
+	list-style: none outside none;
+}
+#stafflist li{
+	width:70px;
+	height:22px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+  white-space: nowrap;
+}
+ </style>
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/Util.js')}}"></script> 
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/DetailTable.js')}}"></script>
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/hint.js')}}"></script>
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/json2.js')}}"></script>
+{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">账户绑定管理</div>
+<div id="modules" style="overflow:hidden;">
+	{% for item in modules%}
+		<div style="float: left; overflow: hidden; border: 1px solid rgb(204, 204, 204); font-size: 25px; font-weight: 700; padding: 5px 30px; background-color: #CCC; color: rgb(255, 255, 255); border-radius: 30px; cursor: pointer;margin-right:20px;" class='module' bind_type='{{item['bind_type']}}' module_code='{{item['module_code']}}' style='' onclick='doGetBindList(this)'>{{item['module_name']}}</div>
+	{%endfor%}
+</div>
+<div style="overflow:hidden;margin-top:30px;">
+	<select id='appids' onchange='doGetBindListWithAppid(this)' style='float:left;width:120px;'>
+		{%for item in appids%}
+		<option value="{{item['appid']}}">{{item['appname']}}</option>
+		{%endfor%}
+	</select>
+	<div style="float: right; margin-left: 20px; padding: 2px 5px; border-radius: 5px; cursor: pointer; background-color: rgb(208, 239, 253); border: 1px solid rgb(175, 238, 253);" onclick="unbind()">解绑</div>
+	<div style="float: right; margin-left: 20px; padding: 2px 5px; border-radius: 5px; cursor: pointer; background-color: rgb(208, 239, 253); border: 1px solid rgb(175, 238, 253);" onclick="autoBind()">绑定</div>
+	<div style="float: right; margin-left: 20px; padding: 2px 5px; border-radius: 5px; cursor: pointer; background-color: rgb(208, 239, 253); border: 1px solid rgb(175, 238, 253);" onclick="bind()">手动绑定</div>
+	<div style="float: right; margin-left: 20px; padding: 2px 5px; border-radius: 5px; cursor: pointer; background-color: rgb(36, 122, 166); border: 1px solid rgb(175, 238, 253);color:#FFF" onclick="syncbind()">同步全部已绑定用户</div>
+	<div style="float: right; margin-left: 20px; padding: 2px 5px; border-radius: 5px; cursor: pointer; background-color: rgb(208, 239, 253); border: 1px solid rgb(175, 238, 253);;float:right;display:none;" onclick="autoAllBind()">绑定所有员工</div>
+	</div>
+<div id="bind_content" style="overflow:hidden;margin-top:20px;">
+	<div class="topsearch">
+<input id="searchemployee" type="text" name="" placeholder="查找员工">
+<div class="topsearch_button" onclick="searchgo()"></div>
+</div>
+	<div id="fenye" style="float:right;"></div>
+	<table id="bind_list" style="width: 100%; margin-top: 20px; overflow: hidden;">
+		<tr style='height:35px;vertical-align:middle;text-align:center;border-bottom:1px solid #EEE;'><td><input type='checkbox' onclick='checkall(this)' id='bind_all_check'/></td><td>姓名</td><td>帐号</td><td>openid</td><td>账户值</td><td>绑定</td></tr>
+	</table>
+</div>
+<div class="modal" id="estorebind" data-backdrop=false style="display:none;margin-left: -250px;margin-top: -250px;width: 400px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;账户绑定</span>
+      	<div class="invite_title_close" onclick="$('#estorebind').hide()" title="关闭" style="color: rgb(102, 102, 102); font-size: 16px;">×</div>
+      </div>
+	    <div>
+	      <div class="doc_rd_confirm_right">
+	          <div class="errorlist_text" style="overflow:auto;height: 200px; line-height: 20px; margin: 10px;">
+	          	<!--
+	          	<div style="float: left;height: 220px;overflow: auto;width: 200px;">
+	          		<ul id="privlist">
+	          			{%for item in functions%}
+	          			<li functioncode="{{item['code']}}">{{item['name']}}</li>
+	          			{%endfor%}
+	          		</ul>
+	          	</div>
+	          	<div style="float: left; width: 180px; padding-left: 10px; margin-left: 5px;height:220px;overflow:auto;">
+	          		<div style="border-bottom: 1px solid rgb(204, 204, 204); padding-bottom: 5px;"><input id="employeequxuan" type="checkbox"/>&nbsp;&nbsp;全选</div>
+	          		<div id="employeelist">
+	          			
+	          		</div>
+	          	</div>-->
+	        <div class="tab-pane" style="min-height: 200px;">
+						<div>
+							用户名：<input type='text' id='estore_account' name='estore_account'/><br/>
+							密&nbsp;&nbsp;码：<input type='text' id='estore_pwd' name='estore_pwd'/>
+						</div>
+					</div>
+	          </div>	          
+	      </div>    
+	    </div>
+	    <div style="border-top: 1px solid #ccc;background-color: rgb(243, 243, 243); padding-left: 80px; height: 25px; padding-top: 5px;">
+					<span onclick="$('#estorebind').hide();bind();" style="min-width: 50px;width: auto;" class="doc_md_content_right_btn">确定</span><span onclick="$('#estorebind').hide()" class="doc_md_content_right_btn">取消</span>
+			</div>
+</div>
+<div class="modal" id="xiechengbind" data-backdrop=false style="display:none;margin-left: -250px;margin-top: -250px;width: 400px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;账户绑定</span>
+      	<div class="invite_title_close" onclick="$('#xiechengbind').hide()" title="关闭" style="color: rgb(102, 102, 102); font-size: 16px;">×</div>
+      </div>
+	    <div>
+	      <div class="doc_rd_confirm_right">
+	          <div class="errorlist_text" style="overflow:auto;height: 100px; line-height: 20px; margin: 10px;">
+	          	<!--
+	          	<div style="float: left;height: 220px;overflow: auto;width: 200px;">
+	          		<ul id="privlist">
+	          			{%for item in functions%}
+	          			<li functioncode="{{item['code']}}">{{item['name']}}</li>
+	          			{%endfor%}
+	          		</ul>
+	          	</div>
+	          	<div style="float: left; width: 180px; padding-left: 10px; margin-left: 5px;height:220px;overflow:auto;">
+	          		<div style="border-bottom: 1px solid rgb(204, 204, 204); padding-bottom: 5px;"><input id="employeequxuan" type="checkbox"/>&nbsp;&nbsp;全选</div>
+	          		<div id="employeelist">
+	          			
+	          		</div>
+	          	</div>-->
+	        <div class="tab-pane" style="min-height: 100px;">
+						<div>
+							用户名：<input type='text' id='xiecheng_account' name='xiecheng_account'/><br/>
+						</div>
+					</div>
+	          </div>	          
+	      </div>    
+	    </div>
+	    <div style="border-top: 1px solid #ccc;background-color: rgb(243, 243, 243); padding-left: 80px; height: 25px; padding-top: 5px;">
+					<span onclick="$('#xiechengbind').hide();bind();" style="min-width: 50px;width: auto;" class="doc_md_content_right_btn">确定</span><span onclick="$('#xiechengbind').hide()" class="doc_md_content_right_btn">取消</span>
+			</div>
+</div>
+{% endblock %}
+{% block javascriptsref %}
+<script>
+  //分页控件
+/*
+使用  Pagination pageObj=new Pagination();
+pageObj.init({
+container:Dom对象,
+totalcount:100,
+pagesize:20,
+defaultpage:2,默认为1
+default:默认加载的页码 默认为第一页
+onBntClick:function(pageindex){
+//加载页面方法
+}
+});
+*/
+var Pagination = function () {
+    this.totalcount = 0;
+    this.pagecount = 0; //页数
+    this.pagesize = 0;
+    this.maxsize = 9;
+    this.container = []; //父容器
+    this.pageclickevent = []; //页码点击事件
+    this.preclickevent = []; //上一页点击事件
+    this.nexclickevent = []; //下一页点击事件
+    this.pointclickevent = []; //
+    this.firstclickevent = [];
+    this.lastclickevent = [];
+    this.currpage = 0;
+    this.point = [];
+}
+Pagination.prototype = {
+    setCount: function () {
+        this.pagecount = Math.ceil(this.totalcount / this.pagesize);
+    },
+    setContainer: function (container) {
+        this.container = container;
+    },
+    addPageClick: function (func) {
+        this.pageclickevent.push(func);
+    },
+    addPreClick: function (func) {
+        this.preclickevent.push(func);
+    },
+    addNexClick: function (func) {
+        this.nexclickevent.push(func);
+    },
+    addPointClick: function (func) {
+        this.pointclickevent.push(func);
+    },
+    addFirstClick: function (func) {
+        this.firstclickevent.push(func);
+    },
+    addLastClick: function (func) {
+        this.lastclickevent.push(func);
+    },
+    pageClick: function (pageindex) {
+        for (var i = 0; i < this.pageclickevent.length; i++) {
+            this.pageclickevent[i].apply(this, [pageindex]);
+        }
+    },
+    preClick: function (pageindex) {
+        for (var i = 0; i < this.preclickevent.length; i++) {
+            this.preclickevent[i].apply(this, [pageindex]);
+        }
+    },
+    nexClick: function (pageindex) {
+        for (var i = 0; i < this.nexclickevent.length; i++) {
+            this.nexclickevent[i].apply(this, [pageindex]);
+        }
+    },
+    pointClick: function () {
+
+    },
+    firstClick: function () {
+        var pageindex = 1;
+        for (var i = 0; i < this.firstclickevent.length; i++) {
+            this.firstclickevent[i].apply(this, [pageindex]);
+        }
+    },
+    lastClick: function () {
+        var pageindex = this.pagecount;
+        for (var i = 0; i < this.lastclickevent.length; i++) {
+            this.lastclickevent[i].apply(this, [pageindex]);
+        }
+    },
+    setDefault: function (pageindex, callback) {
+        var thisindex = pageindex;
+        if (thisindex == this.currpage) return;
+        this.currpage = thisindex;
+        this.setCurrCss();
+        if (thisindex == this.pagecount || thisindex == 1) {
+            this.setNoPageCss();
+        }
+        if (callback != null)
+            callback(thisindex);
+    },
+    setNoPageCss: function () {
+        var nopageCss = {
+            'background-color': '#c8c8c8',
+            'color': '#000'
+        };
+        var pageCss = {
+            'background-color': '#00AAD5',
+            'color': '#FFF'
+        };
+        $("span[pagination='pre'],span[pagination='nex']").css(pageCss);
+        $("span[pagination='" + (this.currpage == 1 ? 'pre' : 'nex') + "']").css(nopageCss);
+    },
+    setCurrCss: function () {
+        var currCss = {
+            'background-color': '#00AAD5',
+            'color': '#FFF'
+        };
+        var notcurrCss = {
+            'background-color': '#e6e6e6',
+            'color': '#000'
+        };
+        $("span[pagination='page']").css(notcurrCss);
+        $("span[pagination='page'][pageindex='" + this.currpage + "']").css(currCss);
+    },
+    setCurrPage: function (no) {
+        if (no != null) this.currpage = no;
+        for (var i = 0; i < this.container.length; i++) {
+            $(this.container[i]).find("span.currpage").text(this.currpage + "/" + this.pagecount + "页");
+        }
+    },
+    settotal: function () {
+        for (var i = 0; i < this.container.length; i++) {
+            $(this.container[i]).find("span.totalcount").text(this.totalcount);
+        }
+    },
+    resetPageList: function () {
+        var $p = $(this.container).find(".pagev[pageindex='" + this.currpage + "']").parent();
+        var $nex = $p.next();
+        var $pre = $p.prev();
+        var d = '';
+        var notarr = [1, this.pagecount, this.currpage];
+        if ($nex.attr('class') == 'pointc') {
+            d = 'nex';
+            var html = [];
+            for (var i = 1; i <= 3; i++) {
+                notarr.push(parseInt(this.currpage) + i);
+                html.push("<span class='pagec'><span  class='pagev' style='width:20px;' pagination='page' pageindex='" + (parseInt(this.currpage) + i).toString() + "'>" + (parseInt(this.currpage) + i).toString() + "</span></span>");
+                if ($(".pagev[pageindex='" + (parseInt(this.currpage) + i + 1).toString() + "']").length) {
+                    $nex.remove();
+                    break;
+                }
+            }
+            $p.after(html.join(''));
+        }
+        if ($pre.attr('class') == 'pointc') {
+            d = 'pre';
+            var html = [];
+            for (var i = 1; i <= 3; i++) {
+                notarr.push(parseInt(this.currpage) - i);
+                html.unshift("<span class='pagec'><span  class='pagev' style='width:20px;' pagination='page' pageindex='" + (parseInt(this.currpage) - i).toString() + "'>" + (parseInt(this.currpage) - i).toString() + "</span></span>");
+                if ($(".pagev[pageindex='" + (parseInt(this.currpage) - i - 1).toString() + "']").length) {
+                    $pre.remove();
+                    break;
+                }
+            }
+            $p.before(html.join(''));
+        }
+        if (d != '') {
+            var n = $(this.container).find(".pagev[pageindex]").length - 1;
+            var $lastpage = $(this.container).find(".pagev[pageindex]:last");
+            while (n > -1 && $(this.container).find(".pagev").length > this.maxsize) {
+                $v = $(this.container).find(".pagev[pageindex]:eq(" + n + ")");
+                if (!notarr.contains(parseInt($v.attr('pageindex')))) {
+                    $v.parent().remove();
+                }
+                n--;
+            }
+            var $pages = $(this.container).find(".pagev[pageindex]");
+            for (var i = 0; i < $pages.length; i++) {
+                var thisindex = parseInt($($pages[i]).attr('pageindex'));
+                var nexindex = parseInt($($pages[i + 1]).attr('pageindex'));
+                if (thisindex + 1 != nexindex) {
+                    if ($($pages[i]).parent().next().attr('class') == 'pagec')
+                        $($pages[i]).parent().after("<span class='pointc'><span class='pointv' pagination='point'>●●●</span></span>");
+                }
+            }
+        }
+    },
+    createHTML: function () {
+        var html = [];
+        html.push("<span class='operc'><span class='pagev btn' title='首页' pagination='first'><<</span></span>");
+        html.push("<span style='margin-left:5px;' class='operc'><span class='pagev btn' title='上一页' pagination='pre'><</span></span>");
+        /*
+        for (var i = 1; i <= this.pagecount; i++) {
+        if (i == this.pagesize && this.pagecount > this.pagesize) {
+        html.push("<span class='pointc'><span class='pointv' pagination='point'>●●●</span></span>");
+        i = this.pagecount - 1;
+        this.point.push(i);
+        }
+        else
+        html.push("<span class='pagec'><span  class='pagev' style='width:20px;' pagination='page' pageindex='" + i + "'>" + i + "</span></span>");
+        }
+        */
+        html.push('<span style="margin-left:5px;"  class="operc"><span pagination="redirect" class="pagev btn">跳转到<input type="text" style="width: 30px; height: 20px;padding:0; margin: -4px 0px 0px 5px; border: 0px none;padding:0px\9;*padding:0px;" class="redirect_bnt">&nbsp;<a href="javascript:void(0);" class="gotopage btn" style="color: rgb(0, 0, 0);margin-top: -2px;background-color:#CCC; cursor: pointer; text-decoration: none;">Go</a>&nbsp;&nbsp;<span class="currpage" style="padding-bottom:2px;"></span>&nbsp;&nbsp;共&nbsp;<span class="totalcount" style="padding-bottom:2px;"></span>&nbsp;条</span></span>');
+        html.push("<span style='margin-left:5px;'  class='operc'><span  class='pagev btn' title='下一页' pagination='nex'>></span></span>");
+        html.push("<span style='margin-left:5px;' class='operc'><span class='pagev btn' title='末页' pagination='last'>>></span></span>");
+        for (var i = 0; i < this.container.length; i++) {
+        		
+            $(this.container[i]).html(html.join(''));
+            if (this.pagecount == 1) {
+                $(this.container[i]).hide();
+            }
+        }
+    },
+    cancelCallBack: function () {
+        this.pageclickevent = []; //页码点击事件
+        this.preclickevent = []; //上一页点击事件
+        this.nexclickevent = []; //下一页点击事件
+        this.pointclickevent = []; //
+        this.firstclickevent = [];
+        this.lastclickevent = [];
+    },
+    init: function (paras) {
+        if (paras.pagecount)
+            this.pagecount = paras.pagecount; //页数
+        if (paras.container)
+            this.setContainer(paras.container); //父容器
+        if (paras.totalcount)
+            this.totalcount = paras.totalcount;
+        if (paras.pagesize)
+            this.pagesize = paras.pagesize;
+        this.setCount();
+        //取消所有回调
+        this.cancelCallBack();
+        if (paras.onBntClick) {
+            this.addPageClick(paras.onBntClick);
+            this.addPreClick(paras.onBntClick);
+            this.addNexClick(paras.onBntClick);
+            this.addLastClick(paras.onBntClick);
+            this.addFirstClick(paras.onBntClick);
+            this.addPageClick(this.setCurrPage);
+            this.addPreClick(this.setCurrPage);
+            this.addNexClick(this.setCurrPage);
+            this.addLastClick(this.setCurrPage);
+            this.addFirstClick(this.setCurrPage);
+        }
+        this.createHTML();
+        this.bindEvent();
+        this.currpage = paras.defaultpage ? paras.defaultpage : 1;
+        this.setCurrPage();
+        this.settotal();
+    },
+    setTotalCount: function (count) {
+        this.totalcount = count;
+        this.currpage = Math.max(this.currpage, 1);
+        this.setCount();
+        this.setCurrPage();
+        this.settotal();
+        for (var i = 0; i < this.container.length; i++) {
+            if (this.totalcount <= this.pagesize) {
+                //只有1页时，隐藏分页控件
+                $(this.container[i]).hide();
+            }
+            else {
+                $(this.container[i]).show();
+            }
+        }
+    },
+    setPageSize: function () {
+
+    },
+    bindEvent: function () {
+        var _obj = this;
+        for (var i = 0; i < this.container.length; i++) {
+            $(this.container[i]).find("span[pagination='point']").unbind('click').bind('click', function () {
+
+            });
+            $(this.container[i]).find("span[pagination='page']").unbind('click').bind('click', function () {
+                var $this = $(this);
+                var thisindex = $this.attr('pageindex');
+                if (thisindex == _obj.currpage) return;
+                _obj.currpage = thisindex;
+                //_obj.setCurrCss();
+                if (thisindex == _obj.pagecount || thisindex == 1) {
+                    // _obj.setNoPageCss();
+                }
+                _obj.pageClick(thisindex);
+                //_obj.resetPageList();
+            });
+            $(this.container[i]).find("span[pagination='pre']").unbind('click').bind('click', function () {
+                var $this = $(this);
+                if (_obj.currpage == 1) return;
+                _obj.currpage--;
+                //_obj.setCurrCss();
+                if (_obj.currpage == 1) {
+                    //_obj.setNoPageCss();
+                }
+                _obj.preClick(_obj.currpage);
+                //_obj.resetPageList();
+            });
+            $(this.container[i]).find("span[pagination='nex']").unbind('click').bind('click', function () {
+                var $this = $(this);
+                if (_obj.currpage == _obj.pagecount) return;
+                _obj.currpage++;
+                //_obj.setCurrCss();
+                if (_obj.currpage == _obj.pagecount) {
+                    //_obj.setNoPageCss();
+                }
+                _obj.nexClick(_obj.currpage);
+                //_obj.resetPageList();
+            });
+            $(this.container[i]).find("span[pagination='first']").unbind('click').bind('click', function () {
+                _obj.currpage = 1;
+                //_obj.setCurrCss();
+                //_obj.setNoPageCss();
+                _obj.firstClick();
+            });
+            $(this.container[i]).find("span[pagination='last']").unbind('click').bind('click', function () {
+                _obj.currpage = _obj.pagecount;
+                //_obj.setCurrCss();
+                //_obj.setNoPageCss();
+                _obj.lastClick();
+            });
+            $(this.container[i]).find("span[pagination='redirect']").find("input.redirect_bnt").unbind('keydown').bind('keydown', function (event) {
+                var ev = event || window.event;
+                if (ev.keyCode == 13) {
+                    var currpage = $(this).val();
+                    if (!(/^[0-9]{1,}$/).test(currpage)) {
+                        $(this).val("");
+                        return;
+                    }
+                    currpage = Math.min(parseInt(currpage), _obj.pagecount);
+                    currpage = Math.max(1, currpage);
+                    $(this).val(currpage);
+                    _obj.currpage = currpage;
+                    _obj.pageClick(currpage);
+                    stopProp(ev);
+                }
+            });
+            $(this.container[i]).find("a.gotopage").unbind('click').bind("click", function () {
+                var e = this;
+                var currpage = $(e).siblings("input.redirect_bnt").val();
+                if (!(/^[0-9]{1,}$/).test(currpage)) {
+                    $(this).val("");
+                    return;
+                }
+                currpage = Math.min(parseInt(currpage), _obj.pagecount);
+                currpage = Math.max(1, currpage);
+                $(this).val(currpage);
+                _obj.currpage = currpage;
+                _obj.pageClick(currpage);
+                stopProp(ev);
+            });
+        }
+    }
+}
+function stopProp(evt) {
+    evt.stopPropagation ? evt.stopPropagation() : (evt.cancelBubble = true);
+    if (evt.preventDefault) evt.preventDefault();
+}
+var ajaxLoading2 = function (msg) {
+    if (typeof (msg) == 'undefined' || msg == '' || msg == null) msg = "正在处理,请稍候...";
+    var html = [];
+    var width = '300px';
+    if (arguments[1] != null) width = arguments[1] + 'px';
+    if ($(".currAjax").length == 0) {
+        html.push("<div class='modal currAjax' style='top:45%;left:40%;z-index:200000;width:" + width + ";'>");
+        html.push("<div class='modal-body' style='overflow:hidden;'><div style='float:left;line-height:48px;'><img src='/bundles/fafatimewebase/images/loading.gif' style='width:48px;height:48px;'/><span>" + msg + "</span></div></div>");
+        html.push("</div>");
+        $(document.body).append(html.join(''));
+        createconverdiv("currAjax");
+    }
+    else {
+        $(".currAjax .modal-body p").html(msg);
+    }
+}
+
+var ajaxLoadEnd2 = function () {
+    $(".currAjax").remove();
+    $(".currConverDiv").remove();
+}
+var showErrBox2 = function (msg) {
+    var time = arguments[1] ? parseInt(arguments[1]) : -1;
+    //if (typeof (msg) == 'undefined' || msg == '' || msg == null) msg = "抱歉,操作失败!";
+    var html = [];
+    var width = '300px';
+    if (arguments[2] != null) width = arguments[2] + 'px';
+    html.push('<div class="modal currErr" style="top:45%;left:40%;z-index:200000;width: ' + width + ';">');
+    html.push('<div class="modal-header"><p>' + '提醒消息' + '</p></div>');
+    html.push('<div class="modal-body" style="overflow: hidden; color: #FF2401; text-align: center;"><div style="position: relative;float: left; "><img style="position:relative;height:16px;width:16px;padding-right:5px;" src="/bundles/fafatimewebase/images/ts.png"></div><div style="position: relative;float: left; "><p>' + msg + '</p></div></div>');
+    html.push('<div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true" onclick=\'$(this).parent().parent().remove();$(".currConverDiv").remove();\'>确定</button></div>');
+    html.push('</div>');
+
+    $(document.body).append(html.join(''));
+    createconverdiv("currErr");
+    if (time > -1) {
+        setTimeout(function () {
+            $(".currErr").remove();
+            $(".currConverDiv").remove();
+        }, time);
+    }
+}
+var showSuccessBox2 = function (msg) {
+    var time = arguments[1] ? parseInt(arguments[1]) : -1;
+    if (typeof (msg) == 'undefined' || msg == '' || msg == null) msg = "恭喜,操作成功!";
+    var html = [];
+    var width = '300px';
+    if (arguments[2] != null) width = arguments[2] + 'px';
+    html.push('<div class="modal currSuccess" style="top:45%;z-index:200000;left:40%;width: ' + width + '; ">');
+    html.push('<div class="modal-header"><p>' + '提醒消息' + '</p></div>');
+    html.push('<div class="modal-body" style="overflow: hidden; color: rgb(0, 153, 0); text-align:center;min-height:50px;line-height:50px;"><div style="position: relative;"><img style="margin-right:5px;" src="/bundles/fafatimewebase/images/zq.png"><span>' + msg + '</span></div></div>');
+    html.push('<div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true" onclick=\'$(this).parent().parent().remove();$(".currConverDiv").remove();\'>确定</button></div>');
+    html.push('</div>');
+    $(document.body).append(html.join(''));
+    createconverdiv("currSuccess");
+    if (time > -1) {
+        setTimeout(function () {
+            $(".currSuccess").remove();
+            $(".currConverDiv").remove();
+        }, time);
+    }
+}
+////////////////////业务js////////////////////
+var ajaxisload=false;
+function doGetBindList(e)
+{
+	if($("#bind_list").attr('load')=='1')return;
+	if(typeof(pageBindObj)=="undefined" || pageBindObj==null){
+		pageBindObj=new Pagination();
+		pageBindObj.init({
+			container:[$("#fenye")[0]],
+			totalcount:0,
+			pagesize:15,
+			onBntClick:function(pageindex){
+				//加载页面方法
+				getBindList(pageindex);
+			}
+		});
+	}
+	$(e).siblings().attr('check','0');
+	$(e).attr('check','1');
+	getBindList(1);
+	$("#bind_list").attr('load','1');
+	$(e).siblings().css("background-color","#CCC");
+	$(e).css("background-color","rgb(36, 122, 166)");
+}
+function getBindList(pageindex){
+	if($("#bind_list").attr('load')=='1')return;
+	var bind_type=$(".module[check='1']").attr("bind_type");
+	var appid=$("#appids option:selected").attr('value');
+	var searchtext=$("#searchemployee").val();
+	$.post("{{path('JustsyBaseBundle_enterprise_setting_get_bindlist')}}",{'bind_type':bind_type,'searchtext':searchtext,'appid':appid,'pageindex':pageindex},function(d){
+		$("#bind_list").attr('load','0');
+		if(d.rows){
+			var html=[];
+			if(d.rows.length==0){
+				html.push("<div style='text-align:center;margin-top:50px;'>未找到匹配的结果！</div>");
+			}
+			else{
+				html.push("<tr style='height:35px;vertical-align:middle;text-align:center;border-bottom:1px solid #EEE;'><td style=''><input type='checkbox' onclick='checkall(this)' id='bind_all_check'/></td><td>姓名</td><td>帐号</td><td>openid</td><td>账户值</td><td>绑定</td></tr>");
+				for(var i=0;i<d.rows.length;i++){
+					html.push("<tr style='height:35px;vertical-align:middle;text-align:center;border-bottom:1px solid #EEE;'><td style=''><input type='checkbox' class='bind_check'/></td><td>"+d.rows[i].nick_name+"</td><td>"+d.rows[i].login_account+"</td><td>"+d.rows[i].openid+"</td><td>"+d.rows[i].bind_uid+"</td><td>"+d.rows[i].isbind+"</td></tr>");
+				}
+			}
+			$("#bind_list").html(null).append(html.join(''));
+		}
+		if(d.count){
+			pageBindObj.setTotalCount(parseInt(d.count));
+		}
+	});
+}
+function bind(){
+	if(ajaxisload)return;
+	var module_code=$(".module[check='1']").attr("module_code");
+	var bind_type=$(".module[check='1']").attr("bind_type");
+	var items=$(".bind_check:checked");
+	if(items.length==0)return;
+	if(items.length>1){
+		showErrBox2("手动绑定不支持批量操作！");
+		return;
+	}
+	var openids="";
+	if(module_code=='EstoreController'){
+		if($("#estore_account").val()=='' || $("#estore_pwd").val()==''){
+			$("#estorebind").show();
+			return;
+		}
+		else{
+			
+		}
+	}
+	if(module_code=='XiechengController'){
+		if($("#xiecheng_account").val()==''){
+			$("#xiechengbind").show();
+			return;
+		}
+	}
+	for(var i=0;i<items.length;i++){
+			if(i==0){
+			 openids+=$(items[i]).parent().parent().children("td:eq(3)").text();
+			}
+			else{
+				openids+=","+$(items[i]).parent().parent().children("td:eq(3)").text();
+			}
+	}
+	var auth='';
+	if(module_code=='EstoreController'){//单个绑定
+		auth=JSON.stringify({"userid":$("#estore_account").val(),"passwd":$("#estore_pwd").val()});
+	}
+	else if(module_code=='XiechengController'){
+		auth=$("#xiecheng_account").val();
+	}
+	ajaxLoading2();
+	ajaxisload=true;
+	$.get("{{path('JustsyInterfaceBundle_sso_bind',{'openid':'openid','appid':'appid'})}}".replace(/openid/,openids).replace(/appid/,$("#appids option:selected").attr('value'))+"?appid=&bind_type="+bind_type+"&openid="+openids+"&auth="+auth+"&encrypt=1",{},function(d){
+		ajaxLoadEnd2();
+		ajaxisload=false;
+		if(d){
+			if(d.returncode=='0000'){
+				showSuccessBox2();
+				getBindList(pageBindObj.currpage);
+			}
+			else{
+				showErrBox2(d.msg);
+			}
+		}
+	});
+	$("#estore_account").val("");
+  $("#estore_pwd").val("");
+  $("#xiecheng_account").val("");
+}
+function autoBind()
+{
+	if(ajaxisload)return;
+	var module_code=$(".module[check='1']").attr("module_code");
+	var bind_type=$(".module[check='1']").attr("bind_type");
+	var items=$(".bind_check:checked");
+	if(items.length==0)return;
+	var openids="";
+	/*
+	if(module_code=='EstoreController'){
+		if($("#estore_account").val()=='' || $("#estore_pwd").val()==''){
+			$("#estorebind").show();
+			return;
+		}
+		else{
+			
+		}
+	}
+	*/
+	for(var i=0;i<items.length;i++){
+			if(i==0){
+			 openids+=$(items[i]).parent().parent().children("td:eq(3)").text();
+			}
+			else{
+				openids+=","+$(items[i]).parent().parent().children("td:eq(3)").text();
+			}
+		}
+	ajaxLoading2();
+	ajaxisload=true;
+	$.post("{{path('JustsyInterfaceBundle_sso_bindbat')}}",{"appid":$("#appids option:selected").attr('value'),'ssomodule':module_code,'eno':"{{eno}}",'openids':openids},function(d){
+		ajaxLoadEnd2();
+		ajaxisload=false;
+		if(d){
+			if(d.s=='1'){
+				showSuccessBox2();
+				getBindList(pageBindObj.currpage);
+			}
+			else{
+				showErrBox2(d.m);
+			}
+		}
+	});
+	/*
+	else if(module_code=='EstoreController'){//单个绑定
+		ajaxLoading2();
+		ajaxisload=true;
+		$.get("{{path('JustsyInterfaceBundle_sso_bind',{'openid':'openid','appid':'appid'})}}".replace(/openid/,openids).replace(/appid/,$("#appids option:selected").attr('value'))+"?appid=&bind_type="+bind_type+"&openid="+openids+"&auth="+JSON.stringify({"userid":$("#estore_account").val(),"passwd":$("#estore_pwd").val()}),{},function(d){
+			ajaxLoadEnd2();
+			ajaxisload=false;
+			if(d){
+				if(d.returncode=='0000'){
+					showSuccessBox2();
+					getBindList(pageBindObj.currpage);
+				}
+				else{
+					showErrBox2(d.msg);
+				}
+			}
+		});
+		$("#estore_account").val("");
+	  $("#estore_pwd").val("");
+	}
+	*/
+}
+function checkall(e){
+	if(!!$(e).attr("checked")){
+		$("input.bind_check").attr("checked",true);
+	}
+	else{
+		$("input.bind_check").attr("checked",false);
+	}
+}
+function unbind()
+{
+	if(ajaxisload)return;
+	var module_code=$(".module[check='1']").attr("module_code");
+	var items=$(".bind_check:checked");
+	if(items.length==0)return;
+	var openids="";
+//	if(items.length>1){
+//		showErrBox2("暂不支持批量解绑！");
+//		return;
+//	}
+	for(var i=0;i<items.length;i++){
+			if(i==0){
+			 openids+=$(items[i]).parent().parent().children("td:eq(3)").text();
+			}
+			else{
+				openids+=","+$(items[i]).parent().parent().children("td:eq(3)").text();
+			}
+	}
+	var bind_type=$(".module[check='1']").attr("bind_type");
+	ajaxLoading2();
+	ajaxisload=true;
+		$.post("{{path('JustsyInterfaceBundle_sso_unbind',{'openid':'openid','appid':'appid'})}}".replace(/openid/,$(items[0]).parent().parent().children("td:eq(3)").text()).replace(/appid/,$("#appids option:selected").attr('value')),{'bind_type':bind_type,'openids':openids},function(d){
+			ajaxLoadEnd2();
+			ajaxisload=false;
+			if(d){
+				if(d.returncode=='0000'){
+					showSuccessBox2();
+					getBindList(pageBindObj.currpage);
+				}
+				else{
+					showErrBox2(d.msg);
+				}
+			}
+		})
+}
+function autoAllBind()
+{
+	if(ajaxisload)return;
+	var module_code=$(".module[check='1']").attr("module_code");
+//	if(module_code=='EstoreController'){
+//		showErrBox2("优选暂不支持批量操作！");
+//		return;
+//	}
+	ajaxLoading2();
+	ajaxisload=true;
+		$.post("{{path('JustsyInterfaceBundle_sso_bindbat')}}",{"appid":$("#appids option:selected").attr('value'),'ssomodule':module_code,'eno':"{{eno}}",'openids':'all'},function(d){
+			ajaxLoadEnd2();
+			ajaxisload=false;
+			if(d){
+				if(d.s=='1'){
+					showSuccessBox2();
+					getBindList(pageBindObj.currpage);
+				}
+				else{
+					showErrBox2(d.m);
+				}
+			}
+		});
+}
+function syncbind()
+{
+	if(ajaxisload)return;
+	var module_code=$(".module[check='1']").attr("module_code");
+	if(module_code=='EstoreController'){
+		showErrBox2("优选暂不支持信息同步！");
+		return;
+	}
+	ajaxLoading2();
+	ajaxisload=true;
+		$.post("{{path('JustsyInterfaceBundle_sso_bindbat')}}",{"appid":$("#appids option:selected").attr('value'),'ssomodule':module_code,'eno':"{{eno}}",'openids':'allbind'},function(d){
+			ajaxLoadEnd2();
+			ajaxisload=false;
+			if(d){
+				if(d.s=='1'){
+					showSuccessBox2();
+					//getBindList(pageBindObj.currpage);
+				}
+				else{
+					showErrBox2(d.m);
+				}
+			}
+		});
+}
+function doGetBindListWithAppid(e){
+	doGetBindList($(".module[check='1']")[0]);
+}
+function searchgo(){
+	doGetBindList($(".module[check='1']")[0]);
+}
+$(document).ready(function(){
+	$("#estore_account").val("");
+	$("#estore_pwd").val("");
+	$("#searchemployee").keyup(function(event){
+		var ev=event||window.event;
+		if(ev.keyCode==13){
+			doGetBindList($(".module[check='1']")[0]);
+		}
+	});
+	doGetBindList($("#modules").children()[0]);
+});
+</script>
+{% endblock %}

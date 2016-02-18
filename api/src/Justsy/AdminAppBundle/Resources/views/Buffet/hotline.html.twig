@@ -1,0 +1,264 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/js/KindEditor/themes/default/default.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/buffet.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/image.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/buffet.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/WdatePicker.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container" style="float:left;padding:10px 0;">
+	<div class="containerBox">
+			<div style="width:100%;">
+				<div class="search_area" style="padding-left:25px;">
+					<span>接收日期：</span>
+					<input type="text" class="mb_textbox" id="startdate" readonly="readonly" onclick="HotLine.selected_start();" style="text-align:center;width:100px;background-color:#eeeeee;" />
+					<input type="text" class="mb_textbox" id="enddate"   readonly="readonly" onclick="HotLine.selected_end();" style="text-align:center;width:100px;background-color:#eeeeee;" />
+					<span style="margin-left:20px;">热线问题：</span>
+				  <input type="text" class="mb_textbox" id="searchKeyword" style="width:220px;margin-top:13px;" placeholder="热线问题关键字" onkeypress="if (event.keyCode==13){HotLine.SearchData(1);}" />
+	        <span class="btnGreen mb_button"  onclick="HotLine.SearchData(1);" style="margin-left:20px;">查&nbsp;&nbsp;询</span>
+	        <span class="btnGreen mb_button" style="width:90px;margin-left:120px;" onclick="HotLine.ViewEdit(this);">添加热线</span>
+		    </div>
+        <table align="center" id="table_search" class="mb_common_table" style="width:905px;margin-left:25px;border-bottom:none;">
+	  	 	 <thead>
+		   	 	  <tr>
+						  <td align="center" width="100">热线编号</td>
+							<td align="left" width="100" style="padding-left:10px;">接收日期</td>
+							<td align="center" width="80">咨询人员</td>
+							<td align="left" width="623" style="border-right:none;padding-left:10px;">热线问题</td>
+						</tr> 
+				 </thead>
+				 <tbody></tbody>
+			  </table>
+			  <div id="Pagination" class="pagination" style="float:left;padding:0px;margin:8px 0px 5px 25px;"></div> 
+	    </div>		
+	</div>
+</div>
+
+	<!--热线编辑-->
+	<div  class="dialogBox " id="edit_dialog" style="display:none;cursor:default;">
+		<div class="background"></div>
+    <div class="dialog hotline_area">
+    	<div class="title">编辑/查看热线</div> 
+      <span title="关闭" onclick="$('#edit_dialog').hide();" class="close-tip-icon"></span>
+      <div class="content hotline_content_area" style="padding:5px 10px;">
+      	<div class="hotline_group">
+      		<span class="hotline_grouptext">接收情况</span>
+        </div>
+        <div class="hotline_row">
+        	 <span class="hotline_rowfield">序号：</span>
+        	 <input id="hotline_number" type="text" class="hotline_textbox" placeholder="热线编号" disabled="disabled" />
+        	 <span class="hotline_rowfield">接收人：</span>
+        	 <input id="textReceive"    type="text" class="hotline_textbox" />
+        	 <span class="hotline_rowfield">来&nbsp;&nbsp;源：</span>
+        	 <select class="mb_combox" id="combox_source" style="width:150px;">
+        	 	<option value="0"></option>
+        	 	<option value="2">热线</option>
+        	 	<option value="3">电子邮件</option>
+        	 	<option value="1">企业微信</option>
+        	 	<option value="4">其他</option>
+        	 </select>
+        </div>
+        <div class="hotline_row">
+        	 <span class="hotline_rowfield">接收日期：</span>
+        	 <input class="hotline_textbox" id="receipt_date" type="text" onClick="HotLine.setdate();"/> 
+        </div>
+      	<div class="hotline_group">
+      		 <span class="hotline_grouptext">员工情况</span>
+       </div>
+        <div class="hotline_row">
+        	 <span class="hotline_rowfield">工&nbsp;&nbsp;号：</span>
+        	 <input id="text_worknum" type="text" class="hotline_textbox" />        	 
+        	 <span class="hotline_rowfield">姓&nbsp;&nbsp;名：</span>
+        	 <input id="text_workname" type="text" class="hotline_textbox" />
+        	 <span class="hotline_rowfield">一级部门：</span>
+        	 <input id="text_dept1" type="text" class="hotline_textbox" />        	         	 
+        </div>
+        <div class="hotline_row">
+        	 <span class="hotline_rowfield">二级部门：</span>
+        	 <input id="text_dept2" type="text" class="hotline_textbox" />       
+       	   <span class="hotline_rowfield">工作地：</span>
+        	 <input id="text_address" type="text" class="hotline_textbox" />
+       	   <span class="hotline_rowfield">岗位：</span>
+        	 <input id="text_workduty" type="text" class="hotline_textbox" />        	         	  	         	 
+        </div>
+        <div class="hotline_row">
+        	 <span class="hotline_rowfield">加盟时间：</span>
+        	 <input id="text_in_date" type="text" class="hotline_textbox" />       
+       	   <span class="hotline_rowfield">联系方式：</span>
+        	 <input id="textcontact" type="text" class="hotline_textbox" style="width:400px;" />  	         	  	         	 
+        </div>
+      	<div class="hotline_group">
+      		 <span class="hotline_grouptext">热线纪要</span>
+        </div>
+        <div style="float:left;height:210px;">
+	        <div class="hotline_row">
+	        	 <textarea class="hotline_textbox hotline_content_TextBox" placeholder="热线内容纪要" id="textcontent"></textarea>         	  	         	 
+	        </div>
+	        <div class="hotline_row">
+	        	 <span class="hotline_rowfield">处理方式：</span>
+	        	 <select style="float:left;width:152px;" id="comobx_scheme" class="mb_combox">
+	        	 	 <option value="0"></option>
+	        	 	 <option value="1">直接解答</option>
+	        	 	 <option value="2">转办</option>
+	        	 	 <option value="3">报告报批</option>
+	        	 	 <option value="4">其他</option>        	 	 
+	        	 </select>    
+	        	 <span class="hotline_rowfield">响应级别：</span>
+	        	 <select class="mb_combox" style="float:left;width:152px;" id="combox_grade">
+	        	 	 <option value="0"></option>
+	        	 	 <option value="1">紧急重要</option>
+	        	 	 <option value="2">不紧急但重要</option>
+	        	 	 <option value="3">紧急一般重要</option>
+	        	 	 <option value="4">不紧急一般重要</option>        	 	 
+	        	 </select>          	 	  	         	 
+	        </div>
+        </div>
+      </div>
+      <div class="operation hotline_bottom" style="padding:7px 0;">
+      	 <div class="hotline_hint"></div>
+      	 <div>
+	          <button onclick="HotLine.Save();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	          <button onclick="$('#edit_dialog').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+         </div>
+      </div>
+    </div>
+  </div>
+
+	<!--解决方案-->
+	<div  class="dialogBox " id="edit_scheme" style="display:none;cursor:default;">
+		<div class="background"></div>
+    <div class="dialog hotline_area">
+    	<div class="title">编辑/查看热线解决方案</div> 
+      <span title="关闭" onclick="$('#edit_scheme').hide();" class="close-tip-icon"></span>
+      <div class="content hotline_content_area" style="padding:5px 10px;">
+        <div class="hotline_group">
+      		 <span class="hotline_grouptext">热线接收情况</span>
+        </div>
+        <div class="hotline_row">
+        	 <span id="hotlinedesc" class="hotline_desc"></span>
+        	 <span id="hotline_receivedate" class="hotline_label"></span>
+        	 <span id="hotline_receivename" class="hotline_label"></span>
+        	 <span id="hotline_receivegrade" class="hotline_label"></span>
+        </div>
+        <!----------热线解决方案------------>
+        <div id="scheme_area" class="hotline_scheme_visit">
+		      	<div class="hotline_group">
+		      		 <span class="hotline_grouptext">热线解决方案</span>
+		        </div>
+		        <div class="hotline_row" style="margin:15px 0px;">
+		        	 <span class="hotline_rowfield">解决日期：</span>
+		        	 <input type="text" onclick="HotLine.setdate();" id="scheme_date" class="hotline_textbox" readonly="readonly" style="background-color: #eee">
+		        	 <span class="hotline_rowfield" style="margin-left:50px;" maxlength=5 >解决人员：</span>
+		        	 <input class="hotline_textbox" id="scheme_staff" type="text" />
+		        </div>          
+		        <div class="hotline_row">
+		        	 <span class="hotline_rowfield" style="float:left;height:220px;line-height:220px;">解决方案：</span>
+		        	 <textarea class="hotline_textbox" id="scheme_content" style="width:650px;height:220px;resize:none;padding:5px;" maxlength="500"></textarea>         	  	         	 
+		        </div>
+        </div>
+        
+        <!----------热线回访记录------------>
+        <div id="visit_area" class="hotline_scheme_visit">
+	        <!--编辑热线回访---->
+		      	<div class="hotline_group">
+		      		 <span class="hotline_grouptext">编辑热线回访</span>
+		        </div>
+		        <div class="hotline_visit_row">
+		        	 <span class="visit_field" >HR热线服务满意度：</span>
+		        	 <input class="hotline_textbox" id="text_hrsatisfied" style="width:580px;" type="text" />
+		        </div>
+		        <div class="hotline_visit_row" >
+		        	 <span class="visit_field">转办人员服务满意度：</span>
+		        	 <input class="hotline_textbox" id="text_zbsatisfied" style="width:580px;"  type="text" />
+		        </div>
+		        <div class="hotline_visit_row">
+		        	 <span class="visit_field" >对我们工作的建议：</span>
+		        	 <textarea class="mb_textarea" id="text_suggest" style="width:580px;"></textarea>
+		        </div>
+		        <div class="hotline_visit_row">
+		        	 <span class="visit_field">问题分类一：</span>
+		        	 <select style="width:150px;float:left;" id="cmb_question1" class="mb_combox">
+			        	 	<option value=""></option>
+			        	 	<option value="咨询">咨询</option>
+			        	 	<option value="建议">建议</option>
+			        	 	<option value="问题反馈">问题反馈</option>
+			        	 	<option value="投诉意见">投诉意见</option>
+			        	 	<option value="其他">其他</option>
+	        	   </select>
+	        	   <div style="float:right;margin-right:30px;">
+		        	   <span class="visit_field">问题分类二：</span>
+			        	 <select style="width:150px;float:left;" id="cmb_question2" class="mb_combox">
+				        	 	<option value=""></option>
+				        	 	<option value="招聘">招聘</option>
+				        	 	<option value="培训">培训</option>
+				        	 	<option value="劳动关系">劳动关系</option>
+				        	 	<option value="绩效考核">绩效考核</option>
+				        	 	<option value="薪资福利">薪资福利</option>
+				        	 	<option value="其他">其他</option>
+		        	   </select>	     
+	        	   </div>   	   
+		        </div>
+	        <div class="hotline_visit_row">
+		        	 <span class="visit_field">备注信息：</span>
+		        	 <textarea class="mb_textarea" id="text_visitnote" style="width:580px;"></textarea>
+		        </div>			        
+	        </div>
+      </div>
+      <!----底部按钮部分----->
+      <div class="operation hotline_bottom" style="padding:7px 0;">
+    	   <div class="hotline_hint"></div>
+    	  <div>
+          <span onclick="HotLine.Edition();" class="btnGreen mb_button" style="float:left;">确&nbsp;定</span>
+          <span onclick="HotLine.Delete();"  class="btnGreen mb_button" style="float:left;margin-left:15px;display:none;" id="delRecord" >删&nbsp;除</span>
+          <span onclick="$('#edit_scheme').hide();" class="btnGreen mb_button" style="float:left;margin-left:15px;">取&nbsp;消</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	HotLine.default_staff = "{{default_staff}}";
+	HotLine.mindate = "{{min_date}}";
+	HotLine.maxdate = "{{max_date}}";
+	HotLine.search_url = "{{path('JustsyAdminAppBundle_mb_hotline_search')}}";
+	HotLine.edit_hotline_url = "{{path('JustsyAdminAppBundle_mb_hotline_edit')}}";
+	HotLine.eidtscheme_url = "{{path('JustsyAdminAppBundle_mb_scheme_edit')}}";
+	HotLine.delete_url = "{{path('JustsyAdminAppBundle_mb_hotline_delete')}}";
+	HotLine.schemedesc_url = "{{path('JustsyAdminAppBundle_mb_hotline_scheme_desc')}}";
+	HotLine.visit_url = "{{path('JustsyAdminAppBundle_mb_hotline_visit_desc')}}";
+	HotLine.delete_scheme_url = "{{path('JustsyAdminAppBundle_mb_scheme_delete')}}";
+	HotLine.delete_visit_url  = "{{path('JustsyAdminAppBundle_mb_visit_delete')}}";
+	HotLine.searchbyid_url = "{{path('JustsyAdminAppBundle_mb_hotline_searchbyid')}}";
+	HotLine.editvisit_url = "{{path('JustsyAdminAppBundle_mb_hotline_visit')}}";
+	HotLine.SearchData(1);
+</script>
+
+{% endblock %}

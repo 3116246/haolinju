@@ -1,0 +1,476 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_microaccount %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">创建公众号</div>
+<div class="rightdetail clearfix">
+	<table style="border:0px;width:100%;">
+		<tr>
+			<td>
+				<form id="formbasic" class="form-horizontal" method="post" enctype="multipart/form-data">
+				<input type="hidden" id="id" name="id"/>
+				<input type="hidden" id="logo_path" name="logo_path"/>
+				<input type="hidden" id="logo_path_big" name="logo_path_big"/>
+				<input type="hidden" id="logo_path_small" name="logo_path_small"/>
+				<input type="hidden" id="micro_old_name"name="micro_old_name"/>
+				<input type="hidden" id="micro_old_number"name="micro_old_number"/>
+				<input type="hidden" id="type"name="type" value="0"/>
+				<input type="hidden" id="micro_use"name="micro_use" value="0"/>
+				<input type="hidden" id="concern_approval"name="concern_approval" value="1"/>
+				<div class="rightdetail_left">
+					<div class="control-group" >
+			      <label class="control-label" for="micro_name" style="width:100px;">名称:</label>
+			      <div class="controls">
+			        <input type="text" class="input-xlarge" id="micro_name" name="micro_name" maxlength="20" placeholder="限制输入2-20字符"/>
+			        <img style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+			        <span class="help-line" style="color:red"></span>
+			      </div>
+		    	</div>
+					<div class="control-group" >
+			      <label class="control-label" for="micro_number" style="width:100px;">帐号:</label>
+			      <div class="controls">
+			        <input type="text" class="input-xlarge" id="micro_number" name="micro_number" maxlength="200" placeholder="请输入常用邮箱"/>
+			        <img style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+			        <span class="help-line" style="color:red"></span>
+			      </div>
+		    	</div> 
+		    	<div class="control-group" id="divpassword" >
+			      <label class="control-label" for="password" style="width:100px;">密码:</label>
+			      <div class="controls">
+			        <input type="password" class="input-xlarge" id="password" style="font-size: 12px;" name="password" maxlenght="16" minlength="6" placeholder="限制输入6-16字符"/>
+			        <img style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+			        <span class="help-line" style="color:red"></span>
+			      </div>
+		    	</div>
+		    	<div class="control-group" >
+			      <label class="control-label" for="concern_approval" style="width:100px;">是否审核:</label>
+			      <div class="controls" style="margin-top:5px;*margin-top:5px;">
+			        <input type="checkbox" class="radio-xlarge" id="ckconcern_approval" onclick="if($(this)[0].checked){$('#checkhint').html('(人员关注该公众号 <font color=blue>需要</font> 管理员审核)')}else{$('#checkhint').html('(人员关注该公众号 <font color=red>不需要</font> 管理员审核)')}" style="margin-top:-3px;*margin-top:-3px;"/>
+			        <span id="spconcern_approval" class="spcontent" style="cursor:pointer;margin-left:3px;">是</span><span id="checkhint">(人员关注该公众号 <font color=red>不需要</font> 管理员审核)</span>
+			      </div>
+		    	</div>
+		    	<div class="control-group" >
+			      <label class="control-label" for="salutatory" style="width:100px;">欢迎词:</label>
+			      <div class="controls">
+			        <textarea class="input-xlarge" id="salutatory" name="salutatory" rows="1" maxlength="140" style="box-shadow: 0 0px 0px rgba(0, 0, 0, 0.075) inset, 0 0 0px rgba(82, 168, 236, 0.6);height: 60px;" ></textarea>
+			        <span class="controls-tip">140字以内</span>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <label class="control-label" for="introduction" style="width:100px;">简介:</label>
+			      <div class="controls">
+			        <textarea class="input-xlarge" id="introduction" name="introduction" rows="2" maxlength="500" style="box-shadow: 0 0px 0px rgba(0, 0, 0, 0.075) inset, 0 0 0px rgba(82, 168, 236, 0.6);height: 80px;"></textarea>
+			        <span class="controls-tip">500字以内</span>
+			      </div>
+			    </div>
+	    	</div>
+	    	</form>
+	    	<div style="margin-left: 100px;">
+	    	{%if(micro_external_param_value > micro_external_count or micro_internal_param_value > micro_internal_count)%}
+ 	        <input id="btnSave" type="button" style="width:138px" class="inputsmall" onclick="add_micro()" value="保存">&nbsp;&nbsp;
+ 	      {%endif%}
+ 	        <input id="btnReturn" type="button" style="width:138px" class="inputsmall" onclick="returnurl()" value="返回">
+          <span id="hint" class="help-inline" style="width:172px;display:none;">
+             <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+             <a id="hint_msg" style="color:#db4800"></a>
+          </span>
+    		</div>
+			</td>
+			<td style="width:120px;vertical-align:top;text-align:center;">
+				<div class=" rightdetail_photo" >
+		    <div class="allphoto" style="width:120px; height:120px;" id="preview_fake" onclick="editHead()">
+		         <img style="width:120px; height:120px;cursor:pointer" title="编辑LOGO" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" id="preview" src="{{path}}"> 
+		    </div>
+		    <div class="alllist">
+		      <br> 上传公众号LOGO<br> 
+		      <a data-toggle="modal" show=false href="#invitedphoto" style="color:#0088CC">编辑LOGO</a>
+		    </div>
+		  </div> 
+			</td>
+		</tr>
+	</table> 
+	<div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+		<div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+		<div class="modal-footer"><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+	</div> 
+	<script type="text/javascript">
+		var uploadObj=null;  
+		var check_number_url="{{path('JustsyBaseBundle_enterprise_setting_check_micro_number')}}";
+		var check_name_url="{{path('JustsyBaseBundle_enterprise_setting_check_micro_name')}}";
+		var micro_old_number="";
+		var micro_old_name="";
+		$(function(){
+			var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+	    var obj_ff = obj.find("embed");
+	    uploadObj = document.all==null? obj_ff : obj;
+	    uploadObj.css({"height":"380px","width":"500px"});
+	    
+	    var micro_data={{micro_data|raw}};
+	     //如果存在数据初始化数据
+	    if(micro_data!=null&&micro_data!=""&&micro_data!="undefined"){
+	    	 $("#micro_number").attr("disabled",true); 
+		    $("#id").val(micro_data[0].id);
+		    $("#micro_number").val(micro_data[0].number);
+		    $("#micro_old_number").val(micro_data[0].number);
+		    micro_old_number=micro_data[0].number;
+		    $("#password").attr("disabled",true);
+		    $("#divpassword").hide();
+		    $("#micro_name").val(micro_data[0].name);
+		    $("#micro_old_name").val(micro_data[0].name);
+		    micro_old_name=micro_data[0].name;
+		    if(micro_data[0].concern_approval=="1"){
+		    	$("#concern_approval").attr("checked",true);
+		    }else{
+		    	$("#concern_approval").attr("checked",false);
+		    }
+		    $("#salutatory").val(micro_data[0].salutatory);
+		    $("#introduction").val(micro_data[0].introduction);
+		    var file_path="{{file_path}}";
+		    $("#preview_fake img").attr("src",file_path+micro_data[0].logo_path);
+		    $("#logo_path_small").val(micro_data[0].logo_path_small);
+		    $("#logo_path").val(micro_data[0].logo_path);
+		    $("#logo_path_big").val(micro_data[0].logo_path_big);
+		    //$("input[name='type']").attr("disabled",true);
+		    //$("#sptype1").css("cursor","default");
+		    //$("#sptype2").css("cursor","default");
+	  	}
+	  	
+  	$("#spcontent").bind("click",function(){
+			if(micro_data==null||micro_data==""||micro_data=="undefined"){
+				var spid=$(this).attr("id");
+				if(spid!=""&&spid!=null){
+					var rdid=spid.replace("sp","");
+					$("#"+rdid).attr("checked",true);
+				}
+			}
+		});
+		$("#spconcern_approval").bind("click",function(){
+			if($("#ckconcern_approval").attr("checked")){
+				$("#ckconcern_approval").attr("checked",false);
+				$("#concern_approval").val(1);
+			}else{
+				$("#ckconcern_approval").attr("checked",true);
+				$("#concern_approval").val(0);
+			}
+		});
+		$("#ckconcern_approval").bind("click",function(){
+			if($("#ckconcern_approval").attr("checked")){
+				$("#concern_approval").val(0);
+			}else{
+				$("#concern_approval").val(1);
+			}
+		});
+		$("#micro_name,#password,#micro_number").bind("keyup",function(){
+	  		switch($(this).attr("id")){
+	  			case "micro_name":
+	  				var micro_name=$("#micro_name").val();
+						if(micro_name==""){
+							$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_name").siblings("span").text("名称为必填项");
+							return;
+						}
+						var regZh = /^[a-z0-9A-Z\u4E00-\u9FA5\uf900-\ufa2d]{2,20}$/;
+			    	if (!regZh.test(micro_name)) {
+							$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_name").siblings("span").text("限制输入2-20字符");
+							return;
+			    	}
+			    	$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    	$("#micro_name").siblings("span").text("");
+	  			break;
+	  			case "password":
+	  				var password=$("#password").val();
+						if(password==""){
+							$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#password").siblings("span").text("密码为必填项");
+							return;
+						}
+						var regZh = /^[a-zA-Z\d_]{6,16}$/;
+			    	if (!regZh.test(password)) {
+							$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#password").siblings("span").text("限制输入6-16字符");
+							return;
+			    	}
+			    	$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    	$("#password").siblings("span").text("");
+	  			break;
+	  			case "micro_number":
+	  				var micro_number=$("#micro_number").val();
+						if(micro_number==""){
+							$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_number").siblings("span").text("帐号为必填项");
+							return;
+						}
+						var regZh =  /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+			    	if (!regZh.test(micro_number)) {
+							$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_number").siblings("span").text("请输入邮箱格式");
+							return;
+			    	}
+			    	$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    	$("#micro_number").siblings("span").text("");
+	  			break;
+	  		} 
+			});
+		$("#micro_name,#password,#micro_number").bind("blur",function(){
+				switch($(this).attr("id")){
+					case "micro_number":
+						var micro_number=$("#micro_number").val();
+						if(micro_number==""){
+							$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_number").siblings("span").text("帐号为必填项");
+							return;
+						}
+						var regZh =  /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+			    	if (!regZh.test(micro_number)) {
+			    		$("#micro_number").focus();
+							$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_number").siblings("span").text("请输入邮箱格式");
+							return;
+			    	}
+						if(micro_old_number!=micro_number&&!issubmit){
+							$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif')}}");
+							$("#micro_number").siblings("span").text("正在验证帐号");
+							$.get(check_number_url,{micro_number:micro_number},function(r){
+									if(typeof(r)!="object")r=eval("("+r+")");
+									if(r.success){
+										$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+										$("#micro_number").siblings("span").text("帐号已经存在");
+										micro_old_number=$("#micro_old_number").val();
+										return;
+									}else{
+										$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+										$("#micro_number").siblings("span").text("");
+										micro_old_number=micro_number;
+										return;
+									}
+								});
+							//$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    	  //$("#micro_number").siblings("span").text("");
+						}
+					break;
+					case "micro_name":
+						var micro_name=$("#micro_name").val();
+						if(micro_name==""){
+							$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_name").siblings("span").text("名称为必填项");
+							return;
+						}
+						var regZh = /^[a-z0-9A-Z\u4E00-\u9FA5\uf900-\ufa2d]{2,20}$/;
+			    	if (!regZh.test(micro_name)) {
+			    		$("#micro_name").focus();
+							$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#micro_name").siblings("span").text("限制输入2-20字符");
+							return;
+			    	}
+			    	if(micro_old_name!=micro_name&&!issubmit){
+			    		$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif')}}");
+							$("#micro_name").siblings("span").text("正在验证名称");
+							var oldname=$("#micro_old_name").val();
+							$.get(check_name_url,{micro_name:micro_name,micro_old_name:oldname},function(r){
+									if(typeof(r)!="object")r=eval("("+r+")");
+									if(r.success){
+										$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+										$("#micro_name").siblings("span").text("名称已经存在");
+										micro_old_name=$("#micro_old_name").val();
+										return;
+									}else{
+										$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+										$("#micro_name").siblings("span").text("");
+										micro_old_name=micro_name;
+										return;
+									}
+								});
+			    		//$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    		//$("#micro_name").siblings("span").text("");
+			    	}
+					break;
+					case "password":
+						var password=$("#password").val();
+						if(password==""){
+							$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#password").siblings("span").text("密码为必填项");
+							return;
+						}
+						var regZh = /^[a-zA-Z\d_]{6,16}$/;
+			    	if (!regZh.test(password)) {
+			    		$("#password").focus();
+							$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+							$("#password").siblings("span").text("限制输入6-16字符");
+							return;
+			    	}
+			    	$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			    	$("#password").siblings("span").text("");
+					break;
+				}
+			});
+		}); 
+		var editHead=function ()
+		{
+			  $("#invitedphoto").modal("show");
+		};
+		var saveHead=function ()
+		{
+		   uploadObj[0].doSave();
+		};
+		var avatar_success=function ()
+		{
+			  $("#invitedphoto").modal("hide");
+			  var change_logo_path="{{path('JustsyBaseBundle_enterprise_setting_change_micro_logo')}}";
+			  $.get(change_logo_path,{micro_id:micro_old_number},function(r){
+			  	if(typeof(r)!="object")r=eval("("+r+")");
+			  	if(r.file_path!=""){//上传成功
+			  		$("#preview").attr("src",r.file_path_big);
+			  		$("#logo_path_small").val(r.logo_path_small);
+				    $("#logo_path").val(r.logo_path);
+				    $("#logo_path_big").val(r.logo_path_big);
+			  	}else{
+			  		error_btn_text("LOGO上传失败");
+			  		$("#logo_path_small").val("");
+				    $("#logo_path").val("");
+				    $("#logo_path_big").val("");
+			  	}
+			  });
+		};
+		var save_micro_url = "{{path('JustsyBaseBundle_enterprise_setting_savemicroaccount',{'network_domain' : curr_network_domain})}}";
+		//检测表单是否可用
+		var checkform=function(){
+			var micro_number=$("#micro_number").val();
+			if(micro_number==""){
+				$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				$("#micro_number").siblings("span").text("帐号为必填项");
+				return false;
+			}
+			var regZh = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+    	if (!regZh.test(micro_number)) {
+    		$("#micro_number").focus();
+				$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				$("#micro_number").siblings("span").text("请输入邮箱格式");
+				return false;
+    	}
+    	$("#micro_number").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+    	$("#micro_number").siblings("span").text("");
+			var micro_name=$("#micro_name").val();
+			if(micro_name==""){
+				$("#micro_name").focus();
+				$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				$("#micro_name").siblings("span").text("名称为必填项");
+				return false;
+			}
+			var regZh = /^[a-z0-9A-Z\u4E00-\u9FA5\uf900-\ufa2d]{2,20}$/;
+    	if (!regZh.test(micro_name)) {
+    		$("#micro_name").focus();
+				$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				$("#micro_name").siblings("span").text("限制输入2-20字符");
+				return false;
+    	}
+    	$("#micro_name").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			$("#micro_name").siblings("span").text("");
+    	if($("#id").val()==""){
+    		var password=$("#password").val();
+				if(password==""){
+					$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+					$("#password").siblings("span").text("密码为必填项");
+					return false;
+				}
+				var regZh = /^[a-zA-Z\d_]{6,16}$/;
+	    	if (!regZh.test(password)) {
+	    		$("#password").focus();
+					$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+					$("#password").siblings("span").text("限制输入6-16字符");
+					return false;
+	    	}
+	    	$("#password").siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+	    	$("#password").siblings("span").text("");
+    	} 
+    	var salutatory=$("#salutatory").text();
+    	if(salutatory.length>140){
+    		$("#salutatory").focus();
+    		return false;
+    	}
+    	var introduction=$("#introduction").text();
+    	if(introduction.length>500){
+    		$("#introduction").focus();
+    		return false;
+    	}
+			return true;
+		}; 
+		var add_micro=function(){
+			if(!checkform())
+				return;
+			if($("#btnSave").val()=="保存"){
+				$("#btnSave").val("提交中");
+				$('#hint').hide();
+				if(micro_old_name==""){
+					error_btn_text("正在验证名称,请稍等"); 
+					return;
+				}
+				if(micro_old_number==""){
+					error_btn_text("正在验证帐号,请稍等"); 
+					return;
+				}
+				submit_data();
+			}
+		};
+		var issubmit=false;
+		var submit_data=function(){
+			var issubmit=true;
+			$("#formbasic").ajaxSubmit({dataType: 'json',//返回的数据类型
+				url:save_micro_url,
+				method: 'post',
+				success:function(r){
+					if(typeof(r)!="object")r=eval("("+r+")");
+					if(r.success){
+						$("#preview_fake img").attr("src",r.logo_path);
+						error_btn_text("保存成功","","ok");
+						setTimeout(returnurl(),3000);
+				    $('#btnSave').attr("disabled",true);
+					}else{
+						error_btn_text("保存失败:"+r.msg); 
+				    $('#btnSave').removeAttr("disabled");
+					}
+				  $('#btnSave').val("保存"); 
+				  issubmit=false;
+				},
+				error:function(r){
+					if(typeof(r.responseText)!="object")r=eval("("+r.responseText+")");
+					if(r.success){
+						error_btn_text("保存成功","","ok");
+				    $('#btnSave').attr("disabled",true);
+				    setTimeout(returnurl(),3000);
+					}else{
+						error_btn_text("保存失败"); 
+				    $('#btnSave').removeAttr("disabled");
+					}
+				  $('#btnSave').val("保存"); 
+				  issubmit=false;
+				}
+			});
+		};
+		var error_btn_text=function(msg,id,state){
+			if(id!=""||id!=null||id!="undefined"){
+				if(state=="ok"){
+					$(id).siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+				}else{
+					$(id).siblings("img").show().attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				}
+				$(id).siblings("span").text(msg);
+			}
+			$('#hint').show();
+			if(state=="ok"){
+				$('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+			}else{
+	    	$('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+	    }
+	    $('#hint_msg').text(msg);
+			$('#btnSave').val("保存");
+		};
+		var micro_url_path="{{path('JustsyBaseBundle_enterprise_setting_microaccount',{'network_domain' : curr_network_domain})}}";
+		//返回按钮的事件
+		var returnurl=function(){
+			window.location.href=micro_url_path;
+		};
+	</script>
+</div>
+{% endblock %}

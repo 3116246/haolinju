@@ -1,0 +1,51 @@
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/imgZoom.js') }}"></script>
+<div id="doc_open_img" style="padding:1px;min-height:1px;width:585px;line-height: 425px;height:425px;overflow:auto;border: 1px solid #CCCCCC;font-size: 12px;">
+    <div style="text-align: center;">加载中...</div>
+</div>
+<div id="doc_view_image_tool" style="padding:1px;min-height:1px;width:590px;height:25px;line-height:25px;font-size: 12px;text-align: center;">
+<span><img title="放大" onclick="zoom(1)" src="{{ asset('bundles/fafatimewebase/images/edit_add.png') }}" style="cursor:pointer;vertical-align: middle;margin-left: 4px;margin-right: 4px;"><img title="缩小" onclick="zoom(0)"  style="cursor:pointer;margin-left: 14px;margin-right: 24px;vertical-align: middle;" src="{{ asset('bundles/fafatimewebase/images/edit_remove.png') }}">原始尺寸：<a></a></span>
+</div>
+<script type="text/javascript">
+	  var doc_open_img=$("#doc_open_img"),_w = doc_open_img.width(),_h=doc_open_img.height(),s=1,w=0,h=0;
+		$(document).ready(function(){
+					imgReady("{{path}}", function () {
+						w= this.width ;
+						h= this.height;
+						$("#doc_view_image_tool a").text(w+"*"+h);
+						var s_w = (_w/w).toFixed(2)*1,s_h=(_h/h).toFixed(2)*1;
+						if(s_w<1 || s_h<1) 
+						{
+							  s = s_w<s_h ? s_w :s_h;			//当前缩放比例	
+							  var l = ((_w-(w*s))/2).toFixed(2)*1,t=Math.max(2,(_h-(h*s)).toFixed(2)*1)/2;
+							  doc_open_img.html("<img src='{{path}}' style='width:"+(w*s).toFixed(2)+"px;height:"+(h*s).toFixed(2)+"px;position:relative;left:"+l+"px;top:"+t+"px' border=0>");
+						}
+						else
+						{
+							 var l = ((_w-w)/2).toFixed(2)*1,t=Math.max(2,((_h-h)/2).toFixed(2)*1);
+						   doc_open_img.html("<img src='{{path}}' style='position:relative;left:"+l+"px;top:"+t+"px' border=0>");
+						}
+					}, function () {
+						
+					}, function () {
+						doc_open_img.html("图像加载失败");
+					});			 
+		});
+		function zoom(t)
+		{
+			 if(s>=1 || s<=0) return;
+			 var a = 100;
+		   if(t==0) //缩小
+		    a=-100;
+		   var img = doc_open_img.find("img");
+		   if(img.length==0) return;
+		   var w2 = img.width(),h2 = img.height();	
+		   w2 += a;
+		   h2 += a;
+		   if(w2<10 || h2<10) return;
+		   var l = Math.max(2,(_w-w2)/2),t=Math.max(2,(_h-h2)/2);
+		   img.css({"width":w2+"px","height":h2+"px","left":l+"px","top":t+"px"});
+		}
+</script>
+  
+

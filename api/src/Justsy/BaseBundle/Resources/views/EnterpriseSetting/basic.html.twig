@@ -1,0 +1,409 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_basic %}class="active"{% endblock %}
+
+{% block main_content_center%}
+
+<div class="grade-title">基本信息</div>
+<div class="rightdetail clearfix">	
+  <form id="formbasic" enctype="multipart/form-data"  method="post" class="form-horizontal">
+  <div class=" rightdetail_photo" >
+    <div  style="width:auto; height:66px;line-height: 64px;border:#ccc solid 1px;text-align:center;" id="preview_fake" onclick="$('#logoupload').show()">
+         <img style="width:auto; height:64px;border:0px;cursor:pointer" title="更改企业LOGO" id="preview" src="{{logo_path}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/downphoto.png') }}'"> 
+    </div>
+    <div class="alllist">
+      <br> 拥有您自已的LOGO，印象更深刻！<br>(logo文件不能大于1M)<br> 
+      <a id='uploadlogo' show=false href="javascript:void(0)" onclick="if(isuploading==0)$('#logoupload').show()"  >{%if haslogo=='0'%}上传企业LOGO！{%else%}重新上传LOGO！{%endif%}</a>
+      <div id="logoupload" style="display:none">
+      		<input type=file id="en_logo_file" onchange='savelog()' name="en_logo_file">
+      </div>
+      <div id='suberror'></div>
+    </div>
+  </div>   
+  <div class="rightdetail_left">
+    <div class="control-group">
+      <label class="control-label" for="ename" style="width:100px;">企业名称：</label>
+      <div class="controls">
+     	    <input type="text" readonly class="input-xlarge" value="{{ename}}"  id="ename" name="ename" maxlength="10" >
+     	    <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+          <span class="help-inline" style="color:red"></span> 
+     	</div>
+    </div>  
+    <div class="control-group">
+      <label class="control-label" for="eshortname" style="width:100px;">企业简称：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{eshortname}}" id="eshortname" name="eshortname"/>
+        <img class='loading-eshortname' style="display:none;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" width="16" height="16"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="parent_industry" style="width:100px;">行业：</label>
+      <div class="controls">
+        <select class="span1" id="parent_industry" name="parent_industry" onChange="select_industry(this);"  style="border:#bbb 1px solid; width:150px;" class="all-select">
+          {% for item in classify %}
+            {% if item.classify_id==item.parent_classify_id %}
+                  <option value="{{ item.classify_id }}" {% if parent_industry_id==item.classify_id%}selected{% endif %}>{{ item.classify_name}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>   
+        <select class="span1" id="industry" name="industry" style="border:#bbb 1px solid; width:125px;" class="all-select">
+        	{% if industry|length==0 %}
+        	    <option value="">---请选择---</option>
+        	{% endif %}
+          {% for item2 in classify %}
+              {% if item2.parent_classify_id==parent_industry_id and item2.classify_id!=item2.parent_classify_id %}
+                  <option value="{{ item2.classify_id }}"{% if industry==item2.classify_id%} selected {% endif %} >     {{ item2.classify_name}}</option>
+              {% endif %}
+          {% endfor %}
+        </select>                
+        <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+        <span class="help-inline" style="color:red"></span> 
+      </div>
+    </div>
+     <div class="control-group">
+      <label class="control-label" for="eidcard" style="width:100px;" style="width:100px;">组织机构代码：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" maxlength="32" value="{{eidcard}}" id="eidcard" name="eidcard"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="vip_level" style="width:100px;" style="width:100px;">VIP级别：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{vip_level}}" id="vip_level" name="vip_level" readonly/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="telephone" style="width:100px;">电话：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" maxlength="20" value="{{telephone}}" id="telephone" name="telephone"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div>
+    	<div class="controlls" style="margin-top:-20px;padding-left:100px;margin-bottom:10px;color:#CCC;">如：0817-3252352 或 13548417283</div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="fax" style="width:100px;">传真：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" maxlength="20" value="{{fax}}" id="fax" name="fax"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div>
+    	<div class="controlls" style="margin-top:-20px;padding-left:100px;margin-bottom:10px;color:#CCC;">如：53899</div>
+    </div>
+     <div class="control-group">
+      <label class="control-label" for="ewww" style="width:100px;">官方网站：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{ewww}}" maxlength="128" id="ewww" name="ewww"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div>
+    	<div class="controlls" style="margin-top:-20px;padding-left:100px;margin-bottom:10px;color:#CCC;">如：https://www.wefafa.com</div>
+    </div>
+     <div class="control-group">
+      <label class="control-label" for="create_staff" style="width:100px;">创建者：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{create_statff_name}}" id="create_staff" name="create_staff" readonly/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+     </div>
+     {#
+     <div class="control-group">
+      <label class="control-label" for="sys_manager" style="width:100px;">管理员：</label>
+      <div class="controls">
+      	 <div class="lib_notify ask_div1" style="width:284px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#sys_manager').focus()">
+				        <div id="InputNotifyArea" style="margin:0px;padding:0px;vertical-align:center;float:left;height:30px;line-height:30px;">
+				          {% for i in sys_manager%}
+				             <span class="NotifyObj"><input  type="hidden" value="{{i.login_account}}"><span class="NotifyPerson">{{i.nick_name}}</span><span class="NotifyClose" onclick="NotifyClose_OnClick(this)">×</span></span>
+				          {% endfor %}
+				        </div>
+        				<input type="text" class="input-xlarge" value="" id="sys_manager" name="sys_manager" data-provide="typehead" style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:60px;font-size:12px;float:left;"/>
+        </div>
+        <script type="text/javascript">
+        var manager_query_url="{{path('JustsyBaseBundle_circle_setting_query_enterprise_manager')}}";
+        var network_domain="{{curr_network_domain}}";
+			  var datasource;
+			  	 $("#sys_manager").typeahead({
+			  	   source :enterprise_setting.datasource,
+			  	   items:8,
+			  	   matcher:enterprise_setting.manager_matcher,
+			  	   sorter:enterprise_setting.manager_sorter,
+			  	   highlighter:enterprise_setting.manager_highlighter,
+			  	   updater:enterprise_setting.manager_updater
+			  	 });    
+			     $("#sys_manager").bind("keyup", txtNotify_OnKeyUp); 
+        </script>
+        
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+     </div>
+     <div class="control-group" style="display:none">
+      				<label class="control-label" for="txtname"></label>
+      				<div class="controls">
+		     	    <input type="text" class="input-xlarge" id="array_sys_manager" name="array_sys_manager">
+		     	    <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+		          <span class="help-inline" style="color:red"></span> 
+     					</div>
+     </div>
+     #}
+    <div class="form-actions">
+   	        <input id="btnSave" type="button" onclick="submit_content();" style="width:138px" class="inputsmall" value="保存">
+            <span id="hint" class="help-inline" style="width:172px;display:none;">
+                   <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+                   <a id="hint_msg" style="color:#db4800"></a>
+            </span>	
+    </div>
+  </div>
+  <div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    <div class="modal-footer"><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+  </div>   
+  </form>         
+</div>
+
+<script language="javascript">
+  var g_eshortname_return=true,isuploading=0;
+  var g_ename_return=true;
+  var check_eshortname=false;
+  var uploadObj=null;
+	var fileurl="{{fileurl}}";
+	var save_file_url="{{path('JustsyBaseBundle_enterprise_setting_save_log')}}";
+  function editHead()
+	{
+		  $("#invitedphoto").modal("show");
+	}
+	function saveHead()
+	{
+	   uploadObj[0].doSave();
+	}
+	function savelog(){
+		$("#suberror").text('正在上传中...请稍等');
+		$("#logoupload").hide();
+		isuploading = 1;
+		$("#formbasic").ajaxSubmit({
+			url:save_file_url,
+			type:'post',
+			dataType:'json',
+			success:function(d){		
+				isuploading=0;		
+				if(d.s=='1')
+				{
+					$("#suberror").text('上传成功！');
+					$("#uploadlogo").text('重新上传LOGO!');					
+					setTimeout(function(){$("#suberror").text('');},2000);
+					$("#preview").attr('src',fileurl+d.file.filepath);
+				}
+				else{
+					$("#suberror").text('上传失败:'+d.m);					
+					setTimeout(function(){$("#suberror").text('');},5000);
+				}
+			}
+		});
+	}
+	function avatar_success()
+	{
+		  $("#invitedphoto").modal("hide");		  
+		  //Account.submit_content($("#btnSave")[0]);
+	}
+	function select_industry(v)
+	{
+		var parent_industry=$(v).val();
+		$("#industry option").remove();
+		for(var i=0; i<_classify.length; i++)
+		{
+			if(_classify[i]["parent_classify_id"]==parent_industry && _classify[i]["parent_classify_id"]!=_classify[i]["classify_id"])
+			{
+				
+				$("#industry").append("<option value="+_classify[i]["classify_id"]+">"+_classify[i]["classify_name"]+"</option>");
+			}
+		}
+  }
+  function validate(e){
+  	if(e.id=='eshortname'){
+  		if($(e).val()==''){
+  			showerr(e,"企业简称不能为空!");
+				return false;
+  		}
+  		if(!check_eshortname){
+  			$(e).siblings('img.loading-eshortname').show();
+	  		var path="{{ path('JustsyBaseBundle_enterprise_setting_checkeshortname') }}";
+	  		$.post(path,{'eshortname':$(e).val()},function(d){
+	  			$(e).siblings('img.loading-eshortname').hide();
+	  			if(d.exist){
+	  				showerr(e,"企业简称重复！");
+						return false;
+	  			}
+	  			else{
+	  				check_eshortname=true;
+	  			}
+	  		});
+	  	}
+  	}
+  	if(e.id=='eidcard'){
+  		if($(e).val()!='' && !(/^[0-9]{1,}$/).test($(e).val())){
+  			showerr(e,"格式不正确！");
+  		}
+  	}
+  	if(e.id=='telephone'){
+  		if($(e).val().match(/^(010|021|022|023|024|025|026|027|028|029|852)-\d{8}$/)==null && $(e).val().match(/^0[3-9]{1}[1-9]{2}-\d{7,8}$/)==null && $(e).val().match(/^(1[8|3|5][0-9]|15[0|3|6|7|8|9]|18[2|5|6|8|9])\d{8}$/)==null)
+			{
+				showerr(e,"电话格式不正确!");
+				return false;
+			}
+  	}
+  	if(e.id=='fax'){
+  		if($(e).val()!='' && $(e).val().match(/^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/g)==null){
+				showerr(e,"传真格式不正确!");
+				return false;
+			}
+  	}
+  	if(e.id=='ewww'){
+  		if($(e).val()!='' && $(e).val().match(/^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$/g)==null){
+				showerr(e,"网站地址格式不正确！");
+				return false;
+			}
+  	}
+  	return true;
+  }
+  function showerr(e,err){
+  	$(e).siblings('span.help-line').text(err).show();
+  	var func=getfunc(e);
+  	setTimeout(function(){func();},2000);
+  }
+  function getfunc(e){
+  	return function(){$(e).siblings('span.help-line').text('').hide()};
+  }
+  $(document).ready(function(){
+  	$("#eshortname").change(function(){
+  		check_eshortname=false;
+  	});
+    $("#ewww,#eidcard,#fax,#telephone,#eshortname").blur(function(){
+    	validate(this);
+    });
+  	var industry="{{industry}}";
+     if(industry.length==0)
+     {
+     	var parent_industry=$("#parent_industry").val();
+     	var industry_array=new Array();
+     	 {% set j=0%}
+     	 {% for item3 in classify %}
+                {% if item3.classify_id!=item3.parent_classify_id%}
+                  if("{{item3.parent_classify_id}}"==parent_industry)
+                  {
+                  	var o={
+                  	       classify_id:"{{item3.classify_id}}",
+                  	       classify_name:"{{item3.classify_name}}",
+                  	       parent_classify_id:"{{item3.classify_id}}"
+                  	};
+                  	industry_array[{{j}}]=o;
+                  	{% set j=j+1 %}
+                  }
+                {% endif %}
+         			{% endfor %}
+       
+    	var option_string="";
+    	for(var i=0;i<industry_array.length;i++)
+    	{
+    	    if(industry_array[i]==null) continue;
+    		  option_string+="<option value='"+industry_array[i].classify_id+"'>"+industry_array[i].classify_name+"</option>";
+    	}
+    	$("#industry").append(option_string);
+     }
+  });
+  $(document).ready(function()
+  {
+//  	$('#eidcard').focus();
+//    $("#ename").blur(function(){
+//      var path="{{path('JustsyBaseBundle_enterprise_setting_checkename') }}";
+//    	enterprise_setting.checkEname(path,this);
+//    	});
+//    $("#eshortname").blur(function(){
+//      var path="{{ path('JustsyBaseBundle_enterprise_setting_checkeshortname') }}";
+//    	enterprise_setting.checkEshrotname(path,this);
+//    	});
+//    $("#ewww").blur(function(){
+//        	var $this = $(this),txt = $this.val();
+//        	if(txt=="") return;
+//        	if($.trim(txt)==""){
+//        		 $this.val("");
+//        	   return;
+//        	}
+//        	
+//    });
+    //var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+    //var obj_ff = obj.find("embed");
+    //uploadObj = document.all==null? obj_ff : obj;
+    //uploadObj.css({"height":"380px","width":"500px"});
+  });	
+   //提交数据
+   function submit_content()
+   {
+   		var es=$("#eshortname,#eidcard,#telephone,#fax,#ewww");
+   		for(var i=0;i<es.length;i++){
+   			if(!validate(es[i]))
+   				return false;
+   		}
+   		if(!check_eshortname)return;
+      //if(g_ename_return==false || g_eshortname_return==false) return;
+      {#
+      var array_sys_manager=$.unique(
+		  $("#InputNotifyArea input").map(function(){return $(this).val();}).toArray()
+		 		 ).join(";");
+		 $("#array_sys_manager").val(array_sys_manager);
+		  #}
+     document.getElementById('btnSave').disabled = true;
+     $('#btnSave').val("提交中..."); 
+      $("form").ajaxSubmit({
+      	      dataType: 'json',//返回的数据类型
+              url: "{{ path('JustsyBaseBundle_enterprise_setting_savebasic', {'network_domain' : curr_network_domain}) }}",//表单的action
+              method: 'post',
+              success:function(r){
+				         if(r.success)
+				         {				         
+				              if($.trim(r.logo_path)!="")
+				              		$("#preview_fake img").attr("src",r.logo_path);
+				             	$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+				              $('#hint_msg').text('基本资料保存成功!');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         else
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				              $('#hint_msg').text('基本资料保存失败!');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         $('#logoupload').hide();
+				         document.getElementById('btnSave').disabled = false;
+				         $('#btnSave').val("保存"); 
+			        }        
+      });      
+   }
+   
+   var _classify=new Array();
+   {% set i=0 %}
+  	 {% for item4  in classify %}
+  	 var o={
+  	 	      classify_id:"{{ item4.classify_id }}",
+  	 				classify_name:"{{item4.classify_name}}",
+  	 				parent_classify_id:"{{item4.parent_classify_id}}"
+  	 				};
+  	     _classify[{{i}}]=o;
+  	     {% set i=i+1 %}
+  	 {% endfor %} 
+</script>
+{% endblock %}

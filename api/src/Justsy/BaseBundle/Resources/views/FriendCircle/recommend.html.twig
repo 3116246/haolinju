@@ -1,0 +1,120 @@
+<div id='recommend' style="height:25px;overflow:hidden;background-color: rgb(213, 234, 165); border: 1px solid rgb(204, 204, 204); border-radius: 6px 6px 6px 6px; padding: 5px; line-height: 25px;">
+<div id='reco_p'>
+{% for row in rows%}
+<span class='onetip'>{{row['content']|raw}}&nbsp;&nbsp;</span>
+{%endfor%}
+</div>
+</div>
+<script>
+//			var c2=0,_c=Function;with(o=document.getElementById("recommend")){ innerHTML+=innerHTML; onmouseover=_c("c2=1"); onmouseout=_c("c2=0");}
+//      (F=_c("if(#%25||!c2)#++,#%=o.scrollHeight>>1;setTimeout(F,#%25?10:5000);".replace(/#/g,"o.scrollTop")))();	
+	$(document).ready(function(){
+		$tips=$("span.onetip");
+		if($tips.length==0)
+		{
+			$("#recommend").hide();
+			return;
+		}
+		var le=0;
+		for(var i=0;i<$tips.length;i++)
+		{
+			le+=$($tips[i]).width();
+		}
+		//$('#reco_p').css('width',le.toString()+'px');
+		if(le>$('#recommend').width()){
+//			recommend_marquee=new marquee($("#reco_p")[0],recommend,'left',true,2);
+//			recommend_marquee.start();
+			recommend_scrollpage=new scrollpage('left',$("#reco_p")[0],'span',recommend,true);
+			recommend_scrollpage.start();
+			//setTimeout(function(){},recommend_scrollpage._k);
+		}
+	});
+	function scrollpage(direct,_e,_node,container,ishover)
+	{
+		this._direct=direct;
+	  this._type='scroll';
+		this._resour=_e;
+		this.con=container;
+		this._k=5000;
+		this._ishover=ishover;
+		this.timer=null;
+		this.node=_node;
+		this.colls=[];
+		this._curr=0;
+		this.clen=function(){
+			return $(this.con).width();
+		};
+		this.lreset=function(){
+			var $childs=$(this._resour).children();
+			var s=0,c=[];
+			for(var i=0;i<$childs.length;i++)
+			{
+				var child=$childs[i];
+				s+=$(child).width();
+				if(s<=this.clen() && i<$childs.length-1){
+					c.push(child);
+					continue;
+				}
+				var e=document.createElement(this.node);
+				for(var j=0;j<c.length;j++){
+					$(e).append(c[j]);
+				}
+				s=0;
+				c=[];
+				if(i<$childs.length-1)i--;
+				$(e).css({'width':this.clen().toString()+'px'});
+				this.colls.push(e);
+			}
+		};
+		this.move=function(){
+			if(this._direct=='left')
+				this.lmove();
+			else if(this._direct=='top')
+				this.tmove();
+		};
+		this.hover=function(){
+			var _m=this;
+			$(this.con).live('mouseover',function(event){
+				if(checkHover(event,this))
+				{
+					_m.quit();
+				}
+			});
+			$(this.con).live('mouseout',function(event){
+				if(checkHover(event,this))
+				{
+					_m.move();
+				}
+			});
+		};
+		this.quit=function(){
+				clearTimeout(this.timer);
+		};
+		this.lmove=function(){
+			var _m=this;
+			this.timer=setInterval(function(){
+				var child=$(_m._resour).children();
+				if(child.length>0)_m.colls[(_m._curr-1)<0?(_m.colls.length-1):(_m._curr-1)]=child[0];
+				$(_m._resour).html(null).hide();
+				var e=_m.colls[_m._curr];
+				$(_m._resour).append(e).slideDown(1000);
+				_m._curr++;
+				if(_m._curr==_m.colls.length)_m._curr=0;
+			},this._k);
+		};
+		this.tmove=function(){
+		};
+		this.start=function(){
+			if(this._ishover)
+			{
+				this.hover();
+			}
+			if(this._direct=='left')
+			{
+				this.lreset();
+				$(this._resour).html(null);
+			}
+			this.move();
+		};
+	}
+</script>

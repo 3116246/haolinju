@@ -1,0 +1,22 @@
+{% if ds["we_convers_list"]["recordcount"] > 0 %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">最新事件</span>
+    <span class="titlemore"></span>
+  </div>
+  <div class="rightbox-context">
+    {% for row in ds["we_convers_list"]["rows"] %}
+    <div class="rightevent-item">
+      <span class="itemicon {{ row["conv_type_id"] == "02" ? "itemicon-vote" : "itemicon-together" }}"></span>
+      <div class="itemtitle">{{ row["title"] }}</div>
+      <div class="itemdatebox">
+        <span class="triangle" style="border-color: transparent transparent #00aad8;top: -11px;top: -12px\9;"></span>
+        <span class="triangle" style="border-color: transparent transparent #E5F6FB;top: -11px;"></span>
+        还有 {{ this.formatDayHourMin(row["minutes"]) }}
+        <input class="btnAdd" type="button" onclick="window.open('{{ path('JustsyBaseBundle_view_oneconv', {'conv_root_id' : row["conv_id"]})}}')" value="{{ row["ismember"] == 0 ? (row["conv_type_id"] == "02" ? "参加" : "投票") : "详情" }}"/>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

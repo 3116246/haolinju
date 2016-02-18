@@ -1,0 +1,255 @@
+{% block stylesheets %}  
+    <link rel="stylesheet" href="{{asset('bundles/fafatimewebase/jcrop/jquery.Jcrop.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{asset('bundles/fafatimewebase/css/portal.css')}}" type="text/css" />
+{% endblock %}
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/jquery.qrcode.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('bundles/fafatimewebase/jcrop/jquery.Jcrop.js')}}"></script>
+  <script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/jquery.form.js')}}"></script>
+{% endblock %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" style="margin-left:0px;">
+  <div class="mobile_background">
+  	<div class="mobile_appname"><p align="center">移动门户</p></div>
+    <div class="mobile_backgroudimg">
+        <div class="portal_icon"></div>
+    </div>
+  </div>
+  <div id="rootwizard" style="width:100%; padding-left:360px; padding-top:16px;height:100px">
+    <ul class="bwizard-steps">
+        <li class="active"><a href="#tab1" data-toggle="tab">名称Logo</a></li>
+        <li><a href="#tab2" data-toggle="tab">引导图</a></li>
+        <li><a href="#tab3" data-toggle="tab">门户模板</a></li>
+        <li><a href="#tab4" data-toggle="tab">主题样式</a></li>
+        <li><a href="#tab5" data-toggle="tab">版权</a></li>
+        <li><a href="#tab6" data-toggle="tab">发布</a></li>
+        <li><a href="#tab7" data-toggle="tab">下载</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1" style="padding-top:15px;width:665px;">
+         <div style="height:120px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; color:#999;width:80px;">门户Logo</div>
+          <div style="margin-left:30px; float:left">
+          	<img onerror="this.src='{{ asset('bundles/fafatimewebase/images/home/logo_we.png')}}'"   id="portal_icon" style="width:90px;height:90px;border-radius:5px;" />
+          </div>
+          <div style="float:left; margin-left:20px; color:#999;width:100px;padding-top:70px">180*180像素</div>
+          <div style="float:right; text-align:right; margin-right:100px">
+            <a href="#" onclick="portal.image_select_dialog(1);">修改</a>
+          </div>
+         </div>
+         <div style="height:60px;line-height:60px;border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; color:#999; width:80px">门户名称</div>
+          <div style="margin-left:30px; float:left">
+             <span id="portal_name" style="float:left;"></span>
+             <div style="float:left;display:none;" id='update_portalname'>
+                 <input type="text" id="text_portalname" class="mb_textbox" />
+                 <span class="btnGreen mb_button" onclick="portal.editprovision(1);">确定</span>
+                 <span class="btnGray mb_button"  onclick="portal.editprovision(3);">取消</span>
+             </div>
+          </div>
+          <div style="float:right; text-align:right; margin-right:100px">
+            <a href="#" onclick="$('#portal_name,#update_portalname').toggle();$('#text_portalname').focus();">修改</a>
+          </div>
+         </div>
+         <div style="height:140px; padding-top:15px; border-bottom:1px solid #eee">
+           <div style="float:left; margin-left:20px; color:#999;width:80px">登录界面Logo</div>
+           <div style="margin-left:30px; float:left">
+              <div style="width:260px;height:85px; background-color:#00a9d9;padding-top:3px;" align="center">
+                 <img id="login_image" style="width:240px;height:78px;" onerror="this.src='{{ asset('bundles/fafatimewebase/images/home/login_logo.png')}}'" src="{{ asset('bundles/fafatimewebase/images/home/login_logo.png')}}">
+              </div>
+              <div style="margin-top:12px; color:#999;">400*130像素，透明PNG格式，注意加背景后的效果</div>
+           </div>
+           <div style="float:right; text-align:right; margin-right:100px">
+              <a href="#" onclick="portal.image_select_dialog(2);">修改</a><br><br>
+              <a href="#">预览</a>
+           </div>
+         </div>
+         <div style="height:260px; padding-top:18px; border-bottom:1px solid #eee">
+           <div style="float:left; margin-left:20px; color:#999; width:80px">用户服务条款</div>
+           <div class="provision_area">
+             <textarea id="text_provision" placeholder="请输入移动门户服务条款"  maxlength="500" rows="8" class="form-control"></textarea>
+             <a href="#" onclick="portal.editprovision(2);">修改</a>
+           </div>
+         </div>
+      </div>
+      
+      <div class="tab-pane" id="tab2" style="cursor: default; width: 665px; padding: 20px 20px 0px;">
+        <div style="float:left;width:260px; height:462px">
+          <div align="center" style="height:20px;">启动图片</div>
+          <div><img id="start_image" onclick="portal.simulate(this,1);" width="260" height="482" /></div>
+        </div>
+        <div style="float:left;width:80px;height:482px;">
+            <span onclick="portal.image_select_dialog(3);" style="margin-top:265px;" class="btnGray mb_button">设置引导图</span>
+        </div>
+        <div style="float:right;width:272px; height:482px;">
+          <div align="center" style="height:20px;">首次使用引导图</div>
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators" id="right_switch">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox" id="img_guide">
+              <div class="item active">
+                <img id="guide_0" onclick="portal.simulate(this,2);" index=0 src="{{ asset('bundles/fafatimewebase/images/home/h1.png')}}">
+              </div>
+              <div class="item">
+                <img id="guide_1" onclick="portal.simulate(this,2);" index=1 src="{{ asset('bundles/fafatimewebase/images/home/h2.png')}}">
+              </div>
+              <div class="item">
+                <img id="guide_2" onclick="portal.simulate(this,2);" index=2 src="{{ asset('bundles/fafatimewebase/images/home/h3.png')}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-pane" id="tab3" style="padding-top:20px;">
+        <div style="float:left;width:260px; height:462px;margin-left:10px">
+          <div align="center" style="height:20px;">当前已选中模板</div>
+          <div><img src="images/startup.png" width="260" height="482" /></div>
+          <div align="center" style="height:30px; line-height:30px">默认门户</div>
+        </div>
+        <div style="float:right;width:272px; height:482px; margin-right:130px;">
+          <div align="center" style="height:20px;">更多可选模板</div>
+        </div>
+      </div>
+      <div class="tab-pane" id="tab4">
+          4
+      </div>
+      <div class="tab-pane" id="tab5">
+          5
+      </div>
+      <div class="tab-pane" id="tab6">
+          6
+      </div>
+      <div class="tab-pane" id="tab7">
+          7
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--编辑门户图标-->
+<div  class="dialogBox " id="select_image" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width: 500px; top: 120px; font-size: 14px; cursor: default;" class="dialog">
+    	<div class="title"></div> 
+      <span title="关闭" onclick="$('#select_image').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" id="upload_portal_icon">
+         <div style="font-size: 12px; height:220px; width:370px;position: relative;">
+            <input type="hidden" id="x" name="x" />
+            <input type="hidden" id="y" name="y" />
+            <input type="hidden" id="w" name="w" />
+            <input type="hidden" id="h" name="h" />				
+            <input type="hidden" id="mobilehomelogo"/>
+            <input type="hidden" id="mobilehomeappid"/>
+            <div style="float: left; cursor: default;" nv-file-drop="" uploader="uploader">
+                <form id="logouploadsubmit" enctype="multipart/form-data" method="post">
+                <div id="logocontener" style="color:#CCC;" nv-file-over="" uploader="uploader" class="b-a b-2x b-dashed lter text-center">
+                    <img id="logo" style="width:200px;height:200px" src="{{asset('bundles/fafatimewebase/images/app_logo_defaultbg.png')}}" title="上传logo">
+                </div>
+                <input onchange="portal.uploadportalicon(this);" style="position:relative; width: 200px; height: 30px; top: 0px; " type="file" id="uploadlogofile" name="uploadlogofile"/>
+                </form>
+            </div>
+            <div style='float:left;'>
+                <span id="preview_box" style="height: 120px;left: 210px;overflow: hidden;position: absolute; top: 0; width: 120px;border-radius: 5px;">
+                <img id="crop_preview" src="{{asset('bundles/fafatimewebase/images/app_logo_defaultbg.png')}}" /></span>
+            </div>
+			   </div>
+			   <div class="up_icon_msg"></div>
+      </div>
+      <div class="operation" style="width:100%;float:left;padding:10px 0px 10px 160px;">
+	      <button onclick="portal.saveportalicon();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	      <button onclick="$('#select_image').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+<!--编辑引导图-->
+<div  class="dialogBox " id="select_guide" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width: 500px; top: 120px; font-size: 14px; cursor: default;" class="dialog">
+    	<div class="title"></div> 
+      <span title="关闭" onclick="$('#select_guide').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" id="upload_portal_icon">
+         <div style="font-size: 12px; height:220px; width:370px;position: relative;">
+            <input type="hidden" id="x" name="x" />
+            <input type="hidden" id="y" name="y" />
+            <input type="hidden" id="w" name="w" />
+            <input type="hidden" id="h" name="h" />				
+            <input type="hidden" id="mobilehomelogo"/>
+            <input type="hidden" id="mobilehomeappid"/>
+            <div style="float: left; cursor: default;" nv-file-drop="" uploader="uploader">
+                <form id="logouploadsubmit" enctype="multipart/form-data" method="post">
+                <div id="logocontener" style="color:#CCC;" nv-file-over="" uploader="uploader" class="b-a b-2x b-dashed lter text-center">
+                    <img id="logo" style="width:200px;height:200px" src="{{asset('bundles/fafatimewebase/images/app_logo_defaultbg.png')}}" title="上传logo">
+                </div>
+                <input onchange="portal.uploadportalicon(this);" style="position:relative; width: 200px; height: 30px; top: 0px; " type="file" id="uploadlogofile" name="uploadlogofile"/>
+                </form>
+            </div>
+            <div style='float:left;'>
+                <span id="preview_box" style="height: 120px;left: 210px;overflow: hidden;position: absolute; top: 0; width: 120px;border-radius: 5px;">
+                <img id="crop_preview" src="{{asset('bundles/fafatimewebase/images/app_logo_defaultbg.png')}}" /></span>
+            </div>
+			   </div>
+			   <div class="up_icon_msg"></div>
+      </div>
+      <div class="operation" style="width:100%;float:left;padding:10px 0px 10px 160px;">
+	      <button onclick="portal.saveportalicon();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	      <button onclick="$('#select_guide').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        initJcrop();
+        var info = {{portal_info|raw}};
+        portal.enterprise_eno = enterprise_eno;
+        portal.update_icon_url = "{{path('JustsyAdminAppBundle_mb_parameter_index')}}";
+        portal.save_icon_url = "{{path('JustsyAdminAppBundle_portal_index')}}";
+        portal.loadinfo(info);
+    });
+
+    var jcropObj = null;
+    function initJcrop(initSelectArea)
+    {
+        $("#crop_preview").attr("src",$('#logo').attr("src"));
+        if(initSelectArea==null) initSelectArea = [55,55,150,150];
+        $('#logo').Jcrop({
+            aspectRatio:1,
+            onChange:showCoords,
+            onSelect:showCoords,
+            setSelect: initSelectArea
+        });
+    }
+    function showCoords(obj){
+    	$("#x").val(obj.x);
+    	$("#y").val(obj.y);
+    	$("#w").val(obj.w);
+    	$("#h").val(obj.h);
+    	if(parseInt(obj.w) > 0){
+    		//计算预览区域图片缩放的比例，通过计算显示区域的宽度(与高度)与剪裁的宽度(与高度)之比得到
+    		var rx = $("#preview_box").width() / obj.w; 
+    		var ry = $("#preview_box").height() / obj.h;
+    	
+    		//通过比例值控制图片的样式与显示
+    		$("#crop_preview").css({
+    			width:Math.round(rx * $("#logo").width()) + "px",	//预览图片宽度为计算比例值与原图片宽度的乘积
+    			height:Math.round(rx * $("#logo").height()) + "px",	//预览图片高度为计算比例值与原图片高度的乘积
+    			marginLeft:"-" + Math.round(rx * obj.x) + "px",
+    			marginTop:"-" + Math.round(ry * obj.y) + "px"
+    		});
+    	}
+    }
+
+    $("#right_switch>li").bind("click",function(){
+        $("#right_switch>li").removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("#img_guide>div").hide();
+        $("#guide_"+index).parent().show();
+    });
+    
+</script>

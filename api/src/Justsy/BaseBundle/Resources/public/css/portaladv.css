@@ -1,0 +1,92 @@
+﻿.adv_ul{
+    border-bottom: 1px solid #F3F3F3;
+    font-family: microsoft yahei;
+    list-style: none outside none;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-top: 10px;
+    overflow: hidden;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+.adv_ul li{
+    float:left;
+    margin-right: 15px;
+    height: 32px;
+    line-height: 25px;
+    cursor: pointer;
+}
+.adv_card {
+    margin-left: 40px;
+    margin-top: 10px;
+}
+.advi_selected{color:#87BDDC}
+.appicons{width: 300px; overflow: hidden; margin-top: 40px; margin-left: 80px;}
+.fenbianlvs{list-style: none outside none;
+    margin: 0 0 20px -40px;
+    overflow: hidden;
+    padding: 0;}
+.fenbianlvs li{float:left;margin-left:40px;}
+.lvs_div{
+background-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    border-radius: 8px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    text-align: center;
+    width: 120px;
+    cursor:pointer;
+}
+.guide_ul{list-style:none outside none;margin:0;padding:0;}
+.guide_ul li{float:left;margin-left:5px;}
+.lvs_selected{background-color:#0088CC;color:#FFF;}
+.before_save{
+border: 1px solid #0088CC;
+    border-radius: 4px;
+    cursor: pointer;
+    float: left;
+    font-size: 18px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    width: 108px;
+}
+.after_publish{
+	background-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    float: left;
+    font-size: 18px;
+    margin-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    width: 192px;
+}
+.can_publish{cursor: pointer;border: 1px solid rgb(0, 136, 204);background-color:#FFF;cursor:pointer;}
+
+.android_tag{float: left; width: 120px; background-color:#CCC; border-radius: 8px;}
+.ios_tag{float: left; width: 120px; background-color:#CCC; border-radius: 8px;margin-left:40px;}
+.tag_device_active{background-color: rgb(0, 136, 204);color:#FFF;}
+.i_tag1{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: 0px -775px;float:left;width:30px;height:30px;}
+.i_tag2{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: 0px -615px;float:left;width:30px;height:30px;}
+.i_tag3{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: 0px -648px;float:left;width:30px;height:30px;}
+.i_tag4{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: 0px -583px;float:left;width:30px;height:30px;}
+.i_tag5{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: 0px -840px;float:left;width:30px;height:30px;}
+
+.i_tag1_active{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: -32px -775px;float:left;width:30px;height:30px;}
+.i_tag2_active{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: -32px -615px;float:left;width:30px;height:30px;}
+.i_tag3_active{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: -32px -648px;float:left;width:30px;height:30px;}
+.i_tag4_active{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: -32px -583px;float:left;width:30px;height:30px;}
+.i_tag5_active{background-image: url('/bundles/fafatimewebase/images/mapp_icons.png');background-position: -32px -840px;float:left;width:30px;height:30px;}
+.tranparentspan{border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #CCCCCC;
+    border-style: solid;
+    border-width: 20px;
+    display: block;
+    float: right;
+    height: 0;
+    left: 250px;
+    position: relative;
+    top: -140px;
+    width: 0;}
+.i_tagundefined_active{ background-image: url("/bundles/fafatimewebase/images/mapp_icons.png");background-position: -32px -648px;float: left;height: 30px;width: 30px;}    

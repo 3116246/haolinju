@@ -1,0 +1,264 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+{% block menuitemactive_basic %}class="active"{% endblock %}
+{% block main_content_center%}
+<style>
+	table{border-color:#cccccc;}
+	td{border-color:#cccccc;}
+	table input[type="text"]
+	{
+		margin-top: 10px;
+		margin-left: 5px;
+	}
+</style>
+<div class="grade-title">LDAP集成配置</div>
+<ul class="nav nav-tabs" style="border-bottom: 1px solid #ddd;height: 37px;padding-left: 25px;">
+    <li class="active"><a href="#serverconfig" data-toggle="tab">连接配置</a></li>
+    <li><a href="#attrmapping" data-toggle="tab">属性映射</a></li>
+    <li><a href="#datasync" data-toggle="tab">数据同步</a></li>
+</ul>
+<div class="tab-content" style="width: 100%;background-color:#ffffff">
+	<div class="tab-pane active" id="serverconfig" style="min-height: 543px;">
+		<div class="ldap_div" style="margin-left: 150px; margin-top: 20px;">
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -12px;">
+				     <span style="padding-right:5px;">产品版本：</span>
+				    <select id="system" style="width:265px;"><option {% if ldap['system']=='windows'%}selected="selected"{% endif%} value="windows">windows20008</option>
+				    	<option value="linux" {% if ldap['system']=='linux'%}selected="selected"{% endif%} >IBM LDAP</option></select>
+			</div>		
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;">
+				     <span style="padding-right:5px;">IP地址：</span>
+				    <input type='text' maxlength="20" value="{{ldap['ipaddress']}}" id="ipadress" style="width:250px;"/>
+			     </div>
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -12px;">
+				     <span style="padding-right:5px;">服务器域：</span>
+				    <input type='text' maxlength="50" value="{{ldap['domain']}}" placeholder="如fafa.cn" id="domain" style="width:250px;"/>
+			</div>
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -1px;">
+				     <span style="padding-right:5px;">BaseDN：</span>
+				    <input type='text' maxlength="100" value="{{ldap['basedn']}}" placeholder="如ou=People,dc=fafaim,dc=com" id="basedn" style="width:250px;"/>
+			</div>
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -24px;">
+				     <span style="padding-right:5px;">Path(员工)：</span>
+				    <input type='text' maxlength="100" value="{{ldap['path_staff']}}" placeholder="如ou=org,dc=fafaim,dc=com" id="path_staff" style="width:250px;"/>
+			</div>			
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -36px;">
+				     <span style="padding-right:5px;">员工查询条件：</span>
+				    <input type='text' maxlength="100" value="{{ldap['filter_exp']}}" placeholder="如ou=*" id="filter_exp" style="width:250px;"/>
+			</div>			
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -24px;">
+				     <span style="padding-right:5px;">Path(部门)：</span>
+				    <input type='text' maxlength="100" value="{{ldap['path_org']}}" placeholder="如ou=org,dc=fafaim,dc=com" id="path_org" style="width:250px;"/>
+			</div>
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;padding-left: 12px;margin-left: -36px;">
+				     <span style="padding-right:5px;">部门查询条件：</span>
+				    <input type='text' maxlength="100" value="{{ldap['filter_exp_org']}}" placeholder="如ou=*" id="filter_exp_org" style="width:250px;"/>
+			</div>			     
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;display:'';">
+				     <span style="padding-right:5px;">连接帐号：</span>
+				     <input type='text' maxlength="32" id="userid" value="{{ldap['userid']}}" style="width:250px;"/>
+			</div>
+			     
+			<div class="application_line" style="margin-left:0px;width:500px;height:45px;">
+				     <span style="padding-right:5px;">连接密码：</span>
+				     <input type='password' maxlength="32" id="pwd" value="{{ldap['pwd']}}" style="width:250px;"/>
+			</div>
+		</div>
+		<div>
+			<input id="saveldap" type="button" onclick="saveLdapData();" style="width:138px;margin-left:260px;" class="inputsmall" value="保存">
+		</div>
+	</div>
+	<div class="tab-pane" id="attrmapping" style="min-height: 543px;">
+		<ul class="nav nav-tabs" style="border-bottom: 1px solid #ddd;height: 37px;padding-left: 25px;margin-top: 20px;">
+		    <li class="active"><a href="#employee" data-toggle="tab">人员属性映射</a></li>
+		    <li><a href="#org" data-toggle="tab">部门属性映射</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="employee">
+				<table border="1" width="80%" style="margin-left:70px;margin-top:20px">
+					<tr style="text-align: center; background-color: rgb(243, 243, 243);"><td width="20%">属性名称</td><td width="80%">LDAP属性标识</td></tr>
+					<tr><td>用户帐号</td><td><input id="uid" type="text" maxlength="32" size=20></td></tr>
+					<tr><td>所属部门</td><td><input id="ou" type="text"  maxlength="32" size=20></td></tr>
+					<tr><td>用户名称</td><td><input id="reg_name" maxlength="32" type="text" size=20></td></tr>
+					<tr><td>用户邮箱</td><td><input id="email" maxlength="32" type="text" size=20></td></tr>
+					<tr><td>手机号码</td><td><input id="mobile" maxlength="32" type="text" size=20></td></tr>
+				</table>
+				<div>
+					<input id="saveemployeeattr" type="button" onclick="saveLdapStaffMapping();" style="width:138px;margin-left:260px;" class="inputsmall" value="保存">
+				</div>
+			</div>
+			<div class="tab-pane" id="org">
+				<table border="1" width="80%" style="margin-left:70px;margin-top:20px">
+					<tr style="text-align: center; background-color: rgb(243, 243, 243);"><td width="20%">属性名称</td><td width="80%">LDAP属性标识</td></tr>
+					<tr><td>部门标识</td><td><input id="uid_org" maxlength="32" type="text" size=20></td></tr>
+					<tr><td>部门名称</td><td><input id="ou_org" maxlength="32" type="text" size=20></td></tr>
+					<tr><td>上级部门</td><td><input id="parentdn" maxlength="32" type="text" size=20></td></tr>
+					<tr><td>完整路径</td><td><input id="orgpath" maxlength="32" type="text" size=20></td></tr>
+				</table>
+				<div>
+					<input id="saveorgattr" type="button" onclick="saveLdapOrgMapping();" style="width:138px;margin-left:260px;" class="inputsmall" value="保存">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tab-pane" id="datasync" style="min-height: 543px;">
+		<input id="syncldap" type="button" onclick="syncLdap();" style="width:138px;margin-left:260px;margin-top: 50px;" class="inputsmall" value="用户同步">
+		<input id="saveldapOrg" type="button" onclick="syncLdapOrg();" style="width:138px;margin-top: 50px;" class="inputsmall" value="组织同步">
+		<div style="text-align:center;margin-left: -80px;" id="ldaperror"></div>
+	</div>
+</div>
+<script language="javascript" style="text/javascript">
+	var staffmapping = {{staffmapping|raw}},orgmapping={{orgmapping|raw}};
+	for(var i=0; i<staffmapping.length; i++)
+	{
+		var wefafa_attr_code = staffmapping[i].wefafa_attr_code;
+		$("#"+wefafa_attr_code).val(staffmapping[i].source_code);
+	}
+	for(var i=0; i<orgmapping.length; i++)
+	{
+		var wefafa_attr_code = orgmapping[i].wefafa_attr_code;
+		if(wefafa_attr_code=="uid" || wefafa_attr_code=="ou") wefafa_attr_code = wefafa_attr_code+"_org";
+		$("#"+wefafa_attr_code).val(orgmapping[i].source_code);
+	}
+	$.ajaxSetup({
+		error: function(x, e) {
+			if($("#syncldap").attr("loading")=="1")
+			{
+				$("#syncldap").attr("loading","0");
+				//syncLdap();
+			}
+			if($("#saveldapOrg").attr("loading")=="1")
+			{
+				$("#saveldapOrg").attr("loading","0");
+				//syncLdapOrg();
+			}
+		}
+	});
+	function saveLdapData(){
+		if($("#saveldap").attr("loading")=="1")return;
+		var params={
+			ipaddress:$("#ipadress").val(),
+			userid:$("#userid").val(),
+			pwd:$("#pwd").val(),
+			basedn:$("#basedn").val(),
+			path_org:$("#path_org").val(),
+			path_staff:$("#path_staff").val(),
+			filter_exp:$("#filter_exp").val(),
+			filter_exp_org:$("#filter_exp_org").val(),			
+			domain:$("#domain").val(),
+			system:$("#system option:selected").val()
+		};
+		//数据校验
+		if(params.ipaddress==""){
+			$("#ldaperror").css("color","red").text("ip地址不能为空");
+			setTimeout(function(){
+				$("#ldaperror").text("");
+			},3000);
+			return;
+		}
+		else if((/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/).test(params.ipadress)){
+			$("#ldaperror").css("color","red").text("ip地址格式不正确");
+			setTimeout(function(){
+				$("#ldaperror").text("");
+			},3000);
+			return;
+		}
+		$("#saveldap").val("保存中...");
+		$("#saveldap").attr("loading","1");		
+		$.post("{{path('JustsyBaseBundle_save_ldap_data')}}",params,function(d){
+			$("#saveldap").val("保存");
+			$("#saveldap").attr("loading","0");
+			if(d.s=='1'){
+				$("#ldaperror").css("color","#059BC6").text("保存成功");
+				setTimeout(function(){
+					$("#ldaperror").text("");
+				},3000);
+			}
+			else{
+			}
+		});
+	}
+
+	function saveLdapStaffMapping()
+	{
+		var btn = $("#saveemployeeattr");
+		if(btn.attr("loading")=="1")return;
+		var params={
+			uid:$("#uid").val(),
+			ou:$("#ou").val(),
+			reg_name:$("#reg_name").val(),
+			email:$("#email").val(),
+			mobile:$("#mobile").val(),
+			action:"staffmapping"
+		};
+		btn.val("保存中...");
+		btn.attr("loading","1");
+		$.post("{{path('JustsyBaseBundle_save_ldap_data')}}",params,function(d){
+			btn.val("保存");
+			btn.attr("loading","0");
+			if(d.s=='1'){
+				$("#ldaperror").css("color","#059BC6").text("保存成功");
+				setTimeout(function(){
+					$("#ldaperror").text("");
+				},3000);
+			}
+			else{
+			}
+		});		
+	}
+
+	function saveLdapOrgMapping()
+	{
+		var btn = $("#saveorgattr");
+		if(btn.attr("loading")=="1")return;
+		var params={
+			uid:$("#uid_org").val(),
+			ou:$("#ou_org").val(),
+			parentdn:$("#parentdn").val(),
+			orgpath:$("#orgpath").val(),
+			action:"orgmapping"
+		};
+		btn.val("保存中...");
+		btn.attr("loading","1");
+		$.post("{{path('JustsyBaseBundle_save_ldap_data')}}",params,function(d){
+			btn.val("保存");
+			btn.attr("loading","0");
+			if(d.s=='1'){
+				$("#ldaperror").css("color","#059BC6").text("保存成功");
+				setTimeout(function(){
+					$("#ldaperror").text("");
+				},3000);
+			}
+			else{
+			}
+		});		
+	}
+	function syncLdap()
+	{
+		if($("#syncldap").attr("loading")=="1")return;
+		$.post("{{path('JustsyOpenAPIBundle_api_sync_user_byad')}}",{},function(d){
+			$("#syncldap").attr("loading","0");
+			$("#syncldap").val("用户同步");
+			if(d.returncode=='0000'){
+			}
+			else{
+			}
+		});
+		$("#syncldap").attr("loading","1");
+		$("#syncldap").val("同步...");
+	}
+
+	function syncLdapOrg()
+	{
+		if($("#saveldapOrg").attr("loading")=="1")return;
+		$.post("{{path('JustsyOpenAPIBundle_api_sync_org_byad')}}",{},function(d){
+			$("#saveldapOrg").attr("loading","0");
+			$("#saveldapOrg").val("组织同步");
+			if(d.returncode=='0000'){
+			}
+			else{
+			}
+		});
+		$("#saveldapOrg").attr("loading","1");
+		$("#saveldapOrg").val("同步...");
+	}
+</script>
+{% endblock %}

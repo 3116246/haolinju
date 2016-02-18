@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wefafa移动应用平台—企业移动门户|移动开发平台|移动信息化专家</title>
+<meta name="keywords" content="企业移动应用平台，移动开发平台，企业移动门户，移动信息化，移动信息化，移动中间件，企业移动互联，大数据，移动OA，移动CRM，Wefafa"/>
+<meta name="description" content="Wefafa移动应用平台，是一个集企业移动门户、快速开发平台和大数据消息网关于一体，帮助企业快速实现原有信息系统的移动化升级，助力企业低成本进入移动互联网时代的移动技术平台。Wefafa拥有国内目前唯一支持企业原有信息系统在保持私网IP、内网部署的物理安全环境中，仍然能够实现移动化访问的专利技术方案"/>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+<meta property="wb:webmaster" content="e2fdb8d07a532c64"/>
+<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/home.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/mapphome.css')}}?t=1" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/portaladv.css')}}?t=1" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/resource.css')}}?t=1" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/componentCreater.css')}}?t=1" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/MappFileUpload.css')}}?t=1" type="text/css" rel="stylesheet">
+{% block stylesheets %}{% endblock %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery-ui.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/config.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/hint.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/applist.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EmployeeCard.js') }}"></script>
+
+{% if ISDEBUG %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/component.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.mousewheel.js') }}"></script>
+
+{% else %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/wefafa_all.min.js') }}"></script>
+{% endif %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/componentCreater.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/componentDrop.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/portaladv.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/MappFileUpload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/ajaxfileupload.js')}}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/componentEdit.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.exedit-3.4.js') }}"></script>
+
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+
+<script type="text/javascript">
+var g_login_account="{{app.user.getUserName()}}";
+var g_photo_path="{{FILE_WEBSERVER_URL}}{{app.user.photo_path}}";
+var ismanager="{{app.user.is_in_manager_circles(app.user.edomain)}}";
+var enterprisename = "{{app.user.ename}}";
+var g_owner="{{app.user.fafa_jid}}",g_nick_name="{{app.user.nick_name}}",file_webserver_url = "{{FILE_WEBSERVER_URL}}",g_curr_openid = "{{ app.user.openid }}",g_resource_context = "{{ asset('bundles/../') }}",appconfig_publish_url = "{{path('JustsyBaseBundle_mappconfig_publish')}}",wefafaHost = "{{ JS_OPEN_API_URL}}";
+//门户配置获取URL
+var getportalconfigurl ="{{path('JustsyInterfaceBundle_mapp_portalconfig',{'openid':'openid'})}}".replace("openid",g_curr_openid)+"?dev=1";
+//var getportalconfigurl="/download/7ea2b5be1d1f11ab5b1aa15529dbb4ca.xml";
+//发布时url应换成http://we.fafatime.com/api/http/mapp/getconfig/7ea2b5be1d1f11ab5b1aa15529dbb4ca
+var getappconfigurl = "{{path('JustsyInterfaceBundle_mapp_getappconfig',{'appid':'appid'})}}"+"?dev=1";
+//本机调试时使用以下url 
+//var getappconfigurl = "/download/7ea2b5be1d1f11ab5b1aa15529dbb4ca.xml";
+var componentattrediturl = "{{path('JustsyBaseBundle_mappconfig_compentattributeedit',{'component':'componentname'})}}",compentediturl="{{path('JustsyBaseBundle_mappconfig_compentedit')}}",appBizProxyUrl="{{path('JustsyBaseBundle_mappconfig_appbizproxyurl')}}",deletapp="{{path('JustsyBaseBundle_appdelete')}}";
+</script>
+{% block javascriptsref %}{% endblock %}
+</head>
+<script type="text/javascript">
+var mouseover_tid = [],mouseout_tid = [],web_auto_login=false;
+var isEnterPanel=false;  //记录鼠标是否进入了菜单列表面板。主要用于鼠标从圈子卡片上移出移入时的，判断是否应该隐藏圈子面板，从圈子卡片移动到面板和从面板移动到圈子卡片上都不能隐藏圈子面板
+jQuery(document).ready(function(){
+	Employees.load("{{ path('JustsyBaseBundle_component_emp') }}?network_domain={{app.user.edomain}}",
+                   "{{ path('JustsyBaseBundle_interviewee_home',{'network_domain':app.user.edomain,'account':'foo'}) }}",
+                   "发送消息页面地址",
+                   "{{path('JustsyBaseBundle_component_emp_attention',{'attenaccount':''})}}",
+                   "{{path('JustsyBaseBundle_component_emp_getaccount',{'empname':''}) }}");  
+	jQuery('[dropdownlist]').each(function(index){
+		jQuery(this).hover(
+			function(){
+				var _self = $(this);
+				clearTimeout(mouseout_tid[index]);
+				isEnterPanel=true;
+				mouseover_tid[index] = setTimeout(function() {
+					_self.find(".topmenu_app_triangle").attr("class","topmenu_app_triangle_up");
+					_self.find(".topmenu_link").attr("class","topmenu_link_hover");
+					_self.find('ul:eq(0)').show();
+				}, 0);
+			},
+			function(){
+				var _self = $(this);
+				isEnterPanel=false;
+				if($("#circle_card_dlag").length>0 && $("#circle_card_dlag").css("display")!="none") return;
+				
+				clearTimeout(mouseover_tid[index]);
+				mouseout_tid[index] = setTimeout(function() {
+            hidePanel(_self);
+				}, 0);
+			}
+		);
+	});
+	
+//  $("#recommenedcircle div").live("mouseover",function(){
+//        var _self = $(this);
+//        
+//   });
+//  $("#recommenedcircle div").live("mouseout",function(){
+//              	var _self = $(this);
+//              	_self.find(".recommenedcircle_span").show();
+//              	_self.find(".recommenedcircle_span_hover").hide();
+//   });   
+});
+
+	function hidePanel(_self)
+	{
+		if(isEnterPanel) return;
+					_self.find(".topmenu_app_triangle_up").attr("class","topmenu_app_triangle");
+					_self.find(".topmenu_link_hover").attr("class","topmenu_link");
+					_self.find('ul:eq(0)').hide();		
+	}
+
+	function switchto(ev)
+	{		
+		$("#applist").hide();
+  	$("#template_right").show();
+		$(".application_submenu_ul").show();	//显示操作菜单
+		$(".application_submenu_ul li").show();	//显示操作菜单
+		if($(ev).attr("id") =="PORTAL" ) {
+			$("#adv_defined").removeAttr("class");
+			$("#basic_defined").attr("class","application_main_menu_active");
+			$(".runtimescreentop").text( $(ev).find("span").text());
+			$("#main_area").html("");
+			$("#adv_defined").show();//显示高级定制
+			AppPublishMgr.type="PORTAL";
+			$("#content_template").attr("appid","PORTAL");
+	    $("#content_template").show();
+			$("#app_basic").parent().hide();//应用 基本信息菜单隐藏
+			$("#menu_component").parent().hide();
+			$("#edit_component").parent().hide();	
+			$(".submenu_left_li_action").attr("class","submenu_left_li");
+			$("#PORTAL").attr("class","submenu_left_li_action");
+			$(".component_black_firstpage").hide();
+			oneApp = new AppObj();
+			XMLConfigPage.portalsInit();
+			SetMenuActive("portals_info");
+			configpage_init();			
+			LoadComponent($("#main_area"),"{{path('JustsyBaseBundle_mapp_portalshome')}}",{},function(){
+			});
+		}
+		else if($(ev).attr("id") =="myapps") { //我的企业应用
+			$(".runtimescreentop").text( $(ev).find("span").text());
+			$("#main_area").html("");
+			AppPublishMgr.type="myapps";
+			$("#application_submenu_ul").show();
+			$("#application_submenu_ul li").show();
+			$("#portals_info").parent().hide();			
+      ApplicationMgr.getAppList("{{path('JustsyBaseBundle_applist')}}");	
+			
+		}
+	}
+</script>
+<body>
+	<div class="body_filter"></div>
+<div id="topnav" class="topnav">
+  {% block main_topnav %}
+  <div class="submenu">
+  	 <div class="submenu_left" style="line-height:42px;">
+			 <div class="wefafalogo">
+			    <a href="#" onFocus="this.blur()" >{% render "JustsyBaseBundle:Common:getWefafaLogo" %}</a>
+			 </div>
+			 <p style="color:#fff; padding-left:80px; padding-top:8px; font-size:14px;font-family: microsoft yahei;">移动应用平台</p>
+						      	
+  	 </div>
+  	 <div class="submenu_center">
+  	 	<ul style="float:right;" id="menu_top">
+  	 		<li class="submenu_left_li_action" id="PORTAL" onclick="switchto(this)">
+  	 		 <img src="{{ asset('/bundles/fafatimewebase/images/topmenu_portal.png')}}" />
+  	 		 <span>企业移动门户</span>
+  	 	 	</li>
+
+  	 		<li class="submenu_left_li" id="myapps" onclick="switchto(this)">
+  	 		  <img src="{{ asset('/bundles/fafatimewebase/images/topmenu_apphead.png')}}" />
+  	 		  <span>我的企业应用</span>
+  	 		</li>
+  	 	 	<li class="submenu_left_li" style="width:85px;">
+  	 		  <a href="{{ JS_OPEN_API_URL}}/{{app.user.edomain}}" target="_blank">企业协作</a>
+  	 		</li>
+  	 		<li class="submenu_left_li" style="width:85px;">
+  	 		  <a href="{{ JS_OPEN_API_URL}}/11058" target="_blank">技术支持</a>
+  	 		</li> 	 		
+  	 		<li class="submenu_left_li withmenu" id="user_account" style="width:85px;">
+  	 		  <span account="{{app.user.fafa_jid}}" class="portal_username" >{{app.user.nick_name}}</span>
+  	 		  <span style="margin-left: 2px; margin-right: 10px; margin-top: -32px;" class="topmenu_app_triangle"></span>
+  	 		  <ul class="account_list">
+  	 		    <li><a style="width: 100%; text-align: center; display: block;" href="{{path('JustsyBaseBundle_logout')}}">安全退出</a></li>
+          </ul>  	 		  
+  	 		</li>
+  	 	</ul>
+    </div>   
+  </div>
+  {% endblock %}
+</div>
+<div  style="position: fixed; display: none; width: 100%; height: 37px; line-height: 37px; text-align: center; font-size: 14px; color: #ffffff; top: 55px; z-index: 1000; background-color: #68AF02;" id="syshint"></div>
+<div style="background-color: rgb(101, 187, 228); height: 57px;"></div>
+
+<div id="content_template" class="homecontent" style="display:none;" appid="" >
+  <div style="float:left;width:400px;" id="template_left">
+  	  <div style="float:left;height:45px;width:100%;border-bottom:1px solid #eeeeee;">
+         <div style="height:100%;margin:auto;width:120px;">
+  	 	   	  <span class="applicateion_os_ico applicateion_os_ico_active" id="iphone_ico" style="display:none;">
+  	 	   	  	  <img src="/bundles/fafatimewebase/images/homepage/icon_ios.png" style="width:24px;height:24px">
+  	 	   	  </span>
+  	 	   	  <span class="applicateion_os_ico applicateion_os_ico_active"  id="android_ico" style="margin-left:20px;">
+  	 	   	  	  <img src="/bundles/fafatimewebase/images/homepage/icon_android.png" style="width:24px;height:24px">
+  	 	   	  </span>  	 	   	  
+  	 	   </div>
+	    </div>
+	    <div style="float:left;width:100%;border-right:1px solid #eeeeee;padding-bottom:20px;;">
+				<!--手机运行时效果图-->
+			   <div id="iosruntime" style="margin-right:30px;">
+			   		<div class="runtimescreentop">企业移动门户</div>
+					<div class="runtimescreen">
+					 	<div class="runtimecompnent_iosstatus">
+					 	</div>
+					 	<div class="runtime_main_content"></div>
+					</div>
+			   </div>
+			   <!--手机运行时效果图-->
+			   <div id="androidruntime" style="margin-right:30px;">
+			   		<div class="runtimescreentop">企业移动门户</div>
+					<div class="runtimescreen">
+					</div>
+			   </div>
+			   <!--操作按钮-->
+			   <div id="runtime_component_toolbar" style="width: 18px;">
+			   		<span style="width:18px;" title="删除该组件" class="runtime_component_toolbar_del  icon-remove"></span>
+			   		<span style="width:18px;" title="编辑该组件" class="runtime_component_toolbar_edit icon-edit" ></span>
+			   </div>
+	   </div>
+  </div>
+  
+<div style="float:left;border-left: 1px solid rgb(243, 243, 243); width: 679px;" id="template_right" >
+  	<div class="application_main_menu">
+  	 	<span class="application_main_menu_active" id="basic_defined">基础定制</span>
+  	    <span id="adv_defined">高级定制</span>
+  	    <div onclick="$('#App_Area').show();$('#template_right').hide();ApplicationMgr.getAppList('{{path('JustsyBaseBundle_applist')}}')" class="component_black_firstpage" title="返回">
+  	    	  <img src="{{ asset('/bundles/fafatimewebase/images/leftcursor.png')}}" />
+  	    </div>
+  	</div>
+    <ul class="application_submenu_ul" for="basic_defined">
+	  	 	  <li  style="display:none;">
+	  	 	    <div class="application_submenu_item" id="portals_info">
+		   			  <span class="application_sub_menu_portals"></span>
+		   			  <span style="color:#059BC6;">门户信息</span>
+	   			  </div>
+	   		  </li>    	
+	  	 	  <li>
+	  	 	    <div class="application_submenu_item" id="app_basic">
+		   			  <span class="application_sub_menu_basic"></span>
+		   			  <span>基本信息</span>
+	   			  </div>
+	   		  </li>
+	         <li>
+	  	 	    <div class="application_submenu_item" id="interface_name" onclick="InterfaceCustom()">
+		   			  <span  class="application_sub_menu_interface"></span>
+		   			  <span>界面定制</span>
+	   			  </div>
+	   		  </li>	   		
+          <!--
+	  	 	  <li>
+	  	 	  		<div id="userUI">
+		  	 	  	<div class="application_interface_item" configid="" templateid="">
+		  	 	  		  <span class="application_sub_menu_interface" onclick="$('#interface_name').trigger('click')" style="margin-left:5px;"></span>
+		   			      <span id="interface_name" style='float:left;padding-left:2px;padding-right:2px;'>界面定制</span>
+		   			      <span style="float:left;margin-left:2px;margin-top:15px;margin-right:10px;" class="topmenu_app_triangle"></span>
+		  	 	    </div>
+	               	<div class="user_appconfig_area">
+		                 <div style="height: 32px; line-height: 32px; float: left; margin: 55px 0px 0px 50px;">
+		               	 	 <img style="float:left;width:32px;height:32px;" src="/bundles/fafatimewebase/images/loading.gif">
+		               	 	 <span style="float:left;">正在加载应用配置信息，请稍候．．．</span>
+		               	 </div>
+	               	</div>
+	   			     </div>	   			  
+	   		  </li>
+	   		  <li style="display:none;">
+	  	 	    <div class="application_submenu_item" id="menu_component"   >
+		   			  <span class="application_sub_menu_addcomponent"></span>
+		   			  <span>添加组件</span>
+	   			  </div>
+	   		  </li>	   	
+	   		  <li style="display:none;">
+	  	 	    <div class="application_submenu_item" id="edit_component"   >
+		   			  <span class="application_sub_menu_editcomponent"></span>
+		   			  <span>编辑组件</span>
+	   			  </div>
+	   		  </li>	
+	   		  -->
+	  	 	  <li>
+	  	 	    <div class="application_submenu_item" id="app_html5" configid="" >
+		   			  <span class="application_sub_menu_basic"></span>
+		   			  <span>插件包</span>
+	   			  </div>
+	   		  </li>
+	   		  <li>
+	  	 	    <div class="application_submenu_item" id="app_mobilepp" configid="" >
+		   			  <span class="application_sub_menu_basic"></span>
+		   			  <span>第三方移动应用</span>
+	   			  </div>
+	   		  </li>
+	   		  <li>
+	  	 	    <div class="application_submenu_item" id="app_webapp" configid="" >
+		   			  <span class="application_sub_menu_basic"></span>
+		   			  <span>Web应用</span>
+	   			  </div>
+	   		  </li>	   		    		    		  	
+	  	 	  <li>
+	  	 	    <div class="application_submenu_item" id="app_resource" tempid=""  configid="" >
+		   			  <span class="application_sub_menu_resource"></span>
+		   			  <span>应用资源</span>
+	   			  </div>
+	   		  </li>	 
+			  {%if(app.user.is_in_manager_circles(app.user.edomain))=="1"%}
+	   		  <li>
+	  	 	    <div class="application_submenu_item" id="app_publish" >
+		   			  <span class="application_sub_menu_publish"></span>
+		   			  <span>应用发布</span>
+	   			</div>
+	   		  </li>
+	   		  {%endif%}		
+	  	 	  <li>
+	  	 	    <div class="application_submenu_item" id="app_portals" >
+		   			  <span class="application_sub_menu_config"></span>
+		   			  <span>配置</span>
+	   			  </div>
+	   		  </li>
+   	</ul>  	 
+  	<div style="float:left;width:100%;cursor:default;margin:10px" id="main_area" for="basic_defined"></div>
+  	
+</div>
+<div id="applist"></div>
+<div class="clearfix"></div>
+<div class="backToTop" title="返回顶部" style="display: none;"></div><div class="backToTop" title="返回顶部" style="display: none;"></div>
+{% render "JustsyBaseBundle:Home:footer"%}
+{% block javascripts %}{% endblock %}
+<div class="modal hide fade" id="app_res_selecetDlg" style="width:760px;margin-left:-380px">
+    <div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    	<h3>应用资源选择列表</h3>
+    </div>
+    <div class="modal-body" id="app_res_selecetDlg_body"> 
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" onclick="ComponentAttr.saveappresource()">确定</a>
+    	<a href="#" class="btn" data-dismiss="modal" style="margin-right:10px;">关闭</a>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).live("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+</script>	
+<script type="text/javascript">    
+var topmenu_link_hovertimer=null,topmenu_link_outtimer=null,NativePageList=null;  
+$(document).ready(function() {
+  	componentDrop.init();  
+  	$('#app_res_selecetDlg').on('show', function () { 
+  		 LoadComponent("app_res_selecetDlg_body","{{path('JustsyBaseBundle_mappconfig_resourcemgr',{'appid':'appid'})}}".replace("appid",$("#content_template").attr("appid"))+"?dlg=1");
+    });
+
+	$("#menu_top .submenu_left_li").live("click",function(){
+		$("#menu_top .submenu_left_li_action").attr( "class","submenu_left_li");
+		$(this).attr("class","submenu_left_li_action");
+	});
+			 
+	$("#PORTAL").trigger("click");
+    $("#user_account").live("mouseover",function(){
+      	$(".account_list").show();
+    });
+
+    $("#user_account").live("mouseout",function(){
+      	$(".account_list").hide();
+    });
+      
+    $(".applicateion_os_ico").live("click",function(){
+      	  var active = $(this);
+      	  if (active.attr("class").indexOf("active")!=-1) return;
+      	  if ( this.id=="android_ico")
+      	  {
+      	  	 $("#iphone_ico").removeClass("applicateion_os_ico_active");
+      	  	 $(this).addClass("applicateion_os_ico_active");
+      	  	 $("#androidruntime").show();
+      	  	 $("#iosruntime").hide();
+      	  }
+      	  else
+      	  {
+     	  	   $("#android_ico").removeClass("applicateion_os_ico_active");
+      	  	 $(this).addClass("applicateion_os_ico_active"); 	
+      	  	 $("#iosruntime").show();
+      	  	 $("#androidruntime").hide();
+      	  }
+    });   
+      
+    $("#userUI").live("mouseover",function(){
+      	 $("#userUI>div:first").attr("class","application_interface_active");
+      	 $(".user_appconfig_area").show();
+    }); 
+      
+    $("#userUI").live("mouseout",function(){
+      	 $("#userUI>div:first").attr("class","application_interface_item");
+      	 $(".user_appconfig_area").hide();
+    });  
+});
+
+function getappresource()
+{
+	 var resourceid = $("#reslist input[name='app_res_radio']:checked").attr("value");
+	 var result = new Object();
+	 result.resourceid = resourceid;
+	 result.resourcetype = $("#reslist input[name='app_res_radio']:checked").parent().parent().attr("type");
+	 $('#app_res_selecetDlg').modal("hide");
+	 return result;	
+}
+  
+function SetMenuActive(currentActive)
+{
+	  var selected = $("#"+currentActive).attr("current_selected");
+	  if ( typeof(selected)!="undefined" && selected=="1") return;
+  	var $this=$("#"+currentActive), currSpan=$(".application_submenu_item[current_selected='1'] span:first");
+  	$(".application_submenu_item[current_selected='1']").attr("current_selected","");
+  	if(currSpan.length>0)
+  	{
+  		currSpan.attr("class",currSpan.attr("class").replace("_active",""));
+  		currSpan.next().css("color","#555555");
+  	}
+  	var span = $this.children('span:first');
+  	$this.attr("current_selected","1");
+  	if ( span.attr("class").indexOf("_active")==-1) {
+	  	span.attr("class",span.attr("class")+"_active");
+	  	$this.children('span:last').css("color","#059BC6");
+    }
+}
+  
+var isload_app = true;
+  
+$(".application_main_menu>span").on("click",function(){
+		 $(".after_publish").popover("hide");
+  	 $(".application_main_menu_active").removeClass("application_main_menu_active");
+  	 $(this).attr("class","application_main_menu_active");
+  	 var $id=$(this).attr("id"),$basic_defined = $("#main_area"),$adv_defined=$("#main_area");
+  	 if($id=="basic_defined") {
+  	 	 $("#template_right>ul[for='basic_defined']").show();
+  	 	 $("#template_right .application_submenu_ul li:first>div").trigger('click');
+  	 	 $basic_defined.show();
+  	 	 menu_status = true;
+  	 }
+  	 else if($id=="adv_defined")
+  	 {
+	  	 	$("#template_right>ul[for='basic_defined']").hide();
+	  	 	if($("#content_template").attr("appid")=="PORTAL")
+	  	 	{
+	  	 		$adv_defined.html("正在加载页面,请稍候...").show();
+	  	 		$adv_defined.load("{{path('JustsyBaseBundle_mappconfig_portaladv')}}",{},function(){});
+	  	 	}
+	  	 	else
+	  	 	{
+	  	 		$adv_defined.html("对不起！高级定制功能需要高级用户才能使用，请联系商务人员。").show();
+	  	 	}
+  	 }
+});
+
+//菜单状态标志
+var menu_status = true;
+
+//界面定制
+function InterfaceCustom(){
+	  if ( menu_status ) {
+		  $("#main_area").html("");
+		  menu_status = false;
+		  SetMenuActive("interface_name");	    
+	    $("#main_area").load("{{path('JustsyBaseBundle_mappconfig_componentlayout')}}",function(){
+	    	menu_status = true;
+	    });
+   }
+}
+  
+$(".application_submenu_item").live("click",function(){
+    var	menuid = $(this).attr("id");
+    if ( !menu_status || menuid=="interface_name") return;
+  	menu_status = false;
+  	var appid = $("#content_template").attr("appid");
+  	var content = $("#main_area");
+  	content.html("");
+  	$("#edit_xml").hide();
+  	SetMenuActive(menuid);	
+  	if ( menuid =="app_basic")
+  	{  	 	 
+  		$("#template_right").hide();
+  		$(".application_botton_back").attr("status","design");
+  		ApplicationMgr.viewApp(XMLConfigPage.appid);  		
+  		$("#applist,#App_Area,#appmain_menu").show();
+  	}
+  	else if ( menuid == "portals_info"){
+  		content.load("{{path('JustsyBaseBundle_mapp_portalshome')}}",function(){
+  	 	  menu_status = true;
+  	  });
+  	}
+  	else if ( appid !="PORTAL" && menuid == "app_html5")
+  	{
+  	 	content.load(componentattrediturl.replace("componentname","html5"),null,function(){
+  	 		menu_status = true;
+  	 	});
+  	}
+  	else if (appid != "PORTAL" && menuid=="app_mobilepp"){
+  	 	  content.load(componentattrediturl.replace("componentname","mobileapp"),null,function(){
+  	 		menu_status = true;
+  	 	});  		 
+  	}
+  	else if ( appid !="PORTAL" && menuid =="app_webapp"){
+  		 content.load(componentattrediturl.replace("componentname","webapp"),null,function(){
+  	 	   menu_status = true;
+  	   });
+  	}
+  	else if(menuid=="app_resource") 
+  	{
+  	 	content.load("{{path('JustsyBaseBundle_mappconfig_resourcemgr',{"appid":"appid"})}}".replace("appid",appid),function(){
+  	 		 menu_status = true;
+  	  });
+  	}
+  	else if ( menuid=="app_publish")
+  	{
+  	 	AppPublishMgr.publish_url = "{{path('JustsyBaseBundle_mapp_publish')}}";
+  	 	AppPublishMgr.history_url = "{{path('JustsyBaseBundle_mapp_publish_history')}}";
+  	 	AppPublishMgr.show();
+  	}
+  	else if (menuid == "app_portals"){
+  	 	XMLConfigPage.portals_mgr.show("{{path('JustsyBaseBundle_mappconfig_getportalsfile')}}");
+  	}
+  	else if(menuid =="menu_portal")
+  	{
+  	 	XMLConfigPage.switchXMLConfig();
+  	}	 
+});
+
+	function resetpass()
+	{
+		$("#resetpassdiv").show();
+		$("#buspass").hide();
+	}  
+	var commitnewpass = false,commitconfigfile=false;
+	/*
+	function resetpass_save(appid)
+	{		
+		var pv =$.trim($("#resetpassdiv input").val());
+		if(pv=="")
+		{
+			$("#resetpasshint").html("密码不能为空！").show('slow', function() {
+				setTimeout(function(){$("#resetpasshint").html("").hide()},3000);
+			});
+			return;
+		}
+		if(pv.length<6)
+		{
+			$("#resetpasshint").html("密码长度不能小于6！").show('slow', function() {
+				setTimeout(function(){$("#resetpasshint").html("").hide()},3000);
+			});			
+			return;
+		}
+		if(commitnewpass) return;
+		commitnewpass=true;
+		$("#resetpassdiv").hide();
+		$("#resetpasshint").html("正在重置新密码，请稍候...").show();
+		$.getJSON("{{path('JustsyBaseBundle_basic_resetpass',{'appid':'appid'})}}".replace("appid",appid),{"pv":pv},function(d){
+			commitnewpass=false;
+			if(d.s=="1")
+			{
+				$("#resetpasshint").html("密码重置成功，请牢记新密码！").show('slow', function() {
+					setTimeout(function(){
+						$("#resetpasshint").html("").hide();
+						$("#resetpassdiv").hide();
+						$("#buspass").show();
+					},3000);
+				});
+			}
+			else
+			{
+				$("#resetpassdiv").show();
+				$("#resetpasshint").html(d.msg).show('slow', function() {
+					setTimeout(function(){$("#resetpasshint").html("").hide()},3000);
+				});
+			}
+		});
+	}
+	*/
+
+	function configfile_update(appid)
+	{
+		var pv =$.trim($("#configfilename").val());
+		if(pv=="") return;
+		if(commitconfigfile) return;
+		var suffix = pv.substring(pv.lastIndexOf(".")+1);
+		suffix = suffix.toLowerCase();
+	 	if ( suffix!="xml"){
+	 	 	 $("#configfilehint").html("请选择xml文件").show();
+	 	 	 return;
+	 	}	 	 
+		commitconfigfile=true;
+		$("#updateconfigdiv").hide();
+		$("#configfilehint").html("正在上传配置文件，请稍候...").show();
+		$.ajaxFileUpload({
+            url:"{{path('JustsyBaseBundle_basic_updateconfigfile',{"appid":"appid"})}}".replace("appid",appid), //你处理上传文件的服务端
+            secureuri:false,
+            fileElementId:'configfilename',
+            dataType: 'json',
+            success: function (data)
+            {
+                if(data.fileid!=''){
+                	$("#configfilelook").html("<a href='{{JS_OPEN_API_URL}}/getfile/"+data.fileid+"'>查看</a>");
+                	$("#configfilehint").html("").hide();
+                	$("#configfilediv").show();
+                }
+                commitconfigfile = false;
+            },
+            error: function (data, status, e)
+						{
+							commitconfigfile = false;
+							$("#configfilehint").html(e);
+							$("#configfilediv").show();
+							setTimeout(function(){$("#configfilehint").hide();},3000);
+						}
+        })		
+	}
+	
+ 
+	
+</script>

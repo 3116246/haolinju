@@ -1,0 +1,227 @@
+<div id="component_switch_attribute_list" style="line-height: 60px; float: left; margin-bottom: 20px;">
+	<div class="component_fileds_row">
+		 	  <span>播放方式：</span>
+		 	  <label>
+		 	  	  <input name="playtype" id="switch_hand" type="radio" style="float:left;" checked="checked"  value="1" onclick="switchtype('hand')" > 
+		 	  	  <span style="float:left;padding-left:5px;font-size:12px;">手动滑动</span>
+		 	  </label>
+		 	  <label>
+		 	  	  <input name="playtype" id="switch_auto" type="radio" style="float:left;"  value="0" onclick="switchtype('auto')" > 
+		 	  	  <span style="float:left;padding-left:5px;font-size:12px;">自动轮换</span>
+		 	  </label>
+			 <div id="autotype" style="display:none;float:left;">
+				 （间隔时间：<input type="text"  maxlength="2" onkeyup='InputNumber(this)' onpaste="InputNumber(this)" id="switch_timer" style="width:25px;text-align:center;margin:0px 10px;" name="title_text">秒）
+			 </div>
+	</div>
+	<div class="component_fileds_row">
+	  	<span>数据来源：</span>
+	    <label>
+		 	    <input name="datasource" id="switch_static" type="radio" style="float:left;" checked="checked"  value="0" onclick="switchresource('static')" > 
+		 	  	  <span style="float:left;padding-left:5px;font-size:12px;">静态</span>
+		 	</label>
+	    <label style="margin-left:25px;">
+		 	    <input name="datasource" id="switch_dynamic" type="radio" style="float:left;"  value="1" onclick="switchresource('dynamic')" > 
+		 	  	<span style="float:left;padding-left:5px;font-size:12px;">动态</span>
+		 	</label>
+	</div>	
+	<div for="dynamic" class="component_fileds_row" style="display:none;">
+		 <span style="float:left;margin-right:10px;">接口地址：</span>
+		 <input type="text" maxlength=200 id="text_address" style="width:350px;margin-top:5px;">
+	</div>
+		
+	<div for="static" class="component_fileds_row">
+		<span>轮换内容：</span>
+		<div style="margin-top:14px;">
+			 <div style="float: left; width:310px;">
+			     <img id="switch_picture" style="float:left;width:310px;height:130px;border: 1px solid #AAAAAA;">
+			     <span class="component_switch_title">&nbsp;</span>
+			 </div>
+			 <div style="float:left;width:20px;line-height:20px;margin-left:1px;" id="pic_number" >
+			 	  <span class="component_switch_number">+</span>
+			 </div>
+			 <div style="float:left;margin-left:5px;" id="component_tools" >
+			 	 <span class="component_tools_edit_active"></span>
+			   <span class="component_tools_delete_active" onclick="component_switch.remove()"></span>
+			 </div>
+	  </div>
+	</div>	
+</div>
+
+<div  class="modal" data-backdrop=static style="display:none;width:515px;height:290px;" id="select_switchpic" show=false >
+	 <div class="portals_staff_windowtitle">
+	   <span>编辑轮换图片</span>
+	   <span style="float:right;padding:2px;" title='关闭' onclick="$('#select_switchpic').modal('hide');"  class="portals_staff_windowtitle_close">×</span>
+   </div>
+   <form enctype="multipart/form-data" method="post" id="switch_uploadfile">
+	   <div class="component_switch_dialog"> 
+ 	 	    <img id="setting_image" >
+   	    <div class="component_switch_dialog_div">
+   	  	   <span>上传图片</span>
+   	  	   <input onmouseover="$('.component_switch_uploadhint').show();" onmouseout="$('.component_switch_uploadhint').hide();" onchange="component_uploadfile(this)"  id="componentImage"  name="componentImage" style="cursor: pointer;float: left;height:20px;margin-top:-22px;opacity: 0;width:55px;" type="file">
+   	  	   <span onclick="component_switch.selectIcon('setting_image')" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg'>选择图片</span>
+   	  	</div>
+   	  	<span class="component_switch_uploadhint">建议上传图片规格为:640*260像素大小</span>
+	   	  <input type="text" id="text_desc" maxlength=20 style="width: 312px; margin-top: 5px;" id="image_desc" >
+	   </div>
+   </form>
+   <div class="component_switch_dialog_bottom">
+   	  <div class="component_switch_error">
+   	  	  <img class="component_switch_hint_img"><span>请选择或上传轮换图片</span>
+   	  </div>
+   	   <span onclick="component_switch.add()"  class="app_apptype_botton_active">确定</span>
+   	   <span onclick="switchCancel();"  class="app_apptype_botton_default">取消</span>
+   </div>
+</div>
+<script type="text/javascript">
+  function switchtype(t) {
+	  if ( t=="auto")
+	    $("#autotype").show();
+	  else
+		  $("#autotype").hide();
+  }
+  function switchresource(t){
+ 	  $("#component_switch_attribute_list div[for]").hide();
+ 	  $("#component_switch_attribute_list div[for='"+t+"']").show();
+ 	  if ( t =="dynamic"){
+ 	  	var url = $.trim( $("#text_address").val());
+ 	  	if (url == ""){
+ 	  	  $("#text_address").val("http://");
+ 	  	  $("#text_address").focus();
+ 	  	}
+ 	  }
+  }
+  
+  function switchCancel(){
+  	$('#select_switchpic').modal('hide');
+  	$(".component_switch_number_active").attr("class","component_switch_number");
+  	$(".component_switch_number[active=1]").attr("class","component_switch_number_active");
+  	$("#component_tools").show();
+  }
+ 
+ //编辑图片
+ $(".component_tools_edit_active").live("click",function(){
+ 	  $("#select_switchpic").modal("show");
+ 	  $("#setting_image").attr("src",$("#switch_picture").attr("src"));
+ 	  $("#text_desc").val($(".component_switch_title").text()); 	  
+ });
+ 
+ //选择数字 
+ $(".component_switch_number").live("click",function(){
+ 	  $(".component_switch_number_active").attr("class","component_switch_number");
+ 	  if ( $(this).text() == "+"){
+ 	  	$("#component_tools").hide();
+ 	  	$("#select_switchpic").modal("show");
+ 	    $("#setting_image").attr("src","");
+ 	    $("#setting_image").css("border","1px solid #AAAAAA");
+ 	    $("#text_desc").val("");
+ 	  }
+ 	  else{
+ 	  	$(".component_switch_number").attr("active",0);
+	 	  $("#switch_picture").attr("src",$(this).attr("url"));
+	 	  $(".component_switch_title").text($(this).attr("text"));
+	 	  $(this).attr("active",1);
+	 	  $("#component_tools").show();
+	 	  $("#component_tools").css("margin-top",parseInt($(this).index()) * 21+"px");
+	 	  if ( $("#pic_number").children().length-1>3) {
+	 	     $(".component_tools_delete_active").show();
+	 	  }
+	 	  else{
+	 	  	$(".component_tools_delete_active").hide();
+	 	  }
+	 	}
+	 	$(this).attr("class","component_switch_number_active");
+ });
+
+  function component_uploadfile(ev){
+	 	 var filename = $(ev).val();
+		 var position = filename.lastIndexOf(".");
+		 if (position==-1) return;
+		 filename = filename.substr(position+1);
+		 if ( filename!="png" && filename!="gif" && filename!="bmp" && filename!="jpg"){
+		 	 	$(".component_switch_error").children().show();
+				$(".component_switch_error>span").text("请选择图片文件类型！");
+				setTimeout("$('.component_switch_error').children().hide();",2000);
+		 	  return;
+		 }
+		 var appid = $("#content_template").attr("appid");
+		 component_swith_hint("load","正在上传图片");
+		 $.ajaxFileUpload({
+	        url: "{{path('JustsyBaseBundle_mappconfig_component_fileupload',{"appid":"appid"})}}".replace("appid",appid),
+	        secureuri:false,
+	        fileElementId:'componentImage',
+	        dataType: 'json',
+	        success: function (data) {
+	           if(data.succeed && data.fileid!="")
+	           {
+	           	  component_swith_hint("succeed","上传图片成功");
+	          	  $("#setting_image").attr("src",file_webserver_url+data.fileid);
+	           }
+	           else{
+				        component_swith_hint("error",data.msg);
+	           }
+	        },
+	        error: function (data, status, e) {
+				    component_swith_hint("error",data.msg);
+				 }
+	   })
+  } 
+  
+  //显示提示信息
+  function component_swith_hint(type,hint){
+  	var img = "",_class="component_switch_hint_img";
+  	var color = "black";
+  	if ( type=="succeed")
+  	   img = "/bundles/fafatimewebase/images/zq.png";
+  	else if ( type=="error") {
+  		 img = "/bundles/fafatimewebase/images/errow.gif";
+  		 color = "red";
+  	}
+    else if ( type=="load") {
+    	 img = "/bundles/fafatimewebase/images/loading.gif";
+    	 _class="component_switch_loading_img";
+    }
+    $(".component_switch_error>img").attr("class",_class);
+    $(".component_switch_error>img").attr("src",img);
+    $(".component_switch_error>span").text(hint);
+    $(".component_switch_error>span").css("color",color);
+    $(".component_switch_error").children().show();
+    if ( type!="load"){
+    	setTimeout(function(){ $(".component_switch_error").children().hide();},2000);
+    }
+  }
+  
+  function BindSwitch(attrs){
+		var dataObj = attrs.pics,timer = attrs.timer;
+		if ( timer != null && timer>0){
+		     	$("#switch_auto").attr("checked","chekced");
+		     	$("#autotype").show();
+		     	$("#switch_timer").val(timer);
+		}   	
+		var html = new Array();
+  	if ( dataObj == null || dataObj.length ==0) {  //如果为0视为动态
+	    $("#switch_dynamic").attr("checked","checked");
+	    switchresource('dynamic');
+	    $("#component_tools").hide();
+	    var url = $.trim(attrs.listurl);			    
+	    if ( url == null || url == "") url = "http://";
+	    $("#text_address").val(url);
+  	}
+  	else{
+  		$("#component_tools").show();
+  		if ( dataObj.length<4 ) $(".component_tools_delete_active").hide();
+  	 	$("#switch_static").attr("checked","checked");
+  	 	for(var i=1;i<= dataObj.length;i++){
+	    	if ( i==1){
+	    		 $("#switch_picture").attr("src",dataObj[i-1].url);
+	    		 $(".component_switch_title").text(dataObj[i-1].text);
+	    	}
+	    	html.push("<span active="+(i==1?"1":"0")+" text='" + dataObj[i-1].text+"' url='"+dataObj[i-1].url+"' class='" + (i == 1 ? "component_switch_number_active":"component_switch_number") +"'>"+ i + "</span>");
+	   	}
+	   	html.push("<span active=0 class='component_switch_number'" + (dataObj.length>=5 ? "style='display:none;'":"") +">+</span>");	
+     	$("#pic_number").html(html.join(''));
+     	
+  	}
+  }
+ 
+  
+</script>

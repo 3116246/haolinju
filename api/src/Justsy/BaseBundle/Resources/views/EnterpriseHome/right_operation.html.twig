@@ -1,0 +1,134 @@
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">用户向导</span>
+  </div>
+  <div class="rightbox-context">
+  <ul>
+  <li style="width: 150px;">
+  <div class="process-bar skin-green" style="cursor:pointer;float:right;width:50%" title="个人资料完善度" onclick="window.location.href='{{ path('JustsyBaseBundle_account_basic', {'network_domain' : app.user.edomain})}}'">
+    <div class="pb-wrapper">
+      <div class="pb-highlight"></div>
+      <div class="pb-container">
+        <div class="pb-text">{{ InfoCompletePercent }}%</div>
+        <div style="width: {{ InfoCompletePercent }}%" class="pb-value"></div>
+      </div>
+    </div>
+  </div>
+  <a style="float:right;padding-right: 3px;" href="{{ path('JustsyBaseBundle_account_basic', {'network_domain' : app.user.edomain})}}">完善个人资料</a>
+  
+  </li>
+{% if app.user.is_in_manager_circles(curr_network_domain)==1 %}    
+  {% if app.user.edomain==curr_network_domain %}
+    {%if app.user.IsFunctionManagerEn()%}
+       <li><a href="{{ path('JustsyBaseBundle_enterprise_setting_basic', {'network_domain':curr_network_domain}) }}">设置企业基础信息</a></li>
+    {%endif%}
+  {% else %}
+    <li><a href="{{path('JustsyBaseBundle_circle_setting_circle',{'network_domain':curr_network_domain})}}">设置圈子基础信息</a></li>
+  {% endif %}
+{% endif %}
+  {% if (ROSTER_INVITE)%}
+    <li><a href="javascript:void($('.icon_invite').trigger('click'));">邀请好友加入圈子</a></li>
+ {% endif %}
+ {% if (DOC)%}
+    <li><a href="{{ path("JustsyBaseBundle_documnet_mgr", {network_domain: curr_network_domain}) }}">浏览圈子文档</a></li>
+{% endif %}
+    <li><a href="{{path("JustsyBaseBundle_member", {'network_domain' : curr_network_domain})}}">查看圈子成员</a></li>
+    {% if app.user.edomain==curr_network_domain %}
+<!--    <li><a data-toggle="modal" show="false" href="#dlgQuitEntp">退出当前企业</a></li>-->
+    {% else %}
+    <li><a data-toggle="modal" show="false" href="#dlgQuitCircle">退出当前圈子</a></li>
+    {% endif %}
+	
+{%if(app.user.IsExistsFunction("CIRCLE_C"))%}
+  <li><a id='createoutsidecircle_a' href="javascript:createoutsidecircle();">创建外部圈子</a></li>
+{%endif%}  
+
+  <li><a href="{{ path('JustsyBaseBundle_help_microapp') }}">微应用开发者文档</a></li>
+  </ul>
+  </div>
+</div>
+
+{% if app.user.edomain==curr_network_domain %}
+<div class="modal" id="dlgQuitEntp" style="display:none;width:400px;margin-left: -200px;" show="false">
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal">×</a>    
+  	<h5>退出当前企业</h5>  
+  </div>
+  <div class="modal-body">
+    <div>　　退出企业一般用于已从当前企业离职，保留现有帐号加入另一家企业的情形。<span style="color:#888;">　退出后将不能再浏览该企业里的信息，并且该企业下的群组也将同时退出。</span></div>
+    <p style="color:red;">　　退出后您将暂时不能使用Wefafa，除非您加入另一企业之后。</p>  
+    <p>　　确认退出当前企业【{{ app.user.get_circle_name(curr_network_domain) }}】吗？</p>    
+  </div>
+  <div class="modal-footer">    
+  	<a id="btnQuitEntp" class="btn">退出并加入另一企业</a>
+  	<a class="btn" data-dismiss="modal">取消</a>   
+  </div>	
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  //退出企业
+  $("#btnQuitEntp").click(function(){
+    $(this).text("请稍候...").attr("disabled", true);
+    var Aurl = "{{ path("JustsyBaseBundle_enterprise_quitentp", {'network_domain':curr_network_domain}) }}"
+    $.getJSON(Aurl, {t: new Date().getTime()}, function (data) 
+    {
+      //成功
+      if (data.success == "1")
+      {
+        window.location.href = "{{ path("JustsyBaseBundle_register", {type:0, mail:app.user.username})|raw }}";
+      }
+    });
+  });  
+});
+</script>
+{% else %}
+<div class="modal" id="dlgQuitCircle" style="display:none;width:400px;margin-left: -200px;" show="false">
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal">×</a>    
+  	<h5>退出圈子</h5>  
+  </div>
+  <div class="modal-body">
+    <span>　　确认退出当前圈子【{{ app.user.get_circle_name(curr_network_domain) }}】吗？</span>
+    <span style="color:#888;">　退出后将不能再浏览该圈子里的信息，并且该圈子下的群组也将同时退出。</span>
+  </div>
+  <div class="modal-footer">    
+  	<a id="btnQuitCircle" class="btn">退出</a>
+  	<a class="btn" data-dismiss="modal">取消</a>   
+  </div>	
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  //退出圈子
+  $("#btnQuitCircle").click(function(){
+    $(this).text("请稍候...").attr("disabled", true);
+    var Aurl = "{{ path("JustsyBaseBundle_enterprise_quitcircle", {'network_domain':curr_network_domain}) }}"
+    $.getJSON(Aurl, {t: new Date().getTime()}, function (data) 
+    {
+      //成功
+      if (data.success == "1")
+      {
+        window.location.href = "{{ path("root") }}";
+      }
+    });
+  }); 
+});
+</script>
+{% endif %}
+<script language='text/javascript'>
+function createoutsidecircle(){
+	CircleCreate.load({
+  		circle_default_logo:"{{ asset('bundles/fafatimewebase/images/default_circle_big.png') }}",
+			user_default_logo:"{{ asset('bundles/fafatimewebase/images/no_photo.png') }}",
+			formid:"div_create_circle_form",
+			saveUrl:"{{path('JustsyBaseBundle_circle_update')}}",
+			mainUrl:"{{path('JustsyBaseBundle_circle')}}",
+			re:$("#createoutsidecircle_a")[0]
+  	});
+  	CircleCreate.hidetrans();
+  	CircleCreate.setRightTrans({left:'40px',top:'60px'});
+  	CircleCreate.setPosition({
+  		X:350,
+  		Y:80
+  	});
+}
+</script>

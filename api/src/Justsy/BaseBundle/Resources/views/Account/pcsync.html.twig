@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>我的资料</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{{ asset('bundles/fafatimewebase/css/home.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/home_s1.css')}}" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="{{asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css">
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="https://www.wefafa.com/bundles/fafatimewebase/js/bootstrap.js"></script>
+<script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EmployeeCard.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Account.js') }}"></script>
+</head>
+<body style="margin:0px;background-color:#fff">
+<form id="formbasic"  method="post" class="form-horizontal">
+<div id="account_pcsync">
+  <div id="rightdetail_photo" >
+    <div class="allphoto" style="width:120px; height:120px;margin: 15px 25px 0;" id="preview_fake">
+         <img style="width:120px; height:120px;cursor:pointer" title="高清头像" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" id="preview" src="{{path}}"> 
+    </div>
+    {%if isself=="1"%}
+    <div class="changeheader">
+      <span style="line-height: 25px; height: 25px; display: block; padding-top: 5px;"><a class="account_pcsync_btn_bg" data-toggle="modal" show=false href="#invitedphoto" >编辑头像</a></span>
+    </div>
+    {%else%}
+     <div class="changeheader" style="height:10px"></div>
+    {%endif%}
+		<div class="process-bar skin-green">
+		    <div class="pb-wrapper" style="text-align: left;" title="个人资料完善程度">
+		      <div class="pb-highlight"></div>
+		      <div class="pb-container">
+		        <div class="pb-text" style="cursor:default">{{InfoCompletePercent}}%</div>
+		        <div class="pb-value" style="width: {{InfoCompletePercent}}%"></div>
+		      </div>
+		    </div>
+		</div> 
+    <div class="account_pcsync_menu" style="height: 10px;line-height: 10px;"></div>		
+    <div class="account_pcsync_menu_active" onclick="showBasic()">
+      <img src="{{ asset('bundles/fafatimewebase/images/mycard.png') }}" style="vertical-align: middle;">&nbsp;<a href="javascript:void(0)">基本资料</a>
+    </div>
+    <div class="account_pcsync_menu" onclick="showDetail()">
+      <img src="{{ asset('bundles/fafatimewebase/images/fileicon.png') }}" style="vertical-align: middle;">&nbsp;<a href="javascript:void(0)">详细资料</a>
+    </div>    		   
+  </div> 
+  <div id="rightdetail_left">
+	  	<div id="baseinfo">
+			    <div class="control-group" style="width:50%">
+			        <label for="input01">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+			        <div class="controls">
+			          <input type="text" maxlength=4 {%if isself=="1"%} class="rightdetail_input" {%else%} class="rightdetail_input_readonly" readonly style="cursor: default;color:#000" {%endif%} value="{{name}}" id="txtname" name="txtname">
+			        </div>
+			    </div> 
+			    <div class="control-group" style="width:50%">
+			        <label for="input01">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
+			        {%if isself=="1"%}
+			        <div class="controls">
+			          <input type="text" onmouseover="$(this).hide();$('#sexList').show()" class="rightdetail_input" readOnly="true" value="{{sex_id}}" id="txtsex" name="txtsex">
+			        </div>
+			        <div class="controls" id="sexList" style="display:none;height: 25px;">
+			          <input type="radio" value="男"  onclick="$('#txtsex').val('男')" {%if(sex_id=='男')%}checked{%endif%} id="a"  name="A">男<input  id="a" name="A" {%if(sex_id=='女')%}checked{%endif%} type="radio" value="女" onclick="$('#txtsex').val('女')">女
+			        </div>
+			        {%else%}
+			        <div class="controls">
+			          <input type="text"  class="rightdetail_input_readonly"  style="cursor: default;color:#000" readOnly="true" value="{{sex_id}}" id="txtsex" name="txtsex">
+			        </div>			        
+			        {%endif%}
+			    </div>    
+			    <div class="control-group" style="width:100%;z-index: 1000;">
+			      <label for="input01">部门名称：</label>
+			      <div class="controls">
+			          {%if isself=="1"%}
+			     	    <input type="text" class="rightdetail_input" readOnly value="{{deptname}}" style="cursor:default;width:180px;" onclick="Account.showDept()" id="txtdept" name="txtdept" maxlength="20" >
+			     	    <input type="hidden"id="txtdeptid" name="txtdeptid" value="{{deptid}}">
+			     	    <span id="adddept" style="display:none;padding-left:10px" ><img  title="添加下级部门" src="{{ asset('bundles/fafatimewebase/images/icon_add.png') }}" width="10" height="10"></span>
+			     	    <span id="deldept" style="display:none;padding-left:10px" ><img  title="删除当前部门" src="{{ asset('bundles/fafatimewebase/images/errow.gif') }}" width="10" height="10"></span>
+			          <span style="position:absolute;top:30px;left:1px;width:265px;display:none;z-index:1000">
+			            <div class="zTreeDemoBackground"><img  src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16">正在加载数据...</div>
+			            <div id="deptdiv" style="display:none" isload="0" class="zTreeDemoBackground" saveurl="{{ path('JustsyBaseBundle_account_deptsave', {'network_domain' : curr_network_domain})}}" delurl="{{ path('JustsyBaseBundle_account_deptdel', {'network_domain' : curr_network_domain})}}" url="{{ path('JustsyBaseBundle_account_deptquery', {'network_domain' : curr_network_domain})}}">
+			               <ul id="depttree" class="ztree"></ul>	
+			            </div>
+			          </span> 
+			          {%else%}
+			             <input type="text" class="rightdetail_input_readonly"  style="cursor: default;color:#000" readOnly value="{{deptname}}" style="cursor:default;width:180px;" id="txtdept" name="txtdept" maxlength="20" >
+			          {%endif%}
+			     	</div>
+			    </div>      
+	    		<div class="control-group" style="width:50%">
+			        <label for="input01">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</label>
+			        <div class="controls">
+			          <input type="text" class="rightdetail_input_readonly" {%if isself=="0"%} style="color:#000" {%endif%} style="cursor: default;" readOnly=true value="{{duty}}" id="txtduty" name="txtduty">
+			        </div>
+			    </div>			    
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+			        <div class="controls">
+			          <input type="text" class="rightdetail_input_readonly" style="cursor: default;width:180px;{%if isself=="0"%}color:#000 {%endif%}" readOnly="true" value="{{account}}" id="txtmail" name="txtmail">
+			        </div>
+			    </div> 
+			    <div class="control-group" style="width:100%"> <label for="input01">出生日期：</label>
+			    	<div class="controls">
+			    	    <input {%if isself=="1"%}class="rightdetail_input" onclick="$(this).hide();$('#birthdaylist').show()"{%else%} class="rightdetail_input_readonly"{%endif%} style="width:180px;{%if isself=="0"%}cursor: default;color:#000{%endif%}" readOnly="true" type="text" id="txtbirthday" name="txtbirthday" value="{{birthday}}">
+			      </div>  
+			      {%if isself=="1"%}
+			      <div class="controls" id="birthdaylist" style="display:none">
+			        <input class="rightdetail_input" style="width:50px;border:1px solid #ccc;height: 17px;" type="text" id="dateYear" onkeypress="Account.inputPlusInteger(this);" maxlength="4" name="dateYear" value="{{year}}">年
+			        <select class="span1" id="dateMonth" name="dateMonth" onChange="Account.load_day(this.value);">
+			          <option value="1">01</option>
+			          <option value="2">02</option>
+			          <option value="3">03</option>
+			          <option value="4">04</option>
+			          <option value="5">05</option>
+			          <option value="6">06</option>
+			          <option value="7">07</option>
+			          <option value="8">08</option>
+			          <option value="9">09</option>
+			          <option value="10">10</option>
+			          <option value="11">11</option>
+			          <option value="12">12</option>
+			        </select>月                    
+			        <select class="span1" id="dateDay" name="dateDay">
+			          <option value ="1">01</option>
+			          <option value ="2">02</option>
+			          <option value ="3">03</option>
+			          <option value ="4">04</option>
+			          <option value ="5">05</option>
+			          <option value ="6">06</option>
+			          <option value ="7">07</option>
+			          <option value ="8">08</option>
+			          <option value ="9">09</option>
+			          <option value ="10">10</option>                
+			          <option value ="11">11</option> 
+			          <option value ="12">12</option> 
+			          <option value ="13">13</option> 
+			          <option value ="14">14</option> 
+			          <option value ="15">15</option> 
+			          <option value ="16">16</option>
+			          <option value ="17">17</option>  
+			          <option value ="18">18</option>  
+			          <option value ="19">19</option>                                
+			          <option value ="20">20</option>
+			          <option value ="21">21</option>
+			          <option value ="22">22</option>
+			          <option value ="23">23</option>
+			          <option value ="24">24</option>
+			          <option value ="25">25</option>
+			          <option value ="26">26</option>
+			          <option value ="27">27</option>
+			          <option value ="28">28</option>
+			          <option value ="29">29</option>
+			          <option value ="30">30</option>
+			          <option value ="31">31</option>
+			        </select>日
+			        <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+			        <span class="help-inline" style="color:red"></span>			        
+			      </div>
+			      {%endif%}
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">&nbsp;手&nbsp;机&nbsp;号：</label>
+			        <div class="controls">			          
+			          {%if mobile|length>0%}
+			          {% if mobile_bind|length == 0 %}
+			          <input type="text" style="float:left" {%if isself=="1"%} class="rightdetail_input" {%else%} class="rightdetail_input_readonly" style="cursor: default;color:#000" readonly {%endif%} maxlength="11" value="{{mobile}}" id="txtmobile" name="txtmobile">
+			          {%if isself=="1"%}<span style="height: 28px; line-height: 28px; display: inline-block; float: right; margin-right: 100px;"><a data-toggle="modal" show=false class="account_pcsync_Amobilebind" style="text-decoration: underline;color: blue;" href="#bindmobile" title="绑定手机后，您就可以使用手机号进行登录哟！">绑定手机号</a></span>{%endif%}
+			          {% else %}
+			          <input type="text"  class="rightdetail_input_readonly" style="cursor: default; {%if isself=="0"%}color:#000 {%endif%}" readonly value="{{mobile}}" id="txtmobile" name="txtmobile"><input type="text"  class="rightdetail_input_readonly" style="cursor: default;" readonly value="  [已绑定]">
+			          <!--客户端不允许取消绑定。只能在wefafa上取消绑定-->
+			          {% endif %} 
+			          {%else%}
+			             <input type="text"  {%if isself=="1"%} class="rightdetail_input" {%else%} class="rightdetail_input_readonly" style="cursor: default;color:#000" readonly {%endif%} maxlength="11" value="" id="txtmobile" name="txtmobile">   
+			          {%endif%}      
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">个性签名：(*60字以内)</label>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txtself_desc" name="txtself_desc" {%if isself=="0"%}readonly {%endif%} style="width:300px;overflow:auto" rows="4" maxlength="60" >{{self_desc}}</textarea>
+			        </div>
+			    </div>
+	    </div>
+	    
+	    <div style="display:none" id="detailinfo">
+	    		<div class="control-group" style="width:50%">
+			        <label for="input01">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯：</label>
+			        <div class="controls">
+			          <input type="text" {%if isself=="1"%} class="rightdetail_input" {%else%} class="rightdetail_input_readonly" style="cursor: default;color:#000" readonly {%endif%} maxlength=20 value="{{hometown}}" id="txthometown" name="txthometown">
+			        </div>
+			    </div>
+					<div class="control-group" style="width:100%">
+					        <label for="input01">工作电话：</label>
+					        <div class="controls">			        	
+					          <input type="text" maxlength="12" {%if isself=="1"%} class="rightdetail_input" {%else%} class="rightdetail_input_readonly" style="cursor: default;color:#000" readonly {%endif%}  value="{{work_phone}}" id="txtwork_phone" name="txtwork_phone">
+					        </div>
+					</div>			    
+	    		<div class="control-group" style="width:100%">
+			        <label for="input01">毕业院校：</label>
+			        <div class="controls">
+			          <input type="text" {%if isself=="1"%} class="rightdetail_input" {%else%} class="rightdetail_input_readonly" style="color:#000" readonly {%endif%} maxlength=32 style="width:180px" value="{{graduated}}" id="txtgraduated" name="txtgraduated">
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">个人特长：(*200字以内)</label>
+			    </div>
+			    <div class="control-group" style="width:100%;height: 40px;">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txtspecialty" name="txtspecialty" {%if isself=="0"%}readonly {%endif%} maxlength=200 style="width:300px;overflow:auto" rows="2" >{{specialty}}</textarea>
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%;">
+			        <label for="input01">兴趣爱好：(*200字以内)</label>
+			    </div>
+			    <div class="control-group" style="width:100%;height: 55px;">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txthobby" name="txthobby" {%if isself=="0"%}readonly {%endif%} maxlength=200 style="width:300px;overflow:auto" rows="3" >{{hobby}}</textarea>
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">工作经历：(*200字以内)</label>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txtwork_his" name="txtwork_his" {%if isself=="0"%}readonly {%endif%} maxlength=200 style="width:300px;overflow:auto" rows="4" >{{work_his}}</textarea>
+			        </div>
+			    </div>			    			    			    
+	    </div>
+  </div>
+  <div class="account_pcsync_footer">
+     <span id="info_btn_close" extend="fafa:win" action="close:window" class="btn_close account_pcsync_btn_bg">关闭</span>  {%if isself=="1"%}<span id="btnSave" class="btn_save account_pcsync_btn_bg" saveurl="{{ path('JustsyBaseBundle_account_pcsyncsave', {'network_domain' : curr_network_domain})}}" onclick="Account.submit_content(this);">保存</span>	{%endif%}
+  </div>
+</div>
+
+<div data-backdrop=false style="display:none;" show=false class="account_pcsync_invitedphoto" id="invitedphoto">
+    				<div style="height:385px;width:540px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    				<div class="account_pcsync_footer" style="width:540px;background:#fff"><span><a class="btn_close account_pcsync_btn_bg" id="header_btn_close" data-dismiss="modal">关闭</a></span><span id="header_btn_save" class="btn_save account_pcsync_btn_bg" onclick="saveHead()">保存</span></div>
+</div>
+
+<div data-backdrop=false style="display:none;" show=false class="modal account_pcsync_bindmobile" id="bindmobile">
+    				<div style="height:60px;width:220px;text-align:center;margin:10px" id="bindmobile_body">
+							  <div style="width: 100%; position: relative;">
+							    <label style="width: 60px; float: left;">手 机 号：</label>
+							    <div style="width: 155px; float: left;">
+							      <div style="width: 155px;text-align: left;" id="txtmobile_msg">{{ mobile }}</div>
+							    </div>
+							  </div>
+							  <div style="width: 100%; position: relative;" id="vaildcode">
+							    <label style="width: 60px; float: left;">验 证 码：</label>
+							    <div style="width: 160px; float: left;">
+							      <input type="text" id="txtvaildcode" name="txtvaildcode" tabindex="2" style="width: 50px;border:1px solid #ccc" onblur="checkvaildcode(this)" onkeypress='$("#txtvaildcode_msg").text("");'>
+							      <span style="cursor:pointer;color:blue" onclick="getmobilevaildcode(this)" >点击获取验证码</span>
+							    </div>
+							  </div>  
+							  <div style="width: 100%; position: relative;"><div style="float: left; width: 220px;" id="loading_vaildcode_ing"></div>
+							  </div>
+    				</div>
+    				<div class="account_pcsync_footer" style="width:240px;background:#fff;height:25px;padding-top: 4px;"><span><a class="btn_close account_pcsync_btn_bg" id="bind_btn_close" data-dismiss="modal">关闭</a></span><span id="bind_btn_save" class="btn_save account_pcsync_btn_bg" onclick="btnSave_OnClick(this)" saveurl="{{ path("JustsyBaseBundle_account_savemobilebind",{network_domain:curr_network_domain}) }}">确定</span></div>
+</div>
+<div id="err_hint" style="padding-top:12px;padding-left:10px;z-index:1000;position:absolute;top:0px;left:0px;display:none;background-image:url('/bundles/fafatimewebase/images/err_hint_bg.png');width:110px;height:22px">
+	<img src="/bundles/fafatimewebase/images/icon_point.png" style="float:left;vertical-align: middle;padding-top: 2px;"><span style="float:left;display: block;padding-left: 4px;">错误提示</span>
+</div>
+	
+</form>
+</body>
+</html>
+<script type="text/javascript">
+  var uploadObj=null;
+  var submitFlag = false;
+  g_resource_context = "/";
+  $(document).ready(function(){  
+	    $('#txtself_desc').maxlength({maxCharacters:60,status:false});
+	    $('#txtspecialty').maxlength({status:false});
+	    $('#txthobby').maxlength({status:false});
+	    $('#txtwork_his').maxlength({status:false});
+	    $(".controls .status").css({"background-color":"transparent","background-image":"none","color":"#00A8C6","font-size":"11px","height":"14px","line-height":"14px"});
+	});
+	function showBasic()
+	{
+		 $(".account_pcsync_menu_active").attr("class","account_pcsync_menu");
+		 $(".account_pcsync_menu:eq(1)").attr("class","account_pcsync_menu_active");
+		 $("#detailinfo").hide();
+	   $("#baseinfo").show();
+	}
+	function showDetail()
+	{
+		 $(".account_pcsync_menu_active").attr("class","account_pcsync_menu");
+		 $(".account_pcsync_menu:eq(2)").attr("class","account_pcsync_menu_active");
+		 $("#detailinfo").show();
+	   $("#baseinfo").hide();
+	}		
+	{%if isself=="1"%}
+  $("#sexList").live('mouseout', function(e) {
+			    if(checkHover(e,this)){
+			         $(this).hide();$('#txtsex').css('border','0px');$('#txtsex').show()
+			    }
+	});
+	function pcCheck()
+	{
+	    	if($("#txtname").val()=="")
+	    	{
+	    		showBasic();
+	    		showErr("姓名不能为空",$("#txtname").offset());
+	    		$("#txtname").focus();
+	    		return false;
+	    	}
+	    	if($("#txtname").val().length<2)
+	    	{
+	    		showBasic();
+	    		showErr("格式不正确",$("#txtname").offset());
+	    		$("#txtname").focus();
+	    		return false;
+	    	}	    	
+	    	var t = $("#txtmobile").val();
+	    	if(t!="" && "readonly"!=$("#txtmobile").attr("readOnly"))
+	    	{
+	    		if(t.length!=11 || !(/^[\d\+][\d\+]+$/).test(t)){
+	    		showBasic();		
+	    		showErr("格式不正确",$("#txtmobile").offset());
+	    		$("#txtmobile").focus();
+	    		return false;
+	    	  }
+	    	}
+	    	return funcheckYear($('#dateYear')[0]);
+	}
+	function showErr(txt,cr)
+	{
+		 $("#err_hint span").html(txt);
+		 $("#err_hint").css({"display":"block","top":(cr.top+15)+"px","left":(cr.left)+"px"});	
+		 setTimeout("hideErr()",3000);	 
+	}
+	function hideErr()
+	{
+		 $("#err_hint span").html("");
+		 $("#err_hint").css({"display":"none"});		 
+	}	
+  function editHead()
+	{
+		  $("#invitedphoto").modal("show");
+	}
+	function saveHead()
+	{
+		 if(submitFlag) return;
+	   $("#header_btn_save").text("提交中...");
+	   submitFlag = true;
+	   uploadObj[0].doSave();
+	}
+	function avatar_success()
+	{
+		  submitFlag=false;
+		  $("#header_btn_save").text("确定");
+		  $("#invitedphoto").modal("hide");
+		  //$("#header_hint").show();
+		  //setTimeout("$('#header_hint').hide()",2000);
+		  Account.submit_content($("#btnSave")[0]);
+	}  
+	$(document).bind("click",function(ee){
+		 if(ee.target.id=="txtbirthday" || ee.target.tagName=="OPTION") return;
+	   if(ee.target.id=="" ||  ee.target.id.indexOf("date")!=0) 	
+	   {
+	   	   if($("#birthdaylist span").text()!="" || !funcheckYear($('#dateYear')[0])) return;
+	       $('#birthdaylist').hide();
+	       var m = $('#dateMonth').val();
+	       m = m*1<10?"0"+m:m;
+	       var d = $('#dateDay').val();
+	       d = d*1<10?"0"+d:d;
+	       $('#txtbirthday').val($('#dateYear').val()+"年"+m+"月"+d+"日");
+	       //$('#txtbirthday').css("border","0px");
+	       $('#txtbirthday').show();
+	       
+	   }
+	});
+	
+  $(document).ready(function()
+  {
+    $('#dateYear').focus();
+    $("#dateMonth option[value='"+parseInt({{month}})+"']").attr("selected",true);
+    $("#dateDay option[value='"+parseInt({{day}})+"']").attr("selected",true);
+    
+    $("#txtname").blur(function(){
+    	  Account.checkName(this);
+    });
+
+    var obj = $($("#invitedphoto")[0].children[0].children[0]);
+    var obj_ff = obj.find("embed");
+    uploadObj = document.all==null? obj_ff : $("#_imageupload");
+    uploadObj.css({"height":"385px","width":"540px"});
+    Account.login_account = "{{account}}";
+    Account.loadDept();
+    $("#bindmobile").modal({show:false,backdrop:false});
+    $("#bindmobile").on('shown', {}, getmobilevaildcode);
+  });
+function funcheckYear(v)
+{
+      if (v.value.length < 1)
+      {
+	    		showBasic();
+	    		$("#birthdaylist").show();
+      	  showErr("不能为空",$(v).offset());     	
+          v.focus();
+          return false;
+      }
+      else if(v.value.length!=4  || !/\d\d\d\d/g.test(v.value))
+      {
+	    		showBasic();
+	    		$("#birthdaylist").show();   	
+      	showErr("格式不正确",$(v).offset());
+        v.focus();
+        return false;
+      }
+      else if (v.value*1<1900 || v.value*1>(new Date().getYear()-16))
+      {
+	    		showBasic();
+	    		$("#birthdaylist").show();    	
+      	showErr("无效的年份",$(v).offset());
+        v.focus();
+        return false;   
+      }
+      return true;  	
+}  
+function getmobilevaildcode() 
+{
+	$("#txtmobile_msg").text($("#txtmobile").val());
+	$("#vaildcode").hide();
+  $("#loading_vaildcode_ing").text("正在获取验证码...").css("color", "blue");
+  $("#bind_btn_save").hide();
+  $.getJSON("{{ path("JustsyBaseBundle_account_getmobilevaildcode",{network_domain:curr_network_domain}) }}", {txtmobile : $("#txtmobile").val(), t : new Date().getTime()}, function(data){
+    $("#vaildcode").show();
+    if (data.success == "1")
+    {
+      $("#loading_vaildcode_ing").text("验证码已发送！请查收").css("color", "blue");
+      $("#bind_btn_save").show();
+    }
+    else
+    {
+      $("#loading_vaildcode_ing").text(data.msg).css("color", "red");
+    }
+  });
+}  
+
+function btnSave_OnClick()
+{
+  if (!checkmobile($("#txtmobile")[0])) return;  
+  if (!checkvaildcode($("#txtvaildcode")[0])) return;
+  
+  var $sender = $("#bind_btn_save");
+  $("#loading_vaildcode_ing").text("正在绑定...");
+  $sender.attr("disabled", "disabled");
+  $.getJSON($sender.attr("saveurl"), {txtmobile : $("#txtmobile").val(), txtvaildcode : $("#txtvaildcode").val(), t : new Date().getTime()}, function(data){
+    if (data.success == "1")
+    {
+      $("#loading_vaildcode_ing").text("绑定成功！");
+      $("#txtmobile").attr("class","rightdetail_input_readonly");
+      $("#txtmobile").parent().find("a").remove();
+      setTimeout("$('#bindmobile').modal('hide')",2000);
+    }
+    else
+    {
+      $("#loading_vaildcode_ing").text(data.msg);
+      $sender.removeAttr("disabled");        
+    }
+  });	
+}
+function checkmobile(sender)
+{
+  var isvaild = (/^[\d\+][\d\+]+$/).test($(sender).val());
+  $("#loading_vaildcode_ing").text("").css("color", "black");
+  if (!isvaild)
+  {
+    $("#loading_vaildcode_ing").text("请输入正确的手机号！").css("color", "red");
+  }
+  
+  return isvaild;
+}
+function checkvaildcode(sender)
+{
+  var isvaild = $(sender).val().length > 0;
+  $("#loading_vaildcode_ing").text("").css("color", "black");
+  if (!isvaild)
+  {
+    $("#loading_vaildcode_ing").text("请输入验证码！").css("color", "red");
+  }
+  
+  return isvaild;
+}
+{%endif%}
+</script>

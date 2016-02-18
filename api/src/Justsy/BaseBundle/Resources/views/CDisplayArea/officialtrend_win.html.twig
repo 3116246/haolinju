@@ -1,0 +1,67 @@
+<div type='official' conv_id='{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' top='{{ds["we_convers_list"]["rows"][0]["top"]}}' hide='{{ds["we_convers_list"]["rows"][0]["hide"]}}' class="topiclayout convbox">
+  <span class="portrait"><img style="width:48px;height:48px" src="{{ ds["we_convers_list"]["rows"][0]["en_logo_path"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/en_logo_default.png") }}'"></span>
+  <span class="topicdetail convdetail">
+    <span class='official_publish_title'>
+      <a href="javascript:void(0)" class="post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}" eshortname="{{ ds["we_convers_list"]["rows"][0]["eshortname"] }}" style="float:left">官方发布</a>
+      
+      <div class="official_publish_type"><span class="official_publish_type_name">{{ ds["we_convers_list"]["rows"][0]["info_type_name"]}}</span><span register='0'  title="更多设置" class="official_publish_type_action"><span style="left: -3px; top: 7px;" class="topmenu_app_triangle"></span></span>
+      	<ul conv_id='{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' top='{{ds["we_convers_list"]["rows"][0]["top"]}}' hide='{{ds["we_convers_list"]["rows"][0]["hide"]}}' class='set_list' style='display:none;list-style:none outside none;position:relative;width:90px;border:1px solid #ccc; background:#fff;z-index:5;border-radius:2px 2px 2px 2px;'>
+      		<li style="width:100%;height:22px;text-align:center;min-height:0;padding:0;"><span style='cursor:pointer;margin-left:-20px;' class='oneset' act='top' act_url="{{path('JustsyBaseBundle_component_cdisparea_convtop')}}?oper=true">设置该条置顶</span></li>
+      		<li style="width:100%;height:22px;text-align:center;min-height:0;padding:0;"><span style='cursor:pointer;margin-left:-20px;' class='oneset' act='cancel_top' act_url="{{path('JustsyBaseBundle_component_cdisparea_convtop')}}?oper=false">取消该条置顶</span></li>
+      		<li style="width:100%;height:22px;text-align:center;min-height:0;padding:0;"><span style='cursor:pointer' class='oneset' act='hide' act_url="{{path('JustsyBaseBundle_component_cdisparea_convhide')}}?oper=true">隐藏该条信息</span></li>
+      		<li style="width:100%;height:22px;text-align:center;min-height:0;padding:0;"><span style='cursor:pointer' class='oneset' act='cancel_hide' act_url="{{path('JustsyBaseBundle_component_cdisparea_convhide')}}?oper=false">显示该条信息</span></li>
+      	</ul>
+      </div>
+    </span>
+    <p class="news news_maxheight">{% if ds["we_convers_list"]["rows"][0]["post_to_group"] == "PRIVATE" %}<span style="color:#ccc;font-size: 12px;">（私密）</span>{% endif %}<span class="conv_content">{{ this.replaceFaceEmote(ds["we_convers_list"]["rows"][0]["conv_content"])|raw|nl2br }}</span></p>
+    {% include 'JustsyBaseBundle:CDisplayArea:attachs.html.twig' with {'ds': ds, 'this' : this} %}
+    {% set we_convers_like_roots = this.filterLikeRows(ds["we_convers_list"]["rows"][0]["conv_root_id"], ds["we_convers_like"]["rows"]) %}
+    {% include 'JustsyBaseBundle:CDisplayArea:like.html.twig' with {'we_convers_likes' : we_convers_like_roots} %}
+    {% include 'JustsyBaseBundle:CDisplayArea:label.html.twig' %}
+  </span>
+  <div class="topicfunction" style="float:left;">
+    <span class="functiontext">
+      {% if ds["we_convers_list"]["rows"][0]["login_account"] == app.user.username %}
+      <a href="javascript:void(0);"><span  onclick="DelTrend(this, '{{ path("JustsyBaseBundle_component_cdisparea_deltrend") }}', '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}', '{{ asset("bundles/fafatimewebase/images/loading.gif") }}')">删除</span></a>｜
+      {% endif %}
+     
+      <a href="javascript:void(0);">
+        {% if we_convers_like_roots|length > 0 and we_convers_like_roots[0]["like_staff"] == app.user.username %}
+        <span  likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="UnLikeConv(this, '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}')">取消赞</span>
+        {% else %}
+        <span  likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="LikeConv(this, '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}')">赞</span>
+        {% endif %}
+        <img class="liking" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+         
+        {%if(trend)%}
+      <a href="javascript:void(0)" onclick="CopyConv_OnClick(this)" 
+        copyid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+        circle_id="{{ ds["we_convers_list"]["rows"][0]["post_to_circle"] }}"
+        group_id="{{ ds["we_convers_list"]["rows"][0]["post_to_group"] }}"
+        tplurl="{{ path("JustsyBaseBundle_component_cdisparea_getcopytemplate") }}"><span >转发{%if(ds["we_convers_list"]["rows"][0]["copy_num"]>0)%}(<span class="copynum">{{ ds["we_convers_list"]["rows"][0]["copy_num"]|number_format }}</span>){%endif%}</span></a>｜
+        
+      <a href="javascript:void(0)" onclick="{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "UnAttenConv_OnClick(this)" : "AttenConv_OnClick(this)" }}"
+        attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+        attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+        unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+         <a href="javascript:void(0)"><span  onclick="ReplyLink_OnClick(this)">评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+        {%else%}
+        <a href="javascript:void(0)" title="您还未获取该功能使用权限"
+        copyid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+        circle_id="{{ ds["we_convers_list"]["rows"][0]["post_to_circle"] }}"
+        group_id="{{ ds["we_convers_list"]["rows"][0]["post_to_group"] }}"
+        tplurl="{{ path("JustsyBaseBundle_component_cdisparea_getcopytemplate") }}"><span >转发{%if(ds["we_convers_list"]["rows"][0]["copy_num"]>0)%}(<span class="copynum">{{ ds["we_convers_list"]["rows"][0]["copy_num"]|number_format }}</span>){%endif%}</span></a>｜
+        
+      <a href="javascript:void(0)" title="您还未获取该功能使用权限"
+        attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+        attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+        unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+         <a href="javascript:void(0)" title="您还未获取该功能使用权限"><span  >评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+        {%endif%}
+     
+    </span>
+    <span style="float:left;" class="comefrom">{{ ds["we_convers_list"]["rows"][0]["post_date_d"] }}</span>     
+    <span class="comefrom">由<a href="#" class="employee_name post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a>发布</span>
+  </div>
+  {% include 'JustsyBaseBundle:CDisplayArea:reply.html.twig' with {'ds': ds, 'isask' : 0,'trend':trend} %}
+</div>

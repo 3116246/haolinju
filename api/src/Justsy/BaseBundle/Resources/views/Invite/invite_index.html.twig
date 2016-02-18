@@ -1,0 +1,110 @@
+<script src="{{ asset('bundles/fafatimewebase/js/slides.jquery.js') }}"></script>
+
+<script type="text/javascript">
+  var invite_parameters = {"circleid":"{{app.user.ecircleid}}","enoId":"{{app.user.eno}}",
+                   "url1":"{{path('JustsyBaseBundle_circle_getcirclemember')}}","url2":"{{path('JustsyOpenAPIBundle_api_getenostaff')}}",
+                   "url3":"{{path('JustsyOpenAPIBundle_api_getmyrelation')}}","getfile":"{{path('JustsyMongoDocBundle_getfile')}}",
+                   "defaultimg":"{{ asset('bundles/fafatimewebase/images/tx.jpg') }}","inviteURL":"{{path('JustsyBaseBundle_invite_sendinvitation')}}",
+                   "owner":"{{app.user.username}}","queryUrl":"{{path('JustsyBaseBundle_search_relation')}}",
+                   "recvedUrl":"{{path('JustsyBaseBundle_invite_recved',{'network_domain':'fafacn.com'})}}"
+                   };
+</script>
+<li style="width:100%;margin-top:0px;list-style: none outside none;">
+  <div class="invite_title_bar">
+		 <div style="float:left;width:340px;height:100%;">
+       <img class="invite_box_ico" src="{{ asset('bundles/fafatimewebase/images/default_circle.png')}}" />
+       <span class="invite_title" title="点击可切换当前圈子" style="cursor:pointer" onclick="$('#invite_circle_list').show();$('#ul_invite').hide()"></span>
+       <span title="点击可切换当前圈子" onclick="if($('#invite_circle_list').css('display').indexOf('none')>-1){$('#invite_circle_list').show();$('#ul_invite').hide();}else{$('#invite_circle_list').hide();$('#ul_invite').show();}" class="topmenu_app_triangle" style="border-width 6px;cursor:pointer;float:left;top:17px;margin-left:2px;"></span>
+     </div>
+     <div class="topsearch" style="float:left;margin:0;padding:0">
+        <input type="text" placeholder="搜索好友、同事" maxlength=10 id="invite_title_text" onkeypress="if(event.keyCode==13){invite.search()}"/>
+        <div class="topsearch_button" style="top: 10px;" onclick="invite.search()"></div>
+     </div>
+     <div class="invite_title_close" title="关闭" >×</div>	         
+  </div>
+
+  <div class="invite_content_left">
+  	 <ul id="ul_invite" style="width:100%;float:left;margin-left:0px;">
+  	 	   <li class="invite_content_left_menu_active" id="invite_li_staff" state="1" style="width:100%;">
+  	 	   	   <img src="{{ asset('bundles/fafatimewebase/images/invest_friend_selected.png')}}" />
+  	 	   	   <span style="margin-left:8px;">同事好友</span>
+  	 	   </li>
+  	 	   <li id="invite_li_email" style="width:100%;">
+  	 	   	   <img src="{{ asset('bundles/fafatimewebase/images/invest_email.png')}}" style="height:12px;"  />
+             <span style="margin-left:8px;">邮件邀请</span>
+  	 	   </li>
+  	 	   <li id="invite_li_inviteme" class="invite_li_email" style="width:100%;">
+  	 	   	   	<img src="{{ asset('bundles/fafatimewebase/images/invest_receive.png')}}" style="height:13px;" />
+  	 	   	   <span style="margin-left:8px;">收到的邀请</span>
+  	 	   	   <span class="tip_new_num" style="display:none;top:-10px;right:35px;"></span>
+  	 	   </li>  	 	   
+  	 </ul>
+  	 
+  	 <ul id="invite_circle_list" style="float:left;margin-left:0px;overflow: auto; height: 430px;"> </ul>
+  	 
+  	 
+  </div>
+  <div class="invite_content_right">
+  	 <div class="invite_content_right_head"><span></span></div>
+  	 <div class="invite_right_middle" id="invite_right_staff" style="display:block;">
+  	 	  <div id="invite_member" style="width:100%;height:170px;"></div>                          	 	  
+  	 	  <div id="invite_page" style="float:left;width:100%;text-align:center;height:45px;line-height:42px;"></div>
+  	 	  <div style="height:40px;line-height:40px;width:90%;color:#999999;float: left;margin-left: 20px;">
+  	 	  	 <span style="float:left;">邀请您的好友加入到</span><a class="cur_circle_name" style="font-weight:700;float:left;display:block;color:#555555;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;max-width:160px;">我的人脉圈</a>，您一次性可以邀请<span style="font-weight:bold;color:#0088CC;">10</span>个好友哟。
+  	 	  </div>
+  	 	  <div id="invite_selected_member" class="invite_member_select"></div>
+  	 </div>
+  	 <div class="invite_right_middle" id="invite_loading" style="display:none;" >
+  	 	   <div class="invite_loading"></div>
+  	 	   <span style="display:block;width:100%;float:left;text-align:center;">正在努力的为您加载数据，请稍候…</span>
+  	 </div>
+  	 <div class="invite_right_middle" id="sendHint" style="display:none;height:290px;" >
+  	 	   <span style="display:block;width:100%;float:left;text-align:center;color: #999999;line-height:30px;margin-top: 100px;"></span>
+  	 </div>
+  	 <div class="invite_right_middle" id="receiveinvite" style="display:none;height:435px;" >
+  	 </div>  	 
+  	 <div class="invite_right_middle" id="invite_right_email" style="height: 290px;">
+  	 	   <div id="invite_area_email" class="invite_email_area">
+  	 	   	  <div style="float:left">
+  	 	   	     <div style="float:left;margin-top: 5px;">邮箱：</div>
+  	 	   	     <div style="float:left"><textarea maxlength="300" onpaste="invite.onPaste(event)" onkeydown="if(event.ctrlKey && event.keyCode==86) {invite.onPaste(event)}" id="emaillist" name="emaillist" style="width: 400px;padding: 0;margin:0;height: 100px;" placeholder="请输入被邀请人的邮箱地址，以分号分隔，1次最多发送10个邮箱地址。"></textarea></div>
+  	 	   	  </div>
+  	 	   	  <div style="float:left;line-height: 30px; height: 30px;">
+  	 	   	     <div id="emaillist_hint" style="float:left;margin-left: 40px;height: 20px;line-height: 20px;width:400px;color: #999999;">支持右键粘贴或Ctrl+V粘贴多个邮箱地址。</div>
+  	 	   	  </div>  	 	   	  
+  	 	   	  <div style="float:left">
+  	 	   	     <div style="float:left;margin-top: 5px;">主题：</div>
+  	 	   	     <div style="float:left"><input name="subject" maxlength=50 style="width: 400px;padding: 0;" id="subject" type="text" ></div>
+  	 	   	  </div>
+  	 	   	  <div style="float:left">
+  	 	   	     <div style="float:left;margin-top: 5px;">正文：</div>
+  	 	   	     <div style="float:left"><textarea maxlength="200" id="content" name="content" style="width: 400px;padding: 0;height: 100px;">您好！邀请您加入Wefafa企业协作网络，与我们一起随时随地协同办公！</textarea></div>
+  	 	   	  </div>  	 	   	  	 	   	  
+  	 	   </div>
+  	 	  <div style="height:40px;line-height:40px;width:90%;color:#999999;float: left;margin-left: 45px;">
+  	 	  	 <span style="float:left;">邀请您的好友加入到</span><a class="cur_circle_name" style="font-weight:700;float:left;display:block;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;max-width:160px;">我的人脉圈</a>，您一次性可以邀请<span style="font-weight:bold;color:#000000;">10</span>个好友哟。
+  	 	  </div>  	 	   
+  	 </div>
+  	 <div class="invite_right_bottom"> 	 	
+  	 	  <div style="height: 35px; margin-top: 25px;width:100%;">
+  	 	      <div class="invite_button">发送邀请</div>
+  	 	  </div>
+        <div style="color:red;float:left;height:22px;line-height:22px;width:100%;text-align: center;margin-top:-3px;">
+        	  <span id="send_error" style="display:none;">请选择邮件地址！</span>        	  
+        </div>		    
+  	 </div>
+  </div>
+</li>
+<script type="text/javascript">
+	  $(document).ready(function () {
+	  	  var num=$(".icon_invite_text").text();
+	  	  if(num!="")
+	  			$("#invite_li_inviteme").find(".tip_new_num").text(num==""?"":parseInt(num)).show();
+	  			try{
+				  	  $('#emaillist').maxlength({status:false});
+				  	  $('#content').maxlength({status:false});
+		  	  }
+		  	  catch(e){}
+	      if(typeof(invite)!="undefined") invite.load(invite_parameters);
+	  });
+</script>	

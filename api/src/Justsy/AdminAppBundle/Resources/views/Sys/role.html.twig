@@ -1,0 +1,99 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style type="text/css">
+  .body_content {cursor: default;margin-left: auto;margin-right: auto;margin-top:5px;width: 1000px;}
+  .pagestyle { cursor:default;display:none;float:left;margin: 8px 0 0;padding: 0; }
+  .menu_staff { color: #0088cc;font-weight: bold;padding: 0 5px;}
+  .menu_bottom { float:left;display:none;}
+  .glyphicon_space { cursor:pointer;margin-left:10px;margin-right:10px;}
+  .hint_msg { height:32px;line-height:32px;padding-left:75px;display:block;}
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/role.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="body_content" >
+	<div>
+		 <span>角色名称：</span>
+		 <input type="text" class="mb_textbox" id="text_role" onkeypress="if (event.keyCode==13) { role.Search(1); }" placeholder="角色名称" style="width:400px;"/>
+		 <span class="btnGreen mb_button" onclick="role.Search(1);">查&nbsp;&nbsp;询</span>
+		 <span style="float:right;margin-left:30px;padding:1px 10px;" onclick="role.show_edit(this);" flag="add" class="btnGray btnCreate">创建角色</span>
+  </div>
+  <table align="center" style="width:100%;" class="mb_common_table" >
+	 	 <thead>
+   	 	  <tr>
+				  <td align="center" width="285">角色名称</td>
+					<td align="center" width="285">角色代码</td>
+					<td align="center" width="285">角色类型</td>
+					<td align="center" width="143">设置权限</td>
+				</tr> 
+		 </thead>
+		 <tbody></tbody>
+  </table>
+  <div class="pagination pagestyle"></div>
+</div>
+<!--删除用户帐号-->
+<div style="display:none;z-index:99999;" id="remove_role" class="dialogBox">
+    <div class="background"></div> 
+    <div style="width:400px; top:145px;" class="dialog">
+        <div class="title">删除角色</div>
+        <span title="关闭" onclick="$('#remove_role').modal('hide');" style="display:block;" class="close-tip-icon"></span>
+        <div style="text-align:center;height:70px;line-height:30px;background-color:#fff;" class="content"></div>    
+        <div class="operation" style="padding:10px;">
+          <button onclick="role.del_role();" class="btn btnGreen mb_button" style="width:75px;">确&nbsp;定</button>
+          <button onclick="$('#remove_role').modal('hide');" class="btn btnGreen mb_button" style="width:75px;" >关&nbsp;闭</button>
+        </div>
+    </div>
+</div>
+
+<!--编辑角色-->
+<div style="display:none;z-index:99999;" id="edit_role" class="dialogBox">
+    <div class="background"></div> 
+    <div style="width:450px; top:100px;" class="dialog">
+        <div class="title">确认消息</div>
+        <span title="关闭" onclick="$('#edit_role').modal('hide');" style="display:block;" class="close-tip-icon"></span>
+        <div style="padding-left:75px;line-height:38px;background-color:#fff;padding-bottom:5px;padding-top:30px;" class="content">
+            <div>
+                <span>角色名称：</span>
+                <input type="text" placeholder="角色名称"  id="text_name" maxlength=20 class="mb_textbox" style="width:200px;">
+            </div>
+            <div>
+               <span>角色代码：</span>
+                <input type="text" placeholder="角色代码"  id="text_code" maxlength=10 class="mb_textbox" style="width:200px;">
+            </div>
+            <div>
+                <span>角色类型：</span>
+                <input type="text" placeholder="角色类型"  id="text_type" maxlength=20 class="mb_textbox" style="width:200px;">
+            </div>
+            <div class="hint_msg"></div>
+        </div>
+        <div class="operation" style="padding:10px 0px 10px 40px;">
+          <button onclick="role.editRole();" class="btn btnGreen mb_button" style="width:75px;">确&nbsp;定</button>
+          <button onclick="$('#edit_role').modal('hide');" class="btn btnGreen mb_button" style="width:75px;" >关&nbsp;闭</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+  role.search_url="{{path('JustsyInterfaceBundle_data_access')}}";
+  role.Search(1);
+</script>
+{% endblock %}

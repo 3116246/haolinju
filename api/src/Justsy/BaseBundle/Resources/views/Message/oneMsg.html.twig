@@ -1,0 +1,45 @@
+<input type="hidden" class="msg_id" value="{{ msg_id }}"/>
+<input type="hidden" class="re_type" value="{{ re_type }}"/>
+<input type="hidden" class="re_pageindex" value="{{ re_pageindex }}"/>
+<input type="hidden" class="lastone" value="{{ lastone }}"/>
+<input type="hidden" class="nextone" value="{{ nextone }}"/>
+<div class="message-function">
+  <input type="button" value="&lt;&lt; 返回" class="messagebutton" onclick="Message.returnPrePage()">
+  <!--<input type="button" value="回复" class="messagebutton" onclick="Message.replyMsg()">-->
+  <input type="button" value="删除" class="messagebutton" onclick="Message.deMsg()">
+  <span class="message-funciton-turn">
+    <a href="#" {%if lastone%} onclick="Message.gotoLastMsg()" {%else%} style="color:#ccc;" {%endif%}>上一条</a>
+    <a href="#" {%if nextone%} onclick="Message.gotoNextMsg()" {%else%} style="color:#ccc;" {%endif%}>下一条</a>
+  </span>
+</div>
+<ul class="message-profile">
+  <span class="senderphoto"><img width="48" height="48" src="{{row['photo_url']}}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span>
+  <li>
+   <p class="sender-title">{{row['title']}}</p>
+   <p class="sender-name">发送人：<span><a href="#" style="color:#5fa207" class="employee_name" login_account="{{row['sender']}}">{{row['nick_name']}}</a></span></p>
+    <p class="sender-name">时间：{{row['send_date']}}</p>
+  </li>
+</ul>
+<div class="message-text">{{row['content']|raw}}</div>      
+<div class="message-function">
+  <input type="button" value="&lt;&lt; 返回" class="messagebutton" onclick="Message.returnPrePage()">
+  <!--<input type="button" value="回复" class="messagebutton" onclick="Message.replyMsg()">-->
+  <input type="button" value="删除" class="messagebutton" onclick="Message.deMsg()">
+  <span class="message-funciton-turn">
+    <a href="#" {%if lastone%} onclick="Message.gotoLastMsg()" {%else%} style="color:#ccc;" {%endif%}>上一条</a>
+    <a href="#" {%if nextone%} onclick="Message.gotoNextMsg()" {%else%} style="color:#ccc;" {%endif%}>下一条</a>
+  </span>
+</div>
+{% if needsubmsgnum is defined and needsubmsgnum == "1" %}
+<script type="text/javascript">
+$(document).ready(function() {
+  var n = $(".icon_message span").text();
+  if (!isNaN(n))
+  {
+    n = n > 1 ? n - 1 : 0;
+    $(".icon_message span").text(n);
+    if (n == 0) $(".icon_message span").hide();
+  }
+});
+</script>
+{% endif %}

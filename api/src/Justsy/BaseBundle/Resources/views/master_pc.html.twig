@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}微发发，一个由工作圈子交织而成的企业社交网络{% endblock %}</title>
+        <LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+        <meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业社交网络。" />
+        <meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+        <link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('bundles/fafatimewebase/css/pc_style.css')}}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('bundles/fafatimewebase/css/pc_style2.css')}}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('bundles/fafatimewebase/css/pc_style3.css')}}" type="text/css" rel="stylesheet">
+{% block stylesheets %}{% endblock %}
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+
+        <script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Map.js') }}"></script>
+{% if ISDEBUG %}
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/component.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.mousewheel.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/CInputArea.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/CDisplayArea.js') }}"></script>
+        <!--<script type="text/javascript" src="{ asset('bundles/fafatimewebase/js/EmployeeCard.js') }}"></script>-->
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/userAutoTips.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/FaceAutoTips.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Message.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Notice.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EnterpriseHome.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Document.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Account.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/OnlineList.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Enterprise_setting.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Circle_setting.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/datepicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/WdatePicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/lang/zh-cn.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Reply.js') }}"></script>
+{% else %}
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/WdatePicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/lang/zh-cn.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/wefafa_all.min.js') }}"></script>
+{% endif %}
+        <script type="text/javascript">
+            var g_owner = "{{app.user.fafa_jid}}";
+            var g_curr_network_domain = "{{ curr_network_domain }}";
+            var g_curr_circle_id = "{{ app.user.get_circle_id(curr_network_domain) }}";
+            var ismanager = "{{app.user.is_in_manager_circles(curr_network_domain)}}";
+            var g_resource_context = "{{ asset('bundles/../') }}";
+            var g_viewimageurl = "{{ path("JustsyBaseBundle_viewimage") }}";
+            var g_userAutoTipsUrl = "{{ path("JustsyBaseBundle_component_cinputarea_queryattips") }}?network_domain={{ curr_network_domain }}";
+            var g_FaceAutoTipsUrl = "{{ path("JustsyBaseBundle_component_cinputarea_loadfaceemotejson") }}";
+            var g_getLabelUrl = "{{ path("JustsyBaseBundle_component_cdisparea_getlabel") }}";
+            var g_saveLabelUrl = "{{ path("JustsyBaseBundle_component_cdisparea_savelabel") }}";
+            var g_appcenterUrl = "{{APPCENTER_URL}}";
+            var appcenter_index = "{{ path('JustsyBaseBundle_appcenter_index', {'network_domain' : curr_network_domain,'appid':'AAA'}) }}";
+            </script>
+{% block javascriptsref %}{% endblock %}
+            <style>
+                    li.clearfix{padding-bottom:10px;padding-top:10px;z-index:0;}
+                    .pagination A{padding-left:10px;padding-right:10px;line-height:30px;}
+                </style>
+            </head>
+            <script type="text/javascript">
+                //字数过多解决方法
+                function toomanyword($es, num)
+                {
+                    for (var i = 0; i < $es.length; i++) {
+                        var $e = $($es[i]);
+                        var str = $e.text();
+                        var mat = str.match(/[a-zA-Z0-9]/g);
+                        var letter = (mat == null ? 0 : mat.length);
+                        if ((str.length - (letter / 2)) > num) {
+                            $e.attr('title', str);
+                            $e.text(str.substring(0, num - 2) + "…");
+                        }
+                    }
+                }
+                window.overLengthAct = function() {
+                    var news_maxheight_template = "<div class='viewall'><span style='float:left;font-weight:700;padding-bottom:2px;'>………………</span><span class='mit_view'><a href='javascript:void(0);' style='float:left;margin-left:4px;color:#0088CC'>显示全部</a><div class='arrow_t'><span class='arrow_down'></span></div></span>";
+                    var items = $(".news_maxheight");
+                    for (var i = 0; i < items.length; i++) {
+                        $this = $(items[i]);
+                        if ($this[0].scrollHeight > parseInt($this.css('max-height').replace("px", "")) && $this.siblings(".viewall").length == 0)
+                        {
+                            $this.after(news_maxheight_template);
+                            $this.siblings(".viewall").find(".mit_view").click(function(event) {
+                                var $sender = $(this);
+                                if ($sender.attr("isexpand") != "1")
+                                {
+                                    $sender.parent().siblings("p.news").removeClass("news_maxheight");
+                                    $sender.find("span").attr("class", "arrow_up");
+                                    $sender.find("a").text("收起");
+                                    $sender.attr("isexpand", "1");
+                                }
+                                else
+                                {
+                                    $sender.parent().siblings("p.news").addClass("news_maxheight");
+                                    $sender.find("span").attr("class", "arrow_down");
+                                    $sender.find("a").text("查看全部");
+                                    $sender.attr("isexpand", "0");
+                                    var t = $sender.parent().siblings("p.news").offset().top - 50;
+                                    if (t < 0)
+                                        $("#contentbox")[0].scrollTop = $("#contentbox")[0].scrollTop + t;
+                                }
+                            });
+                        }
+                    }
+                };
+                var mouseover_tid = [];
+                var mouseout_tid = [];
+                var pmaxheight = 253;
+                if (window.navigator.appName.toString() == "Microsoft Internet Explorer" && window.navigator.appVersion.toString().indexOf("MSIE 7.0") > -1) {
+                    pmaxheight = 258;
+                }
+                function setContentHeight($e) {
+                    var other = $e.offset().top;
+                    $("#contentbox").css('height', ($(window).height() - other - 5).toString() + "px");
+                }
+                function zindexcontroll($el) {
+                    if (window.navigator.appName.toString() == "Microsoft Internet Explorer" && window.navigator.appVersion.toString().indexOf("MSIE 7.0") > -1) {
+                        var $e = $el.parent().parent().parent();
+                        var zindex = 500;
+                        $e.parent().next().find("div.convbox").css('zIndex', zindex);
+                        $e.css('zIndex', zindex + 1);
+                        $e.parent().css('zIndex', 0);
+                        $e.parent().next().css('zIndex', 0);
+                    }
+                }
+                function retry() {
+                    var curr_id = $("#contentbox").children("div.hover").attr("id");
+                    if (curr_id.replace("con_", "").indexOf('two') > -1){
+                        setDisplayTab(null);
+                     }
+                    else {
+                        loadC($("#" + curr_id.replace("con_", ""))[0],true);
+                    }
+                }
+                jQuery(document).ready(function() {
+                    jQuery('[dropdownlist]').each(function(index) {
+                        jQuery(this).hover(
+                                function() {
+                                    var _self = this;
+                                    clearTimeout(mouseout_tid[index]);
+                                    mouseover_tid[index] = setTimeout(function() {
+                                        jQuery(_self).find('ul:eq(0)').slideDown(200);
+                                    }, 400);
+                                },
+                                function() {
+                                    var _self = this;
+                                    clearTimeout(mouseover_tid[index]);
+                                    mouseout_tid[index] = setTimeout(function() {
+                                        jQuery(_self).find('ul:eq(0)').slideUp(200);
+                                    }, 400);
+                                }
+                        );
+                    });
+                });
+                </script>
+
+                <body>
+                    <div id="content">
+  {% block main_content %}
+  {% endblock %}
+                        </div>
+{% block javascripts %}{% endblock %}
+                    </body>
+                </html>
+
+                <script type="text/javascript">
+
+                    function resizeform()
+                    {
+                        var t = 0;
+                        if ($("div.publish").css('display').indexOf('none') < 0)
+                            t = $("div.publish").height();
+                        $("#contentbox").css('height', ($(window).height() - $("#circles_tools").height() - t - 5).toString() + "px");
+                    }
+                    $(document).ready(function() {
+                        $(window).resize(function() {
+                            setContentHeight($("#contentbox"));
+                            overLengthAct();
+                            var items = $("p.news");
+                            for (var i = 0; i < items.length; i++) {
+                                $this = $(items[i]);
+                                if ($this[0].scrollHeight <= pmaxheight && $this.siblings(".viewall").length == 1)
+                                {
+                                    $this.siblings("div.viewall").remove();
+                                    $this.addClass("news_maxheight");
+                                }
+                            }
+                        });
+                        //Employees.load("{ path('JustsyBaseBundle_component_emp') }}?network_domain={curr_network_domain}}",
+                        //       "{ path('JustsyBaseBundle_interviewee_home',{'network_domain':curr_network_domain,'account':'foo'}) }}",
+                        //      "发送消息页面地址",
+                        //     "{path('JustsyBaseBundle_component_emp_attention',{'attenaccount':''})}}",
+                        //   "{path('JustsyBaseBundle_component_emp_getaccount',{'empname':''}) }}");
+                        CircleCard.load("{{ path("JustsyBaseBundle_circle_getcirclecard") }}");
+                        GroupCard.load("{{ path("JustsyBaseBundle_getgroupcard") }}");
+                        $(window).scroll(function()
+                        {
+                            if ($(document).scrollTop() > 100)
+                                $("#ReturnTop").show();
+                            else
+                                $("#ReturnTop").hide();
+                        });
+                        //取得圈子未读会话信息数  
+                        setTimeout(function()
+                        {
+                            $.getJSON("{{ path("JustsyBaseBundle_enterprise_getunreadcircleconversnum") }}", {t: new Date().getTime()}, SetNewNumDisplay_conv_pc);
+                        }, 3000);
+                        $(".Sborder div.Sedit").click(function() {
+                            var $this = $(this);
+                            if ($this.attr('edit') == '0') {
+                                $('div.publish').slideDown(200);
+                                $this.attr({'edit': '1', 'title': '收起'});
+                                $this.parent().parent().addClass("Shover");
+                                $("#contentbox").css('height', ($(window).height() - $("#circles_tools").height() - 105).toString() + "px");
+                            }
+                            else {
+                                $('div.publish').slideUp(200);
+                                $this.attr({'edit': '0', 'title': '我要发布'});
+                                $this.parent().parent().removeClass("Shover");
+                                $("#contentbox").css('height', ($(window).height() - $("#circles_tools").height() - 5).toString() + "px");
+                            }
+                        });
+                        $(".pc_circle_list,.topiclist,.post_list").find('li').bind('click', function() {
+                            var $this = $(this);
+                            if (typeof($this.attr("class")) != "undefined" && $this.attr("class").indexOf("Chover") > -1) {
+                                $this.removeClass("Chover");
+                                return;
+                            }
+                            $this.siblings().removeClass("Chover");
+                            $this.addClass("Chover");
+                        });
+                        $(".topicdiv").bind('mouseover', function(event) {
+                            if (checkHover(event, this)) {
+                                if (typeof(topic_timer) != "undefined")
+                                    clearTimeout(topic_timer);
+                                var to = $(this).offset().top + $(this).height() + 2;
+                                $(".topiclist").css('top', to.toString() + "px");
+                                topic_timer = setTimeout(function() {
+                                    $(".topiclist").slideDown(200);
+                                }, 300);
+                            }
+                        });
+                        $(".topicdiv").bind('mouseout', function(event) {
+                            if (checkHover(event, this)) {
+                                topic_timer = setTimeout(function() {
+                                    $(".topiclist").slideUp(200);
+                                }, 300);
+                            }
+                        });
+                        $(".topiclist").bind('mouseover', function(event) {
+                            if (checkHover(event, this)) {
+                                if (typeof(topic_timer) != "undefined")
+                                    clearTimeout(topic_timer);
+                            }
+                        })
+                        $(".topiclist").bind('mouseout', function(event) {
+                            if (checkHover(event, this)) {
+                                topic_timer = setTimeout(function() {
+                                    $(".topiclist").slideUp(200);
+                                }, 300);
+                            }
+                        })
+                        $(".topiclist li").children("span").click(function() {
+                            var $lebnt = $(this).siblings("div.icohader").find("span"), $otherbnt = $(this).parent().siblings('li').find("span[position][position_grey]");
+                            $lebnt.css("background-position", $lebnt.attr("position"));
+                            $(".topicdiv").find("span:eq(0)").css("background-position", $lebnt.attr("position"));
+                            $(".topicdiv").find("span:eq(1)").text($(this).text());
+                            for (var i = 0; i < $otherbnt.length; i++) {
+                                $($otherbnt[i]).css("background-position", $($otherbnt[i]).attr('position_grey'));
+                            }
+                            $(".topiclist").hide();
+                        });
+                        $("span.label_date").hide();
+                        $("#btnPublish").click(function() {
+                            setTimeout(function() {
+                                $("div.publish").slideUp(200);
+                                $('div.Sedit').attr({'edit': '0', 'title': '我要发布'});
+                                $('div.Sedit').parent().parent().removeClass("Shover");
+                                resizeform();
+                            }, 1000);
+
+                        });
+                    });
+                    </script>

@@ -1,0 +1,49 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain, 'curr_sel_leftmenu' : '5'} %}
+<!--<div class="menuother">官方发布</div>
+<ul class="left-menu">
+		<li>
+			<a href="">
+  			<i class="menu-allinfo"></i>全部信息
+			</a>
+		</li>
+		<li>
+			<a href="">
+  			<i class="menu-news"></i>通知
+			</a>
+		</li>
+		<li>
+			<a href="">
+  			<i class="menu-news"></i>公告
+			</a>
+		</li>
+</ul>-->
+{% endblock %}
+
+{% block main_content_center %}
+<div style="width:100%">
+	<span style="display: inline-block;"><h3 class="bigtitletext">官方发布</h3></span>
+	<span style="display: inline-block;"><h4 class="smalltitletext">-</h4></span>
+	<span style="display: inline-block;"><h4 class="smalltitletext">全部信息</h4></span>
+</div>
+<hr style="margin: 0px; width: 100%;">
+<div id="content_container" class="contentbox">
+<div id="con_two2" type='official' loadurl='{{path("JustsyBaseBundle_enterprise_getofficialconv",{"network_domain" : curr_network_domain})}}' class="display_con_area">
+<script>
+$(document).ready(function(){
+	LoadComponent("con_two2", $("#con_two2").attr("loadurl"));
+});
+</script>
+</div>
+</div>
+{% endblock %}
+{% block main_content_right %}
+<script type="text/javascript">
+$(document).ready(function () {
+  $(".homeright").load("{{ path("JustsyBaseBundle_enterprise_right", {'network_domain' : curr_network_domain}) }}");
+}); 
+</script>  
+{% endblock %}

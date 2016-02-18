@@ -1,0 +1,44 @@
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">推荐群组</span>
+    <span class="titlemore"><a style="color:#005D97;" href="{{path('JustsyBaseBundle_group_search',{'network_domain':curr_network_domain})}}">[更多]</a></span>
+  </div>
+  <div class="rightbox-context">
+    <table>
+      {% for row in ds["we_group"]["rows"] %}
+      <tr class="recomcircleitem">
+        <td width="20px"><img class="circleicon" src="{{ FILE_WEBSERVER_URL }}{{ row["group_photo_path"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"/></td>  
+        <td><a class="cirlcename group_name" title="{{ row["group_name"] }}" group_id="{{ row["group_id"] }}">{{ row["group_name"] }}</a></td>  
+        <td>
+          <input type="hidden" class="group_id" value="{{ row["group_id"] }}">
+          <input type="hidden" class="create_staff" value="{{ row["create_staff"] }}">
+          
+          <a class="btnAddCircle" href="javascript:void(0);" onclick="right_applyAddgroup(this)">加入<span></span></a>
+        </td>  
+      </tr>
+      {% endfor %}
+    </table>
+    <script type="text/javascript">
+    function right_applyAddgroup(sender)
+    {
+      var $sender = $(sender);
+      var circle_id = $sender.siblings(".group_id").val();
+      var create_staff = $sender.siblings(".create_staff").val();
+      var circleName = $sender.parents(".recomcircleitem").find(".cirlcename").text();
+      
+      $sender.removeAttr("onclick");
+      $sender.text("申请...");
+      $.post("{{path('JustsyBaseBundle_group_applyjoin')}}",
+        {create_staff:create_staff,group_id:circle_id,group_name:circleName,network_domain:"{{curr_network_domain}}"},
+        function(data) 
+        {
+          $sender.text("已经申请");
+          $sender.parents(".recomcircleitem").fadeOut("slow", function(){
+            $sender.remove();  
+          });
+        },"text"
+      );
+    } 
+    </script>    
+  </div>
+</div>

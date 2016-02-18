@@ -1,0 +1,180 @@
+﻿
+
+/*温馨提示请勿随意修改原有内容,会影像系统的正常使用*/
+body
+{
+    font: 12px Tahoma, Helvetica, Arial, '宋体' , sans-serif;
+}
+html, legend
+{
+    color: #404040;
+    background: #fff;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td
+{
+    margin: 0;
+    padding: 0;
+}
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset, img
+{
+    border: 0;
+}
+address, caption, cite, code, dfn, em, strong, th, var
+{
+    font-style: normal;
+    font-weight: normal;
+}
+li
+{
+    list-style: none;
+}
+caption, th
+{
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 100%;
+}
+h1
+{
+    font-size: 18px;
+}
+h2
+{
+    font-size: 16px;
+}
+h3
+{
+    font-size: 14px;
+}
+abbr, acronym
+{
+    border: 0;
+    font-variant: normal;
+}
+sup
+{
+    vertical-align: text-top;
+}
+sub
+{
+    vertical-align: text-bottom;
+}
+input, button, textarea, select
+{
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+input, button, textarea, select
+{
+    *font-size: 100%;
+}
+select, input, button, textarea
+{
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+}
+table
+{
+    font-size: inherit;
+}
+a
+{
+    color: #08C;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #F60;
+    text-decoration: underline;
+}
+a.long-btn:hover
+{
+    color: #fff;
+}
+.content-msg
+{
+    border-bottom: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid silver;
+    border-top: 1px solid silver;
+    position: relative;
+    margin-bottom: 60px;
+    /*min-height: 620px;
+    _height: 620px;*/
+    float: left;
+}
+.content-bg
+{
+    position: absolute;
+    /*width: 450px;
+    height: 280px;*/
+    overflow: hidden;
+    left: 50px;
+    top: 0;
+    z-index: 0;
+}
+.divclear
+{
+    clear: both;
+}
+.content-box
+{
+    position: relative;
+    width: 310px;
+    margin: 48px 0 48px 600px;
+    z-index: 1;
+    border: 1px solid #dedede;
+}
+.content-box .hd
+{
+    height: 39px;
+    padding: 5px 0;
+}
+.content-box .hd li
+{
+    padding: 3px 20px 0;
+}
+.content-box .hd h2
+{
+    display: block;
+    height: 35px;
+    overflow: hidden;
+    line-height: 36px;
+    font-size: 14px;
+    padding-left: 10px;
+    color: #4d4d4d;
+    z-index: 1;
+    border-bottom: 1px solid #ededed;
+}
+#logo .sub-logo {
+    float: right;
+}
+#logo .sub-logo a
+{
+    font-weight: 100;
+    font-size: 12px;
+    color:#08C;
+    text-decoration: none;
+	padding: 3px;
+} 
+#logo .sub-logo a:hover 
+{
+	color:#F60;
+}
+#logo .sub-logo-active
+{
+    font-weight: 100;
+    font-size: 12px;
+    color:#08C;
+    text-decoration: none;
+	background-color: #00AAD8;
+    color: #FFFFFF;
+    padding: 3px;
+}

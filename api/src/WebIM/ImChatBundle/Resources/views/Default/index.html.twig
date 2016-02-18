@@ -1,0 +1,37 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FaFa，开启企业社会化时代！</title>
+<meta name="description" content="FaFa是一个依托于强大的FaFa即时消息平台、企业开放平台基础上的面向企业用户的社交网络平台。" />
+<meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件" />
+<script type="text/javascript" src="{{ asset('bundles/fafawebimimchat/js/jquery-1.7.1.min.js') }}" type="text/javascript"></script> 
+<script type="text/javascript" src="https://www.wefafa.com/bundles/fafatimeweopenapi/js/faapi.js"></script>
+<script type="text/javascript" src="/bundles/fafawebimimchat/js/fachat_window.js"></script>
+<script type="text/javascript" src="/bundles/fafawebimimchat/js/fachat_main.js"></script>
+</head>
+<body >
+
+</body>
+</html>
+
+<script type="text/javascript">
+$(document).ready(function(){     
+		if(window.MessageAPI!=null)
+		{
+			 window.MessageAPI.init=function(){
+			    	FaFaChatWin.init();
+   	        FaFaChatMain.init();
+			      FaFaChatMain.Connection("{{from}}","{{p}}");
+			 }
+		}
+    //页面上总是应该执行下面的判断，由于在IE9下的js与docment加载顺序的原因，可能会导致api库文件比documnet先加载完并执行，这时MessageAPI.init方法得不到调用
+    if(typeof(FaFaMessage)=="object" && !FaFaMessage._conning)
+    {
+       //页面加载完，但未进行im连接时，手动调用连接
+       window.MessageAPI.init();
+    }	
+});
+
+</script>

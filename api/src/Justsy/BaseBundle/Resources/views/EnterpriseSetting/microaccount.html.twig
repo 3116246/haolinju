@@ -1,0 +1,135 @@
+
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_microaccount %}class="active"{% endblock %}
+{% block menuitemactive_micromanager %}class="active"{% endblock %}
+
+{%set needapplyFlag = ((micro_internal_param_value-micro_internal_count)==0)%}
+{%set needcreateFlag = ( (micro_internal_param_value-micro_internal_count)>0)%}
+{% block main_content_center%}
+<script type="text/javascript" src="{{asset('bundles/fafatimeweopenapi/js/fafriendapi.js')}}"> </script>
+<div class="twomainright">
+	<div>
+		<div class="micro_maindiv" style="height: 75px; float: left; width: 95%;">
+			<span id="membertotalcount" style="float: left; display: block; width: 80%;">
+				<h4 class="bigtitletext">公众号管理</h4>
+			</span>
+			<span class="searcharea" searchtext="" style="display:none;right:120px;*position:inherit;*height:15px;*width:150px;*float:right;*right:140px;">
+				<input id="txtsearch" name="txtsearch" type="text" placeholder="公众号编号/公众号名称"></input>
+				<div id="search_micro" class="searchicon" style="cursor:pointer;*top:-30px;*left:10px;"></div>
+			</span>
+			{%if(needcreateFlag)%}
+				<span id="add_micro" class="inviteother" style="right: 0px; top: 5px; float: left;" title='创建新的公众号' >
+					<font style="color:#fcfcfc;">创  建</font>
+		    </span>
+	    {%else%}
+					<span id="add_micro_disabled" class="inviteother" style="right: 0;top: 5px; float: left;opacity: 0.3;" title='创建新的公众号' >
+					   <font style="color:#fcfcfc;">创  建</font>
+		    </span>
+	    {%endif%}
+	    <div style="height: 25px; float: left; width: 85%;">
+	       <span style="float: right; display: block; border: 1px solid rgb(204, 204, 204); background-color: #eee4aa; padding: 5px;">
+	          <!--外部公众号还可以创建 <b>{%if((micro_external_param_value-micro_external_count)>0)%}
+	          {{micro_external_param_value-micro_external_count}}
+	          {%else%}0{%endif%}</b> 个,-->还可以创建 <b>{%if((micro_internal_param_value-micro_internal_count)>0)%}
+	          {{micro_internal_param_value-micro_internal_count}}{%else%}0{%endif%}</b> 个内部公众号。
+	          {%if(needapplyFlag)%}<a id="applyMore" href='javascript:applyMore()'
+	           title='向Wefafa申请更多公众号数量'><u>立即申请更多</u></a>{%endif%}
+	       </span>
+	       {%if (needapplyFlag)%}
+	          <span class="topmenu_app_triangle" style="border-color: transparent transparent #eee4aa; left: 161px; border-width: 7px; top: -13px;"></span>
+	       {%else%}
+	          <span class="topmenu_app_triangle" style="border-color: transparent transparent #eee4aa; left: 161px; border-width: 7px; top: -13px;"></span>
+	       {%endif%}
+	    </div>
+		</div>
+		<div id="micro_main" class="memberlist" style="float: left;">
+			{% render 'JustsyBaseBundle:MicroAccount:microitem' with {"network_domain":curr_network_domain,"micro_data":micro_data}%}
+		</div> 
+		<div class="applymore modal" id="applymore" data-backdrop=false style="display:none;height: 280px;margin-left: -160px;margin-top: -150px;width: 320px;" show=false>
+		      <div class="doc_window_title">
+		      	<span>&nbsp;&nbsp;申请公众号数量</span>
+		      </div>
+			    <div>
+			      <div class="doc_rd_confirm_right">
+			          <div class="errorlist_text" style="overflow:auto;height: 200px; line-height: 20px; margin: 10px;">
+			              <div style="margin-left: 10px; height: 30px;"><span style="float:left;height: 25px;line-height: 25px;">请输入你要申请的公众号数量：</span></div>
+			              <div style="margin-left: 50px; height: 30px;"><span style="float:left;height: 25px;line-height: 25px;">内部公众号：</span></div>
+			              <div style="margin-left: 50px; height: 50px;"><span style="float:left;height: 25px;line-height: 25px;"><input name="inside" id="inside" type="text" style="height: 25px;line-height: 25px;width: 100px" maxlength=1>(请输入1-9的数字)</span></div>
+			              <div style="margin-left: 50px; height: 30px;"><span style="float:left;height: 25px;line-height: 25px;">外部公众号：</span></div>
+			              <div style="margin-left: 50px; height: 50px;"><span style="float:left;height: 25px;line-height: 25px;"><input name="outside" id="outside" type="text" style="height: 25px;line-height: 25px;width: 100px" maxlength=1>(请输入1-9的数字)</span></div>
+			          </div>
+			          <div style="margin-left: 10px;float:left"><div id="div_count_msg" class="hint" style="height:20px;width:175px;float:left"></div><span id="deleteDoc" class="doc_md_content_right_btn">提交</span><span onclick="$('#applymore').hide()" class="doc_md_content_right_btn">关闭</span></div>
+			      </div>	      
+			    </div>
+		</div>		
+
+		<script type="text/javascript"> 
+			$("#inside,#outside").live("keyup",function(){
+				 var bool= /^([1-9]*)$/.test($(this).val());
+ 					if(!bool)$(this).val("");
+			});
+			var issubmit=false;
+			var add_micro_count_url_path="{{path('JustsyBaseBundle_enterprise_setting_add_micro_count',{'network_domain' : curr_network_domain})}}";
+			$("#deleteDoc").live("click",function(){
+				var ext_count=$("#outside").val();
+				var int_count=$("#inside").val();
+				if(ext_count>0||int_count>0){
+					if($.trim($("#deleteDoc").text())=="提交" && !issubmit){
+						$("#deleteDoc").text("提交中");
+						$.get(add_micro_count_url_path,{ext_count:ext_count,int_count:int_count},function(r){
+							if(r.success=="0"){//提交成功
+								$("#div_count_msg").html("提交成功,稍后Wefafa会联系您");
+								$("#applyMore").html("申请处理中..").attr("href","javascript:void(0)").attr("title","申请已发送，请等待Wefafa工作人员处理及通知");
+								issubmit=true;
+							}else{
+								$("#div_count_msg").html("提交失败,请您重试");
+							}
+							$("#deleteDoc").text("提交");
+							setTimeout(function(){$('#applymore').hide()},3000);
+						});
+					}
+				}else{
+					if(int_count=="")$("inside").focus();
+					else if(ext_count=="")$("outside").focus();
+					$("#div_count_msg").html("至少申请一种类型的公众号");
+				}
+			});
+			var micro__json_data={{micro_json_data|raw}};
+			var no_photo="{{ asset('bundles/fafatimewebase/images/no_photo.png') }}";
+			var initdata=function(micro_data){
+				if(micro_data==null||micro_data==""||micro_data=="undefined"){
+						$("#micro_main").css({"color":"rgb(0, 108, 170)","font-size":"14px","font-family":"microsoft yahei","height":"300px","line-height":"50px","width":"740px","margin-left":"300px","margin-top":"50px"})
+													.append('<span style="color: red; font-weight: bold; font-size: 22px; margin-left: -50px;">企业还没有创建公众号！</span><br><input id="btnCreate" type="button" style="width:138px;" class="inputsmall" value="立即创建">')
+													.append('<div style="line-height: 20px; display: block; margin-left: -200px; font-size: 12px; margin-top: 50px; width: 600px;">什么是企业公众号？<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;企业公众号是企业在Wefafa企业协作平台上申请的应用账号，该帐号与Wefafa帐号互通，通过企业公众号，企业可在Wefafa企业协作平台上实现和特定群体（如企业内部员工、合作合伙、客户、会员）的文字、图片、网页、语音的全方位沟通、交互，帮助企业轻松发布企业事件、产品信息、销售资讯等！</div>');
+				}
+			};
+			initdata(micro__json_data);
+			var add_url_path="{{path('JustsyBaseBundle_enterprise_setting_microaccount_add',{'network_domain' : curr_network_domain})}}";
+			//var search_url_path="{{path('JustsyBaseBundle_enterprise_setting_microaccount_search',{'network_domain' : curr_network_domain})}}";
+			$("#add_micro,#search_micro,#btnCreate").live("click",function(){
+				switch($(this).attr("id")){
+					case "search_micro":
+						var search_data=$("#txtsearch").val();
+						$.get(search_url_path,{search_data:search_data},function(){
+						}).done(function(r){
+						}).fail(function(r){
+						});
+					break;
+					case "add_micro":
+						window.location.href=add_url_path;
+					break;
+					case "btnCreate":
+						window.location.href=add_url_path;
+					break;
+				}
+			});
+			function applyMore()
+			{
+				$("#applymore").show();
+			}
+		</script>
+	</div>
+</div>
+{% endblock %}
+

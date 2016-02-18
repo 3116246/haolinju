@@ -1,0 +1,28 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+{% block title %}微发发应用中心{% endblock %}
+{% block javascriptsref %}
+ <script type="text/javascript">
+  $(document).ready(function(){
+      var h = $(window).height();
+      var t = $(".twomain").offset().top;
+      $(".twomain").css("min-height","400px");
+      $(".homecontent").css({"min-height":"400px"});
+      $("#fafaappfrm").css("height",(h-t-60)+"px");
+  });
+</script>
+{% endblock %}
+
+{% block main_content %}
+	<div class="twomain" style="min-height:500px;background: #EEF8FF;padding-top:0px;padding-bottom:0px;">
+			<div class="left" style="width:1px;padding-bottom:0px;">
+			  {% block main_content_left %}
+			  {% endblock %}
+			</div>
+			<div>
+		    {% block main_content_center %}		       
+		       <iframe id="fafaappfrm" style="overflow-x: hidden;overflow-y: auto;" name="fafaappfrm" class="app_canvas_frame" height="500" src="{{ path("JustsyBaseBundle_jump_forappcenter") }}?url={{APPCENTER_URL}}/appcenter/index?auth={{checkcode}}" frameBorder="no" width="100%" allowTransparency="yes" scrolling="yes"></iframe>
+		    {% endblock %}
+		  </div>
+			<div class="clearBoth"></div>
+	</div>
+{%endblock%}

@@ -1,0 +1,226 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_detail %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<form id="formdetails" class="form-horizontal" method="post" class="form-horizontal">
+<div class="grade-title">详细资料</div>
+<div class="rightdetail clearfix">
+<!--	  <div class="circles-photo"  style="z-index:1">
+      <div class="circles-downphoto preview_fake"><a data-toggle="modal" show=false href="#invitedphoto"><img src="{{credential_path}}" onerror="javascript:this.src='{{ asset('bundles/fafatimewebase/images/downphoto.png') }}'" width="37" height="49" style="width:37px; height:49px; padding-top:30px;"><br>上传企业证件</a></div>
+    </div>
+	 {#
+	  <div class=" rightdetail_photo" >
+	    <div  style="width:auto; height:auto;cursor:pointer;border:#ccc solid 1px;text-align:center;" alt="企业证件" id="preview_fake" onclick="editCredential_path()">
+         <img style="width:48px; height:48px;border:0px;cursor:pointer" title="编辑企业证件" id="preview" src="{{credential_path}}" onerror="javascript:this.src='{{ asset('bundles/fafatimewebase/images/downphoto.png') }}'"> 
+      </div>
+	    <div class="alllist">
+	      <br> 企业证件让您的业务更好！<br> 
+	      <a data-toggle="modal" show=false href="#invitedphoto"  onclick="editCredential_path()">编辑企业证件</a>
+	    </div>
+    </div> 
+    #}
+-->
+  <div class="rightdetail_left">
+  	{#
+    <div class="control-group">
+      <label class="control-label" for="circle_name" style="width:100px;padding-top:2px;">加入方式：</label>
+      <div class="controls">
+        <input type="radio" name="join_method" {% if join_method ==0 %} checked {% endif %} value="0" style="margin-top:0px;height:22px;">允许任何人
+        <input type="radio" name="join_method" {% if join_method ==1 %} checked {% endif %} value="1" style="margin-top:0px;height:22px;">由成员邀请
+      </div>
+    </div>
+    #}
+<!--    <div class="control-group">
+      <label class="control-label" for="circle_name" style="width:100px;padding-top:2px;">是否允许转发：</label>
+      <div class="controls">
+        <input type="radio"  name="allow_copy" {% if allow_copy !=1 %} checked {% endif %} value="0" style="margin-top:0px;height:22px;">允许
+        <input type="radio"  name="allow_copy" {% if allow_copy ==1 %} checked {% endif %} value="1" style="margin-top:0px;height:22px;">不允许
+      </div>
+    </div>
+-->
+    <div class="control-group">
+      <label class="control-label" for="postcode" style="width:100px;">邮编：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" maxlength="8" value="{{postcode}}" id="postcode" name="postcode"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="eshortname" style="width:100px;">所属区域：</label>
+      <div class="controls">
+        <select class="span1" id="province" name="province" onChange="provincechange(this.value);"  style="border:#bbb 1px solid; width:280px;" class="all-select">
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="eshortname" style="width:100px;">&nbsp;</label>
+      <div class="controls">
+        <select class="span1" id="city" name="city" onChange="citychange(this.value);"  style="border:#bbb 1px solid; width:140px;" class="all-select">
+        </select>
+        <select class="span1" id="area" name="area" style="border:#bbb 1px solid; width:135px;" class="all-select">
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="addr" style="width:100px;">联系地址：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{addr}}" maxlength="40" id="addr" name="addr"/>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="create_date" style="width:100px;">创建日期：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{create_date}}" id="create_date" name="create_date" maxlength="20" readonly>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="ad_desc" style="width:100px;">广告语：</label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="ad_desc" name="ad_desc" rows="4" maxlength="64" >{{ad_desc}}</textarea>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="edesc" style="width:100px;">企业简介：</label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="edesc" name="edesc" rows="4" maxlength="64" >{{ad_desc}}</textarea>
+      </div>
+    </div>
+     <div class="form-actions">
+   	        <input id="btnSave" type="button" saveurl="{{ path('JustsyBaseBundle_enterprise_setting_savedetail', {'network_domain' : curr_network_domain})}}" onclick="submit_content();" style="width:138px" class="inputsmall" value="保存">
+            <span id="hint" class="help-inline" style="width:172px;display:none;">
+                   <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+                   <a id="hint_msg" style="color:#db4800"></a>
+            </span>	
+    </div>
+  </div>
+</div>
+  <div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    <div class="modal-footer"><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+  </div>   
+</form>
+
+
+<script language="javascript">
+ 
+  var uploadObj=null;
+  function editHead()
+	{
+		  $("#invitedphoto").modal("show");
+	}
+	function saveHead()
+	{
+	   uploadObj[0].doSave();
+	}
+	function avatar_success()
+	{
+		  $("#invitedphoto").modal("hide");		  
+		 // Account.submit_content($("#btnSave")[0]);
+	}
+  var provinceid='{{province}}';
+  var cityid='{{city}}';
+  var areaid='{{area}}';
+  var loadprovince=function(){
+    $.get('{{path("JustsyBaseBundle_enterprise_setting_provincelist")}}',function(data){
+      if(typeof(data)!="object")data=eval("("+data+")");
+        $("#province").empty();
+        $("#province").append("<option value=''>请选择</option>");
+        for (var i = 0; i <data.length; i++) {
+          $("#province").append("<option value='"+data[i]["value"]+"'>"+data[i]["text"]+"</option>");
+        };
+        if(provinceid!=""){
+          $("#province").attr("value",provinceid);
+          $("#city").empty();
+          $("#city").append("<option value=''>请选择</option>");
+          $.get('{{path("JustsyBaseBundle_enterprise_setting_citylist")}}',{pid:provinceid},function(data){
+          if(typeof(data)!="object")data=eval("("+data+")");
+          for (var i = 0; i <data.length; i++) {
+            $("#city").append("<option value='"+data[i]["value"]+"'>"+data[i]["text"]+"</option>");
+            if(cityid==data[i]["value"]){
+              $("#city").attr("value",cityid);
+            }
+          };
+          if(cityid!="")citychange(cityid);
+        },'json');
+        }else{
+          $("#city").empty();
+          $("#city").append("<option value=''>请选择</option>");
+          $("#area").empty();
+          $("#area").append("<option value=''>请选择</option>");
+        }
+    },'json');
+  };
+  var provincechange=function(value){
+    $("#city").empty();
+    $("#city").append("<option value=''>请选择</option>");
+    if(value!=""){
+      $.get('{{path("JustsyBaseBundle_enterprise_setting_citylist")}}',{pid:value},function(data){
+        if(typeof(data)!="object")data=eval("("+data+")");
+        for (var i = 0; i <data.length; i++) {
+          $("#city").append("<option value='"+data[i]["value"]+"'>"+data[i]["text"]+"</option>");
+          if(cityid==data[i]["value"]){
+            $("#city").attr("value",cityid);
+          }
+        };
+      },'json');
+    }
+  };
+  var citychange=function(value){
+    $("#area").empty();
+    $("#area").append("<option value=''>请选择</option>");
+    if(value!=""){
+      $.get('{{path("JustsyBaseBundle_enterprise_setting_arealist")}}',{cid:value},function(data){
+        if(typeof(data)!="object")data=eval("("+data+")");
+        for (var i = 0; i <data.length; i++) {
+          $("#area").append("<option value='"+data[i]["value"]+"'>"+data[i]["text"]+"</option>");
+          if(areaid==data[i]["value"]){
+            $("#area").attr("value",areaid);
+          }
+        };
+      },'json');
+    }
+  };
+  $(document).ready(function()
+  {
+    loadprovince();
+    $('#postcode').focus();
+    var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+    var obj_ff = obj.find("embed");
+    uploadObj = document.all==null? obj_ff : obj;
+    uploadObj.css({"height":"380px","width":"500px"});
+  });	
+   //提交数据
+   function submit_content()
+   {
+     document.getElementById('btnSave').disabled = true;
+     $('#btnSave').val("提交中..."); 
+      $("form").ajaxSubmit({
+      	      dataType: 'json',//返回的数据类型
+              url: "{{ path('JustsyBaseBundle_enterprise_setting_savedetail', {'network_domain' : curr_network_domain})}}",//表单的action
+              method: 'post',
+              success:function(r){
+				         if(r.success)
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+				              $('#hint_msg').text('详细资料保存成功');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         else
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				              $('#hint_msg').text('详细资料保存失败');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         document.getElementById('btnSave').disabled = false;
+				         $('#btnSave').val("保存"); 
+			        }        
+      });      
+   }
+</script>
+{% endblock %}

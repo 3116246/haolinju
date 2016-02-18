@@ -1,0 +1,796 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+{% block menuitemactive_employee %}class="active"{% endblock %}
+{% block menuitemactive_microul1 %}style="position: relative;left: 23px;"{% endblock %}
+{% block menuitemactive_microul2 %}style="position: relative;left: 23px;"{% endblock %}
+{% block stylesheets %}
+ <link href="/bundles/fafatimewebase/css/edit-table-default-style.css" type="text/css" rel="stylesheet">
+ <style type="text/css">
+ 	  .input-prepend{width:580px;}
+		#org_left { z-index:10000;display: none; width:180px; height:250px;position: absolute;top: 0;left:0px;}
+		#org_right {  width:740px; height:580px; margin-top:2px; background-color:#FFF;}
+		#org_left a:hover {background-color:#fefdea; text-decoration:none;}
+		ul{margin: 0;padding: 0;border: 0}
+		ul.ztree {padding:0px; border: 1px solid #ccc;background: #eefaf6;width:180px;height:250px;overflow-y:auto;overflow-x:auto;}
+.div_btn {
+	margin-top:2px;
+  line-height:21px;
+  width:69px;
+  height:21px;
+  cursor:pointer;
+  text-align:center;
+  overflow:hidden;
+  background:url('{{asset('bundles/fafatimewebase/images/btn_normal.png')}}');
+ }
+ .invalidpage{
+ 	background-color:#CCC;
+ 	border-color:#CCC;
+ 	cursor:default;
+ 	z-index:0;
+ 	color:#BBB;
+ }
+/*菜单模块 */
+.tab{
+ list-style:none;
+ padding:4px 5px 0px 5px;
+ margin-left:0px;
+ }
+.tab li{ 
+display:inline; /* 【重点】让li横向排列。*/
+ font-size:12px;
+ }
+.tab li a{ 
+padding:5px 10px; /* 因为没有固定高度，所以用填充来调整显示效果。 */
+border:1px solid #ccc;  /* 菜单项的边框 */
+color:#888; 
+border-bottom:none; /* 底部无边框 */
+text-decoration:none;
+background:#f7f7f7
+}
+/*鼠标经过时的样式 */
+.tab li a:hover{ 
+background:#fff;
+}
+/*选中时的样式 */
+.tab li.no a{ 
+background-color:#eefaf6;
+border-bottom:none; /*  隐藏菜单项的底部边框 */
+position:relative;  /* 【重点】菜单项里面的连接使用了相对定位 */
+top:1px;            /* 【重点】相对于外层顶部为1像素，正好是底部边框的像素。所以就遮住了ul的底部边框 */
+color:#000000; 
+font-weight:bold
+}		 	  
+.state_list{
+   z-index:10000;display: none; width:92px; height:100px;position: absolute;top: 0;left:0px;border:1px solid #7F9DB9;background-color:#FFF;
+}
+.state_item{
+   background-color:#FFF;
+   list-style: none outside none;
+   cursor:pointer;
+   padding-left: 10px;   
+}
+.state_item:hover{
+   background-color:#CCC;
+}
+.state_item_active{
+   background-color:#3399FF;
+   list-style: none outside none;
+   color:#FFF;
+   cursor:pointer;
+   padding-left: 10px;
+}
+.dropdown_btn{
+    background-color: #F0F0F0;
+    border: 1px solid #F0F0F0;
+    display: block;
+    float: right;
+    height: 18px;
+    width: 20px;
+    cursor:pointer;
+}
+.dropdown_btn:hover{
+   border: 1px solid #707070;
+}
+.importemps{
+     position: absolute;
+     top: 0;
+     left:0px;
+     z-index:10000;
+     display: none; 
+     width:250px; 
+     height:100px;
+     border: 1px solid #CCCCCC;
+     background: none repeat scroll 0 0 #FFF;
+}
+ </style>
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/Util.js')}}"></script> 
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/DetailTable.js')}}"></script>
+{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">员工管理</div>
+<div style="height: 25px;padding-left: 10px;padding-right: 10px;padding-top: 5px;position: relative;width: 718px;">
+<span style="*position:inherit;*height:15px;*width:150px;*float:left;float: left;*right:140px;left: 5px;top: -5px;" class="searcharea"><input id="txtempserach" type="text" maxlength="10" placeholder="员工姓名/邮箱 模糊搜索"/><div id="empsearch" class="searchicon" style="cursor:pointer;*top:-30px;*left:10px;"></div></span>
+   <span style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;float:right;cursor: pointer;" id="import_btn">批量导入</span>
+   <span style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;float:right;cursor: pointer;" id="menu_invite_btn">单个邀请</span>
+</div>
+<div style="margin-top: 3px;background-color: #F3F3F3; border-top: 1px solid #C4D5E0;border-bottom: 1px solid #C4D5E0; height: 25px;padding-left: 10px;padding-right: 10px;padding-top: 5px;position: relative;width: 720px;">
+   <span style="color:#404040;float:left;margin-right: 5px;"><input id="sel_all" type="checkbox"></span>
+   <span style="color:#404040;float:left;margin-right: 10px;margin-top: 1px;">全选</span>
+   <!--<span id="disable_btn" style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;">禁用</span>-->
+   <span id="delete_btn" style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;">删除</span>
+   <span id="invite_btn" style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;">再次邀请</span>
+   <span id="leave_btn" style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;">办理离职</span>
+   <span id="deptchange_btn" style="color:#3366CC;float:left;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;">部门变更</span>
+</div>
+<div id="state_list" class="state_list">
+		<ul>
+		   <li class="state_item_active" value="1">正常</li>
+		   <li class="state_item" value="9">未激活</li>
+		   <!--<li class="state_item" value="-1">已禁用</li>-->
+		   <li class="state_item" value="3">已离职</li>
+		</ul> 		    
+</div>
+<div id="ent_main">
+				<!--机构树-->
+				<div id="org_left">
+				  		    <ul id="tree_dept" class="ztree"></ul> 		    
+				</div>
+				<div id="org_right">
+				<div id="org_view" style="position: relative;overflow:hidden;top:0px;left:0px;width:740px;height:100%;">
+				    <div id="emplist" style="height:525px;width:738px;overflow-x: hidden; overflow-y: auto;"></div>	
+				    <div id="page"></div>
+						<div id="error" class="error_hint" style="display:none;position: absolute;left:330px;top:100px">
+						   <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}">
+						</div>			    		  		
+				</div>
+				</div>
+		</div>
+<div>
+<!--部门变更-->
+<div class="dept_change modal" id="dept_change" data-backdrop=false style="display: none;
+    margin-left: -100px;
+    margin-top: -160px;
+    width: 220px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;部门变更</span>
+      </div>
+	    <div>
+	      <div class="doc_rd_confirm_right">
+	          <div class="doc_rd_confirm_text" style="height: 230px;">
+	          <ul id="tree_dept2" class="ztree" style="height:220px;width:220px;background: #FFFFFF;border-color: -moz-use-text-color -moz-use-text-color #CCCCCC;border-style: none none solid;border-width: 0 0 1px;"></ul> 
+	          </div>
+	          <div style="margin-left: 55px;float:left;width: 140px;"><span id="saveDeptChange" class="doc_md_content_right_btn">确定</span><span id="cancelDeptChangeSave" class="doc_md_content_right_btn">关闭</span></div>
+	          <div id="deptChangeHint" style="margin-left: 70px;height:30px;text-align: center;float:left;line-height: 30px;"></div>
+	      </div>	      
+	    </div>
+</div>	
+<!--批量导入-->
+<div id="import_panel" class="importemps">
+    <span class="topmenu_app_triangle" style="border-color: transparent transparent rgb(204, 204, 204); left: -20px; border-width: 9px; top: -18px;"></span>
+    <span class="topmenu_app_triangle" style="border-color: transparent transparent rgb(255, 255, 255); border-width: 9px; left: -2px; top: -18px;"></span>    
+    <div style="color:#000">
+    	<form target="frm_import_submit" id="frm_import" action="{{path('JustsyBaseBundle_account_importemployee',{'network_domain':curr_network_domain})}}" method="post" enctype="multipart/form-data">
+        <div style="margin-left: 10px; height: 30px;"><span style="float:left;height: 25px;line-height: 25px;">请先下载</span><a style="float:left;color: blue;line-height: 25px;" href="/WeFaFa_Employee_Template.xls">导入模板</a><span style="float:left;height: 25px;line-height: 25px;">，并填写人员信息</span></div>	
+        <div style="margin-left: 10px; height: 30px;"><input  name="filedata" id="filedata" type="file" style="width:230px;height: 25px;line-height: 25px;"></div>
+        <div style="padding-top: 15px;">
+        	  <span style="float:left;margin-left: 10px;width:120px;line-height: 25px;" id="import_hint"></span>
+   					<span onclick="if(!is_import_ing){$('#import_panel').hide();$import_hint.html('')}" style="color:#3366CC;float:right;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;" id="import_close">关闭</span>
+   					<span style="color:#3366CC;float:right;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;" id="import_start">开始导入</span>
+        </div>
+      </form>
+      <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>
+    </div>
+</div>
+<!--单个邀请-->
+<div id="invite_panel" class="importemps">
+    <span class="topmenu_app_triangle" style="border-color: transparent transparent rgb(204, 204, 204); left: -20px; border-width: 9px; top: -18px;"></span>
+    <span class="topmenu_app_triangle" style="border-color: transparent transparent rgb(255, 255, 255); border-width: 9px; left: -2px; top: -18px;"></span>    
+    <div style="color:#000">
+    	<div style="margin-left: 10px; height: 30px;"><span style="float:left;height: 25px;line-height: 25px;">同事邮箱：(多个邮箱请用,或;分隔)</span></div>	
+        <div style="margin-left: 10px; height: 30px;"><input name="invite_mails" id="invite_mails" type="text"  maxlength=255 style="height: 25px;line-height: 25px;"></div>
+        <div style="padding-top: 15px;">
+        	  <span style="float:left;margin-left: 10px;width:120px;line-height: 25px;" id="invite_hint"></span>
+   					<span onclick="if(!is_invite_ing){$('#invite_panel').hide();$invite_hint.html('')}" style="color:#3366CC;float:right;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;" id="invite_close">关闭</span>
+   					<span style="color:#3366CC;float:right;cursor: pointer;background-color:#F6F7F7;margin-right: 10px;border: 1px solid #999999;padding-left: 5px;padding-right: 5px;" id="invite_start">发送邀请</span>
+        </div>   
+    </div>
+</div>
+<div class="doc_confirm modal" id="doc_confirm" data-backdrop=false style="display:none;margin-left: -110px;margin-top: -60px;width: 260px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;帐号删除</span>
+      </div>
+	    <div>
+	      <div class="doc_rd_confirm_left"></div>
+	      <div class="doc_rd_confirm_right">
+	          <div class="doc_rd_confirm_text" style="height: 60px; line-height: 60px; text-align: center;">确定要删除该人员吗？</div>
+	          <div style="margin-left: 80px;float:left"><span id="deleteDoc" class="doc_md_content_right_btn">确定</span><span id="cancelDelete" class="doc_md_content_right_btn">关闭</span></div>
+	          <div class="deletehint" style="margin-left: 70px;height:20px;width:130px;float:left"></div>
+	      </div>	      
+	    </div>
+</div>
+<div class="doc_confirm modal" id="emp_confirm" style="display:none;margin-left: -110px;margin-top: -60px;width: 260px;">
+      <div class="doc_window_title">
+        <span>&nbsp;&nbsp;消息提示</span>
+      </div>
+      <div>
+        <div class="doc_rd_confirm_left"></div>
+        <div class="doc_rd_confirm_right">
+            <div class="doc_rd_confirm_text" style="height: 60px; line-height: 60px; margin-left: 69px;">员工已经成功办理离职!</div>
+            <div style="margin-left: 100px;float:left"><span class="doc_md_content_right_btn" onclick="$('#emp_confirm').hide()">确认</span></div>
+            <div class="deletehint" style="margin-left: 70px;height:20px;width:130px;float:left"></div>
+        </div>        
+      </div>
+</div>
+<div class="errorlist modal" id="errorlist" data-backdrop=false style="display:none;height: 300px;margin-left: -160px;margin-top: -150px;width: 320px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;导入错误日志</span>
+      </div>
+	    <div>
+	      <div class="doc_rd_confirm_right">
+	          <div class="errorlist_text" style="overflow:auto;height: 220px; line-height: 20px; margin: 10px;"></div>
+	          <div style="margin-left: 130px;float:left"><span onclick="$('#errorlist').hide()" class="doc_md_content_right_btn">关闭</span></div>
+	      </div>	      
+	    </div>
+</div>
+
+<script type="text/javascript" language="javascript"  src="{{asset('bundles/fafatimewebase/js/OrgView.js')}}"></script>
+<script>
+  var empActionUrl = "{{path('JustsyBaseBundle_account_mployeemgr',{'network_domain':curr_network_domain})}}";
+  var error = document.getElementById("error"),orgTree_dept=null,orgTree_dept2 = null,obj=null,RootID="v{{app.user.eno}}";
+  var conText="/",curNode = null, errHandle = null,$error=$("#error"),ajaxObj=null;
+  $(document).ready(function(){
+  orgTree_dept = new OrgTree("tree_dept");
+  cur_dept="";  
+  orgTree_dept2 = new OrgTree("tree_dept2"),
+	obj = new detailTable("emplist",[{id:"nick_name",title:"姓名",width:"80px",edit:0,maxLength:10},
+	                                      {id:"sex_id",title:"性别",width:"50px",edit:0,listData:"'男,男','女,女'"},
+	                                      {id:"dept_name",title:"部门名称",width:"120px",edit:0},
+	                                      {id:"duty",title:"职务",width:"100px",edit:0},
+	                                      {id:"login_account",title:"电子邮箱",width:"151px",edit:0,maxLength:32},
+	                                      {id:"mobile",title:"手机",width:"120px",edit:0,maxLength:11,inputType:"inputPlusInteger"},
+	                                      {id:"state_id",title:"用户状态",width:"100px",edit:0},
+	                                      
+	                                      //{id:"look",title:"详细信息",width:"80px",edit:0,text:"查看",alignStyle:"left"},
+	                                  {crossColor:{doubleColorCSS:"doubleRowBg",singularColorCSS:"singularRowBg",moveinColorCSS:"moveRowBg"}}]);
+	obj.edit=false;
+	obj.count=500;
+	obj.createDeleteColumn = false;
+	obj.selectMode = "multiple";
+	obj.selectByControl = true;
+	obj.setCloneRowIndex(0);
+	obj.key = "employeeid";
+	obj.notnull = "login_account,nick_name";
+	$("#emplist tr:eq(0) td").css({"border":"0px","height":"31px","background-image": "url('/bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg')"});
+	obj.pageObject.reSetPageEvent=function(){
+		var args={};
+		args.parent = this;        	
+        args.updatePage=function(p)
+        {
+        	this.parent.pageinfo.setAttribute("currentpage",p);
+        	this.parent.refreshPageList();
+        }
+		var firstPage="#"+this.fixedid+"_first";
+		var lastestPage="#"+this.fixedid+"_lastest";
+		var prevPage="#"+this.fixedid+"_last";
+		var nextPage="#"+this.fixedid+"_next";
+		$(firstPage).addClass("invalidpage");
+    $(prevPage).addClass("invalidpage");
+    $(lastestPage).attr("title","末页");
+    $(nextPage).attr("title","下一页");
+    $(firstPage).attr("title","首页");
+    $(prevPage).attr("title","上一页");
+		$(firstPage)[0].onclick=$(lastestPage)[0].onclick=$(prevPage)[0].onclick=$(nextPage)[0].onclick=function(e){
+			var event = e || window.event;
+            var eventsrcElement = event.target || event.srcElement;
+        	var src = (eventsrcElement.id); 
+        	var page = eventsrcElement.parentNode;
+            var currentPageNo = parseInt(page.getAttribute("currentpage"));
+            var pageCount = parseInt(page.getAttribute("pagecount"));
+            if (src.indexOf("_next")>0){
+               if (currentPageNo + 1 > pageCount*1){}
+               else{
+                    args.updatePage(currentPageNo + 1);}}
+            else if(src.indexOf("_lastest")>=0){if (currentPageNo == pageCount){}else{
+                args.updatePage(pageCount);}}                    
+            else if(src.indexOf("_last")>0){
+                if (currentPageNo > 1){
+                    args.updatePage(currentPageNo - 1);}
+                else{
+                	}}
+            else if(src.indexOf("_first")>0){
+                 if (currentPageNo == 1){}else{
+                 args.updatePage(1);}}
+            else if (src.indexOf("_jump")>0){
+                 if (currentPageNo >= 1 && currentPageNo <= pageCount){
+                 	 args.updatePage(currentPageNo);}
+                 else{}
+                 }       
+           if(args.callfunc!=null) args.callfunc(); 
+           else
+           {
+               var o = getObjectRef(page.id.replace("__grid_pageinfo",""));
+               o.memoryPage(currentPageNo);
+           }
+           currentPageNo = parseInt(page.getAttribute("currentpage"));
+            if(currentPageNo==pageCount)
+            {
+            	$(lastestPage).addClass("invalidpage");
+            	$(nextPage).addClass("invalidpage");
+            	$(firstPage).removeClass("invalidpage");
+            	$(prevPage).removeClass("invalidpage");
+            }
+            else if(currentPageNo==1)
+            {
+            	$(firstPage).addClass("invalidpage");
+            	$(prevPage).addClass("invalidpage");
+            	$(lastestPage).removeClass("invalidpage");
+            	$(nextPage).removeClass("invalidpage");
+            }
+            else{
+            	$(lastestPage).removeClass("invalidpage");
+            	$(nextPage).removeClass("invalidpage");
+            	$(firstPage).removeClass("invalidpage");
+            	$(prevPage).removeClass("invalidpage");
+            }
+          $("#sel_all")[0].checked=false;
+		};
+	}
+	obj.pageObject.init({parentNode:"page"});
+	obj.pageObject.reSetPageEvent(obj.pageObject.fixedid,obj.pageObject);
+	//obj.pageObject.setPageSize(Pagesize);
+	obj.ColsName["state_id"].callback=function(cell,data)
+	{
+
+		  if(data.state_id=="9") cell.innerHTML = "<div class='textNoBR' style='color:red'>未激活</div>";
+		  else if(data.state_id=="1") cell.innerHTML = "<div class='textNoBR'>正常</div>";
+		  else if(data.state_id=="-1"){
+		      cell.parentNode.style.color="#999"; 
+		      cell.innerHTML = "<div class='textNoBR'>禁用</div>"
+		  }
+		  else if(data.state_id=="3") {cell.parentNode.style.color="#999"; cell.innerHTML = "<div class='textNoBR'>已离职</div>"}
+		  cell.title="";
+		  
+	}
+	obj.ColsName["login_account"].datacheck=function(data)
+	{
+		  var row = data.rowIndex;
+		  if(row==1) return true;//第一行不检查
+		  var text = data.value.replace(/ /g,"");
+		  if(text=="")
+		  {
+		     showHint(row,"login_account","电子邮箱不能为空！");
+		     return false;
+		  }
+		  else  if(!isEmail(text))
+		  {
+         showHint(row,"login_account","电子邮箱格式不正确！");
+         return false;
+      }
+      return true;
+	}	
+	obj.ColsName["mobile"].datacheck=function(data)
+	{
+		  var row = data.rowIndex;
+		  if(row==1) return true;//第一行不检查
+		  var text = data.value.replace(/ /g,"");
+      if(text!="" && !isMobile(text))
+      {
+         showHint(row,"mobile","手机格式不正确！");
+         return false;
+      }
+      return true;
+	}	
+	
+
+  obj.onRowSelected=function(row)
+  {
+  	  var keyv = row.getAttribute("keyvalue");
+  	  var checked = Type.toBoolean(row.getAttribute("checked"));
+ 	
+      if(checked)	
+      {
+          var state=obj.getCellValue(row.rowIndex,"state_id");
+          if(state=="正常")
+          {
+				      ToolButton.setEnable("deptchange_btn","#3366CC");
+				      ToolButton.setEnable("leave_btn","#3366CC");
+				  }
+				  else if(state=="未激活")
+				  {
+				      ToolButton.setEnable("delete_btn","#3366CC");
+				      ToolButton.setEnable("invite_btn","#3366CC");
+				  }
+      }
+      else
+      {
+      	   if(obj.currentRowIndex()=="")
+      	   {
+						  ToolButton.setDisable("deptchange_btn",null);
+						  ToolButton.setDisable("delete_btn",null);
+						  ToolButton.setDisable("leave_btn",null);
+						  ToolButton.setDisable("invite_btn",null);
+           }
+      }
+  }
+  obj.DataBindAfter=function()
+  {
+     // ToolButton.setEnable('saveBtn');
+     // ToolButton.setEnable('btn_addrow');
+		 //newRow.cells[0].innerHTML = "&nbsp;";  	
+  }  
+orgTree_dept.onSelected=function()
+{
+    curNode = orgTree_dept.getManager().getSelectedNodes();
+    if(curNode==null || curNode.length<1) return;
+    curNode = curNode[0];
+    $("#dept_name div span:eq(0)").html(curNode.deptname);
+    $(".state_item_active").attr("class","state_item");
+    $(".state_item:eq(0)").attr("class","state_item_active");
+     $("#org_left").hide();
+     loadData();
+}
+
+obj.ErrorHint = showHint;
+
+//显示错误提示
+function showHint(row,col,text)
+{
+	        if(errHandle!=null)window.clearTimeout(errHandle);
+	        var cell=obj.tabelobj.rows[row].cells[ getIndex(obj.tabelobj,col)];
+	        error.style.display='';
+	        error.style.top =obj.tabelobj.parentElement.offsetTop+ (cell.offsetHeight*(row+1));
+	        error.style.left = cell.offsetLeft+5;
+	        error.innerHTML = text; 
+	        createInput(obj,obj.tabelobj.rows[row].cells[ getIndex(obj.tabelobj,col)]);
+	        errHandle=window.setTimeout("error.style.display='none'",2000);
+}
+
+  //$.ligerDialog.waitting('正在加载数据中,请稍候...');
+	function initOrgList()
+	{
+	   $error.show();
+	   var departImg = "{{asset('bundles/fafatimewebase/css/zTreeStyle/img/diy/department.png')}}";
+	   var departImg0 = "{{asset('bundles/fafatimewebase/css/zTreeStyle/img/diy/department0.png')}}";
+	   try{
+					   $.getJSON("{{path('JustsyBaseBundle_account_deptquery',{'network_domain':curr_network_domain})}}",function(dataNode){
+							   var newData=[];
+							   var reg = /v.*-\d{4,5}/;
+							   for(var i=0;i<dataNode.length; i++)
+							   {
+							        if(dataNode[i].pId=="-10000" || dataNode[i].pId=="0")
+							        {
+							        	  curNode={deptid:dataNode[i].id,deptname:dataNode[i].name.replace(/<\/AB>/g,"&")};
+							            newData.push({deptid:dataNode[i].id,
+										                       deptname:dataNode[i].name.replace(/<\/AB>/g,"&"),
+										                       pid:"-10000",
+										                       open:true, iconOpen:departImg, iconClose:departImg0});
+										  }
+										  else if(reg.test(dataNode[i].id))
+										  {
+										  				continue;
+										  }
+							        else
+							   			   newData.push({deptid:dataNode[i].id,deptname:dataNode[i].name,pid:dataNode[i].pId,open:false,icon:departImg0, iconOpen:departImg, iconClose:departImg0});
+							   }
+             		orgTree_dept.DataSource(newData);
+             		orgTree_dept2.DataSource(newData);
+	     					$("#dept_name").html("").append(makeSelect("部门名称","org_left","84px"));
+	     					$("#state_id").html("").append(makeSelect("用户状态","state_list","60px"));
+             		loadData();					   
+					   });
+	     }
+	     catch(e)
+	     {
+	         alert(e)
+	     }
+
+	     //$.ligerDialog.closeWaitting();
+	}
+	
+	   initOrgList();
+	});
+	
+  function loadData(url)
+  {
+    //$("#txtempserach").val('');
+		if(curNode==null) cur_dept="";
+		else
+		{  
+				cur_dept = curNode.deptid;
+				setControlValue("dept",curNode.deptname);			    
+	  }
+	  $error.show();
+	  if(ajaxObj!=null) ajaxObj.abort();
+    if(url==1) { //搜索
+      url="{{path('JustsyBaseBundle_account_searchemp',{'network_domain':curr_network_domain})}}?deptid="+cur_dept+"&state="+$(".state_item_active").attr("value")+"&search="+$("#txtempserach").val();
+    }else {
+      $("#txtempserach").val('');
+      url="{{path('JustsyBaseBundle_account_getdeptemp',{'network_domain':curr_network_domain})}}?deptid="+cur_dept+"&state="+$(".state_item_active").attr("value");
+    }
+		ajaxObj=$.getJSON(url,function(data){
+		    obj.Init(null);
+		    obj.dataSource=data;
+		    obj.DataBind();
+		    if(document.all)
+		      $("#emplist table input[type='checkbox']").css({"margin-left":"0px","margin-top":"-2px"});
+		    else
+		      $("#emplist table input[type='checkbox']").css({"margin-left":"5px","margin-top":"-2px"});
+		    $error.hide();
+				//ToolButton.setDisable("disable_btn",null);
+				ToolButton.setDisable("delete_btn",null);
+				ToolButton.setDisable("leave_btn",null);
+				ToolButton.setDisable("invite_btn",null);	
+				ToolButton.setDisable("deptchange_btn",null);	    
+	  });  
+  }
+	
+	function makeSelect(text,listdiv,w)
+	{
+	    $("#"+listdiv).unbind("mouseleave").bind("mouseleave",function(event){
+	        $(this).hide();
+	    });
+	    var html = [];
+	    html.push("<div style='height:20px;border:1px solid #ABADB3;padding:1px;background-color: #FFFFFF;width: 90%;'>");
+	    html.push(" <span style='float: left; display: block; width: "+w+"; overflow: hidden; white-space: nowrap;'>");
+	    html.push(text);
+	    html.push(" </span>");
+	    html.push(" <span class='dropdown_btn' href='"+listdiv+"' >");
+	    html.push("    <span class='topmenu_app_triangle' style='border-color: rgb(0, 0, 0) transparent transparent; border-width: 5px; float: none; left: 0px;'></span>");
+	    html.push(" </span>");
+	    html.push(" </div>");
+	    return $(html.join(""));
+	}
+	var confirmWinTinmer=null, $import_hint = $("#import_hint"),$invite_hint=$("#invite_hint"),is_import_ing=false,is_invite_ing=false,isSubmit=false,isMoveDept=false;
+	$(".dropdown_btn").live("click",function(event){
+	   var $this = $(this);
+	   var showDiv =$("#"+ $this.attr("href"));
+	   var offset = $this.offset();
+	   showDiv.css({"display":"block","top":offset.top+$this.height()+7,"left":offset.left-showDiv.width()+$this.width()+2});
+	   event.stopPropagation();
+	});	
+	var action="", $doc_confirm = $("#doc_confirm"),btn_ok = $("#deleteDoc"),btn_cancel = $("#cancelDelete"),opthint = $(".deletehint");
+	
+	$("#delete_btn").bind("click",function(event){
+	   if("disabled"==$(this).attr("disabled")) return;	
+	   action = "delete";
+	   if(confirmWinTinmer!=null) clearTimeout(confirmWinTinmer);
+	   $doc_confirm.find(".doc_window_title span").html("&nbsp;&nbsp;帐号删除");
+	   $doc_confirm.find(".doc_rd_confirm_text").html("确定要<b>删除</b>选择的人员吗？");
+	   btn_ok.show();
+	   btn_cancel.text("关闭");
+	   $doc_confirm.show();
+	});
+	$("#disable_btn").bind("click",function(event){
+	   if("disabled"==$(this).attr("disabled")) return;	
+	   action = "disable";
+	   $doc_confirm.find(".doc_window_title span").html("&nbsp;&nbsp;帐号禁用");
+	   $doc_confirm.find(".doc_rd_confirm_text").html("确定要<b>禁用</b>选择的人员吗？");
+	   $doc_confirm.show();
+	});
+	$("#leave_btn").bind("click",function(event){
+	   if("disabled"==$(this).attr("disabled")) return;	
+	   action = "leave";
+	   if(confirmWinTinmer!=null) clearTimeout(confirmWinTinmer);
+	   $doc_confirm.find(".doc_window_title span").html("&nbsp;&nbsp;人员离职[<a style='color:red'>谨慎操作!</a>]");
+	   $doc_confirm.find(".doc_rd_confirm_text").html('<div style="text-align: center; line-height: 30px;">离职后会清除相关数据且不能恢复！</div><div style="line-height: 30px;">确定选择的人员<b>离职</b>吗？</div>');
+     btn_ok.show();
+     btn_cancel.text("关闭");
+	   $doc_confirm.show();
+	});	
+	$("#deptchange_btn").bind("click",function(event){
+		  $("#deptChangeHint").html("");
+	    $("#dept_change").show();
+	});
+	$("#saveDeptChange").bind("click",function(event){
+		  if(isMoveDept) return;
+      var tmpcurNode = orgTree_dept2.getManager().getSelectedNodes();
+      if(tmpcurNode==null || tmpcurNode.length<1) return;
+      tmpcurNode = tmpcurNode[0];
+      var account = obj.getSelectedValue("login_account");
+      if(account=="") return;
+      isMoveDept=true;
+      $("#deptChangeHint").html("正在变更职务...");
+      $.getJSON("{{path('JustsyBaseBundle_account_movetodept',{'network_domain':curr_network_domain})}}?staff="+account+"&deptid="+tmpcurNode.deptid,{},function(d){
+      	  isMoveDept=false;
+	        if(d.s==0)
+	        {
+	        	  $("#deptChangeHint").html(d.msg);
+	            return;	
+	        }
+	        $("#deptChangeHint").html("职务变更成功!");
+	        loadData();
+	        setTimeout(function(){$("#dept_change").hide();},2000);
+      });
+	});	
+	$("#cancelDeptChangeSave").bind("click",function(event){
+	    $("#dept_change").hide();
+	});
+	//重新发送邀请
+	$("#invite_btn").bind("click",function(event){
+	   if("disabled"==$(this).attr("disabled")) return;	
+	   var account = obj.getSelectedValue("login_account");
+	   if(account=="" || isSubmit) return;
+	   action = "invite";	
+		 $doc_confirm.find(".doc_window_title span").html("&nbsp;&nbsp;邀请帐号");
+		 $doc_confirm.find(".doc_rd_confirm_text").html("正在发送邀请...");
+		 $doc_confirm.show();	      
+		 btn_ok.hide();
+		 ajaxObj=$.getJSON("{{path('JustsyBaseBundle_account_mployeemgr',{'network_domain':curr_network_domain})}}?action="+action+"&account="+account,function(d){
+			       ajaxObj=null;
+			       if(d.s=="0")
+			            $doc_confirm.find(".doc_rd_confirm_text").html("错误:"+d.msg);
+			       else
+			       {
+			       	    $doc_confirm.find(".doc_rd_confirm_text").html("邀请已成功发送！");
+			       }
+			       btn_cancel.text("关闭");
+			       confirmWinTinmer=setTimeout(function(){$doc_confirm.hide();btn_ok.show();btn_cancel.text("关闭")},3000);
+			});	   
+	});		
+	btn_ok.bind("click",function(){
+		     var account = obj.getSelectedValue("login_account");
+		     if(account=="" || isSubmit) return;
+		     isSubmit=true;
+		     btn_ok.css("color","#B7BABB");
+		     btn_cancel.css("color","#B7BABB");
+			   $.getJSON("{{path('JustsyBaseBundle_account_mployeemgr',{'network_domain':curr_network_domain})}}?action="+action+"&account="+account,function(d){
+			       if(d.s=="0") opthint.html("错误:"+d.msg);
+			       else
+			       {
+			       	    //opthint.html("员工离职成功！");
+                  $("#emp_confirm").show();
+                  $("#doc_confirm").hide();
+			       	    loadData();
+			       }
+			       btn_ok.css("color","#000000");
+			       btn_cancel.css("color","#000000");
+			       isSubmit=false;
+			       confirmWinTinmer=setTimeout(function(){$doc_confirm.hide();opthint.html("")},3000);
+			   });
+  });	
+	btn_cancel.bind("click",function(){
+			  $doc_confirm.hide();
+			  if(ajaxObj!=null) ajaxObj.abort();
+  });
+
+	$(".state_item").live("click",function(event){
+	    //根据状态进行人员查询
+	    $(".state_item_active").attr("class","state_item");
+	    $(this).attr("class","state_item_active");
+	    $("#state_list").hide();
+	    loadData();
+	});
+	$("#sel_all").bind("click",function(event){
+	   if($(this).attr("checked")=="checked")
+	   {
+	      checkedRow(obj,"ALL");
+	      if($(".state_item_active").attr("value")=="9") //未激活
+	      {
+	          	ToolButton.setEnable("delete_btn","#3366CC");
+				      ToolButton.setEnable("invite_btn","#3366CC");
+	      }
+	   }
+	   else
+	   {
+	      cancelCheckedRow(obj,"ALL"); 
+	      if($(".state_item_active").attr("value")=="9") //未激活
+	      {
+	          	ToolButton.setDisable("delete_btn",null);
+				      ToolButton.setDisable("invite_btn",null);
+	      }
+	   }
+	});
+	
+	//单个邀请
+	$("#menu_invite_btn").live("click",function(event){
+	    var $this = $(this);
+	    var showDiv =$("#invite_panel");
+	    var offset = $this.offset();
+	    showDiv.css({"display":"block","top":offset.top+$this.height()+5,"left":offset.left-showDiv.width()+$this.width()+2});
+	    showDiv.show();
+	});
+	
+		$("#invite_start").bind("click",function(){
+	    if(is_invite_ing) return;
+	    var acts = $.trim($("#invite_mails").val());
+	    if(acts=="") return;
+	    var sendMails = acts.split(/[,;]/g);
+
+	    $invite_hint.html("正在发送邀请...");
+	    $(this).css("color","#CCC");
+	    $("#invite_close").css("color","#CCC");	    
+	    is_invite_ing = true;	    
+	    $.post("{{path('JustsyBaseBundle_invite_sendinvitation')}}",
+	          {"acts":sendMails,"eno":"{{app.user.eno}}","invMsg":"","invRela":"0"},
+	          function(d){
+	          	$("#invite_start").css("color","#3366CC");
+	            $("#invite_close").css("color","#3366CC");	
+	            is_invite_ing=false;
+	    	      if(d=="1")
+	    	      {
+	    	          	$invite_hint.html("邀请已发送成功");
+	    	      }
+	    	      else  $invite_hint.html("邀请发送失败");
+	    	      setTimeout(function(){$invite_hint.html("")},2000);
+	    });
+	});
+	
+	$("#import_btn").live("click",function(event){
+	    var $this = $(this);
+	    var showDiv =$("#import_panel");
+	    var offset = $this.offset();
+	    showDiv.css({"display":"block","top":offset.top+$this.height()+5,"left":offset.left-showDiv.width()+$this.width()+2});
+	    showDiv.show();
+	});
+	$("#import_start").bind("click",function(){
+	    if(is_import_ing) return;
+	    if($("#filedata").val()=="")
+	    {
+	    	 $import_hint.html("请选择数据文件");
+	    	 return;
+	    }
+	    $import_hint.html("");
+	    $(this).css("color","#CCC");
+	    $("#import_close").css("color","#CCC");
+	    $import_hint.html("正在导入...");
+	    is_import_ing = true;
+	    $("#frm_import").submit();
+	});
+	
+	function import_callback(d)
+	{
+	   is_import_ing=false;
+	   $("#import_start").css("color","#3366CC");
+	   $("#import_close").css("color","#3366CC");	   
+	   if(d.s=="1")
+	   {
+	   	   if(d.error_list.length==0)
+	          $import_hint.html("导入成功");
+	       else
+	       {
+	       	import_error_list = d.error_list;
+	       	$import_hint.html("导入完成,但有 <a title='查看错误日志' style='color:blue' href='javascript:lookimport_error()'>错误</a>");
+          $(".state_item[value='9']").trigger("click");
+	       	return;
+	       }
+	       $("#state_list ul li").attr("class","state_item");
+	       $("#state_list ul li[value='9']").attr("class","state_item_active");
+	       //loadData();
+         //加载导入结果
+         $(".state_item[value='9']").trigger("click");
+	   }
+	   else
+	   {
+	      $import_hint.html("错误:"+d.message);
+	   }
+	   setTimeout(function(){$import_hint.html("")},2000);
+  }
+  var import_error_list=[];
+  function lookimport_error()
+  {
+  	  $("#import_panel").hide();
+  	  $("#errorlist").show();
+  	  var t = [];
+  	  for(var i=0;i<import_error_list.length; i++)
+  	  {
+  	  	 if(import_error_list[i].row!=null)
+  	         t.push( "第"+import_error_list[i].row +"行："+import_error_list[i].msg);
+  	     else
+  	     	   t.push(import_error_list[i].name+"："+import_error_list[i].msg);
+  	     t.push("<br>");
+  	  }
+  	  $("#errorlist .errorlist_text").html(t.join(""));
+  }
+  var oldsearch='';
+  $("#txtempserach").bind('keyup', function(e) {
+    var zval=$(this).val();
+     if(e.which==13 && oldsearch!=zval){
+      oldsearch=zval;
+        loadData(1);
+     }
+  });
+  $("#empsearch").bind('click',function(){
+      loadData(1);
+  });
+</script>
+{% endblock %}

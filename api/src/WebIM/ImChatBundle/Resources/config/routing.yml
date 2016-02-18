@@ -1,0 +1,38 @@
+WebIMImChatBundle_homepage:
+    pattern:  /api/chat/{name}
+    defaults: { _controller: WebIMImChatBundle:Default:index,name:fafa }
+WebIMImChatBundle_file:
+    pattern:  /api/webim/file
+    defaults: { _controller: WebIMImChatBundle:FileUpLoad:save}
+WebIMImChatBundle_faces:
+    pattern:  /api/get/faces
+    defaults: { _controller: WebIMImChatBundle:Default:getFaceMapping }  
+WebIMImChatBundle_fileindex:
+    pattern:  /api/webim/fileindex
+    defaults: { _controller: WebIMImChatBundle:FileUpLoad:index}
+    
+WebIMImChatBundle_getfilepath:
+    pattern:  /api/webim/getfilepath
+    defaults: { _controller: WebIMImChatBundle:FileUpLoad:getFilePath}       
+
+#---------------------------------webim消息记录----------------------------------
+
+WebIMImChatBundle_writemsg:
+  pattern: /api/wechatmsg/writemsg
+  defaults: {_controller:WebIMImChatBundle:WeChatMsg:writemsg}
+
+WebIMImChatBundle_searchmsg:
+  pattern: /api/wechatmsg/searchmsg
+  defaults: {_controller:WebIMImChatBundle:WeChatMsg:searchmsg}
+
+WebIMImChatBundle_deleteById:
+  pattern: /api/wechatmsg/deleteById
+  defaults: {_controller:WebIMImChatBundle:WeChatMsg:deleteById}
+  
+WebIMImChatBundle_paging:
+  pattern: /api/wechatmsg/paging
+  defaults: {_controller:WebIMImChatBundle:WeChatMsg:paging}
+
+WebIMImChatBundle_export:
+  pattern: /api/wechatmsg/export
+  defaults: {_controller:WebIMImChatBundle:WeChatMsg:export} 

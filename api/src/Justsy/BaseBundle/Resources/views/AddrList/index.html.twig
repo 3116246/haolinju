@@ -1,0 +1,219 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+{% block stylesheets %}
+<style type="text/css">
+ .L_T{float:left;}
+ .L_T_image{overflow:hidden;float:left; width:60px;height:67px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -210px;}
+ .L_T_name{float:left;color:#0088CC; margin-top:33px;margin-left:10px;font-family: 微软雅黑;font-size: 20px;font-weight: bold;}
+ .R_T{float:right;width:220px}
+ .R_T ul{list-style:none;outside:none;width:100%;margin-right:-10px;}
+ .R_T_image1{overflow:hidden;float:left; width:15px;height:18px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -180px;}
+ .R_T_name1{width:80px;margin-left:19px;margin-top:2px;}
+ .R_T_name1 a{font-size:12px;color:#0088CC;}
+ .R_T_image2{overflow:hidden;float:left; width:15px;height:18px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-41px -180px;}
+ .R_T_name2{width:80px;margin-left:19px;margin-top:2px;position:absolute;}
+ .R_T_name2 a{font-size:12px;color:#0088CC;position:relative;left:0px;top:0px;}
+ #searchinput2{
+    float:left;
+    font-size:12px;
+    margin:0px;
+    width:190px;
+    margin-left:-10px;
+    background: url({{asset('bundles/fafatimewebase/images/icon.png')}}) no-repeat scroll -2px -29px transparent;
+    height: 14px;
+  }
+ .letter{font-size:12px;color:#0088CC;margin-left:10px;float:left;font-family: 微软雅黑;}
+ #typename {width:100%;border-bottom:#0088CC solid 1px;height:37px;font-family: 微软雅黑;cursor:pointer}
+ #typename a{font-size:14px;font-weight:700;margin:0px;padding-left:0px;padding-right:0px}
+ #typename li{width:105px;text-align:center;}
+ #nav_pre {width:30px;border-bottom:#0088CC solid 1px;height:37px;}
+ #nav_pre a{display:none}
+ #nav_next{width:30px;border-bottom:#0088CC solid 1px;height:37px;padding-bottom:-5px;}
+ #nav_next a{display:none;}
+ .count{color:#CCC;;cursor:pointer}
+ .add_Addr{z-index:999;border:1px solid #CCC;padding:6px 4px 6px 4px;position:absolute;height:280px;width:250px;background-color:#D5EAF0;left:850px;top:80px;border-radius:4px 4px 4px 4px;box-shadow:#CCC 3px 3px 6px;}
+ .add_Addr input{width:150px;height:15px;}
+ .add_Addr td{text-align:right;}
+ .add_Addr select{width:110px;height:27px;}
+ .adrlist_active a{background-color:#fff}
+ .add_addr_type{z-index:1000;border:1px solid #CCC;padding:6px 4px 4px 4px;position:absolute;height:100px;width:250px;background-color:#D5EAF0;left:900px;top:120px;border-radius:4px 4px 4px 4px;box-shadow:#CCC 3px 3px 6px;}
+ .add_addr_type input{width:150px;height:15px;}
+ .edit_Addr{z-index:999;border:1px solid #CCC;padding:6px 4px 6px 4px;position:absolute;height:240px;width:250px;background-color:#D5EAF0;border-radius:4px 4px 4px 4px;box-shadow:#CCC 3px 3px 6px;}
+ .edit_Addr input{width:150px;height:15px;}
+ .edit_Addr td{text-align:right;}
+ .intro_excel{z-index:999;border:1px solid #CCC;padding:6px 4px 6px 4px;position:absolute;height:100px;width:250px;background-color:#EEC;left:900px;top:80px;}
+ .intro_input{width:100px;float:left;margin-left:10px;z-index:999}
+ .leader{list-style:none outside none;}
+ .leader li{float:left;}
+ .leader a{color:#0088CC;}
+ .drop_icon{width:12px;height:12px;float:right;margin-top:2px;margin-right:4px;*margin-top:6px;}
+ .drop_list{margin:0;width:103px;position:absolute;list-style:none outside none;border-left:1px solid #CCC;border-right:1px solid #CCC;border-bottom:1px solid #CCC;}
+ .drop_list li{border-top:1px solid #CCC;padding-left:5px;background-color:#D5EAF0;height:25px;padding-top:5px;cursor:pointer;}
+ .drop_list li:hover{color:red;}
+ .changeName{position:fixed;left:50%;top:30%;z-index:1000;border:1px solid #CCC;padding:6px 4px 4px 4px;height:100px;width:250px;background-color:#D5EAF0;border-radius:4px 4px 4px 4px;box-shadow:#CCC 3px 3px 6px;}
+ .changeName input{width:150px;height:15px;}
+ .card_title{font-size:15px;color:#0088CC;font-weight:700;}
+ input[type="button"]{border-radius:2px 2px 2px;border:1px solid #CCC;width:45px;height:20px;}
+ input[type="button"]:hover{background-color:#0088CC;}
+</style>
+{% endblock %}
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/addrlist.js') }}"></script>
+<script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/faapishare.js')}}"></script>
+{% endblock %}
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}
+
+{% block main_content_center%}
+<div style="width:100%;">
+	<div style="width:100%;">
+		<div class="L_T">
+			<div class="L_T_image"></div>
+			<div class="L_T_name">我的通讯录</div>
+	  </div>
+			<div class="R_T">
+				<ul>
+					<li style="list-style:none;outside:none;margin-left:0px;width:220px">
+						<div style="float:left;width:110px;">
+							<div class="R_T_image1"></div>
+							<div class="R_T_name1"><a href="javascript:;" onclick="$('.add_Addr').css('display','block');">新增通讯录</a></div>
+							</div>
+							<div style="float:left;width:110px;">
+								<div class="R_T_image2" style="display:none"></div>
+								<div class="R_T_name2" style="display:none"><a href="javascript:;" onclick="$('.intro_excel').show()">导入通讯录</a>
+							</div>
+						</li>
+						<li class="topsearch" style="margin-left:-13px;width:220px;">		
+							<input id="searchinput2" class="addr_searchinput"  type="text" placeholder="输入姓名、拼音、手机号查找" value=""/>					
+							<div class="addr_search topsearch_button" style="top:2px;left: 170px;*left: -22px;width: 22px;" onclick="addr_search()"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div style="clear:both;width:0;height:0;"></div><br/>
+			<div style="height:38px;width:750px;">
+				<!--向左-->
+			<ul class="nav nav-tabs" style="float:left">
+				<li id="nav_pre">
+				   <a href="javascript:void(0);" onclick="bar_move.R_move()"><</a>
+				</li>
+			</ul>
+			<!--分类-->
+			<div style="height:38px;overflow:hidden;width:690px;float:left">
+			  <ul class="nav nav-tabs" id="typename">
+				{% set i=0 %}
+				{% for item in my_addrlist_type %}
+				{% set i=i+1%}
+				{% if i==1 %}
+				<li class="adrlist_active" typename="{{item['typename']}}" id="{{item['typeid']}}" onmouseout="visibilit(event,this,false)" onmouseover="visibilit(event,this,true)">
+					{% else%}
+					<li typename="{{item['typename']}}" id="{{item['typeid']}}" onmouseout="visibilit(event,this,false)" onmouseover="visibilit(event,this,true)">
+						{%endif%}
+						<a href="javascript:void(0);"><span class='typename' style='*float:left;*margin-left:2px;cursor:pointer'>{{item['typename']}}</span><span style='*float:left;' class="count">({{item['count']}})</span><img class='drop_icon' style='visibility:hidden;' onmouseover='drop_icon_over(event,this)' onmouseout='drop_icon_out(event,this)' src="{{asset('bundles/fafatimewebase/images/drop_icon.png')}}"/></a><input type="hidden" value="{{item['typeid']}}"/>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<!--向右-->
+			<ul class="nav nav-tabs" style="float:left;">
+				<li id="nav_next">
+				   <a href="javascript:void(0);" onclick="bar_move.L_move()">></a>
+				</li>
+			</ul>				
+			</div>
+        <div style="width:100%;height: 20px;">
+  	<ul class='leader' style="list-style:none outside none;"><li class="letter" style='color:red'>全部</li><li class="letter">A</li><li class="letter">B</li>
+  	 <li class="letter">C</li><li class="letter">D</li><li class="letter">E</li><li class="letter">F</li><li class="letter">G</li><li class="letter">H</li>
+  	 <li class="letter">I</li><li class="letter">J</li><li class="letter">K</li><li class="letter">L</li><li class="letter">M</li><li class="letter">N</li><li class="letter">O</li><li class="letter">P</li>
+  	 <li class="letter">Q</li><li class="letter">R</li><li class="letter">S</li><li class="letter">T</li><li class="letter">U</li><li class="letter">V</li><li class="letter">W</li>
+  	 <li class="letter">X</li><li class="letter">Y</li><li class="letter">Z</li></ul>
+  </div>
+  <br/>
+				<div class="contenter" id="contenter" isloading='false' style="width:740px;min-height:478px;">
+				  
+					<div class="addr_con" id="addr_con_1">
+					{% render "JustsyBaseBundle:AddrList:view" with {'type':my_addrlist_type[0]['typeid'],'pageindex':'1'} %}
+				  </div>
+				</div>
+			</div>
+			<input type="hidden" id="referer" value="{{path('JustsyBaseBundle_addrlist_view')}}?type={{my_addrlist_type[0]['typeid']}}&pageindex=1"/>
+			<div class="add_Addr" style="display:none">
+				<form id="addr_Form">
+					<div class='card_title' style="width:100%;text-align:center" align="center"><span>添加通讯录</span></div>
+						<table>
+							<tr><td>姓名:</td><td><input name="addr_name" maxlength=4 type="text"/></td></tr>
+							<tr><td>单位/部门:</td><td><input name="addr_unit" maxlength=32 type="text"/></td></tr>
+								<tr><td>电话:</td><td><input name="addr_phone" maxlength=20 type="text"/></td></tr>
+								<tr><td>手机:</td><td><input name="addr_mobile" maxlength=11 type="text"/></td></tr>
+								<tr><td>邮箱:</td><td><input name="addr_mail" maxlength=32 type="text"/></td></tr>
+							<tr><td>所属分类:</td><td><select name="typeid">
+								{% for item in my_addrlist_type%}
+								{% if item['typeid']!='M002' and item['typeid']!='M001' %}
+								<option value="{{item['typeid']}}">{{item['typename']}}</option>
+								{%endif%}
+								{% endfor%}
+							</select>
+						<a href="javascript:;" onclick="$('.add_addr_type').show();" style="text-decoration:underline;color:#0088CC;">增加分类</a></td></tr>
+						</table>
+						<div style="width:100%"><image id="add_load" style="float:left;margin-left:5px;width:25px;height:25px;display:none;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}"/><span id="error" style="font-size:12px;color:red;"></span><input onclick="closeAdd()" style="line-height:16px;float:right;margin-right:22px;" type="button" value="取消" /><input onclick="submitAdd()" style="float:right;line-height:16px;margin-right:12px;" type="button" value="保存"/></div>
+						</form>
+					</div>
+					<div class="add_addr_type" style="display:none;">
+						<form id="addr_type_form">
+							<div class='card_title' style="width:100%;text-align:center" align="center"><span>添加类型</span></div>
+							<div>&nbsp;&nbsp;&nbsp;类型名:<input type="text" maxlength=4 name="typename" /></div>
+							<div style="width:100%"><image id="add_type_load" style="float:left;margin-left:5px;width:25px;height:25px;display:none;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}"/><span class="error_type" style="font-size:12px;color:red;"></span><input onclick="closeAddType()" style="line-height:16px;float:right;margin-right:26px;" type="button" value="取消" /><input onclick="submitAddType()" style="float:right;line-height:16px;margin-right:12px;" type="button" value="保存"/></div>
+				    </form>
+		     </div>
+		     <div class="changeName" style="display:none;">
+						<form id="change_name_form">
+							<input type='hidden' value='' name='typeid' />
+							<div class='card_title' style="width:100%;text-align:center" align="center"><span><span class='typename' style='color:black;'></span>更改名称</span></div>
+							<div>&nbsp;&nbsp;&nbsp;新名称:<input type="text" maxlength=4 name="typename" /></div>
+							<div style="width:100%"><image id="change_name_load" style="float:left;margin-left:5px;width:25px;height:25px;display:none;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}"/><span class="error_type" style="font-size:12px;color:red;"></span><input onclick="closeChangeName()" style="line-height:16px;float:right;margin-right:26px;" type="button" value="取消" /><input onclick="submitChangeName()" style="float:right;line-height:16px;margin-right:12px;" type="button" value="保存"/></div>
+				    </form>
+		     </div>
+		<div class="edit_Addr" style="display:none">
+				<form id="edit_Form">
+					<input type="hidden" name="id" value=""/>
+					<div class='card_title' style="width:100%;text-align:center" align="center"><span>编辑通讯录</span></div>
+						<table>
+							<tr><td>姓名:</td><td><input name="addr_name" maxlength=4 type="text"/></td></tr>
+							<tr><td>单位/部门:</td><td><input name="addr_unit" maxlength=32 type="text"/></td></tr>
+								<tr><td>电话:</td><td><input name="addr_phone" maxlength=20 type="text"/></td></tr>
+								<tr><td>手机:</td><td><input name="addr_mobile" maxlength=11 type="text"/></td></tr>
+								<tr><td>邮箱:</td><td><input name="addr_mail" maxlength=32 type="text"/></td></tr>
+						</table>
+						<div style="width:100%"><image id="edit_load" style="float:left;margin-left:5px;width:25px;height:25px;display:none;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}"/><span id="edit_error" style="font-size:12px;color:red;"></span><input onclick="closeEdit()" style="line-height:16px;float:right;margin-right:22px;" type="button" value="取消" /><input onclick="submitEdit()" style="float:right;line-height:16px;margin-right:12px;" type="button" value="保存"/></div>
+						</form>
+					</div>
+		<div class="intro_excel" style="display:none">
+			<form id="intro_Form">
+				<div class='card_title' style="width:100%;text-align:center" align="center"><span style="font-size:15px;">导入通讯录</span></div>
+				<ul style="width:100%;list-style:none;outside:none;"><li><input style="z-index:999;height:16px;" class="intro_input" type="text" value="" /></li>
+					<li style="float:left;margin-left;8px;margin-top:-2px;"> 
+						      <div style="position:relative;background-color:#4D9CD4;cursor:pointer;text-align:center;width:60px;height:25px;padding-top:3px;"><font style="font-size:12px;font-weight:700;color:#FFFFFF">打开文件</font></div>
+									<input class="file_input" onchange="$('.intro_input').val($(this).val());" name="excel" type="file" size="14" style="opacity:0;cursor:pointer;font-size:13px;margin-top:-50px;margin-left:-115px;position:relative;height:32px;left:0px;top:0px;z-index:0"/>
+				  </li>
+				  <li>
+					<img style="width:16px;height:16px;margin-left:3px;margin-top:10px;" src="{{asset('bundles/fafatimewebase/images/icon_tips.png')}}" /></li></ul>
+				<div style="width:100%;clear:both;"><image id="intro_load" style="float:left;margin-left:5px;width:25px;height:25px;display:none;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}"/><span id="intro_error" style="font-size:12px;color:red;"></span><input onclick="closeIntro()" style="line-height:16px;float:right;background:0;margin-right:22px;" type="button" value="取消" /><input onclick="submitIntro()" style="float:right;line-height:16px;margin-right:12px;" type="button" value="确定"/></div>
+			</form>
+	  </div> 
+						<div style="clear:both;"></div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	var addr_view_url="{{path('JustsyBaseBundle_addrlist_view')}}";
+	var addr_search_url="{{path('JustsyBaseBundle_addrlist_searchinfo')}}";
+	var addr_addtype_url='{{path("JustsyBaseBundle_addrlist_addtype")}}';
+	var drop_icon_url="{{asset('bundles/fafatimewebase/images/drop_icon.png')}}";
+	var addr_edit_url="{{path('JustsyBaseBundle_addrlist_edit')}}";
+	var addr_intro_url='{{path("JustsyBaseBundle_addrlist_intro")}}';
+	var addr_deltype_url="{{path('JustsyBaseBundle_addrlist_type_delete')}}";
+	var change_name_url="{{path('JustsyBaseBundle_addrlist_type_change_name')}}";
+</script>
+{% endblock %}

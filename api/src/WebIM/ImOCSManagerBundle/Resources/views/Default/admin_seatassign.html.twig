@@ -1,0 +1,222 @@
+{% extends 'WebIMImOCSManagerBundle::master.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafawebimimocsmanager/css/message.css') }}" />
+{% endblock %}
+{% block main_content %}
+  <div id="main_detail">
+  <div id="main_detail_bg">
+    <div id="main_content">
+      <div id="main_feedback_title" style="height:1px"><b><font size=5></font></b></div>
+      <div id="main_feedback_detail">
+        <div ID="panList" class="main_feedback_list">                
+            <DIV class=main_feedback_list_title>客服人员&nbsp;&nbsp;&nbsp;{{cnt_service|raw}}</DIV>
+            <DIV class="main_feedback_list_detail fafaocscontent">
+               <ul id="serviceList">{{serviceList|raw}}</ul>
+            </DIV>
+            <div class="clearBoth" style="height:12px"></div>
+            <DIV class=main_feedback_list_title>销售人员&nbsp;&nbsp;&nbsp;{{cnt_sale|raw}}</DIV>
+            <DIV class="main_feedback_list_detail fafaocscontent">
+               <ul id="saleList">{{saleList|raw}}</ul>
+            </DIV>
+            <div class="clearBoth" style="height:12px"></div>
+            <DIV class=main_feedback_list_title>前台人员&nbsp;&nbsp;&nbsp;{{cnt_front|raw}}</DIV>
+            <DIV class="main_feedback_list_detail fafaocscontent">
+                <ul id="frontList">{{frontList|raw}}</ul>
+            </DIV>                        
+        </div>
+        <div class="clearBoth"></div>
+      </div>
+      <div id="main_feedback_footer"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>    
+    var submiting = 0;
+    function addEmp(p)
+    {
+        var targetEle = document.getElementById(p);
+        var li=document.createElement("li");
+        li.id="newEmp";
+        targetEle.appendChild(li);
+        li.innerHTML="<div style=\"float:left\">请输入昵称：<input maxlength=10 value='' style='line-height:25px;height:25px;width:150px'><span id='hint' style='color:red'></span></div>";
+        li.children[0].children[0].focus();
+        li.children[0].children[0].onkeypress=function(E)
+        {
+        	   if((E||window.event).keyCode==13)
+        	   {
+        	   	   saveinfo(this,p);
+        	   }
+        }
+        li.children[0].children[0].onblur=function(E)
+        {
+            saveinfo(this,p);
+        }
+    }
+    function changerelation(empid)
+    {
+        var tar=$("#"+empid)[0].children[1].children[2];
+        tar.setAttribute("old",tar.innerHTML);
+        tar.setAttribute("old-account",tar.children[0].innerHTML);
+        p = empid.split("-")[1];
+        tar.innerHTML="<input maxlength=32 value='' style='line-height:25px;height:25px;width:100px'><span id='hint' style='color:red'></span>";
+        tar.children[0].focus();
+        tar.children[0].onkeypress=function(E)
+        {
+        	   if((E||window.event).keyCode==13)
+        	   {
+        	   	   changeAccount(empid,this,p);
+        	   }
+        }
+        tar.children[0].onblur=function(E)
+        {
+            changeAccount(empid,this,p);
+        }
+    }    
+    function changeAccount(empid,t,p)
+    {
+        	  var nameValue = $.trim(t.value);
+        	  if(nameValue==t.parentElement.getAttribute("old-account"))	
+            {
+            	  t.onblur = t.onkeypress=null;
+            	  t.parentElement.innerHTML = t.parentElement.getAttribute("old");
+                return;
+            }
+            setControlValue("hint","<img src='{{ asset('bundles/fafawebimimocsmanager/images/loading.gif') }}'>");
+            $.ajax({
+                 type: "get",
+                 url: "{{path('WebIMImOCSManagerBundle_saveAccount') }}",
+                 data: "empid="+empid+"&account="+nameValue,
+                 success: function(msg){
+                 	    var data=eval(msg);
+                 	    if(!data.succeed)
+                 	    {
+                 	        setControlValue("hint","错误："+data.msg);
+                 	        t.focus();
+                 	    }
+                 	    else{
+                 	        window.location.reload(true);
+                 	    }
+                 }   //操作成功后的操作！msg是后台传过来的值
+            });      	
+    }    
+    function relation(empid)
+    {
+        var tar=$("#"+empid)[0].children[1].children[2];
+        tar.setAttribute("old",tar.innerHTML);
+        p = empid.split("-")[1];
+        tar.innerHTML="<input maxlength=32 value='' style='line-height:25px;height:25px;width:100px'><span id='hint' style='color:red'></span>";
+        tar.children[0].focus();
+        tar.children[0].onkeypress=function(E)
+        {
+        	   if((E||window.event).keyCode==13)
+        	   {
+        	   	   saveAccount(empid,this,p);
+        	   }
+        }
+        tar.children[0].onblur=function(E)
+        {
+            saveAccount(empid,this,p);
+        }
+    }
+    function saveAccount(empid,t,p)
+    {
+        	  var nameValue = $.trim(t.value);
+        	  if(nameValue=="")	
+            {
+            	  t.onblur = t.onkeypress=null;
+            	  t.parentElement.innerHTML = t.parentElement.getAttribute("old");
+                return;
+            }
+            setControlValue("hint","<img src='{{ asset('bundles/fafawebimimocsmanager/images/loading.gif') }}'>");
+            $.ajax({
+                 type: "get",
+                 url: "{{path('WebIMImOCSManagerBundle_saveAccount') }}",
+                 data: "empid="+empid+"&account="+nameValue,
+                 success: function(msg){
+                 	    var data=eval(msg);
+                 	    if(!data.succeed)
+                 	    {
+                 	        setControlValue("hint","错误："+data.msg);
+                 	        t.focus();
+                 	    }
+                 	    else{
+                 	        window.location.reload(true);
+                 	    }
+                 }   //操作成功后的操作！msg是后台传过来的值
+            });      	
+    }    
+    function editname(empid)
+    {
+        var tar=$("#"+empid)[0];
+        p = empid.split("-")[1];
+        tar.innerHTML="<input maxlength=10 value='' style='line-height:25px;height:25px;width:100px'><span id='hint' style='color:red'></span>";
+        tar.children[0].focus();
+        tar.children[0].onkeypress=function(E)
+        {
+        	   if((E||window.event).keyCode==13)
+        	   {
+        	   	   saveedit(empid,this,p);
+        	   }
+        }
+        tar.children[0].onblur=function(E)
+        {
+            saveedit(empid,this,p);
+        }        
+    }
+    function saveedit(empid,t,p)
+    {
+        	  var nameValue = $.trim(t.value);
+            if(nameValue=="")	
+            {
+            	  t.onblur = t.onkeypress=null;
+            	  t.parentElement.innerHTML = t.parentElement.getAttribute("old");
+                return;
+            }
+            setControlValue("hint","<img src='{{ asset('bundles/fafawebimimocsmanager/images/loading.gif') }}'>");
+            $.ajax({
+                 type: "get",
+                 url: "{{path('WebIMImOCSManagerBundle_save') }}",
+                 data: "empid="+empid+"&eno={{eno}}&name="+nameValue+"&etype="+p.replace("List",""),
+                 success: function(msg){
+                 	    var data=eval(msg);
+                 	    if(!data.succeed)
+                 	    {
+                 	        setControlValue("hint","错误："+data.msg);
+                 	        t.focus();
+                 	    }
+                 	    else{
+                 	        window.location.reload(true);
+                 	    }
+                 }   //操作成功后的操作！msg是后台传过来的值
+            });      	
+    }
+    function saveinfo(t,p)
+    {
+        	  var nameValue = $.trim(t.value);
+            if(nameValue=="")	
+            {
+            	  $("#newEmp").remove();
+                return;
+            }
+            setControlValue("hint","<img src='{{ asset('bundles/fafawebimimocsmanager/images/loading.gif') }}'>");
+            $.ajax({
+                 type: "get",
+                 url: "{{path('WebIMImOCSManagerBundle_save') }}",
+                 data: "eno={{eno}}&name="+nameValue+"&etype="+p.replace("List",""),
+                 success: function(msg){
+                 	    var data=eval(msg);
+                 	    if(!data.succeed)
+                 	    {
+                 	        setControlValue("hint","错误："+data.msg);
+                 	        t.focus();
+                 	    }
+                 	    else{
+                 	        window.location.reload(true);
+                 	    }
+                 }   //操作成功后的操作！msg是后台传过来的值
+            });     	
+    }
+</script>
+{% endblock %}

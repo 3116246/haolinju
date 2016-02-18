@@ -1,0 +1,26 @@
+<div id="component_matchlist_attribute_list" style="cursor:default;color:rgb(153, 153, 153);float:left;margin:10px 0 20px 0px;">
+   <div class="component_editor_content_iconrow" style="margin-left:0px;">
+       <span style="float:left;width:110px;display:block;">界面标题：</span>
+       <input type="text" id="matchlist_title" maxlength="20" style="width:310px;">
+    </div>	 
+   <div class="component_editor_content_iconrow" style="margin-left:0px;">
+       <span style="float:left;width:110px;display:block;">数据获取接口地址：</span>
+       <input type="text" id="matchlist_url" maxlength="200" style="width:310px;">
+    </div>
+    <div class="component_editor_content_iconrow" style="margin-left:0px;">
+       <span style="float:left;width:110px;display:block;">参数名称：</span>
+       <input type="text" id="matchlist_para_code" maxlength="200" style="width:310px;">
+    </div>
+    <span onclick="component_matchlist.customize()" style="float:left;margin-left:110px;color:#0077cc;cursor:pointer;">详细页面定制</span>
+
+	 <div class="clearfix"></div>
+</div>
+
+<script type="text/javascript">
+	 //绑定已有数据
+	 function BundleAttr(attr){
+	 	 $("#matchlist_title").val(attr.title);
+	 	 $("#matchlist_url").val(attr.url);
+	 	 $("#matchlist_para_code").val(attr.para_code);
+	 }
+</script>

@@ -1,0 +1,6 @@
+<div class="menuother">标签</div>
+<ul class="left-menu">
+  {% for row in this.labels["rows"] %}
+  <li><a href="?collect_type=02&label_name={{ row["label_name"] }}" ><i class="menu-allinfo"></i>{{ row["label_name"] }}</a></li>
+  {% endfor %}
+</ul>

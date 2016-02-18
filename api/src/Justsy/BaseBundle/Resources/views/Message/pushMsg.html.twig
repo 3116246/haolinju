@@ -1,0 +1,161 @@
+<table style="width:100%;">
+  <tr>
+    <td style="width:50px;">收件人：</td>
+    <td>
+      <div class="lib_notify ask_div1" style="cursor: text; padding-top: 2px; padding-bottom: 1px;" onclick="$(this).children('#txtNotify').focus()">
+        <div id="InputNotifyArea"></div>
+        <input id="txtNotify" type="text" class="ask_input" style="width: 120px; margin: 0px; padding: 0px; vertical-align: top;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>　主题：</td>
+    <td><div class="message-from"><input type="text" name="title" class="messageinput" id="title"></div></td>
+  </tr>
+  <tr>
+    <td>　正文：</td>
+    <td><div class="message-from"><textarea rows="6" cols="" class="messagetextarea" id="Msg" style="border:1px solid #CCCCCC;" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)' ></textarea></div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <div class="lib_attachs ask_div1" style="padding-top: 4px; padding-bottom: 4px; display:none">    
+        <div id="filesList">
+        </div>
+      </div> 
+      <div class="lib_other">
+        {#
+        <ul>     
+          <li id="li_picmenu" class="dropdown" style="width: 80px;">
+            <a class="dropdown-toggle" id="drop_picmenu" role="button" data-toggle="dropdown" href="#"><i class="lib-two"></i>图片/文件</a>
+            <ul id="menuPic" class="dropdown-menu picmenu" role="menu" aria-labelledby="drop_picmenu">
+              <li>
+               <a tabindex="-1">
+                  <form id="upload_file" name="upload_file"  method="post" action="{{ path('JustsyBaseBundle_basic_save')}}" enctype="multipart/form-data">
+                  <span id="upload_file_sel" style="cursor:pointer;display: inline-block;position: relative;width: 154px;">
+                  <input tabindex="-1" name="filedata" onchange="fileSelect('{{ path('JustsyBaseBundle_documnet_upload',{'network_domain':curr_network_domain})}}')" id="filedata" size="0" style="margin-left: -72px; cursor: pointer;left: 0;filter:alpha(opacity = 0);opacity:0;-moz-opacity:0;position: absolute;top: 0;z-index: 1000002;" multiple="" type="file">
+                  上传一个文件
+                  </span>
+                  <span id="upload_file_ing" style="display:none;position: relative;width: 154px;"><img width=16 height=16 src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}">文件上传中...</span>
+                  </form>
+               </a>
+              </li>
+              <li class="picmenuspliter"><a tabindex="-1" href="#" class="picmenuspliter_a"></a></li>
+              <li><a tabindex="-1" data-toggle="modal" show=false href="#openfiledigl" >选择一个已有文件</a></li>
+            </ul>
+          </li>
+        </ul>
+        #}
+        <span class="btnPublish"><input id="btnPublish" name="btnPublish" type="button" class="libenter" value="发  布" onclick="Message.publishMsg('{{ path('JustsyBaseBundle_message_publishMsg') }}')" disabled></span>
+      </div>    
+    </td>
+  </tr>
+</table>
+<div class="modal" id="openfiledigl" style="display:none;width:850px;margin-left: -425px;" show=false>
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal">×</a>    
+  	<h5>选择一个文档</h5>  
+  </div>
+  <div id="files" class="modal-body">    
+  	
+  </div>  
+  <div class="modal-footer">    
+  	<a href="javascript:insertFileID();" class="btn btn-primary" style="color:white;">添加附件</a>  
+  	<A class=btn href="#" data-dismiss="modal" >关闭</A>   
+  </div>	
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#openfiledigl').on('shown', {Aurl: "{{ path('JustsyBaseBundle_documnet_select',{'network_domain':curr_network_domain}) }}"}, openfiledigl_OnShown);
+
+  //通知人员，当前圈子的人数小于100时，会在初始化时取出全部的人员，或者只取出满足条件的人员
+  window.txtNotify_source_all = {{ this.staffs|raw }};
+  window.txtNotify_source_100 = [];
+  window.txtNotify_source_url = "{{ path("JustsyBaseBundle_component_cinputarea_querycirclestaff100") }}";
+  for (var i=0; i<txtNotify_source_all.length; i++)
+  {
+    txtNotify_source_all[i].index = i; 
+    txtNotify_source_all[i].toString = function(){return this.index;};
+  }
+  $("#txtNotify").typeahead({
+    source : txtNotify_source,
+    highlighter : txtNotify_highlighter, 
+    matcher : txtNotify_matcher,
+    sorter : txtNotify_sorter,
+    updater : txtNotify_updater
+  });  
+  $("#txtNotify").bind("keyup", txtNotify_OnKeyUp);
+});
+</script>
+
+
+
+{#
+<div class="publish">
+  <div class="lib_Menubox lib_tabborder">      
+    <ul>
+      <li id="one1" onClick="setInputTab(this)" publish_event="publishMsg" publish_event_param="{{ path('JustsyBaseBundle_message_publishMsg') }}"><span>信息</span></li>
+    </ul>
+  </div>
+  <div class="lib_Contentbox lib_tabborder">
+  	<input type="text" name="title" id="title" placeholder="标题！" style="width:98%"/>
+    <div id="con_one1" class="input_con_area text_div" style="margin-bottom: 8px;">
+      <textarea id="Msg" cols="" rows="15" class="text_input" placeholder="留言！" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)' style="overflow-y:visiable">
+      </textarea>
+      <div style="border:0px 1px 1px 1px solid gray">
+      {% if row!='' %}
+      <div style="width:100%">
+      <span style="float:left;width:100%">-------原始信息-------</span>
+      <div style="width:100%;backgroud-color:#ccc">
+      <p>发件人：<a href="javascript:void();" class="employee_name" style="color:#1a65a5;cursor:pointer;" login_account="{{row['sender']}}">{{row['nick_name']}}</a></p>
+      <p>主&nbsp;&nbsp;&nbsp;题：{{row['title']}}</p>
+      <p>时&nbsp;&nbsp;&nbsp;间：{{row['send_date']}}</p>
+      </div>
+      <div>{{row['content']|raw}}</div>
+      </div>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="lib_notify ask_div1" style="padding-top: 4px;">
+    <div id="InputNotifyArea"></div>
+    <input id="txtNotify" type="text" class="ask_input" style="width: 120px;" placeholder="
+    {% if row!='' %}
+    {{row['sender']}}
+    {% else %}
+    + 你想给谁发信息?
+    {% endif %}
+    ">
+  </div>
+  <div class="lib_attachs ask_div1" style="padding-top: 4px; padding-bottom: 4px; display:none">    
+    <div id="filesList">
+    </div>
+  </div> 
+  <div class="lib_other">
+    <ul>     
+      <li id="li_picmenu" class="dropdown" style="width: 80px;">
+        <a class="dropdown-toggle" id="drop_picmenu" role="button" data-toggle="dropdown" href="#"><i class="lib-two"></i>图片/文件</a>
+        <ul id="menuPic" class="dropdown-menu picmenu" role="menu" aria-labelledby="drop_picmenu">
+          <li>
+           <a tabindex="-1">
+              <form id="upload_file" name="upload_file"  method="post" action="{{ path('JustsyBaseBundle_basic_save')}}" enctype="multipart/form-data">
+              <span id="upload_file_sel" style="cursor:pointer;display: inline-block;position: relative;width: 154px;">
+              <input tabindex="-1" name="filedata" onchange="fileSelect('{{ path('JustsyBaseBundle_documnet_upload',{'network_domain':curr_network_domain})}}')" id="filedata" size="0" style="margin-left: -72px; cursor: pointer;left: 0;filter:alpha(opacity = 0);opacity:0;-moz-opacity:0;position: absolute;top: 0;z-index: 1000002;" multiple="" type="file">
+              上传一个文件
+              </span>
+              <span id="upload_file_ing" style="display:none;position: relative;width: 154px;"><img width=16 height=16 src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}">文件上传中...</span>
+              </form>
+           </a>
+           <!--<a tabindex="-1" href="#" onclick="alert(1)">上传一个文件</a>-->
+          </li>
+          <li class="picmenuspliter"><a tabindex="-1" href="#" class="picmenuspliter_a"></a></li>
+          <li><a tabindex="-1" data-toggle="modal" show=false href="#openfiledigl" >选择一个已有文件</a></li>
+        </ul>
+      </li>
+         <!--<li><a href="#"><i class="lib-three"></i>主题</a></li>   -->
+    </ul>
+    <span class="btnPublish"><input id="btnPublish" name="btnPublish" type="button" class="libenter" value="发  布" onclick="publishInput()" disabled></span>
+    
+  </div>
+  </div>
+#}

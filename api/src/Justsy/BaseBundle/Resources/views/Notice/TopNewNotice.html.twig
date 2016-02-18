@@ -1,0 +1,13 @@
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">最新公告</span>
+    <span class="titlemore"><a href="{{ path('JustsyBaseBundle_notice', {'network_domain' : curr_network_domain}) }}" title="查看更多公告"><div class="more-img"></div></a></span>
+  </div>
+  <div class="rightbox-context">
+    {% if ds["we_bulletin"]["recordcount"] == 0 %}
+    <div class="TopNewNotice-text">　　欢迎大家使用Wefafa，一个真实身份的企业之间进行内外协同工作的企业协作网络。为体验更多更强大的功能，请下载Wefafa客户端。</div>
+    {% else %}
+    <div class="TopNewNotice-text">{{ ds["we_bulletin"]["rows"][0]["bulletin_desc"]|raw }}</div>
+    {% endif  %}
+  </div>
+</div>

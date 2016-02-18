@@ -1,0 +1,90 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_relation.html.twig' with {'network_domain' : curr_network_domain} %}
+{% endblock %}
+
+{% block main_content_center%}
+<div>
+<div style='*padding-bottom:0px;' class="memberbox"><span id="membertotalcount"><h4 class="bigtitletext">圈子成员：<span style="color:#999">0人</span></h4></span>
+	<span class='searcharea' style='right:120px;*position:inherit;*height:15px;*width:150px;*float:right;*right:140px;' searchtext=''><input type='text' placeholder='帐号/姓名'/><div style='cursor:pointer;*top:-30px;*left:10px;' class='searchicon'></div></span>
+	{%if(rostreinvite)%}
+		<span onclick="void($('.icon_invite').trigger('click'));" style='*right:-130px;' title='邀请同事好友加入圈子' class='inviteother'><font>邀&nbsp;&nbsp;请</font></span>
+	{%endif%}
+</div>
+<div class="membernavigator">
+	<div class='navigator_1'><span class='orderby' style="color:#50abdc;" orderby='date'>按时间排序</span><span class='dropicon'></span>
+	<ul style='display:none;' class='orderlist'><li select='1' orderby='date'><span onclick="$(this).parent().attr('select','1');$(this).parent().siblings().attr('select','0');getMemeberPage(0);$('span.orderby').text($(this).text());">按时间排序</span></li><li orderby='name'><span onclick="$(this).parent().attr('select','1');$(this).parent().siblings().attr('select','0');getMemeberPage(0);$('span.orderby').text($(this).text());">按姓名排序</span></li></ul>
+	</div>
+</div>
+<div id="memebermain" class="memberlist">
+{% render 'JustsyBaseBundle:Member:memberMain' with {"network_domain":curr_network_domain}%}
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	function getMemeberPage(pageno)
+	{
+		$("#memebermain").html(null);
+	  LoadComponent("memebermain", "{{ path('JustsyBaseBundle_member_main',{'network_domain':curr_network_domain})}}?order="+$("ul.orderlist li[select='1']").attr('orderby')+"&searchby="+$("span.searcharea").attr('searchtext')+"&pageno="+pageno);
+  }
+  
+  function changeGroup(network_domain,groupname,groupid,_url)
+  {
+  	  $('.title').text(groupname);
+  	  LoadComponent('memebermain',_url);
+  	  if(groupid==null)
+  	    $(".invitebutton").attr("href","{{path('JustsyBaseBundle_invitation_staff')}}?network_domain="+network_domain);
+  	  else
+  	  	$(".invitebutton").attr("href","{{path('JustsyBaseBundle_invitation_staff')}}?groupid="+groupid);
+  }
+  $(document).ready(function() {
+	    $(".left-menu .active").attr("class","");
+      $(".left-menu li[id='left_circle_member']").attr("class","active");
+      //排序列表
+		  $(".dropicon").bind('mouseover',function(event){
+		  	if(checkHover(event,this)){
+		  		if(typeof(orderlist_timer)!='undefined'){
+		  			clearTimeout(orderlist_timer);
+		  		}
+		  		orderlist_timer=setTimeout(function(){$("ul.orderlist").slideDown(200);},500);
+		  	}
+		  });
+		  $(".dropicon").bind('mouseout',function(event){
+		  	if(checkHover(event,this)){
+		  		if(typeof(orderlist_timer)!='undefined'){
+		  			clearTimeout(orderlist_timer);
+		  		}
+		  		orderlist_timer=setTimeout(function(){$("ul.orderlist").slideUp(200);},500);
+		  	}
+		  });
+		  $("ul.orderlist").bind('mouseover',function(event){
+		  	if(checkHover(event,this)){
+		  		if(typeof(orderlist_timer)!='undefined'){
+		  			clearTimeout(orderlist_timer);
+		  		}
+		  	}
+		  });
+		  $("ul.orderlist").bind('mouseout',function(event){
+		  	if(checkHover(event,this)){
+		  		orderlist_timer=setTimeout(function(){$("ul.orderlist").slideUp(200);},500);
+		  	}
+		  });
+		  $(".searchicon").bind('click',function(){
+		  	$(this).parent().attr('searchtext',$(this).siblings('input').val());
+		  	getMemeberPage(0);
+		  });
+		  $(".searcharea").find("input").bind('keyup',function(event){
+		  	var ev=event||window.event;
+		  	if(ev.keyCode==13){
+		  		$(this).parent().attr('searchtext',$(this).val());
+		  		getMemeberPage(0);
+		  	}
+		  });
+  });
+</script>
+{% endblock %}

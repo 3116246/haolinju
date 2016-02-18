@@ -1,0 +1,185 @@
+@charset "utf-8";
+/* CSS Document */ 
+.wefafafriendAutoComplete{
+   border-radius: 5px 5px 5px 5px;background: #FFFFFF;display:none;height: 230px;left: 72px; position: absolute;top: 104px; z-index: 1900;width:360px;
+}
+.wefafafriendAutoComplete_bg{
+   border: 1px solid #A0A0A0; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.wefafafriendAutoComplete_title
+{
+background-color:#F2F2F2;height:30px;line-height:30px;padding-left: 10px;
+}
+.wefafafriendAutoComplete_foot
+{
+   height:25px;
+   border-top: 1px solid #CCCCCC;
+}
+.wefafafriendAutoComplete_switch{
+   float:left;
+   margin-left:30px;
+   color:#04458D;
+   cursor:pointer;
+   display:none;
+}
+.wefafafriendAutoComplete_ok{
+   background-color: #CCCCCC;
+    border: 1px solid #999999;
+    color: #666666;
+    cursor: pointer;
+    float: right;
+    height: 18px;
+    line-height: 16px;
+    margin-right: 10px;
+    margin-top: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 18px\9;
+}
+.wefafafriendAutoComplete_ok:hover{
+    background-color: #04458D;
+    color: #FFFFFF;
+}
+.wefafafriendAutoComplete_close:hover{
+    background-color: #04458D;
+    color: #FFFFFF;
+}
+.wefafafriendAutoComplete_close{
+   background-color: #CCCCCC;
+    border: 1px solid #999999;
+    color: #666666;
+    cursor: pointer;
+    float: right;
+    height: 18px;
+    line-height: 16px;
+    line-height: 18px\9;
+    margin-right: 10px;
+    margin-top: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.wefafafriendAutoComplete_item
+{
+border: 1px solid transparent;
+line-height:14px;
+float:left;
+cursor: pointer;
+margin: 10px 0 0 16px; 
+background: #FFFFFF;
+height: 70px;
+position: relative;
+}
+.wefafafriendAutoComplete_item_selected
+{
+border: 1px solid transparent;
+line-height:14px;
+float:left;
+cursor: pointer;
+margin: 10px 0 0 16px; 
+background: #04458D;
+height: 70px;
+position: relative;
+color:#FFF;
+}
+.wefafafriendAutoComplete_item:hover
+{
+border: 1px solid #cccccc;
+}
+.wefafafriendAutoComplete_item_name{
+   height:14px;
+   line-height:14px;
+   text-align: center;
+   letter-spacing: 2px;
+   text-overflow: ellipsis; 
+   white-space: nowrap;
+   overflow:hidden;
+   width:48px;
+}
+.wefafafriendAutoComplete_item_checkbox{
+    float: left;
+    left: 36px;
+    position: absolute;
+    top: 36px;
+    display: none;
+}
+.wefafafriendAutoComplete_item_radio{
+    float: left;
+    left: 36px;
+    position: absolute;
+    top: 36px;
+    display: none;
+}
+.wefafafriendAutoComplete_title_icon
+{
+    background-image: url("../images/add_contact.png");
+    width:17px;
+    height:18px;
+    display:block;
+    float: left;
+    margin-top: 7px;
+    margin-top: 5px\9;
+    margin-right: 5px;
+}
+.wefafafriendAutoComplete_title_label
+{
+    font-weight: bold;
+    margin-right: 10px;
+    float: left;
+}
+.wefafafriendAutoComplete_title_close
+{
+    color: #CCC;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    height: 16px;
+    line-height: 12px;
+    margin-right: 10px;
+    margin-top: 5px;
+    text-align: center;
+    width: 16px;
+    border: 1px solid transparent;
+}
+.wefafafriendAutoComplete_title_close:hover
+{
+   border: 1px solid #ccc;
+   color: #999999;
+}
+.wefafafriendAutoComplete_title_item
+{
+    color: #0881C0;
+    display: block;
+    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    width: 40px;
+    cursor: pointer;
+    line-height: 21px;
+}
+.wefafafriendAutoComplete_title_item:hover
+{
+   background-image:url("../images/component_friend_item_bg.png");
+   color:#fff;
+}
+.wefafafriendAutoComplete_title_item_active
+{
+   background-image:url("../images/component_friend_item_bg.png");
+   color:#fff;
+}
+
+
+.menu_item, .menu_item_high, .menu_item_nofun {
+    cursor: pointer;
+    padding: 0 14px 0 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.menu_item {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.menu_item:hover {
+    background: none repeat scroll 0 0 #3470CC;
+    color: #FFFFFF;
+}

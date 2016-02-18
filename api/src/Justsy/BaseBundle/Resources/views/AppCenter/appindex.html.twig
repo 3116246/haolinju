@@ -1,0 +1,178 @@
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/MobileApp.js')}}"></script>  
+{% endblock %}
+<div class="row">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" style="margin-left:0px;">
+      <div class="mobile_background" >
+      	<div class="mobile_appname"><p align="center">移动应用</p></div>
+        <!--应用-->                         
+          <div role="tabpanel" class="tab-pane" id="nav_app"> 
+            <div class="mobile_header">
+              <div><img src="{{asset('bundles/fafatimewebase/images/home/statusbar.png')}}" /></div>
+              <div>
+                <table>
+                  <tr height="39">
+                    <td width="70" style="padding-left:10px"></td>
+                    <td width="180" align="center" class="mobile_title">应用</td>
+                    <td width="70" align="right" style="padding-right:10px"><i class="iconfont we-icon-home">&#xe634;</i></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="mobile_body">
+              <ul style="list-style-type: none; padding-left: 0px; margin-top: -10px; max-height:365px; overflow: auto;">
+                <a href="#" id="app_item_add">
+                    <li class="app_item_add">
+                      <p align="center"><i class="iconfont app_icon_add">&#xe634;</i></p>
+                      <p style="height:1px"></p>
+                      <p align="center" class="app_text">订阅应用</p>
+                    </li>
+                </a>
+              </ul>
+            </div>
+          </div>         
+        <!--底部导航-->
+        <ul class="nav mobile_footer" role="tablist">
+          <li role="presentation"><a href="#nav_home" aria-controls="nav_home" role="tab" data-toggle="tab"><i class="iconfont mobile_nav_iconfont mobile_nav_iconfont">&#xe628;</i><br>首页</a></li>
+          <li role="presentation"><a href="#nav_contact" aria-controls="nav_contact" role="tab" data-toggle="tab"><i class="iconfont mobile_nav_iconfont">&#xe626;</i><br>通讯录</a></li>
+          <li role="presentation" class="active"><a href="#nav_app" aria-controls="nav_app" role="tab" data-toggle="tab"><i class="iconfont mobile_nav_iconfont">&#xe62a;</i><br>应用</a></li>
+          <li role="presentation"><a href="#nav_find" aria-controls="nav_find" role="tab" data-toggle="tab"><i class="iconfont mobile_nav_iconfont">&#xe624;</i><br>发现</a></li>
+          <li role="presentation"><a href="#nav_my" aria-controls="nav_my" role="tab" data-toggle="tab"><i class="iconfont mobile_nav_iconfont">&#xe623;</i><br>我的</a></li>
+        </ul>           
+      </div>
+      <div style="width:100%; padding-left:360px; padding-top:16px;height:100px">
+        <ol class="breadcrumb" style="margin-bottom:0">
+          <li><a id="enterprise_name" href="#"></a></li>
+          <li class="active">移动应用</li>
+        </ol>
+        
+        <div id="applist_content">
+        </div>
+        
+        <!--
+        <div style="height:90px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; width:80px">
+            <img src="images/01.png" class="app_icon" />
+          </div>
+          <div style="float:left">
+            <a href="#" style="font-size:15px; font-weight:bold;">焦点资讯</a><br>
+            <p style="color:#999; line-height:16px; font-size:10px; margin-top:5px; font-family:Verdana, Geneva, sans-serif">
+            v1.0<br>
+            最后更新：2015-05-06 10:54:44 by 管理员
+            </p>
+          </div>
+          <div style="float:right; text-align:right; margin-right:20px; line-height:30px">
+            <a href="#"><i class="iconfont we-icon-menu">&#xe627;</i>用户管理</a><br>
+            <a href="#"><i class="iconfont we-icon-menu">&#xe64b;</i>后台配置</a>
+          </div>
+        </div>
+        <div style="height:90px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; width:80px">
+            <img src="images/02.png" class="app_icon" />
+          </div>
+          <div style="float:left">
+            <a href="#" style="font-size:15px; font-weight:bold;">通知公告</a><br>
+            <p style="color:#999; line-height:16px; font-size:10px; margin-top:5px; font-family:Verdana, Geneva, sans-serif">
+            v1.0<br>
+            最后更新：2015-05-06 10:54:44 by 管理员
+            </p>
+          </div>
+          <div style="float:right; text-align:right; margin-right:20px; line-height:30px">
+            <a href="#"><i class="iconfont we-icon-menu">&#xe627;</i>用户管理</a><br>
+            <a href="#"><i class="iconfont we-icon-menu">&#xe64b;</i>后台配置</a>
+          </div>
+        </div>
+        <div style="height:90px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; width:80px">
+            <img src="images/03.png" class="app_icon" />
+          </div>
+          <div style="float:left">
+            <a href="#" style="font-size:15px; font-weight:bold;">工作日志</a><br>
+            <p style="color:#999; line-height:16px; font-size:10px; margin-top:5px; font-family:Verdana, Geneva, sans-serif">
+            v1.0<br>
+            最后更新：2015-05-06 10:54:44 by 管理员
+            </p>
+          </div>
+          <div style="float:right; text-align:right; margin-right:20px; line-height:30px">
+            <a href="#"><i class="iconfont we-icon-menu">&#xe627;</i>用户管理</a><br>
+            <a href="#"><i class="iconfont we-icon-menu">&#xe64b;</i>后台配置</a>
+          </div>
+        </div>
+        <div style="height:90px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; width:80px">
+            <img src="images/04.png" class="app_icon" />
+          </div>
+          <div style="float:left">
+            <a href="#" style="font-size:15px; font-weight:bold;">考勤签到</a><br>
+            <p style="color:#999; line-height:16px; font-size:10px; margin-top:5px; font-family:Verdana, Geneva, sans-serif">
+            v1.0<br>
+            最后更新：2015-05-06 10:54:44 by 管理员
+            </p>
+          </div>
+          <div style="float:right; text-align:right; margin-right:20px; line-height:30px">
+            <a href="#"><i class="iconfont we-icon-menu">&#xe627;</i>用户管理</a><br>
+
+            <a href="#"><i class="iconfont we-icon-menu">&#xe64b;</i>后台配置</a>
+          </div>
+        </div>
+        <div style="height:90px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; width:80px">
+            <img src="images/05.png" class="app_icon" />
+          </div>
+          <div style="float:left">
+            <a href="#" style="font-size:15px; font-weight:bold;">工作审批</a><br>
+            <p style="color:#999; line-height:16px; font-size:10px; margin-top:5px; font-family:Verdana, Geneva, sans-serif">
+            v1.0<br>
+            最后更新：2015-05-06 10:54:44 by 管理员
+            </p>
+          </div>
+          <div style="float:right; text-align:right; margin-right:20px; line-height:30px">
+            <a href="#"><i class="iconfont we-icon-menu">&#xe627;</i>用户管理</a><br>
+            <a href="#"><i class="iconfont we-icon-menu">&#xe64b;</i>后台配置</a>
+          </div>
+        </div>
+        <div style="height:90px; padding-top:15px; border-bottom:1px solid #eee">
+          <div style="float:left; margin-left:20px; width:80px">
+            <img src="images/06.png" class="app_icon" />
+          </div>
+          <div style="float:left">
+            <a href="#" style="font-size:15px; font-weight:bold;">知识问答</a><br>
+            <p style="color:#999; line-height:16px; font-size:10px; margin-top:5px; font-family:Verdana, Geneva, sans-serif">
+            v1.0<br>
+            最后更新：2015-05-06 10:54:44 by 管理员
+            </p>
+          </div>
+          <div style="float:right; text-align:right; margin-right:20px; line-height:30px">
+            <a href="#"><i class="iconfont we-icon-menu">&#xe627;</i>用户管理</a><br>
+            <a href="#"><i class="iconfont we-icon-menu">&#xe64b;</i>后台配置</a>
+          </div>
+        </div>
+        -->
+        
+    	    <div align="center">
+                  <nav>
+                    <ul class="pagination">
+                      <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                      <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#">4</a></li>
+                      <li><a href="#">5</a></li>
+                      <li>
+                        <a href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+          </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#enterprise_name").text(enterprise_name);
+        MobileApp.LoadApp();
+    });
+</script>

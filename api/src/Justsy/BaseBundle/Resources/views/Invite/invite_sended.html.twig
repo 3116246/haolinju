@@ -1,0 +1,57 @@
+{% extends 'JustsyBaseBundle:Invite:invite_index.html.twig' %}
+
+{% block main_content_center %}
+<div id="inv_list">
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+var _url = "{{ path('JustsyBaseBundle_invite_sended_list') }}/";
+LoadComponent("inv_list", _url+"1");
+//重新发送
+function reSend(n)
+{
+  if ($(n).attr("isclick")=="1") return;
+  $(n).attr("isclick","1");
+  var eno = $(n).attr("eno");
+  var invite_recv_email = n.id;
+  $(n).parent().find("img").show();
+  $(n).parent().find("a").hide();
+  $.post("{{path('JustsyBaseBundle_invite_resend')}}",
+    {eno:eno,invite_recv_email:invite_recv_email},
+    function(data) 
+    {
+      var cn = $(n).parent().parent().children().eq(3);
+      cn.text(parseInt(cn.text())+1);
+      $(n).parent().find("img").hide();
+      $(n).parent().find("a").show();
+      $(n).attr("isclick","0");
+    },"text");
+}
+//删除
+function del(n)
+{
+  if ($(n).attr("isclick")=="1") return;
+  $(n).attr("isclick","1");
+  var eno = $(n).attr("eno");
+  var invite_recv_email = n.id;
+  $(n).parent().find("img").show();
+  $(n).parent().find("a").hide();
+  $.post("{{path('JustsyBaseBundle_invite_del')}}",
+    {eno:eno,invite_recv_email:invite_recv_email,invite_send_email:''},
+    function(data) 
+    {
+      $(n).parent().parent().remove();
+      $(n).attr("isclick","0");
+    },"text");
+}
+//翻页
+function getPage(pageindex) 
+{
+  $("#inv_list").empty();
+  LoadComponent("inv_list", _url+pageindex);
+}
+</script>
+{% endblock %}

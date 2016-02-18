@@ -1,0 +1,110 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style type="text/css">
+  .area_left { float:left;padding-top:20px;width:600px;margin-left:20px;cursor:default;}
+  .area_right {  cursor: default;float: left;margin: 120px 0 0 90px;width: 320px;}
+  .pagestyle { cursor:default;display:none;float:left;margin: 8px 0 0;padding: 0; }
+  .menu_staff { color: #0088cc;font-weight: bold;padding: 0 5px;}
+  .rows_style { float: left; width: 100%; margin: 10px 0px;display:none;}
+  .menu_bottom { float:left;display:none;}
+  .reset_user_account { background-color:white;border: 1px solid #0088cc;float: left;height: 30px;margin-bottom:5px;}
+	.reset_user_account>input { border:none;float:left;height:28px;padding-left:5px;padding-right:5px;line-height:28px;}
+	.reset_password_icon { background-image: url("/bundles/fafatimembapp/images/document_icon.png");background-position: -214px -308px;float: left;height: 20px;margin: 5px;width: 20px;}  
+	.message_box { color: #cc3300;float:left;font-weight: bold;height: 30px;padding-left: 20px;}
+	.password_area { float:left;margin: 0 0 0 20px;display:none;width: 100%;}
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/mobile_client.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="area_left" >
+	<div>
+		 <span>请输入用户账号或姓名：</span>
+		 <input type="text" class="mb_textbox" id="text_staff" onkeypress="if (event.keyCode==13) { mobile_client.Search(1); }" placeholder="用户账号或姓名" style="width:340px;"/>
+		 <span class="btnGreen mb_button" onclick="mobile_client.Search(1);" style="float:right;">查&nbsp;&nbsp;询</span>
+  </div>
+  <table align="center" style="width:600px;" class="mb_common_table" >
+	 	 <thead>
+   	 	  <tr>
+				  <td align="center" width="248">用户账号</td>
+					<td align="center" width="248">用户姓名</td>
+					<td align="center" width="103">设置权限</td>
+				</tr> 
+		 </thead>
+		 <tbody></tbody>
+  </table>
+  <div class="pagination pagestyle"></div>
+</div>
+<div class="area_right">
+	  <div class="rows_style" id="staffname" style="margin:0px;">&nbsp;</div>
+	  <div class="rows_style">
+	    <label>
+		 	   <input type="radio" style="float:left;margin-right:5px;" id="mobile_lock" onchange="mobile_client.selectype(this)" name="seletedtype">
+		 	   <span class="component_navtype">手机锁屏</span>
+	    </label>
+    </div>
+    <div class="rows_style">
+	    <label>
+		 	   <input type="radio" style="float:left;margin-right:5px;" id="mobile_wipe" onchange="mobile_client.selectype(this)" name="seletedtype">
+		 	   <span class="component_navtype">恢复出厂设置</span>
+	    </label>
+	  </div>
+	  <div class="rows_style">
+	    <label>
+		 	   <input type="radio" style="float:left;margin-right:5px;" id="mobile_clearpwd" onchange="mobile_client.selectype(this)" name="seletedtype">
+		 	   <span class="component_navtype">清除手机设置的密码</span>
+	    </label>
+	  </div>
+	  <div class="rows_style" style="margin-bottom:0px;">
+	    <label>
+		 	   <input type="radio" style="float:left;margin-right:5px;" id="mobile_newpwd" onchange="mobile_client.selectype(this)" name="seletedtype">
+		 	   <span class="component_navtype">设置手机端新密码</span>
+	    </label>
+	  </div>
+	  <div class="password_area">
+	  	 <div style="float:left;width:100%">
+	  	   <span style="float: left; line-height: 30px; width: 70px;">新&nbsp;密&nbsp;码：</span>
+		  	 <div class="reset_user_account">
+				  	<span class="reset_password_icon"></span>
+				  	<input type="password" id="password1">
+			   </div>
+		   </div>
+		   <div style="float:left;width:100%">
+		   	 <span style="float: left; line-height: 30px; width: 70px;">确认密码：</span>
+			   <div class="reset_user_account">
+	  		 	 <span class="reset_password_icon"></span>
+	  		 	 <input type="password" id="password2">
+			   </div>
+		   </div>
+	  </div>
+	  <div class="message_box">
+	  </div>
+	  <div class="rows_style" style="margin:0px;">
+	  	<span class="btnGreen mb_button" onclick="mobile_client.mobile_submit();">确&nbsp;&nbsp;定</span>
+	  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+  mobile_client.search_url="{{path('JustsyAdminAppBundle_mobile_client_search')}}";
+  mobile_client.execute_url="{{path('JustsyAdminAppBundle_mobile_client_execute')}}";
+  mobile_client.Search(1);
+</script>
+{% endblock %}

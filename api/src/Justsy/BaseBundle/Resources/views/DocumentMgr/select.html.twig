@@ -1,0 +1,10 @@
+	<div class="twomain clearfix" style="width:818px;padding-bottom:1px;min-height:1px">
+  <div id="docGroupListCon" class="left" style="float:left">
+  {% render "JustsyBaseBundle:DocumentMgr:grouplist" with {"mode" : "select", 'network_domain':network_domain} %}
+  </div>
+  <div id="docListCon" class="twocenter" style="width:600px;padding-bottom:1px;float:right">
+  {% render "JustsyBaseBundle:DocumentMgr:list" with {"mode" : "select","network_domain":network_domain, "scope_type":0} %}
+  </div>
+</div>
+  
+

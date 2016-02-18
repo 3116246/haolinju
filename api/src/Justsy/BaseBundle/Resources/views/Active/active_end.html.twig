@@ -1,0 +1,70 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}微发发，启用前的设置{% endblock %}
+
+{% block main_content %}
+<div class="active_main">
+  <div class="active_nav">
+    <ul>
+      <li class="out">1. 基本信息</li>
+      <li class="out2">2. 加入圈子</li>
+      <li class="in2">3. 上传头像</li>
+      <li class="next">4. 开始使用</li>
+    </ul>
+  </div>
+</div>
+<div class="active_detail">
+  <form class="form-horizontal" id="contentForm" method="post" action="{{path('JustsyBaseBundle_active_save')}}/{{type}}" >
+  <input name="account" type="hidden" value="{{ this.account }}" />
+  <input name="realName" type="hidden" value="{{ this.realName }}" />
+  <input name="passWord" type="hidden" value="{{ this.passWord }}" />
+  <input name="ename" type="hidden" value="{{ this.ename }}" />
+  <input name="mailtype" type="hidden" value="{{ this.mailtype }}" />
+  <input name="isNew" type="hidden" value="{{ this.isNew }}" />
+  <input name="circleName" type="hidden" value="{{ this.circleName }}" />
+  <input name="circleId" type="hidden" value="{{ this.circleId }}" />
+  <input name="invstaff" type="hidden" value="{{ this.invstaff }}" />
+  <input id="eno" name="eno" type="hidden" value="{{ this.eno }}" />
+  <input id="mails" name="mails" type="hidden" value="{{ this.mails }}" />
+  <input id="attens" name="attens" type="hidden" value="{{ this.attenMember }}" />
+  <input id="invMsgValue" name="invMsg" type="hidden" value="{{ this.invMsg }}" />
+  <div class="invitedphoto clearfix">
+    <div class="invitedphoto-box">
+    {% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}
+    </div>
+  </div>      
+  <div class="form-actionssmall">
+    <button type="button" class="allinput" id="btnSubmit">下一步 ></button>
+    <a id="skip" style="margin-left: 10px; cursor:pointer;">跳过此步</a>
+  </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var uploadObj = null;
+$(document).ready(function()
+{
+  var obj = $("#_imageupload");
+  var obj_ff = obj.find("embed");
+  uploadObj = document.all==null? obj_ff : obj;
+  uploadObj.css({"height":"380px","width":"500px"});
+  $("#btnSubmit").click(function()
+  {
+    this.disabled = true;
+    uploadObj[0].doSave();
+  });
+  $("#skip").click(function()
+  {
+    if ($(this).attr("isclick")=="1") return;
+    $(this).attr("isclick","1");
+    $("#contentForm").submit();
+  });
+});
+//头像控件上传成功后回调函数，可自己定义
+function avatar_success() 
+{
+  $("#contentForm").submit();
+}
+</script>
+{% endblock %}

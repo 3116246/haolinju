@@ -1,0 +1,52 @@
+<div class="memberbox"><a id="_doc_title">所有文档</a><span class="membertitle"></span>
+		<div class="uploadbox" style="display:{{ mode!="select" ? "block" : "none" }}">
+			<span id="addFile"  class="uploadbutton" style="overflow:hidden">
+			              <form id="mgr_upload_file" name="mgr_upload_file"  method="post" enctype="multipart/form-data">
+			              <input type="hidden" id="hpost_to_group" name="hpost_to_group">
+			              <span  class="upload" id="mgr_upload_file_sel" style="cursor:pointer;display: inline-block;position: relative;width: 122px;">
+			              <input tabindex="-1" name="filedata" hidefocus="hidefocus" onchange="fileSelect_ext('{{ path('JustsyBaseBundle_documnet_upload',{'network_domain':this.network_domain})}}')" id="filedata" size="0" style="cursor: pointer;left: 0;filter:alpha(opacity = 0);opacity:0;-moz-opacity:0;position: absolute;top: 0;z-index: 1000002; width:70px;outline: none;" multiple="" type="file">
+			              上传文件
+		                </span>
+		              <span  id="mgr_upload_file_ing" style="display:none;position: relative;width:122px;"><img width=16 height=16 src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}"><a>文件上传中...</a></span>
+		              </form>
+     </span>  
+     <script type="text/javascript">
+       $("#addFile").mousemove(function (e) 
+       {
+          //var e = e || window.event;
+          var offsetA = $(this).offset();
+          var newX = e.clientX - offsetA.left  - 50;
+          var newY = e.clientY - offsetA.top - 20;
+          $(this).find("input:file").css("left", newX);
+          $(this).find("input:file").css("top",  newY);
+       });
+     </script>
+   </div> 
+</div>
+
+<div class="memberlist">
+    <div class="tabbox">
+        <ul>
+          <li id="mgr_two1" onClick="clearTr();setDisplayTab(this)" class="hover" loadurl="{{ path('JustsyBaseBundle_documnet_listjson',{'network_domain':this.network_domain})}}?file_type=&scope_type={{this.scope_type}}&scope_id={{this.scope_id}}">全部<a class='recordcount'></a></li>
+          <li id="mgr_two2" onClick="clearTr();setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_documnet_listjson',{'network_domain':this.network_domain})}}?file_type=1&scope_type={{this.scope_type}}&scope_id={{this.scope_id}}">文档<a class='recordcount'></a></li>
+          <li id="mgr_two3" onClick="clearTr();setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_documnet_listjson',{'network_domain':this.network_domain})}}?file_type=2&scope_type={{this.scope_type}}&scope_id={{this.scope_id}}">图片<a class='recordcount'></a></li>
+          <li id="mgr_two4" onClick="clearTr();setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_documnet_listjson',{'network_domain':this.network_domain})}}?file_type=3&scope_type={{this.scope_type}}&scope_id={{this.scope_id}}">音/视频<a class='recordcount'></a></li>
+        </ul>
+    </div>
+    <div class="contentbox">
+      <div id="con_mgr_two1" class="display_con_area hover"></div>
+      <div id="con_mgr_two2" class="display_con_area" style="display:none"></div>
+      <div id="con_mgr_two3" class="display_con_area" style="display:none"></div>
+      <div id="con_mgr_two4" class="display_con_area" style="display:none"></div>
+    </div>    
+</div>
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Document.js') }}"></script>
+<script type="text/javascript">
+{%if(mode=="select")%}
+   bindTable();
+{%endif%}
+$(document).ready(function() {        
+        init("{{path('JustsyBaseBundle_documnet_del')}}");
+});  
+</script>

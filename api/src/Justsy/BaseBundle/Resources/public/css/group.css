@@ -1,0 +1,218 @@
+#div_create_group{
+	background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  left: 50px;  
+  position: absolute;
+  top: 50px;
+  width: 570px;
+  border-radius:8px;
+  z-index:20000;
+}
+.div_transparent{
+	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFFFFF;
+  border-style: solid;
+  border-width: 20px;
+  display: block;
+  height: 0;
+  position: relative;
+  top: -80px;
+  width: 0;
+}
+.coverdiv{
+	background-color: #737373;
+  height: 100%;
+  left: 0;
+  -webkit-opacity: 0.7;  
+  -moz-opacity: 0.7;
+  -khtml-opacity: 0.7;   
+  opacity: 0.7;   
+  filter:alpha(opacity=70);  
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";  
+  filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);  
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index:10000;
+}
+.group_base_info #des{
+	border: 1px solid #cacaca;
+  border-radius: 1px;
+  float: left;
+  outline-style: none;
+  width: 183px;
+} 
+.group_base_info #gname{
+	border: 1px solid #cacaca;
+  border-radius: 1px;
+  float: left;
+  height: 18px;
+  line-height: 18px;
+  outline-style: none;
+  padding-left: 5px;
+  width: 183px;
+}
+.group_base_info{
+	float:left;
+}
+.group_logo_upload{
+	float:right;
+}
+.group_base_info select{
+	border: 1px solid #cacaca;
+  border-radius: 1px;
+  float: left;
+  height: 28px;
+  line-height: 18px;
+  outline-style: none;
+  padding-left: 5px;
+  width: 197px;
+  padding:0;
+  padding-top:3px;
+  margin-bottom:5px;
+}
+.classify_span{
+	background-color: #BEBEBE;
+  border: 1px solid #CCCCCC;
+  display: inline-block;
+  height: 25px;
+  position: relative;
+  width: 25px;
+  left:-27px;
+}
+.classify_span span{
+	border-color: #FFF;
+	border-left:transparent;
+	border-right:transparent;
+	border-bottom:transparent;
+	position:relative;
+	left:6px;
+	top:10px;
+	width:0;
+	height:0;
+	border-style: solid;
+	border-width:6px;
+	display:block;
+}
+.clickupload{
+	background-color: #F3FDFE;
+  border: 1px solid #B7D8E9;
+  padding: 2px 5px;
+}
+.creategroupbnt{
+	width:80px;
+	height:35px;
+	border-radius:4px;
+	background-color:#f5b426;
+	float:left;
+	text-align:center;
+	vertical-align: middle;
+}
+.creategroupbnt span{
+	font-size:13px;
+	font-weight:700;
+	color:#FFF;
+	line-height:32px;
+}
+#group_invite_container{
+	height:80px;
+}
+#group_invite_container .pre,#group_invite_container .nex{
+	border: 1px solid #CCCCCC;
+  display: inline-block;
+  height: 50px;
+  margin-top: 6px;
+	line-height: 50px;
+  width: 12px;
+  text-align:center;
+  cursor:pointer;
+}
+#group_invite_container .pre{
+	float:left;
+}
+#group_invite_container .nex{
+	float:left;
+}
+.group_create_foot{
+	height:40px;
+	padding-left:190px;
+}
+.group_invite_set .invite_set_area{
+	width:560px;
+	height:58px;
+	overflow:auto;
+	border:1px solid #cacaca;
+}
+#set_area_input{
+  float: left;
+  height: 18px;
+  line-height: 18px;
+  outline-style: none;
+  padding-left: 5px;
+	width:100%;
+	border:none;
+	background-color:#ecf5f8;
+	margin:0;
+	padding:0;
+}
+.div_close{
+	font-size:18px;
+	font-weight:700;
+	float:right;
+	position:relative;
+	cursor:pointer;
+	top:-5px;
+	*top:-15px;
+}
+#set_area_input:focus{
+}
+#div_create_group input[type="radio"]{
+	margin-top:-3px;
+}
+.share_invite_list{
+	background-clip: padding-box;
+  background-color: #F9F9F9;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 1px 1px 5px 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  float: left;
+  left: 0;
+  list-style: none outside none;
+  margin: 2px 0 0;
+  min-width: 160px;
+  padding-bottom: 5px;
+  position: absolute;
+  top: 100%;
+  z-index:30000;
+}
+.share_invite_list a{
+	clear: both;
+  color: #333333;
+  display: block;
+  font-weight: normal;
+  line-height: 20px;
+  padding: 3px 20px;
+  white-space: nowrap;
+  cursor:pointer;
+}
+.left_trans{
+	border-color: rgba(0, 0, 0, 0) #FFFFFF rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-style: solid solid solid none;
+    border-width: 20px 20px 20px medium;
+    display: block;
+    float: left;
+    position: relative;
+    cursor:pointer;
+}
+.share_invite_list li{list-style:none,outside,none;height:22px;padding-left:5px;width:240px;overflow:hidden;cursor:default;}
+.share_invite_list li:hover{background-color:#ecf5f8;}
+.bordertransparent{
+	border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFFFFF;
+  border-style: solid none solid solid;
+  border-width: 20px medium 20px 20px;
+  display: block;
+  float: right;
+  position: relative;
+}
+.group_create_center{
+    padding: 10px 10px 0;
+}

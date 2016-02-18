@@ -1,0 +1,217 @@
+<style type="text/css">
+ .ADD_T{}
+ .ADD_T tr{height:2px;font-family: 微软雅黑;}
+ .ADD_T td{text-align:left;vertical-align:top;height:48px;padding-left:5px;border-bottom:1px solid #EEE;}
+ .ADD_T_T{height:30px;}
+ .oneaddr:hover{background-color:#D5EAF0}
+ .name{list-style:none outside none;float:left;margin-bottom:0px;margin-left:0px;}
+ .name li{float:left;margin-left:4px;cursor:pointer;}
+ .unit{list-style:none outside none;width:160px;float:left;margin-left:0px;}
+ .buttons{list-style:none outside none;position:absolute;z-index:1000;margin:0;height:17px;border:1px solid #0088CC;background-color:#D5EAF0;border-radius:2px 2px 2px 2px;}
+ .buttons li{float:left;cursor:pointer;margin-left:3px;width:16px;margin-top:1px;}
+ .buttons li div:hover{border:1px solid #0088CC;border-radius:2px 2px 2px 2px;}
+ .buttons li image:hover{border:1px solid #0088CC;border-radius:2px 2px 2px 2px;}
+ .bnt_1{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-42px -2px;}
+ .bnt_1_grey{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -2px;}
+ .bnt_2{overflow:hidden;float:left;width:14px;height:14px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-42px -28px;}
+ .bnt_2_grey{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -28px;}
+ .bnt_3{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-42px -54px;}
+ .bnt_3_grey{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -54px;}
+ .bnt_4{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-42px -105px;}
+ .bnt_4_grey{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -105px;}
+ .bnt_5{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-42px -157px;}
+ .bnt_5_grey{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -157px;}
+ .bnt_6{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:-42px -131px;}
+ .bnt_6_grey{overflow:hidden;float:left;width:14px;height:13px;background-image:url({{asset('bundles/fafatimewebase/images/addressbook.png')}});background-position:0px -131px;}
+ .edit_addr{width:14px;height:13px;}
+ .delete_addr{width:14px;height:13px;}
+ .edit_addr img,.delete_addr img{margin-top:-7px;}
+ .addr_sheet,.addrtype_sheet{position:absolute;z-index:1000;width:80px;margin:0;list-style:none outside none;border-left:1px solid #CCC;border-right:1px solid #CCC;border-bottom:1px solid #CCC;background-color:#D5EAF0;border-radius:2px 2px 2px 2px;}
+ .addr_sheet li,.addrtype_sheet li{padding-top:2px;padding-bottom:2px;padding-left:5px;border-top:1px solid #CCC;cursor:pointer;}
+ .addr_sheet li:hover{color:red;background-color:#0088CC;}
+ .addrtype_sheet li:hover{color:red;background-color:#0088CC;}
+ .mouseover{color:red;background-color:#0088CC;}
+ .adpp{	border-color: #CCC;
+ 				border-top:transparent;
+ 				border-right:transparent;
+ 				border-bottom:transparent;
+ 				margin-top:2px;
+    		border-style: solid;
+    		border-width: 6px;
+    		display: block;
+    		float: right;
+    		height: 0;
+    		left: 2px;
+    		top: 8px;
+    		*display:none;
+    		width: 0;
+    }
+ .adgg{
+ 		    border-color: #0088CC;
+ 				border-left:transparent;
+ 				border-right:transparent;
+ 				border-bottom:transparent;
+ 				position:relative;
+ 				left:0px;
+ 				top:4px;
+ 				width:0;
+ 				height:0;
+    		border-style: solid;
+    		border-width:6px;
+    		display:block;
+ }
+</style>
+ {%if pagecount>0%}
+<table class="ADD_T" style="width:100%">
+{% for item in my_addrlist %}
+	<tr class="oneaddr">
+	<td>{%if item['typeid']!='M002'%}<input type='checkbox' style='display:none;'/>{%endif%}</td>
+	<td style="width:55px;"><image style="width:48px;height:48px;margin: 3px;max-width:none" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" src="{{asset(item['photo_url'])?item['photo_url']:asset('bundles/fafatimewebase/images/reg_title.png')}}"/></td>
+	<td addr_id="{{item['id']}}" login_account="{{item['addr_account']}}" style="text-align:left;width:220px;">
+	 <ul class="name"><li style="margin-left:0px;"><a href="javascript:void();" style="{{item['addr_account']!=''?'color:#0088CC':''}}" class="name_unit">{{item['addr_name']}}</a>
+	    <input class="addr_account" type="hidden" value="{{item['addr_account']}}"/>
+		  <input type="hidden" class="id" value="{{item['id']}}"/>
+		  <input type="hidden" class="typeid" value="{{item['typeid']}}"/>
+		  <input type="hidden" class="mail" value="{{item['addr_mail']}}"/>
+		  <input type="hidden" class="jid" value="{{item['jid']}}"/>
+		  <input type="hidden" class="isInCard" value="{{item['isInCard']}}"/>
+		  </li>
+	  </ul>
+	  <ul style="float:right;width:80px;list-style:none outside none;margin-right:10px;margin-left:0px;">
+	  	{%if item['addr_account']==''%}
+		   {% if item['addr_mail']==''%}
+		   <li style="float:left;" id="{{item['id']}}"><a href="javascript:;" style="font-weight:bold;cursor:pointer;">邀请加入</a></li>
+		   {%else%}
+	  	<li style="float:left;" id="{{item['id']}}"><a href="javascript:;" onclick="invite(this)" style="font-weight:bold;color:#0088CC;cursor:pointer;">邀请加入</a></li>
+	  	{%endif%}
+	  	{%endif%}
+	  </ul>
+	  <ul class="unit" style="margin-bottom:0"><li>{{item['addr_unit']}}</li>
+	  	</ul>
+	</td>
+	<td><div style="color:#7E7A7A;font-size: 12px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;width: 130px;">电话：<a style="color:#000;">{{item['addr_phone']}}</a></div></td>
+	<td><div style="color:#7E7A7A;font-size: 12px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;width: 130px;">手机：<a style="color:#000;">{{item['addr_mobile']}}</a></div></td>
+	<td><div style="color:#7E7A7A;font-size: 12px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;width: 220px;">邮箱：<a style="color:#000;">{{item['addr_mail']}}</a></div>
+	</td>
+	</tr>
+{% endfor %}
+</table>
+{% else %}
+<div style="text-align:center;width:100%;padding-top:50px;">没有搜索到数据</div>
+{% endif %}
+{% set n=(pagecount//3+(pagecount%3==0?0:1)) %}
+{% set m=(pageindex//3+(pageindex%3==0?0:1))%}
+{%if( pageindex%3==0 or pageindex==pagecount) and n>1%}
+<div class="pagination pagination-right">
+	<ul>
+	  <li {{ m ==1 ? 'class="disabled"' : "" }}><a href="javascript:;" {% if m > 1 %}onclick="getpage({{(m-2)*3+1}})"{% endif %}>上一页</a></li>
+	{% set pagestart = m < 3 ? 1 : m-1 %}
+	{% set pageend = pagestart+1 > n ? n : pagestart+1 %}
+	{%for i in pagestart..pageend %}
+	  <li {{ m == i ? 'class="active"' : "" }}><a href='javascript:;' onclick="getpage({{(i-1)*3+1}})">{{(i)}}</a></li>
+	{%endfor%}
+	  <li {{ m == n ? 'class="disabled"' : "" }}><a href="javascript:;" {% if m < n %}onclick="getpage({{m*3+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}
+<ul addr_id='' addr_account='' class="buttons" style='display:none;'>
+	<li class="bnt"><div class="card_addr" login_account="" title="个人名片"></div></li>
+	<li class="bnt" onclick="send_msg(this)"><div class="msg_addr" title="发送消息"></div></li>
+	<li class="bnt"><div class="mail_addr" title="发送邮件"></div></li>
+	<li class="bnt" onclick="moveoutAddr(this)"><div class="goCard" title="从名片薄删除"></div></li>
+	<li class="bnt" onclick="copyAddr(this)"><div class="toCard" title="收藏到名片薄"></div></li>
+	<li class="bnt" onclick="shareAddr(this)"><div class="share_addr" title="分享"></div></li>
+	<li class="bnt" onclick="editAddr(event,this)"><div class="edit_addr"><img src="{{asset('bundles/fafatimewebase/images/edit.png')}}" title="编辑"/></div></li>
+	<li class="bnt" onclick="deleteAddr(this)"><div class="delete_addr"><img src="{{asset('bundles/fafatimewebase/images/delete.png')}}" title="删除"/></div></li>
+	<li class="bnt" onclick="showSheet(this)"><div class='addr_menu' title='更多' style='text-align:center;width:14px;height:13px;'><span class='adgg'></span></div></li>
+	<input type="hidden" class="mouse" value=""/>
+</ul>
+<div id="forload" style="display:none"><image class="bnt_load" style="width:14px;height:13px;background-color:#EEC;margin-left:2px;margin-top:-6px;" src="{{asset('bundles/fafatimewebase/images/loading.gif')}}"/></div>
+<div id="forcorr" style="display:none"><image class="bnt_corr" style="width:14px;height:13px;margin-left:5px;" src="{{asset('bundles/fafatimewebase/images/zq.gif')}}"/></div>
+<script language='javascript' type='text/javascript'>
+	var page_count={{pagecount}};
+	var page_index={{pageindex}};
+	var buttons=$(".buttons").html();
+	var addr_invite_url="{{path('JustsyBaseBundle_addrlist_invite')}}";
+
+  $(document).ready(function(){
+  	$(".name_unit").unbind('mouseover').bind('mouseover',function(event){
+  		if(typeof(Timer)!='undefined'){
+				clearTimeout(Timer);
+			}
+  	 var ev=event||window.event;
+  	 var le=$(this).offset().left+$(this).width();
+  	 var to=$(this).offset().top;
+  	 var $buttons=$(".buttons");
+  	 $buttons.hide();
+  	 var parentUL=$(this).parent().parent();
+  	 $buttons.attr({addr_id:$(this).siblings('.id').val(),addr_account:$(this).siblings('.addr_account').val()});
+  	 $buttons.find(".card_addr").attr('class','card_addr bnt_1');
+  	 $buttons.find(".msg_addr").attr('class','msg_addr bnt_2');
+  	 $buttons.find(".mail_addr").attr('class','mail_addr bnt_3').html("<a href='mailto:"+parentUL.find("input.mail").val()+"'>&nbsp;&nbsp;</a>");
+  	 
+  	 if($("#typename .adrlist_active").attr('id')=='M001'){
+  	 	 $buttons.find(".goCard").attr('class','goCard bnt_4');
+  	 	 $buttons.find(".toCard,.share_addr").hide().parent().hide();
+  	 }
+  	 else{
+  	 	 $buttons.find(".goCard").hide().parent().hide();
+  	 	 if($(this).siblings('.isInCard').val()=='yes'){
+  	 	 	  $buttons.find(".toCard").attr('class','toCard bnt_5_grey');
+  	 	 }
+  	 	 else{
+  	 	 		$buttons.find(".toCard").attr('class','toCard bnt_5');
+  	 	 }
+  	 	 $buttons.find(".share_addr").attr('class','share_addr bnt_6');
+  	 }
+  	 if($(this).siblings('.addr_account').val()==''){
+  	 		$buttons.find("div.card_addr,div.msg_addr").hide().parent().hide();
+  	 		$buttons.find(".edit_addr,.delete_addr").show().parent().show();
+  	 }
+  	 else{
+  	 		$buttons.find("div.card_addr,div.msg_addr").show().parent().show();
+  	 		$buttons.find(".edit_addr,.delete_addr").hide().parent().hide();
+  	 }
+  	 $buttons.find(".card_addr").attr('login_account',$(this).siblings('.addr_account').val());
+  	 
+  	 $(".card_addr").click(function(event){
+			  var ex = getEventCoord(event);			  
+			            	  var txt = $(this).text();  
+			            	  var acc = $(this).attr("login_account");	  
+			            	  if(acc!=null && acc!="")
+			            	  {
+			            	  	  $(this).attr("target","_blank");
+			            	  	  $(this).attr("href",Employees.personUrl.replace("foo",acc));
+			            	  	  txt = acc;
+			            	  }
+				Employees.show(ex.pageX,ex.pageY,txt);
+			});
+  	 $buttons.css({left:le+5+'px',top:to+'px'});
+  	 $buttons.show();
+  });
+  $(".buttons").unbind('mouseover').bind('mouseover',function(event){
+				if(checkHover(event,this)){
+					if(typeof(Timer)!='undefined'){
+						clearTimeout(Timer);
+					}
+				}
+			});
+			$(".buttons").unbind('mouseout').bind('mouseout',function(event){
+				if(checkHover(event,this)){
+					if($(this).find('.bnt_load').length>0)
+  	 	 		{
+	  	 	 		$(this).find('.mouse').val('out');
+	  	 	 		return;
+  	 	 		}
+					$(this).hide();
+				}
+			});
+  	 $(".name_unit").unbind('mouseout').bind('mouseout',function(event){
+  	 	 if(checkHover(event,this)){
+  	 	 	Timer=setTimeout(function(){
+  	 	 		$(".buttons").hide();
+  	 	 	},500);
+  	 	}
+  	 });
+  });
+</script>

@@ -1,0 +1,372 @@
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Account.js') }}"></script>
+<style type="text/css">
+	 .li_menu { height:25px;line-height:25px; padding-left: 10px;cursor: pointer;}
+	 .li_menu:hover { background-color:#0077cc;color:#ffffff;font-weight:bold;}	 
+</style>
+<div class="portals_area_left">
+   <div>
+     <span class="portals_area_span">应用图标</span>
+     <div id="app_icon" style="float: left; width: 200px; cursor: default; height: 60px; margin-top:20px;">
+     	 <img src="{{appicon}}" style="float:left;width:60px;height:60px;" onerror="this.src='{{ asset('bundles/fafatimewebase/images/portals_wefafa_logo.png') }}'" >
+     	 <img src="{{ asset('bundles/fafatimewebase/images/ico_edit.png') }}"  class="portals_editico" onclick="edit_appico()" >
+     </div>
+   </div>
+  <div>
+    <span class="portals_area_span">应用名称</span>
+    <div id="app_name" style="float: left; width:200px;cursor:default;height:60px;line-height:60px;margin-top:20px;" >
+      <span style="float:left;margin-left:10px;" >{{appname}}</span>
+      <img src="{{ asset('bundles/fafatimewebase/images/ico_edit.png') }}"  class="portals_editico" onclick="edit_appico()" >
+    </div>
+  </div>
+  <div>
+    <span class="portals_area_span">二维码</span>
+    <img src="{{ asset('bundles/fafatimewebase/images/ercode.png') }}" title="通过手机扫一扫，下载移动门户客户端"  style="float:left;margin-top:10px;">
+  </div>
+  <div>
+    <span class="portals_area_span">管理员</span>
+    <table style="float: left; width: 200px;line-height:20px;height:100px;">
+    	<tr>
+    		<td id="staff_manager" valign="middle"></td>
+    	</tr>
+    </table>
+  </div>
+  <div style="border-bottom:none;">
+    <span class="portals_area_span">应用数量</span>
+    <span style="float:left;">{{appcount}}</span>
+  </div>
+</div>
+<div class="portals_area_right">
+  <div class="portals_area_right_addcontact_row">
+    <span style="float:left;" id="staff_amount" >用户列表</span>
+    <div class="dropdown"style="float: right; line-height: 20px; margin-top: 9px;">
+    	<a class="dropdown-toggle btn"  id="btn_menu_users"  role="button" data-toggle="dropdown" data-target="#">
+    		✚&nbsp;添加用户
+    		<b class="caret"></b>
+    	</a>
+    	<ul class="dropdown-menu" role="menu" aria-labelledby="btn_menu_users" style="min-width: 122px;">
+    		<li onclick="showstaffbox('add')" style="border-bottom: 1px solid rgb(243,243,243);" class="li_menu">添加用户</li>
+    		<li onclick="showstaffbox('export')" class="li_menu">导入用户</li>
+    	</ul>
+    </div>
+ <div id="add_staff" class="portals_staff_box">
+  	 <div class="portals_staff_windowtitle">
+      	<span style="padding-left:20px;">添加用户</span>
+      </div>
+      <form id="frmAdd" style="margin-bottom:0px;">
+	      <div class="portals_staff_filedsrow"> 
+	      	  <div style="float: left; padding-right: 5px;">部门：</div>
+	      	  <input type="text" name="txtdept" id="txtdept" onclick="Account.showDept()" readonly=""  style="cursor: text;"/>
+	      	  <input type="hidden"id="txtdeptid" name="txtdeptid" value="">
+	          <span style="width: auto; display: none; position: absolute; top: 65px; left: 87px;">
+	            <div class="zTreeDemoBackground" style="min-height:265px;" ><img  src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16">正在加载数据...</div>
+	            <div id="deptdiv" isload="0" url="{{ path('JustsyBaseBundle_account_deptquery', {'network_domain' : "fafatime.com"})}}" >
+	               <ul id="depttree" class="ztree" style="max-height:275px;width:100%;" ></ul>	
+	            </div>
+            </span>
+	      </div>      
+	      <div class="portals_staff_filedsrow"> 
+	      	  <span>姓名：</span>
+	      	  <input type="text" name="realName" id="realName">
+	      </div>
+        <div class="portals_staff_filedsrow"> 
+            <span style="margin-left:-24px;">登录帐号：</span>
+            <input type="text" name="account" value="" id="account">
+        </div>        
+	     <div class="portals_staff_filedsrow"> 
+	      	  <span>密码：</span>
+	      	  <input type="password" name="pass" value="" id="pass">
+	      </div>
+	      <div class="portals_staff_filedsrow" style="height: 22px; line-height: 22px;"> 
+	      	  <span>性别：</span>
+	      	   <input type="hidden" id="sex" name="sex">
+	      	   <label style="float: left; margin-bottom: 0px;">
+	      	   	  <input type="radio" style="float:left;" checked  id="checkboxsex1" name="checkboxsex" value="1">
+	      	   	   <span style="float:left;padding-left:5px;">男</span>
+	      	   </label>
+	       	   <label style="float: left; margin-left: 45px; margin-bottom: 0px;">
+	      	   	  <input type="radio" style="float:left;" name="checkboxsex" value="0">
+	      	   	  <span style="float:left;padding-left:5px;">女</span>
+	      	   </label>
+	      </div>        
+	      <div class="portals_staff_filedsrow"> 
+	      	  <span>职务：</span>
+	      	  <input type="text" name="duty" id="duty">
+	      </div>
+	      <div class="portals_staff_filedsrow"> 
+	      	  <span>手机：</span>
+	      	  <input type="text" name="mobile" id="mobile">
+	      </div>
+      </form>
+      <div id="error_hint" class="portals_staff_errorhint" > </div>
+     <div style="float:left;">
+      	 <span style="margin-left:120px;margin-right:10px;" class="button_default" onclick="addstaff()">保&nbsp;&nbsp;存</span>
+      	 <span style="padding-right: 0px;" class="button_default" onclick="Cancel_AddStaff();">取&nbsp;&nbsp;消</span>
+      </div>      
+ </div>
+  
+ <div id="export_staff" class="portals_staff_box">
+	  <div class="portals_staff_windowtitle">
+	  	<span style="padding-left:20px;">导入用户</span>
+	  </div>
+	  <form target="frm_import_submit" id="frm_import" action="{{path('JustsyBaseBundle_enterprise_setting_import_employee',{'network_domain':"fafatime.com"})}}" method="post" enctype="multipart/form-data">
+	      <div style="line-height: 20px; margin-top: 5px; margin-left: 15px;">
+	      	 <span style="display: block; height: 25px; line-height: 25px; width: 100%;">
+		      	 <span style="float: left; height: 25px; line-height: 25px;">请先下载</span>
+		      	 <a href="/WeFaFa_Employee_Template.xls" style="float: left; color: blue; line-height: 25px; padding: 0px 5px;">导入模板</a>
+		      	 <span style="float:left;height: 25px;line-height:25px;">并填写人员信息。</span>
+	      	 </span>
+	      	 <span style="float:left;line-height:20px;">（默认密码为手机号或邮箱帐号）</span>
+	      </div>
+	      
+	      <div style="margin-left: 10px; line-height: 40px;">
+	     	<input type="file" name="filedata" id="filedata" style="height:25px;line-height:25px; width: 325px; border: 1px solid #eeeeee;">
+	     </div>
+	     <div style="float:left;width:100%;">
+	     	  <div class="portals_staff_errorhint" style="margin-left:12px;width:170px;margin-top:2px;"> </div>
+	      	<span style="margin-right:10px;" onclick="export_staff()" class="button_default" >开始导入</span>
+	      	<span style="padding-right: 0px;" class="button_default" onclick="$(this).parents('.portals_staff_box').hide();">关&nbsp;&nbsp;闭</span>
+	     </div> 
+	  </form>
+	  <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>	  
+ </div>
+
+</div>
+  <!--用户列表-->
+  <div class="portals_staff_list"></div>  
+  <div class='pagecontainer'></div>
+</div>
+
+<div class="errorlist modal" id="errorlist" data-backdrop=false style="display:none;height: 300px;margin-left: -160px;margin-top: -150px;width: 320px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;导入错误日志</span>
+      </div>
+	    <div>
+	      <div class="doc_rd_confirm_right">
+	          <div class="errorlist_text" style="overflow:auto;height: 220px; line-height: 20px; margin: 10px;"></div>
+	          <div style="margin-left: 130px;float:left"><span onclick="$('#errorlist').hide()" class="doc_md_content_right_btn">关闭</span></div>
+	      </div>	      
+	    </div>
+</div>
+
+<script type="text/javascript">
+	Account.loadDept();
+  $(document).ready(function(){
+  	 getStaff(1);
+  	 $("#account").val("");
+  	 $("#pass").val("");
+  });
+  
+  function showstaffbox(type){
+  	$("#btn_menu_users").dropdown('toggle');
+  	if (type=="add"){
+  		$("#export_staff").hide();
+  		$("#add_staff").toggle();
+  	}
+  	else{
+  		$("#add_staff").hide();
+  		$("#export_staff").toggle();
+  	}
+  }
+  
+  //添加用户
+ function addstaff(){
+ 	 if ( $.trim($("#realName").val())==""){
+ 	 	 showerrorHint($("#realName"),"请输入用户姓名！","error");
+ 	 	 return;
+ 	 }
+ 	 if ( $.trim($("#account").val())==""){
+ 	 	 showerrorHint($("#account"),"请输入登录账号！","error");
+ 	 	 return;
+ 	 }
+ 	 else if(!validEmail($("#account").val())){
+ 	 	 showerrorHint($("#account"),"登录账号为邮箱格式，请检查！","error");
+ 	 	 return;
+ 	 }
+ 	 if ($("#checkboxsex1").attr("checked")==null)
+ 	   $("#sex").val("女");
+ 	 else
+ 	 	 $("#sex").val("男"); 	 
+ 	 showerrorHint(null,"正在保存数据，请稍候……","load");
+ 	 $("#frmAdd").ajaxSubmit({
+ 			url:"{{path('JustsyBaseBundle_enterprise_setting_add_employee_noactive')}}",
+ 			dataType:'json',
+ 			success:function(d){
+ 				if(d.s=='1') {
+ 					$("#add_staff input:visible").val("");
+ 					showerrorHint(null,"添加用户成功！","success");
+ 					setTimeout(function(){ $("#add_staff .portals_staff_errorhint").html(""); $("#add_staff").hide();},1000);
+ 					getStaff(1);
+ 				}
+ 				else{
+ 					showerrorHint(null,d.m,"error");
+ 				}
+ 			}	
+ 		});
+ }
+ 
+ //取消添加用户
+ function Cancel_AddStaff(){
+ 	 $("#pass,#txtdeptid").val("");
+ 	 $("#add_staff input[type='text']").val("");
+ 	 $("#checkboxsex1").attr("checked",true);
+ 	 $("#add_staff .portals_staff_errorhint").html("");
+ 	 $("#add_staff").hide();
+ }
+ 
+ ///获得用户列表
+ function getStaff(pageindex)
+ {
+ 	  var html = "<div class='portalloding'><img src='/bundles/fafatimewebase/images/loading.gif'><span>正在加载用户列表……</span></div>";
+ 	  $(".portals_staff_list").html(html);
+ 	  var recordrow = 18; //每页显示数据记录条件
+ 	  var parameter = { "pageindex":pageindex,"recordrow":recordrow};
+ 	  $.getJSON("{{path('JustsyBaseBundle_mapp_portalsstaff')}}",parameter,function(data){
+ 	  	pageControl.status = false;
+  	  if ( data!=null) {
+  	  	 $(".portals_staff_list").html("");
+  	  	 if ( pageindex == 1 ){
+  	  	   $("#staff_amount").text("用户列表("+data.recordcount+")");  	  	   
+  	  	   if ( data.recordcount > recordrow){
+					   pageControl.recordrow = recordrow;
+					   pageControl.maxIndex = 6;
+					   pageControl.control = $(".portals_staff_list");
+					   pageControl.totalIndex = Math.ceil(data.recordcount / recordrow );
+					   pageControl.container = $(".pagecontainer");
+					   pageControl.setting();
+					   pageControl.callback=function(index){
+					   	 $(".portals_staff_list").html("");
+					   	 getStaff(index);
+					   };
+			     } 
+  	  	 }
+	  	   BindStaff(data.staff);
+      }
+ 	  });
+ }
+ 
+ function BindStaff(staffs){
+	  var html = new Array();
+  	var pageindex = 0;
+  	var errorImage = "{{ asset('/bundles/fafatimewebase/images/no_photo.png')}}";
+  	var managerHtml = new Array();
+  	for(var i=0;i<staffs.length;i++){
+  		  pageindex = Math.ceil((i+1)/18);
+  		  html.push("<div class='portals_staffinfo'" +(pageindex>1?"style='display:none;'":"")+">");
+  		  if (staffs[i].photo_path==null || staffs[i].photo_path =="")
+  		  	 html.push("<img src='"+errorImage+"'>");
+  		  else
+  		  	 html.push("<img src='" + staffs[i].photo_path+"' onerror=\"this.src='"+errorImage +"'\">");
+        if ( staffs[i].manager!="0"){
+           html.push("<div class='portals_staff_manager'>");
+           html.push("  <span style='cursor:pointer;'>");
+           html.push("  <a login_account='" + staffs[i].login_account + "' class='employee_name'>" + staffs[i].nick_name + "</a></span>");
+           html.push("  <span style='float:left;color:#cc3300;'>管理员</span>");
+           html.push("</div>");
+           managerHtml.push("<span style='padding:5px;float:left;'><a class='employee_name' login_account='" + staffs[i].login_account+ "'>" + staffs[i].nick_name +"</a></span>");
+        }
+        else{
+        	html.push("<span style=' cursor: pointer;float: left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 100px;'><a login_account='"+staffs[i].login_account+"' class='employee_name' target='_blank'>"+staffs[i].nick_name+"</a></span>");
+        }
+        html.push("</div>");
+  	}
+  	html.push("");
+  	$(".portals_staff_list").html(html.join(''));
+    if ( managerHtml.length >0 ){
+      $("#staff_manager").html(managerHtml.join(''));
+    }
+ }
+ 
+ var error_hint_hander=null;
+ //消息显示
+ function showerrorHint(control,hint,type){
+ 	 if (control!= null ) control.focus();
+ 	 var html=new Array();
+ 	 if (type =="error" || type=="stop" )
+ 	    html.push(" <img src='/bundles/fafatimewebase/images/error.gif' />");
+ 	 else if ( type=="success")
+ 	 	  html.push(" <img src='/bundles/fafatimewebase/images/zq.png'/>");
+ 	 else if (type=="load")
+ 	 	  html.push(" <img src='/bundles/fafatimewebase/images/loading.gif' style='width:32px;height:32px;margin-top:-5px;' />");
+ 	 html.push("<span>"+hint+"</hint>");
+ 	 $(".portals_staff_errorhint:visible").html(html.join(''));
+ 	 if ( type!="stop")
+ 	  	error_hint_hander=setTimeout(function(){ $(".portals_staff_errorhint:visible").html("");},4000);
+ 	 else
+ 	 	  window.clearTimeout(error_hint_hander);
+ }
+ var is_import_ing = false;
+ //导入用户数据
+ function export_staff(){ 	 
+ 	 if(is_import_ing) return;
+ 	 var file = $("#filedata").val();
+	 if( file =="") {
+     showerrorHint(null,"请选择数据文件","error");
+     return;
+	 }
+	 else{
+	 	 var suffix = file.substring(file.lastIndexOf(".")+1);
+	 	 if ( suffix!="xls" && suffix!="xlsx"){
+	 	 	 showerrorHint(null,"请选择Excel文件","error");
+	 	 	 return;
+	 	 }
+	 }
+	 showerrorHint(null,"正在导入…","load");
+	 is_import_ing = true;
+	 $("#frm_import").submit();
+ }
+ 
+ //导入用户数据回调函数
+ function import_callback(d) {
+	   is_import_ing=false;
+	   if(d.s=="1")
+	   {
+	   	   if(d.error_list.length==0){
+	         showerrorHint(null,"导入成功","success");
+	       }
+	       else {
+	       	 import_error_list = d.error_list;
+	       	 showerrorHint(null,"导入完成,但有 <a title='查看错误日志' style='color:blue' href='javascript:lookimport_error()'>错误</a>","stop");
+	       }
+	       setTimeout( function() 
+	         {  $("#export_staff").hide();
+	         		getStaff(1);
+	         },2000);
+	   }
+	   else
+	   {
+	   	  showerrorHint(null,"错误："+d.message,"error");
+	   }
+ }
+ 
+  var import_error_list=[];
+  
+  function lookimport_error()
+  {  	  
+  	  $("#errorlist").show();
+  	  var t = [];
+  	  for(var i=0;i<import_error_list.length; i++)
+  	  {
+  	  	 if(import_error_list[i].row!=null)
+  	         t.push( "第"+import_error_list[i].row +"行："+import_error_list[i].msg);
+  	     else
+  	     	   t.push(import_error_list[i].name+"："+import_error_list[i].msg);
+  	     t.push("<br>");
+  	  }
+  	  $("#errorlist .errorlist_text").html(t.join(""));
+  }
+  
+//  $("#app_name").live("mouseout",function(event){
+//  	if(!checkHover(event,this)) return;
+//  	$("#app_name>img").hide();
+//  });
+  
+//  $("#app_icon").live("mouseout",function(event){
+//  	if(!checkHover(event,this)) return;
+//  	$("#app_icon>img:last").hide();
+//  });
+
+  function edit_appico(){
+  	$("#adv_defined").trigger("click");
+  }  
+  
+</script>

@@ -1,0 +1,146 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_basic %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<form id="formbasic"  method="post" class="form-horizontal">
+<style>
+.controls select {*min-height: 0px; *height: 24px;}
+</style>
+<form id="formbasic" class="form-horizontal" method="post" enctype="multipart/form-data">
+<div class="grade-title">基本信息</div>
+<div class="rightdetail clearfix">
+  <input type="hidden" value="{{account}}" id="txtmail" name="txtmail">
+  <div class=" rightdetail_photo" >
+    <div class="allphoto" style="width:120px; height:120px;" id="preview_fake" onclick="editHead()">
+         <img style="width:120px; height:120px;cursor:pointer" title="编辑头像" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" id="preview" src="{{path}}"> 
+    </div>
+    <div class="alllist">
+      <br> 拥有您自已的头象，让同事更容易找到您！<br> 
+      <a data-toggle="modal" show=false href="#invitedphoto" style="color:#0088CC">编辑头像</a><span><img id='loadlog' style='width:12px;height:12px;display:none;' src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/></span>
+    </div>
+  </div> 
+  <div class="rightdetail_left">
+    <div class="control-group">
+      <label class="control-label" for="txtname">真实姓名：</label>
+      <div class="controls">
+     	    <input type="text" class="input-xlarge" value="{{name}}" style="width:270px;"  id="txtname" name="txtname" maxlength="10" >
+     	    <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+          <span class="help-inline" style="color:red"></span> 
+     	</div>
+    </div>    
+    <div class="control-group">
+      <label class="control-label" for="input01">性　　别：</label>
+      <div class="controls">
+        <label style="display:inline; cursor: pointer;line-height: 28px;"><input type="radio" class="input-xlarge" value="男" name="txtsex_id" style="margin: 0 4px;" {% if sex_id=="男" %} checked="checked"{% endif %}>男</label>
+        <label style="display:inline; cursor: pointer;line-height: 28px;"><input type="radio" class="input-xlarge" value="女" name="txtsex_id" style="margin: 0 4px;" {% if sex_id=="女" %} checked="checked"{% endif %}>女</label>
+      </div>
+    </div>    
+    <div class="control-group">
+      <label class="control-label" for="input01">部门名称：</label>
+      <div class="controls" style="position:relative">
+     	    <input type="text" class="input-xlarge" readOnly value="{{deptname}}" style="cursor:default;width:270px;" onclick="Account.showDept()" id="txtdept" name="txtdept" maxlength="20" >
+     	    <input type="hidden"id="txtdeptid" name="txtdeptid" value="{{deptid}}">
+     	    <span id="adddept" style="display:none;padding-left:10px" ><img  title="添加下级部门" src="{{ asset('bundles/fafatimewebase/images/icon_add.png') }}" width="10" height="10"></span>
+     	    <span id="deldept" style="display:none;padding-left:10px" ><img  title="删除当前部门" src="{{ asset('bundles/fafatimewebase/images/errow.gif') }}" width="10" height="10"></span>
+          <span style="position:absolute;top:30px;left:1px;width:auto;display:none">
+            <div class="zTreeDemoBackground"><img  src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16">正在加载数据...</div>
+            <div id="deptdiv" style="display:none" isload="0" class="zTreeDemoBackground" saveurl="{{ path('JustsyBaseBundle_account_deptsave', {'network_domain' : curr_network_domain})}}" delurl="{{ path('JustsyBaseBundle_account_deptdel', {'network_domain' : curr_network_domain})}}" url="{{ path('JustsyBaseBundle_account_deptquery', {'network_domain' : curr_network_domain})}}">
+               <ul id="depttree" class="ztree"></ul>	
+            </div>
+          </span> 
+     	</div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="input01">职　　务：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{duty}}" style="width:270px;" id="txtduty" name="txtduty" maxlength="20">
+      </div>
+    </div>     
+    <div class="control-group">
+      <label class="control-label" for="input01">手 机 号：</label>
+      <div class="controls">
+        {% if we_staff_mobile["rows"][0]["mobile_bind"]|length == 0 %}
+        <input type="text" class="input-xlarge" value="{{mobile}}" maxlength="11" style="width:270px;" id="txtmobile" name="txtmobile"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">         
+        <a class="Amobilebind" href="{{ path("JustsyBaseBundle_account_mobilebind", {'network_domain' : curr_network_domain})}}" title="绑定手机后，您就可以使用手机号进行登录哟！">绑定手机号</a>
+        {% else %}
+        <input type="text" readonly class="input-xlarge" value="{{mobile}}" maxlength="11" style="width:270px;" id="txtmobile" name="txtmobile"  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"> 
+        <a class="Amobilebind" href="{{ path("JustsyBaseBundle_account_mobileunbind", {'network_domain' : curr_network_domain})}}" title="绑定手机后，您可以取消哟！">取消手机绑定</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="textarea">个性签名：</label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="txtself" style="width:270px;" name="txtself" rows="2" maxlength="60">{{self}}</textarea>
+        <span class="controls-tip">60字以内</span>
+      </div>
+    </div>
+    <div class="form-actions" style="margin-top:0px;padding-top:0px;">
+   	        <input id="btnSave" type="button" saveurl="{{ path('JustsyBaseBundle_account_savebasic', {'network_domain' : curr_network_domain})}}" onclick="Account.submit_content(this);" style="width:138px;margin-left: 150px;" class="inputsmall" value="保存">
+            <span id="hint" class="help-inline" style="width:172px;display:none;">
+                   <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+                   <a id="hint_msg" style="color:#db4800"></a>
+            </span>	
+    </div>
+  </div>
+</div>  
+  				<div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    				<div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    				<div class="modal-footer"><span><img class='modal_savelog' style='display:none;width:16px;height:16px;margin-right:5px;' src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/></span><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+  				</div>          
+</form>
+
+<script type="text/javascript">
+  var uploadObj=null;
+  var save_photo_url="{{path('JustsyBaseBundle_identify_save_log')}}";
+  var fileurl="{{fileurl}}";
+  function editHead()
+	{
+		  $("#invitedphoto").modal("show");
+	}
+	function saveHead()
+	{
+		$(".modal_savelog").show();
+	   uploadObj[0].doSave();
+	}
+	function avatar_success()
+	{
+		$(".modal_savelog").hide();
+		  $("#invitedphoto").modal("hide");		  
+		  savePhoto();
+	}
+	function savePhoto(){
+		$("#loadlog").show();
+		$.post(save_photo_url,{},function(d){
+			$("#loadlog").hide();
+			if(d.s=='1'){
+				$('.allphoto #preview').attr("Src",fileurl+d.file);
+			}
+			else{
+				
+			}
+		});
+	}
+  $(document).ready(function()
+  {
+    $('#txtself').maxlength({maxCharacters:60,status:false});
+    var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+    var obj_ff = obj.find("embed");
+    uploadObj = document.all==null? obj_ff : obj;
+    uploadObj.css({"height":"380px","width":"500px"});
+    Account.login_account = "{{account}}";
+    {%if IS_ORG_VIEW=='1' %}
+    Account.loadDept();
+    {%else%}
+       $("#txtdept").removeAttr("onclick");
+       $("#txtdept").bind("click",function(){
+           $(".zTreeDemoBackground").html("sorry！你还未认证，不能设置部门");
+           $(".zTreeDemoBackground").parent().show();
+           setTimeout(function(){$(".zTreeDemoBackground").parent().hide()},3000);
+       });
+    {%endif%}
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}
+{% block main_content_center %}
+<div class="active_detailone active_detailone_box">
+	  <div class="grade-title">
+	   	  企业认证及服务专区
+	  </div>
+	  <div>
+		      <div style="font-weight: 700; height: 50px; line-height: 50px;">尊敬的Wefafa用户：</div>
+		      <div style="padding-left: 25px;">你好！如果你要升级你企业Vip等级，请直接联系以下人员：</div>
+		      <div style="margin-top: 50px; margin-left: 200px;">
+		         <span title="WebIM正在登录中，请稍等" id="callsale" style="margin-right: 20px;float: left; display: block; width: 180px; border: 1px solid rgb(204, 204, 204); line-height: 40px; text-align: center; height: 40px; border-radius: 5px 5px 5px 5px; background-color: #daeec3;font-weight:700;cursor: pointer;" title="立即联系">售前咨询</span>
+		         <span title="WebIM正在登录中，请稍等" id="callservice" style="float: left; display: block; width: 180px; border: 1px solid rgb(204, 204, 204); line-height: 40px; text-align: center; height: 40px; border-radius: 5px 5px 5px 5px; background-color: #daeec3;font-weight:700;cursor: pointer;" title="立即联系">客户服务</span></div>
+	  </div>
+</div>
+  
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+	  var timers = 120;
+	  web_auto_login=true;
+	  function checker(){
+	     if(typeof(FaFaChatMain)=="undefined" || FaFaMessage==null || FaFaMessage._conn==null || !FaFaMessage._conn.connected) setTimeout(function(){checker()},500);
+	     else
+	     {
+	        $("#callsale").attr("title","WebIM已登录成功，可向TA发送消息");
+	        $("#callservice").attr("title","WebIM已登录成功，可向TA发送消息");
+	     }
+	  }
+		$(document).ready(function()
+		{
+		    $("#callsale").unbind("click").bind("click",function(){
+		        FaFaChatWin.ShowRoster("10094-100082@fafacn.com");
+		    });
+		    $("#callservice").unbind("click").bind("click",function(){
+		        FaFaChatWin.ShowRoster("10097-100082@fafacn.com");
+		    });		
+		    setTimeout(function(){checker()},500);
+		        
+		});
+</script>
+{% endblock %}

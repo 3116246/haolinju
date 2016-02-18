@@ -1,0 +1,71 @@
+/* 美邦标题部分 */
+.mb_title_area { border-bottom: 1px solid #0088cc;color: #0088cc;cursor: default;float: left;font-weight:bold;height:45px;width: 100%;}
+.mb_title_area>img { float: left;padding-right: 10px;width: 180px;}
+.mb_title_area>span { display: block;float: left;font-size: 22px;letter-spacing: 5px;margin-top: 0;text-align: center;text-shadow: 2px 0 1px #ccc;width: 580px; }
+.mb_title_button_area { color: #000000;cursor: pointer;float: right;font-weight: 100;margin-right: 15px;margin-top: 5px;padding: 2px;}
+.mb_title_button_img {background-image: url("/bundles/fafatimewebase/images/icon_add.png");background-repeat: no-repeat;float: left;height: 16px;margin-top: 3px;width: 16px;}
+.mb_title_button_img_text { float:left;padding-left:5px;}
+/*表格样式*/
+.mb_table { cursor: default;margin-left: auto;margin-right: auto; margin-top: 5px; }
+.mb_table_tr { background-color: white;border-color: #878787;border-style: none solid solid;border-width: 0 1px 1px;float: left;height: 28px;line-height: 28px;width: 100%;}
+.mb_table_title { background-color: #ccc;border: 1px solid #878787;float: left;height: 28px;line-height: 28px;width: 100%;}
+.mb_rightLing { float:left;text-align:center;border-right:1px solid #878787;height:100%;display:block;}
+.mb_combox { border: 1px solid #aaa;font-size: 12px;height: 22px; line-height: 20px;vertical-align: middle; width: 120px; }
+.mb_textbox { border: 1px solid #aba;height: 25px;line-height: 25px;padding:2px 5px;+height:22px;+line-height:22px;}
+.mb_delete_button { background-image: url("/bundles/fafatimewebase/images/document_icon.png");background-position: -38px 598px;float: left;height: 16px;margin-left: 20px;width: 16px;}
+.mb_delete_button:hover { cursor:pointer;background-position:1px -602px;}
+.mb_edition_button {background-image: url("/bundles/fafatimewebase/images/document_icon.png");background-position: -38px -575px;float: left;height: 16px;margin-left: 20px;width: 18px;}
+.mb_edition_button:hover { cursor:pointer;background-position:1px -575px;}
+.mb_role_button {background-image: url("/bundles/fafatimewebase/images/document_icon.png");background-position: -38px -708px;float: left;height: 16px;margin-left: 20px;width: 18px;}
+.mb_role_button:hover { cursor:pointer;background-position:1px -708px;}
+.mb_download_icon { background-image: url("/bundles/fafatimewebase/images/document_icon.png");background-position: -38px 519px;float:left;height: 16px;margin-left: 20px;width: 16px; }
+.mb_download_icon:hover { background-position:1px 519px; }
+.mb_add_button { background-image: url("/bundles/fafatimewebase/images/mapp_icons.png"); background-position: -3px -583px;float: left;height: 25px;margin-left: 5px;width: 25px; }
+.mb_add_button:hover { cursor:pointer;background-position: -35px -583px;}
+.mb_content_area { float: left;height: 450px;margin-top: 10px;max-height: 450px;min-height: 450px;padding: 0;}
+.search_area { border-bottom: 1px solid #0088cc;height: 50px;line-height: 50px;padding-left: 20px; }
+.search_empty { background-color: rgb(249, 237, 184);border: 1px solid rgb(237, 201, 103); border-radius: 2px;color: #cc3300; margin-top: 10px;padding: 2px;text-align: center;width: 100%;}
+.mb_tables { margin-top: 10px; width: 850px;cursor:default; }
+.mb_tables_row { height:25px;background-color:white; }
+.mb_tables_row>td {border:1px solid #ddd; padding-left:8px;}
+.mb_tables_title { background: linear-gradient(to bottom, #f9f9f9 0px, #efefef 100%) repeat-x scroll 0 0 rgba(0, 0, 0, 0);height: 30px;text-align: center;}
+.mb_tables_title>td { border:1px solid #ddd;}
+.mb_upload_fileIcon { background-image: url("/bundles/fafatimeweopenapi/images/icon28.png");background-position: -1px -252px;cursor: pointer; float: left;height: 25px;width: 25px; }
+.mb_button{ height: 25px;line-height: 22px;+line-height:20px;margin-left: 10px;padding: 0;width: 70px; }
+.mb_search_icon {	float:left;background-image: url("/bundles/fafatimewebase/images/icon.png");background-position: -185px -33px;background-repeat: no-repeat;cursor: pointer;height: 14px;margin-left: -19px;margin-top: 9px;overflow: hidden;position: relative;width: 14px;}
+/*美邦表格样式*/
+.mb_common_table { border-top:1px solid #ddd;cursor: default;float: left;margin-top: 10px;overflow-x: hidden;overflow-y: auto;width: 100%; }
+.mb_common_table > thead  { float:left;width:100%;height:30px;background:linear-gradient(to bottom, #f9f9f9 0px, #efefef 100%) repeat-x scroll 0 0 rgba(0, 0, 0, 0); }
+.mb_common_table > thead > tr {  border-bottom: 1px solid #ddd;border-left: 1px solid #ddd;line-height: 30px;text-align: center;width: 100%;}
+.mb_common_table > thead > tr > td { float:left;border-right:1px solid #ddd;float: left;height: 30px; }
+.mb_common_table > tbody { float:left;width:100%;}
+.mb_common_table > tbody > tr { border-bottom: 1px solid #ddd;border-left: 1px solid #ddd;line-height: 30px;text-align: center;width: 100%;}
+.mb_common_table > tbody > tr > td { border-right: 1px solid #ddd;float: left;height: 30px;overflow: hidden;padding-left: 8px;text-overflow: ellipsis;white-space: nowrap;}
+.mb_common_table > tbody > tr:hover {background: none repeat scroll 0 0 #eaf2ff;}
+.mb_common_table_empty { background-color: rgb(249, 237, 184);border-color: #ccc;border-style: none solid solid;border-width: 1px;color: #cc3300;display: block;height: 30px;line-height: 30px;text-align: center;width: 100%; }
+.mb_common_word { display: block;float: left;font-size: 22px;letter-spacing: 5px;margin-top: 0;text-align: center;text-shadow: 2px 0 1px #ccc;cursor:default; }
+.mb_menu_area { border-bottom: 1px solid #0088cc;float:left;height: 26px;padding-left: 30px;width:100%; }
+.mb_menu_active { background-color: white; border-color: #0088cc;border-radius:5px 5px 0 0;border-style: solid solid none;border-width: 1px;color:#0088cc;cursor:default;float:left;line-height:25px;text-align:center;width: 120px; }
+.mb_menu { color:#999999;cursor:pointer;float:left;line-height:25px;text-align:center;width:120px;}
+.mb_textarea{ background-color: #ffffff;border: 1px solid #aba;display: inline-block;float: left;font-size: 12px;padding:4px;resize:none; }
+.staff_field_setting  { color: #0088cc;cursor: pointer;display: none;float: left;font-size: 12px;height: 100px;margin-left: 956px;margin-top: -260px; }
+.remove_file { float: left;height: 25px;width: 25px; }
+.remove_file>i { cursor: pointer;margin-left: 5px;margin-top: 5px; }
+.mb_search_down_icon { background-image: url("/bundles/fafatimewebase/images/down_hover.png");background-repeat: no-repeat;cursor: pointer;float:left;height: 20px;margin-left: -23px;margin-top: 5px;overflow: hidden;position: relative;width: 20px; }
+.body_content{  cursor: default;margin-left: auto;margin-right: auto;padding-top: 20px;width:1000px;}
+.selected_dept_area { display:none;background-color: #fff;border: 1px solid #ccc;height: 255px;left: 87px;position: absolute;top: 48px;}
+.option_area { border-top: 1px solid #ddd;float: left;height: 10px;position: relative;width: 100%; }
+.option_area > span { background: linear-gradient(to right, rgb(237, 201, 103) 0px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0);color: #cc3300;float: left;    margin-top: -12px;padding: 0 10px; }
+.common_ul { background-color:#fff;border: medium none;float: left;height: 448px;max-height: 448px;overflow-x: hidden;overflow-y: auto;width: 100%; }
+.common_ul>li { border-bottom: 1px solid #ccc;float: left;line-height: 30px;list-style: outside none none;outline: 0 none;padding:0px 15px;text-align: left;white-space: nowrap;width: 100%; }
+.common_ul>li:hover { background-color:#b5e7eb;color:#fff;border-bottom: 1px solid #b5e7eb; }
+.op_dept_area { float:left;width:100%;display:none;margin-top:4px; }
+.op_dept_area>span { float: left; margin-left: 40px;padding: 0;text-shadow: none;width: 100px;}
+.group_menu_bar {border-bottom: 1px solid #0088cc;float: left;height:25px;line-height:25px;padding-left: 20px;width: 100%; }
+.group_menu_bar>span { border-radius:5px 5px 0 0;border-style: solid solid none;border-width: 1px;float: left;line-height: 22px;margin-right: 5px;text-align: center;text-shadow: none;width:105px; }
+.menu_item_active { background-color: #0088cc;border-color: #0088cc;color: white;cursor: default;height: 25px;}
+.menu_item { background-color: #eee;border-color: #ccc;cursor: pointer;height: 24px; }
+.common_success_icon { background-image: url("/bundles/fafatimewebase/images/reg.png");background-position: 607px 2px;float: left;height: 20px;width: 20px;}
+.common_error_icon { background-image: url("/bundles/fafatimewebase/images/reg.png");background-position: 628px 2px;float: left;height: 20px;width: 20px;}
+.del_pid { display: block;float: left;height: 20px;margin-top: 4px;padding-left: 5px;width: 20px;}
+.del_pid_icon { cursor: pointer;display: none;float: left;}

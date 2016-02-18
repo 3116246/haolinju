@@ -1,0 +1,324 @@
+
+<div type="{%block publishtype%}circle{%endblock%}" class="publish">
+  <div class="lib_Menubox lib_tabborder">      
+    <ul>
+    {%if(publish)%}
+      <li id="one1" onClick="setInputTab(this)" publish_event="publishTrend" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishTrend") }}"><span>动态</span></li>
+      <li id="one2" onClick="setInputTab(this)" publish_event="publishAsk" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishAsk") }}"><span>提问</span></li>
+      <li id="one3" onClick="setInputTab(this)" publish_event="publishTogether" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishTogether") }}"><span>活动</span></li>
+      <li id="one4" onClick="setInputTab(this)" publish_event="publishVote" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishVote") }}"><span>投票</span></li>
+      {%if ismanager==1%}
+	      {%if app.user.IsExistsFunction("OFFICIAL_RELEASE")%}
+	      <li id="one5" onClick="setInputTab(this)" publish_event="publishOfficialTrend" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishOfficialTrend") }}"><span>官方</span></li>
+	      {%endif%}
+      {%endif%}
+   {%else%}
+       <li id="one1" title="您还未获得相应权限，暂时不能使用该功能" publish_event="publishTrend" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishTrend") }}"><span>动态</span></li>
+      <li id="one2" title="您还未获得相应权限，暂时不能使用该功能" publish_event="publishAsk" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishAsk") }}"><span>提问</span></li>
+      <li id="one3" title="您还未获得相应权限，暂时不能使用该功能" publish_event="publishTogether" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishTogether") }}"><span>活动</span></li>
+      <li id="one4" title="您还未获得相应权限，暂时不能使用该功能" publish_event="publishVote" publish_event_param="{{ path("JustsyBaseBundle_component_cinputarea_publishVote") }}"><span>投票</span></li>
+   {%endif%} 
+    </ul>
+  </div>
+  <div class="lib_Contentbox lib_tabborder">
+    <div id="con_one1" {%if(not publish)%} style="background-color: #EEEEEE;" {%endif%} class="input_con_area text_div" style="margin-bottom: 0px;">
+    {%if(publish)%}
+      <textarea id="Trend" cols="" rows="" class="text_input userAutoTips FaceAutoTips" style="height: 56px;" placeholder="我有很多话想说！" onpaste='setPublishEnable()' onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'></textarea>
+      {%else%}
+      <textarea id="Trend" cols="" rows="" class="text_input userAutoTips FaceAutoTips" style="height: 56px;background-color:transparent" disabled="disabled" readonly="readonly" placeholder="您还未获得相应权限，暂时不能使用该功能" ></textarea>
+      {%endif%}
+    </div>
+    <div id="con_one2" class="input_con_area ask_div" style="display:none">
+      <div class="ask_div1">
+        <input id="AskQuestion" name="AskQuestion" type="text" class="text_input" placeholder="您有什么问题？" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'>
+      </div>
+    </div>
+    <div id="con_one3" class="input_con_area ask_div" style="display:none">
+      <div class="ask_div1" style="margin-bottom:8px">
+        <input id="together_title" name="together_title" type="text" class="text_input" placeholder="您有什么活动计划？" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'>
+      </div>
+       <div class="ask_div3">
+          <select id="seltogether_m" class="span1" style="width:80px;float:left" onchange="seltogether_m_OnChange()">
+            {% for i in 1..12 %}
+            <option value="{{ i }}">{{ i }}月</option>
+            {% endfor %}
+          </select>
+          <select id="seltogether_d" class="span1" style="width:70px;float:left">
+          </select>
+          <select id="seltogether_hm" class="span1" style="width:80px;float:left">
+            {% for i in 0..23 %}
+            <option value="{{ i }}:00">{{ i }}:00</option>
+            <option value="{{ i }}:30">{{ i }}:30</option>
+            {% endfor %}
+          </select>
+          <select id="seltogether_dur" style="width:100px;">
+            <option value="">持续时间</option>
+            <option value="1小时">1小时</option>
+            <option value="2小时">2小时</option>
+            <option value="3小时">3小时</option>
+            <option value="4小时">4小时</option>
+            <option value="5小时">5小时</option>
+            <option value="6小时">6小时</option>
+            <option value="7小时">7小时</option>
+            <option value="8小时">8小时</option>
+            <option value="全天">全天</option>
+          </select>
+<script type="text/javascript">
+$(document).ready(function () {
+  //初始化活动时间选择框
+  var d = new Date();
+  $("#seltogether_m").val(d.getMonth()+1);  
+  d = new Date(d.getTime()+30*60*1000);
+  $("#seltogether_hm").val(d.getHours()+":"+(d.getMinutes()<30?"00":"30"));
+  $("#selvote_m").val(d.getMonth()+1);
+  $("#selvote_hm").val(d.getHours()+":"+(d.getMinutes()<30?"00":"30"));
+  seltogether_m_OnChange();
+  selvote_m_OnChange();
+});
+</script>          
+      </div>
+      <div class="ask_div1" style="margin-bottom:8px">
+        <input id="together_addr_map_point" name="together_addr_map_point" value="" type="hidden">
+        <input id="together_addr" name="together_addr" type="text" class="text_input" placeholder="地点" style="width:80%"><a onclick="together_map()" class="right-vote-button" href="javascript:void(0);" style="margin: 2px;float:right">地图定位</a>
+      </div>
+      <div class="ask_div1">
+        <textarea id="together_desc" cols="" rows="" class="text_input" placeholder="活动描述"></textarea>
+      </div>
+    </div>
+    <div id="con_one4" class="input_con_area ask_div" style="display:none">
+      <div class="ask_div1" style="margin-bottom:8px">
+        <input id="txtvote_title" name="txtvote_title" type="text" class="text_input" placeholder="您想对何事发起投票？" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'>
+      </div>
+       <div class="ask_div3">
+       	  <span style="padding-left:6px;float:left">截止时间：</span>
+          <select id="selvote_m" class="span1" style="width:80px;float:left" onchange="selvote_m_OnChange()">
+            {% for i in 1..12 %}
+            <option value="{{ i }}">{{ i }}月</option>
+            {% endfor %}
+          </select>
+          <select id="selvote_d" class="span1" style="width:70px;float:left">
+          </select>
+          <select id="selvote_hm" class="span1" style="width:80px;float:left">
+            {% for i in 0..23 %}
+            <option value="{{ i }}:00">{{ i }}:00</option>
+            <option value="{{ i }}:30">{{ i }}:30</option>
+            {% endfor %}
+          </select>          
+      </div>
+      <div id="divvote_ismulti" class="ask_div1" style="color:#888888;">
+        <span style="padding-left:6px">投票选项：</span>
+        <label class="radio" style="width: 40px; display: inline-block; margin: 0px; font-size: 12px;"><input type="radio" name="vote_sel_type" id="vote_sel_type_single" value="0" checked>单选</label>
+        <label class="radio" style="width: 40px; display: inline-block; margin: 0px; font-size: 12px;"><input type="radio" name="vote_sel_type" id="vote_sel_type_multi" value="1">多选</label>
+      </div>
+      <div id="divvote_options">
+        <div class="ask_div4">
+          <input type="text" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'  class="text_input" placeholder="选项一">
+        </div>
+        <div class="ask_div4">
+          <input type="text" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)' class="text_input" placeholder="选项二">
+        </div>
+        <div class="ask_div4">
+          <input type="text" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)' class="text_input" placeholder="选项三" onfocus="vote_option_OnFocus(this)">
+        </div>
+      </div>
+    </div>
+    <div id="con_one5" class="input_con_area ask_div" style="display:none">
+      <div id="divofficial_ismulti" class="ask_div1" style="color:#888888;">
+        <span style="padding-left:6px">信息类型：</span>
+        <label class="radio" style="width: 40px; display: inline-block; margin: 0px; font-size: 12px;"><input type="radio" name="official_sel_type" id="official_sel_type_notice" value="notice" checked>通知</label>
+        <label class="radio" style="width: 40px; display: inline-block; margin: 0px; font-size: 12px;"><input type="radio" name="official_sel_type" id="official_sel_type_bulletin" value="bulletin">公告</label>
+      </div>  
+      <div class="ask_div4">
+          <textarea id="officialTrend" cols="" rows="" class="text_input userAutoTips FaceAutoTips" style="height: 56px;" placeholder="我要发布官方信息！" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'></textarea>
+      </div>
+     </div> 
+  </div> 
+  <div class="lib_notify ask_div1" style="margin-bottom: 0px;margin-top: 4px;padding-top: 4px; padding-bottom: 2px; cursor: text; display: {% block hasCCNotify %}none{% endblock %};" onclick="$(this).children('#txtNotify').focus()">
+    <div id="InputNotifyArea"></div>
+    <input id="txtNotify" type="text" class="ask_input" style="margin: 0px; padding: 0px; vertical-align: top; height: 20px; width: 180px;" placeholder="+ 您想通知其它群组的某人吗？">
+  </div>
+  <div class="lib_attachs ask_div1" style="margin-bottom: 0px;margin-top: 4px;padding-top: 4px; padding-bottom: 4px; display:none">    
+    <div id="filesList">
+    </div>
+  </div>  
+  <div class="lib_other">
+    <ul>
+      <li id="li_facemenu" class="dropdown">
+      {%if(publish)%}
+        <a class="dropdown-toggle" id="drop1" role="button" data-toggle="dropdown" href="menuFaceEmote" onclick="if ($('#menuFaceEmote li').length==0) LoadComponent('menuFaceEmote', '{{path("JustsyBaseBundle_component_cinputarea_loadfaceemote")}}')" title="小提示：输入“[”就可以选择表情了"><i class="ins_face icon16"></i> 表情</a>
+        <ul id="menuFaceEmote" class="dropdown-menu facemenu" role="menu" aria-labelledby="drop1">
+        </ul>
+         {%else%}
+           <a class="dropdown-toggle" href="javascript:void(0)" title="您还未获得相应权限，暂时不能使用该功能"><i class="ins_face icon16"></i> 表情</a>
+         {%endif%}
+      </li>      
+      <li id="li_picmenu" class="dropdown" style="width: 80px;">
+      {%if(publish)%}
+        <a class="dropdown-toggle" title="小提示：单次上传不超过50M，最多可同时上传8个附件" id="drop_picmenu" role="button" data-toggle="dropdown" href="menuPic"><i class="ins_file icon16"></i> 图片/文件</a>
+        {%else%}
+        <a class="dropdown-toggle" title="您还未获得相应权限，暂时不能使用该功能" href="javascript:void(0)"><i class="ins_file icon16"></i> 图片/文件</a>
+        {%endif%}
+        <div class="uploadingfilebox"><div class="uploadingfilebox_inner">
+          <img src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/>
+          <span>正在上传：</span><span class="uploadingfilename"></span><div class="uploadingfileprogress"></div>
+        </div></div>
+        <ul id="menuPic" class="dropdown-menu picmenu" role="menu" aria-labelledby="drop_picmenu">
+          <li>
+           <a id="filesel_a" tabindex="-1" style="overflow:hidden;">
+              <form id="upload_file" name="upload_file"  method="post" enctype="multipart/form-data">
+              	<input id="hpost_to_group" name="hpost_to_group" type="hidden" value="{% block HPostToGroupID %}ALL{% endblock %}"/>
+                <span id="upload_file_sel" style="cursor:pointer;display: inline-block;position: relative;width: 154px;">
+                <input type=hidden id="uploadSourcePage" name="uploadSourcePage" value="home">
+                <input tabindex="-1" name="filedata" hidefocus="hidefocus"  onchange="fileSelect('{{ path('JustsyBaseBundle_documnet_upload', {'network_domain' : network_domain})}}')" id="filedata" size="1" style="cursor: pointer;left: 0;filter:alpha(opacity = 0); width:70px;opacity:0;-moz-opacity:0;position: absolute;top: 0;z-index: 1000002;outline: none;" type="file">
+              上传一个图片/文件
+              </span>
+              <span id="upload_file_ing" style="display:none;position: relative;width: 154px;"><img width=16 height=16 src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}">文件上传中...</span>
+              </form>
+           </a>
+           <script type="text/javascript">
+             $("#filesel_a").mousemove(function (e) 
+             {
+                //var e = e || window.event;
+                var offsetA = $(this).offset();
+                var newX = e.clientX - offsetA.left  - 50;
+                var newY = e.clientY - offsetA.top - 20;
+                
+                $(this).find("input:file").css("left", newX);
+                $(this).find("input:file").css("top",  newY);
+             });
+           </script>
+          </li>
+          <li class="picmenuspliter"><a tabindex="-1" href="#" class="picmenuspliter_a"></a></li>
+          <li><a tabindex="-1" data-toggle="modal" show=false href="#openfiledigl" >选择一个已有图片/文件</a></li>
+        </ul>
+      </li>
+      {%if(publish)%}
+      <li id="li_at" onclick="AtSomebody()" style='margin-left:10px;' class="dropdown"><a class="dropdown-toggle" title="小提示：你也可以直接输'@'符哟" id="drop_picmenu" role="button" data-toggle="dropdown" href="javascript:void(0);"><i class="ins_at icon16"></i> Ta</a></li>
+      {%else%}
+      <li id="li_at" style='margin-left:10px;' class="dropdown"><a class="dropdown-toggle" title="您还未获得相应权限，暂时不能使用该功能" id="drop_picmenu" role="button" data-toggle="dropdown" href="javascript:void(0);"><i class="ins_at icon16"></i> Ta</a></li>
+      {%endif%}
+<!--      <li><a href="#"><i class="lib-three"></i>主题</a></li>   -->
+    </ul>
+    <span class="btnPublish">
+    {%if(publish)%}
+       <span id="btnPublish" name="btnPublish" type="button" onmouseover="publishNote(this)" class="libenter" value="发  布" onclick="publishInput()" disabled="disabled"><input id="btnpub" type="button" value="发布" style="height: 1px; width: 1px; position: absolute; border: 0px none; opacity: 0; background: none repeat scroll 0px 0px transparent;">发  布</span>
+       	{%else%}
+       	<span id="btnPublish" name="btnPublish" type="button" class="libenter" value="发  布" title="您还未获得相应权限，暂时不能使用该功能" disabled="disabled">发  布</span>
+       		{%endif%}
+    </span>
+    <div class="postselect" style="height: 28px;  line-height: 28px;  display:{% block hasPostToGroup %}block{% endblock %}">
+  		<ul class="post_to_group" id="menus" dropdownlist="1">		
+  		{%if(publish)%}
+  			<li style="width:50px;padding-left: 20px;"><a style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 50px;" href="javascript:void(0);"><span id="spost_to_group_name">全部成员</span></a>
+  				<ul class="post_list" style="display: none;margin-left: -25px;margin-top: 0px;*margin-top: 6px;width: 94px;">
+  					<li style="background-color:#99CCCC; text-align:center; color:#fff;">发布到 …</li>
+  					<li><a href="javascript:void(0);" title="发布给当前圈子的全部成员" group_value="ALL" onclick="mi_post_to_group_OnClick(this)"><div class="postto_all icon16"></div>全部成员</a></li>
+  					<li style=" border-bottom:1px dashed #ccc; padding-bottom:5px;"><a href="javascript:void(0);" title="私密信息只有自己才能看到" group_value="PRIVATE" onclick="mi_post_to_group_OnClick(this)"><div class="postto_me icon16"></div>私密</a></li>
+  					{% for item in this.groups_array %}
+  					<li style="overflow:hidden;"><a href="javascript:void(0);" style="overflow:hidden;white-space: nowrap;text-overflow: ellipsis;" title="发布给（{{ item["group_name"] }}）的成员" group_value="{{ item["group_id"] }}" onclick="mi_post_to_group_OnClick(this)"><div class="postto_group icon16"></div><span style="float: left; width: 66px; overflow: hidden; text-overflow: ellipsis;">{{ item["group_name"] }}</span></a></li>
+  					{% endfor %}
+  				</ul>
+  			</li>		
+  			{%else%}
+  			<li style="width:50px;padding-left: 20px;"><a href="javascript:void(0);" title="您还未获得相应权限，暂时不能使用该功能"><span>全部成员</span></a>
+  			</li>		
+  			{%endif%}
+  		</ul>
+    	<div style="display:none"> 
+          <span style="float:right; width: 10px;">&nbsp;</span>          
+          <span id="bcancel_post_to_group" onclick="bcancel_post_to_group_OnClick()">×</span>
+          <span id="apost_to_group" onclick="apost_to_group_OnClick()">发布给：全部同事</span>
+          <input id="txtpost_to_group" type="text" style="float:right; display:none; width: 100px; margin-right: 10px; margin-top:-7px;" placeholder="请输入群组名称" onblur='$("#apost_to_group").show();$(this).hide();if ($("#hpost_to_group").val() != "ALL"){$("#bcancel_post_to_group").show();}'>
+    	</div>	
+    </div>
+    <!--------关于置顶--------->
+    <div class='set_top' >
+    	<span><input type='checkbox' checked='checked' id='istop'/><span style='margin-left:3px;text-align:center;'>置顶</span></span>
+    	<span class='set_time' style='padding-right:6px;padding-left:2px;padding-top:2px;cursor:pointer;'><span id='serTime' timeout='1'>1天</span><span class='bn'></span></span>
+    	<ul class='time_ul' style='display:none;z-index:999;width:40px;height:80px;margin:0;padding:0;border:0;position:absolute;border:1px solid #CCC;border-redius:4px 4px 4px 4px;background-color:white;'>
+    			<li style='width:100%;text-align:center;color:#AAA;cursor:pointer;' timeout='1d'>1天</option>
+    			<li style='width:100%;text-align:center;color:#AAA;cursor:pointer;' timeout='1w'>1周</option>
+    			<li style='width:100%;text-align:center;color:#AAA;cursor:pointer;' timeout='1m'>1月</option>
+    		</ul>
+    </div>
+    <!----关于短信提醒------>
+  </div>
+  <div id='uploadfilecontainer' class='uploadfilecontainer' style='display:none;'>
+  	<span class='tranparent_span'></span>
+  </div>
+  <div class="clearBoth"></div>
+</div>
+<div class="modal" id="openfiledigl" data-backdrop=false style="display:none;width:735px;margin-left: -430px;" show=false>
+    <div class="modal-header" style="padding: 0;">    
+    	<a class="close" data-dismiss="modal">×</a>    
+    	<h5 style="margin: 0 0 0 10px;line-height: 25px;">选择一个文档</h5>  
+    </div>
+    <div id="files" class="modal-body" style="padding:1px;max-height: 450px;">    
+    	
+    </div>  
+    <div class="modal-footer" style="padding: 5px 5px 5px 0;">    
+    	<a href="javascript:insertFileID();" class="btn btn-primary insertSelFile" style="color:white;display:none;">添加附件</a>  
+    	<A class=btn href="#" data-dismiss="modal" >关闭</A>   
+    </div>	
+</div>
+<div class="modal" id="togetherMap" data-backdrop=false style="display:none;width:650px;margin-left: -315px;" show=false>
+    <div class="modal-header" style="padding:0px">    
+    	<a class="close" data-dismiss="modal">×</a>
+    </div>
+    <div id="togetherMap_map" class="modal-body fafa-map" style="border:1px solid #ccc;padding:1px;height: 337px;width:640px;margin-left: 3px;margin-top: 20px;">
+    </div>  
+    <div class="modal-footer">    
+    	<a href="javascript:togetherMap_save();" class="btn btn-primary" style="color:white;">确定</a>  
+    	<A class=btn href="#" data-dismiss="modal" >关闭</A>   
+    </div>	
+</div>
+<script type="text/javascript">
+$("#Trend").bind("keydown",function(e){
+  if(e.which==9 && $.trim($(this).val())!="") {
+    $("#btnPublish").removeAttr('disabled');
+    //$("#btnpub").focus();
+    $("#btnPublish").focus();
+  }//else $("#btnPublish").attr("disabled",'disabled');
+});
+$(document).ready(function() {
+  $('input[placeholder]').placeholder();
+  $('textarea[placeholder]').placeholder();
+  setInputTab($("#one1"));
+
+  $('#openfiledigl').on('shown', {Aurl: "{{ path('JustsyBaseBundle_documnet_select', {'network_domain' : network_domain}) }}"}, openfiledigl_OnShown);
+
+  var txtpost_to_group_source = {{ this.groups|raw }};
+  for (var i=0; i<txtpost_to_group_source.length; i++)
+  {
+    txtpost_to_group_source[i].index = i; 
+    txtpost_to_group_source[i].toString = function(){return this.index;};
+  }
+  $("#txtpost_to_group").typeahead({
+    source : txtpost_to_group_source,
+    highlighter : txtpost_to_group_highlighter, 
+    matcher : txtpost_to_group_matcher,
+    sorter : txtpost_to_group_sorter,
+    updater : txtpost_to_group_updater
+  });
+  
+  //通知人员，当前圈子的人数小于100时，会在初始化时取出全部的人员，或者只取出满足条件的人员
+  window.txtNotify_source_all = {{ this.staffs|raw }};
+  window.txtNotify_source_100 = [];
+  window.txtNotify_source_url = "{{ path("JustsyBaseBundle_component_cinputarea_querycirclestaff100") }}";
+  for (var i=0; i<txtNotify_source_all.length; i++)
+  {
+    txtNotify_source_all[i].index = i; 
+    txtNotify_source_all[i].toString = function(){return this.index;};
+  }
+  $("#txtNotify").typeahead({
+    source : txtNotify_source,
+    highlighter : txtNotify_highlighter, 
+    matcher : txtNotify_matcher,
+    sorter : txtNotify_sorter,
+    updater : txtNotify_updater
+  });  
+  $("#txtNotify").bind("keyup", txtNotify_OnKeyUp);
+  $("#li_facemenu").show();//兼容IE7（部分情况）下不显示的BUG（不明原因把该元素的display设置为了none），这儿强制show
+  setTopTime();
+});
+</script>

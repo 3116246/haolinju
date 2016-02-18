@@ -1,0 +1,18 @@
+<ul>
+  {% for row in ds["we_convers_list"]["rows"] %}
+  {% include 'JustsyBaseBundle:CDisplayArea:reply_item.html.twig' with {'trend':trend} %}
+  {% endfor %}
+</ul>
+{%if(pagecount>1)%}
+<div class="reply_pager pagination pagination-right" url="{{ path("JustsyBaseBundle_component_cdisparea_getreply") }}" conv_root_id="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="ReplyList.getPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href='#' onclick="ReplyList.getPage({{i}})">{{(i)}}</a></li>
+	{%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %}onclick="ReplyList.getPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}

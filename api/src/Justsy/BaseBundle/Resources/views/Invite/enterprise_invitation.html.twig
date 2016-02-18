@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FaFa，开启企业社会化时代！</title></head>
+
+<body style="background:#fff;color:#000;font-size:12px;font-weight:normal;font-family:'lucida Grande',Verdana;padding:0 7px 6px 4px;margin:0;">
+<table width="620" border="0" align="center" cellpadding="0" cellspacing="3" style="font-size:12px;font-family:Verdana, Arial, Helvetica, sans-serif;line-height:18px">
+  <tr>
+    <td width="611"><a href="https://www.wefafa.com/" target="_blank"><img src="https://www.wefafa.com/bundles/fafatimewebase/images/wefafa_logo.png" width="180" height="75" border="0"  /></a></td>
+    <td style="border-bottom:1px solid #00a9d9"><p align="right" style="width:449px;">&nbsp;</p></td>
+  </tr>
+ <tr>
+            <td height="60" colspan="2">
+                <span style="font-size: 14px; font-weight: bold">欢迎加入Wefafa</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="word-break:break-all">
+                {% if has_e is defined and has_e=="1" %}
+                <p>Hi，我是{{realName}}，想邀请你加入<strong style="font-weight:bold;">【{{ename}}】企业协作网络</strong>，下面这几位同事都已经加入了<br  /></p>
+                {% else %}
+                <p>Hi，我是{{realName}}，想邀请你加入<strong style="font-weight:bold;">Wefafa企业协作网络</strong><br/></p>
+                {% endif %}
+				<table cellpadding="0" cellspacing="0">
+						<tr>
+						  {% for s in staff %}
+						  <td style="padding-right:6px;font-size:12px;font-family:Tahoma;word-wrap:break-word;line-height:1.3;" valign="top">
+							  <img alt="{{s.nick_name}}" height="60" src={% if s.photo_path %} "{{s.photo_path}}" {% else %} "https://www.wefafa.com/bundles/fafatimewebase/images/tx.jpg" {% endif %} style="vertical-align:top" width="60"><span style="display:block;margin-top:5px;width:60px;overflow:hidden;text-align: center;">{{s.nick_name}}</span>
+							</td>
+							{% endfor %}
+					  </tr>
+        </table>
+
+					<p>在这里我们可以：<br>找到公司同事、合作伙伴及新老朋友，了解大家的动态，和大家一起分享、协同工作；<br>
+					还能与大家随时随地沟通，参加公司内外的各种活动及投票等。<br>
+					快快加入我们吧！</p>
+          {% if invMsg %}
+          <p>他对您说：<br>{{invMsg}}</p>
+          {% endif %}
+				<p><a href="{{activeurl}}" style="display:block;margin:25px 0;background-image:url('https://www.wefafa.com/bundles/fafatimewebase/images/btn80.png');width:80px;height:28px;line-height:28px;text-align:center;font-size:14px;color:white;text-decoration:none;background-color:#1082a7">
+					接受邀请</a></p>
+               <p style="margin:0;color:#999;">您也可以，点击以下链接 &quot;接受邀请&quot;</p>
+					<a href="{{activeurl}}" style="display:block;color:#1e5494;text-decoration:underline;line-height:1.3;">					{{activeurl}}</a>
+					<p style="margin:3px 0;color:#999;">(如果以上不是链接形式，请手工粘贴到浏览器地址栏再访问)</p>
+			   </td>
+        </tr>
+  <tr>
+          <td colspan="2"><p style="color:#999">------------------------------------------------------------------------------------------------------------------</p>
+            <p>Wefafa - 一个由工作圈子交织而成的企业社交网络 <a href="https://www.wefafa.com" target="_blank">https://www.wefafa.com</a><br  />
+              客服邮箱：service@fafatime.com<br  />
+              <br  />
+              <font color="#999999">此邮&#x4EF6;由系统发出，请勿直接回复；如有任何疑问请&nbsp;<a href="https://www.wefafa.com/aboutus.htm" target="_blank">联系Wefafa客服</a></font>
+  </p>    </tr>
+</table>
+
+</html>

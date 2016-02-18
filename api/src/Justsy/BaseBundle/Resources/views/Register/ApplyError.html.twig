@@ -1,0 +1,13 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block main_content %}
+<div align='center' style='margin-bottom:40px;'>
+<div style="background:url({{asset('bundles/fafatimewebase/images/activeback.jpg')}});width:960px;height:520px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.3);border:1px solid #EEE;">
+<div style='text-align: left;height: 45px;padding-left: 20px;cursor: default;'><span style="color: #999999;font-family: 微软雅黑;font-size: 16px;line-height: 42px;"><b>注册失败！</b></span></div>
+    <div class="regok" style="cursor: default;">
+    <h3 style="height: 100px;line-height: 100px;"><span style="color:#ff8400;">感谢您填写注册信息！</span></h3>
+    <p>您的邮箱:<b>{{email}}</b>，已激活或注册超过次数限制！请您使用其他邮箱注册。<br>
+    </p><br>
+    </div>
+</div>
+</div>  
+{% endblock %}

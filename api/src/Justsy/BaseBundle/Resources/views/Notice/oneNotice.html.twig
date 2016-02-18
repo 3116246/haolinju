@@ -1,0 +1,152 @@
+<input type="hidden" class="bulletin_id" value="{{ bulletin_id }}"/>
+<input type="hidden" class="re_type" value="{{ re_type }}"/>
+<input type="hidden" class="re_pageindex" value="{{ re_pageindex }}"/>
+<input type="hidden" class="lastone" value="{{ lastone }}"/>
+<input type="hidden" class="nextone" value="{{ nextone }}"/>
+<div class="message-function">
+  <input type="button" value="&lt;&lt; 返回" class="messagebutton" onclick="Notice.returnPrePage()">
+  <span class="message-funciton-turn">
+    <a href="#" {%if lastone%} onclick="Notice.gotoLastMsg()" {%else%} style="color:#ccc;" {%endif%}>上一条</a>
+    <a href="#" {%if nextone%} onclick="Notice.gotoNextMsg()" {%else%} style="color:#ccc;" {%endif%}>下一条</a>
+  </span>
+</div>
+<ul class="message-profile">
+  <span class="senderphoto"><img width="48" height="48" src="{{this.photo_url}}{{row['photo_path']}}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span>
+  <li>
+   <p class="sender-title">公告</p>
+   <p class="sender-name">发布人：<span><a href="#" style="color:#5fa207" class="employee_name" login_account="{{row['bulletin_staff']}}">{{row['nick_name']}}</a></span></p>
+    <p class="sender-name">时间：{{row['bulletin_date']}}</p>
+  </li>
+</ul>
+<div class="message-text">{{row['bulletin_desc']|raw}}</div>      
+<div class="message-function">
+  <input type="button" value="&lt;&lt; 返回" class="messagebutton" onclick="Notice.returnPrePage()">
+  <span class="message-funciton-turn">
+    <a href="#" {%if lastone%} onclick="Notice.gotoLastMsg()" {%else%} style="color:#ccc;" {%endif%}>上一条</a>
+    <a href="#" {%if nextone%} onclick="Notice.gotoNextMsg()" {%else%} style="color:#ccc;" {%endif%}>下一条</a>
+  </span>
+</div>
+
+
+{#
+<style type="text/css">
+.mes_title
+{	
+}
+.tools
+{
+	text-align:center;
+	width:100%;
+	height:36px;
+	background:#aac1de url({{ asset('bundles/fafatimewebase/images/tool.jpg')}});
+	position:relative;
+}
+.tool
+{
+	width:96%;
+	position:absolute;
+	height:20px;
+	top:50%;
+	left:50%;
+	margin-left:-48%;
+  margin-top:-10px;
+
+}
+.tool div
+{
+	padding-left:3px;
+	padding-right:3px;
+	background:#ccc;
+}
+.tools a
+{
+}
+.sender
+{
+	position:relative;
+	width:100%;
+	height:65px;
+	overflow:hidden;
+	background-color:#aac1de;
+}
+.sender ul
+{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:50%;
+	margin-top:-30px;
+}
+.sender ul li{
+	}
+.sender_img
+{
+  height:100%;
+}
+.sender_img img
+{
+	width:50px;
+	height:50px;
+}
+.sender_info
+{
+	padding-left:30px;
+	height:100%;
+}
+.sender_info p{height:10px;line-height:10px;}
+.send_content
+{
+	word-wrap:break-word;
+	padding:10px 20px 20px 20px;
+}
+.content_file
+{
+	width:100%;
+}
+</style>
+<div>
+<div class="mes_title"></div>
+<div class="tools">
+<div class="tool"><div style="float:left;"><a href="#" onclick="$('#content_container').children().remove();LoadComponent('content_container', '{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain})}}/unread');$('#title').text('未读公告');">返&nbsp;回</a></div><div style="float:right;">
+<a href="#" class="last">上一条</a>|<a href="#" class="next">下一条</a></div>
+</div>
+</div>
+<div class="sender">
+<ul style="list-style:none">
+<li style="float:left;"><div class="sender_img"><img src="{{this.photo_url}}{{row['photo_path']}}" alt="" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"/></div></li>
+<li style="float:left;">
+<div class="sender_info">
+<p>发布人:<a href="javascript:void();" login_account={{row['bulletin_staff']}} class="employee_name" style="color:#1a65a5;cursor:pointer;">{{row['nick_name']}}</a></p>
+<p>时&nbsp;间:{{row['bulletin_date']}}</p>
+</div>
+</li>
+</ul>
+</div>
+<hr/>
+<div class="send_content">
+{{row['bulletin_desc']}}
+</div>
+<div class="tools">
+<div class="tool"><div style="float:left;"><a href="#" onclick="$('#content_container').children().remove();LoadComponent('content_container', '{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain})}}/unread');$('#title').text('未读公告');">返&nbsp;回</a></div><div style="float:right;"><a href="#" class="last" >上一条</a>|<a href="#" class="next">下一条</a></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+{% if lastone!='' %}
+$(".last").click(function(){
+	$('#content_container').children().remove();
+	LoadComponent("content_container", "{{path('JustsyBaseBundle_notice_one',{'network_domain':curr_network_domain})}}/{{lastone}}"); 
+});
+{% else %}
+$(".last").attr("style","color:red");
+{% endif %}
+{% if nextone!='' %}
+$(".next").click(function(){
+	$('#content_container').children().remove();
+	LoadComponent("content_container", "{{path('JustsyBaseBundle_notice_one',{'network_domain':curr_network_domain})}}/{{nextone}}");
+});
+{%else%}
+	$(".next").attr("style","color:red");
+{% endif %}
+</script>
+#}

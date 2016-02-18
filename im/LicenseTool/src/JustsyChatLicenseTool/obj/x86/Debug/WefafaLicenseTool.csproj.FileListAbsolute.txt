@@ -1,0 +1,12 @@
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\bin\Debug\WefafaLicenseTool.exe
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\bin\Debug\WefafaLicenseTool.pdb
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\WefafaLicenseTool.Properties.Resources.resources
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\WefafaLicenseTool.exe
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\WefafaLicenseTool.pdb
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\obj\x86\Debug\WefafaLicenseTool.FrmMain.resources
+D:\gchen\MyProjects\xmpp\FaFa_Server\WefafaLicenseTool\src\WefafaLicenseTool\bin\Debug\System.Data.SQLite.dll
+E:\work\Code\Justsy Push-IM\Trunk\LicenseTool\src\WefafaLicenseTool\obj\x86\Debug\WefafaLicenseTool.exe
+E:\work\Code\Justsy Push-IM\Trunk\LicenseTool\src\WefafaLicenseTool\obj\x86\Debug\WefafaLicenseTool.pdb

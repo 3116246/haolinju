@@ -1,0 +1,173 @@
+<div class="modal" data-backdrop=false id="dlgInvStaff" style="display:none;width:650px;margin-left: -325px;" show=false>
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal">×</a>    
+  	<h5>邀请成员加入圈子【{{ circle_name }}】</h5>  
+  </div>
+  <div class="modal-body">
+    <div><span>您可以邀请企业内部员工或企业合作伙伴加入圈子，目前不支持个人用户加入圈子。</span></div>
+    <div>
+      <input type="text" name="invMails" id="invMails" maxlength=500 style="width:550px" >
+      <img src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16" id="loadingImg" style="display:none" />
+    </div>
+    <div><span id="inv-hint-msg" style="color:red;"></span></div>
+  </div>
+  <div class="modal-footer">    
+  	<a id="btnSubmit" class="btn" disabled="true">邀请</a>  
+  	<a id="btnClose" class="btn" data-dismiss="modal" >关闭</a>
+  </div>	
+</div>
+
+<script language="javascript">
+var dlgInvStaff = $("#dlgInvStaff");
+var btnSubmit = $("#btnSubmit");
+var arrMails = [];
+var defaultString = "请直接输入被邀请人的邮箱地址用半角分号“;”结束，多个成员用半角分号“;”隔开";
+var hintMsg = 
+{
+  "mail01":"您输入的邮件地址不正确，请检查！",
+  "mail02":"邮箱地址重复输入，请重新输入！",
+  "mail03":"您不能邀请自己！",
+  "mail04":"该帐号已加入本圈子！",
+  "inv_suc":"邀请已成功发出！",
+  "inv_err":"邀请发送失败！"
+};
+$(document).ready(function()
+{
+  $("#invMails").val(defaultString);
+  $("#btnInvStaff").click(function()
+  {
+    dlgInvStaff.modal();
+  });
+  $("#dlgInvStaff .close,#dlgInvStaff .btn").click(function()
+  {
+    if ($(this).is($("#btnSubmit"))) return;
+    $("#invMails").val(defaultString);
+    arrMails = [];
+    btnSubmit.attr("isclick","0");
+    btnSubmit.attr("disabled",true);
+    $("#inv-hint-msg").text("");
+    if ("undefined"!=typeof(loadUnActiveStaff)) loadUnActiveStaff();
+  });
+  $("#invMails").keypress(function(ev)
+  {
+    btnSubmit.attr("disabled",true);
+    var key = ev.which;
+    if (key==59)
+    {
+      ev.preventDefault();
+      var ars = this.value.split(";");
+      var account = ars[ars.length-1];
+      var circleId = "{{ circleId }}";
+      //验证邮箱
+      if (!checkEmail(account)) return;
+      $("#loadingImg").show();
+      $.post("{{path('JustsyBaseBundle_component_invnickname')}}",
+        {account:account,circleId:circleId},
+        function(data) 
+        {
+          if (data.hs=="1")
+          {
+            btnSubmit.attr("disabled",true);
+            $("#inv-hint-msg").text(hintMsg.mail04);
+          }
+          else
+          {
+            if (data.name.length>0)
+            {
+              var ms = '';
+              ars[ars.length-1] = data.name;
+              $.each(ars,function(i,n)
+              {
+                ms += n + ";";
+              });
+              $("#invMails").val(ms);
+              arrMails.push(account+":"+data.name);
+            }
+            else
+            {
+              $("#invMails").val($("#invMails").val()+";");
+              arrMails.push(account+":"+account);
+            }
+            btnSubmit.attr("disabled",false);
+            $("#inv-hint-msg").text("");
+          }
+          $("#loadingImg").hide();
+        },"json");
+    }
+  }).blur(function()
+  {
+    if (this.value == "") this.value = defaultString;
+  }).focus(function()
+  {
+    if (this.value == defaultString) this.value = "";
+  });
+  $("#btnSubmit").click(function()
+  {
+    var submitArr = [];
+    var arr = $("#invMails").val().split(";");
+    $.each(arrMails,function(i,n)
+    {
+      if (n.length==0) return true;
+      var s = n.split(":");
+      if ($.inArray(s[1],arr)>=0)
+      {
+        submitArr.push(s[0]);
+      }
+    });
+    var circleName = "{{ circle_name }}";
+    var circleId = "{{ circleId }}";
+    if (submitArr.length==0) return;
+    if (btnSubmit.attr("isclick")=="1") return;
+    btnSubmit.attr("isclick","1");
+    btnSubmit.attr("disabled",true);
+    $.post("{{path('JustsyBaseBundle_component_sendcircleinvitation')}}",
+      {acts:submitArr,circleId:circleId,circleName:circleName},
+      function(data) 
+      {
+        if (data=="1")
+        {
+          $("#inv-hint-msg").text(hintMsg.inv_suc);
+        }
+        else
+        {
+          $("#inv-hint-msg").text(hintMsg.inv_err);
+          btnSubmit.attr("disabled",false);
+        }
+        btnSubmit.attr("isclick","0");
+      },"text");
+  });
+});
+//验证邮箱
+function checkEmail(mail)
+{
+  var re = true;
+  if (!validEmail(mail))
+  {
+    re = false;
+    $("#inv-hint-msg").text(hintMsg.mail01);
+    btnSubmit.attr("disabled",true);
+  }
+  else if (mail=="{{ invSendAcc }}")
+  {
+    re = false;
+    $("#inv-hint-msg").text(hintMsg.mail03);
+    btnSubmit.attr("disabled",true);
+  }
+  else
+  {
+    $.each(arrMails,function(i,n)
+    {
+      if (n.length==0) return true;
+      var s = n.split(":");
+      if (mail==s[0])
+      {
+        re = false;
+        $("#inv-hint-msg").text(hintMsg.mail02);
+        btnSubmit.attr("disabled",true);
+        return false;
+      }
+    });
+  }
+  return re;
+}
+</script>

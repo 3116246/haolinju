@@ -1,0 +1,253 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+{% block menuitemactive_dept %}class="active"{% endblock %}
+{% block stylesheets %}
+ <style type="text/css">
+	body { font-size:12px;font-family:tahoma;}
+ .div_wrap {
+  display:table;  
+  background-color:#FFCCFF;
+  width:70px;
+  height:34px;
+  position:relative;
+  overflow:hidden;
+  background:url('{{ asset('bundles/fafatimewebase/images/org_bg.gif')}}');
+ }
+ .div_subwrap {
+  vertical-align:middle;
+  display:block;  
+  text-align:center;
+  height:34px;
+  line-height:17px;
+  cursor: default;
+ }
+ td {padding-right: 5px;}
+
+  .org_menu_img_left{float:left; text-align:left;}
+  .org_menu_img_right{float:right; text-align:right;}
+  .org_menu_item {cursor:pointer;background-color:#ffffff;height:20px}
+  .org_menu_item_active {cursor:pointer;background-color:#D6E2F2;height:20px}
+  #org_menu{position: absolute;width:118px;padding-top:0px;padding-left:1px;top:0px;left:0px;z-Index:1}
+  #org_menu_div {float:left;width:118px;height:83px;padding-top:2px;padding-left:2px;border:1px solid #c0c0c0;z-Index:1;background-color:#ffffff}
+  .org_add{position: absolute;background:url('{{ asset('bundles/fafatimewebase/images/add_org.gif')}}');width:16px;height:16px;display:'none';cursor:pointer}
+  .org_delete{position: absolute;background:url('{{ asset('bundles/fafatimewebase/images/del_org.gif')}}');width:16px;height:16px;display:'none';cursor:pointer}
+ </style>
+{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">组织机构</div>
+<div>
+	<ul class="nav nav-tabs" style="border-bottom: 1px solid #ddd;height: 37px;padding-left: 25px;">
+		<li class="active"><a href="#orgmap" data-toggle="tab">拓谱关系图</a></li>
+		<!--<li><a href="#orgctrl" data-toggle="tab">部门访问控制</a></li>-->
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="orgmap" style="background-color: #fff;min-height: 550px;">
+			<div id="org_view" name="org_view" style="border: 0px solid #CCCCCC;position: relative;overflow:auto;top:0px;left:0px;width:99%;height:100%;padding-left: 5px;"></div>
+		</div>
+		<div class="tab-pane" id="orgctrl" style="background-color: #fff;min-height: 550px;">
+			<div style="float: left; left: 1px; border-right: 1px solid rgb(204, 204, 204); min-height: 550px; width: 210px;">
+				<div class="zTreeDemoBackground"><img  src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16">正在加载数据...</div>
+				<div id="deptdiv" style="display:none" isload="0" class="zTreeDemoBackground" saveurl="{{ path('JustsyBaseBundle_account_deptsave', {'network_domain' : curr_network_domain})}}" delurl="{{ path('JustsyBaseBundle_account_deptdel', {'network_domain' : curr_network_domain})}}" url="{{ path('JustsyBaseBundle_account_deptquery', {'network_domain' : curr_network_domain})}}">
+					<ul id="depttree" class="ztree"></ul>	
+				</div> 
+			</div>
+			<div style="float: left; min-height: 550px; display: block; margin-left: 20px; margin-top: 20px;">
+				<div style="border-bottom: 1px solid rgb(243, 243, 243); width: 490px;">当前部门：<span><b>设计部</b></span></div>
+
+				<div style="width: 490px; background-color: rgb(243, 243, 243); margin-top: 5px;"><b>&nbsp;&nbsp;可见性设置</b></div>
+				<div style="margin: 10px;">
+					<input type='radio' style="margin-right: 5px; margin-top: -3px;">所有人可见
+				</div>
+				<div style="margin: 10px;">
+					<input type='radio' style="margin-right: 5px; margin-top: -3px;">仅部门成员可见
+				</div>
+				<div style="margin: 10px;">
+					<div><input type='radio' style="margin-right: 5px; margin-top: -3px;">特定成员可见</div>
+					<div style="margin: 10px;"><input type="text"><button style="margin-top:-10px;height:32px">添加</button></div>
+					<div style="margin: 10px; height: 200px; width: 460px; border: 1px solid rgb(204, 204, 204);">
+						
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="doc_deleteconfirm modal" id="doc_delete" data-backdrop=false style="display:none;height: 129px;margin-left: -110px;margin-top: -60px;width: 220px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;删除部门</span>
+      </div>
+	    <div>
+	      <div class="doc_rd_deleteconfirm_left"></div>
+	      <div class="doc_rd_deleteconfirm_right">
+	          <div class="doc_rd_deleteconfirm_text">确认该部门下已没有员工，并且确定要删除该部门吗？</div>
+	          <div style="margin-left: 20px;margin-top: 10px;float:left"><span id="deleteDoc" class="doc_md_content_right_btn">确定</span><span id="cancelDelete" class="doc_md_content_right_btn">取消</span></div>
+	          <div class="deletehint" style="margin-left: 70px;height:20px;width:130px;float:left"></div>
+	      </div>	      
+	    </div>
+</div>
+<div class="resulthint modal" id="resulthint" data-backdrop=false style="display:none;height: 129px;margin-left: -110px;margin-top: -60px;width: 220px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;系统提示</span>
+      </div>
+	    <div>	      
+	      <div class="doc_rd_deleteconfirm_right" style="height: 90px;">
+	          <div class="hint_text" style="text-align: center; line-height: 50px; height: 45px;"></div>
+	          <div style="margin-left: 80px;margin-top: 10px;float:left"><span onclick="$('#resulthint').hide();" class="doc_md_content_right_btn">关闭</span></div>
+	      </div>	      
+	    </div>
+</div>
+<script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/OrgView.js')}}"></script>
+<script>
+var orgView =null;
+
+function addNew()
+{
+	    var curOrg = orgView.getSelectedOrg();
+	    if(curOrg==null) return;
+    	var ds= orgView.data;
+    	var NewID = "empty_"+(new Date()).valueOf();
+    	ds.push({deptid:NewID,deptname:"",
+    		       pid:curOrg.id,
+    		       open:false,icon:"../images/zTree/img/diy/department0.png", 
+    		       iconOpen:"../images/zTree/img/diy/department.png", 
+    		       iconClose:"../images/zTree/img/diy/department0.png"});
+    	orgView.DataSource( ds);
+    	orgView.setEdit(orgView.out.id+ "__"+NewID);
+}
+function deleteorg()
+{
+			orgView.addOrgImg.style.display='none';
+			orgView.deleteOrgImg.style.display='none';
+	    var curdept = orgView.getSelectedOrg();
+	    if(curdept==null) return;
+	    if(curdept.id.indexOf("empty")>-1)
+	    {
+	    	  orgView.removeDept( curdept.id);
+	        return;	
+	    }
+	    var btn_ok = $("#deleteDoc"),btn_cancel = $("#cancelDelete"),$dlg_deleteconfirm=$(".doc_deleteconfirm"),$deleteconfirm_text=$dlg_deleteconfirm.find(".doc_rd_deleteconfirm_text");
+      btn_ok.hide();
+      btn_ok.attr("objectid",curdept.id);
+			btn_cancel.text("关闭");	
+			var deptname = $(["#",orgView.out.id,"__",curdept.id].join("")).text();
+			$(".doc_window_title span").html("&nbsp;&nbsp;删除部门—"+deptname);
+			$deleteconfirm_text.html("<IMG class=loadingimg src=\"/bundles/fafatimewebase/images/loadingsmall.gif\" width=16 height=16>&nbsp;检查员工信息...");
+			$dlg_deleteconfirm.show();
+			$.get("{{path('JustsyBaseBundle_account_chkdeptemp',{'network_domain':curr_network_domain})}}",{"deptid":curdept.id},function(r){
+				 if(r.s=="0")
+				 {
+						   $deleteconfirm_text.html("部门下还有员工");
+						   return;	
+				 }
+				 btn_ok.show();
+				 btn_cancel.text("取消");				 
+         $deleteconfirm_text.html("确定要删除该部门？");
+			});
+			
+}
+$("#deleteDoc").bind("click",function(event){
+	        var delDeptID = $(this).attr("objectid");
+				 	$.get("{{ path('JustsyBaseBundle_account_deptdel',{'network_domain':curr_network_domain})}}",{"deptid": delDeptID},function(d){
+				  	  $("#deleteDoc").hide()
+				  	  $("#cancelDelete").text("关闭");	
+				  	  $(".deletehint").html("");
+				  	  if(d.s=="1")
+				  	  {
+				  	      	$(".doc_rd_deleteconfirm_left").attr("class","doc_rd_deleteconfirm_left_ok");
+				  	      	$(".doc_deleteconfirm .doc_rd_deleteconfirm_text").html("删除成功！");
+				  	      	setTimeout('$(".doc_deleteconfirm").hide();$(".doc_rd_deleteconfirm_left_ok").attr("class","doc_rd_deleteconfirm_left");',1000);
+										orgView.removeDept( delDeptID);
+				  	  }
+				  	  else
+				  	  {
+				  	      	$(".doc_rd_deleteconfirm_left").attr("class","doc_rd_deleteconfirm_left_error");
+				  	      	$(".doc_deleteconfirm .doc_rd_deleteconfirm_text").html(d.msg);
+				  	      	setTimeout('$(".doc_deleteconfirm").hide();$(".doc_rd_deleteconfirm_left_error").attr("class","doc_rd_deleteconfirm_left");',5000);		  	  	  	
+				  	  }						    
+					});
+});
+$("#cancelDelete").bind("click",function(){
+			    	$(".doc_deleteconfirm").hide();
+});
+var OrgMenuMrg=null;
+function MenuInit()
+{
+		    OrgMenuMrg=orgView.initMenu();
+				OrgMenuMrg.Add("item_edit",null,"编辑部门",function(){
+                    orgView.Edit(initOrgList);
+				});
+				OrgMenuMrg.Add("item_add",null,"增加下级部门",function(){
+                    orgView.AppendChildDept(initOrgList);
+				});
+				OrgMenuMrg.Add("item_del",null,"删除部门",function(){
+				    orgView.Del(initOrgList);
+				});
+}
+ 
+$(document).ready(function(){
+    //<div id="addorg" class="org_add" title="添加下级部门" onclick="addNew()"></div>
+    //<div id="delorg" class="org_delete" title="删除该部门" onclick="deleteorg()"></div>
+    document.body.appendChild($('<div id="addorg" class="org_add" title="添加下级部门" onclick="addNew()"></div>')[0]);
+    document.body.appendChild($('<div id="delorg" class="org_delete" title="删除该部门" onclick="deleteorg()"></div>')[0]);
+    $(".twomainright").css("position", "relative");
+    document.getElementById("org_view").innerHTML="";
+    
+		orgView = new OrgView("org_view");
+		orgView.RootID("v{{app.user.eno}}");
+		orgView.editMode="EXP";
+		orgView.addOrgImg.style.display='none';
+		orgView.deleteOrgImg.style.display='none'; 
+		
+		orgView.addOrgImg.onmouseleave=orgView.deleteOrgImg.onmouseleave=function(event)
+		{
+							        var e = event||window.event;
+							        var src = e.relatedTarget||e.toElement;
+							        if(src==null) return;
+							        if(src.id==orgView.out.id) return;
+					        		orgView.addOrgImg.style.display='none';
+					        		orgView.deleteOrgImg.style.display='none';
+		}
+		orgView.saveDept=function(ctlid,data)
+		{
+			  $.post("{{ path('JustsyBaseBundle_account_deptsave',{'network_domain':curr_network_domain})}}",data,function(re){
+			      if(re.s==0)
+			      {
+			         var ctl=$("#org_view__"+re.deptid);
+			         ctl.find(".div_subwrap").html(ctl.attr("old"));
+			         $("#resulthint").find(".hint_text").html(re.msg);
+			         $("#resulthint").show();
+			         setTimeout(function(){$("#resulthint").hide()},2000);
+			         return;
+			      }
+			  	  orgView.saveAfter(ctlid,{"deptid":re.id,"deptname":re.name,"pid":re.pId});
+			  });			  
+		}
+		orgView.onSelected=function(src,e)
+		{
+			  if(orgView.editMode=="MENU"){
+				    if(src.getAttribute("root")=="")
+				    {
+				        $("#org_view__item_edit")[0].style.display="none";    
+				    }
+				    else
+				        $("#org_view__item_edit")[0].style.display=""; 
+				    OrgMenuMrg.Show(src,e.x+src.offsetWidth-22,e.y);
+				    return; 
+		   }
+		   if(src.getAttribute("root")!="")
+		      orgView.setEdit(src.id);   
+		}    
+    	MenuInit();
+		$.getJSON("{{path('JustsyBaseBundle_account_deptquery',{'network_domain':curr_network_domain})}}",function(dataNode){
+		    var newData=[];
+		    for(var i=0;i<dataNode.length; i++)
+		    {
+		    	if((/^v.*?999$/g).test(dataNode[i].id)) continue;//过滤公共帐号部门
+		      newData.push({deptid:dataNode[i].id,deptname:dataNode[i].name,pid:dataNode[i].pId,open:false,icon:"../images/zTree/img/diy/department0.png", iconOpen:"../images/zTree/img/diy/department.png", iconClose:"../images/zTree/img/diy/department0.png"});
+		    }
+		    orgView.DataSource(newData);
+		});    
+});
+</script>
+{% endblock %}

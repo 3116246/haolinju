@@ -1,0 +1,119 @@
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<div class="publish">
+  <div class="lib_Menubox lib_tabborder">      
+    <ul>
+      <li id="one6" onClick="setInputTab(this)" publish_event="publishNotice" publish_event_param="{{ path("JustsyBaseBundle_notice_publish",{"network_domain":curr_network_domain})}}"><span>公告</span></li>
+    </ul>
+  </div>
+  <div class="lib_Contentbox lib_tabborder">
+    <div id="con_one6" class="input_con_area text_div" style="margin-bottom: 8px;">
+      <textarea id="Notice" cols="" rows="" class="text_input" placeholder="你有什么事情需要公告" onkeyup='setPublishEnable()' onblur='setPublishDisable(this)'></textarea>
+    </div>
+  </div>
+  <div class="lib_attachs ask_div1" style="padding-top: 4px; padding-bottom: 4px; display:none">    
+    <div id="filesList">
+    </div>
+  </div>  
+  <div class="lib_other">
+    <span class="btnPublish"><input id="btnPublish" name="btnPublish" type="button" class="libenter" value="发  布" onclick="publishInput()" disabled></span>
+    <div class="postselect" style="line-height: 17px; margin-top: 3px; display:{% block hasPostToGroup %}none{% endblock %}">
+  		<ul class="post_to_group" id="menus" dropdownlist="1">
+  		{% if num!=0 %}		
+  			<li><a href="javascript:void(0);"><div class="postto icon16"></div><span id="spost_to_group_name">全部成员</span></a>
+  		{% else %}
+  		  <li><a href="javascript:void(0);"><div class="postto icon16"></div><span id="spost_to_group_name">选择群组</span></a>
+  		{% endif %}
+  				<ul class="post_list">
+  					<li style="background-color:#99CCCC; text-align:center; color:#fff;">发布到 …</li>
+  					{% if num!=0 %}
+  					<li><a href="javascript:void(0);" title="发布给当前圈子的全部成员" group_value="ALL" onclick="mi_post_to_group_OnClick(this)"><div class="postto_all icon16"></div>全部成员</a></li>
+  					{% endif %}
+  					{#<li style=" border-bottom:1px dashed #ccc; padding-bottom:5px;"><a href="javascript:void(0);" title="私密信息只有自己才能看到" group_value="PRIVATE" onclick="mi_post_to_group_OnClick(this)"><div class="postto_me icon16"></div>私密</a></li>#}
+  					{% for item in group %}
+  					<li><a href="javascript:void(0);" title="发布给（{{ item["group_name"] }}）的成员" group_value="{{ item["group_id"] }}" onclick="mi_post_to_group_OnClick(this)"><div class="postto_group icon16"></div>{{ item["group_name"] }}</a></li>
+  					{% endfor %}
+  				</ul>
+  			</li>		
+  		</ul>
+		
+	<div style="display:none"> 
+      <span style="float:right; width: 10px;">&nbsp;</span>
+      <input id="hpost_to_group" name="hpost_to_group" type="hidden" value="ALL"/>
+      <span id="bcancel_post_to_group" onclick="bcancel_post_to_group_OnClick()">×</span>
+      <span id="apost_to_group" onclick="apost_to_group_OnClick()">发布给：全部同事</span>
+      <input id="txtpost_to_group" type="text" style="float:right; display:none; width: 100px; margin-right: 10px; margin-top:-7px;" placeholder="请输入群组名称" onblur='$("#apost_to_group").show();$(this).hide();if ($("#hpost_to_group").val() != "ALL"){$("#bcancel_post_to_group").show();}'>
+	</div>
+    </div>
+  </div>
+  <div class="clearBoth"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+$(".add_group").attr("href","{{path('JustsyBaseBundle_group', {'network_domain' : curr_network_domain})}}");
+	
+	jQuery('[dropdownlist]').each(function(index){
+		jQuery(this).hover(
+			function(){
+				var _self = this;
+				clearTimeout(mouseout_tid[index]);
+				mouseover_tid[index] = setTimeout(function() {
+					jQuery(_self).find('ul:eq(0)').slideDown(200);
+				}, 400);
+			},
+			function(){
+				var _self = this;
+				clearTimeout(mouseover_tid[index]);
+				mouseout_tid[index] = setTimeout(function() {
+					jQuery(_self).find('ul:eq(0)').slideUp(200);
+				}, 400);
+			}
+		);
+	});
+ 
+ 
+  $('input[placeholder]').placeholder();
+  $('textarea[placeholder]').placeholder();
+  
+  setInputTab($("#one6"));
+  var txtpost_to_group_source = {{ this.groups|raw }};
+  for (var i=0; i<txtpost_to_group_source.length; i++)
+  {
+    txtpost_to_group_source[i].index = i; 
+    txtpost_to_group_source[i].toString = function(){return this.index;};
+  }
+  $("#txtpost_to_group").typeahead({
+    source : txtpost_to_group_source,
+    highlighter : txtpost_to_group_highlighter, 
+    matcher : txtpost_to_group_matcher,
+    sorter : txtpost_to_group_sorter,
+    updater : txtpost_to_group_updater
+  });
+  
+  //通知人员，当前圈子的人数小于100时，会在初始化时取出全部的人员，或者只取出满足条件的人员
+  {#
+  window.txtNotify_source_all = {{ this.staffs|raw }};
+  window.txtNotify_source_100 = [];
+  window.txtNotify_source_url = "{{ path("JustsyBaseBundle_component_cinputarea_querycirclestaff100") }}";
+  for (var i=0; i<txtNotify_source_all.length; i++)
+  {
+    txtNotify_source_all[i].index = i; 
+    txtNotify_source_all[i].toString = function(){return this.index;};
+  }
+  $("#txtNotify").typeahead({
+    source : txtNotify_source,
+    highlighter : txtNotify_highlighter, 
+    matcher : txtNotify_matcher,
+    sorter : txtNotify_sorter,
+    updater : txtNotify_updater
+  });  
+  $("#txtNotify").bind("keyup", txtNotify_OnKeyUp);
+  #}
+});
+</script>
+<style>
+	.recipients-tips{ font-family:Tahoma, Arial;position:absolute; background:#f7f7f2; z-index:2147483647; padding:2px; border:1px solid #6b9228; display:none;}
+  .recipients-tips ul{list-style: none outside none; margin: 0;}
+	.recipients-tips li a{display:block; padding:2px 5px; color:#333; cursor:pointer; font-family:Tahoma, Arial;}
+	.recipients-tips li a em{font-weight:700; color:#000; font-family:Tahoma, Arial;}
+	.autoSelected{background:#b8c796; font-family:Tahoma, Arial;}
+</style>

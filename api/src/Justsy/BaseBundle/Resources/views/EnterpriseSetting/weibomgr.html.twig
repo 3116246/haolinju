@@ -1,0 +1,118 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+
+{% block menuitemactive_weibo_mgr %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<form id="formdetails" class="form-horizontal" method="post" class="form-horizontal">
+<div class="grade-title">微博管理</div>
+<div class="rightdetail clearfix">
+  <div class='add_account_div'>
+  	<div onclick="WeiboMgr.addSinaAccount()" class='add_button_div'>+新浪帐号</div>
+  	<div onclick="WeiboMgr.addWeixinAccount()" class='add_button_div'>+微信帐号</div>
+  	<div onclick="WeiboMgr.addTencentAccount()" class='add_button_div'>+腾讯帐号</div>
+  </div>
+  <hr/>
+  <div class='account_list_div'>
+  	<table class='account_list_table'>
+  		<tr style="color:#247aa6">
+  			<td>帐号名称</td>
+  			<td>所属平台</td>
+  			<td>令牌状态</td>
+  			<td>添加人</td>
+  		</tr>
+  		{%for item in accounts%}
+  		<tr>
+  			<td>{{item['nick_name']}}</td>
+  			<td>{{item['typename']}}</td>
+  			<td>{% if item['istoken']=='1'%}正常{%else%}已过期{%endif%}</td>
+  			<td>{{item['create_staff_name']}}</td>
+  		</tr>
+  		{%endfor%}
+  	</table>
+  	{%if accounts|length==0%}
+  	<div style="text-align:center;margin-top:30px;">未添加任何微博帐号！</div>
+  	{%endif%}
+  </div>
+</div>
+</form>
+<div class="modal hide fade" id="add_weixin" role="dialog" aria-labelledby="add_weixinLabel"
+        aria-hidden="true" style="width: 370px; margin-left: -275px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×</button>
+                    <h5 style="margin: 0px">
+                        添加微信公众号</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="weixin_name">
+                        <span class="needinputitem">*</span><span>公众号名称：</span><span><input id="weixin_name_input"
+                            type="text" maxlength="32" /></span></div>
+                    <div id="weixin_appid" style="margin-left: 4px;">
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="needinputitem">*</span>AppID：</span><span><input
+                            id="weixin_appid_input" type="text" maxlength="100" style="margin-bottom:1px" /></span></div>
+                    <div id="Div2" style="margin-left: 108px; color: #5BA607; font-size: 11px;"><span>注：订阅号可不填AppID！</span></div>
+                    <div id="weixin_appkey" style="margin-left: 2px;">
+                        <span class="needinputitem">*</span><span>AppSecret：</span><span><input id="weixin_appkey_input"
+                            type="text" maxlength="100" style="margin-bottom:1px"/></span></div>
+                    <div id="Div3" style="margin-left: 108px; color: #5BA607; font-size: 11px;"><span>注：订阅号可不填AppSecret！</span></div>
+                    <div id="Div1" style="margin-left:34px">
+                        <span class="needinputitem">*</span><span>原始ID：</span><span><input id="weixin_no_input"
+                            type="text" maxlength="50" /></span></div>
+                    <div id="Div4" style="margin-left: 108px; color: #5BA607; font-size: 11px;"><span>请正确填写原始ID！否则无法接收消息。</span></div>
+                </div>
+                <div class="modal-footer">
+                    <span id="actionhint"></span>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">
+                        关闭</button>
+                    <button id="save" class="btn btn-primary">
+                        保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal hide fade" id="add_sina" role="dialog" aria-labelledby="add_weixinLabel"
+        aria-hidden="true" style="width: 650px; display: block; margin-left: -275px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×</button>
+                    <h5 style="margin: 0px">
+                        添加新浪微博帐号</h5>
+                </div>
+                <div class="modal-body" style="padding:0;">
+                   <iframe src='' style="width: 610px; height: 400px;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="modal hide fade" id="add_tencent" role="dialog" aria-labelledby="add_weixinLabel"
+        aria-hidden="true" style="width: 650px; margin-left: -275px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×</button>
+                    <h5 style="margin: 0px">
+                        添加腾讯微博帐号</h5>
+                </div>
+                <div class="modal-body" style="padding:0;overflow:hidden;">
+                   <iframe src='' style="width: 650px; height: 500px;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+<script language="javascript">
+$(document).ready(function(){
+	if(WeiboMgr){
+		WeiboMgr.init({
+			sina_auth_url:"{{path('JustsyBaseBundle_weibo_sina_authorize')}}",
+			weixin_auth_url:'',
+			tencent_auth_url:"{{path('JustsyBaseBundle_weibo_tencent_authorize')}}"
+		});
+	}
+});
+</script>
+{% endblock %}

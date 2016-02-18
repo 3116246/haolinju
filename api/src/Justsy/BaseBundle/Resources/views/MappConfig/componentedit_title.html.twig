@@ -1,0 +1,113 @@
+<div id="component_title_attribute_list" style="float:left;margin:20px;line-height:40px;">
+	<div>
+		<span style="margin-right:10px">标题类型：</span><span><input name="title_type" checked type="radio" value="text" style="margin-right: 10px; margin-top: -3px;" onclick="switchtitletype('text')">文字&nbsp;&nbsp;&nbsp;&nbsp;<input  name="title_type" type="radio" value="pic" style="margin-right: 10px; margin-top: -3px;" onclick="switchtitletype('pic')">图片</span>
+	</div>
+	<div for="text">
+		<div style="float:left;">
+			<span style="float:left;margin-right:10px">标题文字：</span>
+			<input name="title_text" id="title_text" maxlength=10 checked type="text" style="float:left;margin-top:5px;">
+		</div>
+		<div style="float:left;">
+			<span style="margin-right:10px;float:left;">字体颜色：</span>
+			<span class="componnet_title_color" onclick="showcolor(this)">#ffffff</span>
+		</div>
+		<div class='component_color' style="margin-top:82px;margin-left:70px;"></div>
+	</div>
+	<div for="pic" style="display:none">
+		<div>
+			<span style="margin-right:10px">图片地址：</span><input id="componentImage" name="componentImage" onchange="component_uploadfile()" type="file">
+		</div>
+		<form enctype="multipart/form-data" method="post" class="switch_uploadfile">
+			<span style="color:#ccc">图片宽度不超过320px，高度不超过60px。只能为PNG透明图片，建议为白色。</span>
+			<span><img src="" id="title_ico" style="float:left;width:320px;height:60px"></span>
+			<div class="component_switch_error" style="margin-left:10px;margin-top:10px;">
+   	  	  <img class="component_switch_hint_img"><span>请选择或上传轮换图片</span>
+   	   </div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+function switchtitletype(t) {
+	$("#component_title_attribute_list div[for]").hide();
+	$("#component_title_attribute_list div[for='"+t+"']").show();
+}
+ function component_uploadfile(){
+	 	 var filename = $("#componentImage").val();
+		 var position = filename.lastIndexOf(".");
+		 if (position==-1) return;
+		 filename = filename.substr(position+1);
+		 if ( filename!="png" && filename!="gif" && filename!="bmp" && filename!="jpg"){
+		 	  $("#component_hint").html("请选择图片文件");
+				setTimeout("$('#component_hint').html('');",2000);
+		 	  return;
+		 } 
+		 var appid = $("#content_template").attr("appid");
+		 component_swith_hint("load","正在上传图片");
+		 $.ajaxFileUpload({
+	        url: "{{path('JustsyBaseBundle_mappconfig_component_fileupload',{"appid":"appid"})}}".replace("appid",appid),
+	        secureuri:false,
+	        fileElementId:'componentImage',
+	        dataType: 'json',
+	        success: function (data) {
+	           if(data.succeed && data.fileid!="") {
+	           	  component_swith_hint("succeed","图片上传成功");
+	          	  $("#title_ico").attr("src",file_webserver_url+data.fileid);
+	           }
+	           else{
+	           	  component_swith_hint("error",data.msg);   	
+	           }
+	        },
+	        error: function (data, status, e) {
+				     component_swith_hint("scceed",data.msg);
+				 }
+	   })
+ }
+ //调用颜色控件
+ function showcolor(ev){
+   componentColor.hideTransparent = true;
+   componentColor.Init($(".component_color"));
+   componentColor.beforeColor = $(ev).css("color");
+ 	 componentColor.setobj=[];
+ 	 componentColor.type = false;
+ 	 componentColor.setobj.push($(ev));
+ 	 componentColor.setTitle("选择字体颜色");
+ 	 componentColor.onSelected=function(vColorValue){
+ 	   $(".componnet_title_color").text(vColorValue);
+ 	   $(".componnet_title_color").css("color",vColorValue);
+ 	 };
+ 	 componentColor.onMouseMove = function(vColorValue){
+ 		 $(".componnet_title_color").text(vColorValue);
+ 		 $(".componnet_title_color").css("color",vColorValue);
+ 	 };
+ 	 componentColor.onClose = function(beforecolor){
+ 	   $(".componnet_title_color").text(beforecolor);
+ 		 $(".componnet_title_color").css("color",beforecolor);
+ 	 };
+ } 
+ 
+  //显示提示信息
+  function component_swith_hint(type,hint){
+  	var img = "",_class="component_switch_hint_img";
+  	var color = "black";
+  	if ( type=="succeed")
+  	   img = "/bundles/fafatimewebase/images/zq.png";
+  	else if ( type=="error") {
+  		 img = "/bundles/fafatimewebase/images/errow.gif";
+  		 color = "red";
+  	}
+    else if ( type=="load") {
+    	 img = "/bundles/fafatimewebase/images/loading.gif";
+    	 _class="component_switch_loading_img";
+    }
+    $(".component_switch_error>img").attr("class",_class);
+    $(".component_switch_error>img").attr("src",img);
+    $(".component_switch_error>span").text(hint);
+    $(".component_switch_error>span").css("color",color);
+    $(".component_switch_error").children().show();
+    if ( type!="load"){
+    	//setTimeout(function(){ $(".component_switch_error").children().hide();},2000);
+    }
+  }
+
+ 
+</script>

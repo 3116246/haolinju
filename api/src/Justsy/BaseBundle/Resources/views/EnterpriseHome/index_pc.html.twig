@@ -1,0 +1,107 @@
+{% extends 'JustsyBaseBundle::master_pc.html.twig' %}
+
+{% block main_content %}
+<div class="center" style="width:100%;padding: 0;">
+    <div id="circles_tools" style="position: relative;z-index:1;border-bottom:1px solid #ceeef7;padding-top:3px;height:25px;background: url('{{ asset('bundles/fafatimewebase/images/two_level_background.png')}}') repeat scroll 0 0 transparent;">
+		   {%if showcircle==""%}
+            <div class="circles" style="left:20px;top:-8px;">
+                <ul id="pc_circles_menus" dropdownlist="1">
+                    <li style="width:114px">
+                        <a class="curcircle" href="#" hidefocus="true"><span class="topmenu_app_triangle moreoper" style="margin-top:4px;*margin-top:10px;" title="更多圈子"></span><span style="color:#5592CB" title="当前所在圈子" class="curcircle_name color0">{{ curr_network_domain == app.user.edomain ? app.user.eshortname : app.user.get_circle_name(curr_network_domain) }}</span></a>
+                        <ul class="pc_circle_list" style='display:none;width:140px;padding-bottom:15px;'>
+                            <li class="pc_circles_item"><a style="color:#3e96b5;max-width:80px;overflow:hidden;" href="{{ path('JustsyBaseBundle_enterprise_home_forpc', {'network_domain' : app.user.edomain}) }}">{{ app.user.eshortname }}{{ app.user.eshortname }}</a><span title="有新信息啦" style="float:right;top:inherit;margin-top:2px;*margin-top:-18px;padding:0;width:18px;height:16px;background-image:url({{asset('bundles/fafatimewebase/images/PC_Wefafa_Icon.png')}});background-position:0px -340px;display:none;" class="tip_new_num" circle_id="{{ app.user.get_circle_id(app.user.edomain) }}"></span></li>
+													{% for a_network_domain in app.user.network_domains %}
+													{% if a_network_domain != app.user.edomain and app.user.circle_apply_status[loop.index0]!="1" %}
+                                    <li class="pc_circles_item"><a style="color:#666767;max-width:80px;overflow:hidden;" title="点击进入该圈子" href="{{ path('JustsyBaseBundle_enterprise_home_forpc', {'network_domain' : a_network_domain}) }}">{{ app.user.circle_names[loop.index0] }}</a><span title="有新信息啦" style="float:right;top:inherit;margin-top:2px;*margin-top:-18px;padding:0;width:18px;height:16px;background-image:url({{asset('bundles/fafatimewebase/images/PC_Wefafa_Icon.png')}});background-position:0px -340px;display:none;" class="tip_new_num" circle_id="{{ app.user.circle_ids[loop.index0] }}"></span></li>
+													{% endif %}
+													{% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+			{%endif%}
+                            <div style='margin-top:1px;*margin-top:2px;' onclick="window.location.href='{{path('JustsyBaseBundle_enterprise_home_forpc')}}?trend={{trend}}'" class='Shome'><div style="display:none;" class='Smescommend'></div></div>
+                            {%if publish%}
+                            <div title="我要发布" style='margin-right:4px;' class='Sborder'><a style="width:100%;height:100%;" href='javascript:void(0);'><div edit='0' class='Sedit'></div></a></div>
+                            {%else%}
+                            <div title="您还没有权限使用发布功能" style='float:right;margin-right:8px;padding:2px;border-left:2px;border-top:2px;border-right:1px;border-bottom:1px;border-style:solid;border-color:#f1fcff;border-top-color:#fafeff;margin-right:4px;'><a style="width:100%;height:100%;" href='javascript:void(0);'><div edit='0' class='Sedit'></div></a></div>
+                            {%endif%}
+                            <div title="刷新" class='Sborder'><a href='javascript:retry();'><div class='Srefresh'></div></a></div>
+                            <div class='Sseparator'>|</div>
+                            <div modle='bnt' title="我的收藏" class='Sborder'><a style="width:100%;height:100%;" id='collect' onclick='loadC(this)' href="javascript:void(0);" loadurl="{{path('JustsyBaseBundle_collect_pc',{'network_domain' : curr_network_domain})}}?trend={{trend}}"><div class='Smycollect'></div></a></div>
+                            <div modle='bnt' title="提到我的" class='Sborder'><a style="width:100%;height:100%;" id='atme' onclick='loadC(this)' href="javascript:void(0);" loadurl="{{path('JustsyBaseBundle_at_pc',{'network_domain' : curr_network_domain})}}?trend={{trend}}"><div class='Satme'></div></a></div>   
+                        </div>
+  {% render "JustsyBaseBundle:CInputArea:indexpc" with {'network_domain' : curr_network_domain, 'name' : 'foo','trend':trend} %}
+                        <div class="hometopic" style="z-index:0;position: relative;">
+                            <div class="tabbox" style="display:none">
+                                <ul>
+                                    <li id="two1" onClick="setDisplayTab(this)" class="hover" gettopurl="{{path('JustsyBaseBundle_enterprise_gettopconv_pc')}}?class=conv&network_domain={{curr_network_domain}}&trend={{trend}}" loadurl="{{ path('JustsyBaseBundle_enterprise_getallconvpc') }}?trend={{trend}}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv_pc') }}?trend={{trend}}" loadunreadurl="{{ path("JustsyBaseBundle_enterprise_getallconvunread_pc") }}?trend={{trend}}">全部</li>
+                                    <li id="two2" onClick="setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_enterprise_getattenconv') }}?trend={{trend}}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}?&trend={{trend}}" loadunreadurl="{{ path("JustsyBaseBundle_enterprise_getattenconvunread") }}?trend={{trend}}">我的关注</li>
+                                    <li id="two3" onClick="setDisplayTab(this)" loadurl="{{ path('JustsyBaseBundle_enterprise_getpublishconv') }}?trend={{trend}}" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}?&trend={{trend}}" loadunreadurl="{{ path("JustsyBaseBundle_enterprise_getpublishconvunread") }}?trend={{trend}}">我发布的</li>
+                                </ul>
+                            </div>
+                            <div class="contentbox" id="contentbox" style="z-index:0;padding-right:0px;*padding-right:20px;position: relative;padding-left: 5px;overflow-x:hidden;overflow-y:auto;">
+                                <div id="con_two1" class="display_con_area hover"></div>
+                                <div id="con_two2" class="display_con_area" style="display:none"></div>
+                                <div id="con_two3" class="display_con_area" style="display:none"></div>
+                                <div id="con_collect" class="display_con_area" style="display:none"></div>
+                                <div id="con_atme" class="display_con_area" style="display:none"></div> 
+                            </div>
+                            <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_login_check') }}" >
+                                <input name="_username" type="hidden" value="{{ account }}" />
+                                <input name="_password" type="hidden" value="{{ passWord }}" />
+                            </form>    
+                            <script type="text/javascript">
+                            	manager_trend="{{trend}}";
+                            						function loadC(e){
+                            							var retry=arguments[1]?arguments[1]:false;
+                            							$(".contentbox #con_"+$(e).attr('id')).show().addClass('hover').siblings().hide().removeClass('hover');
+                            							$(".tabbox li").removeClass("hover");
+                            							if($(e).attr('isload')!='1' || retry==true){
+                            								$(".contentbox #con_"+$(e).attr('id')).html(null);
+                            								LoadComponent("con_" + $(e).attr("id"), $(e).attr("loadurl"));
+                            								$(e).attr('isload','1');
+                            							}
+                            						}
+                                        var publishShowState = false;
+                                        $(document).ready(function() {
+                                        		//字数过多解决方法
+                                        		toomanyword($("li.pc_circles_item a"),8);                                       
+                                        		toomanyword($("span.curcircle_name"),8);
+                                            $(".publish").css("display", "none");
+                                            //resizeform();
+                                            setContentHeight($("#contentbox"));
+                                            //自动登录
+                                            $.post("{{path('JustsyInterfaceBundle_logincheck')}}",
+                                                    {login_account: "{{ account }}", password: "{{ passWord }}"},
+                                            function(data)
+                                            {
+                                                if (data.returncode == "0000")
+                                                {
+                                                    setDisplayTab(document.getElementById("two1"));
+                                                    window.OnPublished = EnterpriseHome_OnPublished;
+                                                    $("#contentbox").scroll(EnterpriseHome_Document_OnScroll);
+                                                    window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000 * 60);
+                                                }
+                                            }, "json");
+                                            $("#icon_publish_newtrend").bind("click", function(event) {
+                                                if (!publishShowState)
+                                                {
+                                                    $(".publish").css("display", "block");
+                                                    publishShowState = true;
+                                                }
+                                                else
+                                                {
+                                                    $(".publish").css("display", "none");
+                                                    publishShowState = false;
+                                                }
+                                            });
+                                            $(".Sborder[modle='bnt'] a").click(function(){
+                                            	$(".Sborder[modle='bnt']").removeClass("Shover");
+                                            	$(this).parent().addClass("Shover");
+                                            });
+                                        });
+                                </script>
+                            </div>
+                        </div>  
+{% endblock %}

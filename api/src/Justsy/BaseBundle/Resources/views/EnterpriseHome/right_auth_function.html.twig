@@ -1,0 +1,18 @@
+{% if functionlist is defined %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext" style="width:100%;color: #F8B62B;cursor:default">升级到专业版&nbsp;&nbsp;<img style="height: 8px; margin-top: -3px; width: 8px;" src="{{ asset('bundles/fafatimewebase/images/up.png')}}"></span>
+  </div>
+  <div class="rightbox-context">
+    {% for row in functionlist %}
+    <div class="rightevent-item" style="padding-left: 8px;">
+      <span class="itemicon"></span>
+      <div class="itemtitle" ><img src="{{ asset('bundles/fafatimewebase/images/star_48.png')}}" style="cursor:default;float:left;width:24px;height:24px"><span style="float:left;color: #0088CC;margin-left: 10px;margin-top: 3px;cursor:default">{{ row["title"] }}</span></div>
+    </div>
+    {% endfor %}
+    <div class="rightevent-item"> 
+      <div class="itemtitle"><span style="float:left;padding-bottom: 2px;padding-top: 2px;color: #0088CC;cursor:pointer">更多专属功能>></span><a href="{{path('JustsyBaseBundle_update_adv')}}"><span class="fafa_btn">立即升级</span></a></div>
+    </div>    
+  </div>
+</div>
+{% endif %}

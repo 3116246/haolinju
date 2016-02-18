@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>
+	{% block title %}Wefafa，企业协作网络{% endblock %} 
+	</title>	
+  <meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业协作网络。" />
+  <meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css') }}" />
+	<link rel="stylesheet" type="text/css" href="http://webim.fafatime.com/bundles/fafawebimimonlineservice/css/message.css" />
+	{% block stylesheets %}{% endblock %}
+	<script src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/bootstrap.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/component.js') }}"></script>
+	<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+</head>
+<body>
+	<div class="wrap" style="max-width:1545px;">
+		<div class="head" style="height:40px;line-height:40px;">
+			  <div class="head_left">
+			  	 <a href="{{ path('JustsyBaseBundle_login') }}">
+			       <img src="{{ asset('bundles/fafatimewebase/images/wefafa_logo.png') }}" style='width:80px;height:35px;' border="0">
+			     </a>
+			  </div>
+			  <div style='float:right;width:50%;height:40px;line-height:40px;'>
+			  	 <ul class="login_ul_menu">
+			  	 <li class='li_menu_default'"><a href="{{path('JustsyBaseBundle_login')}}">首　页</a></li>
+			  	 <li class="li_menu_default" onclick="javascript:convertPage(2);">产品介绍</li>
+			  	 <li class="li_menu_selected">企业微信</li>
+			  	 <li class="li_menu_default"><a href="http://www.fafatime.com/downcenter" target="_blank">软件下载</a></li>
+			  	 <li class="li_menu_default"><a href="#">开放平台</a></li>
+			  	 <li class="li_menu_default">
+			  	 	  <a href="{{ path('JustsyBaseBundle_default') }}">
+			  	 	    <img src="{{ asset('bundles/fafatimewebase/images/login.png') }}" style="width:56px;height:31px;margin-top:5px;" border="0">
+			  	 	  </a>
+			  	 </li>
+			  	 </ul>
+			  </div>
+		</div>
+		<div id="pageHome" style="height:500px;width:70%;margin-left:auto;margin-right:auto;line-height:500px;">
+			  微信简介
+		</div>
+	</div>
+
+<div style="width:70%;margin-left:auto;margin-right: auto;">  
+   <div style="background:url({{ asset('bundles/fafatimewebase/images/wefafa_title.png') }}) repeat center;float:left;height:25px;line-height:25px;width:100%;">
+   	  <span style="font-family:'微软雅黑';font-size:14px;color:#3e3a39;cursor:default;font-weight:bold;float:left;margin-left:5px;">他们都在使用Wefafa，随时随地办公协作！</span>
+   	  <span class="webo">
+   	  	<a href="http://weibo.com/fafatime" style="float:left;margin-left:30px;" target="_blank">微博关注</a>
+   	  </span>
+   </div>
+</div>
+<div class="bestent" style="margin:auto;width:70%;max-width:1545px;" >
+  <ul style="margin-left:10%;">
+    <li class="e1"></li>
+    <li class="e2"></li>
+    <li class="e3"></li>
+    <li class="e4"></li>
+    <li class="e5"></li>
+    <li class="e6"></li>
+  </ul>
+</div>
+<div class="footer" style="max-width:1545px;">
+	<div class="wrap">
+	<div class="fl">Copyright &copy; 2012 <a href="http://www.fafatime.com" target="_blank">Justsy</a>&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+	<div class="fr">
+	  <a href="/prointro.htm" target="_blank">产品介绍</a>&nbsp;&nbsp;<a href="{{ path('JustsyBaseBundle_help_index') }}" target="_blank">使用帮助</a>&nbsp;&nbsp;<a href="http://www.fafatime.com/downcenter" target="_blank">软件下载</a>&nbsp;&nbsp;<a href="/corp.htm" target="_blank">商务合作</a>&nbsp;&nbsp;<a href="/userlic.htm" target="_blank">服务与声明</a>&nbsp;&nbsp;<a href="/aboutus.htm" target="_blank">关于我们</a></div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $.get("{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}");
+  $.get("{{ asset('bundles/fafatimewebase/css/home.css')}}");
+  $.get("{{ asset('bundles/fafatimewebase/css/home_s1.css')}}");
+  $.get("{{ asset('bundles/fafatimewebase/js/wefafa_all.min.js')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/home_bg.jpg')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/homeicon.png')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/icon16.png')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/icon.png')}}");
+});
+</script>
+
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js" defer></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=pm@fafatime.com,corp@fafatime.com,service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服" defer></script>

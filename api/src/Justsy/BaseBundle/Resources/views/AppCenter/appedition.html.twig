@@ -1,0 +1,170 @@
+<div class="application_edit" >
+	  <div style="float:left;width:400px;">
+	  	 <div class="application_line">
+			     <span style="padding-right:5px;">应用名称：</span>
+			     <input type="text" maxlength="10" class="appname" style="width:125px;" />
+			     <span style="margin-left:35px;">排序序号：</span>
+			     <input type="text" maxlength="10" class="sortid" style="width:56px;" onkeyup='enableNaN()' value="{{maxsortid}}" onpaste="enableNaN()" class="sortid" />
+	     </div>	
+	     <div class="application_line" style="margin-left:0px;width:500px;height:135px;">
+		     <span style="padding-right:5px;">应用简介：</span>
+		     <textarea maxlength="200" placeholder="请输入应用程序简介"  class="appdesc"></textarea>
+	     </div>
+	  	 <div class="application_line">
+			     <span style="padding-right:5px;">开发团队：</span>
+			     <input type="text" maxlength="10" class="staff" style="width:300px;" value="{{app.user.nick_name}}" />
+	     </div>		 
+	     <div class="application_line">
+			     <span style="padding-right:5px;">用户认证：</span>
+			     <input type="text" maxlength="100" class="textbindurl" placeholder="请填写接口地址" style="width:300px;" />
+	     </div>
+	     <span style="float:left;margin-left:65px;color:#0077CC;margin-top:-20px;">什么是用户认证？</span>
+	  </div>
+	  <div class="application_icon_area">
+	  	  <span> 应用logo图片</span>
+	  	  <img title="设置应用图标" class="img_applogo" imageUrl=""  data-toggle="modal" show=false />
+	  </div>
+	  <div class="application_error_area"></div>
+	  
+   <div style="float: left; margin-left: 290px;">
+	   <span appid="" onclick="ApplicationMgr.saveApp()" class="application_botton_active" style="margin-right: 20px;">保&nbsp;&nbsp;存</span>
+	   <span appid="" onclick="ApplicationMgr.canceledit()" class="application_botton">取&nbsp;&nbsp;消</span>
+	 </div>
+	 <div  class="modal invitedphoto" data-backdrop="static" style="display:none;width:530px;" show=false >
+		  <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+		  <div style="color:#0077CC; margin: -25px 0px 5px 38px;">
+		  	 <img src="{{ asset('bundles/fafatimewebase/images/icon_point.png')}}" />上传应用Logo时，请选择最小120*120像素的图片进行上传。
+		  </div>
+			<div class="modal-footer">
+		      <img id="uplod_loading" style="float:left;width:32px;height:32px;margin-left:20px;display:none;" src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}">
+		  	  <span class="upload_hint" style="float:left;margin-left:5px;margin-top:4px;color:#006BD9;" ></span>
+		  	  <span class="btn btnsaveimage">确 定</span>    			   
+			    <span class="btn" onclick="Window_CloseLogo();">关闭</span>
+			</div>
+	 </div>	  
+	 
+</div>
+ <script type="text/javascript">
+  	 var uploadObj=null;
+  	 var mysortids = null;
+  	 $(".invitedphoto .modal-body").children().css("overflow","hidden");
+  	 var edit_url = "{{path('JustsyBaseBundle_appedit')}}";
+  	 xmlpage_url ="{{path('JustsyBaseBundle_mappconfig')}}";
+  		var theList={{theList|raw}};
+  	 var appconfig_publish_url = "{{path('JustsyBaseBundle_mappconfig_publish')}}";
+  	 function appendNativeList(nativelist)
+  	 {
+  	 		var html=[];
+  	 		for(var i=0;i<nativelist.length;i++){
+  	 				html.push("<option value='"+nativelist[i].temp_code+"'>"+nativelist[i].temp_name+"</option>");
+  	 		}
+  	 		$(".nativelist").html(html.join(''));
+  	 }
+  	 function fillForm(row)
+  	 {
+  	 		ApplicationMgr.appid=row.appid;
+  	 		$(".application_edit .appname").val(row.appname);
+  	   	 if (row.applogo!=null && row.applogo!="") {
+  	   	 	  $(".application_edit .img_applogo").prev().hide();
+  	 	      $(".application_edit .img_applogo").show();
+  	 	      $(".application_edit .img_applogo").attr("imageurl",row.applogo);
+  	 	      $(".application_edit .img_applogo").attr("src",row.logo_url);
+  	   	 }
+  	   	 $(".application_edit .functiontypes").find("input[value='"+row.functiontype+"']").attr("checked","checked");
+  	   	 $(".application_edit .textaccount").val(row.login_account);
+  	   	 $(".application_edit .textbindurl").val(row.bindurl);
+  	   	 $(".application_edit .subscribe").val(row.subscribe);
+  	   	 $(".application_edit .appdesc").val(row.appdesc);  
+  	   	 mysortids = row.sortid;
+  	   	 alert(mysortids);
+  	   	 $(".application_edit .sortid").val(row.sortid==null?"0":row.sortid);
+  	   	 if(row.functiontype=="native"){
+  	   	 		$(".daili_account,.daili_pwd,.auth_inter").hide();
+		  				$(".native_function").show();
+  	   	 }
+  	   	 else{
+  	   	 		$(".daili_account,.daili_pwd,.auth_inter").show();
+		  				$(".native_function").hide();
+  	   	 }
+  	 }
+	   function avatar_success()
+		 {
+		 	  var appid  = $("#applist_update .application_edit").eq(0).attr("appid");
+				var url = "{{ path('JustsyBaseBundle_app_savephotor')}}?appid="+appid;
+	      $.post(url,null,function(data){
+		       if (data.s=="1")
+		       {
+		       	  $(".invitedphoto").modal("hide");
+		       	  $(".img_applogo").prev().hide();
+		       	  $(".img_applogo").show();
+		       	  $(".img_applogo").attr("imageUrl",data.file);
+		       	  var getfile = "{{path('JustsyMongoDocBundle_getfile')}}"+"/";
+		       	  $(".img_applogo").attr("src",getfile + data.file);
+		       	  if ( appid != "")
+		       	  {
+					 	  	var ctl = $(".application_box[appid='"+appid+"']");
+					 	  	ctl.find("img").attr("src",getfile + data.file);
+					 	  	ctl = $("#basic_"+ appid +" .appReadonly");					 	  	 
+					 	  	 //图片的处理
+					 	  	 ctl.eq(1).attr("applogo",data.file);
+				  	 	   ctl.eq(1).attr("src",getfile + data.file);
+				  	 	}
+				  	 	$("#uplod_loading").hide();
+				  	 	$(".upload_hint").text("");
+		       }
+		       else
+		       {		       	 
+		       	 $("#uplod_loading").attr("src","/bundles/fafatimewebase/images/errow.gif");
+		       	 $("#uplod_loading").show();
+		   	   	 $(".upload_hint").text("应用Logo上传失败");
+		       }     
+	      });
+		 }		 
+		  $(document).ready(function(){
+		  	if(theList.length>0)
+					fillForm(theList[0]);
+				else
+					$(".application_line .sortid").val(1);
+		  	$(".functiontypes input").bind('click',function(){
+		  		if($(this).val()=="native"){
+		  				$(".daili_account,.daili_pwd,.auth_inter").hide();
+		  				$(".native_function").show();
+		  		}
+		  		else{
+		  			$(".daili_account,.daili_pwd,.auth_inter").show();
+		  				$(".native_function").hide();
+		  		}
+		  	});
+        var obj = $($(".invitedphoto .modal-body")[0].children[0].children[0]);
+        var obj_ff = obj.find("embed");
+        uploadObj = document.all==null? obj_ff : obj;
+        uploadObj.css({"height":"380px","width":"500px"});   		  	
+	       //保存头像
+	   	   $(".btnsaveimage").click(function(){
+	   	   	   $("#uplod_loading").attr("src","/bundles/fafatimewebase/images/loading.gif");
+		   	   	 $("#uplod_loading").show();
+		   	   	 $(".upload_hint").text("正在上传应用Logo，请稍候……");
+			       uploadObj[0].doSave();
+		     });
+		     
+		     $(".img_applogo").click(function(){
+		     	  $("#uplod_loading").hide();
+		     	  $(".upload_hint").text("");
+		     	  $(".invitedphoto").modal("show");
+		     });
+		  });
+		 
+		 function Window_CloseLogo()
+		 {
+		    $(".invitedphoto").modal("hide");
+		   	$(".upload_hint").text("");
+		   	$(".uplod_loading").hide();
+		 }	
+		 
+		 //禁止输入非数字
+		 function enableNaN(){
+		   var tmptxt=$(".sortid").val(); 
+       $(".sortid").val(tmptxt.replace(/\D|^0/g,'')); 
+		 }
+		    	  
+ </script>

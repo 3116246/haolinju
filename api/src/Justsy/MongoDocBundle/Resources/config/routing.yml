@@ -1,0 +1,37 @@
+#JustsyMongoDocBundle_putfile:
+#    pattern:  /putfile/{name}
+#    defaults: { _controller: JustsyMongoDocBundle:Default:index, name: foo }
+    
+JustsyMongoDocBundle_getimage:
+    pattern:  /getfile/image/{sizemode}/{id}
+    defaults: { _controller: JustsyMongoDocBundle:Default:getImage, sizemode: original, id: "0" }
+    requirements: 
+        sizemode: original|small|middle
+        
+JustsyMongoDocBundle_getfile:
+    pattern:  /getfile/{id}
+    defaults: { _controller: JustsyMongoDocBundle:Default:getFile, id: "0" }
+    
+JustsyMongoDocBundle_downfile:
+    pattern:  /downloadfile/{id}
+    defaults: { _controller: JustsyMongoDocBundle:Default:downFile, id: "0" }    
+        
+JustsyMongoDocBundle_getfile1:
+    pattern:  /getfile/
+    defaults: { _controller: JustsyMongoDocBundle:Default:getFile, id: "0" }
+    
+JustsyMongoDocBundle_getandroidsetup:
+    pattern:  /setupfile/wefafa.apk
+    defaults: { _controller: JustsyMongoDocBundle:Default:getFile,id: "androidsetup"}
+JustsyMongoDocBundle_getiossetup:
+    pattern:  /setupfile/wefafa.ipa
+    defaults: { _controller: JustsyMongoDocBundle:Default:getFile,id: "iossetup"}
+JustsyMongoDocBundle_getpcsetup:
+    pattern:  /setupfile/pcsetup
+    defaults: { _controller: JustsyMongoDocBundle:Default:getFile,id: "pcsetup"}
+JustsyMongoDocBundle_uploadfile:
+    pattern:  /uploadfile/
+    defaults: { _controller: JustsyMongoDocBundle:Default:uploadfile}
+JustsyMongoDocBundle_delfile:
+    pattern:  /deletefile/
+    defaults: { _controller: JustsyMongoDocBundle:Default:removeFile}    

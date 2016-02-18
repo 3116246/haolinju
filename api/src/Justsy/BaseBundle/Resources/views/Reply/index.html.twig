@@ -1,0 +1,47 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain, 'curr_sel_leftmenu' : '4'} %}
+<div class="menuother">评论/回复</div>
+<ul class="left-menu">
+		<li>
+			<a href="{{path('JustsyBaseBundle_reply_in',{'network_domain' : curr_network_domain})}}">
+  			<i class="menu-comment"></i>收到的评论/回复
+			</a>
+		</li>
+		<li>
+			<a href="{{path('JustsyBaseBundle_reply_out',{'network_domain' : curr_network_domain})}}">
+  			<i class="menu-comment"></i>发出的评论/回复
+			</a>
+		</li>
+</ul>
+{% endblock %}
+
+{% block main_content_center %}
+{% endblock %}
+
+{% block main_content_right %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">粉丝 (<span id="_attentionmecount">0</span>)</span>
+  </div>
+  <div>
+    {% render "JustsyBaseBundle:EmployeeCard:queryAttentionThis" with {"account" : app.user.username, topCount:-1} %}
+  </div>
+</div>
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">正在关注 (<span id="_meattentioncount">0</span>)</span>
+  </div>
+  <div>
+    {% render "JustsyBaseBundle:EmployeeCard:queryAttention" with {"account" : app.user.username, topCount:-1} %}
+  </div>
+</div>
+<script type="text/javascript">
+      $(document).ready(function() {
+          $("#_meattentioncount").text( $("#meattentioncount").text());
+          $("#_attentionmecount").text( $("#attentionmecount").text());
+      });
+</script>
+{% endblock %}

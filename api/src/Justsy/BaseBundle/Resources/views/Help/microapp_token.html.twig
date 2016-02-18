@@ -1,0 +1,70 @@
+<p>微应用调用各接口推送消息时需要使用token，以识别其是否为合法调用。每次token获取后，有效期为1小时，请开发者自行缓存，并在到期后予以重新申请。</p>
+<h5>接口地址（HTTP请求方式：POST）</h5>
+<p>https://www.wefafa.com/api/http/proxytoken</p>
+<h5>参数列表</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>appid</td>
+		<td>应用注册时由Wefafa分配的唯一标识</td>
+	</tr>
+	<tr>
+		<td>code</td>
+		<td>
+		动态授权码
+		<ul>
+			<li>1、使用appid和appkey顺序组合成一个新字符串A。例：appid为123456，appkey为89!{H45U,则组合后的A应该为：12345689!{H45U</li>
+			<li>2、对A进行MD5加密(32位)处理，得到新的密文C。例：C=MD5("12345689!{H45U")</li>
+			<li>3、将密文C做为授权码，在获取token时传入</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>grant_type</td>
+		<td>固定值，传入：proxy</td>
+	</tr>
+	<tr>
+		<td>state</td>
+		<td>应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td>
+	</tr>
+</table>
+<h5>返回值列表</h5>
+<table class="table table-bordered"> 
+	<tr>
+		<td>属性名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>access_token</td>
+		<td>API访问token码</td>
+	</tr>
+	<tr>
+		<td>token_type</td>
+		<td>固定返回值：bearer</td>
+	</tr>
+	<tr>
+		<td>expires</td>
+		<td>本次获取token的有效截止日期</td>
+	</tr>
+	<tr>
+		<td>expires_in</td>
+		<td>本次获取token的有效时长。固定为1小时，单位秒</td>
+	</tr>
+	<tr>
+		<td>state</td>
+		<td>应用状态码。请求授权码时提交的应用状态码。</td>
+	</tr>
+	<tr>
+		<td>error</td>
+		<td>错误代码。发生错误时返回</td>
+	</tr>
+	<tr>
+		<td>msg</td>
+		<td>错误信息。发生错误时返回</td>
+	</tr>
+</table>
+<h5>实例参考</h5>
+<p>https://www.wefafa.com/api/http/proxytoken?appid=sdf32as3sds4d&amp;code=sd3r2334sdfd&amp;grant_type=proxy&amp;state=gi3443d-3d-wef</p>

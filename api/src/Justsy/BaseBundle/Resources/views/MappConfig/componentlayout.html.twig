@@ -1,0 +1,109 @@
+<div style="width:100%;">
+	<div class="component_treearea">
+	 	  <ul id="tree_component" class="ztree" style="background-color:transparent;border:none;min-height:590px;"></ul>
+	</div>	
+	<div id="component_configarea" style="float:left;width: 460px;">
+	 	<div id="component_listarea" style="float:left;width:100%;"></div>
+	 	<div id="component_editarea" style="float:left;display:none;width:100%;">
+	 	  	<div style="height: 30px; border-bottom: 1px solid rgb(243, 243, 243); margin-left: -10px;background:url('/bundles/fafatimewebase/images/topnav_bg.png') repeat-x scroll 0 0 rgba(0, 0, 0, 0); margin-top: -10px; line-height: 30px;">
+    			<span id="btn_basicedit" style="padding-left: 10px; padding-right: 10px; color: #ffffff;">公共属性配置</span>
+    			<span id="btn_componentedit" style="padding-left: 10px; padding-right: 10px; cursor: pointer;color:#999999">组件属性配置</span>
+  			</div>
+	 	  	<div id="bsiacattr_editdiv"></div>
+		 	<div id="component_editdiv"></div>
+		 	<div class="component_edit_buttom">
+		 	  	<div><span id="component_editor_hint"></span></div>
+		 	  	<span style="float:right;">
+				    <span onclick="ComponentAttr.save()" class="btn btn-primary">确认修改</span>
+				    <span onclick="ComponentAttr.deleteComponent()" class="btn">删除</span>
+				    <span onclick="ComponentAttr.cancel()" class="btn">取消</span>
+			    </span>
+		    </div>
+	 	</div>
+	</div>
+</div>
+<div class="modal hide fade" id="selectComponentDialog" style="width:750px;margin-left:-380px">
+    <div class="portals_staff_windowtitle">
+      	<span style="padding-left:10px;">选择用户组件</span>
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin:5px 10px 0 0">&times;</button>
+      </div>
+    <div class="modal-body" id="component_list_body" style="min-height:170px;">
+    	<div>
+    		<div class="componentlist" style="overflow:hidden;float:left;width:80%;border-right: 1px solid #bbb;">
+    		</div>
+    		<div class="componentdesc" style="float:left;height:160px;padding-left:5px;width:19%;">
+    		</div>
+    	</div>
+    </div>
+    <div class="modal-footer">
+    	<span style="float:left;margin-left:10px;color:#0088cc;" id="selected_notice"></span>
+      <a href="#" class="btn btn-primary" onclick="AppConfigManager.addComponent()">确定</a>
+    	<a href="#" class="btn" data-dismiss="modal" style="margin-right:10px;">关闭</a>
+    </div>
+</div>
+
+<div class="modal hide fade" id="selectPageDialog">
+    <div class="portals_staff_windowtitle">
+      	<span style="padding-left:10px;">选择页面定制方式</span>
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin:5px 10px 0 0">&times;</button>
+    </div>
+    <div class="modal-body" id="component_list_body" style="min-height:270px;padding:0 5px 5px;">
+    	 <div class="component_newpage">
+    	 	   <div class="component_newpage_icon" status=0>
+    	 	   	  <img src="{{ asset('/bundles/fafatimewebase/images/bg_apptype_selected.png')}}" />
+    	 	      <span>新建页面</span>
+    	 	   </div>    	 	   
+    	 </div>
+    	 <div style="width:100%;">
+    	 	  <span class="component_selectedpage_title">选择以下存在的页面：</span>
+    	 	  <div class="component_selected_page" style="float:left;"></div>
+    	 </div>
+    </div>
+    <div class="modal-footer">
+    	<span style="float:left;margin-left:10px;color:#0088cc;" id="selectpagehint"></span>
+      <a href="#" class="btn btn-primary" onclick="AppConfigManager.selectedPage()">确定</a>
+    	<a href="#" class="btn" data-dismiss="modal" style="margin-right:10px;">关闭</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		AppConfigManager.initConfigPage();
+    	$("#bsiacattr_editdiv").show();
+    	$("#component_editdiv").hide();
+    	$("#btn_basicedit").live("click",function(){
+    		if($(this).attr("cur")=="1") return;
+    		$("#bsiacattr_editdiv").show();
+    		$("#component_editdiv").hide();
+    		$(this).attr("cur","1").css({"color":"#ffffff","cursor":"none"});  
+    		$("#btn_componentedit").attr("cur","0").css({"color":"#999999","cursor":"pointer"}); 		
+    	});
+    	$("#btn_componentedit").live("click",function(){
+    		if($(this).attr("cur")=="1") return;
+    		$("#bsiacattr_editdiv").hide();
+    		$("#component_editdiv").show();
+    		$(this).attr("cur","1").css({"color":"#ffffff","cursor":"none"});  
+    		$("#btn_basicedit").attr("cur","0").css({"color":"#999999","cursor":"pointer"});
+    	});    	
+		$(".component_newpage_icon").live("click",function(){
+			 if ( $(".component_newpage_icon img:visible").length==0){
+			 	  $(".component_newpage_icon img").show();
+			 	  $(".component_newpage_icon span").css("margin-left","-58px");
+			 	  $(this).attr("status",1);
+			 }
+			 else {
+			 	  $(".component_newpage_icon img").hide();
+			 	  $(".component_newpage_icon span").css("margin-left","0px");
+			 	  $(this).attr("status",0);
+			 }
+			 //清除
+			 $(".component_selected_page input").attr("checked",false)
+		});
+		
+		$(".component_selected_page input").live("click",function(){
+			 $(".component_newpage_icon img").hide();
+			 $(".component_newpage_icon span").css("margin-left","0px");
+			 $(".component_newpage_icon").attr("status",0);
+		});		
+	});
+</script>

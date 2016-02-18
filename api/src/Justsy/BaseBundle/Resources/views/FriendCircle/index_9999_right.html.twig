@@ -1,0 +1,26 @@
+  <div id='dfriendevent' class="rightbox" style="float:left;display: block; width: 218px;">
+  </div>
+
+  <div class="rightbox" style="float:left;width: 218px;">
+    {% render "JustsyBaseBundle:FriendCircle:UserTag"%}
+  </div>
+  <!--
+  <div class="rightbox" style="float:left;width: 218px;">
+    {#{% render "JustsyBaseBundle:FriendCircle:SupperUser" %}#}
+  </div>
+  -->
+  <div class="rightbox" style="float:left;width: 218px;">
+    <div class="rightbox-title">
+	  <span class="titletext">推荐企业</span>
+	  <!--<span class="titlemore" title="查看更多"><a href="{{ path("JustsyBaseBundle_help_index") }}"><div class="more-img"></div></a></span>-->
+		</div>
+    	{% render "JustsyBaseBundle:FriendCircle:RemEnterprise"%}
+  </div>
+<script>
+	var friend_event_url="{{path('JustsyBaseBundle_friendcircle_friendevent')}}";
+$(document).ready(function(){
+	$("#dfriendevent").load(friend_event_url,{},function(d){
+        	$("#dfriendevent").hide().slideDown(200);
+        });
+});
+</script>

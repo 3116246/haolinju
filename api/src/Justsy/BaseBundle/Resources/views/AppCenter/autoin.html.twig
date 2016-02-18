@@ -1,0 +1,15 @@
+<html>
+<head>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+</head>
+<body>
+<div class="twomain" style="font-size:12px;text-align:center;height:450px;line-height:450px;background: #EEF8FF;padding-top:0px;padding-bottom:0px;">
+		       <a href="{{url}}" style="text-decoration:none"><span id="autoJump"><img border=0 style="border:0;vertical-align:middle" src="/bundles/fafatimewebase/images/loadingsmall.gif">数据加载中...</span></a>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("#autoJump").trigger("click");
+  });
+</script>

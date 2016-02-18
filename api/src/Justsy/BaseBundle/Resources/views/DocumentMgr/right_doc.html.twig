@@ -1,0 +1,19 @@
+{% if we_doc|length > 0 %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">最新文档</span>
+    <span class="titlemore"><a href="{{ path('JustsyBaseBundle_documnet_mgr', {'network_domain' : curr_network_domain}) }}" title="查看更多文档"><div class="more-img"></div></a></span>
+  </div>
+  <div class="rightbox-context">
+    <table class="rightdoctable">
+      {% for row in we_doc %}
+      <tr>
+        <td><img class="fileicon" src="{{ asset('bundles/fafatimewebase/images/') }}{{ this.getFileIcon(row["file_name"]) }}"></td>
+        <td><a class="filename" href="{{ FILE_WEBSERVER_URL }}{{ row["file_id"] }}" target="_blank" title="{{ row["file_name"] }}">{{ row["file_name"] }}</a></td>
+        <td><a login_account="{{ row["login_account"] }}" style="color:#0088CC;" class="employee_name">{{ row["up_by_staff"] }}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}

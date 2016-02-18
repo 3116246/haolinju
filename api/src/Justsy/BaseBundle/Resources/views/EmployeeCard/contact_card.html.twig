@@ -1,0 +1,57 @@
+<div id="contact_card_detail" style="width:411px;height:265px">
+  <div class="emp_card_detail_title"><a class="emp_card_detail_close" data-dismiss="modal">×</a></div>
+  {% if this is not defined %}
+  <div style="text-align:center; font-size:14px; margin:70px 20px 0px 20px;">没有找到名为【{{ userName }}】的人员信息！</div>
+  {% else %}
+  <!-- 个人信息框 -->
+  <div class="pesonallayout"> 
+     <span class="pesonalphoto">
+     <a href="javascript:void(0)" title="查看个人主页" target=_blank id='Contact_card_dlag_personweb'><img style="border:0px;width:90px;height:90px" src="{{ this.photo_url }}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'">
+     </a>
+     </span>
+     <div style="padding-top: 3px;"><div class="fafa_level_{{css_level}}" style="margin: 0 auto;font-weight:700;{%if(this.user["auth_level"]!="V" and this.user["auth_level"]!="S")%}background:#cccccc;{%endif%}">{{ this.user["auth_level"] }}{{ this.user["vip_level"] }}</div></div>
+		 <div class="myNums" style="padding-left: 10px; margin-bottom: 0px;">
+			  <span class="myNumItem myNumItemRightBorder" style="padding-left: 0px;padding-right: 0px;width:40px;background-color: #F9E6E9;"><div>粉丝</div><div class="myNumText">{{this.user["fans_num"]|number_format}}</div></span>
+			  <span class="myNumItem myNumItemRightBorder" style="padding-left: 0px;padding-right: 0px;width:40px;background-color: #FEF8E9;"><div>关注</div><div class="myNumText">{{this.user["attenstaff_num"]|number_format}}</div></span>
+			  <span class="myNumItem myNumItemRightBorder" style="padding-left: 0px;padding-right: 0px;width:40px;background-color: #DAEEC3;"><div>动态</div><div class="myNumText">{{this.user["publish_num"]|number_format}}</div></span>
+		 </div>
+  </div>
+
+  <div class="pesonalother">
+    <span class="pesonaldetail">
+      <div style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:250px;" class='emp_card_detail_orgname'>{{ this.user["ename"]}}</div>
+      <div style="padding-bottom: 5px;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:250px;"><a href="javascript:void(0)" class="pesonalname">{{ this.user["nick_name"] }}</a></div>
+      <div style="cursor:default;font-weight: 700;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:250px;">{% if this.user["eno"] != app.user.eno and (staff_pref["pref_externview_dept"] is not defined or staff_pref["pref_externview_dept"] != "1") %}<font style='color:#ccc'></font>{% else %}{{ this.user["dept_name"] }}{% endif %}&nbsp;&nbsp;{% if this.user["eno"] != app.user.eno and (staff_pref["pref_externview_duty"] is not defined or staff_pref["pref_externview_duty"] != "1") %}<font style='color:#ccc'></font>{% else %}{{ this.user["duty"] }}{% endif %}</div>
+     </span>   
+    <span class="personallist ">手机号：{%if this.user["eno"] != app.user.eno and (staff_pref["pref_externview_mobile"] is not defined or staff_pref["pref_externview_mobile"] != "1") or this.user["mobile"]==""%}<font style='color:#ccc'>[保密]</font>{%else%}{{ this.user["mobile"] }}{%endif%}</span>
+    <span class="personallist ">邮&nbsp;&nbsp;箱：{%if(this.userName=="")%}<font style='color:#ccc'>[保密]</font>{%else%}{{ this.userName }}{%endif%}</span>
+	  {%if this.userName!="sysadmin@fafatime.com"%}
+	  <div class="pesonalbutton" style="width: 115px;margin-top: -2px;">
+	  <span style="float: left; color: rgb(255, 255, 255); background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); border-radius: 3px 3px 3px 3px;">
+	   <span style="margin-right: -5px; margin-top: 3px;" class="ecread_icon_attention"></span>
+	   <a href="javascript:void(0)" id="Contact_card_dlag_attention" class="Contact_card_attention Contact_card_attention_concern" style="font-weight: 700;color: rgb(255, 255, 255); padding-left:15px;padding-right:15px;float:left; background-color: rgb(248, 182, 43);">关注TA</a>
+	   </span>
+	  </div>  
+	  {%endif%}
+  </div> 
+	<div id="attention" state="{{ this.user["attention"] }}" login_account="{{this.userName}}" style="display:none">{{ this.user["attention"] }}</div>
+	<div class="fafa_jid" style="display:none">{%if(this.isSelf==false)%}{{ this.user["fafa_jid"] }}{%endif%}</div>
+	<div class="personweburl"  style="display:none">{{ path('JustsyBaseBundle_interviewee_home',{'network_domain':this.network_domain,'account':this.userName})}}</div>  
+  <div class="emp_card_detail_desc" style="background-color:#fff;color:#000;height: 52px;margin-top:0px"> 
+  	<div style="float: left; height: 25px; width: 100%;"><span style="float: left; display: block; margin-left: 15px;">个人标签</span><hr style="float: left; margin-top: 15px; width: 80%;"></div>
+  	<div style="float: left; width: 100%; height: 27px; line-height: 27px;margin-left: 15px;color: #666666;">
+  	{%if tag|length>0%}
+  	  {%for t in tag%}
+  		   <span id="{{t["tag_id"]}}">{{t["tag_name"]}}</span>
+  		{%endfor%}
+  	{%else%}
+  	   <span style="color:#CCCCCC">TA暂时还没添加标签</span>
+  	{%endif%}
+  	</div>
+  </div>
+  <div class="emp_card_detail_desc" title="{{ this.user["self_desc"] }}">
+      &nbsp;&nbsp;签名：{{ this.user["self_desc"] }}
+  </div>
+  <!-- 个人信息框结束 -->
+  {% endif %}
+</div>

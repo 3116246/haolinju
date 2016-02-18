@@ -1,0 +1,168 @@
+{%if IsBeyondCreateGroup %}
+<div style='background-color: #F8CB6A;border: 1px solid #CCCCCC;text-align: center;'>抱歉，您目前最多只能创建 &nbsp;<span style='color:red;'>{{CountCreateGroup}}</span>&nbsp;个群组。</div>
+{%else%}
+<div>
+<form id="div_create_group_form">
+<div class='group_create_center'>
+	<div>
+		<div class='group_base_info'>
+			<div>
+				<input type="hidden" id="circleId" name="circleId" value="{{ this.circleId }}">
+				<table>
+					<tr><td style='vertical-align: top;'><b>群组名称：</b></td><td style="width:320px;"><input type='text' maxlength='20' style='margin-right:5px;' onblur="javascript:GroupCreate.CheckgroupOrNetWork(this.value);" checkurl="{{ path('JustsyBaseBundle_checkgroupname')}}" onchange="$(this).attr('check','0');" check='0' id='gname' name='gname'/><span class="errspan" style="color:red;display:none;"></span><img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style='display:none;width:16px;height:16px;' class='loading'/><img style='display:none;width:16px;height:16px;' src="{{asset('bundles/fafatimewebase/images/ok.png')}}" class='ok'/></td></tr>
+				<!--<tr><td style='vertical-align: top;'><b>群组分类：</b></td><td>
+				<div><select id='classify' name='classify'></select><span id="sel_classify" style='display:inline-block;cursor: pointer;'  class='classify_span'><span></span></span></div></td></tr>-->
+				<tr><td style='vertical-align: top;'><b>群组分类：</b></td><td>
+				<div>
+					 <a id="btn_select" style="border: 1px solid #CACACA;
+    display: inline-block;
+    color: #4D4D4D;
+    height: 25px;
+    position: relative;
+    width: 195px;"><span id="sp_classify" style="display: block;
+    height: 25px;
+    line-height: 25px;
+    position: absolute;
+    text-indent: 10px;
+    width: 170px;"></span><span style='cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: -28px;
+    margin-top: -1px;'  class='classify_span'><span></span></span><select id='classify' name='classify' style=" height: 25px;
+    left: 0;
+    opacity: 0;
+    position: absolute;cursor: pointer;
+    top: 0;"></select>
+						</a>
+				</div></td></tr></tr>
+				<tr><td style='vertical-align: top;'><b>群组描述：</b></td><td><textarea id='des' name='des' placeholder='不超过80个字'></textarea></td></tr>
+				</table>
+			</div>
+			<div>
+			<p style="margin-bottom:0px;"><b>加入方式：</b></p>
+			<input type='hidden' for='iskaifang' value='0' id='radjoin' name='radjoin'/>
+			<table>
+				<tr>
+					<td><input p='0' checked='checked' for='iskaifang' type='radio'/>&nbsp;&nbsp;<span>完全开放</span></td>
+					<td style='padding-left:20px;color: #CCCCCC;'>任何人可以查看，搜索和申请加入</td>
+				</tr>
+				<tr>
+					<td><input p='1' for='iskaifang' type='radio'/>&nbsp;&nbsp;<span>邀请加入</span></td>
+					<td style='padding-left:20px;color: #CCCCCC;'>无法直接申请，仅能通过成员邀请加入</td>
+				</tr>
+			</table>
+			</div>
+		</div>
+		<div class='group_logo_upload'>
+			<div class="allphoto" style="background: none repeat scroll 0 0 rgba(0, 0, 0, 0);border: 1px solid #CCCCCC;border-radius: 6px;height: 128px;padding: 10px;width: 100px;margin-right:15px;" id="preview_fake" onclick="editHead()">
+         <img style="width:100px; height:100px;cursor:pointer;border:1px solid #CCC;" title="编辑LoGo" id="preview" src="{{ asset('bundles/fafatimewebase/images/no_photo.png') }}">
+         <div id="loadlog" style="display:none;width:100px;height:100px;margin-top:-100px;"><img style="height: 25px;margin-left: 35px;margin-top: 35px;width: 25px;" src="{{asset('bundles/fafatimewebase/images/loadingsmall.gif')}}"/></div> 
+    		<div style='margin-top:8px;cursor:pointer;'><center><span class='clickupload'>点击上传</span></center></div>
+    	</div>
+		</div>
+	</div>
+	<div style='clear:both;'></div>
+	<div style='display:none;' class='group_invite_member'>
+		<p style="margin-bottom:0px;"><b>邀请成员：</b><span id='memberloading' style='float:right;display:none;margin-right:240px;*margin-right:none;*margin-left:150px;'>loading...</span></p>
+		<div id='group_invite_container'><span class='pre' style="border: 0 none;font-size: 20px;font-weight: bold;" onclick="GroupCreate.InviteManager.showPreMember()"><</span><ul style='margin:0;list-style:none outside none;'></ul><span class='nex' style='margin-left:10px;border: 0 none;font-size: 20px;font-weight: bold;' onclick="GroupCreate.InviteManager.showNextMember()">></span></div>
+	</div>
+	<a href='javascript:void(0);' onclick='showtearea(this)' style="text-decoration: underline;">通过邮箱邀请>></a>
+	<div style='margin-top:5px;display:none;' class='group_invite_set'>
+		<!--
+		<div class='invite_set_area' onclick="groupCreate.showinviteput(this)">
+			<span class='invite_note' style='color:#CCC;'>被邀请的邮箱或姓名</span>
+			<input style='display:none;' placeholder='' type='text' id='set_area_input'/>
+		</div>-->
+		<textarea style='width:550px;'></textarea>
+		<div style='color:#CCC;'>多个被邀请人用分号隔开&nbsp;&nbsp;&nbsp;<span id='inputerror'></span></div>
+		<input type='hidden' style='' id='invs' name='invs'/>
+	</div>
+</div>
+<div style='clear:both;'></div>
+<div class='group_create_foot'>
+	<center>
+		<div style='font-size:14px;cursor:pointer;' onclick="GroupCreate.createSubmit(this)" class='creategroupbnt'><span>创建群组</span></div>
+		<div style='margin-left:20px;cursor:pointer;background-color:#cacaca;font-size:14px;' class='creategroupbnt' onclick="GroupCreate.close();"><span>取&nbsp;消</span></div>
+	</center>
+</div>
+<div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    <div class="modal-footer"><span><img class='modal_savelog' style='display:none;width:16px;height:16px;margin-right:5px;' src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/></span><A class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+</div>
+</form>
+</div>
+<script>
+	var image_default_path="";
+	var grouptype={{grouptype|raw}};
+	var fileurl="{{fileurl}}";
+	var save_group_logo_url="{{path('JustsyBaseBundle_group_save_logo')}}";
+	var load_mind_url="";
+	$(document).ready(function(){
+		var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+	  	var obj_ff = obj.find("embed");
+	  	uploadObj = document.all==null? obj_ff : obj;
+	  	uploadObj.css({"height":"380px","width":"500px"});
+	  	GroupCreate.loadGroupType(grouptype,"classify");
+	  	GroupCreate.InviteManager.init({
+	  		container:$("#group_invite_container")[0],
+				prebnt:$("#group_invite_container").find(".pre")[0],
+				nexbnt:$("#group_invite_container").find(".nex")[0],
+				get_N_url:"{{path('JustsyBaseBundle_group_getmember')}}",
+				pagecount:parseInt("{{pagecount}}")
+	  	});
+	  	GroupCreate.showtransparent("left");
+	  	//GroupCreate.setInputEvent($("#set_area_input")[0],load_mind_url);
+	  	$("input[type='radio'][for]").click(function(){
+	  		var p=$(this).attr('for');
+	  		var val=$(this).attr('p');
+	  		$(this).attr('checked',true);
+	  		$("input[type='radio'][for='"+p+"'][p='"+Math.abs(parseInt(val)-1)+"']").attr('checked',false);
+	  		$("input[type='hidden'][for='"+p+"']").val(val);
+	  	});
+	  	$("#classify").bind('click',function(){
+	  		$("#sp_classify").text($(this).find("option:selected").text());
+	  	});
+	  	$("#sp_classify").text($("#classify").find("option:selected").text());
+	});
+	function showtearea(e)
+	{
+		if($(".group_invite_set").css('display').indexOf('none')>-1){
+			$(".group_invite_set").css('display','block');
+			$(e).text('收起');
+		}
+		else
+			$(".group_invite_set").css('display','none');
+		  $(e).text('通过邮箱邀请>>');
+	}
+	function saveLogo()
+	{
+		$("#loadlog").show();
+		$.post(save_group_logo_url,{groupid:0},function(d){
+			$("#loadlog").hide();
+			if(d.group_photo_path!=''){
+				$('#preview').attr("src",fileurl+d.fileid);
+			}
+			else{
+				
+			}
+		});
+	}
+	function editHead()
+	{
+		$("#invitedphoto").modal("show");
+	}
+	function saveHead()
+	{
+		$(".modal_savelog").show();
+	   uploadObj[0].doSave();
+	}
+	function avatar_success()
+	{
+		$(".modal_savelog").hide();
+	  $("#invitedphoto").modal("hide");	
+	  var groupsdownphoto = $(".groups-downphoto");
+	  groupsdownphoto.html( "<a data-toggle=\"modal\" show=false href=\"#invitedphoto\"><img id='img1' width='120px' height='120px' src='{{path('JustsyBaseBundle_component_cavatareditor_getfileinfo',{'size':'120'})}}'/></a>");
+	  saveLogo();
+	}
+</script>
+{%endif%}

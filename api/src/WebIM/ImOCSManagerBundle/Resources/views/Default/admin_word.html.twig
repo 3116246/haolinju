@@ -1,0 +1,91 @@
+{% extends 'WebIMImOCSManagerBundle::master.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafawebimimocsmanager/css/message.css') }}" />
+{% endblock %}
+{% block main_content %}
+  <div id="main_detail">
+  <div id="main_detail_bg">
+    <div id="main_content">
+      <div id="main_feedback_title" style="height:1px"><b><font size=5></font></b></div>
+      <div id="main_feedback_detail">
+        <div ID="panList" class="main_feedback_list">                
+            <DIV class=main_feedback_list_title>日常用语列表&nbsp;&nbsp;&nbsp;{{addinfo|raw}}</DIV>
+            <DIV class="main_feedback_list_detail fafaocscontent">
+               <ul id="serviceList">{{list|raw}}</ul>
+            </DIV>
+        </div>
+        <div class="clearBoth"></div>
+      </div>
+      <div id="main_feedback_footer"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>    
+    var submiting = 0;
+    function addEmp(p)
+    {
+        var targetEle = document.getElementById(p);
+        var li=document.createElement("li");
+        li.id="newEmp";
+        targetEle.appendChild(li);
+        li.innerHTML="<div style=\"float:left\">请输入常用语：<input maxlength=200 value='' style='line-height:25px;height:25px;width:350px'><span id='hint' style='color:red'></span></div>";
+        li.children[0].children[0].focus();
+        li.children[0].children[0].onkeypress=function(E)
+        {
+        	   if((E||window.event).keyCode==13)
+        	   {
+        	   	   saveinfo(this,"");
+        	   }
+        }
+        li.children[0].children[0].onblur=function(E)
+        {
+            saveinfo(this,"");
+        }
+    }
+    function editname(empid)
+    {
+        var tar=$("#word_"+empid)[0].children[1];
+        tar.innerHTML="<input maxlength=200 value='"+tar.children[0].innerHTML+"' style='line-height:25px;height:25px;width:350px'><span id='hint' style='color:red'></span>";
+        tar.children[0].focus();
+        tar.children[0].onkeypress=function(E)
+        {
+        	   if((E||window.event).keyCode==13)
+        	   {
+        	   	   saveinfo(this,empid);
+        	   }
+        }
+        tar.children[0].onblur=function(E)
+        {
+            saveinfo(this,empid);
+        }        
+    }    
+    function saveinfo(t,id)
+    {
+        	  var nameValue = $.trim(t.value);
+            if(nameValue=="")	
+            {
+            	  $("#newEmp").remove();
+                return;
+            }
+            setControlValue("hint","<img src='{{ asset('bundles/fafawebimimocsmanager/images/loading.gif') }}'>");
+            $.ajax({
+                 type: "get",
+                 url: "{{path('WebIMImOCSManagerBundle_wordadminsave') }}",
+                 data: "wordid="+id+"&eno={{eno}}&words="+nameValue,
+                 success: function(msg){
+                 	    var data=eval(msg);
+                 	    if(!data.succeed)
+                 	    {
+                 	        setControlValue("hint","错误："+data.msg);
+                 	        t.focus();
+                 	    }
+                 	    else{
+                 	        window.location.reload(true);
+                 	    }
+                 }   //操作成功后的操作！msg是后台传过来的值
+            });     	
+    }
+</script>
+{% endblock %}

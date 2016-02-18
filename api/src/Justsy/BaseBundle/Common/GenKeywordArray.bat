@@ -1,0 +1,2 @@
+php GenKeywordArray.php
+pause

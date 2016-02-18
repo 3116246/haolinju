@@ -1,0 +1,35 @@
+<div class="rightbox-title">
+<span class="titletext">人脉事件</span>
+</div>
+<div id='eventcontainer' style='height:250px;overflow:hidden;'>
+<ul id='friendevent' style="margin: 0px;">
+{%if rows|length==0 %}
+<li style="cursor:default;margin: 5px 5px 5px 25px;display: inline-block;float:none;color:#CCCCCC;width: 90%;border-radius:2px 2px 2px 2px;">
+你的小伙伴们最近什么都没做!
+</li>
+{%else%}
+{%for row in rows%}
+<li class="friendevent_item" style="cursor:default; width: 90%;height:22px; margin: 5px; display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; border-bottom: 1px solid rgb(238, 238, 238);" title="">{{row['content']|raw}}</li>
+{%endfor%}      
+{%endif%}       
+</ul>
+</div>
+<script>
+	$(document).ready(function(){
+		if($('#friendevent').height()>$('#eventcontainer').height()){
+			//event_marquee=new marquee($("#friendevent")[0],eventcontainer,'top',true,1);
+			//event_marquee.start();
+    c=0,_=Function;with(o=document.getElementById("eventcontainer")){ innerHTML+=innerHTML; }
+      (F=_("if(#%250||!c)#++,#%=o.scrollHeight>>1;setTimeout(F,#%250?5:10000);".replace(/#/g,"o.scrollTop")))();
+		}
+		else{
+			$('#eventcontainer').css('height',($('#friendevent').height()+10)+"px");
+		}
+		$(".friendevent_item").hover(function(){
+			var _self = $(this);
+			if(_self.attr("title")!="") return;
+			_self.attr("title",_self.text());
+			}
+			);
+	});
+</script>

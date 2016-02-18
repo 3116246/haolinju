@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}Wefafa，企业移动社会化协作，微应用平台{% endblock %}</title>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+<meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业协作网络。" />
+<meta name="keywords" content="Wefafa,企业社交,企业协作,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+<meta property="wb:webmaster" content="e2fdb8d07a532c64"/>
+<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/home.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/home_s1.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/home_s2.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/js/starts/jRating.jquery.css')}}" rel="stylesheet" type="text/css" media="screen">
+<link href="{{ asset('bundles/fafatimewebase/css/circle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/group.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/PictureViewer.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/ComFileUpload.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/weibomgr.css')}}" type="text/css" rel="stylesheet">
+
+{% block stylesheets %}{% endblock %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/starts/jRating.jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Map.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Invite.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/imgZoom.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/CircleCreate.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/GroupCreate.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/PictureViewer.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/ComFileUpload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/weibomgr.js')}}"></script>
+{% if ISDEBUG %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/component.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.mousewheel.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/CInputArea.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/CDisplayArea.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EmployeeCard.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/ContactCard.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EnterpriseCard.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/userAutoTips.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/FaceAutoTips.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Message.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Notice.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EnterpriseHome.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Document.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Account.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/OnlineList.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Enterprise_setting.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Circle_setting.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/WdatePicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/lang/zh-cn.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Reply.js') }}"></script>
+
+{% else %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/WdatePicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/My97DatePicker/lang/zh-cn.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/wefafa_all.min.js') }}"></script>
+
+{% endif %}
+<script type="text/javascript">
+var g_login_account="{{app.user.getUserName()}}";
+var g_photo_path="{{FILE_WEBSERVER_URL}}{{app.user.photo_path}}";
+var g_owner="{{app.user.fafa_jid}}",g_nick_name="{{app.user.nick_name}}";
+var g_curr_network_domain = "{{ curr_network_domain }}";  
+var g_curr_circle_id = "{{ app.user.get_circle_id(curr_network_domain) }}";
+var g_curr_openid = "{{ app.user.openid }}";
+var ismanager="{{app.user.is_in_manager_circles(curr_network_domain)}}";
+var g_resource_context = "{{ asset('bundles/../') }}";
+var g_viewimageurl = "{{ path("JustsyBaseBundle_viewimage") }}";
+var g_userAutoTipsUrl = "{{ path("JustsyBaseBundle_component_cinputarea_queryattips") }}?network_domain={{ curr_network_domain }}";
+var g_FaceAutoTipsUrl = "{{ path("JustsyBaseBundle_component_cinputarea_loadfaceemotejson") }}";
+var g_getLabelUrl = "{{ path("JustsyBaseBundle_component_cdisparea_getlabel") }}";
+var g_saveLabelUrl = "{{ path("JustsyBaseBundle_component_cdisparea_savelabel") }}";
+var g_appcenterUrl = "{{APPCENTER_URL}}";
+var appcenter_index = "{{ path('JustsyBaseBundle_appcenter_index', {'network_domain' : curr_network_domain,'appid':'AAA'}) }}";
+var g_documnet_selectUrl = "{{ path('JustsyBaseBundle_documnet_select', {'network_domain' : curr_network_domain}) }}";
+var g_documnet_uploadUrl = "{{ path('JustsyBaseBundle_documnet_upload', {'network_domain' : curr_network_domain}) }}";
+var g_load_conv_url="{{path('JustsyBaseBundle_component_cdisparea_get_conv_byid',{'network_domain' : curr_network_domain})}}";
+</script>
+{% block javascriptsref %}{% endblock %}
+</head>
+<script type="text/javascript">
+var mouseover_tid = [],mouseout_tid = [],web_auto_login=false;
+var isEnterPanel=false;  //记录鼠标是否进入了菜单列表面板。主要用于鼠标从圈子卡片上移出移入时的，判断是否应该隐藏圈子面板，从圈子卡片移动到面板和从面板移动到圈子卡片上都不能隐藏圈子面板
+jQuery(document).ready(function(){
+	jQuery('[dropdownlist]').each(function(index){
+		jQuery(this).hover(
+			function(){
+				var _self = $(this);
+				clearTimeout(mouseout_tid[index]);
+				isEnterPanel=true;
+				mouseover_tid[index] = setTimeout(function() {
+					_self.find(".topmenu_app_triangle").attr("class","topmenu_app_triangle_up");
+					_self.find(".topmenu_link").attr("class","topmenu_link_hover");
+					_self.find('ul:eq(0)').show();
+				}, 0);
+			},
+			function(){
+				var _self = $(this);
+				isEnterPanel=false;
+				if($("#circle_card_dlag").length>0 && $("#circle_card_dlag").css("display")!="none") return;
+				
+				clearTimeout(mouseover_tid[index]);
+				mouseout_tid[index] = setTimeout(function() {
+            hidePanel(_self);
+				}, 0);
+			}
+		);
+	});
+	
+//  $("#recommenedcircle div").live("mouseover",function(){
+//        var _self = $(this);
+//        
+//   });
+//  $("#recommenedcircle div").live("mouseout",function(){
+//              	var _self = $(this);
+//              	_self.find(".recommenedcircle_span").show();
+//              	_self.find(".recommenedcircle_span_hover").hide();
+//   });   
+});
+
+	function hidePanel(_self)
+	{
+		if(isEnterPanel) return;
+					_self.find(".topmenu_app_triangle_up").attr("class","topmenu_app_triangle");
+					_self.find(".topmenu_link_hover").attr("class","topmenu_link");
+					_self.find('ul:eq(0)').hide();		
+	}
+</script>
+
+
+
+<body>
+	<div class="body_filter"></div>
+  <ul class="invite_box" id="invite_box" ></ul>  
+<div id="topnav" class="topnav">
+  {% block main_topnav %}
+  <div class="submenu">
+  	 <div class="submenu_left">
+						     <div class="wefafalogo"><a href="{{ path("root") }}" onFocus="this.blur()" >{% render "JustsyBaseBundle:Common:getWefafaLogo" %}</a></div>
+						     <div class="circles">
+						      <ul id="circles_menus">
+									<li style="width:114px">
+										<a class="curcircle" href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : curr_network_domain}) }}" hidefocus="true"><span title="{{app.user.get_circle_name(curr_network_domain)}}" class="curcircle_name">{{ curr_network_domain == app.user.edomain ? app.user.eshortname : app.user.get_circle_name(curr_network_domain) }}</span></a>
+									</li>
+						        </ul>
+									</div>  	 	
+  	 </div>
+  	 <div class="submenu_center">  	
+						  <div id="topmenu" class="topmenu">
+								<ul id="menus" class="menus">
+									<li dropdownlist="1" id="topmenu_circle_list">
+										
+										<a class="topmenu_link" style="position: relative;" href="{{ path('JustsyBaseBundle_circle_search',{'network_domain':curr_network_domain,'account':app.user.getUserName()}) }}"><span class="topmenu_app_triangle"  title="更多圈子"></span><span title="创建、查找更多圈子" >圈子</span></a>
+										
+                    <ul class="circle_list" style=" margin-top: -1px;width: 420px;">
+                      <li style="width:100%">
+													<div id="mycircle_title" class="circle_list_class">
+														<span style="float: left; display: block; color: rgb(0, 0, 0);">我的圈子</span>
+														<hr style="float: left; margin: 20px 10px 0;width: 80%;">
+														<span id="circle_list_page_up" style="border: 1px solid #CCCCCC;color:#ccc;cursor: pointer;display: none;float: left;height: 18px;line-height: 18px;margin-top: 10px;text-align: center;width: 20px;"><</span>
+														<span id="circle_list_page_no"  current_page=1 style="color:#000;cursor: default;display: none;float: left;height: 18px;line-height: 18px;margin-top: 10px;margin-left: 5px;margin-right: 5px;text-align: center;width: 20px;">1/2</span>
+														<span id="circle_list_page_next" style="color:#000;border: 1px solid #CCCCCC;cursor: pointer;display: none;float: left;height: 18px;line-height: 18px;margin-top: 10px;text-align: center;width: 20px;">></span>
+													</div>
+													<div id="mycircle" class="circles_item">														
+														<div title="{{ app.user.eshortname }}" id="{{app.user.ecircleid}}"><img onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle_en.png')}}'" src="{{path('JustsyMongoDocBundle_getfile',{'id': app.user.elogo}) }}">
+															<a href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : app.user.edomain}) }}">{{ app.user.eshortname }}</a>															
+															<span title="有新信息啦" class="tip_new_num" style="display:none;left: 50px;top: -10px;" circle_id="{{ app.user.ecircleid}}"></span></div>
+														<div id="9999"><img onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle_re.png')}}'" src="{{ asset('bundles/fafatimewebase/images/default_circle_re.png')}}"><a href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : 9999}) }}">我的人脉</a><span title="有新信息啦" class="tip_new_num" style="display:none;left: 50px;top: -10px;" circle_id="9999"></span></div>
+														<div id="100000"><img onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle_we.png')}}'" src="{{ asset('bundles/fafatimewebase/images/default_circle_we.png')}}"><a href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : 100000}) }}">We广场</a><span title="有新信息啦" class="tip_new_num" style="display:none;left: 50px;top: -10px;" circle_id="100000"></span></div>
+														{% for a_network_domain in app.user.network_domains %}
+														{% set a_id=app.user.circle_ids[loop.index0]%}
+															{% if ("1"!=app.user.circle_apply_status[loop.index0]) and (a_network_domain != app.user.edomain) and (a_id!=9999)and (a_id!=10000)and (a_id!=100000)%}
+																{%if loop.index0<3 %}
+																    <div id="{{ a_id }}"><img onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle.png')}}'" src="{{path('JustsyMongoDocBundle_getfile',{'id': app.user.circle_logo_path[loop.index0]}) }}"><a title="点击进入该圈子" href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : a_network_domain}) }}">{{ app.user.circle_names[loop.index0] }}</a><span title="有新信息啦" class="tip_new_num" style="display:none;left: 50px;top: -10px;" circle_id="{{ a_id }}"></span></div>
+																{%else%}
+																    <div style="display:none" id="{{ a_id }}"><img onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle.png')}}'" src="{{path('JustsyMongoDocBundle_getfile',{'id': app.user.circle_logo_path[loop.index0]}) }}"><a title="点击进入该圈子" href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : a_network_domain}) }}">{{ app.user.circle_names[loop.index0] }}</a><span title="有新信息啦" class="tip_new_num" style="display:none;left: 50px;top: -10px;" circle_id="{{ a_id}}"></span></div>
+																{% endif %}
+															{% endif %}
+														{% endfor %}
+													</div>
+													<div class="circle_list_class">
+													  <span style="float: left; display: block; color: rgb(0, 0, 0);">推荐圈子</span>
+														<hr style="float: left; margin: 15px 10px 0;width: 80%;">
+													</div>
+													<div  id="recommenedcircle" class="circles_item" count="0" style="padding-bottom: 5px;">													  
+													</div>
+											</li>
+										</ul>
+										<span id="allcircle_new_num" title="有新信息啦" class="tip_new_num" style="display:none;top:-6px;left: 65px;z-index: 100;"></span>										
+									</li>
+									{%if(app.user.IsFunctionDoc(curr_network_domain) and (curr_network_domain!="9999"))%}
+									<li><a class="topmenu_link" href="{{ path('JustsyBaseBundle_documnet_mgr', {'network_domain' : curr_network_domain}) }}">文档</a></li><!--人脉圈暂时不提供文档模块-->
+									{%endif%}
+									<li><a class="topmenu_link" href="{{path('JustsyBaseBundle_member', {'network_domain' : curr_network_domain})}}">{%if curr_network_domain=="9999"%}我的人脉{%else%}成员{%endif%}</a></li>
+								{%if(app.user.IsFunctionAppCenter())%}
+									<li class="cat-item cat-item-50" id="topmenu_app_list" style="width:75px" dropdownlist="1">
+										<a class="topmenu_link" style="position: relative;height: 29px;" href="javascript:void(0);">
+											<div style="dipslay:block;float:left">应用</div><span class="topmenu_app_triangle" ></span>
+										</a>
+										  {% render "JustsyBaseBundle:AppCenter:getApps" with {"network_domain" : curr_network_domain} %}
+									</li>		
+									{%endif%}
+								</ul>
+						    </div>
+						    <div class="topsearch">
+						      <input name="" type="text" id="searchinput" placeholder="搜动态、找同事">
+						      <div class="topsearch_button"></div>
+						      <script type="text/javascript">
+						      jQuery(document).ready(function(){
+						          var SearchEdit_source_url = "{{ path("JustsyBaseBundle_searchedit_query") }}";
+						          var SearchEdit_user_url_pre = "{{ path("JustsyBaseBundle_interviewee_home", {'network_domain':curr_network_domain}) }}";
+						          var SearchEdit_group_url_pre = "{{ path("JustsyBaseBundle_personal_group", {'network_domain':curr_network_domain}) }}";
+						          var SearchEdit_circle_url_pre = "{{ path("JustsyBaseBundle_enterprise", {'network_domain':null, 'name':null}) }}";
+						          $("#mycircle div:lt(5)").css("display","block");
+						          $.getJSON(SearchEdit_source_url, {network_domain : g_curr_network_domain, t : new Date().getTime()}, function (data) 
+						          {
+						            datasource = data;
+						            for (var i=0; i<datasource.length; i++)
+						            {
+						              datasource[i].index = i; 
+						              datasource[i].toString = function(){return this.index;};
+						            }
+						            if($("#searchinput").typeahead!=null){
+								            $("#searchinput").typeahead({
+								              menu : '<ul class="typeahead dropdown-menu" style="min-width: 216px;"></ul>',
+								              source : datasource,
+								              matcher : SearchEdit_matcher,
+								              sorter : SearchEdit_sorter,
+								              highlighter : SearchEdit_highlighter,
+								              updater : SearchEdit_updater
+								            });
+						            }
+						          })
+						          $("#searchinput").keypress(function(e){
+						            if (e.keyCode != 13) return;
+						            var q = $.trim($(this).val());
+						            if (q == "") return;
+						            window.location.href = "{{ path("JustsyBaseBundle_all_search", {'network_domain':curr_network_domain}) }}?q=" + q;  
+						          });
+						          $(".topsearch_button").click(function(){
+						            var q = $.trim($("#searchinput").val());
+						            if (q == "") return;
+						            window.location.href = "{{ path("JustsyBaseBundle_all_search", {'network_domain':curr_network_domain}) }}?q=" + q;  
+						          });
+						          //显示我的圈子分页
+						          var $mycircle =$("#mycircle"),  circle_count= $mycircle.children("div").length,t_page = Math.ceil(circle_count/5);
+						          $mycircle.find("div").live("click",function(){
+						              var $this=$(this);
+						              if($this[0].tagName=="DIV")
+						              {
+						              	   window.location.href= $this.find("a").attr("href");
+						              	   return;
+						              }
+						              if($this[0].tagName=="A") return;
+						          });
+						          $("#circle_list_page_no").text("1/"+t_page);
+						          if(circle_count*1>5)
+						          {
+						             var $mycircle_title=$("#mycircle_title")	;
+						             $mycircle_title.find("hr").css("width","60%");
+						             $mycircle_title.find("span").css("display","block"); 
+								          $("#circle_list_page_next").click(function(){			
+								          	 var pno = $("#circle_list_page_no").attr("current_page")*1,$c = Math.min((pno+1)*5,circle_count*1);
+								          	 if(pno==t_page) return;					          	 
+								          	 $mycircle.find("div").css("display","none");
+								          	 $("#circle_list_page_no").text((pno+1)+"/"+t_page);
+								          	 for(var i=(pno)*5;i<$c; i++)
+								          	 {
+								          	     	$mycircle.find("div:eq("+i+")").css("display","block");
+								          	 }
+								          	 $("#circle_list_page_no").attr("current_page",(pno+1));
+								          	 if((pno+1)==t_page){
+								          	     	$(this).css("color","#ccc");
+								          	 }
+								          	 $("#circle_list_page_up").css("color","#000");
+								          });
+								          $("#circle_list_page_up").click(function(){
+								          	 var pno = $("#circle_list_page_no").attr("current_page")*1,$c = Math.min((pno-1)*5,circle_count*1);
+								          	 if(pno==1) return;
+								          	 $mycircle.find("div").css("display","none");
+								          	 $("#circle_list_page_no").text((pno-1)+"/"+t_page);
+								          	 for(var i=(pno-2)*5;i<$c; i++)
+								          	 {
+								          	     	$mycircle.find("div:eq("+i+")").css("display","block");
+								          	 }								          	 
+								          	 $("#circle_list_page_no").attr("current_page",(pno-1));
+								          	 if((pno-1)==1){
+								          	     	$(this).css("color","#ccc");
+								          	 }
+								          	 $("#circle_list_page_next").css("color","#000");
+								          });
+						          }
+						       });
+						       </script>
+						    </div>
+						    <div id="topright" class="topright" style="width: auto;">
+						      <ul id="menus" class="accountmenu" style="margin: 0px;height:37px">
+						      {% if app.user.is_in_manager_circles(curr_network_domain)==1 %}
+						        {% if app.user.edomain==curr_network_domain %}
+						        {% if (app.user.IsFunctionManagerEn())%}
+						        {%if app.user.eno_level=='S' and app.user.mstyle=='default'%}
+						        <li><a class="topright_link" href="javascript:checkMstyle();" title="企业设置"><div class="icon_en_set "><span></span></div></a>
+						        <div id="mstylebox" style="display:none;border:1px solid #CCC;width:250px;height:150px;padding:5px;background-color:#FFF;margin-left:-100px;margin-top:5px;border-radius:6px;"><p>尊敬的用户，Wefafa平台为付费用户提供了两种管理模式，请您根据具体情况择优选择。</p><div style="padding-left:50px;margin-left:20px;border:1px solid #CCC;background-color:#CCC;width:160px;padding-top:10px;padding-bottom:10px;"><input mstyle="inpriv" checked="checked" title="该模式下，管理员拥有最高的控制权。" style="margin-top:-2px;" type="radio" name="mstyle"/>&nbsp;<span style="cursor:default;"  title="该模式下，管理员拥有最高的控制权。">统一管理模式</span><br/><input mstyle="outpriv" style="margin-top:-2px;" type="radio" name="mstyle"/>&nbsp;<span style="cursor:default;" title="该模式为Wefafa平台默认管理模式">自由控制模式</span></div><div><center><div style="background-color:#00aad9;width:100px;border-radius:4px;margin-top:10px;cursor:pointer;" onclick="savemstyle(this)">确定</div></center></div></div>
+						        </li>
+						        {%else%}
+						      <li><a class="topright_link" href="{{path('JustsyBaseBundle_enterprise_setting_basic',{'network_domain':curr_network_domain})}}" title="企业设置"><div class="icon_en_set "><span></span></div></a></li>
+						        {%endif%}
+						        {%endif%}
+						        {% else %}    	
+						    	<li><a class="topright_link" href="{{path('JustsyBaseBundle_circle_setting_circle',{'network_domain':curr_network_domain})}}" title="圈子设置"><div class="icon_en_set"><span></span></div></a></li>
+  						    	{% endif %}
+						    	{% endif %}
+						    	{%if(app.user.IsFunctionRosterInvite(curr_network_domain) and curr_network_domain!="10000")%}
+						      <li>
+						      	 <a class="topright_link" style="cursor:pointer;" title="邀请">
+						      	   <div class="icon_invite"><span class="icon_invite_text tip_new_num" style="right:-8px;display: none;"></span></div>
+						      	 </a>
+						      	 <!--<ul class="invite_box" id="invite_box" style="cursor: default;display: none; left: 50%; margin-left: -406px;"></ul>-->
+						      </li>
+						      {%endif%}
+									<li><a class="topright_link" href="{{path('JustsyBaseBundle_message',{'network_domain':curr_network_domain})}}" title="系统消息"><div class="icon_message"><span class="icon_message_text tip_new_num" style="right: -8px;display: none;"></span></div></a></li>	
+									<li id="topright_account_list" dropdownlist="1" style="width:50px;border-right: 1px solid transparent;"><a class="topright_link" style="width:40px;position: relative;" href="#" title="我的帐号"><span class="topmenu_app_triangle" ></span><div class="icon_account"></div></a>				
+										<ul class="account_list">
+											<li class="cat-item cat-item-61"><a href="{{ path('JustsyBaseBundle_interviewee_home',{'network_domain':curr_network_domain, 'account' : app.user.username}) }}"><div class="icon_myinfo icon_menu16"></div> 个人主页</a></li>
+											<li class="cat-item cat-item-62"><a href="{{ path('JustsyBaseBundle_account_basic', {'network_domain':curr_network_domain}) }}"><div class="icon_mysetting icon_menu16"></div>帐号设置</a></li>
+											<li class="cat-item cat-item-63"><a href="{{ path('JustsyBaseBundle_help_index') }}"><div class="icon_help icon_menu16"></div>使用帮助</a></li>
+											{% if (app.user.IsFunctionManagerEn())%}
+											<li class="cat-item cat-item-63"><a href="{{path('JustsyBaseBundle_mapp')}}"><div class="icon_logout icon_menu16"></div>移动门户</a></li>
+											<li class="cat-item cat-item-63"><a href="/mb/admin/index"><div class="icon_logout icon_menu16"></div>管理后台</a></li>
+											{%endif%}
+											<li class="cat-item cat-item-63"><a href="{{ path('JustsyBaseBundle_logout') }}"><div class="icon_logout icon_menu16"></div>安全退出</a></li>
+										</ul>
+									</li>
+						      </ul>
+						    </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>
+<div style="height:50px"></div>
+<div id="content" class="homecontent">
+  {% block main_content %}
+  {% endblock %}
+  
+  <div id="ReturnTop" class="backtotop">
+    <a href="#">返回顶部</a>
+  </div>
+</div>
+<div id="online_list" class="online-list" style="display:none;"
+  onlineurl="{{ path("JustsyBaseBundle_component_onlinelist_getonlinelist") }}" 
+  friendurl="{{ path("JustsyBaseBundle_component_onlinelist_getfriendlist") }}">
+  <div class="online-list-top">关注好友</div>
+  <div class="online-list-box">
+    <div id="online_up" onclick="OnlineList.online_up_OnClick(this)" class="online-page">
+      <a href="javascript:void(0)" class="online-list-up">向上滚动</a>
+    </div>
+    <div class="right_online_list" id="right_onlinelist">
+      <ul class="online-list-user" style="top:0px">
+      </ul>
+    </div>
+    <div id="online_down" onclick="OnlineList.online_down_OnClick(this)" class="online-page">
+      <a href="javascript:void(0)" class="online-list-down">向下滚动</a>
+    </div>
+  </div>
+  <div class="online-list-footer">
+    <a title="收起列表" href="javascript:void(0)" class="online-upwards" onclick="OnlineList.online_collapse_OnClick(this)">收起</a>
+    <a title="点击展开" href="javascript:void(0)" class="online-down-click" style="display:none;" onclick="OnlineList.online_expand_OnClick(this)">在线好友</a>
+  </div>
+</div>
+<div id="footer" class="footer">
+	<div class="footertext">
+  	<div class="fl">Copyright &copy; 2012 <a href="http://www.fafatime.com" target="_blank">Justsy</a>&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+  	<div class="fr"> <a href="/prointro.htm" target="_blank">产品介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ path('JustsyBaseBundle_help_index') }}" target="_blank">使用帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.fafatime.com/downcenter" target="_blank">软件下载</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/corp.htm" target="_blank">商务合作</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/userlic.htm" target="_blank">服务与声明</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/aboutus.htm" target="_blank">关于我们</a></div>
+  </div>
+</div>
+
+<div class="wefafa_chat_box">
+	  <div style="width:100%;float:left;">
+	  	   <span style="float:left;margin-left:10px;">WebIM即时沟通</span>
+	     <div class="wefafa_chat_login">立即登录</div>
+	  </div>
+	  <div style="float:left;width:100%;background-color:white;display:none;">
+	  	 <img class="wefafa_chat_login_image"  src="/bundles/fafatimewebase/images/loading.gif">
+	  	 <span style="float:left">WebIM 正在登录...</span>
+	  </div>	 
+</div>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>
+
+<script type="text/javascript">    
+  var topmenu_link_hovertimer=null,topmenu_link_outtimer=null;
+  var circle_join_apply_url = "{{path('JustsyBaseBundle_circle_apply_join')}}",circle_cancel_apply_url = "{{ path('JustsyBaseBundle_circle_apply_cancel',{'circleid':''}) }}";
+  function checkMstyle()
+  {
+  	$("#mstylebox").slideDown(200);
+ 	}
+ 	function savemstyle(e)
+ 	{
+ 		var mstyle=$("#mstylebox input:checked").attr("mstyle");
+ 		$.getJSON("{{path('JustsyBaseBundle_enterprise_setting_save_mstyle',{'network_domain':curr_network_domain})}}?mstyle="+mstyle,function(d){
+ 			$(e).text("完成");
+ 			if(d.s=='1')
+ 			{
+ 				window.location.href="{{path('JustsyBaseBundle_enterprise_setting_basic',{'network_domain':curr_network_domain})}}";
+ 			}
+ 		});
+ 		$(e).text("设置中...");
+ 	}
+  $(document).ready(function() {
+    show_auth_comment("{{ path('JustsyBaseBundle_auth_comment') }}");
+    Employees.load("{{ path('JustsyBaseBundle_component_emp') }}?network_domain={{curr_network_domain}}",
+                   "{{ path('JustsyBaseBundle_interviewee_home',{'network_domain':curr_network_domain,'account':'foo'}) }}",
+                   "发送消息页面地址",
+                   "{{path('JustsyBaseBundle_component_emp_attention',{'attenaccount':''})}}",
+                   "{{path('JustsyBaseBundle_component_emp_getaccount',{'empname':''}) }}");    
+    GroupCard.load("{{ path("JustsyBaseBundle_getgroupcard") }}");
+    ContactCard.load("{{ path('JustsyBaseBundle_component_emp_contact') }}?network_domain={{curr_network_domain}}",
+                   "{{ path('JustsyBaseBundle_interviewee_home',{'network_domain':curr_network_domain,'account':'foo'}) }}",
+                   "发送消息页面地址",
+                   "{{path('JustsyBaseBundle_component_emp_attention',{'attenaccount':''})}}",
+                   "{{path('JustsyBaseBundle_component_emp_getaccount',{'empname':''}) }}");
+    EnterpriseCard.load("{{path('JustsyBaseBundle_enterprise_get_card')}}","{{path('JustsyBaseBundle_enterprise_atten')}}");
+    
+    $("#invite_box").load("{{ path('JustsyBaseBundle_invite')}}?network_domain={{curr_network_domain}}");
+    
+    $(window).scroll(function () 
+    {
+      if ($(document).scrollTop() > 100) $("#ReturnTop").show();
+      else $("#ReturnTop").hide();
+    });
+    //获取推荐圈子列表
+   $("#recommenedcircle").html('<span style="font-size:12px;text-align: center; display: block; width: 400px;">正在为您努力加载推荐圈子列表...</span>');
+    $.getJSON("{{path('JustsyBaseBundle_circle_recommendlist')}}",{},function(list){
+        	var $recommenedcircle = $("#recommenedcircle");
+        	$recommenedcircle.attr("count",list.length);
+        	var html = "<div id='circleid' title=circlename circle_id='circleid' style='display:block' class='circle_name' onclick=\"applycircle('circleid')\"><img onerror=\"this.src='{{ asset('bundles/fafatimewebase/images/default_circle.png')}}'\" src=\"logo_path_big\"><span class='recommenedcircle_span' >circlename</span><span class='recommenedcircle_span_hover' href=\"{{ path('JustsyBaseBundle_enterprise', {'network_domain' : 'circleid'}) }}\">申请加入</span></div>";
+        	var cs = [];
+        	for(var i=0;i<list.length; i++)
+        	{
+        		  if(i<5)cs.push(html.replace(/(circleid)/g,list[i].circle_id).replace(/(logo_path_big)/g,list[i].logo_path_big).replace(/(circlename)/g,list[i].circle_name));
+        		  else cs.push(html.replace(/(circleid)/g,list[i].circle_id).replace(/(logo_path_big)/g,list[i].logo_path_big).replace(/(circlename)/g,list[i].circle_name).replace("block","none"));
+        	}
+        	$recommenedcircle.html(cs.join(""));
+        	CircleCard.load("{{ path("JustsyBaseBundle_circle_getcirclecard") }}");
+    });
+    //取得圈子未读会话信息数  
+    setTimeout(function () 
+    {
+      $.getJSON("{{ path("JustsyBaseBundle_enterprise_getunreadcircleconversnum") }}", {t : new Date().getTime()}, SetNewNumDisplay_conv);
+    }, 5000);    
+    
+    Message.load(
+      "{{path('JustsyBaseBundle_message_getunreadcount',{'network_domain':curr_network_domain})}}",
+      "{{path('JustsyBaseBundle_notice_getunreadcount',{'network_domain':curr_network_domain})}}",
+      null
+    );
+
+    OnlineList.init(document.getElementById("online_list"));
+    
+    var timerindex = 0;
+    
+    function linke_webim()
+    {
+		  if ( typeof(FaFaMessage)=="object")
+		  {
+		  	 if ( FaFaMessage._conn!=null && FaFaMessage._conn.connected)
+		  	 {
+		  	 	  clearInterval(timerindex);
+		  	 	  $(".wefafa_chat_box").hide();
+		  	 	  document.cookie= "webim_chat=true";
+		  	 }
+		  }
+    }
+    
+    $(".wefafa_chat_login").live("click",function(){
+    	  login_webim();
+    	  timerindex = setInterval(linke_webim,1000);
+    });    
+   
+    
+   function login_webim()
+    {
+    	$(".wefafa_chat_box>div:first").hide();
+    	$(".wefafa_chat_box>div:last").show();
+    	window.MessageAPI.init=function(){
+	      $.getScript("{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js", function() {
+						  if(typeof(FaFaChatWin)=="undefined") 
+						     setTimeout(function(){FaFaChatWin.init();FaFaChatWin.SetOwnerOpenid(g_curr_openid)},200); 
+							  else{ FaFaChatWin.init();FaFaChatWin.SetOwnerOpenid(g_curr_openid);}
+				});
+				$.getScript("{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_main.js", function() {
+		      if(typeof(FaFaChatMain)=="undefined")
+		      {
+		        setTimeout(function(){FaFaChatMain.init();FaFaChatMain.Connection(g_owner,"{{app.user.t_code}}");},200);
+		      }
+		      else
+		      {
+		        FaFaChatMain.init();
+		        FaFaChatMain.Connection(g_owner,"{{app.user.t_code}}");
+		      }
+		    });
+	    };
+	    //页面上总是应该执行下面的判断，由于在IE9下的js与docment加载顺序的原因，可能会导致api库文件比documnet先加载完并执行，这时MessageAPI.init方法得不到调用
+      if(typeof(FaFaMessage)=="object" && !FaFaMessage._conning)
+      {
+        //页面加载完，但未进行im连接时，手动调用连接
+        window.MessageAPI.init();
+      }
+    }  
+    
+    //读取cooke
+    function readCookie()
+    {
+    	 var result = "";
+	     if (document.cookie.length>0)
+	     {
+	       var c_start = document.cookie.indexOf("webim_chat=");
+	       if (c_start >-1)
+	       { 
+	       	  c_start = c_start + "webim_chat".length + 1;
+            var c_end=document.cookie.indexOf(";",c_start)
+            if (c_end==-1) c_end = document.cookie.length
+            result = unescape(document.cookie.substring(c_start,c_end));
+	       }
+	     }
+	     return result;
+    }
+    
+    if(readCookie()=="true" || (typeof(web_auto_login)!="undefined" && web_auto_login))
+    {
+    	login_webim();
+    	timerindex = setInterval(linke_webim,1000);
+    }   
+
+    
+    //获取邀请数
+    $.post("{{path('JustsyBaseBundle_invite_getinvcount')}}",
+      function(data) 
+      {
+        if (data=="0") return;
+        $(".icon_invite_text").text(data).show();
+      },"text");
+    
+    $(".icon_invite").parent().click(function()
+    {
+       if(invite._paras==null) return;
+    	 $("#showInviteDiv").hide();
+    	 $(".invite_box").show();  
+    	 
+    	 //设置居中
+    	 var _left = $(document).width()-$("#invite_box").width();
+    	 _left = Math.ceil(_left / 2);
+    	 $("#invite_box").css("margin-left",_left+"px");    	 
+    	 $(".body_filter").show();
+
+    	 var circleControl = $("#mycircle").find("#"+g_curr_circle_id);
+    	 if (circleControl.length==1)
+    	 {
+    	     $(".invite_title").attr("circleid", $(circleControl).attr("id"));
+    	 	   $(".invite_title").text($(circleControl).find("a").text());
+    	 	   $(".invite_box_ico").attr("src",$(circleControl).find("img").attr("src"));
+	         invite.loadData();	
+    	 }
+    });
+    
+		(function(doc,id) {
+		  var t = doc.createElement('script');
+		  t.async = true;
+		  t.src = '//hm.baidu.com/h.js?'+id;
+		  (doc.head || doc.body).appendChild(t);
+		})(document,'db1aeb97dd42cc6e9d4cb5fadadf9073'); 
+  }); 
+</script>

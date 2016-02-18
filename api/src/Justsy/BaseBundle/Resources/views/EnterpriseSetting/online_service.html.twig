@@ -1,0 +1,188 @@
+{% extends 'JustsyBaseBundle:EnterpriseSetting:enterprise_master.html.twig' %}
+{% block stylesheets %}
+ <style type="text/css">
+ 	  .input-prepend{width:580px;}
+ </style>
+{% endblock %}
+{% block menuitemactive_online_service %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">在线服务人员管理</div>
+<div class="rightdetail clearfix">
+<ul flag="flag" class="nav nav-tabs" style="margin-bottom:37px;">
+	  <li class="active"  onclick=changetab(0)>
+	    <a href="#">坐席分配</a>
+	  </li>
+	  <li  onclick=changetab(1)>
+	    <a href="#">常用语</a>
+	  </li>
+</ul>
+<div id="tab_content0" style="width:580px;height:auto;min-height:262px;padding:0px 0px 0px 20px;border:#ccc solid 1px;">
+<form id="formbasic"  method="post">
+{#<div class="grade-title">在线服务人员管理</div>#}
+<div class="rightdetail clearfix">
+  <div class="rightdetail_left">
+    <div class="control-group">
+      <label class="control-label" for="sale_persons" style="width:200px;">销售人员：<a style="color:#4E95BC;display:hidden;" id="sale_add" href="#" ></a></label>
+      <div class="controls">
+      	 {% if sale|length>0 %}
+     	     {% for s in sale %}
+     	        <div class="input-prepend" style="position:relative;">
+		  				<span class="add-on">名称</span>
+		  				<input class="span2" type="text" value="{{s.name}}" key_type="sale_name" id="sale_name{{loop.index}}"   onblur=enterprise_setting.name_edit_click(this)>
+		  				{#<button type="button" class="btn" data-toggle="button" id="sale_name{{loop.index}}_edit"  onclick=enterprise_setting.name_edit_click(this)>修改</button>#}
+		  				<span class="add-on">关联账号</span>
+		  				<input class="span2" type="text" value="{{s.account}}" empid="{{s.employeeid}}" data-provide="typehead"  key_type="sale_account" id="sale_account{{loop.index}}"   onblur=enterprise_setting.account_edit_click(this)>
+		  				{% if loop.index==loop.last and sale|length <10  %}
+		  				  <img  class="edit_add_img"  onclick=enterprise_setting.add_a_click($("#sale_add"),10) style="border:0px;width:16px;height:16px;margin-top:6px;cursor:pointer;" src="{{ asset('bundles/fafatimewebase/images/edit_add.png')}}">
+		  				{% endif %}
+		  				{#<button type="button" class="btn" data-toggle="button" id="sale_name{{loop.index}}_account" onclick=enterprise_setting.account_edit_click(this)>修改</button>#}
+		  				<img  class="error_img" style="display:none;margin-top:8px;" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        			<span  class="tip_span" style="position:absolute;top:0px;right:10px;margin-top:2px;font-size:14px;height30px;line-height:30px;color:red;"></span>
+							</div>
+     	     {% endfor %}
+					{% endif %}
+					<div class="input-prepend" style="position:relative;">
+              <span class="add-on">名称</span>
+		  				<input class="span2" type="text" value="" key_type="sale_name" id="sale_name"   onblur=enterprise_setting.name_edit_click(this)>					
+              <span class="add-on">关联账号</span>
+		  				<input class="span2" type="text" value="" empid="" data-provide="typehead"  key_type="sale_account" id="sale_account"   onblur=enterprise_setting.account_edit_click(this)>
+		  				<button type="button" class="btn" data-toggle="button" id="sale_name_account" onclick=enterprise_setting.add_a_click($("#sale_add"),10)>添加</button>		  				
+					</div>
+     	</div>
+    </div>  
+    <div class="control-group">
+      <label class="control-label" for="ename" style="width:200px;">客服人员：<a  style="color:#4E95BC;display:none;" id="service_add" href="#"></a></label>
+      <div class="controls">
+     	    {% if service|length>0 %}
+     	     {% for s in service %}
+     	        <div class="input-prepend"  style="position:relative;">
+		  				<span class="add-on">名称</span>
+		  				<input class="span2" type="text" value="{{s.name}}" key_type="service_name"  id="service_name{{loop.index}}"    onblur=enterprise_setting.name_edit_click(this)>
+		  				<span class="add-on">关联账号</span>
+		  				<input class="span2" type="text" value="{{s.account}}"  empid="{{s.employeeid}}" data-provide="typehead"  key_type="service_account"  id="service_account{{loop.index}}"  onblur=enterprise_setting.account_edit_click(this)>
+		  				{% if loop.index==loop.last and service|length<10 %}
+		  				  <img  class="edit_add_img"  onclick=enterprise_setting.add_a_click($("#service_add"),10) style="border:0px;width:16px;height:16px;margin-top:6px;cursor:pointer;" src="{{ asset('bundles/fafatimewebase/images/edit_add.png')}}">	
+		  				{% endif %}
+							<img   class="error_img"   style="display:none;margin-top:8px;" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        			<span  class="tip_span" style="position:absolute;top:0px;right:10px;margin-top:5px;font-size:14px;height:30px;inline-height:30px;color:red;"></span>
+							</div>
+     	     {% endfor %}
+					{% endif %}
+					<div class="input-prepend" style="position:relative;">
+              <span class="add-on">名称</span>
+		  				<input class="span2" type="text" value="" key_type="service_name" id="service_name"   onblur=enterprise_setting.name_edit_click(this)>					
+              <span class="add-on">关联账号</span>
+		  				<input class="span2" type="text" value="" empid="" data-provide="typehead"  key_type="service_account" id="service_account"   onblur=enterprise_setting.account_edit_click(this)>
+		  				<button type="button" class="btn" data-toggle="button" id="service_name_account" onclick=enterprise_setting.add_a_click($("#service_add"),10)>添加</button>		  				
+					</div>					
+     	</div>
+    </div>  
+    <div class="control-group">
+      <label class="control-label" for="ename" style="width:200px;">前台人员：<a  style="color:#4E95BC;display:hidden;" id="front_add" href="#"></a></label>
+      <div class="controls">
+     	  {% if front|length>0 %}
+     	     {% for s in front %}
+     	        <div class="input-prepend"  style="position:relative;">
+		  				<span class="add-on">名称</span>
+		  				<input class="span2"  type="text" value="{{s.name}}"  key_type="front_name"   id="front_name{{loop.index}}"    onblur=enterprise_setting.name_edit_click(this)>
+		  				<span class="add-on">关联账号</span>
+		  				<input class="span2"  type="text" value="{{s.account}}"  empid="{{s.employeeid}}" data-provide="typehead"   key_type="front_account"  id="front_account{{loop.index}}"   onblur=enterprise_setting.account_edit_click(this)>
+		  				{%  if loop.index==loop.last and front|length<10  %}
+		  					 <img  class="edit_add_img"  onclick=enterprise_setting.add_a_click($("#front_add"),10) style="border:0px;width:16px;height:16px;margin-top:6px;cursor:pointer;" src="{{ asset('bundles/fafatimewebase/images/edit_add.png')}}">	
+		  				{% endif %}
+							<img    class="error_img"  style="display:none;margin-top:8px;" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        			<span  class="tip_span" style="position:absolute;top:0px;right:10px;margin-top:2px;font-size:14px;height:30px;line-height:30px;color:red;"></span>
+							</div>
+     	     {% endfor %}
+					{% else %}
+					<div class="input-prepend" style="position:relative;">
+              <span class="add-on">名称</span>
+		  				<input class="span2" type="text" value="" key_type="front_name" id="front_name"   onblur=enterprise_setting.name_edit_click(this)>					
+              <span class="add-on">关联账号</span>
+		  				<input class="span2" type="text" value="" empid="" data-provide="typehead"  key_type="front_account" id="front_account"   onblur=enterprise_setting.account_edit_click(this)>
+		  				<button type="button" class="btn" data-toggle="button" id="service_name_account" onclick=enterprise_setting.add_a_click($("#front_add"),10)>添加</button>
+					</div>		
+					{% endif %}			
+     	</div>
+    </div> 
+  </div>           
+</div>
+</form>
+</div>
+<div id="tab_content1" style="width:500px;height:262px;padding:10px 50px;border:#ccc solid 1px;display:none;">
+	  <div><span>多条常用语请用用半角分号“;”隔开</span></div>
+	  <div><span>请输入常用语：</span></div>
+	  <form method="post" id="default_words">
+	  <div class="control-group">
+      <label class="control-label" for="ewww" style="width:100px;"></label>
+      <div class="controls">
+	  		<textarea class="input-xlarge" maxlength="200" style="width:500px; color: rgb(184, 184, 184); " rows="4" id="msg_textarea" name="msg_textarea"  autocomplete="off">{{msg_textarea}}</textarea>
+        <img   style="display:none" src="{{asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+        <span  class="help-line" style="color:red"></span>
+      </div>
+    </div>
+     <div class="form-actions">
+   	        <input id="btnSave" type="button" onclick="submit_content();" style="width:138px" class="inputsmall" value="保存">
+            <span id="hint" class="help-inline" style="width:172px;display:none;">
+                   <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+                   <a id="hint_msg" style="color:#db4800"></a>
+            </span>	
+    </div>
+    </form>
+   </div>
+</div>
+<script type="text/javascript">
+	      var new_public_account_url="{{path('JustsyBaseBundle_enterprise_setting_online_service_new_public_account',  {'network_domain' : curr_network_domain})}}";
+	      var save_public_account_url="{{path('JustsyBaseBundle_enterprise_setting_online_service_save_public_account',{'network_domain' : curr_network_domain})}}";
+        var manager_query_url="{{path("JustsyBaseBundle_enterprise_setting_online_service_query")}}";
+        var network_domain="{{curr_network_domain}}";
+        var datasource;
+			  	 $("input.span2").typeahead({
+			  	   source :enterprise_setting.datasource,
+			  	   items:8,
+			  	   matcher:enterprise_setting.manager_matcher,
+			  	   sorter:enterprise_setting.manager_sorter,
+			  	   highlighter:enterprise_setting.online_service_highlighter,
+			  	   updater:enterprise_setting.online_service_updater
+			  	 });
+			  function changetab(ix)
+			  {
+			  	var $clicked_li=$("ul[flag=flag] li").eq(ix);
+			  	$clicked_li.attr("class","");
+			  	$clicked_li.addClass("active");
+			  	$clicked_li.siblings("li").removeClass("active");
+			  	$("#tab_content"+ix).siblings("div").hide();
+			  	$("#tab_content"+ix).show();
+			  }
+			  function submit_content()
+			  {
+			  	$("#btnSave").attr("disabled","true");
+			  	$("#btnSave").val("提交中...");
+			  	$("form#default_words").ajaxSubmit({
+			  	      dataType:"json",
+			  	      url:"{{path('JustsyBaseBundle_enterprise_setting_save_default_words',{'network_domain':curr_network_domain})}}",
+			  	      method:"post",
+			  	      success:function(json)
+			  	      {
+			  	      	if(json.success)
+			  	      	{
+			  	      			$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+				              $('#hint_msg').text('常用语保存成功!');
+				              setTimeout("$('#hint').hide()",2000);
+			  	      	}
+			  	      	else
+			  	      	{
+			  	      			$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				              $('#hint_msg').text('常用语保存失败!');
+				              setTimeout("$('#hint').hide()",2000);
+			  	      	}
+			  	        $("#btnSave").attr("disabled","false");
+			  	        $("#btnSave").val("提交");
+			  	      }
+			  	});
+			  }
+</script>
+{% endblock %}

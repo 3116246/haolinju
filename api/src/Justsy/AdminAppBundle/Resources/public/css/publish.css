@@ -1,0 +1,21 @@
+.publish_area { float: left; padding: 10px 0px 0px; width: 100%;}
+.publish_search_area { border-bottom: 1px solid #0088cc;height: 50px;line-height: 50px;padding-left: 20px; }
+.publish_search_text { border: 1px solid #aba;height: 25px;line-height: 25px; margin-bottom: 0; margin-top: 1px;outline-style: none;padding: 5px; }
+.publish_search_empty{ background-color: rgb(249, 237, 184);border: 1px solid rgb(237, 201, 103);border-radius: 2px;color: black;font-weight: bold;margin: 20px;padding: 5px;width: 900px;display:none;}
+.publish_search_page { float: left;margin-left: 20px;margin-top: 10px;padding: 5px 0 5px 10px;width: 900px;display:none; }
+.publish_main {	width:100%;font-family:"Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma; }
+.publish_edit {	display:none;	width:100%;	margin-top:10px;	font-size:12px;	font-family:"Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma; }
+.publish_edit_row {	float: left; height: 35px; line-height: 35px; width: 100%; }
+.publish_edit_hint { float:left;line-height: 30px;padding-left: 10px;width: 340px; }
+.publish_edit_hint>span { padding-left:4px; }
+.publish_table { background-color: white;border-color: #878787;border-style: solid;border-width: 1px 1px 0;cursor: default;float: left;margin-left:20px;margin-top:8px;width:900px;display:none;}
+.publish_table>div { border-bottom: 1px solid #878787;height:28px;line-height:28px; width:100%; }
+.publish_table>div:hover { color:#0088cc;}
+
+.publish_fileds_date { float:left;border-right:1px solid #878787;text-align:center;	width:135px; }
+.publish_fileds_title {	float:left;	border-right:1px solid #878787;	padding-left:5px;	width:580px; }
+.publish_fileds_content { border-right: 1px solid #878787;float: left;max-width: 360px;overflow: hidden;padding-left: 5px;text-overflow: ellipsis;white-space: nowrap;width: 360px; }
+.publish_fileds_staff {	float:left;	border-right:1px solid #878787;	text-align:center;	width:70px; }
+.publish_fileds_view { float:left;text-align:center;width:110px;}
+.publish_combox { border: 1px solid #aaa;font-size: 12px;height: 22px;line-height: 20px;vertical-align: middle; width: 120px; }
+.publish_zdlx { float:right;}

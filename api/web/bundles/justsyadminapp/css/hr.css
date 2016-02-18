@@ -1,0 +1,70 @@
+.hr_gzd_upload_area
+{
+    float: right;
+    height: 35px;
+    line-height: 32px;
+    margin: 20px 0 10px;
+    padding-left: 20px;
+    width: 100%;;
+}
+.hr_gzd_upload_area>input
+{
+	 float: right;
+   height: 32px;
+   margin-right: -71px;
+   opacity: 0;
+   position: relative;
+   width: 71px;
+   z-index: 100;
+   cursor:pointer;
+}
+.hr_gzd_upload_area>span
+{
+	  background-image: url("../images/button.png");
+    color: white;
+    cursor: pointer;
+    float: right;
+    height: 31px;
+    line-height: 31px;
+    position: relative;
+    text-align: center;
+    top: 1px;
+    width: 71px;
+    z-index: 0;
+}
+.hr_gzd_table
+{
+	 background-color:#ffffff;
+   border-color:#878787;
+   border-style:solid;
+   border-width:1px 1px 0;
+   cursor: default;
+   float: left;
+   width: 100%;
+}
+.hr_gzd_table>div
+{
+	   border-bottom: 1px solid #878787;
+    height: 30px;
+    line-height: 28px;
+    width: 100%;
+}
+
+.hr_gzd_fileds_left
+{
+	  border-right: 1px solid #878787;
+    display: block;
+    float: left;
+    height: 100%;
+    text-align: center;
+    width: 30%;
+}
+
+.hr_gzd_fileds_right
+{
+    display: block;
+    float: left;
+    height: 100%;
+    text-align: center;
+    width: 68%;
+}

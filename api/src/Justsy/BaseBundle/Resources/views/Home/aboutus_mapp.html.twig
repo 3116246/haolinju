@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>关于我们——Wefafa移动应用平台</title>	
+  <meta name="description" content="Wefafa，让工作更轻松、更高效。">
+  <meta name="keywords" content="FaFa,企业社交网络,企业应用中心,企业即时通讯,微应用,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心">
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+	<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" />
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<style type="text/css">
+	  .item
+	  {
+	     cursor:pointer;
+	     color:#000000;
+	     background-color:#FFFFFF;
+	  }
+	  .item:hover
+	  {
+	     color:#666;
+	     background-color:#d6ecf2;
+	  }	  
+	  .item_active
+	  {
+	     cursor:pointer;
+	     color:#FFF;
+	     background-color:#00a9d9;
+	  }	  
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	var topMain=$("#features_ad").height()//是头部的高度加头部与nav导航之间的距离
+	var feanav=$(".features_nav");
+	var feaw=$(".feawrap");
+	$(window).scroll(function(){
+		if ($(window).scrollTop()>topMain){//如果滚动条顶部的距离大于topMain则就nav导航就添加类.nav_scroll，否则就移除
+			feaw.addClass("feawrap_scroll");
+			feanav.addClass("feanav_scroll");
+		}else{
+			feaw.removeClass("feawrap_scroll");
+			feanav.removeClass("feanav_scroll");
+		}
+	});
+})
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="nav clearfix" id="featop">
+	<div class="nav-content">
+		<h1 class="left" href="http://www.wefafa.com"></h1>
+		
+		<div class="right line-li" style="display:none">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+				<li class="we_btn"><a href="{{path('JustsyBaseBundle_default')}}">登录</a></li> 
+<!--				<li><a href="reg.html">注册</a></li>
+					<else/>
+                <li><a href="{weixin::U('User/Index/index')}">管理中心</a></li>
+				<li><a href="/javascript:;" onClick="Javascript:window.open('{weixin::U('System/Admin/logout')}','_blank')" >退出</a></li>
+				</if>	
+-->                
+			</ul>
+		</div>
+	</div>
+</div>
+	<div class="intro5" style="margin-left:200px;">
+	  <div class="intro5_left">
+	    <ul style="padding-left:50px; line-height:40px;">
+		  <li index=1 class="item">公司简介</li>
+		  <li index=2 class="item">企业文化</li>
+		  <!--<li index=3 class="item">Wefafa团队</li>-->
+		  <li index=4 class="item">联系我们</li>
+		</ul>
+	  </div>
+	  <div class="intro5_right">
+		<ul>
+		<div id="a1">
+			<h1 class="int_h1">公司简介</h1><br>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;【发发时代Wefafa】是一家充满勇气、创新力和务实行动力的成长性公司！</li><br>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公司成立于2011年，专注企业级移动应用和开发平台的研发和运营,帮助企业最快速、最低成本、动态化实现企业原有信息系统的移动化延伸。</li><br>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wefafa相信，近年迅猛发展的移动互联网浪潮将推动所有企业进行IT战略调整，移动互联将成为企业未来应用部署及数据访问的重要手段。移动信息化将不仅是一个附加的，或现有基础构架的一个补充，或是一个管理功能，而是即将成为一个标准的企业IT基础架构平台，需要全新的移动互联网思维去推动这次信息化变革。
+</li><br>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为此，Wefafa团队基于其资深的企业信息化和移动互联网背景，经过两年多时间，专注于企业移动信息化领域的创新和开发，打造出一个全新的基于移动互联网的企业移动应用平台——全力支持企业的移动化变革，帮助企业客户和集成商、ISV合作伙伴低成本、快速地开发和部署移动应用，确保企业现有IT系统安全地延伸到各种移动设备，以出色体验，释放企业移动IT的潜力及竞争力，从中受益！
+</li><br>
+				<!--<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们秉承“创新、协作、分享、共赢”的核心价值观，倡导人与人、企业与企业间随时随地沟通、协作、分享，利用协作网络的力量，与合作伙伴及客户一起实现互利共赢，共同为企业创造价值，为社会创造财富。</li>-->
+				<br><br>
+		</div>
+		<div id="a2" style="display:none">
+			<h1 class="int_h1">企业文化</h1><br>
+				<li><h3>公司愿景：</h3><h5>让企业移动相联，共同为社会创造财富！</h5><br>
+				<li><h3>核心价值观：</h3><h5>创新、分享、开放、共赢</h5><br>
+				<li><h3>企业文化：</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公司既是一个有共同梦想的团队，又是一个有共同价值观的大家庭。我们希望公司就像家一样，彼此互相尊重、团结互助、相互学习、共同成长；我们希望每位员工不仅在工作中努力付出，尽职尽责，为公司创造更大的价值，同时还需要兼顾家庭和生活，关爱父母和亲人，尊重长辈与亲友，注重身体健康，跟随公司的发展，创造属于自己的幸福生活。</li>
+		</div>
+		<!--<div id="a3" style="display:none">
+			<h1 class="int_h1">Wefafa团队</h1><br>
+				<li><h3>创始人兼CEO</h3>
+				<li>
+					<h5>2007-2009就读于中欧国际工商管理学院</h5>
+				<h5>2001-2002年 任职于原信息产业部电子信息中心，参与国家信息化项目建设；</h5>
+				<h5>2002-2011年 任职于某知名手机品牌公司CIO职位，从参与公司创建到发展成国内手机品牌市场占有率第一的知名企业，先后参与公司IT管理、手机增值业务管理、手机应用开发管理和企业信息化管理等，曾多次参加IBM、Oracle、Microsoft等公司组织的企业CIO峰会，深刻了解企业客户需求，了解企业信息技术发展趋势，同时精通互联网、移动互联网及移动通信行业。</h5>
+				<h5>2011年10月 创立北京发发时代信息技术有限公司，带领团队用20个月的时间打造出企业IT服务领域最有价值的Wefafa平台。</h5></li><br>
+				<li><h3>核心成员</h3>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;均来自于大型央企或国企，普遍有着10年左右的工作经验，在国家电网等大型信息项目中担任管理职位、技术专家或云计算负责人等，深刻了解行业客户需求，具有大型云计算项目的开发与实施经验。</li><br>
+				<li><h3>团队精神</h3>
+				<h5>怀抱梦想、坚持方向、充满激情、快乐工作！</h5>
+				</li>
+		</div>-->
+		<div id="a4" style="display:none">
+			<h1 class="int_h1">联系我们</h1><br>
+			<li><h3>北京总部</h3>
+			<h5>地址：北京市朝阳区慧忠北路103号洛克时代中心B座1302<br></h5>
+			<h5>电话：010-84871899</h5>
+			<h5>传真：010-84871899</h5>
+			<h5>邮编：100101</h5>
+			<h5>电子邮箱：<a href="mailto:service@wefafa.com">service@wefafa.com</a></h5>
+			
+			</li><br>
+			<li><h3>成都研发中心</h3></li>
+			<h5>地址：四川省成都市高新区天府软件园B区7号楼7层<br></h5>
+			<h5>电话：028-85327386</h5>
+			<h5>邮编：610041</h5>
+			<h5>电子邮箱：<a href="mailto:rd@wefafa.com">rd@wefafa.com</a></h5>
+		</div>
+		</ul>
+	  </div>
+   	</div>
+</div>
+
+<!-- footer -->
+{% render "JustsyBaseBundle:Home:footer"%}
+<script type="text/javascript">
+var position="{{position}}";
+$(document).ready(function()
+{
+	$(".intro5_right div:gt(0)").hide();
+	$(".intro5_left li:eq(0)").attr("class","item_active");
+	$(".intro5_left li").bind("click",function(){
+		  var ind = $(this).attr("index");
+		  $(".intro5_right div").hide();
+		  $("#a"+ind).show();
+		  $(".intro5_left .item_active").attr("class","item");
+		  $(this).attr("class","item_active");
+	});
+	if(position=="concact")
+	{
+		$(".item[index='4']").trigger('click');
+	}
+    //FaFaChatWin.ShowRoster("10097@100082.fafacn.com");
+});
+</script>
+
+</body></html>

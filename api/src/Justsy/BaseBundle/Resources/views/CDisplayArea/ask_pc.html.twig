@@ -1,0 +1,50 @@
+<div type='ask' conv_id='{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' style='z-index:{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' top='' hide='' class="topiclayout convbox">
+    <span class=" portrait"><img style="height: 36px;width: 36px;" src="{{ ds["we_convers_list"]["rows"][0]["photo_url"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span> 
+    <span class="topicdetail convdetail">
+        <span class='conv_header'>
+            <span style='*float:left;'>
+                <a href="#" class="post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a>
+            </span>
+            <span class="comefrom">{{ ds["we_convers_list"]["rows"][0]["post_date_d"] }}</span>
+            <!--<div style="clear: both;"></div>-->
+        </span><br/>
+        <div class="ask"><span class="askicon"></span><p style="text-indent:-20px;*text-indent:0px;"><span class="conv_title"><a href="#" class="employee_name post_staffname" style="color:#0078B4;display:none;" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a><span class="conv_content" style="font-size:12px;">{{ this.replaceFaceEmote(ds["we_convers_list"]["rows"][0]["conv_content"])|raw|nl2br }}</span></span></p></div>
+            {% include 'JustsyBaseBundle:CDisplayArea:attachs.html.twig' with {'ds': ds, 'this' : this} %}
+            {% include 'JustsyBaseBundle:CDisplayArea:cc.html.twig' %}
+            {% include 'JustsyBaseBundle:CDisplayArea:label_pc.html.twig' %}
+                    </span>
+                    <div class="topicfunction">  
+                       {% if ds["we_convers_list"]["rows"][0]["comefrom"] != "00" %}
+                            <span class="comefromleft">来自{{ ds["we_convers_list"]["rows"][0]["comefrom_d"] }}</span>
+            {% endif %}
+                            <span class="functiontext">
+                                <span title='更多操作' style='*margin-top:5px;' class='moreoper'></span>
+                                <ul class='convoper' style="background-color:#FFF;z-index:1000;display:none;width:85px;list-style:none outside none;margin:0;padding:0;top:32px;right:5px;position:absolute;background-color:#FFF;z-index:10;">
+								      		{% if ds["we_convers_list"]["rows"][0]["login_account"] == app.user.username %}<li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                            <span style="cursor:pointer;"><span  onclick="DelTrend(this, '{{ path("JustsyBaseBundle_component_cdisparea_deltrend") }}', '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}', '{{ asset("bundles/fafatimewebase/images/loading.gif") }}')">删除</span></span></li>{% endif %}
+                                        {%if trend%}
+                                        <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                            <span onclick="{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "UnAttenConv_OnClick_Pc(this)" : "AttenConv_OnClick_Pc(this)" }}"
+                                                  attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                                  attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+                                                  unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span style="cursor:pointer;" class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></span>
+                                        </li>
+                                        {%else%}
+                                        <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                            <span title="您还未获取该功能使用权限"
+                                                  attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                                  attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+                                                  unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span style="cursor:pointer;" class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></span>
+                                        </li>
+                                        {%endif%}
+                                    </ul>
+                                    {%if trend%}
+                                    <a href="javascript:void(0)"><span onclick="ReplyLink_OnClick(this)">回答{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+                                    {%else%}
+                                    <a href="javascript:void(0)"><span title="您还未获取该功能使用权限">回答{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+                                    {%endif%}
+                                </span>
+                                <div style="clear: both;"></div>
+                            </div>
+                {% include 'JustsyBaseBundle:CDisplayArea:reply_pc.html.twig' with {'ds': ds, 'isask' : 1} %}
+                        </div>

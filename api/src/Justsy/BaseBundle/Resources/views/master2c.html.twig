@@ -1,0 +1,12 @@
+{% extends 'JustsyBaseBundle::master.html.twig' %}
+{% block main_content %}
+	<div class="twomain" style="padding-top: 0;padding-bottom: 0px;">
+	  <div class="homeleft">
+	    {% block main_content_left %}{% endblock %}
+	  </div>
+	  <div class="twomainright">
+	    {% block main_content_center %}{% endblock %}
+	  </div>
+	  <div class="clearBoth"></div>
+	</div>  
+{% endblock %}

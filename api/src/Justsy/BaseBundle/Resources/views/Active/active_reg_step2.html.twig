@@ -1,0 +1,331 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}Wefafa激活{% endblock %}
+{% block main_content %}
+<div class="active_main">
+  <div class="active_nav">
+    <ul>
+      <li class="out">1. 基本信息</li>
+      <li class="in2">2. 建立圈子</li>
+      <li class="next">3. 上传头像</li>
+      <li class="next2">4. 开始使用</li>
+    </ul>
+  </div>
+</div>
+<div class="active_detail">
+  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_active_end') }}" >
+    <input name="account" type="hidden" value="{{ this.account }}" />
+    <input name="realName" type="hidden" value="{{ this.realName }}" />
+    <input name="passWord" type="hidden" value="{{ this.passWord }}" />
+    <input name="ename" type="hidden" value="{{ this.ename }}" />
+    <input name="mailtype" type="hidden" value="{{ this.mailtype }}" />
+    <input name="isNew" type="hidden" value="{{ this.isNew }}" />
+    <input name="eno" type="hidden" value="{{ this.eno }}" />
+    <input name="circleId" type="hidden" value="{{ this.circleId }}" />
+    <input name="invstaff" type="hidden" value="{{ this.invstaff }}" />
+    <input id="mails" name="mails" type="hidden" />
+    <input id="invMsgValue" name="invMsg" type="hidden" />
+    <div class="control-group">圈子名称：
+      <input type="text" class="RegFormIptone" maxlength=12 value="{{this.circleName}}" id="circleName" name="circleName" {%if this.isNew=='0'%} disabled="true" {%endif%}/><img src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16" class="imgclass" id="loadingImg" style="display:none" />
+      <span class="help-text">建议使用企业简称为默认圈子名称</span>
+      <span class="help-inline" style="color:red"></span>
+    </div>
+    <div class="control-group-title">圈子成员：<span style="color:#888;">至少邀请3位同事加入企业圈子</span></div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo" maxlength=32 id="mailFront1" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail" maxlength=32 id="mailBehind1" value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo" maxlength=32 id="mailFront2" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail" maxlength=32 id="mailBehind2" value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo" maxlength=32 id="mailFront3" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail" maxlength=32 id="mailBehind3" value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <input type="text" class="RegFormIpttwo" maxlength=32 id="mailFront4" /><span class="mailbox">@</span><input type="text" class="RegFormIptmail" maxlength=32 id="mailBehind4" value="{{this.emaildomain}}" {%if this.mailtype=='1'%} disabled="true" {%endif%} />
+      <span style="color:red"></span>
+    </div>
+    <div class="control-group">
+      <textarea id="invMsg" cols="" rows="" class="RegFormIpttext">想对被邀请的同事说点什么吗？</textarea>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="allinput" id="btnSubmit" {%if this.isNew=="1"%} disabled="true" {%endif%}>下一步 ></button>
+    </div>
+  </form>   
+  <div class="invitedright inviteimg"><img src="{{ asset('bundles/fafatimewebase/images/invite.jpg') }}" width="256" height="251"></div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var btnSubmit = $("#btnSubmit");
+var isValid = [true,true,true,true,true,true];
+var ipts = $("form .RegFormIptone,.RegFormIpttwo,.allinput,.RegFormIpttext");
+var circleNameChanged = true;
+var mailDivs = $("form .control-group");
+mailDivs = mailDivs.slice(1,mailDivs.length-1);
+var hintMsg = 
+{
+  "circleName01":"圈子名称为必填项！",
+  "circleName02":"圈子名称重复，请修改！",
+  "mail01":"您输入的邮件地址不正确，请检查！",
+  "mail02":"邮箱地址重复输入，请重新输入！",
+  "mail03":"您不能邀请自己！",
+  "mail04":"该用户已注册！"
+};
+var defaultInvMsg = "想对被邀请的同事说点什么吗？";
+var mailChanged = false;
+var mailUnRegister = [true,true,true,true];
+
+$(document).ready(function()
+{
+  ipts.blur(function()
+  {
+    var pn = $(this).parent();
+    var idx = ipts.index(this);
+    var cns = pn.children();    
+    if ($(this).is("#circleName"))
+    {
+      if (this.value.length < 1)
+      {
+        setErrInfo(cns,idx,hintMsg.circleName01);
+      }
+      else
+      {
+        if (circleNameChanged)
+        {
+          $("#loadingImg").show();
+          checkCircleName(this.value,cns,idx);
+        }
+        else
+        {
+          clearErrInfo(cns, idx);
+        }
+      }
+    }
+    else if (this.className == "RegFormIpttwo")
+    {
+      if (!checkMailValid(cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail01);
+      }
+      else if (this.value+"@"+cns[2].value == "{{this.account}}")
+      {
+        setErrInfo(cns,idx,hintMsg.mail03);
+      }
+      else if (!checkMailUnique(pn,cns))
+      {
+        setErrInfo(cns,idx,hintMsg.mail02);
+      }
+      else
+      {
+        if (mailChanged)
+        {
+          setCheckInfo(cns,idx);
+          checkMailRegistered(this.value,cns,idx);
+        }
+      }
+    }
+    else if ($(this).is("#invMsg"))
+    {
+      if (this.value == "") this.value = defaultInvMsg;
+    }
+    enableSubmit();
+  }).keypress(function(ev)
+  {
+    if ($(this).is("#circleName"))
+    {
+      btnSubmit.attr("disabled",true);
+    }
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm(this);
+        return;
+      }
+      moveToNext(ipts,this);
+    }
+  }).change(function()
+  {
+    if ($(this).is("#circleName"))
+    {
+      circleNameChanged = true;
+    }
+    else if (this.className=="RegFormIpttwo")
+    {
+      mailChanged = true;
+    }
+  });
+  
+  $("#invMsg").focus(function()
+  {
+    if (this.value == defaultInvMsg) this.value = "";
+  });
+  
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm(this);
+  });
+  if ("{{this.isNew}}"=="0")
+  {
+    $(".RegFormIpttwo").first().focus();
+  }
+  else
+  {
+    $("#circleName").focus().select();
+  }
+});
+//提交
+function submitForm(btn)
+{
+  btn.disabled = true;
+  var mails = "";
+  $.each(mailDivs,function(i,n)
+  {
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      mails += s + ",";
+    }
+  });
+  $("#mails").val(mails);
+  if ($("#invMsg").val() != defaultInvMsg) $("#invMsgValue").val($("#invMsg").val());
+  $("#contentForm").submit();
+}
+//显示错误信息
+function setErrInfo(cns, idx, info)
+{
+  isValid[idx] = false;
+  cns.last().text(info);
+}
+//清除错误信息
+function clearErrInfo(cns, idx)
+{
+  isValid[idx] = true;
+  cns.last().text("");
+}
+//后台检查
+function setCheckInfo(cns, idx)
+{
+  isValid[idx] = false;
+  cns.last().text("");
+  var sr = "{{ asset('bundles/fafatimewebase/images/loading.gif') }}";
+  cns.last().html('<img src="'+sr+'" class="joinimg" width="16" height="16">');
+}
+//验证邮箱有效性
+function checkMailValid(cns)
+{
+  if (cns[0].value.length < 1) return true;
+  var mail = cns[0].value + "@" + cns[2].value;
+  var reg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+  return reg.test(mail);
+}
+//检查邮箱是否重复
+function checkMailUnique(pn,cns)
+{
+  var re = true;
+  var idx = mailDivs.index(pn);
+  var mail = cns[0].value + "@" + cns[2].value;
+  $.each(mailDivs,function(i,n)
+  {
+    if (idx == i) return;
+    var cn = $(n).children();
+    if (cn[0].value.length > 0)
+    {
+      var s = cn[0].value + "@" + cn[2].value;
+      return re = !(mail == s);
+    }
+  });
+  return re;
+}
+//验证邮箱数量
+function checkMailCount(mails)
+{
+  var re = 0;
+  $.each(mails,function(i,n)
+  {
+    if (n.value.length > 0) re++;
+  });
+  return re;
+}
+//检查邀请的邮箱是否已注册
+function checkMailRegistered(v, cns, idx)
+{
+  var mail = v+"@"+cns[2].value;
+  $.post("{{path('JustsyBaseBundle_active_checkinvmail')}}",{mail:mail},function(data) 
+  {
+    cns.last().text("");
+    if (data > 0)
+    {
+      mailUnRegister[idx] = false;
+      cns.last().text(hintMsg.mail04);
+    }
+    else
+    {
+      mailUnRegister[idx] = true;
+      isValid[idx] = true;
+    }
+    mailChanged = false;
+    //isValid[5] = checkMailCount($("form .RegFormIpttwo"))>2;
+    isValid[5] = true;
+    enableSubmit();
+  },"text");
+}
+//设置submit键
+function enableSubmit()
+{
+  var suc = true;
+  for (i in isValid)
+  {
+    suc &= isValid[i];
+  }
+  for (i in mailUnRegister)
+  {
+    suc &= mailUnRegister[i];
+  }
+  btnSubmit.attr("disabled",!suc);
+}
+//移至下一个控件
+function moveToNext(ipts, n)
+{
+  var nxt = ipts.index(n)+1;
+  var nxtNode = ipts.eq(nxt);
+  if (nxtNode == null) return;
+  if (nxtNode.attr("disabled"))
+  {
+    moveToNext(ipts, nxtNode);
+  }
+  else
+  {
+    ipts.eq(nxt).focus();
+  }
+}
+//检查圈子否有重名
+function checkCircleName(circleName, cns, idx)
+{
+  $.post("{{path('JustsyBaseBundle_active_checkcirclename')}}",{circleName:circleName},function(data) 
+  {
+    $("#loadingImg").hide();
+    if (circleName == data)
+    {
+      setErrInfo(cns,idx,hintMsg.circleName02);
+    }
+    else
+    {
+      clearErrInfo(cns,idx);
+    }
+    circleNameChanged = false;
+    //isValid[5] = checkMailCount($("form .RegFormIpttwo"))>2;
+    isValid[5] = true;
+    enableSubmit();
+  },"text");
+}
+</script>
+{% endblock %}

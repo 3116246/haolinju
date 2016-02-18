@@ -1,0 +1,264 @@
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/css/departmentManager.css')}}" type="text/css" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/ajaxfileupload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/TreeMark.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/departmentManager.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div style="margin-top: 55px; width: 952px;">
+  <div class="containerBox" style="padding: 10px;">
+  	  <div class="mb_title_area">
+  			<div class="dept_search_area">
+  				 <span style="float:left;padding-right:10px;">上级部门：</span>
+  				 <input id="text_pid" state="first" class="mb_textbox" readonly="readonly" type="text" style="float:left;background-color:#eeeeee;cursor:default;width:220px;"/>
+  				 <span class="del_pid">
+  				     <span class="glyphicon glyphicon-remove del_pid_icon" onclick="Import.delPid();" title="删除上级部门"></span>
+  				 </span>  				
+  				 <span style="float: left; padding-right:10px; padding-left:20px;">部门名称：</span>
+  				 <input class="mb_textbox" id="text_searchname" type="text" onkeypress="if (event.keyCode==13) {Import.search_import(1);}" style="float:left;"/>
+  				 <button id="btnSearch" class="mb_button_style" onclick="Import.search_import(1);" style="float:left;margin-left:50px;line-height:21px;">查&nbsp;&nbsp;询</button>
+  			</div>
+  			<div style="float:right;width:185px;">
+	  		  <div onclick="AddDepartment.viewdialog(this);" class="mb_title_button_area" style="float:left;">
+	  			 	  <span class="mb_title_button_img"></span>
+	  			 	  <span class="mb_title_button_img_text">添加部门</span>
+	  			 </div>
+	  			 <div onclick="Import.viewdialog();" class="mb_title_button_area" style="margin-right:0px;">
+	  			 	  <span class="mb_title_button_img"></span>
+	  			 	  <span class="mb_title_button_img_text">导入部门</span>
+	  			 </div>
+  			 </div>
+  		</div>
+  		<ul id="tree_menu" class="ztree" style="float:left;border:none;min-height:465px;resize:none;margin:10px;width:360px;background-color:transparent;">
+  	  </ul>
+  	  <div style="float:left;width:550px;">
+		  	 <table align="center" id="table_search" class="staff_table" style="width:547px;">
+		  	 	 <thead>
+		          <tr class="staff_table_head">
+							  <td style="float: left; width: 355px;">部门名称</td>
+							  <td style="float: left; width: 85px;">排序号</td>
+							  <td style="float: left; border-right: medium none; width: 105px;">数据操作</td>
+							</tr>
+					 </thead>
+					 <tbody style="float:left;width:100%;"></tbody>
+				 </table>
+		  	 <div id="Pagination" class="pagination" style="float: left; padding: 0px; margin: 8px 0px 0px;"></div>
+		  	 <span class="mb_button_style" onclick="DeptOrder.edit_order();" style="float:right; margin-top: 8px; width:120px;">保存部门排序号</span>
+  	  </div>  		
+	</div>
+</div>
+
+<!--导入用户数据-->
+<div  class="dialogBox " id="viewImport" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:1000px;left:90px;top:62px;" class="dialog">
+    	<div class="title">导入部门数据</div> 
+      <span title="关闭" onclick="$('#viewImport').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:#fff;overflow:hidden;padding:10px 25px;height:460px;max-height:460px;+height:410px;+max-height:410px;cursor:default;">
+      	 <div class="import_step1">
+      	 	  <span>请选择以下几种数据导入类型：</span>
+	 	        <div class="import_step1_row">
+      	 	  	 <label>
+	 	            <input class="importtype" type="radio" name="radio_item" id="excel_type" style="float:left;" checked="checked"> 
+	 	  	        <span class="component_navtype">Excel数据导入</span>
+	 	           </label>
+	 	        </div>
+      	 	  <div class="import_step1_row">
+      	 	  	 <label>
+	 	            <input class="importtype"  type="radio" name="radio_item" id="ldap_type" style="float:left;"> 
+	 	  	        <span class="component_navtype">Ldap数据同步</span>
+	 	           </label>
+	 	        </div>
+	 	        <div class="import_step1_row">
+      	 	  	 <label>
+	 	            <input class="importtype" type="radio" name="radio_item" id="database_type" style="float:left;"> 
+	 	  	        <span class="component_navtype">数据库同步</span>
+	 	           </label>             
+	 	        </div>	 	        
+            <div class="import_step1_row">	 	           
+      	 	  	 <label>
+	 	            <input class="importtype" type="radio" name="radio_item" id="api_type" style="float:left;"> 
+	 	  	        <span class="component_navtype">接口数据同步</span>
+	 	           </label>	 	 	            	           
+      	 	  </div>
+      	 </div>
+      	 <div class="import_step2">
+      	 	  <div class="import_step2_setting">
+	      	 	  <!--excel上传设置-->
+	      	 	  <div style="height:25px;line-height:25px;padding-left:30px;" id="excel_setting">
+	      	 	  	  <span style="float:left;">指定根部门ID：</span>
+	      	 	  	  <input class="mb_textbox import_selectfile" id="rootdeptid" type="text" style="width:100px;margin-right:20px;padding:0 2px;" id="filedata" name="filedata"/>
+	 	           	  <span style="float:left;width:90px;">请选择文件：</span>
+	 	           	  <form target="frm_import_submit" id="frm_import" action="{{path('JustsyAdminAppBundle_department_uploadfile')}}" method="post" enctype="multipart/form-data">
+	 	           	    <input class="mb_textbox import_selectfile" type="file" id="filedata" name="filedata"/>
+	 	           	  </form>
+	 	           	  <button onclick="ImportExcel.uploadfile();" class="mb_button_style" style="float:left;width:60px;margin-left:20px;">上&nbsp;&nbsp;传</button>
+	 	           	  <a style="text-decoration:none;float:right; margin-right:2px;cursor:pointer;" onclick="window.location.href='{{JS_OPEN_API_URL}}/WeFaFa_Department_Template.xls'">模板下载</a>
+	 	           	  <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>
+		 	        </div>
+		 	        <!--Ldap-->
+	      	 	  <div style="height:25px;line-height:25px;display:none;" id="ldap_setting">
+	 	           	  <span style="float:left;width:100px;">ldap</span>
+		 	        </div>
+	            <div style="float:left;padding-left:40px;display:none;margin-top:-10px;" id="database_setting" >
+	            	    <div class="import_input_row">
+			 	           	  <span style="float:left;width:100px;">数据库类型：</span>
+			 	           	  <select  id="dbtype" class="mb_combox" style="float:left;width:760px;">
+			 	           	  	 <option value=""></option>
+				    	           <option value="oracle">Oracle</option>
+				    	           <option value="sqlserver2005">MSSQL2005</option>
+				    	           <option value="sqlserver2008">MSSQL2008</option>
+				    	           <option value="mysql">Mysql</option>
+				              </select>
+		 	           	  </div>
+	              	  <div class="import_input_row">
+			 	           	  <span style="float:left;width:100px;">数据库服务器：</span>
+			 	           	  <input class="mb_textbox" type="text" id="text_server" style="float:left;width:300px;" />
+		 	           	    <span style="float:left;margin-left:80px;padding-right:10px;">数据库名：</span>
+			 	           	  <input class="mb_textbox" type="text" id="text_database" style="float:left;width:300px;" />
+		 	           	  </div>
+		 	           	  <div class="import_input_row">
+		 	           	    <span style="float:left;width:100px;">用户账号：</span>
+			 	           	  <input class="mb_textbox" type="text" id="text_user" style="float:left;width:300px;" />
+		 	           	    <span style="float:left;margin-left:80px;padding-right:10px;">用户密码：</span>
+			 	           	  <input class="mb_textbox" type="password" id="text_password" style="float:left;width:300px;" />
+		 	           	  </div>	
+		 	           	  <div style="float:left;margin-top:5px;" >
+		 	           	    <span style="float:left;width:100px;">
+		 	           	    	 <span style="float:left;width:100%;display:block;">查询SQL语句：</span>
+		 	           	    	 <img onclick="Import.ExecSQL();" src="{{ asset('/bundles/fafatimembapp/images/icon_execute.png')}}" title="执行SQL语句"  class="staff_execute_icon" />
+		 	           	    </span>
+			 	           	  <textarea class="mb_textbox" type="text" id="text_sql" style="float:left;height:60px;width:760px;line-height:15px;max-width:760px;max-height:60px;min-width:760px;min-height:60px;"></textarea>
+		 	           	  </div>		 	           	  	 	           	          	  
+		 	        </div>
+	            <div style="height:25px;line-height:25px;float:left;padding-left:90px;" id="api_setting" >
+	           	  <span style="float:left;padding-right:5px;">接口地址：</span>
+	           	  <input class="mb_textbox" type="text" id="api_url" style="float:left;width:500px;" />
+	           	  <button onclick="Import_API.getData();" class="btnGreen mb_button" style="float:left;width:80px;margin-left:20px;">获得数据</button>    
+		 	        </div>	 		
+	 	        </div>
+	 	        <table class="staff_table" id="select_datasorce"><tbody></tbody></table>
+	 	        <div class="import_process">
+	 	        	 <span class="import_process_bar"></span>
+	 	        	 <span class="import_process_text"></span>
+	 	        </div>
+	 	        <div class="staff_field_setting" onclick="Import.viewField();"><span style="color:red;">※</span>设置字段映射<span style="color:red;">※</span></div>
+	 	        <div class="staff_field_content">
+	 	        	 <div class="staff_field_title">
+	 	        	 	 <span style="float:left;padding-left:10px;"> 指定字段映射关系</span>
+	 	        	 	 <span class="staff_field_colse" onclick="$('.staff_field_content').hide();" title="关闭"></span>
+	 	        	 </div>
+	 	        	 <div class="dept_setField_hint">
+	 	        	 	   <span style="float:left;">选择导入方式：</span>
+	 	        	 	   <label title="指定部门名称和上级部门名称">
+	 	                  <input onchange="Import.radio_change(this);" id="type1" type="radio" checked="checked" style="float:left;" name="radio_select_style" class="importtype"> 
+	 	  	              <span style="float:left;">部门名称式</span>
+	 	               </label>	 	               
+	 	               <label title="指定部门ID、部门名称、上级部门ID" style="margin-left:20px;">
+	 	                 <input onchange="Import.radio_change(this);"  id="type2" type="radio" style="float:left;" name="radio_select_style" class="importtype"> 
+	 	  	              <span style="float:left;">部门ID式</span>
+	 	                </label>
+	 	        	 </div>	 	        	 
+	 	        	  <div id="setcontent"></div>
+	 	        	 <div class="setfield_hint">&nbsp;</div>
+	 	        	 <button onclick="Import.setField();" class="btnGreen mb_button" style="width:80px;margin-left:145px;">确&nbsp;定</button>  	 	        	 
+	 	        </div>
+      	 </div>   	 
+      </div>
+      <div class="operation" style="width: 100%; float: left; background-color: transparent; padding: 10px 0px;">
+      	 <div class="staffmanager_hint"></div>
+      	 <div>
+      	 	  <span onclick="Import.step('P');" class="mb_button_style" id="btnPre"  style="float:left;width:80px;display:none;">上一步</span>   
+	          <button onclick="Import.step('N');" class="btnGreen mb_button" id="btnNext" style="float:left;width:80px;">下一步</button>
+	          <button onclick="Import.start(1);" id="btn_start_import" class="btnGreen mb_button" style="float:left;width:80px;display:none;">开始导入</button>
+         </div>
+      </div>
+</div>
+</div>
+ 
+<!--编辑部门数据-->
+<div  class="dialogBox " id="viewAdd" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width: 500px;top:140px;" class="dialog">
+    	<div class="title">添加组织部门</div> 
+      <span title="关闭" onclick="$('#viewAdd').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:#fff;overflow: hidden; cursor: default; padding-left: 80px; min-height:310px; padding-top: 10px;">
+        <div class="staff_add_row"> 
+            <span>上级部门：</span>
+            <input type="text" class="mb_textbox" readonly="readonly" onclick="DeptOrder.showdept();" style="float:left;margin-top:2px;width:240px;" id="text_parent_name">
+            <span id="dept_area" class="selected_dept_area" style="width:324px;">
+	            <ul id="depttree" class="ztree" style="background-color: #fff;border:none;float: left;height: 225px;max-height: 225px;overflow-x: hidden;overflow-y: auto;width: 100%;"></ul>	
+	            <span id="btnSelected" style="padding:0px;width:100%;border-radius:0px;display:none;" onclick="LoadDept.selected_dept();" class="btn btnGray">选中部门</span>
+            </span>
+        </div>
+	      <div class="staff_add_row"> 
+	      	  <span>部门名称：</span>
+	      	  <input type="text" class="mb_textbox" style="width:240px;" id="text_dept_name">
+	      </div>
+        <ul class="depart_searchArea" style="overflow:auto;"></ul>
+        <div class="staff_add_hint"></div>
+      </div>
+      <div class="operation" style="width:100%;float:left;padding:10px 0px 10px 160px;">
+	      <button onclick="AddDepartment.Save();" class="btnGreen mb_button" style="float:left;width:80px;">确&nbsp;定</button>    
+	      <button onclick="$('#viewAdd').hide();" class="btnGreen mb_button" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div> 	
+</div>
+
+<!--错误数据显示对话框-->
+<div  class="dialogBox " id="viewError" style="display:none;" >
+ 	  <div class="background"></div>
+    <div style="width:600px;top:50px;left:-50px;" class="dialog">
+    	<div class="title">错误提示</div> 
+      <span title="关闭" onclick="$('#viewError').hide();" style="cursor:pointer;" class="close-tip-icon"></span>
+      <div class="content" style="background-color:#fff;cursor:default;overflow:auto;padding:10px 20px;height:300px;max-height:300px;">
+      </div>
+      <button onclick="$('#viewError').hide();" class="btnGreen mb_button" style="width:80px;float:left;margin:10px 10px 10px 260px;">关&nbsp;闭</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	 $(document).ready(function(){
+	 	  AddDepartment.search_url = "{{path('JustsyAdminAppBundle_departmentmanager_searchname')}}";
+	 	  AddDepartment.add_url ="{{path('JustsyAdminAppBundle_departmentmanager_adddept')}}";
+	    Import.import_url = "{{path('JustsyAdminAppBundle_departmentmanager_import')}}";	    
+	    Import.sql_url = "{{path('JustsyAdminAppBundle_staffmanager_query')}}";
+	    Import.statistics_url = "{{path('JustsyAdminAppBundle_department_dept_statistics')}}";
+	    Import.search_url = "{{path('JustsyAdminAppBundle_departmentmanager_search')}}";
+	    Import.dele_url = "{{path('JustsyAdminAppBundle_departmentmanager_delete')}}";
+	    Import.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+	    DeptOrder.getdepart_url = "{{path('JustsyAdminAppBundle_department_tree')}}";
+	    DeptOrder.editorder_url ="{{path('JustsyAdminAppBundle_departmentmanager_editorder')}}";
+	    DeptOrder.loadTree();
+	    Import.search_import(1);
+   });
+</script>
+
+{% endblock %}

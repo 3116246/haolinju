@@ -1,0 +1,358 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_auth_eno %}class="active"{% endblock %}
+{% block main_content_center %}
+<style>
+textarea:focus{}
+</style>
+<div class="grade-title">身份认证</div>
+<div class="gradebox clearfix">	
+	<div class="c_act_t0">
+				<span style=" font-size:12px;">你当前等级为是{{cur}}，通过认证后直接升级为{{up}}，享有更多特权。</span>
+	</div>
+	<div class="c_act_t0" style="padding-top: 15px;">
+				<span style=" font-size:12px;">当前状态：</span><span style=" font-size:12px;color:red">企业未认证</span>
+	</div>
+	<form id="enoauthform" enctype='multipart/form-data' method='post' style='margin-top:10px;'>
+	<div style="background:url({{asset('bundles/fafatimewebase/images/enoauth1.jpg')}});height:215px;width:645px;border:1px solid #c9e2fa;">
+		 <div style='padding:3px;padding-left:20px;font-size:15px;font-weight:700;color:#2886bc;'>企业身份认证<span style='float:right;cursor:pointer;color:#00aad8;display:none;margin-right:25px;width:20px;text-align:center;border-radius: 2px 2px 2px 2px;background-color: #D0E6FB;border: 1px solid;' title='下一页' id='change_ul'>></span><span style='float:right;cursor:default;color:#00aad8;display:none;margin-right:10px;width:20px;text-align:center;border-radius: 2px 2px 2px 2px;background-color: #D0E6FB;border: 1px solid;' title='上一页' id='change_ul2'><</span></div>
+		<div style='padding-top:15px;padding-left:40px;'>							
+				<p><span>请上传您企业的有效身份证件，可以是：企业营业执照、企业组织机构代码证、税务等级证等</span><br/>
+					<span>证件或其副本中的任何一种。提交后，我们将在<span style='color:red;'>24小时之内</span>完成审核流程。</span></p>
+				<div>
+					<div id='uploadarea' style='width:180px;margin-top:20px;height:70px;float:left;'>
+						<div id='uploadbnt' style="background:url({{asset('bundles/fafatimewebase/images/enoauth3.jpg')}});height:38px;width:145px;text-align:center;border-left:1px solid #CCC;border-right:1px solid #CCC;border-bottom:1px solid #CCC;border-radius:4px;" align='center'><img id='filestatus' style='width:16px;height:16px;margin-bottom:5px;display:none;' src='{{asset('bundles/fafatimewebase/images/loadingsmall.gif')}}'><span style='line-height:42px;font-size:15px;'>{%if credential_path!='' %}重新提交{%else%}提交证件{%endif%}</span></div>
+						<input type='file' id='uploadfile' name='uploadfile' onchange='savefile()' style='cursor:pointer;height:40px;width:75px;outline-color:invert;outline-style:none;outline-width:medium;padding:0;left:0px;margin:0;top:-39px;position:relative;opacity:0;filter:Alpha(Opacity=0);'/>
+						<div style='top:-38px;position:relative;left:-5px;'>（1M以内，jpg或png格式图片）</div>
+					</div>
+					<ul id='uploaded' style="height: 88px; margin-bottom: 0px;float:left;">
+						{%if credential_path!='' %}
+						<li class='list' style='text-align: center;padding-top:5px;margin-left:12px;float:left;list-style:none outside none;'>
+							<a style=''><img style='max-width:none;width:90px;height:66px;border: 1px solid #CCCCCC;border-radius: 4px 4px 4px 4px;box-shadow: 1px 2px rgba(0, 0, 0, 0.4);' src='{{credential_path}}'/></a>
+							</li>
+						{%endif%}
+					</ul>
+					<div id="suberror" style="border-radius: 4px 4px 4px 4px;cursor:default;display:none;height: 26px; line-height: 26px; padding-left: 10px; width: 482px; background: none repeat scroll 0% 0% rgb(248, 176, 42); color: rgb(255, 255, 255); float: left;"></div>
+					{%if result=='2' %}
+					<div id="authing" style="border-radius: 4px 4px 4px 4px;cursor:default;height: 26px; line-height: 26px; padding-left: 10px; width: 482px; background: none repeat scroll 0% 0% rgb(248, 176, 42); color: rgb(255, 255, 255); float: left;">用于认证的证件已成功提交，正在等待Wefafa审核中...</div>
+					{%endif%}
+					{%if result=='0' %}
+					<div id="authing" style="border-radius: 4px 4px 4px 4px;cursor:default;height: 26px; line-height: 26px; padding-left: 10px; width: 482px; background: none repeat scroll 0% 0% rgb(248, 176, 42); color: rgb(255, 255, 255); float: left;">您的认证申请被驳回，这可能是您所上传的证件无效导致的，请修改证件后重新提交。</div>
+					{%endif%}
+					{%if result=='1' %}
+					<div id="authing" style="border-radius: 4px 4px 4px 4px;cursor:default;height: 26px; line-height: 26px; padding-left: 10px; width: 482px; background: none repeat scroll 0% 0% rgb(248, 176, 42); color: rgb(255, 255, 255); float: left;">您通过了企业认证申请。</div>
+					{%endif%}
+				</div>
+     </div>		 
+  </div>
+	</form>
+	<div style="background:url({{asset('bundles/fafatimewebase/images/enoauth2.jpg')}});height:155px;width:645px;border:1px solid #c9e2fa;">
+		 <div style='padding:3px;padding-left:20px;font-size:15px;font-weight:700;color:#2886bc;'>企业成员列表</div>
+		<div style='padding-top:15px;'>							
+				<p id='enolist' style='display:none;margin-left:40px;'><span>通过认证后，您的企业（共<span style='color:red;' id='N_num'>12 </span>人）将全部升级为认证V会员。</span></p>
+				<ul id='allMember' style='min-width:426px;list-style:none outside none;margin-left:30px;padding:0;height:70px;margin-top:10px;'></ul>
+     </div>		 
+  </div>
+</div>
+
+<script type='text/javascript' language='javascript'>
+	var pageindex=0;
+	var pagecount=0;
+	var get_N_url="{{path('JustsyBaseBundle_identify_get_n_members')}}";
+	var save_auth_url="{{path('JustsyBaseBundle_identify_save_enoauth')}}";
+	var save_file_url="{{path('JustsyBaseBundle_identify_save_creden')}}";
+	var fileurl="{{fileurl}}";
+	$(document).ready(function(){
+		getNMember();
+		$("#to_auth_eno,#to_auth_user").hide();
+		$("input[check='1']").blur(function(){
+			$("span.alert-error").hide();
+			if(vilidate(this))
+			{
+			}
+			else{
+				//$("#Submit").attr('disabled','disabled');
+				$(this).siblings("img.alert-ico").hide().siblings('img.error-ico').show();
+			}
+			
+		});
+		$("#change_ul").click(function(){
+		if(pageindex=pagecount)return;
+		var currpage=(pageindex+1);
+		if(currpage==pagecount)
+		{
+			$(this).css('cursor','default');
+		}
+		$("#change_ul2").css('cursor','pointer');
+		var $lis=$("#sendMember").find("li[page='"+currpage+"']");
+		if($lis.length>0)
+		{
+			$("#sendMember").find("li").hide();
+			$lis.show();
+			pageindex=currpage;
+		}
+		else
+			getSelectedMember();
+	});
+	$("#change_ul2").click(function(){
+		if(pageindex==1)return;
+		var currpage=(pageindex-1);
+		if(currpage==1){
+			$(this).css('cursor','default');
+		}
+		$("#change_ul").css('cursor','pointer');
+		var $lis=$("#sendMember").find("li[page='"+currpage+"']");
+		if($lis.length>0)
+		{
+			$("#sendMember").find("li").hide();
+			$lis.show();
+			pageindex=currpage;
+		}
+		else
+			getselectedMember();
+	});
+	$("#uploadbnt").mouseover(function(event){
+		if(checkHover(event,this)){
+			var le=parseInt($("#uploadfile").css('left').replace('px',''));
+			le=Math.abs(le-75);
+			$("#uploadfile").css('left',le.toString()+'px');
+		}
+	});
+	});
+	function attachfile(file)
+	{
+		var html=[];
+		html.push("<li class='list' style='text-align: center;padding-top:5px;margin-left:12px;float:left;list-style:none outside none;'>");
+		html.push("<a style=''><img style='width:90px;height:66px;border: 1px solid #CCCCCC;border-radius: 4px 4px 4px 4px;box-shadow: 1px 2px rgba(0, 0, 0, 0.4);' src='"+(fileurl+file.filepath)+"'/></a>");
+		html.push("<span style='cursor:default;white-space: nowrap;width:90px;color:#F8B02A;text-overflow: ellipsis; overflow: hidden; display: block;'>证件预览</span>");
+		html.push("</li>");
+		$("#uploaded").html(null).append(html.join(''));
+	}
+	var iscommiting=0;
+	function savefile()
+	{
+		if(iscommiting==1) return;
+		iscommiting=1;
+		$("#filestatus").show();
+		$("#authing").hide();
+		$("#uploadbnt").find('span').text('上传中...');
+		$("#suberror").show().text('正在提交证件中，请稍后...');
+		$("#enoauthform").ajaxSubmit({
+			url:save_file_url,
+			type:'post',
+			dataType:'json',
+			success:function(d){				
+				$("#filestatus").hide();
+				$("#uploadbnt").find('span').text('提交证件');
+				if(d.s=='1')
+				{
+				  //自动提交认证
+				  attachfile(d.file);
+				  submitform();
+				}
+				else{					
+					iscommiting=0;
+					$("#suberror").text('上传失败！');					
+					setTimeout(function(){$("#suberror").text('');},2000);
+				}
+			}
+		});
+	}
+	function select_industry(v)
+	{
+		var parent_industry=$(v).val();
+		$("#industry option").remove();
+		if(parent_industry=='')
+		{
+			$("#industry").append("<option value=''>请选择</option>");
+		}
+		for(var i=0; i<_classify.length; i++)
+		{
+			if(_classify[i]["parent_classify_id"]==parent_industry && _classify[i]["parent_classify_id"]!=_classify[i]["classify_id"])
+			{
+				
+				$("#industry").append("<option value="+_classify[i]["classify_id"]+">"+_classify[i]["classify_name"]+"</option>");
+			}
+		}
+		if(!vilidate($("#industry")[0])){
+			$("#Submit").attr('disabled','disabled');
+			$(v).siblings("img.alert-ico").hide();
+		}
+  }
+  function checkValue()
+  {
+  	var $v=$("input[check='1'],select[check='1']");
+  	for(var i=0;i<$v.length;i++)
+  	{
+  		if(!vilidate($v[i]))
+  			return false;
+  	}
+  	return true;
+  }
+  function getNMember()
+	{
+	  	if(pageindex>pagecount)return;
+	  	if(typeof(getNajax)!='undefined' && getNajax!=null)return;
+			getNajax=$.post(get_N_url,{'pageindex':(pageindex+1)},function(d){
+				if(d.page >0)
+				{
+					pagecount=d.page;
+					pageindex++;
+					if(pagecount >1){
+						$("#change_ul,#change_ul2").show();
+					}
+					addAttenMember(d.json,pageindex);
+					$("#N_num").text(d.count);
+					$("#enolist").show();
+				}
+				else{
+				}
+				getNajax=null;
+			});
+	}
+	function addAttenMember(json,page)
+	{
+	  if (json == null) return;
+	  var pn = $("#allMember");
+	  pn.find("li").hide();
+	  var html=[];
+	  for(var i=0; i< json.length; i++)
+	  {
+	    var s='<li page="'+page+'" class="list" style="text-align: center;padding-top:5px;margin-left:10px;float:left;list-style:none outside none;"><div style="width:50px;height:50px;border:1px solid #CCC;padding-top:2px;"><a><img src="';
+	    if (json[i].photo_path==null || json[i].photo_path=='')
+	    {
+	      s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+	    }
+	    else
+	    {
+	    	//s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+	      s+=json[i].photo_path;
+	    }
+	    s+='" width="32" height="32" onerror=\'this.src="{{ asset("bundles/fafatimewebase/images/tx.jpg") }}"\' title="'+json[i].nick_name+'"></a>';
+	    s+='<span class="text" style="cursor:pointer;white-space: nowrap;width:50px;text-overflow: ellipsis; overflow: hidden; display: block;" title="'+json[i].nick_name+'"><a class="account_baseinfo" login_account="'+json[i].login_account+'">'+json[i].nick_name+'</a></span></div>';
+	    s+='<span><input type="hidden" value="'+json[i].login_account+'" /></span>';
+	    html.push(s);
+	  }
+	  $s=$(html.join(''));
+	  pn.append($s);
+	}
+	function submitform()
+	{
+			//数据校验
+			if($("#uploaded li").length==0)
+			{
+				$("#suberror").text('请先上传证件！').show();
+				setTimeout(function(){
+								$("#suberror").text("").hide();
+							},4000);
+				return;
+			}	
+			$("#enoauthform").ajaxSubmit({
+				url:save_auth_url,
+				dataType:'json',
+				type:'post',
+				success:function(d){
+					iscommiting=0;
+					if(d.s=='1')
+					{
+						$("#uploadbnt").find('span').text('重新提交');
+						$("#suberror").text('用于认证的证件已成功提交，正在等待Wefafa审核中...');
+						//window.location.href="{{path('JustsyBaseBundle_identify_apply_success')}}"+"?type=eno";
+					}
+					else{
+						$("#suberror").text(d.m).show();
+						setTimeout(function(){
+							$("#suberror").text("").hide();
+						},4000);	
+					}
+				}
+			});
+	}
+	function vilidate(e)
+	{
+		if(e.id=='addr')
+		{
+			if($(e).val()==''){
+				showerr(e,"请准确的填写所在地!");
+				return false;
+			}
+		}
+		if(e.id=='fax')
+		{
+			if($(e).val()!='' && $(e).val().match(/^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/g)==null){
+				showerr(e,"传真格式不正确!");
+				return false;
+			}
+		}
+		if(e.id=='phone')
+		{
+			if($(e).val().match(/^(010|021|022|023|024|025|026|027|028|029|852)-\d{8}$/)==null && $(e).val().match(/^0[3-9]{1}[1-9]{2}-\d{7,8}$/)==null && $(e).val().match(/^(1[8|3|5][0-9]|15[0|3|6|7|8|9]|18[2|5|6|8|9])\d{8}$/)==null)
+			{
+				showerr(e,"电话格式不正确!");
+				return false;
+			}
+		}
+		if(e.id=='website')
+		{
+			if($(e).val()!='' && $(e).val().match(/^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$/g)==null){
+				showerr(e,"网站地址格式不正确!");
+				return false;
+			}
+		}
+		if(e.id=='industry')
+		{
+			if($(e).val()=='')
+			{
+				showerr($(e).siblings('select')[0],"请选择行业!");
+				return false;
+			}
+		}
+		if(e.id=='showfilename')
+		{
+			if($(e).val()=='')
+			{
+				showerr(e,"请上传有效证件！");
+				return false;
+			}
+		}
+		$(e).siblings("img.alert-ico").show().siblings('img.error-ico').hide();
+		$(e).attr('cansub','1');
+		if($("input[check='1'][cansub='1'],select[check='1'][cansub='1']").length==$("input[check='1'],select[check='1']").length)
+		{
+			//$("#Submit").removeAttr('disabled');
+		}
+		else{
+			//$("#Submit").attr('disabled','disabled');
+		}
+		return true;
+	}
+	function showerr(e,err)
+	{
+		$curr=$(e).siblings("span.alert-error");
+		var le=$(e).offset().left;
+		var to=$(e).offset().top;
+		var wid=$(e).height();
+		$curr.find('span').text(err);
+		$(e).attr('cansub','0');
+		$curr.css({'position':'absolute','left':le.toString()+'px','top':(to+wid+10).toString()+'px','width':'270px'}).show();
+		$(e).siblings('img.error-ico').attr('title',err).show().siblings('img.alert-ico').hide();
+		var st=tttt($curr);
+		setTimeout(st,1000);
+	}
+	function tttt($curr)
+	{
+		return function(){$curr.hide();};
+	}
+	var _classify=new Array();
+   {% set i=0 %}
+  	 {% for item4  in classify %}
+  	 var o={
+  	 	      classify_id:"{{ item4.classify_id }}",
+  	 				classify_name:"{{item4.classify_name}}",
+  	 				parent_classify_id:"{{item4.parent_classify_id}}"
+  	 				};
+  	     _classify[{{i}}]=o;
+  	     {% set i=i+1 %}
+  	 {% endfor %} 
+</script>
+{% endblock %}

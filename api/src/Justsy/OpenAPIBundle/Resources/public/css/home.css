@@ -1,0 +1,348 @@
+﻿/*温馨提示请勿随意修改原有内容,会影像系统的正常使用*/
+.spantitle
+{
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.divtitle
+{
+    padding: 20px 20px 0px 42px;
+    color: #333333;
+    /*border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid silver;
+    border-bottom: 1px solid silver;*/
+    height: 43px;
+    padding-top: 5px;
+    background-color: #ededed;
+    line-height: 43px;
+}
+.divcontent
+{
+    padding: 0px 0px 0px 0px;
+    /*border-bottom: 1px solid silver;
+    border-left: 1px solid silver;
+    border-right: 1px solid silver;
+    min-height: 620px; /*height: 620px;*/
+    /*_height: 620px;*/
+}
+.divtextarea
+{
+    float: right;
+    margin-top: -5px;
+}
+.divtextarea textarea
+{
+    min-height: 100px;
+    min-width: 423px;
+    height: 100px;
+    width: 423px;
+}
+.msgfiled
+{
+    float: left;
+    padding: 20px 20px 10px 52px;
+    vertical-align: middle;
+}
+.send
+{
+    height: 40px;
+    line-height: 40px;
+}
+.msgfiled label
+{
+    font-family: Tahoma, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    height: auto;
+    width: 120px;
+    font-size: 12px;
+}
+.msgfiled input
+{
+    width: 420px;
+}
+.msgfiled input
+{
+    height: 33px;
+    line-height: 33px;
+    font-size: 14px;
+}
+.divadvanced
+{
+    float: right;
+    width: 405px;
+    height: auto;
+    margin-left: -3px;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid silver;
+}
+.divadvanced select
+{
+    width: 92px;
+}
+.lbadvanced
+{
+    color: #135097;
+}
+.checkbox {
+    width: 28px; 
+    height: 28px; 
+    margin-top: -1px; 
+    *margin-top: -1px;
+    margin-left: -3px; 
+    *margin-left: -3px;
+}
+.divitem
+{
+    padding: 5px 0px 0px 12px;
+    height: 30px;
+}
+.btnsend
+{
+    width: 50px;
+    height: 22px;
+}
+.icon16
+{
+    width: 16px;
+    height: 16px;
+    float: left;
+}
+.postselect
+{
+    float: right;
+    padding-right: 5px;
+    width: 90px;
+    height: 22px;
+    line-height: 22px;
+    color: #0073aa;
+}
+.ins_face
+{
+    margin-top: 3px;
+    background: url(../images/home_icons.png) 0px -720px no-repeat;
+    padding-right: 4px;
+}
+.ins_file
+{
+    margin-top: 3px;
+    background: url(../images/home_icons.png) 0px -740px no-repeat;
+    padding-right: 4px;
+}
+.btnPublish
+{
+    margin-top: 5px;
+    float: right;
+    display: block;
+    width: 44px;
+    height: 22px;
+}
+.btnPreview
+{
+    margin-top: 5px;
+    margin-right: 15px;
+    float: right;
+    display: block;
+    width: 44px;
+    height: 22px;
+}
+.preview
+{
+    font-family: 宋体;
+    cursor: pointer;
+    width: 44px;
+    height: 22px;
+    color: rgb(255, 255, 777);
+    font-size: 12px;
+    border: 0px none;
+    line-height: 22px;
+    text-align: center;
+    display: block;
+    background-color:  #5CACEE;
+}
+.libenter
+{
+    font-family: 宋体;
+    cursor: pointer;
+    width: 44px;
+    height: 22px;
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    border: 0px none;
+    line-height: 22px;
+    text-align: center;
+    display: block;
+    background-color: rgb(255, 153, 0);
+}
+.lib_other li
+{
+    width: 70px;
+    list-style: none outside none;
+    height: 22px;
+    line-height: 22px;
+    padding-top: 5px;
+    float: left;
+    color: rgb(85, 146, 203);
+}
+.dropup, .dropdown
+{
+    position: relative;
+}
+.dropdown a
+{
+    color: #08C;
+    text-decoration: none;
+}
+.dropdown a:hover
+{
+    cursor: pointer;
+    color: rgb(255, 153, 0);
+    text-decoration: underline;
+}
+.dropdown-toggle a
+{
+    color: rgb(0, 136, 204);
+    text-decoration: none;
+}
+.divtext
+{
+    padding: 10px 0px 0px 38px;
+}
+.divtext input[type="text"]
+{
+    width: 271px;
+    height: 23px;
+    line-height: 23px;
+}
+.gray_input
+{
+    color: #878787;
+    border: 1px solid #95bde0;
+}
+.gray_input2
+{
+    color: #444;
+    border: 1px solid #95bde0;
+}
+.phonepreview_msg {
+    z-index: 1000;
+    margin: 0px;
+    background-color: transparent;
+    position: relative;
+}
+.phonepreview_send_name {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 27px 0px 0px 5px;
+    width: 340px;
+    text-align: center;
+    line-height: 48px;
+    height: 48px;
+    overflow:hidden;
+    *overflow:hidden;
+    cursor: default;
+}
+.phonepreview_title {
+    margin: -15px 0px 0px 0px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: default;
+}
+.phonepreview_photo 
+{
+    margin: 20px 0px 0px 17px;
+    position: absolute;
+    cursor: default;
+}
+.phonepreview_photo img {
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+}
+.phonepreview_say {
+    margin: 30px 0px 0px 65px;
+    position: absolute;
+}
+.phonepreview_content_main 
+{
+    background: #00c3f8;
+    width: 257px;
+    height: auto;
+    max-height: 345px;
+    margin: 20px 0px 0px 75px;
+    padding: 0px;
+}
+.phonepreview_content {
+    margin: 10px 10px 0px 15px;
+    max-height: 290px;
+    padding: 0px 0px 0px 0px;
+    overflow:hidden;
+    *overflow:hidden;
+    word-break: break-all;
+    cursor: default;
+}
+.phonepreview_time 
+{
+    margin: 10px 20px 0px 0px;
+    text-align: right;
+    cursor: default;
+}
+.phonepreview_button {
+    margin: 5px 20px 0px 0px;
+    text-align: right; 
+}
+.phonepreview_button span {
+    width: 70px;
+    height: 25px;
+    margin: 8px 5px 0px 5px;
+    padding: 3px 10px 3px 10px;
+    font-size: 13px;
+    color: white;
+    background: #1b7dbd;
+    text-align: center;
+    cursor: default;
+}
+b.rtop, b.rbottom{display: block; background: #dedede;}
+b.rtop b, b.rbottom b{display: block;height: 1px;overflow: hidden; background: #00c3f8}
+b.r1{margin: 0 5px}
+b.r2{margin: 0 3px}
+b.r3{margin: 0 2px}
+b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px} 
+
+
+.preview_delete {
+    background-color: #CCCCCC;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    height: 12px;
+    left: 330px;
+    line-height: 12px;
+    position: absolute;
+    text-align: center;
+    width: 16px;
+}
+
+.msg_error 
+{
+    background: url("../images/icon23-status.png") repeat scroll 24px 0 #ffffff;
+    width: 23px;
+    height: 23px;
+}
+.msg_success {
+    background: url("../images/icon23-status.png") no-repeat scroll 0px 0px #ffffff;
+    width: 23px;
+    height: 23px;
+}
+.msg_warning {
+    background: url("../images/icon23-status.png") repeat scroll 48px 0 #ffffff;
+    width: 23px;
+    height: 23px;
+}
+.msg_load {
+    width: 16px;
+    height: 16px;
+}

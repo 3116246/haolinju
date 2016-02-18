@@ -1,0 +1,51 @@
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">推荐圈子</span>
+    <span class="titlemore"><a href="{{path('JustsyBaseBundle_circle_search')}}/{{curr_network_domain}},{{app.user.username}}" title="更多圈子推荐"><div class="more-img"></div></a></span>
+	  {%if ds["we_circle"]["rows"]|length>5%}
+	  <span class="switchother"><a href="javascript:void(0)" onclick="switchCircle()" title="换一组"><div class="switch-img"></div></a></span>
+	  {%endif%}
+  </div>
+  <div class="rightbox-context">
+    <table id="recommendcirclelist">
+      {% for row in ds["we_circle"]["rows"] %}
+      <tr class="recomcircleitem" {% if loop.index0>=5 %}style="display:none"{%endif%}>
+        <td width="30px"><img class="circleicon" src="{{ FILE_WEBSERVER_URL }}{{ row["logo_path"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/default_circle.png") }}'"/></td>  
+        <td><a class="cirlcename circle_name" title="{{ row["circle_name"] }}" circle_id="{{ row["circle_id"] }}" >{{ row["circle_name"] }}</a></td>  
+        <td> 
+          <input type="hidden" class="circle_id" value="{{ row["circle_id"] }}">
+          <input type="hidden" class="create_staff" value="{{ row["create_staff"] }}">
+          {% if (circle_join_c)%}
+          <a class="btnAddCircle" href="javascript:void(0);" onclick="wefafaWin.weconfirm(this,'圈子申请','是否确认加入该圈子？',right_applyAddCircle)">加入<span></span></a>
+          {% else %}
+          <a class="btnAddCircle" style="" href="javascript:void(0);" title="未认证用户不能使用该功能" >加入<span></span></a>
+          {% endif %}
+        </td>  
+      </tr>
+      {% endfor %}
+    </table>
+    <script type="text/javascript">
+    function switchCircle()
+    {
+        	var recommendcirclelist = $("#recommendcirclelist");
+        	var list= recommendcirclelist.find("tr:visible:last");
+        	if(list.length==0)
+        	{
+        	    	return;
+        	}
+        	var $tr = recommendcirclelist.find("tr");
+        	var ind = list[0].rowIndex;
+        	$tr.css("display","none");
+        	if(ind==$tr.length-1)
+        	{
+        		recommendcirclelist.find("tr:first").css("display","block");
+        		recommendcirclelist.find("tr:gt(0):lt(4)").css("display","block");
+        	}
+        	else{        	
+        	   for(var i=ind+1; i<=ind+5;i++)
+        	       $tr.eq(i).css("display","block");
+          }
+    }
+    </script>    
+  </div>
+</div>

@@ -1,0 +1,81 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_circle %}class="active"{% endblock %}
+
+{% block main_content_center%} 
+<div class="grade-title">圈子动态设置</div>
+<div class="rightdetail clearfix">
+	<div class="message-function">
+  		<input type="button" value="保存" class="messagebutton" onclick="submit_content()">
+  		<span class="help-inline" style="width:172px;display:none;">
+        	<img src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16"><a style="color:#db4800"></a>
+    	</span>
+	</div>
+	<ul class="messagecate">
+	  <li>
+	  <span class="message-select"  style="width:73px;"><input id="ckboxall" type="checkbox" onclick='$(".messagelist input:checkbox").attr("checked", this.checked)'>全部接收</span>
+	  <span class="message-title" style="display:block;width:650px;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">圈子名称</span>
+	  </li>
+	</ul>
+	<ul class="messagelist">
+	{% for circle in list %}
+	  <li>
+	  <span class="list-select" style="width:73px;font-size:12px;">{% if(circle['hint']=='0')%}<input type="checkbox" class="ckbox" id="{{circle['circle_id']}}" >{%else%}<input type="checkbox" class="ckbox" id="{{circle['circle_id']}}" checked="true">{%endif%}是否接收</span>
+	  <span class="list-title" style="display:block;width:650px;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">{{circle['circle_name']}}</span>
+	  </li>
+	{% endfor %}
+	</ul>
+	{% if(count>10) %}
+	<div class="message-function">
+  		<input type="button" value="保存" class="messagebutton" onclick="submit_content()">
+  		<span class="help-inline" style="width:172px;display:none;">
+        	<img src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16"><a style="color:#db4800"></a>
+    	</span>
+	</div>
+	{% endif%}
+</div>
+<script type="text/javascript">
+	
+	var submit_content=function () {
+		
+		if($(".messagebutton").val()=="保存"){
+			var circleobj=[];
+			$(".ckbox").each(function(){
+				if($(this).attr("checked")) circleobj.push($(this).attr("id")+"#1");
+				else circleobj.push($(this).attr("id")+"#0");
+			});
+			if(circleobj!=[]){
+				$(".messagebutton").val('保存中');
+			    $(".help-inline").show().find("img").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif')}}").siblings('a').text('保存中,请稍等...');
+
+				var circlestr=circleobj.join(';');
+				$.post("{{path('JustsyBaseBundle_account_setcircle')}}",{circleobj:circlestr}).done(function(data){
+					if(typeof(data)!='object') data=eval("("+data+")");
+					if(data.success) $(".help-inline").show().find("img").attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}").siblings('a').text(data.msg);
+					else $(".help-inline").show().find("img").attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}").siblings('a').text(data.msg);
+					$(".messagebutton").val('保存');
+				}).fail(function(){
+					$(".messagebutton").val('保存');
+					$(".help-inline").show().find('img').attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}").siblings('a').text('变更圈子动态设置失败');
+				});
+			}else{
+				$(".help-inline").show().find('img').attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}").siblings('a').text('请选择要变更的圈子');
+			}
+		}
+	};
+	var eachckbox=function(){
+		var isckeck=true;
+		$(".ckbox").each(function(){
+			if(!$(this).attr("checked")) isckeck=false;
+		});
+		$("#ckboxall").attr("checked", isckeck);
+	};
+	$(function(){
+		eachckbox();
+
+		$(".ckbox").bind('click',function(){
+			eachckbox();
+		});
+	});
+</script>
+{% endblock %}

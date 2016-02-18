@@ -1,0 +1,527 @@
+{% extends 'JustsyBaseBundle::master.html.twig' %}
+{% block stylesheets %}
+{% endblock %}	  
+{% block main_content %}
+  <div class="home_circle_background">
+	  <div class="home_circle_detault_bg">
+	  	 <div class="home_circle_head">
+	 	  	 {%if photo_big!="" %}
+	 	  	     <div class="home_circle_leftHeader">
+	 	  	        <img style="width:100%;height:100%;float:left;" onerror="javascript:this.src='/bundles/fafatimewebase/images/tx.jpg';" src="{{path('JustsyMongoDocBundle_getfile',{'id': photo_big})}}" />
+	 	  	     </div>
+					{%else%}
+						<div class="home_circle_leftHeader" id="user_img">
+							 <div style="width:100%;height:100%;cursor:pointer;">
+							 	 <img id="userHead" style="display:none;float:left;width:100%;height:100%;" />
+							 	 <span>上传头像</span>
+							 </div>
+	  	 	  	</div>     
+					{% endif %}							
+					 <div style="float:left;width:260px;height:90px;">
+  	 	  	    <div class="home_cirlce_middleHeader">
+  	 	  	      <span style="float:left;margin-top:8px;border-width:10px;margin-left:-22px;border-color:transparent #dddddd transparent transparent;" class="topmenu_app_triangle"></span>
+	  	 	 	      <span style="float:left;margin-top:8px;border-width:10px;margin-left:-20px;border-color:transparent rgb(255, 247, 224) transparent transparent;" class="topmenu_app_triangle"></span>
+  	 	  	      <span id="btn_head_close" class="home_cirlce_middleHeader_close">×</span>
+  	 	  	      <img src="{{asset('bundles/fafatimewebase/images/home_default_header.png')}}" />
+  	 	  	      <span id="rightHint">圈子世界哪能没有面子快快上传你的头像吧。</span>
+  	 	  	      <a data-toggle="modal" show=false href="#invitedphoto" style="color:#B46B34;float:right;margin-right:12px;margin-top:-18px;">马上传头像</a>
+  	 	        </div>
+	  	 	   </div>
+	 	  	   <div class="home_circle_rightHeader">
+	 	  	   	  <span class="home_circle_rightHeader_img"></span>
+	 	  	   	  <a href="{{ path('JustsyBaseBundle_circle_search',{'network_domain' : curr_network_domain,'account':app.user.username})}}"><span style="color:#006BD9;margin-left:5px;">更多圈子</span></a>
+	 	  	   </div>
+	  	 </div>
+	  	 <!--上传头像-->
+	  	 <div id="invitedphoto" class="modal" data-backdrop=false style="display:none;width:530px;" show=false class="invitedphoto clearfix">
+    	   <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    			<div class="modal-footer">
+    		      <img id="_lodding" style="float:left;width:32px;height:32px;margin-left:20px;display:none;" src="/bundles/fafatimewebase/images/loading.gif">
+	  	 	  	  <span id="upload_hint" style="float:left;margin-left:5px;margin-top:4px;color:#006BD9;" ></span>
+	  	 	  	  <span class="btn" id="btnsaveimage" state="1" >确 定</span>    			   
+    			    <span class="btn"><a data-dismiss="modal">关闭</a></span>
+    			</div>
+  		 </div>
+	  	 <div class="home_circle_body">
+	  	 	 {% if user_role=="j" %}
+	  	 	   <div class="home_circle_body_leftdisable">
+			  	 	 <div class="home_cirlce_bottom_area" style="margin-top:225px;">
+			  	 	   <div class="home_circle_title">
+			  	 	     <span>{{ app.user.eshortname }}</span><div class="home_circle_leftico1"></div>
+			  	 	   </div>
+			  	 	   <span class="home_circle_bottom_descript">与您的同事在企业内部圈子里<br>进行安全、高效的协同工作</span>
+			  	 	   <div class="home_circle_last">
+			  	 	     <span class="home_circle_last_ico" style="background-position:0 -140px;"></span>
+			  	 	  	   <span style="float:left;margin-left:5px;">
+			  	 	  	 	  	  {%if circleideno!="" %}
+			  	 	  	           {{circleideno}}
+									      {% endif %}
+			  	 	  	 	 </span>
+			  	 	  	 	 <span class="home_circle_incircle">
+			  	 	  	 	 	  <a href="{{path('JustsyBaseBundle_identify_auth_user', {'network_domain' : app.user.edomain})}}" >申请认证</a>
+			  	 	  	 	 </span>
+			  	 	   </div>
+			  	 	 </div>
+	  	 	   </div>
+	  	 	 {%else%}
+		  	   <div class="home_circle_body_left"> 
+			  	   <div id="setDepart" class="home_circle_body_content">
+			  	 	   <div id="depart">
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:74px;" orgid="manager" src="/bundles/fafatimewebase/images/manager.png" />
+			  	 	   	 <span class="home_circle_departname">总经理</span>
+			  	 	   </div>
+			  	 	   <div style="margin-top:5px;" id="depart1">
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:3px;" src="/bundles/fafatimewebase/images/we_android_48.png">
+			  	 	     <span class="home_circle_departname">ＩＴ部</span>
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:14px;" src="/bundles/fafatimewebase/images/we_android_48.png" >
+			  	 	     <span class="home_circle_departname">销售部</span>
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:14px;" src="/bundles/fafatimewebase/images/we_android_48.png" />
+			  	 	     <span class="home_circle_departname">市场部</span>
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:14px;" src="/bundles/fafatimewebase/images/we_android_48.png" />
+			  	 	     <span class="home_circle_departname">客服部</span>
+			  	 	   </div>
+			  	 	   <div style="margin-top:5px;" id="depart2">
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:50px;" src="/bundles/fafatimewebase/images/we_android_48.png" />
+			  	 	     <span class="home_circle_departname">财务部</span>
+			  	 	     <img class="home_circle_body_left_ico" style="margin-left:14px;" src="/bundles/fafatimewebase/images/we_android_48.png" />
+			  	 	   	 <span class="home_circle_departname">行政部</span>
+			  	 	   </div>
+			  	 	 </div>
+			  	 	 <div class="home_cirlce_bottom_area">
+			  	 	   <div class="home_circle_title">
+			  	 	     <span>{{ app.user.eshortname }}</span><div class="home_circle_leftico" title="私密圈子"></div>
+			  	 	   </div>
+			  	 	   <span class="home_circle_bottom_descript">与您的同事在企业内部圈子里<br>进行安全、高效的协同工作</span>
+			  	 	   <div class="home_circle_last">
+			  	 	     <span class="home_circle_last_ico"></span>
+			  	 	  	   <span style="float:left;margin-left:5px;">
+			  	 	  	 	  	  {%if circleideno!="" %}
+			  	 	  	           {{circleideno}}
+									      {% endif %}		
+			  	 	  	 	 </span>
+			  	 	  	 	 <span class="home_circle_incircle">
+			  	 	  	 	  	<a href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : app.user.edomain}) }}">立即进入</a>
+			  	 	  	 	 </span>
+			  	 	   </div>
+			  	 	 </div>		  	 	
+		  	 	 </div>
+	  	 	 {% endif %}
+	  	 	 <div class="home_circle_dept_hint">
+	  	 	 	  <span style="float:left;border-width:10px;margin-left:-22px;border-color:transparent rgb(175,175,175) transparent transparent;" class="topmenu_app_triangle"></span>
+	  	 	 	  <span style="float:left;border-width:10px;margin-left:-20px;border-color:transparent rgb(255, 247, 224) transparent transparent;" class="topmenu_app_triangle"></span>
+	  	 	 	  <div id="dept_hint1">
+	  	 	  	  <span id="hint_close1" class="home_cirlce_middleHeader_close">×</span>
+	  	 	  	  <span id="dept_message" style="color:#666666;float:left;margin-left:12px;margin-top:-8px;width:165px;"></span>
+	  	 	  	  <span style="float:left;display:block;width:100%;margin-top:5px;">
+	  	 	  	  	 <span id="linke_isMe" class="home_circle_dept_hint_a">我就是</span>
+	  	 	  	  	 <span id="home_circle_invite" style="color:#B46B34;float:right;margin-right:15px;cursor:pointer;">立即邀请</span>
+	  	 	  	  </span>
+  	 	  	  </div>
+  	 	  	  <div id="dept_hint2" style="width:100%;height:100%;display:none;">
+  	 	  	  	<span id="hint_close2" class="home_cirlce_middleHeader_close">×</span>
+	  	 	  	  <span style="float:left;display:block;height:38px;line-height:38px;width:100%;text-align:center;margin-top:-8px;" id="dept_hint2_1">确认自己是<span style="color:red;">成都发发</span>公司负责人？</span> 
+	  	 	  	  <span style="float:left;width:150px;margin-left:30px;">
+	  	 	  	    <input id="home_circle_ok" state="1" type="button" value="确 定" class="delbutton">
+	  	 	  	    <input id="home_circle_cancel" type="button" value="取 消" class="escbutton">
+	  	 	  	  </span>
+  	 	  	  </div>
+	  	 	 </div>
+	  	 	 <!--中间部门--> 	 	 
+         <div class="home_circle_body_middle">
+           <div class="home_circle_body_content">
+	  	 	   	 <div>
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:52px;" src="{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}\"" />
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:11px;" src="{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}\"" />
+	  	 	   	 </div>
+	  	 	   	 <div>
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:30px;" src="{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}\"" />
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:11px;" src="{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}\""  />
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:10px;" src="{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/default_circle_en.png')}}\"" />
+	  	 	   	 </div>
+	  	 	   	 <div>
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:30px;" src="{{asset('bundles/fafatimewebase/images/tx.jpg')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/tx.jpg')}}\"" />
+                <img class="home_circle_body_middle_ico" style="margin-left:11px;" src="{{asset('bundles/fafatimewebase/images/tx.jpg')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/tx.jpg')}}\"" />
+                <img class="home_circle_body_middle_ico" style="margin-left:10px;" src="{{asset('bundles/fafatimewebase/images/tx.jpg')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/tx.jpg')}}\"" />
+	  	 	   	 </div>
+	  	 	   	 <div>
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:52px;" src="{{asset('bundles/fafatimewebase/images/tx.jpg')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/tx.jpg')}}\"" />
+	  	 	   	 	  <img class="home_circle_body_middle_ico" style="margin-left:11px;" src="{{asset('bundles/fafatimewebase/images/tx.jpg')}}" onerror="javascript:this.src=\"{{asset('bundles/fafatimewebase/images/tx.jpg')}}\"" />
+	  	 	   	 </div>
+	  	 	 	 </div>
+	  	 	 	 <div class="home_cirlce_bottom_area">
+	  	 	  	 <div class="home_circle_title">
+	  	 	  	   <span>我的人脉圈</span><div class="home_circle_middleico" title="半开放圈子"></div>
+	  	 	  	 </div>	  	 	  	 
+	  	 	  	 <span class="home_circle_bottom_descript">关注相关企业和合作伙伴<br/>拓展您的职业人脉</span>
+	  	 	  	 <div class="home_circle_last">
+		  	 	     <span class="home_circle_last_ico"></span>
+ 	 	  	 	     <span style="float:left;margin-left:5px;">
+	  	 	  	 	  	  {%if circleid9999 !="" %}
+	  	 	  	           {{circleid9999}}
+							      {% endif %}		
+	  	 	  	 	 </span>
+		  	 	  	 <span class="home_circle_incircle">
+		  	 	  	 	  <a href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : "9999"}) }}">立即进入</a>
+		  	 	  	 </span>
+		  	 	   </div>	  	 	  
+	  	 	   </div>
+	  	 	 </div>
+
+	  	 	 <div class="home_circle_body_right">
+	  	 	   <div class="home_circle_body_content">
+	  	 	 	 	 	<span class="home_weArea_span1">执点话题</span><span class="home_weArea_span2">#企业社会化协作#</span>
+    	        <span style="font-size:20px;float:left;padding-top:6px;width:187px;">
+    	 	        <span class="home_weArea_span3">职场人生</span>
+    	 	        <span class="home_weArea_span4">商业机会</span>
+    	        </span>
+    	        <span class="home_weArea_span5">移动医疗</span><span class="home_weArea_span6">企业微信</span>
+	  	 	 	 </div>
+	  	 	 	 <div class="home_cirlce_bottom_area">
+		  	 	   <div class="home_circle_title">
+		  	 	  	 	 <span>We广场</span><div class="home_circle_rightico" title="全开放圈子"></div>
+		  	 	   </div>
+		  	 	   <span class="home_circle_bottom_descript">与Wefafa平台所有用户<br/>分享您的动态</span>
+		  	 	   <div class="home_circle_last">
+		  	 	     <span class="home_circle_last_ico"></span>
+	  	 	  	 	  <span style="float:left;margin-left:5px;">
+	  	 	  	 	  	  {%if circleid10000 !="" %}
+	  	 	  	           {{circleid10000}}
+							      {% endif %}		
+	  	 	  	 	  </span>	
+		  	 	  	 	<span class="home_circle_incircle">
+		  	 	  	 	  <a href="{{ path('JustsyBaseBundle_enterprise', {'network_domain' : "10000"}) }}">立即进入</a>
+		  	 	  	 	</span>
+		  	 	   </div>
+		  	 	 </div>
+	  	 	 </div>	  	 	 
+	  	 	 <div style="float:right;color:#006BD9;margin-right:80px;height:50px;line-height:50px;">
+	  	 	 	  <span class="home_circle_setparaIco"></span>
+	  	 	 	  <span id="setpara" state="1" style="cursor:pointer;">不再显示该页面？</span>
+	  	 	 </div>	  
+	  	 </div>
+	  </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+  	 var isme = true;
+  	 var isload=false;
+  	 var home_dept_id = "{{deptid}}";
+  	 var uploadObj=null;
+  	 var url="";
+  	 
+	   function avatar_success()
+		 {
+				var url = "{{ path('JustsyBaseBundle_circle_savephoto')}}";
+	      $.post(url,null,function(data){
+	      	 $("#btnsave").attr("state",1);
+	      	 $("#_lodding").hide();
+		       if (data.s=="1")
+		       {
+		       	  $("#btnsaveimage").attr("state",1);
+		       	  $("#_lodding").hide();
+	  	 	      $("#upload_hint").text("");	
+		       	  $("#userHead").show();
+		       	  $("#invitedphoto").modal("hide");
+		      	  $("#userHead").attr("src","{{path('JustsyMongoDocBundle_getfile')}}"+"/"+data.file);
+		       }
+		       else
+		       {
+		       	 $("#upload_hint").show();
+		       	 $("#upload_hint").text("头像上传失败");         	 	
+		       }     
+	      });
+		 }
+	   	   
+  	 $(document).ready(function(){
+       var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+       var obj_ff = obj.find("embed");
+       uploadObj = document.all==null? obj_ff : obj;
+       uploadObj.css({"height":"380px","width":"500px"});    
+  	 	 //去掉master样式
+  	 	 $(".home_circle_background").parent().removeClass();
+  	 	 $(".home_circle_background").parent().prev().css("height","40px");
+  	 	 
+  	   //保存头像
+   	   $("#btnsaveimage").live("click",function(){
+	   	   if($("#btnsaveimage").attr("state")==1)
+	   	   {
+	   	     $("#btnsaveimage").attr("state",0);
+		   	   $(".home_cirlce_middleHeader").hide();
+		  	 	 $("#_lodding").show();
+		  	 	 $("#upload_hint").text("正在上传头像");	  	 	
+			     console.info(uploadObj[0]);
+		       uploadObj[0].doSave(); 
+	       }
+	     });
+  	 	 
+  	 	 $(".home_cirlce_middleHeader_close").live("click",function(){
+  	 	 	  if (this.id =="btn_head_close")
+  	 	 	    $(".home_cirlce_middleHeader").hide();
+  	 	 	  else
+  	 	 	  	$(".home_circle_dept_hint").hide();
+  	 	 });
+  	 	 
+  	 	 
+  	 	 $("#user_img").live("mouseover",function(){
+  	 	 	  $(".home_cirlce_middleHeader").show();
+  	 	 });
+  	 	 
+  	 	 $("#user_img").live("click",function(){
+  	 	 	  $("#invitedphoto").modal("show");
+  	 	 });
+  	 	 
+  	 	 //获得部门数据
+  	 	 url = "{{ path('JustsyBaseBundle_circle_getdepart')}}";
+  	 	 $.post(url,function(datas){
+  	 	 	 isload = true;
+  	 	 	 var role = "{{user_role}}";
+  	 	 	 if ( role=="j") return false;
+  	 	 	 var img = "";	 
+  	 	 	 var data = datas.managerTable.we_manager.rows;
+  	 	 	 if ( data.length==1)
+  	 	 	 {
+  	 	 	 	  $("#depart").addClass("employee_name");
+  	 	 	 	  $("#depart").attr("login_account",data[0].login_account);
+  	 	 	 	  $("#depart>span").text(data[0].nick_name.substring(0,3));
+  	 	 	 	  $("#depart>img").attr("state",0);
+  	 	 	 	  img = data[0].photo;
+  	 	 	 	  if ( img !="")
+  	 	 	 	  {
+              img = "{{path('JustsyMongoDocBundle_getfile')}}"+"/"+img;
+              $("#depart>img").attr("src",img);
+            }
+  	 	 	 }
+  	 	 	 else
+  	 	 	 {
+  	 	 	 	 $("#depart>img").attr("state",1);
+  	 	 	 }
+  	 	 	 $("#depart>img").attr("id","managerid");
+  	 	 	 data = datas.departTable.we_depart.rows;
+  	 	 	 var Image_controls = $("#setDepart img:gt(0)");
+  	 	 	 var Span_controls = $("#setDepart span:gt(0)");
+  	 	 	 var departname = ""
+  	 	 	 var leng = data.length;
+  	 	 	 for(var i=0;i<leng;i++)
+  	 	 	 {
+  	 	 	 	  departname = data[i].dept_name;
+  	 	 	 	  img = data[i].photo; 
+  	 	 	 	  //判断是否成员
+  	 	 	 	  if (data[i].member>0)
+  	 	 	 	  {
+  	 	 	 	  	 $(Image_controls[i]).addClass("employee_name");
+  	 	 	 	     $(Image_controls[i]).attr("login_account",data[i].dept_id);
+  	 	 	 	     $(Image_controls[i]).attr("state",0);
+  	 	 	 	     if ( img =="")
+                 $(Image_controls[i]).attr("src","{{asset('bundles/fafatimewebase/images/tx.jpg')}}");
+               else
+               {
+               	 img = "{{path('JustsyMongoDocBundle_getfile')}}"+"/"+img;
+               	 $(Image_controls[i]).attr("src",img);
+               }
+               if (data[i].dept_id=="{{app.user.username}}")
+                  isme = false;
+  	 	 	 	  }
+  	 	 	 	  else
+  	 	 	 	  {
+  	 	 	 	  	 $(Image_controls[i]).attr("orgid",data[i].dept_id);
+  	 	 	 	  	 $(Image_controls[i]).attr("id", "orgid_" + data[i].dept_id);
+  	 	 	 	  	 $(Image_controls[i]).attr("state",1);
+  	 	 	 	  } 	 	  
+  	 	 	 	  $(Image_controls[i]).attr("title",data[i].dept_name);  	 	 	 	  
+  	 	 	 	  $(Span_controls[i]).text(departname);
+  	 	 	 } 	 	  	 
+  	 	 });
+  	 	 
+  	 	 //获得我的人脉圈
+  	 	 url = "{{ path('JustsyBaseBundle_circle_getConnection')}}";
+  	 	 $.post(url,function(data){
+  	 	 	 var controls = $(".home_circle_body_middle img");
+  	 	 	 var image = "";
+  	 	 	 var ishave=false;
+  	 	 	 for(var i=0;i<data.enterprise.length;i++)
+  	 	 	 {
+  	 	 	 	  image = data.enterprise[i].logo;
+  	 	 	 	  ishave = /\/$/.test(image);  	 	 	 	  
+  	 	 	 	  if (!ishave)   	 	 	 	  	
+  	 	 	 	    controls.eq(i).attr("src",image);
+  	 	 	 	  controls.eq(i).attr("title",data.enterprise[i].enoname);
+  	 	 	 }
+  	 	 	 for(var i=0;i<data.member.length;i++)
+  	 	 	 {
+  	 	 	 	  var j = 5 + i;
+  	 	 	 	  image = data.member[i].logo;
+  	 	 	 	  ishave = /\/$/.test(image);
+  	 	 	 	  controls.eq(j).attr("title",data.member[i].nick_name);
+  	 	 	 	  if (!ishave)
+  	 	 	 	    controls.eq(j).attr("src",image);
+  	 	 	 }
+  	 	 });
+  	 	 
+  	 	 
+  	 	 $(".home_circle_body_left_ico").live("mouseover",function(event){
+  	 	 	  if (!isload || typeof($(this).attr("state"))=="undefined" || $(this).attr("state")=="0") return;
+  	 	 	  var orgid = $(this).attr("orgid");
+  	 	 	  if ( orgid=="manager")
+  	 	 	  {
+  	 	 	  	 $("#linke_isMe").show();
+  	 	 	  	 $("#dept_message").html("一个组织哪能没有头儿？<br/>快快邀请老板加进来吧！");
+  	 	 	  	 $("#dept_hint2").attr("orgid",orgid);
+  	 	 	  	 $("#dept_hint2").attr("isorg",0);
+  	 	 	  }
+  	 	 	  else
+  	 	 	  {
+  	 	 	  	 if (isme)
+  	 	 	  	   $("#linke_isMe").show();
+  	 	 	  	 else
+  	 	 	  	 	 $("#linke_isMe").hide();  	 	 	  	   
+  	 	 	  	 $("#dept_message").html("该部门还没有成员加入？<br/>快快邀请<span style='color:red;'>" + $(this).attr("title")+ "</span>同事吧！");
+  	 	 	  	 $("#dept_hint2").attr("orgid",orgid);
+  	 	 	  	 $("#dept_hint2").attr("isorg",1);
+  	 	 	  }
+  	 	 	  $("#dept_hint2").attr("texts",$(this).attr("title"));	 	  	
+  	 	 	  var poin = getMousePoint(event);
+  	 	 	  var x = poin.x+"px";
+  	 	 	  var y = poin.y+"px";
+  	 	 	  $(".home_circle_dept_hint").show().css({"left":x,"top":y});
+  	 	 	  $("#dept_hint1").show();
+  	 	 	  $("#dept_hint2").hide();
+  	 	 });
+  	 	 
+  	 	 //我就是
+  	 	 $("#linke_isMe").live("click",function(){
+  	 	 	  $("#dept_hint2_1").html("");
+  	 	 	  var html="";  	 	 	  
+  	 	 	  if ($("#dept_hint2").attr("isorg")==1)
+  	 	 	  {
+  	 	 	  	 html="确认将自己添加到<span style='color:red;'>" + $("#dept_hint2").attr("texts") +"</span>？";
+             $("#dept_hint2_1").css("line-height","38px");  	 	 	  }
+  	 	 	  else
+  	 	 	  {
+  	 	 	  	 html="确认自己是<span style='color:red;'>{{app.user.eshortname}}</span>公司负责人？"; 
+             if ( "{{app.user.eshortname}}".length>4)
+  	 	 	  	   $("#dept_hint2_1").css("line-height","18px");
+  	 	 	  	 else
+  	 	 	  	 	 $("#dept_hint2_1").css("line-height","38px");
+  	 	 	  }  	 	 	  	 
+  	 	 	  $("#dept_hint2_1").html(html);
+  	 	 	  $("#dept_hint1").hide();
+  	 	 	  $("#dept_hint2").show();
+  	 	 	  $("#home_circle_message2").text($("#message1").text());  	 	 	  
+  	 	 });
+  	 	
+  	 	 function getMousePoint(ev) {
+  	 	 	// 定义鼠标在视窗中的位置
+	      var point = {x:0,y:0};
+				// 如果浏览器支持 pageYOffset, 通过 pageXOffset 和 pageYOffset 获取页面和视窗之间的距离
+				if(typeof window.pageYOffset != 'undefined') {
+					point.x = window.pageXOffset;
+					point.y = window.pageYOffset;
+				}
+				// 如果浏览器支持 compatMode, 并且指定了 DOCTYPE, 通过 documentElement 获取滚动距离作为页面和视窗间的距离
+				// IE 中, 当页面指定 DOCTYPE, compatMode 的值是 CSS1Compat, 否则 compatMode 的值是 BackCompat
+				else if(typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+					point.x = document.documentElement.scrollLeft;
+					point.y = document.documentElement.scrollTop;
+				}
+				// 如果浏览器支持 document.body, 可以通过 document.body 来获取滚动高度
+				else if(typeof document.body != 'undefined') {
+					point.x = document.body.scrollLeft;
+					point.y = document.body.scrollTop;
+				}
+			 
+				// 加上鼠标在视窗中的位置
+				point.x += ev.clientX;
+				point.y += ev.clientY;
+			 
+				// 返回鼠标在视窗中的位置
+				return point;
+			 }
+			 
+			 $("#home_circle_invite").live("click",function(){
+	    	 $("#showInviteDiv").hide();
+	    	 $(".invite_box").show();
+	    	 var circleControl = $("#mycircle").find("#"+g_curr_circle_id);
+	    	 if (circleControl.length==1)
+	    	 {
+	    	 	   $(".invite_title").attr("circleid", $(circleControl).attr("id"));
+	    	 	   $(".invite_title").text($(circleControl).find("a").text());
+	    	 	   $(".invite_box_ico").attr("src",$(circleControl).find("img").attr("src"));
+		         //invite.loadData();
+	    	 }
+			 });
+			 
+			 //确定加入部门或设置为总经理
+			$("#home_circle_ok").live("click",function(){
+				 if ($(this).attr("state")=="0") return false;
+				 var orgid = $("#dept_hint2").attr("orgid");
+				 url ="{{ path('JustsyBaseBundle_account_depart')}}";
+				 $.post(url,"orgid="+orgid,function(data){
+				 	  $("#home_circle_ok").attr("state",1);
+				 	  if(data.succeed==1)
+				 	  {
+				 	  	var img = "{{photo_small}}";
+				 	  	if(orgid=="manager")
+				 	  	{
+				 	  	   $("#depart").addClass("employee_name");
+  	 	 	 	       $("#depart").attr("login_account","{{app.user.username}}");
+  	 	 	 	       $("#depart>img").attr("state",0);
+  	 	 	 	       $("#depart>span").text("{{nick_name}}");
+  	 	 	 	       if ( img =="")
+  	 	 	 	         $("#depart>img").attr("src","{{asset('bundles/fafatimewebase/images/tx.jpg')}}");
+                 else
+                 {
+               	   img = "{{path('JustsyMongoDocBundle_getfile')}}"+"/"+img;
+               	   $("#depart>img").attr("src",img);
+                 }
+				 	  	}
+				 	  	else
+				 	  	{
+				 	  		 $("#orgid_"+orgid).addClass("employee_name");
+				 	  		 $("#orgid_"+orgid).attr("login_account","{{app.user.username}}");
+				 	  		 $("#orgid_"+orgid).attr("state",0);
+  	 	 	 	       if ( img =="")
+  	 	 	 	         $("#orgid_"+orgid).attr("src","{{asset('bundles/fafatimewebase/images/tx.jpg')}}");
+                 else
+                 {
+               	   img = "{{path('JustsyMongoDocBundle_getfile')}}"+"/"+img;
+               	   $("#orgid_"+orgid).attr("src",img);
+                 }
+                 $("#orgid_"+orgid).next().text("{{nick_name}}");
+                 isme = true;
+				 	  	}
+				 	  	$(".home_circle_dept_hint").hide();			 	     	    
+				 	  }
+				 });
+			});
+			
+			//取消
+		  $("#home_circle_cancel").live("click",function(){
+		  	 $(".home_circle_dept_hint").hide();
+			});
+			
+			$("#setpara").live("click",function(){
+         if ($("#setpara").attr("state")== 0 )
+         {
+         	  return false; 
+         }        
+				 url = "{{ path('JustsyBaseBundle_circle_parameter')}}";
+				 $.post(url,function(data){
+				 	 if(data.succeed=="1")
+				 	 {
+				 	 	 $(".home_circle_setparaIco").show();
+				 	 	 $("#setpara").css({"cursor":"default","color":"#999999"});
+				 	 	 $("#setpara").text("您已设置下次不再显示该页面");
+				 	 	 $("#setpara").attr("state",0);	 	    
+				 	 }
+				 });
+			});
+			
+			$(".employee_name post_staffname").live("mouseover",function(){
+				 $(".home_circle_dept_hint").hide();
+			});
+			
+  	 });
+  </script>
+{% endblock %}

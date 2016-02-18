@@ -1,0 +1,670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>Wefafa，企业移动社会化协作，微应用平台</title>	
+	<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+  <meta name="description" content="Wefafa，让工作更轻松、更高效。">
+  <meta name="keywords" content="FaFa,企业社交,企业协作,企业即时通讯,微应用,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心">
+	<meta property="wb:webmaster" content="e2fdb8d07a532c64"/>
+	<link rel="stylesheet" type="text/css" href="{{asset('bundles/fafatimewebase/css/homepage/index.css')}}">
+	<link rel="shortcut icon" href="/bundles/fafatimewebase/bundles/fafatimewebase/images/homepage/favicon.ico">
+	<script src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/bootstrap.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/component.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/slides.jquery.js') }}"></script>
+	<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+	<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js" defer></script>
+	<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服" defer></script>
+<style type='text/css'>
+	.coverdiv{
+		background-color: #111111;
+	  height: 100%;
+	  left: 0;
+	  opacity: 0.7;
+	  filter:Alpha(Opacity=0.7);
+	  position: fixed;
+	  top: 0;
+	  width: 100%;
+	  z-index:10000;
+	}
+</style>
+<script type="text/javascript">
+function pppp(id) { return document.getElementById(id); }
+function moveElement(elementID,final_x,final_y,interval) {
+  if (!document.getElementById) return false;
+  if (!document.getElementById(elementID)) return false;
+  var elem = document.getElementById(elementID);
+  if (elem.movement) {
+    clearTimeout(elem.movement);
+  }
+  if (!elem.style.left) {
+    elem.style.left = "0px";
+  }
+  if (!elem.style.top) {
+    elem.style.top = "0px";
+  }
+  var xpos = parseInt(elem.style.left);
+  var ypos = parseInt(elem.style.top);
+  if (xpos == final_x && ypos == final_y) {
+  return true;
+  }
+  if (xpos < final_x) {
+    var dist = Math.ceil((final_x - xpos)/10);
+    xpos = xpos + dist;
+  }
+  if (xpos > final_x) {
+    var dist = Math.ceil((xpos - final_x)/10);
+    xpos = xpos - dist;
+  }
+  if (ypos < final_y) {
+    var dist = Math.ceil((final_y - ypos)/10);
+    ypos = ypos + dist;
+  }
+  if (ypos > final_y) {
+    var dist = Math.ceil((ypos - final_y)/10);
+    ypos = ypos - dist;
+  }
+  elem.style.left = xpos + "px";
+  elem.style.top = ypos + "px";
+  var repeat = "moveElement('"+elementID+"',"+final_x+","+final_y+","+interval+")";
+  elem.movement = setTimeout(repeat,interval);
+}
+function classNormal(){
+ var focusBtnList = pppp('focus_change_btn').getElementsByTagName('li');
+ for(var i=0; i<focusBtnList.length; i++) {
+  focusBtnList[i].className='';
+ }
+}
+function focusChange() {
+ var focusBtnList = pppp('focus_change_btn').getElementsByTagName('li');
+  focusBtnList[0].onmouseover = function() {
+   moveElement('focus_change_list',0,0,5);
+   classNormal()
+   focusBtnList[0].className='current'
+  }
+  focusBtnList[1].onmouseover = function() {
+   moveElement('focus_change_list',-540,0,5);
+   classNormal()
+   focusBtnList[1].className='current'
+  }
+  focusBtnList[2].onmouseover = function() {
+   moveElement('focus_change_list',-1080,0,5);
+   classNormal()
+   focusBtnList[2].className='current'
+  }
+  focusBtnList[3].onmouseover = function() {
+   moveElement('focus_change_list',-1620,0,5);
+   classNormal()
+   focusBtnList[3].className='current'
+  }
+}
+setInterval('autoFocusChange()', 5000);
+var atuokey = false;
+function autoFocusChange() {
+ pppp('focus_change').onmouseover = function(){atuokey = true}
+ pppp('focus_change').onmouseout = function(){atuokey = false}
+ if(atuokey) return;
+ var focusBtnList = pppp('focus_change_btn').getElementsByTagName('li');
+ for(var i=0; i<focusBtnList.length; i++) {
+  if (focusBtnList[i].className == 'current') {
+   var currentNum = i;
+  }
+ }
+ if (currentNum==0 ){
+  moveElement('focus_change_list',-540,0,5);
+  classNormal()
+  focusBtnList[1].className='current'
+ }
+ if (currentNum==1 ){
+  moveElement('focus_change_list',-1080,0,5);
+  classNormal()
+  focusBtnList[2].className='current'
+ }
+ if (currentNum==2 ){
+  moveElement('focus_change_list',-1620,0,5);
+  classNormal()
+  focusBtnList[3].className='current'
+ } 
+ if (currentNum==3 ){
+  moveElement('focus_change_list',0,0,5);
+  classNormal()
+  focusBtnList[0].className='current'
+ }
+}
+
+
+function classNormal2(){
+ var cusBtnList = pppp('cus_change_btn').getElementsByTagName('li');
+ for(var i=0; i<cusBtnList.length; i++) {
+  cusBtnList[i].className='';
+ }
+}
+function cusChange() {
+ var cusBtnList = pppp('cus_change_btn').getElementsByTagName('li');
+  cusBtnList[0].onmouseover = function() {
+   moveElement('cus_change_list',0,0,5);
+   classNormal2()
+   cusBtnList[0].className='cus_current'
+  }
+  cusBtnList[1].onmouseover = function() {
+   moveElement('cus_change_list',-970,0,5);
+   classNormal2()
+   cusBtnList[1].className='cus_current'
+  }
+  cusBtnList[2].onmouseover = function() {
+   moveElement('cus_change_list',-1940,0,5);
+   classNormal2()
+   cusBtnList[2].className='cus_current'
+  }
+  cusBtnList[3].onmouseover = function() {
+   moveElement('cus_change_list',-2910,0,5);
+   classNormal2()
+   cusBtnList[3].className='cus_current'
+  }
+}
+setInterval('autoCusChange()', 5000);
+var atuokey2 = false;
+function autoCusChange() {
+ pppp('cus_change').onmouseover = function(){atuokey2 = true}
+ pppp('cus_change').onmouseout = function(){atuokey2 = false}
+ if(atuokey2) return;
+ var cusBtnList = pppp('cus_change_btn').getElementsByTagName('li');
+ for(var i=0; i<cusBtnList.length; i++) {
+  if (cusBtnList[i].className == 'cus_current') {
+   var currentNum = i;
+  }
+ }
+ if (currentNum==0 ){
+  moveElement('cus_change_list',-970,0,5);
+  classNormal2()
+  cusBtnList[1].className='cus_current'
+ }
+ if (currentNum==1 ){
+  moveElement('cus_change_list',-1940,0,5);
+  classNormal2()
+  cusBtnList[2].className='cus_current'
+ }
+ if (currentNum==2 ){
+  moveElement('cus_change_list',-2910,0,5);
+  classNormal2()
+  cusBtnList[3].className='cus_current'
+ } 
+ if (currentNum==3 ){
+  moveElement('cus_change_list',0,0,5);
+  classNormal2()
+  cusBtnList[0].className='cus_current'
+ }
+}
+
+window.onload=function(){
+ focusChange();
+ cusChange();
+}
+</script>
+	<script type="text/javascript">
+	var showTime = 0;
+	var errorlist={
+		 "error01":"您输入的邮件地址不正确，请检查。",
+		 "error02":"该邮件地址为公共邮箱，请点击<a href='/register?type=0&mail=MAIL'>公共邮箱注册</a>。",
+		 "error03":"该邮箱已经被注册，请<b>直接登录</b>。",
+		 "error0401":"您的信息已提交，正在审批中，若需修改您的注册信息，请继续，否则请耐心等待审批邮件通知。",
+		 "error0402":"您的注册申请总次数已超过10次，已被禁止注册，请<a href='mailto:admin@fafatime.com'>与我们联系</a>完成注册工作。",
+		 "error0403":"您提交的注册信息已经审批通过，请登录MAIL查收邮件，并根据邮件提示内容开始启用微发发。若未收到，请点击请求再次发送",
+		 "error05":"该邮件地址已经被系统列入黑名单，点击查看详细信息。"
+	};
+	$(document).ready(function(){
+		//绑定邮箱联想
+       $("#txtmail").typeahead(
+       {
+		      menu : '<ul class="typeahead dropdown-menu" style="min-width:240px;margin-top:0px;z-index:30000;"></ul>',
+	        source : {{domain|raw}},
+	        matcher: function(item)
+	        {
+	  	      if(this.query.indexOf("@")==-1) return true;
+	  	      return item.toLowerCase().indexOf(this.query.split("@")[1].toLowerCase())>-1;
+	        },
+	        highlighter:function(item)
+	        {
+	  	       if(this.query.indexOf("@")>0) return this.query.split("@")[0]+"@"+ item;
+	  	       return this.query+"@"+ item;
+	        },
+	        updater : function(item)
+			    {
+			  	  var email = this.query.indexOf("@")>0?this.query.split("@")[0]+"@"+ item:this.query+"@"+ item;
+			  	  return email;
+			    }
+       });
+       $("#txtmail").live("keypress",function(event){
+       	 if(event.keyCode==13)
+       	   setTimeout(function(){submit_mail();},200);
+       });
+	}); 	
+  function checkIntegrality(e_source) 
+  {
+  	  if(document.getElementById('loginBtn').onclick==null) return;//正在提交 中
+  	  var usr = $("#_username").val();
+  	  var pTmp = document.getElementsByName("_password");
+  	  var pwd = "";
+  	  for(var i=0;i<pTmp.length;i++)
+  	  {
+  	     if(pTmp[i].type=="password")
+  	     {
+  	         pwd = pTmp[i].value;
+  	         break;
+  	     }
+  	  }
+	    if( usr == "登录帐号/手机号" )
+	    {
+	      $('p#p_user').text ("登录帐号不能为空！！");
+		    $('#nameerror').slideDown(showTime,callback2);	    
+	      $("#_username").focus();
+	      return false;
+	    }
+	    else if(usr == "")
+	    {
+	      $('p#p_user').text ("请输入登录帐号！");
+			  $('#nameerror').slideDown(showTime,callback2);
+	    }
+	    else
+	    {
+//	      if(!validEmail(usr))
+//	      {
+//			    $('p#p_user').text ("登录帐号格式不正确！");
+//			    $('#nameerror').slideDown(showTime,callback2);
+//	        $('#_username').focus();
+//	        return false;
+//	      }
+	    }
+    if(pwd=="" || pwd=="登录密码")
+    {
+    	if(e_source=="" || e_source=="pwd"){
+          $('p#p_pwd').text ("登录密码不能为空！");
+          $('#pwderror').slideDown(showTime,callback3);
+       }
+	     $('input[name="_password"]:text').focus();
+       return false; 
+    }
+    $('input[name="_password"]:text').remove();
+    document.getElementById('loginBtn').onclick = null;//JustsyBaseBundle_login_check
+    document.getElementById('loginBtn').innerHTML="登录中...";
+    document.getElementById("form1").action="/login_check";//
+    document.getElementById("form1").submit();
+    return true;
+  }
+  
+  function submit_mail()
+  {
+  	if($("#btnregister")[0].disabled) return;//已提交到后台验证
+    var mails = document.getElementById('txtmail').value;
+    mails = $.trim(mails);
+    if( mails=='请输入企业邮箱地址' || mails=='')
+    { 
+	    $('p#email_err').text ("企业邮箱地址不能为空！");
+	    $('#emailerror').slideDown(showTime,callback1);
+      $('#txtmail').focus();
+      return false;
+    }
+    //判断邮件的正确性
+    if(!validEmail(mails))
+    {
+	    $('p#email_err').text ("企业邮箱地址格式错误！");
+	    $('#emailerror').slideDown(showTime,callback1);
+      $('#txtmail').focus();
+      return false;
+    }
+    else
+    {
+      if (typeof(mails) == 'undefined')
+	      return false;
+	      var date = readCooke(mails);
+	      if ( date!=null)
+	      {
+	      	 var date1 = new Date(date);
+	      	 if ( ((new Date().getTime()-date1.getTime())/1000)<60)
+	      	 {
+	      	 	  $('p#email_err').html("请检查你的邮箱，勿频繁注册！");
+	      	 	  $('div#emailerror').attr("class","alert alert-error");	      	 	  
+	      	 	  $('div#emailerror').slideDown(showTime,callback1);
+	            $('#txtmail').focus();
+	      	 	  return false;
+	      	 }
+	      	 else
+	      	 	  writeCooke(mails);
+	      }
+      $("#btnregister")[0].disabled=true;
+      $("#btnregister")[0].innerHTML="提交中...";
+      $.post("{{path('JustsyBaseBundle_mailtype')}}",
+        "id="+mails,
+        function(result){
+          var jsondata = result ;
+          if (jsondata["succeed"])
+          {
+             window.location.href = "{{path('JustsyBaseBundle_save')}}/"+mails;                       
+          }
+          else
+          {
+          	var tx = errorlist[jsondata.msg];
+          	if(jsondata.msg=="error02")
+          	  tx = tx.replace("MAIL",mails);
+            $('p#email_err').html (tx);
+	          $('#emailerror').slideDown(showTime,callback1);
+            $('#txtmail').focus();
+			      $("#btnregister")[0].disabled=false;
+			      $("#btnregister")[0].innerHTML="企业注册";            
+           return false;
+          }
+        }
+      );
+    }
+  }
+function writeCooke(email)
+  {
+	   var exdate=new Date();
+	   exdate.setDate(exdate.getDate() + 1);		   
+	   document.cookie = email + "=" + escape(new Date()) +";expires="+exdate.toGMTString();
+  }
+     
+ //读取cooke
+ function readCooke(email)
+ {
+   var result = null;
+   if (document.cookie.length>0)
+   {
+     var c_start = document.cookie.indexOf(email + "=")
+     if (c_start >-1)
+     { 
+       c_start = c_start + email.length + 1;
+       var c_end=document.cookie.indexOf(";",c_start)
+       if (c_end==-1) c_end = document.cookie.length
+       result = unescape(document.cookie.substring(c_start,c_end)); 
+     }
+     else
+     	 writeCooke(email);
+   }
+   return result; 
+ }   
+function callback1() 
+{
+			setTimeout(function() {
+			 
+				$( "#emailerror:visible" ).removeAttr( "style" ).fadeOut();
+			}, 2000 );
+		
+}
+function callback2() 
+{ 
+			setTimeout(function() {
+			 $( "#nameerror:visible" ).removeAttr( "style" ).fadeOut();
+			}, 2000 );
+		}
+function callback3() {
+			setTimeout(function() {
+				$( "#pwderror:visible" ).removeAttr( "style" ).fadeOut();
+			}, 2000 );
+		}
+  
+  function enter(e,ctr)
+  {
+  	return;
+    if (window.event) { e = event; e.which = e.keyCode; } else if (!e.which) e.which = e.keyCode;
+    var code = e.which; // 輸入鍵的 ASCII 碼。 
+    if(code==13)
+    {
+      if(ctr=="mail")
+      {
+      	if($("#btnregister")[0].disabled) return;//已提交到后台验证
+        submit_mail();
+      }
+      else
+      {
+        if (ctr == "username")
+        {
+          setTimeout(function () 
+          {
+            $("#_password").focus();
+          }, 100);
+        }
+        else 
+          checkIntegrality(ctr);
+      }
+    }
+  }  
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="wrap">
+	<div class="head">
+		<div class="head_l">
+			<a href="http://www.wefafa.com" class="welogo" title="Wefafa，移动社会化协作，微应用平台"><img src="{{asset('bundles/fafatimewebase/images/homepage/wefafa_logo.png')}}" border="0"></a>
+		</div>
+		<div class="head_r">
+			<h3 class="nav"> <a href="{{path('JustsyBaseBundle_newlogin')}}" class="nav_now">首页</a> <a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature" >功能</a> <a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a> <a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a> <a href="/static/appin/index.htm">文档</a> <a class="titlelogin" href="{{path('JustsyBaseBundle_default')}}" target=_blank>登录</a> <a class="titlereg" href="javascript:showhighlight();">注册</a> </h3>
+		</div>
+	</div>
+</div>
+<div class="ad">
+	<div class="wrap">
+		<div class="ad_l">
+			<div style="height:20px"></div>
+			<div class="r0_1"></div>
+			<div class="r0_2">
+				通过移动终端，以人为中心，随时随地，连接一切，乐享工作。
+			</div>
+			<div class="r0_3">			
+				<div class="r1" id="idInputLine">
+					  <input class="loginFormIpt" tabindex="4" placeholder="请输入邮箱地址" autocomplete="off" onKeyPress="enter(event,&#39;mail&#39;);" id="txtmail" name="txtmail" type="text" maxlength="32">
+			      <div id="emailerror" class="alert alert-error" style="display:none">
+        		    <strong>错误！</strong> <p id="email_err">请检查！</p>
+          		</div>
+			  </div>
+				<div class="r2"><span id="btnregister" class="btn btn-reg formSubmit" tabindex="5" type="button" onClick="submit_mail();">免费注册</span></div>
+			</div>
+			<div class="r0_4">
+				<ul class="down">
+				<li><a href="{{pc["url"]}}" target='_blank'><div class="downwin downicon">Windows版<br>{{pc["fileversion"]}}</div></a></li>
+				<li><a href="{{android["url"]}}" target='_blank'><div class="downandroid downicon">Android版<br>{{android["fileversion"]}}</div></a></li>
+				<li><a href="{{ios["url"]}}" target='_blank'><div class="downios downicon">iOS版<br>{{ios["fileversion"]}}</div></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="ad_r">			
+			<div id="focus_change">
+				<div id="focus_change_list" style="top:0; left:0;">
+				  <ul>
+				  <li><img src="{{asset('bundles/fafatimewebase/images/homepage/ad1.png')}}" alt="" /><div class="title">移动经营，从Wefafa开始！</div></li>
+				  <li><img src="{{asset('bundles/fafatimewebase/images/homepage/ad2.png')}}" alt="" /><div class="title">移动客服，7*24小时全员客服。</div></li>
+				  <li><img src="{{asset('bundles/fafatimewebase/images/homepage/ad3.png')}}" alt="" /><div class="title">移动销售，用专业和速度赢得订单。</div></li>
+				  <li><img src="{{asset('bundles/fafatimewebase/images/homepage/ad4.png')}}" alt="" /><div class="title">移动办公，带来全新的办公体验。</div></li>
+				  </ul>
+				</div>			 
+				<div id="focus_change_btn">
+					<ul>
+					  <li class="current"><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/dian1.png')}}" alt="" /></a></li>
+					  <li><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/dian1.png')}}" alt="" /></a></li>
+					  <li><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/dian1.png')}}" alt="" /></a></li>
+					  <li><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/dian1.png')}}" alt="" /></a></li>
+					</ul>
+				</div>
+			</div><!--focus_change end-->
+		</div>
+	</div>	
+</div>
+<div style="height:260px; border-bottom:1px #EEEEEE solid">
+	<div class="wrap">
+		<div class="feature">
+			<div class="feature_1">
+				<div class="f_main"><img src="{{asset('bundles/fafatimewebase/images/homepage/f_app.png')}}"><span class="f_title"><h1 class="f_main">微应用</h1><p class="f_sectitle">轻松办公，随需而变</p></span></div>
+				<div class="f_content">
+					<ul>
+						<li>专为移动互联网设计的企业应用</li>
+						<li>适应企业不断变化的业务需求</li>
+						<li>与原有信息系统快速对接</li>
+					</ul>
+				</div>
+			</div>
+			<div class="feature_2">
+				<div class="f_main"><img src="{{asset('bundles/fafatimewebase/images/homepage/f_circle.png')}}"><span class="f_title"><h1 class="f_main">微圈子</h1><p class="f_sectitle">随时分享，内外协作</p></span></div>
+				<div class="f_content">
+					<ul>
+						<li>圈子，可以任意创建或加入</li>
+						<li>在内外圈子进行社会化分享与协作</li>
+						<li>用圈子+应用整合产业链资源</li>
+					</ul>
+				</div>
+			</div>
+			<div class="feature_3">
+				<div class="f_main"><img src="{{asset('bundles/fafatimewebase/images/homepage/f_friend.png')}}"><span class="f_title"><h1 class="f_main">微人脉</h1><p class="f_sectitle">工作交流，商务沟通</p></span></div>
+				<div class="f_content">
+					<ul>
+						<li>企业微信，不只是微信</li>
+						<li>企业公众号，不只是营销</li>
+						<li>移动语音，不只是对讲</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="height:450px; margin-top:10px">
+	<div class="wrap">
+		
+		<div id="cus_change">
+		<div class="cus_title">
+			<div style="float:left; width:100px;">
+				<h1 style="color:#00a5d3; padding-top:10px;">客户案例</h1>
+			</div>
+			<div style="float:right; padding-top:10px; padding-right:20px;"><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case" target='_blank'>更多>></a></div>
+			<div style="float:right; padding-right:20px;">
+				
+			</div>
+		</div>
+			<div id="cus_change_list" style="top:0; left:0;z-index:-1;">
+			  <ul>
+			  <li>
+			  	<span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">K-Touch/天语</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">高科技品牌企业</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">独立部署</p>
+					<p class="ptitle">主要应用：
+					  <ul class="cus_intro_detail">
+						<li>供应链协作</li>
+						<li>销售管理</li>
+						<li>公众号内刊</li>
+						<li>即时通讯</li>
+						<li>移动审批</li>
+						<li>移动会议</li>
+						<li>消息推送</li>
+						<li>企业文化建设</li>
+					  </ul>
+					</p>
+				</span>
+				<img src="{{asset('bundles/fafatimewebase/images/homepage/cus_1.png')}}" alt="" />
+			  </li>
+			  <li><span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">上海美特斯邦威</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">快时尚服装品牌</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">独立部署</p>
+					<p class="ptitle">主要应用：
+					  <ul class="cus_intro_detail">
+						<li>零售店管理</li>
+						<li>企业内部协作</li>
+						<li>服装款式搭配</li>
+						<li>导购信息采集</li>
+						<li>业务系统对接</li>
+						<li>会员管理</li>
+						<li>消息推送</li>
+					  </ul>
+					</p>
+				</span><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_2.png')}}" alt="" /></li>
+			  <li><span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">成都任我行股份有限公司</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">第三方软件企业</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">公有云</p>
+					<p class="ptitle">主要应用：
+					  <ul class="cus_intro_detail">
+						<li>微应用平台</li>
+						<li>消息推送</li>
+						<li>信息实时采集</li>
+						<li>开放Api</li>
+						<li>即时通讯</li>
+					  </ul>
+					</p>
+				</span><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_3.png')}}" alt="" /></li>
+			  <li><span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">成都万锦大酒店</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">酒店行业客户</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">公有云</p>
+					<p class="ptitle">主要应用：
+					  <ul class="cus_intro_detail">
+						<li>会员管理</li>
+						<li>在线客服</li>
+						<li>会员社交</li>
+						<li>内部沟通</li>
+						<li>移动审批</li>
+						<li>移动会议</li>
+						<li>消息推送</li>
+						<li>Wifi定位</li>
+					  </ul>
+					</p>
+				</span><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_4.png')}}" alt="" /></li>
+			  </ul>
+			</div>
+			<div id="cus_change_btn">
+			  <ul>
+			  <li class="cus_current"><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_logo1.png')}}" alt="" /></a></li>
+			  <li><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_logo2.png')}}" alt="" /></a></li>
+			  <li><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_logo3.png')}}" alt="" /></a></li>
+			  <li><a href="#"><img src="{{asset('bundles/fafatimewebase/images/homepage/cus_logo4.png')}}" alt="" /></a></li>
+			  </ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="footer">
+	<div class="wrap">Copyright © 2011-2013 <a href="http://www.wefafa.com/" target="_blank">Justsy</a>&nbsp;发发时代 版权所有&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+</div>
+
+<!--在线客服-->
+<div id="service-side">
+	<div class="service-sidec">
+		<div class="service-name"><a href="javascript:;">在线客服</a></div>
+		<div class="service-memo">Android在线</div>
+	</div>
+	<div class="service-sideb>
+	<div class="b">
+	<div class="service-resource"></div>
+	<img src="{{asset('bundles/fafatimewebase/images/homepage/service_head.png')}}">
+	</div>
+	</div>
+</div>
+<!--在线客服结束-->
+<script type="text/javascript">
+    var isreg="{{isreg}}";
+		function showhighlight(){
+			$(document.body).append("<div title='点击还原' onclick='$(this).remove();' class='coverdiv'><img style='float:right;cursor:pointer;' onclick='$(this).parent().remove();' src=\"{{asset('bundles/fafatimewebase/images/remove_0607_5.png')}}\"/></div>");
+			$("div.ad div.r0_3").css({'z-index':'20000','position':'relative'});
+		}
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+		$(document).ready(function(){
+			 if(isreg=="1")
+			 {
+			     showhighlight();
+			 }
+		})     
+</script><div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body></html>

@@ -1,0 +1,170 @@
+<form id="frmpropelling" method="post" style="float:left;margin-left:10px;">
+	  <input type="hidden" id="remind_id" name="remind_id">
+	  <input type="hidden" id="remind_detailsid" name="remind_detailsid">
+	  <input type="hidden" id="edit_staff" name="edit_staff" >
+	  <input type="hidden" id="staff_jid" name="staff_jid">
+	  <input type="hidden" id="staff_jid_type" name="staff_jid_type">
+	  <input type="hidden" id="immediately" name="immediately">
+   <div style="float:left;height:90px;">
+	   <span style="float:left;display:block;height:90px;line-height:90px;">接收人员：</span>	   
+	   <div id="remind_staffs" style="float:left;padding-left:5px;border:1px solid #0186A9;background-color: #EEEEEE;width:545px;height:90px;overflow-x:hidden;overflow-y:auto;"></div>
+	   <img id="propelling_add_staffs" class="propelling_add_staffs" src="{{asset('bundles/fafatimewebase/images/edit_add.png')}}" title="添加接收人" />
+	 </div> 
+	 <div style="float:left;height:90px;margin-top:8px;">
+	   <span style="float:left;display:block;height:90px;line-height:90px;">推送内容：</span>
+	   <textarea id="searchCondition" name="propelling_content" class="propelling_remindContent" placeholder="请输入２００字内的推送内容！" style="float:left;line-height:20px;width:540px;height:80px;" maxlength="200"></textarea>
+	 </div>
+   <div style="position:relative;float:left;height:30px;width:555px;margin-left:60px;">
+ 	 	  <label style="float:left;font-size:12px;margin-top:5px;margin-left:0px;height:22px;width: 70px;">
+ 	 	  	  <input type="radio" name="sendtype" id="immediately1" checked="checked" style="float:left;">立即发送
+ 	 	  </label>
+ 	    <label class="propelling_date_area_title">
+ 	    	 <input type="radio" name="sendtype" id="immediately0" style="float:left;"><span style=""float:left;">定时提醒</span>
+ 	    </label>
+	    <div class ="propelling_date_area">
+			  <select style="width:65px;" class="combox_style" name="_year" id="propelling_year"></select><span class="remind_lable_date">年</span>
+		    <select class="combox_style" id="propelling_month" name="_month" style="width:50px;">
+		    	 <option value=""></option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+					 <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+					 <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+				   <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+		    </select><span class="remind_lable_date">月</span>
+	      <select class="combox_style" name="_day" id="propelling_day" style="width:50px;">
+	      	 <option value=""></option>
+	      </select><span class="remind_lable_date">日</span>
+	   	  <select style="width:50px;" name="_hour" id="propelling_hour" class="combox_style" style="width:40px;">
+		   	  <option value=""></option><option value="00">00</option><option value="01">01</option><option value="02">02</option>
+					<option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option>
+					<option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option>
+					<option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option>
+					<option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option>
+					<option value="19">19</option><option value="20">20</option><option value="21">21</option>
+					<option value="22">22</option><option value="23">23</option>
+	      </select><span class="remind_lable_date">时</span>
+		   	<select style="width:50px;" name="_minute" id="propelling_minute" class="combox_style" style="width:40px;">
+		   	  <option value=""></option>
+		   	  <option value="00">00</option>
+					<option value="05">05</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="35">35</option>
+					<option value="40">40</option>
+					<option value="45">45</option>
+					<option value="50">50</option>
+					<option value="55">55</option>
+		    </select><span class="remind_lable_date">分</span>
+	    </div>
+ 	    <div class="propelling_hint">
+				 <img  id="propelling_hint_img" src="{{asset('bundles/fafatimewebase/images/prompt.png')}}" />
+			   <span id="propelling_hint_span"></span>
+ 	    </div>
+ 	    <span state="1" style="float:right;margin-top:4px;" class="contact_button2" id="btnAddPropelling"> 确&nbsp;定</span>
+	 </div>
+</form>
+<div class="select_staff_box" id="select_staff_box">
+  <div class="select_staff_box_title">
+  	 <span style="float:left;margin-left:12px;">选择接收人员</span>
+  	 <span style="float:right;cursor:pointer;margin-right:10px;" title="关闭" 
+  	 	 onclick="javascript:document.getElementById('select_staff_box').style.display='none';document.getElementById('propelling_add_staffs').style.display='block';">×</span>
+  </div>  
+  <div style="float:left;">
+  	<ul class="propelling_ul"></ul>
+  	<div class="propelling_right">
+  		 <div style="float:left;margin-top:8px;margin-left:45px;+margin-left:25px;height:24px;">
+ 	  		 <input type="text" placeholder="查找联系人" class="propelling_text_search" id="searchCondition" style="float:left;border-right:none;height:14px;line-height:12px;font-size:11px;width:355px;+width:345px;" name="searchCondition" class="propelling_text_sarch">
+ 	  		 <div id="bntSearch" style="height:22px;" style="float:left;" class="propelling_search_staff" >            	
+    	      <center >
+    	      	 <img src="/bundles/fafatimewebase/images/icon_search.png" style="margin-left:5px;">
+    	      </center>
+         </div>
+       </div>
+       
+       <div style="float:left;">
+       	 <div class="propelling_lettery_area"></div>
+         <div class="propelling_staff_area">
+             <div class="propelling_loadding" id="propelling_loadding" >
+				     	  <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style="width:32px;height:32px;">
+				     	  <span>正在检索用户</span>
+				     </div>
+         </div>
+       </div>
+       <div style="float:left;height:25px;line-height:25px;width:410px;margin:8px 0px 0px 50px;">
+       	 <label id="checkbox_allchecked" style="float:left;font-size:12px;padding-right:25px;margin-top:3px;height:20px;line-height:20px;">
+       	 	 <input type="checkbox" style="float:left;margin-top:3px;margin-right:2px;">
+       	 	 <span style="float:left;">全选</span>
+       	 </label>
+       	 <div style="float:left;"><span style="float:left;">共选择了</span>
+       	 	  <span id="staff_number" style="color:blue;padding:0 5px;float:left;font-weight:bold;">&nbsp;</span><span style="float:left;">人</span></div>
+       	 <span id="btnCheckedStaff" class="contact_button2" style="float:right;margin-top:1px;line-height:22px;" state="1"> 确&nbsp;定</span>
+       </div>
+  	</div>
+  </div>
+</div>
+
+<div style="float:left;margin-top:15px;">
+	 <div style="float:left;margin-left:-20px;width:25px;height:25px;border-bottom:1px solid #0186A9;"></div>
+   <div style="float:left;border-radius:6px 6px 0px 0px;height:25px;line-height:25px;padding-left:5px;padding-right:5px;border-left:1px solid #0186A9;border-top:1px solid #0186A9;border-right:1px solid #0186A9;">
+	 	  推送消息列表
+	 </div>
+	 <div style="float:left;height:25px;width:550px;border-bottom:1px solid #0186A9;"></div>
+</div>
+
+<div class="propelling_message_listfileds">
+	 <span style="float:left;display:block;width:95px;padding-left:5px;">接收人</span>
+	 <span style="float:left;display:block;width:110px;">推送时间</span>
+	 <span style="float:left;display:block;">推送内容</span>
+</div>
+
+
+
+
+
+<div class="propelling_message_list_box">
+	<div id="propelling_list_loadding" style="float:left;width:100%;height:390px;display:none;">
+		 <div style="margin-top:175px;height:32px;line-height:32px;margin-left:auto;margin-right:auto;width:185px;">
+		 	  <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style="float:left;width:32px;height:32px;" />
+		   <span style="float:left;margin-left:2px;">正在加载消息推送列表……</span>
+		 </div>
+	</div>
+	<div style="float:left;width:100%" id="propelling_page1">
+		{% for c in PropellingList %}	  
+		  <div class="propelling_message_list" id="detailsid_{{c.detailsid}}">
+			 	  <span style="width:95px;padding-left:5px;">{{c.nick_name }}</span>
+			 	  <span style="width:110px;">{{c.remind_date }}</span>
+			 	  <span class="propelling_list_content" title="{{c.remindcontent}}">{{c.remindcontent }}</span>
+			 	  {% if c.state ==0 %}
+			 	    <span class="propelling_list_delete" style="float:right;" detailsid="{{c.detailsid}}" remindid="{{c.remindid}}" title="删除"></span>
+			 	  {% else %}
+			 	    <span class="propelling_list_edit"   style="float:right;" detailsid="{{c.detailsid}}" remindid="{{c.remindid}}" staffid="{{c.remind_staffid}}" stafftype="{{c.staff_type}}"  title="编辑"></span>
+			 	  {% endif %}
+		 	 </div>
+		{% endfor %}
+	</div>
+</div>
+
+{% if page>1 %}
+	<div class="propelling_message_listfileds" style="margin-top:0px;border-top:none;border-bottom:1px solid #BDBDBD">
+		<div style="float:left;padding-left:10px;">
+			总记录数：<span style="font-weight:bold;">{{rowcount}}</span>
+		</div>
+		<div style="float:left;margin-left:50px;">
+			 当前页：<span style="font-weight:bold;padding-right:2px;" id="propelling_pageindex">1</span>/<span id="propelling_countpage" style="font-weight:bold;padding-left:2px;">{{page}}</span>
+	  </div>
+	  <div class="propelling_list_selectpage" >
+	  	 <span title='首页'   flag="firstpage" >|<</span>
+	  	 <span title='上一页' flag="prevpage"><</span>
+	  	 <span title='下一页' flag="nextpage">></span>
+	  	 <span title='尾页'   flag="lastpage">>|</span>
+	  </div>
+		
+	</div> 
+{% endif %}
+
+<script type="text/javascript">
+	 $(document).ready(function() {	 	 
+     Init.propelling_message_delete = "{{path('JustsyBaseBundle_propelling_message_delete')}}";	 	 	 	 
+	 });	
+</script>

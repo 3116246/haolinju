@@ -1,0 +1,102 @@
+<ul class="title_box" style="height:300px;">
+   	{% if rows|length>0 %}
+   	  {% for i in rows %}
+   	     <li class="title_box_li" id="{{i.id}}">
+   	      <span class="c_time" style="display:block;width:65px;height:30px;line-height:30px;float:left;margin:0px;padding:0px;">
+   	         {%if i.isafter<=0%}
+   	         <div style="height: 15px; margin-top: -6px; margin-left: -30px;color:green">{{ i.dt }}</div>
+   	         <div style="font-size: 16px; margin-top: -3px; overflow: hidden; height: 22px; font-weight: bold; font-family: 微软雅黑;color:green">{{ i.time }}</div>
+   	         {%else%}
+   	         <div style="height: 15px; margin-top: -6px; margin-left: -30px;color:#ccc">{{ i.dt }}</div>
+   	         <div style="font-size: 16px; margin-top: -3px; overflow: hidden; height: 22px;font-weight: bold; font-family: 微软雅黑; color:#ccc">{{ i.time }}</div>
+   	         {%endif%}
+   	      </span>
+   	     	<span class="short_title" onclick="view_content('{{i.id}}','{{i.content}}');" style="display:block;float:left;cursor:pointer;width:145px;height:30px;line-height:30px;overflow:hidden;font-family: 微软雅黑;font-size: 14px;font-weight: 700;padding-top: 6px;height:22px">{{ i.title }}</span>
+   	     	<input class="hid_id" type="hidden" value="{{i.id}}"/>
+   	     	<input class="hid_content" type="hidden" value="{{i.content}}"/>
+   	     	<input class="hid_bell_time" type="hidden" value="{{i.bell_time}}"/>
+   	     </li>
+   	  {% endfor %}
+   	{% endif %}
+</ul>
+{%if(pagecount>1)%}
+<div class="pagination" style="text-align:left;width:100%;margin:0">
+	<ul>
+	  <!--<li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="{% if q|length ==0 %}getPage({{pageindex-1}}){% else %} getPage({{pageindex-1}},{{q}}) {% endif %}" {% endif %}>上一页</a></li>-->
+	  {% set pagestart = 1 %}
+	  {% set pageend = pagestart+4 > pagecount ? pagecount : pagestart+4 %}
+	  {%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }} q="{{q}}"><a href='javascript:;' onclick="{% if q|length ==0 %} getPage({{i}}) {% else %} getPage({{i}},{{q}}) {% endif %}">{{(i)}}</a></li>
+	  {%endfor%}
+	  <!--<li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %} onclick="{% if q|length ==0 %} getPage({{pageindex+1}}) {% else %} getPage({{pageindex+1}},{{q}}) {% endif %}" {% endif %}>下一页</a></li>-->
+  </ul>
+</div>
+{%endif%}
+<script>
+ $(".short_title").mouseover(function(event){
+ 	 var e=event||window.event;
+ 	 var t=this;
+ 	 var content=$(this).siblings('.hid_content').val();
+ 	 var date=$(this).siblings('.c_time').children('div:first').text();
+ 	 var time=$(this).siblings('.c_time').children('div:last').text();
+ 	 var bell_time=$(this).siblings('.hid_bell_time').val();
+ 	 var id=$(this).siblings('.hid_id').val();
+ 	 if(typeof(J_hide)!='undefined')
+ 	 clearTimeout(J_hide);
+ 	 J_timer=setTimeout(function(){
+ 	 	 var x=parseInt(e.clientX);
+ 	   var y=parseInt($(document).scrollTop()-0+e.clientY);
+ 	 	 $("#journal_detail .timer .datetime").children("div:first").text(date);
+ 	 	 $("#journal_detail .timer .datetime").children("div:last").text(time);
+ 	 	 $("#journal_detail .timer .Wdate").val(date+" "+time);
+ 	 	 $("#journal_detail .timer .Wdate").attr('title',date+" "+time);
+ 	 	 $("#journal_detail .detail_id").val(id);
+ 	 	 $("#journal_detail textarea").text(content);
+ 	 	 $("#journal_detail .log").text("只读。");
+ 	 	 $("#journal_detail .timer .datetime").show();
+ 	 	 $("#journal_detail .timer .datetime").siblings("img").hide();
+ 	 	 $("#journal_detail .timer .Wdate").removeClass('new_date_set_input1');
+ 	 	 $("#journal_detail .timer .Wdate").addClass('new_date_set_input2');
+ 	 	 $("#journal_detail .journal_bar").children("a:first").children("img:first").hide();
+ 	 	 $("#journal_detail .journal_bar").children("a:first").children("img:last").show();
+ 	 	 $("#journal_detail .journal_bar").children("a:eq(1)").children("img:first").show();
+ 	 	 $("#journal_detail .journal_bar").children("a:eq(1)").children("img:last").hide();
+ 	 	 $("#journal_detail").css('left',(x-25).toString()+"px");
+ 	 	 $("#journal_detail").css('top',(y-40).toString()+"px");
+ 	 	 $("#journal_detail textarea").attr('readonly','readonly');
+ 	 	 $("#journal_detail").attr('status','readonly');
+ 	 	 if(bell_time!=""){
+ 	 	 		$("#journal_detail .bell .Wdate").val(bell_time);
+ 	 	 		$("#journal_detail .bell .Wdate").css('margin-left','-32px');
+ 	 	 		$("#journal_detail .gou").css('display','block');
+ 	 	 }
+ 	 	 else{
+ 	 	 		$("#journal_detail .bell .Wdate").val('');
+ 	 	 		$("#journal_detail .bell .Wdate").attr('title','请设置提醒时间');
+ 	 	 		$("#journal_detail .gou").hide();
+ 	 	 }
+ 	 	 showLOG($("#journal_detail .log")[0]);
+ 	 	 $("#journal_detail").show();
+ 	 },1000);
+ });
+ $(".short_title").mouseout(function(event){
+ 	 	if(checkHover(event,this)){
+		 	clearTimeout(J_timer);
+		 	J_hide=setTimeout(function(){$("#journal_detail").hide();},500);
+		} 
+ 	});
+ 	$("#journal_detail").mouseover(function(event){
+ 		if(checkHover(event,this)){
+ 			clearTimeout(J_hide);
+ 		}
+  });
+  $("#journal_detail").mouseout(function(event){
+   if(checkHover(event,this)){
+   	clearTimeout(J_hide);
+   	if($("#journal_detail").attr('status')!='edit'){
+   		$("#journal_detail").hide();
+   	}
+   }
+  });
+</script>
+

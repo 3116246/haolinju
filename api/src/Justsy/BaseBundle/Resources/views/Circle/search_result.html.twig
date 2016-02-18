@@ -1,0 +1,52 @@
+{% extends 'JustsyBaseBundle:Circle:index.html.twig' %}
+{%
+set IsJoin = app.user.IsExistsFunction("CIRCLE_JOIN_C")
+%}
+{% block main_content_center %}
+<div class="circlesmainright">
+<table class="table circle-spc" style="width: 700px;">
+  <tr>
+    <td>圈子名称</td>
+    <td>圈子描述</td>
+    <td>&nbsp</td>
+  </tr>
+  {% for r in rows %}
+  <tr>
+    <td id="circle_id" style="display:none;">{{ r.circle_id }}</td>
+    <td id="circle_name" width="150px">{{ r.circle_name }}</td>
+    <td title="{{ r.circle_desc }}"><span style="white-space: nowrap;width:450px;text-overflow: ellipsis; overflow: hidden; display: block;">{{ r.circle_desc }}</span></td>
+    <td>
+      {%if(IsJoin)%}
+      <a style="cursor:pointer" is_join="{{r.is_join}}" create_staff="{{r.create_staff}}" onclick="joinCircle(this);">{% if r.is_join==1 %}已加入{% else %}申请加入{% endif %}</a>
+      <img style="display:none" src="{{ asset("bundles/fafatimewebase/images/loadingsmall.gif") }}" />
+      {%endif%}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+//申请加入
+function joinCircle(n)
+{
+  if ($(n).attr("isclick")=="1" || $(n).attr("is_join")=="1" || $(n).text()=="已申请") return;
+  $(n).attr("isclick","1");
+  $(n).parent().find("img").show();
+  $(n).parent().find("a").hide();
+  var circle_id = $(n).parent().parent().children("#circle_id").text();
+  var circle_name = $(n).parent().parent().children("#circle_name").text();
+  var create_staff = $(n).attr("create_staff");
+  $.post("{{path('JustsyBaseBundle_circle_apply_join')}}",
+    {createStaff:create_staff,circleId:circle_id,circleName:circle_name},
+    function(data) 
+    {
+      $(n).parent().find("img").hide();
+      $(n).parent().find("a").show();
+      $(n).attr("isclick","0");
+      $(n).text("已申请");
+    },"text");
+}
+</script>
+{% endblock %}

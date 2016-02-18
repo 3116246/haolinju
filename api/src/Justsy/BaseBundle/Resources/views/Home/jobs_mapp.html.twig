@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+	<meta charset="utf-8">
+	<title>招贤纳士——Wefafa移动应用平台</title>	
+<meta name="keywords" content="企业移动应用平台，移动开发平台，企业移动门户，移动信息化，移动信息化，移动中间件，企业移动互联，大数据，移动OA，移动CRM，Wefafa"/>
+<meta name="description" content="Wefafa移动应用平台，是一个集企业移动门户、快速开发平台和大数据消息网关于一体，帮助企业快速实现原有信息系统的移动化升级，助力企业低成本进入移动互联网时代的移动技术平台。Wefafa拥有国内目前唯一支持企业原有信息系统在保持私网IP、内网部署的物理安全环境中，仍然能够实现移动化访问的专利技术方案"/>
+  <link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+  <link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" />
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<style type="text/css">
+	  .item
+	  {
+	     cursor:pointer;
+	     color:#000000;
+	     background-color:#FFFFFF;
+	  }
+	  .item:hover
+	  {
+	     color:#666;
+	     background-color:#d6ecf2;
+	  }	  
+	  .item_active
+	  {
+	     cursor:pointer;
+	     color:#FFF;
+	     background-color:#00a9d9;
+	  }	  
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var topMain=$("#features_ad").height()//是头部的高度加头部与nav导航之间的距离
+	var feanav=$(".features_nav");
+	var feaw=$(".feawrap");
+	$(window).scroll(function(){
+		if ($(window).scrollTop()>topMain){//如果滚动条顶部的距离大于topMain则就nav导航就添加类.nav_scroll，否则就移除
+			feaw.addClass("feawrap_scroll");
+			feanav.addClass("feanav_scroll");
+		}else{
+			feaw.removeClass("feawrap_scroll");
+			feanav.removeClass("feanav_scroll");
+		}
+	});
+})
+</script>
+</head>
+<body screen_capture_injected="true">
+<div class="nav clearfix" id="featop">
+	<div class="nav-content">
+		<h1 class="left" href="javascript:;"></h1>
+		
+		<div class="right line-li" style="display:none">
+			<ul>
+        <li><a href="{{path('JustsyBaseBundle_newlogin')}}" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+        <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+        <li class="we_btn"><a href="{{path('JustsyBaseBundle_default')}}">登录</a></li> 
+<!--				<li><a href="reg.html">注册</a></li>
+					<else/>
+                <li><a href="{weixin::U('User/Index/index')}">管理中心</a></li>
+				<li><a href="/javascript:;" onClick="Javascript:window.open('{weixin::U('System/Admin/logout')}','_blank')" >退出</a></li>
+				</if>	
+-->                
+			</ul>
+		</div>
+	</div>
+</div>
+
+    <div id="main_content">
+      <div id="main_about">
+        <div id="main_about_detail">
+        <img src="{{ asset('bundles/fafatimewebase/images/homepage/zp.jpg')}}" width="898" height="146"/><br />
+        <h1><br />
+          如果您能胜任以下职位并愿意加入我们，请您跟我们联系：<br />
+          电话：010-87665176 传真：010-87665172 E-mail：co@fafatime.com</h1>
+        <p>
+        <h2><br />
+          .net软件开发工程师</h2>
+        
+         招聘人数：5  简历语言要求：中文 语言能力：英语　掌握程度：一般<br />
+          <strong>职位描述：</strong><br />
+         1、在上级的领导和监督下定期完成量化的工作要求；<br />
+         2、能独立处理和解决所负责的任务；<br />
+         3、根据开发进度和任务分配，完成相应模块软件的开发、编程任务；<br />
+         4、进行程序单元、功能的测试，查出软件存在的缺陷并保证其质量；<br />
+         5、进行编制项目文档和质量记录的工作；<br />
+         6、维护软件使之保持可用性和稳定性；</p>
+        <p><strong>岗位要求：</strong><br />
+         1、计算机及软件相关专业毕业，一年以上相关工作经验，大专以上学历，优秀应届毕业生可择优录用<br />
+         2、熟悉.net开发技术，熟悉.NET Framework，具有一定ASP,.NET,XML,Web Service 开发经验<br />
+         3、精通WEB开发，精通JavaScript，Html<br />
+         4、熟悉SQL Server 或Oracle 数据库，有数据库设计经验<br />
+         5、有良好的代码撰写习惯及代码注释习惯，能够独立撰写开发文档和设计文档<br />
+         6、工作积极主动，具有较强的团队合作意识<br />
+         7、同时具有Winform或Android开发经验者优先 <br />
+          <br />
+        </p>
+        <p><h2>Android开发经理</h2>
+        招聘人数：2  简历语言要求：中文<br />
+          <strong>职位描述：</strong> <br />
+         1.负责软件系统架构分析、设计及原型实现，指导技术团队完成Android产品研发；<br />
+         2. 负责Android智能手机平台应用软件的分析、设计、编码和测试； <br />
+         3.参与产品需求分析并制定技术实施方案； <br />
+         4.参与制定设计及实现规范，指导设计、实现及部署工作； <br />
+         5.负责软件技术构架和关键技术的攻关； <br />
+         6.负责团队管理工作，协助、指导工程师解决技术关键问题。 </p>
+        <p><strong>任职要求：</strong> <br />
+          1.本科及以上学历，计算机、电子或相关专业； <br />
+          2.具备扎实的Java编程基础，1年以上软件开发经验，熟悉Android开发平台及框架原理，1年以上Android相关开发经验； <br />
+          3.熟悉基于Android SDK的应用程序开发，能独立进行应用程序开发、调试和移植；<br />
+          4.熟悉Android UI设计，熟悉tcp/Ip/HTTP编程 熟练掌握Android下活动、服务、线程、进程的通信机制 <br />
+          熟悉软件开发流程，具备良好的编码习惯。 <br />
+          5.强烈的责任心和团队精神，善于与合作，能在高强度的压力下工作。<br />
+        </p>
+        <p><h2><br />
+          Android开发工程师</h2>
+        </p>
+        <p>招聘人数：3  简历语言要求：中文 语言能力：英语　掌握程度：良好<br />
+          <strong>职位描述：</strong> <br />
+          1、负责Android平台上的应用软件开发<br />
+          2、与项目组策划、美术人员共同讨论开发需求及设计软件实现细节<br />
+          3、积极努力配合QA人员提出的问题意见对程序进行调试修改与完善<br />
+          4、对客户端图形显示，资源管理，内存管理等技术进行研究与优化<br />
+          5、深入分析整个系统的关键模块，并指导核心问题的攻关。</p>
+        <p><trong>职位要求：</trong><br />
+          1、熟练掌握JAVA编程语言，具有1年以上Android应用开发的工作经验<br />
+          2、掌握Eclpise开发工具，熟悉Android SDK/NDK，了解CVS或SVN等相关源代码版本控制系统<br />
+          3、熟练掌握Android的API，理解Android的体系结构，掌握Android中界面绘制，后台运行，数据存储等的原理，熟悉xml，http，TCP/IP，SOCKET等协议<br />
+          4、熟悉数据库，有Sqlite使用经验<br />
+          5、具备团队合作精神，稳定的工作态度<br />
+          6、大学专科或以上学历，计算机、电子通信等相关专业，英语水平优良，有良好的英文阅读能力。<br />
+        </p>
+        <p><h2><br />
+          iPhone软件开发经理</h2>
+        招聘人数：2  简历语言要求：中文<br />
+         <strong>职位描述：</strong> <br />
+          1、领导技术团队成员开发iPhone平台手机客户端软件；<br />
+          2、负责软件整体架构设计以及核心代码编写；<br />
+          4、负责项目中重点难点技术的攻关；<br />
+          5、跟踪手机行业技术发展方向。</p>
+        <p><strong>岗位要求：</strong><br />
+          1、掌握Objective-C、C/C++语言开发；<br />
+          2、熟悉macos x操作系统，熟悉iPhone SDK开发环境及底层调用，熟悉iOS App 开发流程；<br />
+          3、熟练运用instrument做内存优化和性能优化；<br />
+          4、熟悉Http协议相关知识，熟悉网络编程；<br />
+          5、熟悉面向对象编程，图形界面开发；<br />
+          6、具备良好和规范的编码风格；<br />
+          7、曾经在App Store发表过至少一个应用；<br />
+          8、有带领5人以上团队开发项目的经验，有项目管理经验；<br />
+          9、沟通能力强，团队合作意识强，刻苦耐劳，责任心强，有很强的学习和创新能力，对新事物有强烈的好奇心。</p>
+        <p><h2><br />
+          市场总监</h2>
+        工作地点：北京<br />
+          <b>职位描述</b><br />
+          <b>一、岗位职责</b><br />
+          1、制定公司市场营销战略，年度运营指标、发展计划，推动并确保市场拓展目标的顺利完成；<br />
+          2、负责公司公关活动的策划、实施，网络营销的策划与执行等；<br />
+          3、与销售部协同完成公司年度销售指标；<br />
+          4、规划、组织、实施公司的市场调研、市场策划、营销推广等；<br />
+          5、培训、指导市场营销人员，建设、管理高素质的营销团队。</p>
+        <p><b>二、任职要求</b><br />
+          1、市场营销管理类或相关专业本科及以上学历;<br />
+          2、三年以上市场营销管理工作经验，有互联网行业市场营销工作经验优先；<br />
+          3、具备很强的策划能力，熟悉各类媒体运作方式，有大型市场活动推广成功经验；<br />
+          4、具有敏感的商业和市场意识，分析问题及解决问题能力强，具有优秀的资源整合能力和业务推进能力；<br />
+          5、具备良好的沟通合作技巧及丰富的团队建设经验。 </p>
+        <p><h2><br />
+          销售总监</h2>
+        工作地点：北京<br />
+          职位描述<br />
+          招聘人数：1<br />
+          简历语言要求：中文<br />
+          职位描述： 岗位职责： <br />
+          1、全面规划销售部门的业务，并组织实施部门内的业务，完成制订的月度、季度、年度的业务收入计划，对公司下达的销售 <br />
+          指标负责； <br />
+          2、追踪企业信息化和企业移动互联网行业发展动态、提出相应销售策略，引导和控制销售工作的方向和进度，带领团队实现公司要求 <br />
+          的利润目标； <br />
+          3、协调企业内外部关系，对企业市场营销战略计划的执行进行监督和控制； <br />
+          4、对所属部门的营销业务人员进行聘用、考核、调配、晋升 、惩罚和解聘。 </p>
+        <p>岗位要求： <br />
+          1、大学本科以上学历，5年以上企业管理软件或IT解决方案的销售经验，3年以上营销团队管理经验；<br />
+          2、在大型软件及IT企业销售总监以上岗位的从业经验，须具有相当规模的业务量及丰富的客户资源。<br />
+          3、具备较强的执行力与管理能力，具有带领过10人以上团队经验； <br />
+          4、具有出色的市场分析能力、沟通、协调以及谈判能力； <br />
+          5、有较强抗压能力和不屈不挠的精神。<br />
+        </p>
+        </div>
+      </div>
+      <div id="main_feedback_footer"></div>
+    </div>
+<!-- footer -->
+{% render "JustsyBaseBundle:Home:footer"%}
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$(".intro5_right div:gt(0)").hide();
+	$(".intro5_left li:eq(0)").attr("class","item_active");
+	$(".intro5_left li").bind("click",function(){
+		  var ind = $(this).attr("index");
+		  $(".intro5_right div").hide();
+		  $("#a"+ind).show();
+		  $(".intro5_left .item_active").attr("class","item");
+		  $(this).attr("class","item_active");
+	});
+  FaFaChatWin.ShowRoster("10097@100082.fafacn.com");
+});
+</script>
+<script type="text/javascript">
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+</script><div class="backToTop" title="返回顶部" style="display: none;"></div><div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body></html>

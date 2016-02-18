@@ -1,0 +1,1435 @@
+<div>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>约定：</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、所有接口地址中出现的{SERVER-HOST}都是指Wefafa平台的地址。如果非自主部署的平台，则统一为https://www.wefafa.com；企业自主部署的平台，则为平台在企业内部的实际部署地址。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、所有接口地址中出现的{Appcenter-HOST}都是指Wefafa应用开放平台的地址。如果非自主部署的平台，则统一为http://app.wefafa.com；企业自主部署的平台，则为平台在企业内部的实际部署地址。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、调用接口时给定的参数必须与各API参数列表中的名称完全相同。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4、所有API接口的调用方式参考：<a class="innerlink" href="#" ref="quickin-dev">应用开发->API接口的调用</a>。<br>
+</div>
+<ul> 
+	<li><a href="#" name="apilist-login" id="apilist-login">用户登录</a></li> 
+	<div class="help_right_text">		
+		<table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>logincheck</td>
+			</tr>			
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>采用API调用方式实现用户登录Wefafa平台。该接口仅作Wefafa用户身份认证，返回成功或失败。<br>如果是WEB应用调用，支持Jquery跨域调用（jsoncallback）。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/interface/logincheck</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">login_account</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">Wefafa帐号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">password</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">登录密码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">comefrom</td><td style="border: 1px solid rgb(204, 204, 204);">00：Web设备登录(默认为00)</td><td style="border: 1px solid rgb(204, 204, 204);">登录设备</td></tr>
+ 		  <tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">returncode</td><td style="border: 1px solid rgb(204, 204, 204);">0000:登录成功<br>0002:帐号或密码不正确<br>9999:系统异常</td><td style="border: 1px solid rgb(204, 204, 204);">登录结果</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/interface/logincheck?login_account=XXX@fafa.com&password=PWD</td>	
+			</tr>			
+ 		</table>
+	</div> 
+<li><a href="#" name="apilist-auth" id="apilist-auth">用户认证及授权</a></li> 
+	<div class="help_right_text">
+		<li><a href="#" name="apilist-auth1" id="apilist-auth1">Web-Server应用授权</a></li>
+		<table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>authorize(Web应用)</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>授权Web应用可以访问用户在Wefafa中的相关信息。该接口总是打开Wefafa用户认证页面。参考下图：<br>
+			   	<img style="width:500px;height:300px" src="/static/appin/images/authorize.png"><br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{Appcenter-HOST}/appcenter/oauth2/authorize</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型。固定为code。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址，当授权成功后，将自动定向到redirect_uri标识的地址。<br>如果为空，则默认重定向到注册时填写的入口地址；如果指定时，则必须与注册时填写的地址同域。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表(返回值将以参数的形式回传到redirect_uri指定的页面地址)</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。请求授权码时提交的应用状态码。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>http://app.wefafa.com/appcenter/oauth2/authorize?appid=00440&response_type=code&state=gi3443d-3d-wef&redirect_uri=</td>	
+			</tr>			
+ 		</table>	
+ 		<li><a href="#" name="apilist-auth2" id="apilist-auth2">Web-Client应用授权</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>authorize(浏览器端/JS)</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>授权浏览器端应用或JS脚本可以访问用户在Wefafa中的相关信息。该接口总是打开Wefafa用户认证页面。参考下图：<br>
+			   	<img style="width:500px;height:300px" src="/static/appin/images/authorize.png"><br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{Appcenter-HOST}/appcenter/oauth2/authorize</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">token</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型。固定为code。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址，当授权成功后，将自动定向到redirect_uri标识的地址。<br>如果为空，则默认重定向到注册时填写的入口地址；如果指定时，则必须与注册时填写的地址同域。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表(返回值将以参数的形式回传到redirect_uri指定的页面地址)</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">API访问token码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">token_type</td><td style="border: 1px solid rgb(204, 204, 204);">bearer</td><td style="border: 1px solid rgb(204, 204, 204);">固定返回值</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效截止日期</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires_in</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效时长。固定为2592000毫秒</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。请求授权码时提交的应用状态码。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>http://app.wefafa.com/appcenter/oauth2/authorize?appid=00440&response_type=token&state=gi3443d-3d-wef&redirect_uri=</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-auth3" id="apilist-auth3">Native-App应用授权应用授权</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>authorize(本地客户端)</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>授权浏览器端应用或JS脚本可以访问用户在Wefafa中的相关信息。该接口总是打开Wefafa用户认证页面。参考下图：<br>
+			   	<img style="width:500px;height:300px" src="/static/appin/images/authorize.png"><br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{Appcenter-HOST}/appcenter/oauth2/authorize</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">token</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型。固定为code。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">urn:ietf:oauth2:weop</td><td style="border: 1px solid rgb(204, 204, 204);">固定参数值</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表(返回值将以参数的形式回传到redirect_uri指定的页面地址)</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);" colspan=3>无</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>http://app.wefafa.com/appcenter/oauth2/authorize?appid=00440&response_type=token&state=gi3443d-3d-wef&redirect_uri=urn:ietf:oauth2:weop</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-auth4" id="apilist-auth4">Access_token获取</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getToken</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>Web应用根据授权码获取API访问Token。该接口只支持POST方式提交的Http请求。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{Appcenter-HOST}/appcenter/oauth2/accesstoken</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">grant_type</td><td style="border: 1px solid rgb(204, 204, 204);">authorization_code</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型。固定为authorization_code。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址，当授权成功后，将自动定向到redirect_uri标识的地址。<br>如果为空，则默认重定向到注册时填写的入口地址；如果指定时，则必须与注册时填写的地址同域。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">API访问token码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">token_type</td><td style="border: 1px solid rgb(204, 204, 204);">bearer</td><td style="border: 1px solid rgb(204, 204, 204);">固定返回值</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效截止日期</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires_in</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效时长。固定为2592000毫秒</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。请求授权码时提交的应用状态码。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>http://app.wefafa.com/appcenter/oauth2/accesstoken?appid=sdf32as3sds4d&code=sd3r2334sdfd&grant_type=authorization_code&state=gi3443d-3d-wef&redirect_uri=</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-auth41" id="apilist-auth41">Access_token验证</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>PingToken</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>验证指定的一个API访问Token是否有效（主要发生在本地缓存token已过期或异地登录的情况）。该接口只支持POST方式提交的Http请求。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{Appcenter-HOST}/appcenter/oauth2/{token}/ping。其中，{token}为要验证的token码</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">ping</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型。固定为ping。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">API访问token码。指定的token还有效时返回。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。请求授权码时提交的应用状态码。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>http://app.wefafa.com/appcenter/oauth2/bvr2d33sc433dd30kjdj/ping?appid=sdf32as3sds4d&response_type=ping&state=gi3443d-3d-wef</td>	
+			</tr>			
+ 		</table> 		
+ 		<li><a href="#" name="apilist-auth5" id="apilist-auth5">获取消息代理Token</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getMessageProxyToken</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>特殊接口。该接口获取的token暂时仅能用于应用系统中通过后台自动推送消息时使用。该接口只支持POST方式提交的Http请求。
+			   <br>该token不需要的用户认证即可获取,有效期为30秒，获取时的采用动态授权码，其动态授权码code生成规则及步骤为：
+			   <br>1、使用appid和appkey顺序组合成一个新字符串A。例：appid为123456，appkey为89!{H45U,则组合后的A应该为：12345689!{H45U。
+			   <BR>2、对A进行MD5加密(32位)处理，得到新的密文C。例：C=MD5("12345689!{H45U")。
+			   <BR>3、将密文C做为授权码，在获取token时传入。
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{Appcenter-HOST}/appcenter/oauth2/proxytoken</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">Wefafa用户的唯一标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">动态授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">grant_type</td><td style="border: 1px solid rgb(204, 204, 204);">proxy</td><td style="border: 1px solid rgb(204, 204, 204);">proxy。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。由应用系统指定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">API访问token码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">token_type</td><td style="border: 1px solid rgb(204, 204, 204);">bearer</td><td style="border: 1px solid rgb(204, 204, 204);">固定返回值</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效截止日期</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires_in</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效时长。固定为30秒</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。请求授权码时提交的应用状态码。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>http://app.wefafa.com/appcenter/oauth2/proxytoken?appid=sdf32as3sds4d&openid=2424244s&code=sd3r2334sdfd&grant_type=proxy&state=gi3443d-3d-wef</td>	
+			</tr>			
+ 		</table>  				 					
+	</div> 
+<li><a href="#" name="apilist-userinfo" id="apilist-userinfo">用户信息</a></li> 
+	<div class="help_right_text">
+		<li><a href="#" name="apilist-userinfo1" id="apilist-userinfo1">我的基本信息</a></li> 
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>userinfo</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取当前登录用户的基本信息。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/userinfo</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   正确返回如下JOSN格式串：<br>
+      	   {"returncode":"0000",<br>"staff_full":
+<br>&nbsp;&nbsp;&nbsp;&nbsp;{"login_account":"Wefafa帐号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"jid":"IM通讯帐号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"nick_name":"姓名/昵称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"photo_path":"48*48头像文件标识编号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"photo_path_small":"24*24头像文件标识编号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"photo_path_big":"120*120头像文件标识编号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dept_id":"当前所在部门号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dept_name":"部门名称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"eno":"企业号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ename":"企业全称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"eshortname":"企业简称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"self_desc":"个性签名",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"duty":"职务",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"birthday":"生日",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"specialty":"特长",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"sex_id":"性别",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hometown":"籍贯",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"we_level":"Wefafa等级",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"work_his":"工作经历",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"graduated":"毕业院校",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hobby":"兴趣爱好",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"work_phone":"联系电话",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"mobile":"手机号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"mobile_is_bind":"是否绑定手机号登录",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"total_point":"积分",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"register_date":"注册日期",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"active_date":"激活时间",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"attenstaff_num":"关注人数",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fans_num":"粉丝人数",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"publish_num":"动态总数"}}
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/userinfo?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424</td>	
+			</tr>			
+ 		</table>	
+ 		<li><a href="#" name="apilist-userinfo2" id="apilist-userinfo2">员工/好友信息</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>staffcard</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取指定的企业员工或者好友的个人信息。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/getstaffcard</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">staff</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户帐号。支持Wefafa帐号/JID/绑定手机号/openid</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      		 访问其他企业且非好友人员信息时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0005"}，0005表示“无数据访问权限”。<br>
+      	   正确返回如下JOSN格式串：<br>
+      	   {"returncode":"0000",<br>"staff_full":
+<br>&nbsp;&nbsp;&nbsp;&nbsp;{"login_account":"Wefafa帐号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"jid":"IM通讯帐号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"nick_name":"姓名/昵称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"photo_path":"48*48头像文件标识编号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"photo_path_small":"24*24头像文件标识编号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"photo_path_big":"120*120头像文件标识编号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dept_id":"当前所在部门号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dept_name":"部门名称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"eno":"企业号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ename":"企业全称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"eshortname":"企业简称",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"self_desc":"个性签名",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"duty":"职务",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"birthday":"生日",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"specialty":"特长",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"sex_id":"性别",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hometown":"籍贯",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"we_level":"Wefafa等级",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"work_his":"工作经历",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"graduated":"毕业院校",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"hobby":"兴趣爱好",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"work_phone":"联系电话",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"mobile":"手机号",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"mobile_is_bind":"是否绑定手机号登录",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"total_point":"积分",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"register_date":"注册日期",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"active_date":"激活时间",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"attenstaff_num":"关注人数",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fans_num":"粉丝人数",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"publish_num":"动态总数"}}
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/getstaffcard?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&staff=test@fafatime.com</td>	
+			</tr>			
+ 		</table>	
+ 		<li><a href="#" name="apilist-userinfo3" id="apilist-userinfo3">企业部门列表</a></li>	
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getdepartment</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取当前登录用户所在企业的所有部门列表数据。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/getdepartment</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">name</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">部门名称［可选］。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   正确返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"recordcount":记录总数,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rows":[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"dept_id":"部门编号","dept_name":"部门名称"},{...},...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]}<br>	   
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/getdepartment?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-userinfo4" id="apilist-userinfo4">企业人员列表</a></li>	
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getstaffs</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取当前登录用户所在企业的所有员工列表数据。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/getenostaff</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">nick</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">员工姓名［可选］。根据姓名模糊查询。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">letter</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">帐号［可选］。根据帐号从左到右模糊查询。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   正确返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"recordcount":记录总数,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rows":[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"dept_id":"所在部门编号","login_account":"Wefafa帐号","name":"姓名","photo_path":"48*48头像标识ID"},{...},...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]}<br>	   
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/getenostaff?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424</td>	
+			</tr>			
+ 		</table>  					
+	</div> 
+  <li><a href="#" name="apilist-userinfo5" id="apilist-userinfo5">群组成员列表</a></li>	
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getgroupmember</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取当前登录用户指定的群组的成员列表数据。只能获取自己所在的群组成员列表</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/getgroupmember</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">groupid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">群组编号。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   正确返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"members":[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"login_account":"Wefafa帐号","nick_name":"姓名","photo_path":"48*48头像标识ID"},{...},...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]}<br>	   
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/getgroupmember?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&groupid=100034</td>	
+			</tr>
+ 		</table>
+	</div> 
+  <li><a href="#" name="apilist-userinfo6" id="apilist-userinfo6">圈子成员列表</a></li>	
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getcirclemember</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取当前登录用户指定的圈子的成员列表数据。只能获取自己所在的圈子成员列表</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/getcirclemember</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">circleid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">圈子编号。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   正确返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"members":[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"login_account":"Wefafa帐号","nick_name":"姓名","photo_path":"48*48头像标识ID"},{...},...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]}<br>	   
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/getcirclemember?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&circleid=10092</td>	
+			</tr>
+ 		</table>
+	</div>	
+<li><a href="#" name="apilist-status" id="apilist-status">状态感知</a></li>
+	 <div class="help_right_text">
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getpresence</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>获取指定联系人的当前出席状态，只能获取本企业员工。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/getpresence</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">staff</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">员工帐号。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   正确返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rows":[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"employeeid":"员工编号","account":"Wefafa帐号","name":"姓名","resource":"登录设备","state":"1|0"},{...},...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]}<br>
+					注：state为1时表示在线，为0表示离线。  
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/getpresence?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&staff=lil@faftime.com</td>	
+			</tr>			
+ 		</table> 	 	
+	 </div>
+<li><a href="#" name="apilist-message" id="apilist-message">消息推送</a></li>
+	 <div class="help_right_text">
+	 	<li><a href="#" name="apilist-message1" id="apilist-message1">发送消息-离线模式</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>sendmsg</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>将消息发送给指定的人员或人员列表。当接收人员不在线时，将做为离线消息推送给接收者，接收者下次上线时会收到该消息。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/sendmsg</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识。需要与获取account_token时的一致。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">title</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息标题。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">message</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息正文。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">from</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息发送者jid或openid。为空时自动发管理员身份发送消息。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">to</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息接收者jid或openid。多个接收者间使用，分隔</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">link</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]当消息附加业务操作时指定的数据提交地址。需要将当前操作按钮对应的value码值附加到该地址后提交。当未指定按钮的link属性时，操作时默认为该地址</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">buttons</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]以JSON格式定义的定义一个或者多个业务操作按钮及属性。当未指定buttons且有Link属性时，默认为“查看”按钮。格式如下：<br>[{“text”: “按钮文本”, “code”: “业务代码”, “value”: “业务码值”, “link”: “数据提交地址”, “m”: “数据提交方式，未指定时默认为GET”,"blank":"1|0","showremark":"1|0","remarklabel":"审批意见"},…]
+ 	  		<br>其中，text、code、value是必须的，其它属性都可选。
+ 	  		<br>link：客户端点击按钮时打开的URL地址。未指定时采用Link属性。
+ 	  		<br>m：打开URL时的数据提交方式，未指定时默认为GET。可设置为POST。
+ 	  		<br>blank：是否弹出新的浏览器窗口打开URL。
+ 	  		<br>showremark：标识客户端在操作按钮时，是否显示附加说明输入框。
+ 	  		<br>remarklabel：当showremark为1时，指定附加说明输入框的提示标签文本，未指定时建议客户端默认显示为“附加说明：”。
+      </td>
+      </tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   消息发送成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/sendmsg?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&Title=atten&Message=好友关注&From=my@fafatime.com&To=test@fafatime.com</td>	
+			</tr>			
+ 		</table>		 		
+ 		<li><a href="#" name="apilist-message2" id="apilist-message2">发送消息-在线模式</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>sendpresence</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>将消息发送给指定的人员或人员列表。当接收人员不在线时，该消息自动丢弃。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/sendpresence</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识。需要与获取account_token时的一致。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">title</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息标题。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">message</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息正文。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">from</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息发送者jid或openid。为空时自动发管理员身份发送消息。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">to</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息接收者jid或openid。多个接收者间使用，分隔</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">link</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]当消息附加业务操作时指定的数据提交地址。需要将当前操作按钮对应的value码值附加到该地址后提交。当未指定按钮的link属性时，操作时默认为该地址</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">buttons</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]以JSON格式定义的定义一个或者多个业务操作按钮及属性。当未指定buttons且有Link属性时，默认为“查看”按钮。格式如下：<br>[{“text”: “按钮文本”, “code”: “业务代码”, “value”: “业务码值”, “link”: “数据提交地址”, “m”: “数据提交方式，未指定时默认为GET”,"blank":"1|0","showremark":"1|0","remarklabel":"审批意见"},…]
+ 	  		<br>其中，text、code、value是必须的，其它属性都可选。
+ 	  		<br>link：客户端点击按钮时打开的URL地址。未指定时采用Link属性。
+ 	  		<br>m：打开URL时的数据提交方式，未指定时默认为GET。可设置为POST。
+ 	  		<br>blank：是否弹出新的浏览器窗口打开URL。
+ 	  		<br>showremark：标识客户端在操作按钮时，是否显示附加说明输入框。
+ 	  		<br>remarklabel：当showremark为1时，指定附加说明输入框的提示标签文本，未指定时建议客户端默认显示为“附加说明：”。 	  		
+</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   消息发送成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/sendpresence?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&Title=atten&Message=好友关注&From=my@fafatime.com&To=test@fafatime.com</td>	
+			</tr>			
+ 		</table>
+	 	<li><a href="#" name="apilist-message21" id="apilist-message21">发送群组消息</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>sendgroupmsg</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>将消息发送给指定的群组成员。只能向自己所在的群组发消息。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/sendgroupmsg</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识。需要与获取account_token时的一致。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">title</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息标题。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">message</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息正文。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">from</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息发送者jid或openid。为空时自动发管理员身份发送消息。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">groupid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息接收群组编号。多个接收者群组间使用，分隔</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">link</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]当消息附加业务操作时指定的数据提交地址。需要将当前操作按钮对应的value码值附加到该地址后提交。当未指定按钮的link属性时，操作时默认为该地址</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">buttons</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]以JSON格式定义的定义一个或者多个业务操作按钮及属性。当未指定buttons且有Link属性时，默认为“查看”按钮。格式如下：<br>[{“text”: “按钮文本”, “code”: “业务代码”, “value”: “业务码值”, “link”: “数据提交地址”, “m”: “数据提交方式，未指定时默认为GET”,"blank":"1|0","showremark":"1|0","remarklabel":"审批意见"},…]
+ 	  		<br>其中，text、code、value是必须的，其它属性都可选。
+ 	  		<br>link：客户端点击按钮时打开的URL地址。未指定时采用Link属性。
+ 	  		<br>m：打开URL时的数据提交方式，未指定时默认为GET。可设置为POST。
+ 	  		<br>blank：是否弹出新的浏览器窗口打开URL。
+ 	  		<br>showremark：标识客户端在操作按钮时，是否显示附加说明输入框。
+ 	  		<br>remarklabel：当showremark为1时，指定附加说明输入框的提示标签文本，未指定时建议客户端默认显示为“附加说明：”。
+      </td>
+      </tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   消息发送成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/sendgroupmsg?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&Title=atten&Message=好友关注&From=my@fafatime.com&groupid=1008374</td>	
+			</tr>			
+ 		</table>
+	 	<li><a href="#" name="apilist-message22" id="apilist-message22">发送圈子消息</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>sendcirclemsg</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>将消息发送给指定圈子的所有成员。只能发给自己所在的圈子。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/sendcirclemsg</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识。需要与获取account_token时的一致。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">title</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息标题。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">message</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息正文。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">from</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息发送者jid或openid。为空时自动发管理员身份发送消息。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">circleid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息接收圈子编号。多个接收圈子间使用，分隔</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">link</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]当消息附加业务操作时指定的数据提交地址。需要将当前操作按钮对应的value码值附加到该地址后提交。当未指定按钮的link属性时，操作时默认为该地址</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">buttons</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]以JSON格式定义的定义一个或者多个业务操作按钮及属性。当未指定buttons且有Link属性时，默认为“查看”按钮。格式如下：<br>[{“text”: “按钮文本”, “code”: “业务代码”, “value”: “业务码值”, “link”: “数据提交地址”, “m”: “数据提交方式，未指定时默认为GET”,"blank":"1|0","showremark":"1|0","remarklabel":"审批意见"},…]
+ 	  		<br>其中，text、code、value是必须的，其它属性都可选。
+ 	  		<br>link：客户端点击按钮时打开的URL地址。未指定时采用Link属性。
+ 	  		<br>m：打开URL时的数据提交方式，未指定时默认为GET。可设置为POST。
+ 	  		<br>blank：是否弹出新的浏览器窗口打开URL。
+ 	  		<br>showremark：标识客户端在操作按钮时，是否显示附加说明输入框。
+ 	  		<br>remarklabel：当showremark为1时，指定附加说明输入框的提示标签文本，未指定时建议客户端默认显示为“附加说明：”。
+      </td>
+      </tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   消息发送成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/sendcirclemsg?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&Title=atten&Message=好友关注&From=my@fafatime.com&circleid=1009882</td>	
+			</tr>			
+ 		</table>  		
+ 		<li><a href="#" name="apilist-message3" id="apilist-message3">发送部门消息</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>senddeptmsg</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>将消息发送给指定部门的全部成员。发送人要与接收部门属于同一企业</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/sendremindmsg</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>					
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识。需要与获取account_token时的一致。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">title</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息标题。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">message</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息正文。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">from</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息发送者jid或openid。为空时自动发管理员身份发送消息。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">deptid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">消息接收部门编号。多个接收部门间使用，分隔。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">link</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]当消息附加业务操作时指定的数据提交地址。需要将当前操作按钮对应的value码值附加到该地址后提交。当未指定按钮的link属性时，操作时默认为该地址</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">buttons</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">[可选]以JSON格式定义的定义一个或者多个业务操作按钮及属性。当未指定buttons且有Link属性时，默认为“查看”按钮。格式如下：<br>[{“text”: “按钮文本”, “code”: “业务代码”, “value”: “业务码值”, “link”: “数据提交地址”, “m”: “数据提交方式，未指定时默认为GET”,"blank":"1|0","showremark":"1|0","remarklabel":"审批意见"},…]
+ 	  		<br>其中，text、code、value是必须的，其它属性都可选。
+ 	  		<br>link：客户端点击按钮时打开的URL地址。未指定时采用Link属性。
+ 	  		<br>m：打开URL时的数据提交方式，未指定时默认为GET。可设置为POST。
+ 	  		<br>blank：是否弹出新的浏览器窗口打开URL。
+ 	  		<br>showremark：标识客户端在操作按钮时，是否显示附加说明输入框。
+ 	  		<br>remarklabel：当showremark为1时，指定附加说明输入框的提示标签文本，未指定时建议客户端默认显示为“附加说明：”。 	  		
+ 	  	</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   消息发送成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/senddeptmsg?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&Title=atten&Message=好友关注&From=my@fafatime.com&deptid=100834</td>	
+			</tr>			
+ 		</table> 						
+	 </div>
+<li><a href="#" name="apilist-mobile" id="apilist-mobile">手机绑定</a></li>	
+		<div class="help_right_text">
+			    <li><a href="#" name="apilist-mobile-getcode" id="apilist-mobile-getcode">获取验证码</a></li>
+			    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getvaildcode</td>
+					</tr>
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>Wefafa登录帐号绑定手机号时，获取手机验证码。同一帐号在一天内最多能获取5次，且每次获取时间间隔不能小于90秒。</td>
+					</tr>
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/mobilebind/getvaildcode</td>
+					</tr>	
+					<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+					</tr>
+		 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">txtmobile</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用于绑定的手机号码。</td></tr>
+		 	  	<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+					</tr>
+		      <tr>
+		      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+		      		 发生错误时返回如下JSON格式串：<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;{"success":"0","msg":"错误描述"}<br><br>
+		      	   成功返回如下JOSN格式串：<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;{"success":"1","code":"6位数字验证码"}<br> 
+		      	</td>
+		      </tr>
+		 	  	<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+					</tr>
+					<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/mobilebind/getvaildcode?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&txtmobile=18688888888</td>	
+					</tr>			
+		 		</table>
+			  <li><a href="#" name="apilist-mobile-bind" id="apilist-mobile-bind">手机绑定</a></li>
+			    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>bind</td>
+					</tr>
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>根据手机码和获取到的手机验证码，绑定到当前人员的登录帐号。绑定成功后，可以使用该手机号码直接登录Wefafa及客户端。</td>
+					</tr>
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/mobilebind/save</td>
+					</tr>	
+					<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+					</tr>
+		 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">txtmobile</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用于绑定的手机号码。</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">txtvaildcode</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用于绑定的验证码。</td></tr>
+		 	  	<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+					</tr>
+		      <tr>
+		      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+		      		 发生错误时返回如下JSON格式串：<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;{"success":"0","msg":"错误描述"}<br><br>
+		      	   成功返回如下JOSN格式串：<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;{"success":"1"}<br> 
+		      	</td>
+		      </tr>
+		 	  	<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+					</tr>
+					<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/mobilebind/save?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&txtmobile=18688888888&txtvaildcode=888888</td>	
+					</tr>			
+		 		</table>
+			  <li><a href="#" name="apilist-mobile-bind" id="apilist-mobile-bind">解除手机绑定</a></li>
+			    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>unbind</td>
+					</tr>
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>解除绑定到当前人员登录帐号上的手机号码。解除后不能使用手机码登录Wefafa及客户端。</td>
+					</tr>
+					<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/mobilebind/remove</td>
+					</tr>	
+					<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+					</tr>
+		 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+		 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+		 	  	<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+					</tr>
+		      <tr>
+		      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+		      		 发生错误时返回如下JSON格式串：<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;{"success":"0","msg":"错误描述"}<br><br>
+		      	   成功返回如下JOSN格式串：<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;{"success":"1"}<br> 
+		      	</td>
+		      </tr>
+		 	  	<tr>
+					   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+					</tr>
+					<tr>
+					   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/mobilebind/remove?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424</td>	
+					</tr>			
+		 		</table>		 			 		
+		</div>
+<li><a href="#" name="apilist-share" id="apilist-share">数据分享</a></li>
+	 <div class="help_right_text">
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>enterprise-trend</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>以动态的形式将应用中的业务数据发布到企业圈子中。如果动态包含附件，需要先把附件上传到Wefafa中，可使用文件上传接口实现。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/newtrend</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">conv_content</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">动态内容。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">attachs</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">附件编号，附件上传参考［文档管理］部分相关接口。多个附件用,间隔</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000","conv":"动态编号"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/newtrend?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&conv_content=test</td>	
+			</tr>			
+ 		</table> 	
+ 		
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>private-trend</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>以动态的形式将应用中的业务数据发布给相关人员。如果动态包含附件，需要先把附件上传到Wefafa中，可使用文件上传接口实现。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/privatetrend</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">conv_content</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">动态内容。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">notifystaffs</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">通知人员列表，以逗号分隔。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">attachs</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">附件编号，附件上传参考［文档管理］部分相关接口。多个附件用,间隔</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000","conv":"动态编号"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/newtrend?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&conv_content=test</td>	
+			</tr>			
+ 		</table> 		 	
+	 </div>	 
+<li><a href="#" name="apilist-document" id="apilist-document">文档管理</a></li>
+	 <div class="help_right_text">
+	 	<li><a href="#" name="apilist-document1" id="apilist-document1">创建目录</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>newdir</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>在Wefafa平台上创建新的云端目录，该目录具有私有访问权限，且创建人可以登录Wefafa的“文档”模块对其进行直接管理。</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/newdir</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">name</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">目录名称。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">dirid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">上级目录(可选,如果未指定则默认为圈子根目录)。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000","dirid":"目录标识号"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/newdir?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&name=生产管理-任务计划</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-document2" id="apilist-document2">文件上传</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>fileupload</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>
+			   	将本地文件上传到Wefafa平台上的云端目录，该文件具有私有访问权限，且创建人可以登录Wefafa的“文档”模块对其进行直接管理。Http请求只支持POST方式。<br>
+			   	上传成功后将返回该文件的标识号，可以通过{SERVER-HOST}/getfile/{文件的标识号}的方式直接读取和访问。
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/fileupload</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">filename</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">文件名称。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">filedata</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">以BASE64格式编码的文件内容。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">dirid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">目录标识编号。</td></tr>
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"0000","file_id":"文件标识号"}<br> 
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/fileupload?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&name=任务统计报表.xls&filedata=sdfrajfh..&dirid=d24sf839fj</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-document2" id="apilist-document2">获取用户目录</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getuserdir</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>
+			    通过用户的访问令牌获取用户在云端的文档目录结构，从而可以轻松的访问或操作目录中的内容,上传本地文件,获取文件等 Http请求只支持POST方式。<br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/get/userdir</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">dirid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">目录标识编号。</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">mode</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">为0只获取下一级目录结构,为1获取以dirid为根的整个目录树。</td></tr>
+ 	  	
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"recordcount":2,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"rows":"[{'id':'1030',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'parentid':'1029',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'name':'文件夹1',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'createdate':'2013-06-26 16:32:32',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'remark':null,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'owner':'someone@somedomain.com'},<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{'id':'1029',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'parentid':'c2',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'name':'文件夹2',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'createdate':'2013-06-26 16:21:59',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'remark':null,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'owner':'someone@somedomain.com'}]"}<br>
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/fileupload?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&dirid=d24sf839fj&mode=1</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-document2" id="apilist-document2">获取共享目录</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getsharedir</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>
+			    返回所有共享给用户的文件目录列表,可以从根据目录获取文件等, Http请求只支持POST方式。<br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/get/sharedir</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"recordcount":0,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"rows":"[{'id':'1032',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'parentid':'c2',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'name':'文件夹1',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'createdate':'2013-07-03 10:41:40',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'remark':null,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'owner':'someone@somedomain.com'},<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{'id':'1031',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'parentid':'c2',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'name':'文件夹2',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'createdate':'2013-07-03 10:41:09',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'remark':null,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;'owner':'someone@somedomain.com'}]"}<br>
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/fileupload?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-document2" id="apilist-document2">获取用户文件列表</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getFiles</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>
+			    获得用户文件夹下的所有可访问的文件列表 Http请求只支持POST方式。<br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/get/userfiles</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">dirid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">目录标识编号。</td></tr>
+ 	  	
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"recordcount":5,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"rows":"[{'file_id':'50f640d53809882c1d000000',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_name':'Change Log.txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_ext':'txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_by_staff':'someone@somedomain.com',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_date':'2013-01-16 13:55:32',
+&nbsp;&nbsp;&nbsp;&nbsp;'dir':'c2'},
+&nbsp;&nbsp;&nbsp;&nbsp;{'file_id':'50f647cfe4b26bc20b000000',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_name':'hehe.txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_ext':'txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_by_staff':'someone@somedomain.com',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_date':'2013-01-16 14:25:17',
+&nbsp;&nbsp;&nbsp;&nbsp;'dir':'c2'}]"}<br>
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/fileupload?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&dirid=d24sf839fj</td>	
+			</tr>			
+ 		</table>
+ 		<li><a href="#" name="apilist-document2" id="apilist-document2">获取共享文件列表</a></li>
+    <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口名称</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>getFiles</td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">功能描述</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>
+			    获得共享给用户的所有文件的列表 Http请求只支持POST方式。<br>
+			   </td>
+			</tr>
+			<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">接口地址</td>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=2>{SERVER-HOST}/api/http/get/sharefiles</td>
+			</tr>	
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>参数列表</td>	
+			</tr>
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">应用标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识</td></tr> 	  	
+ 	  	<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);" colspan=3>返回值列表</td>	
+			</tr>
+      <tr>
+      	<td style="width:120px;border: 1px solid rgb(204, 204, 204);" colspan=3>
+      		 发生错误时返回如下JSON格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"returncode":"9999","code":"错误码","msg":"错误描述"}<br><br>
+      	   成功返回如下JOSN格式串：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"recordcount":5,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"rows":"[{'file_id':'50f640d53809882c1d000000',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_name':'Change Log.txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_ext':'txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_by_staff':'someone@somedomain.com',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_date':'2013-01-16 13:55:32',
+&nbsp;&nbsp;&nbsp;&nbsp;'dir':'c2'},
+&nbsp;&nbsp;&nbsp;&nbsp;{'file_id':'50f647cfe4b26bc20b000000',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_name':'hehe.txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'file_ext':'txt',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_by_staff':'someone@somedomain.com',
+&nbsp;&nbsp;&nbsp;&nbsp;'up_date':'2013-01-16 14:25:17',
+&nbsp;&nbsp;&nbsp;&nbsp;'dir':'c2'}]"}<br>
+      	</td>
+      </tr>
+ 	  	<tr>
+			   <td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);"  colspan=3>实例参考</td>
+			</tr>
+			<tr>
+			   <td style="border: 1px solid rgb(204, 204, 204);" colspan=3>https://www.wefafa.com/api/http/fileupload?access_token=sd3r2334sdfd&appid=34sdf3&openid=d43ssdg332424&dirid=d24sf839fj</td>	
+			</tr>			
+ 		</table> 		 	 	 		 	 	 		 	 	 		 	 	 		 	 	 		 	 	
+	</div>	 
+ </ul>

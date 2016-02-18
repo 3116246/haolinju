@@ -1,0 +1,189 @@
+<div id="component_nav_attribute_list" style="float:left;margin-bottom:20px;cursor:default;color:#888888;">
+  <div class="component_fileds_row">
+ 	   <span>导航类型：</span>
+ 	   <label>
+ 	     <input type="radio" checked="checked" style="float:left;" id="nva_bottom" name="navtype"> 
+ 	  	 <span class="component_navtype">底部导航</span>
+ 	   </label>
+ 	   <label>
+ 	  	 <input type="radio" style="float:left;" id="nav_side" name="navtype" > 
+ 	  	 <span class="component_navtype">侧滑导航</span>
+ 	   </label>
+	</div>
+	<div class="component_fileds_row">
+	 	  <span>默认背景：</span>
+	 	  <span style="background-color:black;display:block;width:40px;border:1px solid #EEEEEE;" id="default_color" onclick="showColor(this)" >&nbsp;</span>
+	 	  <span style="margin-left:20px;">选中背景：</span>
+	 	  <span style="background-color: blue;display:block;width:40px;border:1px solid #EEEEEE;" id="active_color" onclick="showColor(this)" >&nbsp;</span>
+	 	  <div class='component_color'></div>
+	</div>
+	<span style="float: left; margin-left:85px;height: 25px; line-height:25px;">（暂时只支持单色背景填充）</span>
+	<div style="float:left;height:30px;line-height:30px;">
+ 	  <div style="float:left;margin-right:10px;">菜单项</div>
+ 	  <div class="component_nav_header">
+	   	  <span>序号</span>
+	   	  <span>默认图标</span>
+	   	  <span>选中图标</span>
+	   	  <span>名&nbsp;称</span>
+	   	  <span style="padding-left:105px;">功&nbsp;能</span>
+	 	</div>
+	</div>
+	<div style="float:left;width:500px;margin-left:40px;" id="component_item_area"></div>
+	<div class="component_nvar_bottom" style="display:none;">
+		 <span class="component_item_add" onclick="addNavItem()"></span>
+		 <span style="color:#0077CC;">添加新项</span>
+		 <span>（当菜单项超过５项时，导航类型将只能用侧滑菜单）</span>
+	</div>
+	<div class="component_nav_item" style="display:none;" id="nav_model">
+ 	  <span style="display:block;width:20px;height:100%;">
+ 	  	 <span class="component_tools_delete component_nav_delete" title="删除该项" onclick="component_nav.remove(this)" ></span>
+ 	  </span>
+ 	  <span class="component_nva_no"></span>
+ 	  <span class="component_nav_backdefault" data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg" onclick="component_nav.selectIcon(this)">
+  	 	  <img />
+  	 </span>
+    <span class="component_nav_backactive" data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg" onclick="component_nav.selectIcon(this)" >
+  	 	  <img />
+  	 </span> 	 	
+  	 <span class="component_nav_input">
+  	 	 <input type="text" />
+  	 </span>  	 
+  	 <span class="component_nav_function">详细页面定制</span>
+	</div>
+</div>
+
+<script type="text/javascript">	
+	 //添加新项
+   function addNavItem(){
+   	  	 
+//   	  	 
+//   	 if ( count+1 > 5){
+//   	 	 $("#nva_bottom").attr("disabled","disabled");
+//   	 	 $("#nav_side").attr("checked","checked");
+//   	 }
+//   	 else{
+//   	 	 $("#nva_bottom").removeAttr("disabled");
+//   	 }
+   	 
+   	 
+   	 
+   	 var id = "nav_"+Math.random().toString().replace(".","");
+   	 $("#nav_model .component_nav_backdefault>img").attr("id",id);
+   	 $("#nav_model .component_nav_backdefault>img").css("display","none");   	 
+   	 id = "nav_"+Math.random().toString().replace(".","");
+   	 $("#nav_model .component_nav_backactive>img").attr("id",id);
+   	 $("#nav_model .component_nav_backactive>img").css("display","none");
+   	 var no = $("#component_item_area").children().length;
+   	 $("#nav_model .component_nva_no").text(no+1);
+   	 var html = $("#nav_model").html();
+   	 html = html.replace("NavIndex",no).replace("NavItemName","");
+   	 html = "<div class='component_nav_item' tag='new' functionid='' target='self'>"+html+"</div>";
+   	 $("#component_item_area").append(html);
+   	 var count=$("#component_item_area").children().length;
+   	 if (count< component_nav.itemcount){
+   	 	 $(".component_nvar_bottom").show();
+   	 }
+   	 else
+   	 	 $(".component_nvar_bottom").hide();
+   }
+   
+   ///绑定已有导航数据
+   function BindComponentNav(attrs){
+   	 var data = attrs.navitems;
+   	 $("#component_item_area").html("");
+   	 if ( data == null || data.length==0){
+   	 	 addNewNav();
+   	 }
+   	 else{
+   	 	  var bgcolor = attrs.bgcolor;
+   	 	  var bgcolor_active = attrs.bgcolor_active;
+				for(var i=0;i < data.length;i++){
+					 //默认图标
+					 var id = "nav_"+Math.random().toString().replace(".","");
+			   	 $("#nav_model .component_nav_backdefault>img").attr("id",id);
+			   	 $("#nav_model .component_nav_backdefault>img").attr("src",data[i].itemicon);
+			   	 $("#nav_model .component_nav_backdefault>img").show();
+			   	 //活动图标
+			   	 id = "nav_"+Math.random().toString().replace(".","");
+			   	 $("#nav_model .component_nav_backactive>img").attr("id",id);
+			   	 $("#nav_model .component_nav_backactive>img").attr("src",data[i].itemicon_active);
+			   	 $("#nav_model .component_nav_backactive>img").show();
+			   	 //按钮名称
+			   	 $("#nav_model .component_nav_input>input").attr("value",data[i].itemname);	   	 
+			   	 $("#nav_model .component_nva_no").text( i+1 );			   	 
+			   	 var html = $("#nav_model").html();
+			   	 var func = data[i].functionid;
+			   	 var _target = func.target;
+			   	 if ( _target==null || _target=="")
+			   	   _target = "self";
+   	       html = "<div class='component_nav_item' functionid='" + func.text + "' target='"+_target+"'>"+html+"</div>";
+           $("#component_item_area").append(html);
+				}				
+				$("#default_color,.component_nav_backdefault").css("background-color",bgcolor);
+				$("#active_color,.component_nav_backactive").css("background-color",bgcolor_active);
+				
+				$("#nav_model .component_nav_backdefault>img").attr("src","");
+				$("#nav_model .component_nav_backactive>img").attr("src","");
+				$("#nav_model .component_nav_input>input").attr("value","");
+				if ( data.length < component_nav.itemcount ){
+					$(".component_nvar_bottom").show();
+				}
+				else
+					$(".component_nvar_bottom").hide();
+   	 }
+   }
+         
+   $(".component_nav_item").live("mouseover",function(){
+   	  $(this).find(".component_tools_delete").show();
+   });
+   
+   $(".component_nav_item").live("mouseout",function(){
+   	 $(this).find(".component_tools_delete").hide();
+   });
+   
+   var componentNav_curid="";
+   //显示控件
+	 function showColor(ev){
+     componentColor.Init($(".component_color"));
+     componentColor.beforeColor = $(ev).css("background-color");
+     componentNav_curid = ev.id;
+   	 if ( ev.id=="default_color"){
+   	 	  componentColor.setTitle("默认背景色选择");
+   	 	  $(".component_color").css("margin-left","-5px");
+   	 }
+   	 else{
+   	 	 componentColor.setTitle("选中背景色选择");
+   	 	 $(".component_color").css("margin-left","120px");
+   	 }
+   	 $(".component_color").css("margin-top","42px");
+   	 componentColor.onSelected=function(colorValue){
+ 		   setColor(colorValue);
+ 	   };
+ 	   componentColor.onMouseMove = function(colorValue){
+ 	   	 setColor(colorValue);
+ 	   };
+ 	   componentColor.onClose = function(colorValue){
+ 	   	 setColor(colorValue);
+ 	   };
+   }
+   
+   //设置颜色值
+   function setColor(colorValue){
+     $("#" + componentNav_curid ).css("background-color",colorValue);	 
+       if ( componentNav_curid == "default_color")
+ 	   	   $("#component_nav_attribute_list .component_nav_backdefault").css("background-color",colorValue);   
+ 	   	 else
+ 	   	   $("#component_nav_attribute_list .component_nav_backactive").css("background-color",colorValue);   
+   }
+   
+   //页面定制
+   $("#component_nav_attribute_list .component_nav_function").live("click",function(){
+   	 var functionid = $(this).parents(".component_nav_item").attr("functionid");
+   	 if ( functionid==null || functionid=="")
+   	 	 component_nav.customizebyempty(this);
+   	 else
+   	 	 component_nav.customize(this);
+   }); 
+</script>
+
+

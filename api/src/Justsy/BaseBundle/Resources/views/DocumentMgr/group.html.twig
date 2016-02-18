@@ -1,0 +1,14 @@
+{% if(mode!="select") %}
+{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'curr_network_domain' : this.network_domain, 'curr_sel_leftmenu' : '0'} %}
+{% endif %}
+
+<div class="menuother">群组</div>
+<ul class="left-menu">
+  {% for group in this.groups %}
+  <li><a href="javascript:loadGroupDocList('g{{ group["group_id"] }}','{{ group["group_name"] }}')" ><i class="menu-group"></i>{{ group["group_name"] }}</a></li>
+  {% endfor %}
+</ul>
+{% if this.groups|length == 0 %}
+   <span href="#"><i></i>你还没有加入任何群组哦</span>
+{% endif %}

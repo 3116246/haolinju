@@ -1,0 +1,529 @@
+# JustsyAdminAppBundle_homepage:
+#     pattern:  /hello/{name}
+#     defaults: { _controller: JustsyAdminAppBundle:Default:index }
+
+#-----------------------HR--------------------------
+JustsyAdminAppBundle_mb_hr_testsql:
+    pattern:  /interface/mb/hr/testsql
+    defaults: { _controller: JustsyAdminAppBundle:HR:testsql }
+JustsyAdminAppBundle_mb_hr_cqjl:
+    pattern:  /interface/mb/hr/cqjl
+    defaults: { _controller: JustsyAdminAppBundle:HR:cqjl }
+JustsyAdminAppBundle_mb_hr_jqkc:
+    pattern:  /interface/mb/hr/jqkc
+    defaults: { _controller: JustsyAdminAppBundle:HR:jqkc }
+JustsyAdminAppBundle_mb_hr_kqgs:
+    pattern:  /interface/mb/hr/kqgs
+    defaults: { _controller: JustsyAdminAppBundle:HR:kqgs }
+JustsyAdminAppBundle_mb_hr_selfinfo_qry:
+    pattern:  /interface/mb/hr/selfinfo_qry
+    defaults: { _controller: JustsyAdminAppBundle:HR:selfinfo_qry }
+JustsyAdminAppBundle_mb_hr_selfinfo_save:
+    pattern:  /interface/mb/hr/selfinfo_save
+    defaults: { _controller: JustsyAdminAppBundle:HR:selfinfo_save }
+
+#-----------------------Home--------------------------
+JustsyAdminAppBundle_mb_admin:
+    pattern:  /mb/admin/index
+    defaults: { _controller: JustsyAdminAppBundle:Home:index }
+JustsyAdminAppBundle_mb_admin_getmenu:
+    pattern:  /mb/admin/getmenu
+    defaults: { _controller: JustsyAdminAppBundle:Home:getMenu }
+
+#-----------------------Sys--------------------------
+JustsyAdminAppBundle_mb_sys_htryqx:
+    pattern:  /mb/sys/htryqx
+    defaults: { _controller: JustsyAdminAppBundle:Sys:htryqx }
+JustsyAdminAppBundle_mb_sys_searchlist:
+    pattern:  /mb/sys/searchlist
+    defaults: { _controller: JustsyAdminAppBundle:Sys:SearchList }
+JustsyAdminAppBundle_mb_sys_getqxrymenu:
+    pattern:  /mb/sys/getqxrymenu
+    defaults: { _controller: JustsyAdminAppBundle:Sys:getQXRYMenu }
+JustsyAdminAppBundle_mb_sys_saveqxrymenu:
+    pattern:  /mb/sys/saveqxrymenu
+    defaults: { _controller: JustsyAdminAppBundle:Sys:saveQXRYMenu }
+#系统权限管理
+JustsyAdminAppBundle_mb_sys_role:
+    pattern:  /mb/sys/role/index
+    defaults: { _controller: JustsyAdminAppBundle:Sys:roleindex }
+#功能点管理
+JustsyAdminAppBundle_mb_sys_func:
+    pattern:  /mb/sys/function/index
+    defaults: { _controller: JustsyAdminAppBundle:Sys:funcindex }    
+#清除权限   
+JustsyAdminAppBundle_mb_sys_clearrole:
+    pattern:  /mb/sys/clearerole
+    defaults: { _controller: JustsyAdminAppBundle:Sys:CleareRole } 
+#系统日志
+JustsyAdminAppBundle_mb_syslog_index:
+    pattern:  /mb/sys/syslog
+    defaults: { _controller: JustsyAdminAppBundle:SysLog:Index }
+#查看日志
+JustsyAdminAppBundle_mb_syslog_search:
+    pattern:  /mb/sys/syslog/search
+    defaults: { _controller: JustsyAdminAppBundle:SysLog:SearcySysLog }
+#-----------------------parameter----------------------------------------
+#系统参数
+JustsyAdminAppBundle_mb_parameter_index:
+    pattern:  /mb/sys/para/index
+    defaults: { _controller: JustsyAdminAppBundle:Parameter:Index }
+#保存系统参数
+JustsyAdminAppBundle_mb_parameter_save:
+    pattern:  /mb/sys/para/save
+    defaults: { _controller: JustsyAdminAppBundle:Parameter:Save }
+#显示参数
+JustsyAdminAppBundle_mb_parameter_view:
+    pattern:  /mb/sys/para/view
+    defaults: { _controller: JustsyAdminAppBundle:Parameter:view }
+
+#-----------------------MspPush--------------------------
+JustsyAdminAppBundle_mb_msgpush_push:
+    pattern:  /mb/msgpush/push
+    defaults: { _controller: JustsyAdminAppBundle:MsgPush:push }
+JustsyAdminAppBundle_mb_msgpush_sendmsg:
+    pattern:  /mb/msgpush/sendmsg
+    defaults: { _controller: JustsyAdminAppBundle:MsgPush:SendMsg }
+JustsyAdminAppBundle_mb_msgpush_search:
+    pattern:  /mb/msgpush/search
+    defaults: { _controller: JustsyAdminAppBundle:MsgPush:SearchPush }
+JustsyAdminAppBundle_mb_msgpush_detail:
+    pattern:  /mb/msgpush/detail
+    defaults: { _controller: JustsyAdminAppBundle:MsgPush:detailPush }  
+JustsyAdminAppBundle_mb_msgpush_depart:
+    pattern:  /mb/msgpush/depart
+    defaults: { _controller: JustsyAdminAppBundle:MsgPush:GetDepartment }
+
+#-----------------------CMSManage--------------------------
+JustsyAdminAppBundle_mb_cmsmanage_publish:
+    pattern:  /mb/cmsmanage/publish
+    defaults: { _controller: JustsyAdminAppBundle:CMSManage:publish }
+JustsyAdminAppBundle_mb_cmsmanage_publish_init:
+    pattern:  /mb/cmsmanage/initData
+    defaults: { _controller: JustsyAdminAppBundle:CMSManage:InitData }     
+JustsyAdminAppBundle_mb_cmsmanage_publish_edit:
+    pattern:  /mb/cmsmanage/editPublish
+    defaults: { _controller: JustsyAdminAppBundle:CMSManage:editPublish }
+JustsyAdminAppBundle_mb_cmsmanage_publish_search:
+    pattern:  /mb/cmsmanage/searchpublish
+    defaults: { _controller: JustsyAdminAppBundle:CMSManage:searchPulish }
+JustsyAdminAppBundle_mb_cmsmanage_publish_searchbyid:
+    pattern:  /mb/cmsmanage/searchbyid
+    defaults: { _controller: JustsyAdminAppBundle:CMSManage:searchPulishById }
+    
+JustsyAdminAppBundle_mb_cmsmanage_publish_getApiList:
+  pattern: /interface/content/publish/list
+  defaults: { _controller: JustsyAdminAppBundle:CMSManage:getApi_contentlist }
+    
+JustsyAdminAppBundle_mb_cmsmanage_publish_detail:
+  pattern: /interface/content/publish/detail
+  defaults: { _controller: JustsyAdminAppBundle:CMSManage:detailContentPublish }
+#-----------------------salary--------------------------
+JustsyAdminAppBundle_mb_salary:
+    pattern:  /mb/hr/gzd
+    defaults: { _controller: JustsyAdminAppBundle:Salary:Index}
+JustsyAdminAppBundle_mb_salary_field:
+    pattern:  /mb/hr/salary/field
+    defaults: { _controller: JustsyAdminAppBundle:Salary:IndexField}
+JustsyAdminAppBundle_mb_updatefield:
+    pattern:  /mb/hr/salary/updatefield
+    defaults: { _controller: JustsyAdminAppBundle:Salary:editSalaryField}
+JustsyAdminAppBundle_mb_salary_upload:
+    pattern:  /mb/hr/salary/upload
+    defaults: { _controller: JustsyAdminAppBundle:Salary:uploadFile }
+#删除工资字段项
+JustsyAdminAppBundle_mb_salary_deletfield:
+    pattern:  /mb/hr/salaryfield/delete
+    defaults: { _controller: JustsyAdminAppBundle:Salary:deleteField }    
+#获得工资字段表数据
+JustsyAdminAppBundle_mb_salary_getfields:
+    pattern:  /mb/hr/salary/getsalayfields
+    defaults: { _controller: JustsyAdminAppBundle:Salary:getSalaryFields }
+#删除工资文件及工资表数据
+JustsyAdminAppBundle_mb_salary_deletefile:
+    pattern:  /mb/hr/salary/delete
+    defaults: { _controller: JustsyAdminAppBundle:Salary:deleteFile }
+#查询工资文件数据
+JustsyAdminAppBundle_mb_salary_searchData:
+    pattern:  /mb/hr/salary/search
+    defaults: { _controller: JustsyAdminAppBundle:Salary:searchData}
+            
+#-----------------------appRole--------------------------
+JustsyAdminAppBundle_mb_app_role:
+    pattern:  /mb/sys/approle
+    defaults: { _controller: JustsyAdminAppBundle:AppRole:Index}
+JustsyAdminAppBundle_mb_save_approle:
+    pattern:  /mb/sys/save/approle
+    defaults: { _controller: JustsyAdminAppBundle:AppRole:SaveRole}
+JustsyAdminAppBundle_mb_get_approle:
+    pattern:  /mb/sys/get/approle
+    defaults: { _controller: JustsyAdminAppBundle:AppRole:getRoleByAppID}
+#delete
+JustsyAdminAppBundle_mb_app_delete:
+    pattern:  /mb/sys/get/delete
+    defaults: { _controller: JustsyAdminAppBundle:AppRole:delete_exists}    
+      
+#-----------------------resetpassword--------------------------
+JustsyAdminAppBundle_mb_reset_index:
+    pattern:  /mb/sys/reset
+    defaults: { _controller: JustsyAdminAppBundle:ResetPWD:Index}
+JustsyAdminAppBundle_mb_reset_getaccount:
+    pattern:  /mb/sys/reset/getaccount
+    defaults: { _controller: JustsyAdminAppBundle:ResetPWD:getAccount}
+JustsyAdminAppBundle_mb_reset_password:
+    pattern:  /mb/sys/resetpwd
+    defaults: { _controller: JustsyAdminAppBundle:ResetPWD:ResetPassWord}
+#-----------------------basicinfo--------------------------
+JustsyAdminAppBundle_mb_basic_staffinfo:
+    pattern:  /mb/basic/staff
+    defaults: { _controller: JustsyAdminAppBundle:Staff:Index}
+JustsyAdminAppBundle_mb_basic_staff_audit:
+    pattern:  /mb/basic/staffinfo/update
+    defaults: { _controller: JustsyAdminAppBundle:Staff:updateStatus}
+JustsyAdminAppBundle_mb_basic_staff_search:
+    pattern:  /mb/basic/staffinfo/search
+    defaults: { _controller: JustsyAdminAppBundle:Staff:searchStaff}
+JustsyAdminAppBundle_mb_basic_staff_searchbyid:
+    pattern:  /mb/basic/staffinfo/searchbyid
+    defaults: { _controller: JustsyAdminAppBundle:Staff:searchbyid}
+JustsyAdminAppBundle_staffmanager_index:
+    pattern:  /mb/staff/index
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:Index }
+JustsyAdminAppBundle_staffmanager_import_excel:
+    pattern:  /mb/staff/import/excel
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:importExcel}
+#导入数据    
+JustsyAdminAppBundle_staffmanager_import_start:
+    pattern:  /mb/staff/import/start
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:ImportData}
+#SQL数据查询    
+JustsyAdminAppBundle_staffmanager_query:
+    pattern:  /mb/staff/import/query
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:Query}
+#查询用户数据
+JustsyAdminAppBundle_staffmanager_searchstaff:
+    pattern:  /mb/staff/search
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:searchStaff}
+#删除用户数据
+JustsyAdminAppBundle_staffmanager_delete:
+    pattern:  /mb/staff/delete
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:deleteStaff}
+#修改人员数据
+JustsyAdminAppBundle_staffmanager_update_staff:
+    pattern:  /mb/staff/updatestaff
+    defaults: { _controller: JustsyAdminAppBundle:StaffManager:updateStaff}    
+
+#部门数据管理
+JustsyAdminAppBundle_departmentmanager_index:
+    pattern:  /mb/depart/index
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:Index }
+#查询部门数据(添加数据时)
+JustsyAdminAppBundle_departmentmanager_searchname:
+    pattern:  /mb/depart/searchname
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:searchName }
+#添加部门数据
+JustsyAdminAppBundle_departmentmanager_adddept:
+    pattern:  /mb/depart/add
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:AddDepartment }
+#导入部门数据
+JustsyAdminAppBundle_departmentmanager_import:
+    pattern:  /mb/depart/import
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:ImportData }    
+#查询部门数据
+JustsyAdminAppBundle_departmentmanager_search:
+    pattern:  /mb/depart/search
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:searchData }
+#删除部门名称
+JustsyAdminAppBundle_departmentmanager_delete:
+    pattern:  /mb/depart/delete
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:deleteDept }
+#上传部门数据文件
+JustsyAdminAppBundle_department_uploadfile:
+    pattern:  /mb/dept/loadfile
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:importExcel}
+#统计部门人员及路径
+JustsyAdminAppBundle_department_dept_statistics:
+    pattern:  /mb/dept/statistics
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:statistics}
+
+#获得部门树数据
+JustsyAdminAppBundle_department_tree:
+    pattern:  /mb/dept/tree
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:getTree}
+#编辑部门序列号
+JustsyAdminAppBundle_departmentmanager_editorder:
+    pattern:  /mb/depart/editorder
+    defaults: { _controller: JustsyAdminAppBundle:DepartmentManager:editOrder}       
+    
+#---------------------report-----------------------------------
+JustsyAdminAppBundle_mb_report_index:
+    pattern:  /mb/hr/convey/report
+    defaults: { _controller: JustsyAdminAppBundle:Report:Index}
+JustsyAdminAppBundle_mb_report_edit:
+    pattern:  /mb/hr/convey/edit
+    defaults: { _controller: JustsyAdminAppBundle:Report:editreport}
+JustsyAdminAppBundle_mb_report_delete:
+    pattern:  /mb/hr/convey/delete
+    defaults: { _controller: JustsyAdminAppBundle:Report:deleteReport}    
+JustsyAdminAppBundle_mb_report_search:
+    pattern:  /mb/hr/convey/search
+    defaults: { _controller: JustsyAdminAppBundle:Report:searchreport}
+JustsyAdminAppBundle_mb_report_searchdetail:
+    pattern:  /mb/hr/convey/search/detail
+    defaults: { _controller: JustsyAdminAppBundle:Report:searchdetail}     
+JustsyAdminAppBundle_mb_report_upload:
+    pattern:  /mb/hr/report/uploadfile
+    defaults: { _controller: JustsyAdminAppBundle:Report:uploadreport}
+
+#---------------------school-----------------------------------
+JustsyAdminAppBundle_mb_school_index:
+    pattern:  /mb/myschool/index
+    defaults: { _controller: JustsyAdminAppBundle:School:Index}
+JustsyAdminAppBundle_mb_school_edit:
+    pattern:  /mb/school/edit
+    defaults: { _controller: JustsyAdminAppBundle:School:editschool}
+JustsyAdminAppBundle_mb_school_delete:
+    pattern:  /mb/school/delete
+    defaults: { _controller: JustsyAdminAppBundle:School:deleteschool}    
+JustsyAdminAppBundle_mb_school_search:
+    pattern:  /mb/school/search
+    defaults: { _controller: JustsyAdminAppBundle:School:searchschool}
+JustsyAdminAppBundle_mb_school_searchdetail:
+    pattern:  /mb/school/search/detail
+    defaults: { _controller: JustsyAdminAppBundle:School:searchdetail}     
+JustsyAdminAppBundle_mb_school_upload:
+    pattern:  /mb/school/uploadfile
+    defaults: { _controller: JustsyAdminAppBundle:School:uploadschool}
+
+#-----------------------------------版本发布--------------------------------------------
+JustsyAdminAppBundle_version_index:
+    pattern:  /mb/version/index
+    defaults: { _controller: JustsyAdminAppBundle:Version:index}
+#上传安装包文件
+JustsyAdminAppBundle_version_upload:
+    pattern:  /mb/version/upload
+    defaults: { _controller: JustsyAdminAppBundle:Version:UploadFile}
+#搜索
+JustsyAdminAppBundle_version_search:
+    pattern:  /mb/version/search
+    defaults: { _controller: JustsyAdminAppBundle:Version:SearchVersion}
+#删除发布信息及安装包文件
+JustsyAdminAppBundle_version_del:
+    pattern:  /mb/version/del
+    defaults: { _controller: JustsyAdminAppBundle:Version:DelVersion}
+
+#---------------------自助管理---------------------------------------------
+JustsyAdminAppBundle_mb_buffet_setting:
+    pattern:  /mb/buffet/setting
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:Index}
+#编辑自助设置信息 
+JustsyAdminAppBundle_mb_buffet_settingedit:
+    pattern:  /mb/buffet/setting/edit
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:settingEdit}    
+#搜索自助设置信息 
+JustsyAdminAppBundle_mb_buffet_settingsearch:
+    pattern:  /mb/buffet/setting/search
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:settingSearch}
+#搜索自助设置信息详细
+JustsyAdminAppBundle_mb_buffet_searchbyid:
+    pattern:  /mb/buffet/setting/searchbyid
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:SearchById }
+#删除自助设置信息
+JustsyAdminAppBundle_mb_buffet_delete:
+    pattern:  /mb/buffet/setting/delete
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:deleteBuffet}
+JustsyAdminAppBundle_mb_hotlint_setting:
+    pattern:  /mb/buffet/setting
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:Index}        
+    
+#---------------------热线管理---------------------------------------------
+JustsyAdminAppBundle_mb_hotline_index:
+    pattern:  /mb/hotline/index
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:Index }
+#添加或修改热线
+JustsyAdminAppBundle_mb_hotline_edit:
+    pattern:  /mb/hotline/edit
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:editHotLine}    
+#热线查询
+JustsyAdminAppBundle_mb_hotline_search:
+    pattern:  /mb/hotline/search
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:SearchHotLine}
+#热线查询
+JustsyAdminAppBundle_mb_hotline_searchbyid:
+    pattern:  /mb/hotline/searchbyid
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:SearchHotLineById}    
+#查看热线处理详细
+JustsyAdminAppBundle_mb_hotline_scheme_desc:
+    pattern:  /mb/scheme/desc
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:viewSchemedesc}
+#查看回访详细
+JustsyAdminAppBundle_mb_hotline_visit_desc:
+    pattern:  /mb/visit/desc
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:viewVisit}
+          
+#删除热线记录
+JustsyAdminAppBundle_mb_hotline_delete:
+    pattern:  /mb/hotline/delete
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:DeleteHotLine}
+#删除热线处理记录
+JustsyAdminAppBundle_mb_scheme_delete:
+    pattern:  /mb/scheme/delete
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:DeleteScheme}
+#删除热线回访记录
+JustsyAdminAppBundle_mb_visit_delete:
+    pattern:  /mb/visit/delete
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:DeleteVisit}
+#-------------------------mobile client-----------------------------------
+JustsyAdminAppBundle_mobile_client_index:
+    pattern:  /mb/mobileclient/index
+    defaults: { _controller: JustsyAdminAppBundle:MobileClient:index}
+JustsyAdminAppBundle_mobile_client_search:
+    pattern:  /mb/mobileclient/search
+    defaults: { _controller: JustsyAdminAppBundle:MobileClient:searchStaff}
+JustsyAdminAppBundle_mobile_client_execute:
+    pattern:  /mb/mobileclient/execute
+    defaults: { _controller: JustsyAdminAppBundle:MobileClient:execute}    
+
+#-------------------------default group -----------------------------------
+JustsyAdminAppBundle_default_group_index:
+    pattern:  /mb/defaultgroup/index
+    defaults: { _controller: JustsyAdminAppBundle:DefaultGroup:Index}
+#上传默认群组logo
+JustsyAdminAppBundle_default_group_logo:
+    pattern:  /mb/defaultgroup/upload
+    defaults: { _controller: JustsyAdminAppBundle:DefaultGroup:uploadLogo }
+#创建默认群组
+JustsyAdminAppBundle_default_group_create:
+    pattern:  /mb/defaultgroup/create
+    defaults: { _controller: JustsyAdminAppBundle:DefaultGroup:creategroup}
+#获得部门底下人员
+JustsyAdminAppBundle_default_group_getstaff:
+    pattern:  /mb/defaultgroup/getstaff
+    defaults: { _controller: JustsyAdminAppBundle:DefaultGroup:getStaff}
+
+#上传群组logo(手机端调用)
+JustsyAdminAppBundle_default_group_setlogo:
+    pattern:  /interface/set/grouplogo
+    defaults: { _controller: JustsyAdminAppBundle:DefaultGroup:setgrouplogo}
+      
+#好友管理
+JustsyAdminAppBundle_friend_index:
+    pattern:  /mb/friend/index
+    defaults: { _controller: JustsyAdminAppBundle:Friend:Index}
+
+#服务员管理
+JustsyAdminAppBundle_service_index:
+    pattern:  /mb/service/index
+    defaults: { _controller: JustsyAdminAppBundle:Service:Index}    
+
+#朋友圈动态管理
+JustsyAdminAppBundle_friendcircle_index:
+    pattern:  /mb/friendcircle/index
+    defaults: { _controller: JustsyAdminAppBundle:Friend:FriendCircle}
+
+#上传广播员头像
+JustsyAdminAppBundle_friendcircle_photo:
+    pattern:  /mb/friendcircle/photo
+    defaults: { _controller: JustsyAdminAppBundle:Friend:uploadPhoto }      
+
+#门户订阅管理
+JustsyAdminAppBundle_portal_index:
+    pattern:  /mb/portal/index
+    defaults: { _controller: JustsyAdminAppBundle:Portal:Index}  
+
+     
+#----------------------mb interface-----------------------------------------
+JustsyAdminAppBundle_mb_staffinfo_get:
+    pattern:  /interface/staffinfo
+    defaults: { _controller: JustsyAdminAppBundle:Staff:getStaffinfo}
+JustsyAdminAppBundle_mb_staffinfo_update:
+    pattern:  /interface/staffinfo/update
+    defaults: { _controller: JustsyAdminAppBundle:Staff:updateStaffInfo}
+JustsyAdminAppBundle_mb_staffinfo_subordinates:
+    pattern:  /interface/subordinates
+    defaults: { _controller: JustsyAdminAppBundle:Staff:Subordinates}
+JustsyAdminAppBundle_mb_staffinfo_subordinates_depart:
+    pattern:  /interface/subordinates/getstaffbydepart
+    defaults: { _controller: JustsyAdminAppBundle:Staff:getStaffbydepart}    
+JustsyAdminAppBundle_mb_staffinfo_subordinatesinfo:
+    pattern:  /interface/subordinatesinfo
+    defaults: { _controller: JustsyAdminAppBundle:Staff:subordinatesinfo}
+ 
+    
+#查看应用接口(限制权限)
+JustsyAdminAppBundle_mb_approle:
+    pattern:  /interface/myapplist
+    defaults: { _controller: JustsyAdminAppBundle:AppRole:myAppList}
+#按工号或用户账号查看具有权限的应用
+JustsyAdminAppBundle_mb_approle_search:
+    pattern:  /interface/approle/search
+    defaults: { _controller: JustsyAdminAppBundle:AppRole:SearchAppRole}    
+#检查工资查看账号是否存在
+JustsyAdminAppBundle_mb_salary_exists:
+    pattern:  /interface/salary/exists
+    defaults: { _controller: JustsyAdminAppBundle:Salary:existAccount}     
+#工资账号注册
+JustsyAdminAppBundle_mb_salary_register:
+    pattern:  /interface/salary/register
+    defaults: { _controller: JustsyAdminAppBundle:Salary:salaryRegister}
+#重置工资登录密码
+JustsyAdminAppBundle_mb_salary_restart:
+    pattern:  /interface/salary/restart
+    defaults: { _controller: JustsyAdminAppBundle:Salary:RestartPassword}
+#工资账号独立登录
+JustsyAdminAppBundle_mb_salary_login:
+    pattern:  /interface/salary/login
+    defaults: { _controller: JustsyAdminAppBundle:Salary:salaryLogin}
+#人员最大工资月份
+JustsyAdminAppBundle_mb_salary_maxdate:
+    pattern:  /interface/salary/maxmonth
+    defaults: { _controller: JustsyAdminAppBundle:Salary:maxMonth}    
+#查看最近一月工资大类
+JustsyAdminAppBundle_mb_salary_view:
+    pattern:  /interface/salary/view
+    defaults: { _controller: JustsyAdminAppBundle:Salary:salaryView}
+#查看工资大类下工资详细
+JustsyAdminAppBundle_mb_salary_detail:
+    pattern:  /interface/salary/detail
+    defaults: { _controller: JustsyAdminAppBundle:Salary:salarydetail}
+#员工可查看的报表文件
+JustsyAdminAppBundle_mb_report_view:
+    pattern:  /interface/report/view
+    defaults: { _controller: JustsyAdminAppBundle:Report:Api_ViewReport}
+#我的大学
+JustsyAdminAppBundle_mb_school_view:
+    pattern:  /interface/school/view
+    defaults: { _controller: JustsyAdminAppBundle:School:Api_ViewSchool }    
+#删除发布内容接口
+JustsyAdminAppBundle_mb_publish_del:
+    pattern:  /interface/content/publish/delete
+    defaults: { _controller: JustsyAdminAppBundle:CMSManage:deletePublish }
+#自助查询接口(查询关键字)
+JustsyAdminAppBundle_mb_buffset:
+    pattern:  /interface/buffset/keyword
+    defaults: { _controller: JustsyAdminAppBundle:Buffet:searchByKey }
+#添加或修改热线
+JustsyAdminAppBundle_mb_hotline_add:
+    pattern:  /interface/hotline/add
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:Api_AddHotline }
+#添加或修改回访记录
+JustsyAdminAppBundle_mb_hotline_visit:
+    pattern:  /interface/hotline/editvisit
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:Api_EditVisit }    
+#添加或修改热线处理方案
+JustsyAdminAppBundle_mb_scheme_edit:
+    pattern:  /interface/scheme/eidt
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:Api_EditScheme }
+#查看我的热线
+JustsyAdminAppBundle_mb_hotline_my:
+    pattern:  /interface/hotline/list
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:Api_MyHotLine }
+#查看我的热线回复
+JustsyAdminAppBundle_mb_hotline_reply:
+    pattern:  /interface/hotline/reply
+    defaults: { _controller: JustsyAdminAppBundle:HotLine:Api_HotLineReply }
+    
+#同步组织部门
+JustsyAdminAppBundle_mb_syndata_org:
+    pattern:  /api/http/syndata/org
+    defaults: { _controller: JustsyAdminAppBundle:SynData:SynDataByORG }

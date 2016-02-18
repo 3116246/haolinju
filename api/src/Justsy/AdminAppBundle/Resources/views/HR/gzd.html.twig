@@ -1,0 +1,112 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/salary.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/pageControl.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/ajaxfileupload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/salary.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container salary_area">
+  <div class="containerBox" style="min-height:540px;">
+   	  <div class="search_area" style="padding-left: 50px; padding-right: 50px;">
+   	  	 <span style="float:left;">上传日期：</span>
+   	  	 <select class="mb_combox" style="float:left;margin-top:15px;" id="search_date"></select>
+   	  	 <span style="float:left;margin-left:60px;">文件名称：</span>
+   	  	 <input type="text" class="mb_textbox" style="float:left;margin-top:15px;width:200px;">
+   	  	 <span class="btnGreen search_button" style="margin-left:30px;margin-top:15px;"  onclick="Salary.SearchData();">查&nbsp;&nbsp;询</span>
+   	  	 <span class="btnGreen search_button" style="margin-left:50px;margin-top:15px;" onclick="Salary.showupload();">上传文件</span>
+   	  	 <a href="/We_SalaryTemp.xls" style="float:right;margin-top:15px;">
+   	  	   <span class="btnGreen search_button">模板下载</span>
+   	  	 </a>
+   	  </div>
+   	  <div style="padding:10px 50px;">
+   	  	<table border="1" align="center" class="mb_tables">
+   	  		<thead>
+   	  			 <tr class="mb_tables_title">
+							  <td width="150">上传日期</td>
+							  <td width="280">上传文件名称</td>
+							  <td width="260">上传备注信息</td>
+							  <td width="85" >上传人员</td>
+							  <td >操&nbsp;作</td>
+						 </tr>
+   	  	 </thead>
+   	  	 <tbody>
+   	  	 </tbody>
+   	   </table>
+   	 </div>
+	</div>
+</div>
+
+	<!--上传工资文件-->
+	<div  class="dialogBox " id="upload_file" style="display:none;">
+		<div class="background"></div>
+    <div style="width:650px;top:70px;left:-50px;" class="dialog">
+    	<div class="title">上传工资文件</div> 
+      <span title="关闭" onclick="Salary.closeDialog();" class="close-tip-icon"></span>
+      <div class="content" id="upload_content" style="min-height:240px;overflow:hidden;padding:10px 50px;cursor:default;">      	 
+      	<form target="frm_import_submit" id="frm_import" action="{{path('JustsyAdminAppBundle_mb_salary_upload')}}" method="post" enctype="multipart/form-data">
+	        <span style="float:left;">请选择要上传的文件：</span>
+	        <div class="upload_file_area">
+	        	<span class="filename"></span>
+	        	<div style="float:right;">
+		          <span class="mb_upload_fileIcon"></span>
+		     	    <input type="file" name="filedata" id="filedata" onchange="Salary.change();" style="width:25px;margin-left:-25px;float:left;opacity:0;cursor:pointer;" >
+		     	  </div>
+	     	  </div>
+		     	  <span style="float: left; width: 100%; margin-top: 10px;">备注信息：</span>
+		     	  <input class="mb_textbox" type="text" maxlength=50 style="float:left;width:100%;" id="textnote" name="textnote" />	     	  
+     	  	  <label class="salary_checkbox">
+     	  	 	  <input type="checkbox" id="check_cover" name="check_cover" checked="true" />
+     	  	 	  <span >当有员工同月份数据时覆盖</span>
+     	  	  </label>
+	      </form>
+	      <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>	  
+      </div>
+      <div class="content" id="AddHint" style="display:none;height:260px;min-height:260px;overflow-x:hidden;overflow-y:auto;padding:10px;cursor:default;"></div>  	 
+      <div class="operation" style="padding:10px;height: 52px;">
+      	 <div class="upload_file_hint"></div>
+      	 <div style="float:left;margin-top:4px;">
+	          <button onclick="Salary.uploadFile();"  class="btnGreen search_button" style="float:left;width:80px;">开始上传</button>    
+	          <button onclick="Salary.closeDialog();" class="btnGreen search_button" style="float:left;width:80px;">取&nbsp;消</button>
+         </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">	 
+	 $(document).ready(function(){	   
+		 Salary.icon.error = "{{ asset('bundles/fafatimeweopenapi/images/error.png')}}";
+		 Salary.icon.warning = "{{ asset('bundles/fafatimeweopenapi/images/zq.png')}}";
+		 Salary.icon.success = "{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}";
+		 Salary.icon.loading =  "{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}";
+	   Salary.upload_url = "{{path('JustsyAdminAppBundle_mb_salary_upload')}}";
+	   Salary.delete_url = "{{path('JustsyAdminAppBundle_mb_salary_deletefile')}}";
+	   Salary.search_url = "{{path('JustsyAdminAppBundle_mb_salary_searchData')}}";
+	   Salary.isupload = false;
+	   Salary.InitData( {{uploadData|raw}} ,{{ InitDate|raw}});
+   });
+</script>
+
+{% endblock %}

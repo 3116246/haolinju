@@ -1,0 +1,48 @@
+{% extends 'JustsyBaseBundle:Group:group_create.html.twig' %}
+
+{% block main_content_center %}
+<div>
+  <div class="search-circles-box" style="width:680px">
+    <div class="search-circles-input">
+      <input id="searchCondition" placeholder="按群名称搜索" name="searchCondition" class="search-circles-input" type="text">
+      <div class="circles-search-box">
+        <input type="button" class="circlessearch" value="搜索群组" id="btnSearch">
+      </div>
+    </div>
+  </div>
+  <div style="height:18px"></div>
+  <div id='resmes_group' style='background-color: #F8CB6A;border: 1px solid #CCCCCC;text-align: center;display:none;color:#0088CC'></div>
+  <div id="result" style="width:704px"></div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function()
+{
+  $("#btnSearch").click(function()
+  {
+    btnSearchClick();
+  });
+  $("#searchCondition").keypress(function(ev)
+  {
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      btnSearchClick();
+    }
+  });
+  
+  btnSearchClick();
+});
+//提交
+function btnSearchClick()
+{
+  var cond = $("#searchCondition").val();
+  var ac = "{{ path('JustsyBaseBundle_group_searchresult',{'network_domain':curr_network_domain}) }}";
+  $("#result").html(null);
+  LoadComponent("result", ac, {cond:cond});
+}
+</script>
+{% endblock %}

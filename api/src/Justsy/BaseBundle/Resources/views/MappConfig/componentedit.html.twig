@@ -1,0 +1,18 @@
+
+<span style="display:none;border-width: 10px; top: -20px; float: left; border-color: transparent transparent #059BC6; left: 17px;" class="topmenu_app_triangle"></span>
+<span style="display:none;border-width: 10px; top: -19px; float: left; border-color: transparent transparent #fff; left: -3px;" class="topmenu_app_triangle"></span>
+<div id="component_edit" style="background-color:white;display:none;width:660px;min-height:300px;border:1px solid #059BC6;border-radius: 3px;">
+
+	<div class="component_edit_content">
+		
+	</div>
+	<div id='component_editor_hint' style='display: none; float: left; width: 100%; text-align: center; height: 25px; line-height: 25px; color: rgb(204, 51, 0);'></div>
+	<div class="modal-footer">
+		<span class="btn btn-primary" onclick="ComponentAttr.save()">确认修改</span><span  class="btn" onclick="ComponentAttr.cancel()">取消</span>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+	ComponentEdit.init(oneApp);
+	ComponentEditView.show($("#main_area"),ComponentEdit.componentlist);
+</script>

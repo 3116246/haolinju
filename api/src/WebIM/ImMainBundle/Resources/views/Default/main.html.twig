@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}微发发，一个由工作圈子交织而成的企业社交网络{% endblock %}</title>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+<meta name="description" content="FaFa是一个依托于强大的FaFa即时消息平台、企业开放平台基础上的面向企业用户的社交网络平台。" />
+<meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件" />
+<script src="{{ asset('bundles/fafawebimimmain/js/jquery.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafawebimimchat/js/lib/ligerUI/skins/liling/css/ligerui-all.css')}}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafawebimimchat/css/webim.css') }}" /> 
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafawebimimmain/css/zTreeStyle/zTreeStyle.css') }}" />
+
+<script type="text/javascript" src="https://www.wefafa.com/bundles/fafatimeweopenapi/js/faapi.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafawebimimmain/js/fachat_main.js') }}"></script>
+
+</head>
+<body onkeypress="enter(event)">
+
+</body>
+</html>
+<script type="text/javascript">
+  var guestAccount = "{{jid}}";
+  var pwd = "{{pass}}";
+  var onlineCache = new HashMap();
+      
+  $(document).ready(function() {
+    
+    FaFaChatMain.init();
+    if(window.MessageAPI!=null)
+		{
+		  window.MessageAPI.init=function(){FaFaMain_Connection(guestAccount,pwd);}
+		}
+  });
+</script>

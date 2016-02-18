@@ -1,0 +1,1068 @@
+@charset "utf-8";
+/* CSS Document */
+
+#rosterHeader img{
+   opacity: 0.1;
+}
+
+.webim_main_urlloading 
+{
+  text-align:center;
+  float:left;
+  margin: 0px auto; 
+  width:16px; 
+  height:16px;
+  margin-left: 10px;
+  margin-top: 7px;
+  background:url(../images/loading.gif);
+ 
+}
+
+.webim_main_urlloading_word
+{
+    float: left;
+    font-family: "宋体","Arial","Helvetica","Verdana","sans-serif";
+    font-size: 12px;
+    line-height: 30px;
+    margin-left: 2px;
+    position: absolute;
+    cursor:default;
+}
+
+#webim_disconnect_hint
+{
+    background-color: rgb(181, 231, 235);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    cursor: default;
+    font-family: "宋体","Arial","Helvetica","Verdana","sans-serif";
+    font-size: 12px;
+    height: 30px;
+    line-height: 18px;
+    overflow: hidden;
+    padding-left: 5px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 195px;
+    position:fixed;
+    display:none;
+}
+
+.webim_refresh_connection
+{
+    background-image: url("../images/refresh.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height:16px;width:16px;
+    left:175px;
+    position: absolute;
+    margin-top:8px;
+}
+
+.webim_disconnect_hint_word
+{
+   font-family: "宋体","Arial","Helvetica","Verdana","sans-serif";
+   font-size: 12px;
+   margin-top: 6px;
+   position: absolute;
+}
+
+.webim_main_errorhint 
+{
+  float:left;
+  width:16px; height:16px;
+  margin-left:10px;margin-top:8px;
+  background-image:url(../images/error1.png);
+}
+
+.webim_descloading {float:left;margin: 0px auto; text-align:center; font-size:12px
+}
+
+.webim_main_header .webim_main_expand {
+  height: 20px;width:20px;
+  float:right;
+  cursor:pointer;
+  background-image:url("../images/WebIM_Buttons.png");
+  background-position:-1px -203px;
+  margin-top:2px;
+}
+
+.webim_online_img {
+  width:17px;height:16px;
+  background-image:url("../images/WebIM_Buttons.png");
+  background-repeat:no-repeat;
+  cursor:pointer;
+  float: left;
+  margin-top:6px;
+  margin-left: 5px;
+  background-position:1px -172px;
+  background-attachment: scroll;
+ }
+ 
+ .webim_online_img2 {
+  width:17px;height:16px;  
+  background-repeat:no-repeat;
+  cursor:pointer;
+  float: left;
+  margin-top:6px;
+  margin-left: 5px;
+ }
+
+.webim_main_header .webim_main_expand:hover 
+{
+  height: 22px;width:22px;
+  cursor:pointer;
+  background-image:url("../images/WebIM_Buttons.png");
+  background-position:1px -224px;
+
+}
+
+.webim_main_header .webim_main_min {
+  height: 22px;width:22px;
+  float:right;
+  cursor:pointer;
+  background-image:url("../images/WebIM_Buttons.png");
+  background-position:-40px -203px;
+}
+
+.webim_main_header .webim_main_min:hover {
+  /* background-attachment: fixed;*/
+  height: 22px;width:22px;
+  float:right;
+  cursor:pointer;
+  background-image:url("../images/WebIM_Buttons.png");
+  background-position: -41px -224px;
+}
+
+.webim_main_header {
+   vertical-align: middle;
+   height:30px;
+   width: 195px;
+   background-color: #b5e7eb;
+   border-bottom: 1px solid #eee;
+   line-height:18px;
+   padding-left:5px;
+   font-size: 12px;
+   font-family: "宋体","Arial","Helvetica","Verdana","sans-serif";
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   cursor:default;
+}
+.webim_main_header .webim_main_nickname {
+   height:18px;
+   line-height:18px;
+   left: 50px; position: absolute;
+   top: 5px;
+   overflow: hidden;
+   width: 120px;   
+   padding-left:5px;
+   font-size: 12px;
+   font-family: "宋体","Arial","Helvetica","Verdana","sans-serif"; 
+   cursor:default; 
+}
+.webim_main_header .webim_main_nickname span {
+  cursor:pointer; 
+  padding:5px;
+  margin:5px;
+}
+.webim_main_header .webim_main_newmsg
+{
+   height:18px;
+   line-height:18px; 
+   padding-left:5px;
+   font-size: 12px;
+   font-family: "宋体","Arial","Helvetica","Verdana","sans-serif"; 
+   cursor:pointer;   
+}
+.webim_main_header .webim_main_newmsg_flash1
+{
+   height:16px;
+   line-height:16px; 
+   padding-left:5px;
+   font-size: 12px;
+   font-family: "宋体","Arial","Helvetica","Verdana","sans-serif"; 
+   cursor:pointer;   
+}
+.webim_main_header .webim_main_newmsg_flash2
+{
+   height:16px;
+   width:16px;
+   padding-left:5px;
+   font-size: 12px;
+   font-family: "宋体","Arial","Helvetica","Verdana","sans-serif"; 
+   cursor:pointer; 
+   background-image: url(../images/newmsg.png);
+   background-repeat:no-repeat;   
+}
+.webim_main_header .webim_main_fafa_chat_photo {
+  float:left;
+  width:16px;
+  height:16px;
+  cursor:pointer;
+}
+.webim_main_header .webim_main_fafa_chat_photo img {
+  width:16px;
+  height:16px;
+}
+
+.webim_main_body
+{
+	overflow-y: auto;
+	overflow-x: hidden;
+	display:none;
+	height:1px;
+	background-color: #ffffff;
+	border:1px solid #eee;
+	height:315px;
+	position:relative;
+}
+
+.webim_main_body A:link
+{ color: #0057a0;
+  text-decoration: none;
+}
+
+.webim_main_body A:visited
+{
+  color: #0057a0;
+  text-decoration: none;
+}
+.webim_main_body A:hover{color: #0093d8;text-decoration: none;}
+.webim_main_body A:active{color: #0057a0;text-decoration: none;}
+
+.webim_main_body ul{ width:100%; list-style:none;margin:0px;padding:0px}
+
+.webim_main_body li
+{ list-style:none; height:30px; line-height:30px;text-align:left;position: relative;
+  padding-top:7px;
+}
+
+.webim_main_body li:hover
+{ 
+  background-color:rgb(181, 231, 235);
+}
+
+.webim_main_organ
+{
+	overflow-y: auto;
+	display:none;
+	height:1px;
+	background-color: #ffffff;
+	border:1px solid #eee;
+	height:315px;
+}
+
+.webim_main_group
+{
+	overflow-y: auto;
+	overflow-x: hidden;
+	display:none;
+	background-color: #ffffff;
+	border:1px solid #eee;
+	height:315px;
+	position:relative;
+}
+
+.webim_main_group_img
+{
+    background-image: url("../images/group.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 16px;
+    left: 20px;
+    position: absolute;
+    top: 3px;
+    width: 16px;
+}
+
+.webim_main_group_image_open
+{
+    background-image: url("../images/tree_node_open.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 10px;
+    left: 6px;
+    position: absolute;
+    top: 7px;
+    width: 10px;
+}
+
+.webim_main_group_image_close
+{
+    background-image: url("../images/tree_node_close.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 10px;
+    left: 6px;
+    position: absolute;
+    top: 7px;
+    width: 10px;
+}
+
+.webim_main_groupName
+{
+    cursor: pointer;
+    display: block;
+    font-size: 11px;
+    left: 40px;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+}
+
+.webim_main_group ul
+{ list-style:none;margin:0px;padding:0px}
+
+.webim_main_group li
+{
+  list-style:none;
+  height:23px;
+  line-height:23px;
+  text-align:left;
+  position: relative;
+  cursor:pointer;
+}
+
+.webim_main_group li:hover
+{
+  list-style:none;
+  height:23px;
+  line-height:23px;
+  text-align:left;
+  position: relative;
+  cursor:pointer;
+  background-color:rgb(181, 231, 235);
+}
+
+.webim_main_searchRoster
+{
+  height: 22px;
+  display:none;
+}
+
+.webim_main_searchRoster_button
+{
+   background-image: url("../images/WebIM_Buttons.png");
+   background-position: -85px -172px;
+   background-repeat: no-repeat;
+   cursor: pointer;
+   float: right;
+   height: 22px;
+   left: 180px;
+   position: absolute;
+   top: 35px;
+   width: 22px;
+}
+
+.webim_main_searchRoster_cancel
+{
+   background-image: url("../images/cancel.png");
+   background-repeat: no-repeat;
+   cursor: pointer;
+   float: right;
+   width:26px;height:22px;
+   left: 142px;
+   position: absolute;
+   top: 30px;
+   display:none;      
+}
+
+.webim_main_searchRoster_enter
+{
+   background-image: url("../images/enter.png");
+   background-repeat: no-repeat;
+   cursor: pointer;
+   float: right;
+   width: 31px;height: 22px;
+   left: 168px;
+   position: absolute;
+   top: 30px;
+   display:none;
+}
+
+
+.webim_main_function_tool
+{
+   height:30px;
+}
+
+.function_tool_roster_active
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -1px -80px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 66px;
+}
+
+.function_tool_roster
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -1px -140px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 66px;
+}
+
+.function_tool_roster:hover
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -1px -110px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 66px;
+}
+
+.function_tool_organ_active
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -130px -80px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 66px;
+}
+
+.function_tool_organ
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -130px -140px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 66px;
+}
+
+.function_tool_organ:hover
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -130px -110px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 66px;
+}
+
+.function_tool_group
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -65px -140px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 68px;
+}
+
+.function_tool_group_active
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -65px -80px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 68px;
+}
+
+.function_tool_group:hover
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -65px -110px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    width: 68px;
+}
+
+.webim_user_offline
+{
+  filter: Alpha(Opacity=40);
+  opacity:0.4;
+  -moz-opacity:0.4;       
+}
+
+.webim_roster_photo
+{
+    position:absolute;
+    left:8px;
+    top:8px;
+}
+
+#fafaocsfontbox
+{
+   position:fixed;z-index:9200;height:30px;overflow:hidden;
+   width:200px; margin:0px auto; 
+   PADDING-BOTTOM: 0px;PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px;
+   LINE-HEIGHT: 30px; 
+   BACKGROUND-COLOR: #fff; 
+   BACKGROUND-ATTACHMENT: fixed; 
+   FONT-FAMILY: microsoft yahei,Arial, Helvetica, sans-serif; COLOR: #333; FONT-SIZE: 12px;
+   bottom:0px;
+   right:0px;
+   left:100%;
+   margin-left:-202px;
+  background-color: #ffffff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  *border: 1px solid #999;
+  /* IE6-7 */
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;     
+}
+
+
+#fafaocstopleft{ float:left; font-size:12px; font-weight:bold; text-indent:8px;}
+.nar{ width:21px; height:17px; display:block; text-indent:-9999px;  float:left;}
+.nar:hover{ width:21px; height:17px; display:block; text-indent:-9999px; float:left;}
+.nar_max{ width:21px; height:17px; display:block; text-indent:-9999px;  float:left;}
+.nar_max:hover{ width:21px; height:17px; display:block; text-indent:-9999px;  float:left;}
+#fafaocsmax{ width:21px; height:17px; display:block; text-indent:-9999px; float:left;}
+#fafaocsmax:hover{ width:21px; height:17px; display:block; text-indent:-9999px;  float:left;}
+#fafaocsclose{ width:21px; height:17px; display:block; text-indent:-9999px;  float:left;}
+#fafaocsclose:hover{ width:21px; height:17px; display:block; text-indent:-9999px;  float:left;}
+#fafaocstopright{float:right; text-align:left; padding-right:9px;}
+#fafaocstitle{ width:100%; padding-top:10px; height:30px;text-align:center; text-indent:22px;font-size:12px; font-weight:bold;}
+#fafaocsboxcenter{ width:100%; min-height:30px; _height:30px;}
+
+
+/*---联系人头像---*/
+.webim_roster_list
+{
+   cursor: pointer;
+   font-size: 12px;
+   line-height: 15px;
+   max-width: 145px;
+   overflow: hidden;
+   position: relative;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   display:block;
+   float:left;
+   top:-1px;
+   left:18px;
+}
+
+.webim_roster_member
+{
+   cursor: pointer;
+   font-size: 12px;
+   line-height: 15px;   
+   position: relative;
+   display:block;
+   float:left;
+   top:-1px;
+   left:24px;
+}
+
+.webim_main_roster_header
+ {
+    height: 24px;
+    margin-left: 32px;
+    width: 24px;
+    line-height:1px;
+ }
+.webim_main_roster_header_photo
+{
+  background-image: url("../images/nophoto.jpg")
+  border: 1px solid rgb(204,204,204);
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  float:right;
+}
+
+.webim_main_roster_header_photo_twinkle
+{
+  border: 1px solid rgb(204,204,204);
+  cursor: pointer;
+  height: 24px;
+  margin-left: 2px;
+  margin-top: 2px;
+  width: 24px;
+}
+
+ 
+.webim_main_roster_header_online
+ {    
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -1px -190px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 12px;
+    width: 12px;
+    margin-left: 50px;
+    position: absolute;
+    top: 23px;    
+ }
+
+.webim_main_roster_header_leave
+ {    
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position:-18px -190px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 12px;
+    width: 12px;
+    margin-left: 50px;
+    position: absolute;
+    top: 23px;    
+ }
+ 
+.webim_main_roster_header_busy
+ {    
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position:-35px -190px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 12px;
+    width: 12px;
+    margin-left: 50px;
+    position: absolute;
+    top: 23px;    
+ }
+ 
+.webim_main_roster_header_disturb
+ {    
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -52px -190px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 12px;
+    width: 12px;
+    margin-left: 50px;
+    position: absolute;
+    top: 23px;    
+ }
+ 
+ .webim_main_roster_header_offline
+ {
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -70px -190px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 12px;
+    width: 12px;
+    margin-left: 50px;
+    position: absolute;
+    top: 23px;    
+ }
+
+.webim_main_roster_header_device
+{
+   background-attachment: scroll;
+   background-image: url("../images/WebIM_Buttons.png");
+   background-position: 1px -32px;
+   background-repeat: no-repeat;
+   cursor: pointer;
+   float: left;
+   height: 16px;width: 16px;
+   margin-left: -25px;
+   margin-top: 6px;
+   display:none;
+}
+
+.webim_main_roster_header_device_web
+{
+    background-attachment: scroll;
+    background-image: url("../images/web.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left:-25px;
+    margin-top:4px;
+    width: 16px;
+}
+
+.webim_main_roster_header_device_pc
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -152px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: -25px;
+    margin-top: 5px;
+    width: 16px;
+}
+
+.webim_main_roster_header_device_iPad
+{
+    background-attachment: scroll;
+    background-image: url("../images/iPad.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left:-25px;
+    margin-top:4px;
+    width: 16px;
+}
+
+.webim_main_roster_header_device_Androd
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -135px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: -25px;
+    margin-top: 5px;
+    width: 16px;
+}
+
+.webim_main_roster_header_device_Iphone
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position:-118px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: -25px;
+    margin-top: 4px;
+    width: 16px;
+}
+
+.webim_main_roster_header_nickname
+{ 
+   cursor: pointer;
+   height: 14px;
+   left: 65px;
+   line-height: 14px;
+   position: absolute;
+   top: 7px;
+}
+
+.webim_main_roster_header_nickname:hover
+{ 
+   color:blue;
+}
+
+.webim_main_roster_header_desc
+{
+    color: rgb(192, 192, 192);
+    cursor: default;
+    display: block;
+    font-size: 11px;
+    height: 16px;
+    left: 65px;
+    line-height: 16px;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    top: 19px;
+    white-space: nowrap;
+    max-width: 100px;
+}
+/*-----end------*/
+
+.webim_main_unreadmsglist
+{
+    border: 1px solid #CCCCCC;
+    max-height: 200px;
+    overflow: auto;
+    padding: 2px;
+    position: absolute;
+    width: 195px;
+    font-size:12px;
+    background-color:#fff;
+    z-index:10000;
+}
+.webim_main_unreadmsglist div
+{
+	cursor:pointer;
+	background-color:#fff;
+	padding:2px;
+  height: 20px;
+  line-height: 20px;	
+}
+.webim_main_unreadmsglist div:hover
+{
+	cursor:pointer;
+	background-color:#ccc;
+	padding:2px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.webim_status_selected
+{
+  position: absolute;
+  display:none;
+  height: 16px;width:16px;
+  cursor:pointer;
+  background-repeat:no-repeat;
+  background-image:url("../images/WebIM_Buttons.png");
+  background-position: -102px -172px;
+  left: 26px;top: 6px;
+}
+
+.webim_status_select_list
+{
+    display:none;
+    background-color: rgb(246, 252, 252);
+    border: 1px solid rgb(153, 153, 153);    
+    height: 126px;
+    position: absolute;
+    width: 100px;
+    z-index: 9210;
+}
+
+.webim_status_select_list ul
+{ 
+    width: 100px;
+    height: 126px;
+    list-style: none outside none;
+    margin-left: -1px;
+    margin:0;
+}
+
+.webim_status_select_list li
+{
+    cursor: pointer;
+    height: 24px;
+    width: 100px;
+    line-height: 24px;
+    padding-top: 1px;
+}
+
+.webim_status_select_list li:hover
+{
+    cursor:pointer;
+    height: 24px;
+    width: 100px;
+    line-height: 24px;
+    padding-top: 1px;
+    background-color:rgb(181, 231, 235);
+}
+
+.webim_status_select_word
+{
+    font-size: 12px;
+    left: 35px;
+    line-height: 12px;
+    position: absolute;
+    cursor:pointer;
+}
+
+.webim_status_select_online
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: 2px -188px;
+    background-repeat: no-repeat;
+    cursor: default;
+    height: 17px;
+    margin-left: 10px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.webim_status_select_leave
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -15px -188px;
+    background-repeat: no-repeat;
+    cursor: default;
+    height: 17px;
+    margin-left: 10px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.webim_status_select_busy
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -31px -188px;
+    background-repeat: no-repeat;
+    cursor: default;
+    height: 17px;
+    margin-left: 10px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.webim_status_select_disturb
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -47px -188px;
+    background-repeat: no-repeat;
+    cursor: default;
+    height: 17px;
+    margin-left:10px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.webim_status_select_offline
+{
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -64px -188px;
+    background-repeat: no-repeat;
+    cursor: default;
+    height: 17px;
+    margin-left: 11px;
+    margin-top: 4px;
+    width: 17px;
+}
+
+.webim_roster_leave
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position:-16px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: 5px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.webim_roster_busy
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -34px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: 5px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+.webim_roster_dnd
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position:-50px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: 5px;
+    margin-top: 6px;
+    width: 17px;
+}
+
+/*离线*/
+.webim_roster_offline
+{
+    background-attachment: scroll;
+    background-image: url("../images/WebIM_Buttons.png");
+    background-position: -68px -172px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: 5px;
+    margin-top: 6px;
+    width: 17px;
+}
+.webim_search_panel
+{
+    background-color: rgb(246, 252, 252);
+    border: 1px solid #999999;
+    height: 200px;
+    display:none;
+    position: fixed;
+    bottom:146px;
+    right:1px;
+    width: 198px;
+    z-index: 9209;   
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.webim_search_img
+{
+    height:20px;
+    margin-left: 5px;
+    margin-top:2px;
+    position: absolute;
+    width:20px;
+}
+
+.webim_search_nick
+{
+  margin-left:35px;
+  font-size:12px;
+  position: absolute;
+  margin-top:-1px;
+  cursor:pointer;
+}
+
+.webim_search_roster
+{
+   width:100%;
+   margin:0px;padding:0px;
+}
+
+.webim_search_roster li
+{ 
+  background-color:white;
+  list-style:none; height:25px; line-height:25px;text-align:left;
+  position: relative;color:black;
+}
+
+.webim_search_roster li:hover
+{ 
+  list-style:none; height:25px; line-height:25px;text-align:left;
+  position: relative;background-color:rgb(181, 231, 235);
+}
+
+.webim_main_discuss
+{
+    background: url("../images/web.png");    
+    background-repeat: no-repeat;
+    cursor: pointer;
+    float: left;
+    width:16px;height:16px;    
+    margin-top: 2px;
+    
+}
+.webim_first_li
+{
+	 cursor:pointer;
+	 vertical-align:middle;
+	 list-style:none;
+	 height:18px;
+	 line-height:18px;
+	 text-align:left;
+	 position:relative;
+	 padding-top: 5px;	
+}

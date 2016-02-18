@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<title>移动门户管理系统</title>
+	<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+	<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+	<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+	<link href="{{ asset('bundles/fafatimembapp/css/home.css')}}" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<div id="topDiv">
+		<img class="logo" src="{{ asset('bundles/fafatimewebase/images/wefafa_logo1.png') }}">
+		<span class="title">移动门户管理系统</span>
+		<a class="item" href="{{ path('JustsyBaseBundle_logout') }}">退出登录</a>
+	</div>
+	<div id="mainDiv">
+		<div id="leftDiv">
+			<ul id="treemenu" class="ztree" style="max-height:100%;height:100%; width:100%; padding:0 5px; background-color:white; border:none;"></ul>
+		</div>
+		<div id="mainContentDiv">
+			<div id="MainTabs" style="height:100%; padding:0px; font-size: 12px; overflow:hidden;">
+				<ul> 
+		          <li><a href="#tabs-1">起始页</a></li> 
+		        </ul> 
+		        <div id="tabs-1"></div>
+			</div>
+		</div>		
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+var url_getmenu = "{{ path('JustsyAdminAppBundle_mb_admin_getmenu') }}";
+var host = "{{ JS_OPEN_API_URL}}";
+</script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/home.js')}}"></script>

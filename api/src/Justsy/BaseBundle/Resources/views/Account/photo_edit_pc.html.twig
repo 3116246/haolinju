@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>我的资料</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{{ JS_OPEN_API_URL}}{{ asset('bundles/fafatimewebase/css/home.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ JS_OPEN_API_URL}}{{ asset('bundles/fafatimewebase/css/home_s1.css')}}" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+</head>
+<body style="margin:0px;background-color:#fff">
+<form id="formbasic"  method="post" class="form-horizontal">
+  				<div class="modal" data-backdrop=false style="width:500px;height:430px" show=false class="invitedphoto clearfix" id="invitedphoto">
+    				<div class="modal-body" style="height:400px;padding:0px;width:500px;">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    				<div class="modal-footer">    				
+    				<span style="float:right;text-align: center;margin-left: 10px;margin-right: 30px;cursor: pointer;" class="btn_close account_pcsync_btn_bg"  extend="fafa:win" action="close:window"><a extend="fafa:win" action="close:window" data-dismiss="modal">关闭</a></span> <span style="float:right;text-align: center;cursor: pointer;" id="btnSave" saveurl="{{ path('JustsyBaseBundle_account_savephoto',{'network_domain' : 'fafatime'})}}" onclick="saveHead();" class="btn_save account_pcsync_btn_bg" >保存</span>
+    				<span id="hint" class="help-inline" style="float:right;width:172px;display:none;">
+                   <img style="vertical-align: middle;" id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" okurl="{{ asset('bundles/fafatimewebase/images/ok.png')}}" errurl="{{ asset('bundles/fafatimewebase/images/errow.gif')}}" width="16" height="16">
+                   <a id="hint_msg" style="color:#db4800"></a>
+            </span>
+    				</div>
+  				</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+  var uploadObj=null;
+  g_resource_context = "/";
+  function saveHead()
+	{
+	   if(submitFlag==1) return;
+	   $sender.text("提交中...");
+	   uploadObj[0].doSave();
+	}
+	var submitFlag=0, $sender = $("#btnSave");;
+	function avatar_success()
+	{
+    $("form").ajaxSubmit({
+      	      dataType: 'json',//返回的数据类型
+              url: $sender.attr("saveurl"),
+              method: 'post',
+              success:function(r){
+				         if(r.succeed)
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src', $('#hint_img').attr("okurl"));
+				              $('#hint_msg').text('基本信息保存成功');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         else
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src', $('#hint_img').attr("errurl"));
+				              $('#hint_msg').text('基本信息保存失败');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         submitFlag=0;
+				         $sender.text("保存");
+			        }        
+      }); 		
+	}
+  $(document).ready(function()
+  {
+    var obj = $($("#invitedphoto")[0].children[0].children[0]);
+    var obj_ff = obj.find("embed");
+    uploadObj = document.all==null? obj_ff : $("#_imageupload");
+    uploadObj.css({"height":"385px","width":"500px"});
+  });
+
+</script>

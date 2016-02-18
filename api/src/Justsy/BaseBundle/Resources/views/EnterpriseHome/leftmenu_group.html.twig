@@ -1,0 +1,69 @@
+<div class="menuother">群&nbsp;组</div>
+<ul class="left-menu">
+  {% for group in this.groups %}
+    {% if group['applying']=="1" %}
+		  <li id='left_group_{{group['group_id']}}'>
+		      <a href="javascript:void(0)" title="申请正在审核中">
+		         <div style="display: block;float:left;margin-top: 5px; margin-left:15px;" class="menu-group"></div>
+		         <div style="display: block;float:left;text-indent: 0;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:100px">{{ group["group_name"] }}</div>
+		         <div style="display: block;float:left;position: relative;height: 26px;width:15px"><span title="取消申请" style="display:block;right: 0;top:0; position: absolute;width: 40px;" class="group_new_num" onclick="wefafaWin.weconfirm(this,'群申请','确定取消加入申请？',cancelGroupApply,'{{group['group_id']}}')"></span>
+		         </div>
+		      </a>
+		  </li>
+    {%else%}
+		  <li id='left_group_{{group['group_id']}}'>
+		      <a href="{{ path('JustsyBaseBundle_group',{'network_domain':network_domain,'group_id':group['group_id']})}}" title="{{ group["group_name"] }}">
+		         <div style="display: block;float:left;margin-top: 5px; margin-left:15px;" class="menu-group"></div>
+		         <div style="display: block;float:left;text-indent: 0;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:100px">{{ group["group_name"] }}</div>
+		         <div style="display: block;float:left;position: relative;height: 26px;width:15px"><span title="有新信息啦" style="display:none;right: 0;top:0; padding-left: 3px;margin-top: 6px;" class="tip_new_num group_new_num" group_id="{{group['group_id']}}"></span>
+		         </div>
+		       </a>
+		  </li>
+  {%endif%}
+  {% endfor %}
+  {% if (group_s) %}
+  <li><a href="{{ path('JustsyBaseBundle_group_search',{'network_domain':curr_network_domain,'group_s':group_s,'group_c':group_c}) }}"><i class="menu-search"></i>查找群组</a></li>
+  {% endif %}
+   {% if (group_c) %}
+  <li><a id='createmygroup_a' href="javascript:createmygroup()"><i class="menu-create"></i>创建群组</a></li>
+  {% endif %}
+</ul>
+
+<script type="text/javascript">
+var group_main="{{ path('JustsyBaseBundle_group_create',{'network_domain':curr_network_domain,'group_s':group_s,'group_c':group_c}) }}";
+$(document).ready(function() {
+  setTimeout(function(){
+      $.getJSON("{{ path("JustsyBaseBundle_group_getunreadconversnum", {'network_domain' : network_domain}) }}", {t : new Date().getTime()}, function (data) 
+      {
+        for (var i = 0; i<data.length; i++)
+        {
+          $(".group_new_num[group_id='"+data[i].group_id+"']").text(data[i].num).css("display","block");    
+        }
+      });
+    }, 1000);
+});
+	function cancelGroupApply(group_id)
+	{	    
+			    $.getJSON("{{ path('JustsyBaseBundle_group_applycancel',{'groupid':''}) }}"+"/"+group_id,{},function(d){
+			       	if(d.success=="1")
+				      {
+				           $("#left_group_"+group_id).remove();
+				      }
+				  });
+  }
+  function createmygroup(){
+    var $co =  $("#createmygroup_a"); $cp = $co.parent();
+  	GroupCreate.load({
+  		group_default_logo:"{{ asset('bundles/fafatimewebase/images/default_circle_big.png') }}",
+			user_default_logo:"{{ asset('bundles/fafatimewebase/images/no_photo.png') }}",
+			formid:"div_create_group_form",
+			saveUrl:"{{path('JustsyBaseBundle_group_createsave',{'network_domain' : network_domain})}}",
+			mainUrl:group_main,
+			re:$("#createmygroup_a")[0]
+  	});
+  	//$cp.css({"z-index":"20001","background-color":"#ffffff"});
+  	//GroupCreate.hidetrans();
+  	//GroupCreate.setLeftTrans({left:'-40px',top:($cp.offset().top-$cp.heigth()/2)+'px'});
+  	//GroupCreate.setPosition();
+  }
+</script>

@@ -1,0 +1,58 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block stylesheets %}  
+<style type="text/css">
+.use-down a.use-windows{ padding:0px; margin:0px; list-style:none; width:100px; height:22px;float:left; display:block;background:url({{ asset('bundles/fafatimewebase/images/register.png') }}) no-repeat 35px -620px; text-align:center; display:block;padding-top:33px;}
+.use-down a.use-android{ padding:0px; margin:0px; list-style:none; display:block;width:100px; height:22px;float:left; background:url({{ asset('bundles/fafatimewebase/images/register.png') }}) no-repeat 33px -674px;text-align:center;padding-top:33px;}
+.use-down a.use-apple{ padding:0px; margin:0px; list-style:none; width:100px; height:22px;float:left; background:url({{ asset('bundles/fafatimewebase/images/register.png') }}) no-repeat 35px -734px;text-align:center;padding-top:33px;}
+</style>
+{% endblock %}
+{% block title %}微发发，启用前的设置{% endblock %}
+{% block main_content %}
+<div class="active_main">
+  <div class="active_nav">
+    <ul>
+      <li class="out">1. 基本信息</li>
+      <li class="out2">2. 加入圈子</li>
+      <li class="out2">3. 上传头像</li>
+      <li class="in2">4. 开始使用</li>
+    </ul>
+  </div>
+</div>
+<div class="active_detail">
+  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_login_check') }}" >
+  <input name="_username" type="hidden" value="{{ this.account }}" />
+  <input name="_password" type="hidden" value="{{ this.passWord }}" />
+  <div class="use-title">您已经完成基本信息设置，现在可以使用微发发了。</div>
+  <div class="use-list-title">下载FaFa客户端，更丰富、更强大、更方便的功能等着您，下载和使用完全免费哦！</div>
+  <ul class="use-list">
+    <li>企业社交网络上的动态、消息、通知等实时推送到客户端；</li>
+    <li>随时随时通过企业组织机构、企业通信录、好友列表实时沟通；</li>
+    <li>与同事、好友随时进行语音对讲、视频聊天、免费网络电话等；</li>
+    <li>通过客户端包括手机参与完全免费的企业内外多人语音会议；</li>
+    <li>以单点登录方式接入企业应用中心，随时随地移动办公；</li>
+    <li class="use-list1">............</li>
+  </ul>
+  <ul class="use-down clearfix">
+    <li style="cursor: pointer;"><a class="use-windows" href="http://www.fafatime.com/download/fafa_pc_1.0.4.0.rar">Windows</a></li>
+    <li style="cursor: pointer;"><a class="use-android" href="http://www.fafatime.com/download/fafa_android_1.0.1.2.apk">Android</a></li>
+    <li style="cursor: pointer;"><a class="use-apple" href="http://www.fafatime.com/downcenter#">ios</a></li>
+  </ul>
+  </form>
+</div>
+<div class="form-actionsone">
+  <button type="button" class="allinput" id="btnSubmit">进入微发发</button>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+$(document).ready(function()
+{
+  $("#btnSubmit").click(function()
+  {
+    this.disabled = true;
+    $("#contentForm").submit();
+  });
+});
+</script>
+{% endblock %}

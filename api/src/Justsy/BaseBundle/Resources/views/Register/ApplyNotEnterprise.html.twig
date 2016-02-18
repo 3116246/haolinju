@@ -1,0 +1,10 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block main_content %}
+<div class="regok">
+	<br>
+	<h1><span style="color:#ff8400;">您的注册信息已经成功提交！</span></h1><br>
+	<h3>我们将在 <font color=red>1个工作日内 </font>将审核结果发送至以下邮箱：<b>{{email}}</b></h3><br>
+	<h3> 收到邮件后，请您根据邮件提示开始启用Wefafa！</h3><br><br><br>
+	<a class="btn-reg btn" href="{{path('JustsyBaseBundle_login')}}">返回首页</a> 
+</div>
+{% endblock %}

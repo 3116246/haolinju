@@ -1,0 +1,37 @@
+<input type="hidden" class="noticetype" value="{{ type }}"/>
+<input type="hidden" class="pageindex" value="{{ pageindex }}"/>
+<ul class="messagemenu clearfix">
+  <li class="{{type=="0" ? "messagemenu-active" : "messagemenu-link"}}"><a href="#" onclick="{{type=="0" ? "" : "$('#messagebox').empty();LoadComponent('messagebox', '" ~ path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain, "type":0}) ~ "');"}}">未读公告<span class="message-number"></span></a></li>
+  <li class="{{type=="1" ? "messagemenu-active" : "messagemenu-link"}}"><a href="#" onclick="{{type=="1" ? "" : "$('#messagebox').empty();LoadComponent('messagebox', '" ~ path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain, "type":1}) ~ "');"}}">已读公告<span class="message-number"></span></a></li>
+</ul>
+{% if text.notice_collection|length == 0 %}
+<div class="no-messages"><img width="26" height="27" class="prompticon" src="{{ asset("bundles/fafatimewebase/images/prompt.png") }}">没有公告！</div>
+{% else %}
+<ul class="noticelist">
+  {% for notice in text.notice_collection %}
+    <li class="clearfix">
+    <input type="hidden" class="bulletin_id" value="{{notice['bulletin_id']}}"/>
+    <span class="noticeperson"><img width="48" height="48" src="{{text.photo_url}}{{notice['photo_path']}}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span>
+    <span class="noticedetail">
+      <p class="noticetitle"><a href="#" class="employee_name" login_account="{{notice['bulletin_staff']}}">{{notice["staff_name"]}}</a>：</p>
+      <p class="noticetext">{{notice["bulletin_desc"]|raw}}</p>
+      <p class="noticeother"><span class="noticedate">{{notice['bulletin_date']}}</span><span class="noticebrowse"><a href="#" onclick="Notice.toShowDetail(this)">详细</a></span></p>
+    </span>
+    </li>
+  {% endfor %}
+</ul>
+{%if(pagecount>1)%}
+<div class="pagination pagination-right" style="margin:0px">
+	<ul>
+	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a href="#" {% if pageindex > 1 %}onclick="Notice.getPage({{pageindex-1}})"{% endif %}>上一页</a></li>
+	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+	{%for i in pagestart..pageend %}
+	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href='#' onclick="Notice.getPage({{i}})">{{(i)}}</a></li>
+	{%endfor%}
+	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a href="#" {% if pageindex < pagecount %}onclick="Notice.getPage({{pageindex+1}})"{% endif %}>下一页</a></li>
+  </ul>
+</div>
+{%endif%}
+{% endif %}
+

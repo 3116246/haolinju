@@ -1,0 +1,133 @@
+<div id="component_tabs_attribute_list" style="cursor: default; color: rgb(153, 153, 153); float: left; margin-bottom: 20px;">
+	<div class="component_fileds_row" id="tabs_style" style="display:none;">
+	  <span>分类样式：</span>
+		<label style="margin-right:50px;">
+		 	<input name="tabsstyle" type="radio" id="listtype" checked="checed" style="float:left;"> 
+		 	<span class="component_tabs_style">样式一</span>
+		</label>
+    <label>
+		 	<input name="tabsstyle" type="radio" id="listtype" style="float:left;"> 
+		 	<span class="component_tabs_style">样式二</span>
+		</label>		
+	</div>  
+	<div class="component_tabs_colorRow">
+	  <span>默认背景：</span>
+	  <span class="component_tabs_defaultcolor" onclick="showcolor(this)"></span>
+	  <span style="margin-left:55px;">选中背景：</span>
+	  <span class="component_tabs_activecolor" onclick="showcolor(this)"></span>
+	</div>
+	<div class='component_color' style="margin-top:-10px;" ></div>
+	<div style="float:left;margin:5px 200px 5px 100px;">（暂时只支持单色背景填充）</div>
+	<div style="float:left;width:100%">
+		 <div style="width: 100%; height: 30px;line-height:30px;">
+		    <span style="float:left;margin-right:10px;">分类项：</span>
+		    <div style="float:left; border-bottom:1px solid #dddddd;width:390px;">
+		    	  <span style="margin-left:30px;">序号</span>
+		    	  <span style="margin-left:70px;">名称</span>
+		    	  <span style="margin-left:130px;">功能</span>
+		    </div>		 
+		 </div>
+		 <!--内容添加到component_tabs_area处-->
+		 <div class="component_tabs_area"></div>
+		 <div class="component_nvar_bottom">
+			 <span onclick="addNewTabs()" class="component_item_add"></span>
+			 <span style="color:#0077CC;">添加新选项卡</span>
+	    </div>
+	</div>
+	 <!--tabs项样式-->
+	 <div class="component_tabs_item" id="tabs_model" style="display:none;">
+	   <span style="float:left;display: block; width:30px; height: 100%;">
+	 	   <span class="component_tools_delete component_tabs_delete" onclick="component_tabs.remove(this);" title="删除该项" ></span>
+	 	 </span>
+		 <span class="component_tabs_no"></span>
+		 <input type="text" maxlength=10>
+		 <span class="component_nav_function component_tabs_function">详细页面定制</span>
+	 </div>
+	 <div class="clearfix"></div>
+</div>
+
+<script type="text/javascript">
+	 //添加新项
+   function addNewTabs(){
+   	 var count = $(".component_tabs_area").children().length;
+   	 if ( count >= component_tabs.itemcount){
+   	 	 ComponentAttr.showMessage("最多允许 "+ component_tabs.itemcount +" 个选项卡！");
+   	 	 return;
+   	 }
+   	 $("#tabs_model .component_tabs_no").text(count+1);   	
+   	 var html = $("#tabs_model").html(); 
+   	 html = "<div class='component_tabs_item' functionid='' target='self'>" + html + "</div>";
+   	 $(".component_tabs_area").append(html);
+   }
+   
+   //绑定已有数据
+   function BindTabs(attrs){
+   	 var data = attrs.tabitems;
+   	 if ( data.length==0){
+   	 	  addNewTabs();
+   	 }
+   	 else{
+   	 	 $(".component_tabs_area").html("");
+   	 	 for( var i=0;i< data.length;i++){
+   	 	 	  $("#tabs_model>input").attr("value",data[i].itemname);
+   	 	 	  $("#tabs_model .component_tabs_no").text(i+1);
+   	      var html = $("#tabs_model").html();
+   	      var func = data[i].functionid;
+   	      var _target = func.target;
+   	      if ( _target==null || _target=="")
+   	         _target = "self";   	      
+   	      html = "<div class='component_tabs_item' functionid='" + func.text + "' target='"+_target+"'>" + html + "</div>";
+   	      $(".component_tabs_area").append(html);
+   	 	 }
+   	 	 $("#tabs_model>input").attr("value","");
+   	 	 var color = attrs.bgcolor;
+   	 	 if ( color==null || color=="") color="transparent";
+   	 	 $(".component_tabs_defaultcolor").css("background-color",color);
+   	 	 color = attrs.bgcolor_active;
+   	 	 if ( color==null || color=="") color="transparent";
+   	 	 $(".component_tabs_activecolor").css("background-color",color);
+   	 }
+   }   
+   
+   $(".component_tabs_item").live("mouseover",function(){
+   	  $(this).find(".component_tools_delete").show();
+   });
+   
+   $(".component_tabs_item").live("mouseout",function(){
+   	 $(this).find(".component_tools_delete").hide();
+   });
+   
+   var _class = "";
+   //显示控件
+	 function showcolor(ev){
+     componentColor.Init($(".component_color"));
+     componentColor.beforeColor = $(ev).css("background-color");
+   	 _class = $(ev).attr("class");
+   	 if ( _class == "component_tabs_defaultcolor"){
+   	 	  componentColor.setTitle("默认背景色选择");
+   	 	  $(".component_color").css("margin-left","70px");
+   	 }
+   	 else{
+   	 	 componentColor.setTitle("选中背景色选择");
+   	 	 $(".component_color").css("margin-left","235px");
+   	 }
+   	 $(".component_color").css("margin-top","65px");
+   	 componentColor.onSelected=function(vColorValue){   	 	 
+ 		   $("."+ _class).css("background-color",vColorValue);
+ 	   };
+ 	   componentColor.onMouseMove = function(color){
+ 	   	 $("."+ _class).css("background-color",color);
+ 	   };
+ 	   componentColor.onClose = function(beforecolor){
+ 	   	 $("."+ _class).css("background-color",beforecolor);	   	 
+ 	   };
+   }  
+    	   //详细页面定制
+ 	 $(".component_tabs_function").live("click",function(){
+ 	   var functionid = $(this).parents(".component_tabs_item").attr("functionid");
+	 	 if ( functionid==null || functionid=="")
+	 	   component_tabs.customizebyempty(this);
+	 	 else
+	 	 	 component_tabs.customize(this);
+ 	 }); 
+</script>

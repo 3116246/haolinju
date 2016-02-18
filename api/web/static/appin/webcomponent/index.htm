@@ -1,0 +1,207 @@
+<ul> 
+	<div>
+    <div><b>约定：</b></div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;1、所有引用地址中出现的{SERVER-HOST}都是指Wefafa平台的地址。如果非自主部署的平台，则统一为https://www.wefafa.com；企业自主部署的平台，则为平台在企业内部的实际部署地址。<br>
+ 				 &nbsp;&nbsp;&nbsp;&nbsp;2、所有JS库或组件，都是基于jquery1.7开发，所以在引用JS库前，需要保证jquery1.7+版本的正确引用。   <br>	
+ 				 &nbsp;&nbsp;&nbsp;&nbsp;3、所有JS库或组件，都依赖于<b>即时通讯JS库-faapi.js</b>，所以在引用和使用前，需要先确保正确引用faapi.js。   	
+    </div>
+	</div>
+	<li><a href="#" name="webcomponent-webim" id="webcomponent-webim">即时通信JS库</a></li> 
+	<div class="help_right_text">
+		<div>该通信库完全基于XMPP协议，简化并封装了原协议与服务器之间的交互，引用地址：{SERVER-HOST}/bundles/fafatimeweopenapi/js/faapi.js?v=2.0<br></div>	
+		<div>
+			如果是自主部署的Wefafa平台和IM通信服务器，需要在引用上述JS库时指定IM通信服务器的地址（未指定时默认连接到Wefafa的IM通信服务器地址，所以需要能访问internet网络），参考以下引用样例：<br>
+		  {SERVER-HOST}/bundles/fafatimeweopenapi/js/faapi.js?server=http://192.168.1.122:5280&v=2.0<br>
+		  该JS开发库主要包含以下对象：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;roster：联系人基本对象。包括联系人基本属性信息。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Jid：Jid格式转换对象。用于在jid串与Jid（详细信息参考<a href=#>XMPP协议</a>）对象之间互转。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FaFaMessage：FaFa消息及通信对象。核心对象。处理连接、消息收发等常用操作。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FaFaEmployee：员工操作对象，企业级应用对象之一。提供了获取联系人基本信息、个人群组等数据接口。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FaFaEnterprise：企业操作对象，企业级应用对象之一。提供了获取当前企业基本信息、部门等数据接口。<br><br>
+<li ><a id="webcomponent-webim1" name="webcomponent-webim1" href="#">连接服务器</a></li>
+<b>FaFaMessage.Connection(User,P):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User:string	Jid串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P:string	连接密码。传输过程采用MD5加密。<br>
+返回值：无。<br>
+连接并登录服务器。应用总是应该委托专门的方法给ConnectionStateChange事件，用以监控连接状态的变化，并在成功后进行业务处理。<br>
+例：FaFaMessage.Connection("test-10082@fafacn.com","123456")<br><br>
+<li ><a id="webcomponent-webim0" name="webcomponent-webim0" href="#">OAuth连接服务器</a></li>
+<b>FaFaMessage.OAuth2Connection(appid):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid:string	应用标识。注册应用时由Wefafa分配。<br>
+返回值：无。<br>
+连接并登录服务器。应用总是应该委托专门的方法给ConnectionStateChange事件，用以监控连接状态的变化，并在成功后进行业务处理。<br>
+例：FaFaMessage.OAuth2Connection("skfrsklfjo3");
+<br><br>
+
+<li ><a id="webcomponent-webim2" name="webcomponent-webim2" href="#">断开连接</a></li>
+<b>FaFaMessage.Disconnect():</b><br>
+参数：<br>
+无。<br>
+返回值：无。<br>
+断开服务器连接。<br><br>
+<li ><a id="webcomponent-webim3" name="webcomponent-webim3" href="#">收到消息处理</a></li>
+<b>FaFaMessage.GetMessage(function(Message){}):</b><br>
+参数：回调方法function（Message）。<br>
+返回值：无。<br>
+接收到消息时触发的事件。应用总是应该通过参数形式，委托专门的回调方法function（Message）处理收到的消息。可委托多个处理方法function（Message）。
+当有消息到达时，会将消息分发给委托的每一个处理方法function（Message），消息本身（Message）将做为参数回传给回调方法。<br>
+附：<br>
+Message对象说明：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属性	类型	描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To	Jid对象	消息接收者。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From	Jid对象	消息发送者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type	string	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nick	string	消息发送者姓名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time	string	消息发送时间。离线消息时为空。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delay	string	离线消息发送时间。在线消息时为空。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Body	JSONObject {text:”消息文本“,innerHTML:DOM}	仅能从该对象的text属性中获取消息内容。innerHTML中为消息的原始Dom对象。<br>
+例：FaFaMessage.GetMessage(function(Message){<br>
+    alert(Message.Nick)<br>
+})<br><br>
+<li ><a id="webcomponent-webim4" name="webcomponent-webim4" href="#">收到IQ处理</a></li>
+<b>FaFaMessage.GetIQ(function(iqObj){}):</b><br>
+参数：回调方法function（iqObj）。<br>
+返回值：无。<br>
+接收到服务器或联系人发的实时IQ节时触发的事件。应用总是应该通过参数形式，委托专门的方法function（iqObj）处理收到的IQ内容。可委托多个处理方法function（iqObj）。
+当有IQ到达时，会将IQ分发给委托的每一个处理方法function（iqObj），IQ本身将解析为对象iqObj做为参数回传给回调方法。<br>
+附：<br>
+IQ对象说明<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属性	类型	描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To	Jid对象	消息接收者。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From	Jid对象	消息发送者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type	string	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tagName	string	IQ的标签标识<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Body	Dom-Object IQ内容的原始Dom对象。<br>
+例：FaFaMessage.GetIQ(function(iqObj){<br>
+    alert(iqObj.Body)<br>
+})<br><br>
+<li ><a id="webcomponent-webim5" name="webcomponent-webim5" href="#">收到Presence处理</a></li>
+<b>FaFaMessage.GetPresence(function(presenceObj){}):</b><br>
+参数：回调方法function（presenceObj）。<br>
+返回值：无。<br>
+处理联系人上下线及状态变化，同时接收采用Presence类型发送的各类消息。应用总是应该通过参数形式，委托专门的方法function（presenceObj）处理收到的IQ内容。可委托多个处理方法function（presenceObj）。
+当有IQ到达时，会将IQ分发给委托的每一个处理方法function（presenceObj），Presence本身将解析为对象presenceObj做为参数回传给回调方法。<br>
+附：<br>
+presenceObj对象说明<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属性	类型	描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To	Jid对象	消息接收者。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From	Jid对象	消息发送者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type	string	上下线状态及hasofflinefile（离线消息）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show	string	上线状态时的状态类型<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status	string	状态类型描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Body	Dom-Object Presence内容的原始Dom对象。<br>
+例：FaFaMessage.GetPresence(function(presenceObj){<br>
+    alert(presenceObj.Type)<br>
+})<br><br>
+<li ><a id="webcomponent-webim6" name="webcomponent-webim6" href="#">获取联系人处理</a></li>
+<b>FaFaMessage.RosterAfter(function(rosterList){}):</b><br>
+参数：回调方法function（rosterList）。<br>
+返回值：无。<br>
+当登录服务器成功后，会自动获取当前登录者的好友列表，当好友列表获取成功后会触发该事件。应用总是应该通过参数形式，委托专门的方法function（rosterList）处理联系人列表内容。<br>
+附：<br>
+ItemList列表中的单个元素说明<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属性	类型	描述<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To	Jid对象	消息接收者。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From	Jid对象	消息发送者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group	string	好友所在分组名称<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subscription	string	订阅状态<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name	string	好友姓名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item	Xml	当前好友的原始xml内容。<br>
+例：FaFaMessage.RosterAfter(function(rosterList){<br>
+    alert(rosterList.length)<br>
+})<br><br>
+<li ><a id="webcomponent-webim7" name="webcomponent-webim7" href="#">连接状态改变</a></li>
+<b>FaFaMessage.ConnectionStateChange(function(status, info){}):</b><br>
+参数：回调方法function（status, info）。<br>
+返回值：无。<br>
+登录服务器过程中，连接状态及登录状态变化处理事件。应用总是应该通过参数形式，委托专门的方法监控并处理状态变化。可委托多个处理方法。
+<br>
+status状态码及值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.ERROR - An error has occurred<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.CONNECTING - The connection is currently being made<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.CONNFAIL - The connection attempt failed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.AUTHENTICATING - The connection is authenticating<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.AUTHFAIL - The authentication attempt failed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.CONNECTED - The connection has succeeded<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.DISCONNECTED - The connection has been terminated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.DISCONNECTING - The connection is currently being terminated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strophe.Status.ATTACHED - The connection has been attached
+<br><br>
+<li ><a id="webcomponent-webim8" name="webcomponent-webim8" href="#">更改在线状态</a></li>
+<b>FaFaMessage.ChangeState(show, signature, statusDesc):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;show:当前在线状态代码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signature:个性签名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statusDesc:状态描述<br>
+返回值：无。<br>
+登录服务器过程中，连接状态及登录状态变化处理事件。应用总是应该通过参数形式，委托专门的方法监控并处理状态变化。可委托多个处理方法。
+<br>
+show在线状态码及值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;""：上线/在线<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"away"：离开<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dnd"：忙碌<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dnd"结合statusDesc为”请勿打扰“时：请勿打扰<br>
+<br><br>
+<li ><a id="webcomponent-webim9" name="webcomponent-webim9" href="#">发送消息</a></li>
+<b>FaFaMessage.Send(From, To, Msg, Nick):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From：string	Jid串。消息发送者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To：string	Jid串。消息接收者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Msg：string	消息内容。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nick：string	发送者姓名。<br>
+返回值：无。<br>
+向指定的人员立即发送消息。<br>
+<br><br>
+<li ><a id="webcomponent-webim10" name="webcomponent-webim10" href="#">发送群消息</a></li>
+<b>FaFaMessage.SendGroupMessage(From, To, Msg, Nick):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From：string	Jid串。消息发送者<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To：string	Jid串。消息接收群<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Msg：string	消息内容。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nick：string	发送者姓名。<br>
+返回值：无。<br>
+向指定的群立即发送消息。<br>
+<br><br>
+		</div>
+	</div> 
+<li><a href="#" name="webcomponent-status" id="webcomponent-status">状态感知组件</a></li> 
+	<div class="help_right_text">
+用户出席(上线、下线、状态切换)状态感知，当好友或特定的联系人（需要订阅）的状态发生变化时，能自动接收到变化通知，并调用指定的回调处理。<br>
+引用地址：{SERVER-HOST}/bundles/fafatimeweopenapi/js/fapresence.js<br>
+<br><br>
+<li ><a id="webcomponent-status1" name="webcomponent-status1" href="#">连接服务器</a></li>
+<b>FaFaPresence.Connection(appid):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid：string	应用标识号。注册应用时由Wefafa分配。<br>
+返回值：无。<br>
+连接到IM服务器。<br>
+<br><br>
+<li ><a id="webcomponent-status2" name="webcomponent-status2" href="#">感知帐号绑定</a></li>
+<b>FaFaPresence.AddBind(eleID,user):</b><br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eleID：string	用户控件ID，一般指在页面上，包含用户姓名的控件的ID。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user：string	用户帐号。也可以在控件上指定属性account为用户的帐号，这时该参数可以省略。<br>
+返回值：无。<br>
+添加一个新的需要实时感知其出席状态的用户帐号。<br>
+例：<br>
+HTML：＜div＞＜span id='test'＞在线客服＜/span＞＜/div＞<br>
+JS:FaFaPresence.AddBind("test","servie@fafatime.com");<br>
+<br><br>
+<li ><a id="webcomponent-status3" name="webcomponent-status3" href="#">在线状态处理</a></li>
+<b>FaFaPresence.OnStateChange:</b><br>
+参数：无。<br>
+返回值：无。<br>
+感知或订阅的人员在线状态发生改变时处理事件。通常情况下，系统都应把当前的在线状态实时的反应给操作用户。<br>
+例：<br>
+FaFaPresence.OnStateChange=function(presence){alert(presence);}<br>
+<br><br>
+	</div> 
+<li><a href="#" name="webcomponent-share" id="webcomponent-share">数据分享组件</a></li> 
+<div class="help_right_text">
+		该组件主要提供将指定的内容分享到指定圈子/群组的功能。WEB应用可以在页面上引用。<br>
+		引用地址：{SERVER-HOST}/bundles/fafatimewebase/js/faapishare.js<br>	
+		打开分享窗口：FaFaShare.share_Show_Window(content)
+</div> 
+ </ul>

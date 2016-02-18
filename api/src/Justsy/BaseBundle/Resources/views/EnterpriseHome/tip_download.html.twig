@@ -1,0 +1,41 @@
+<div id="tip_download">
+  <div class="bob">
+    <div class="bobleft"></div>  
+    <div class="bobtop"></div>  
+    <div class="bobbottom"></div>  
+    <div class="bobright1"></div>  
+    <div class="bobright2"></div>  
+  </div>
+  <div class="title">欢迎下载安装wefafa客户端</div>
+  <div class="tipcontent">
+    <h5>实时信息推送</h5>
+    <div>实时文字、图片、语音消息聊天，企业通知、公告、广播、任务、工资条、客户订单等信息的实时推送。</div>
+    <h5>群组管理</h5>
+    <div>可组建消息群组、临时讨论组、语音会议组。</div>
+    <h5>高质量的语音功能</h5>
+    <div>采用全球领先的语音引擎，实现PC、手机（Android）间高质量免费的语音消息、语音对讲、语音会议，极大的节省企业管理与运营成本。</div>
+    <h5>清晰的视频通话</h5>
+    <div>采用全球领先的视频引擎，实现低带宽，高清晰的视频对话。</div>
+    <h5>高速文件传输</h5>
+    <div>一对一高速文件传输、群文件共享、离线文件，真正方便员工移动办公。</div>
+  </div>
+  <div class="foot">
+    <a href="javascript:;" onclick="TipDownload.noremind(this)" url="{{ path("JustsyBaseBundle_enterprise_settipdownload", {'network_domain' : curr_network_domain}) }}">不再提醒</a>
+    <a class="btnclose" href="javascript:;" onclick="TipDownload.close(this)">关闭</a>
+  </div>
+</div>
+<script type="text/javascript">
+var TipDownload = {
+  noremind : function (sender) {
+    var $sender = $(sender);
+    
+    $.getJSON($sender.attr("url"), {t : new Date().getTime()}, function (data) {
+    });
+        
+    this.close(sender);
+  },
+  close : function (sender) {
+    $("#tip_download").remove();
+  }  
+};
+</script>

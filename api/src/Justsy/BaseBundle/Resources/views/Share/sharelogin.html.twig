@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}" type="text/javascript"></script>
+<link   rel="stylesheet" href="{{asset('bundles/fafatimewebase/css/share.css')}}?t=1" type="text/css">
+<script src="{{ asset('bundles/fafatimewebase/js/faapishare.js')}}" type="text/javascript"></script>
+</head>
+<body style="padding:0px;margin:0px">
+<form id="form1"  method="post">
+   <input type="hidden" name="ref_url" id="ref_url" value="{{ref_url}}">
+   {% if error %}
+        <div style="display:none" id="errorMsg" class="error">{{ error.message }}</div>
+   {% endif %}
+   <div id="wefafa_share_body" style='width:500px;height:320px;'>
+    <!--<div class="wefafa_share_modal in" id="div_share" style="width: 580px; height: 400px;top: 50%; cursor: default;" show="false">-->
+    <div id="div_share" style="width: 500px; height: 320px;top: 50%; cursor: default;" show="false">
+            <div class="wefafa_share_title"><img style="float:left;margin-left:12px;width:16px;heigth:16px;margin-top:6px;" src="/bundles/fafatimewebase/images/we16.png" /><span id="windows_title" style="margin-left:5px;color:black;">Wefafa用户登录</span></div>
+            <div class="wefafa_share_forwards">
+                <div class="wefafa_share_contentbox">
+                    <div id="content_box" class="hover">
+                        <div>
+                            <div style="height: 35px;">
+                               <span style="font-weight: bold;">已有wefafa用户账号，请直接登录</span>
+                            </div>
+                            <div style="text-align: center;position: relative;">
+                                <span> 登录账号：</span>
+                                <input type="text" style="border:1px solid rgb(127,157,185);font-size:14px;height:28px;line-height:28px;width:185px;" id="_username" name='_username' maxlength="32"  placeholder="登录帐号/手机号" tabindex="1" />
+                                <span class="wefafa_share_account_error" style="display: none;">
+                                    <div style="font-weight: bold;"> 错误！</div>
+                                    <div class="wefafa_alert_account_close"></div>
+                                    <span id="span_account_error"></span>
+                               </span>
+                            </div>
+                            <div style="text-align: center;position: relative;">
+                                <span> 登录密码：</span>
+                                <input type="password" style="border:1px solid rgb(127,157,185);font-size:14px;height:28px;line-height:28px;width:185px;" 
+                                       id="_password" name='_password' maxlength="30" tabindex="2" />
+                                <span class="wefafa_share_password_error" >
+                                  <div style="font-weight: bold;">错误！</div>
+                                  <div class="wefafa_alert_account_close"></div>
+                                  <span id="span_password_error"></span>
+                                </span>
+                           </div>
+                            <div style="text-align: center;">
+                                <input class="checkinput" type="checkbox" id="remember_me" name="_remember_me" checked style="display:none;"/>
+                                <span id="wefafa_share_login" style="margin-right:12px; background-color: #696969;color: white;
+                                    width:80px; border: 0 none; display: inline-block;font-size:14px; font-weight:700;
+                                    height:30px; line-height: 28px; margin-top: 1px; text-align:center; vertical-align: baseline;" tabindex="3">登&nbsp;&nbsp;录</span>
+                            </div>
+                        </div>
+                        <div >
+                                <div style="height: 35px;">
+                                    <span style="font-weight: bold; ">还没有wefafa账号?赶快免费注册一个吧！</span></div>
+                                <div  style="text-align: center;">
+                                    <span id="wefafa_register" style="margin-left: 35px; background-color: rgb(0,153,68);
+                                        color: white; width: 80px; border: 0 none; cursor: pointer; display: inline-block;
+                                        font-size: 14px; font-weight: 700; height: 30px; line-height: 28px;text-align: center; vertical-align: baseline;"
+                                        tabindex="3">立即注册</span>
+                                </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+  </div>
+  </div> 
+</form>
+</body>
+</html>
+
+<script type="text/javascript">
+   $(document).ready(function(){ 
+     var errorMsg = $("#errorMsg");
+     if(errorMsg!=null && errorMsg[0]!=null)
+     {
+    	  if(errorMsg[0].innerHTML.indexOf("password")>1){
+    	  	$('#span_password_error').text ("登录密码不正确！");
+    	  	$('.wefafa_share_password_error').show();
+    	    setTimeout("$('.wefafa_share_password_error').hide()",2000);
+    	    $("#_password [realtype='text']").focus();
+    	  }
+    	  else if(errorMsg[0].innerHTML=="Bad credentials")
+    	  {
+    	  	$('#span_account_error').text ("登录帐号不正确！");
+    	  	$('.wefafa_share_account_error').show();
+			    setTimeout("$('.wefafa_share_account_error').hide()",2000);
+			    $('#_username').focus();
+    	  }
+     }
+          
+     var regexps =/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+     //检验用户账号
+     $("#_username").live("blur",function(){
+        $(".wefafa_share_account_error").show();
+        if(this.value==""){
+          $("#span_account_error").text("登录账号不允许为空，请输入！");
+          setTimeout("$('.wefafa_share_password_error').hide()",2000);
+          return false;
+        }
+        else if (!regexps.test(this.value)){
+          $("#span_account_error").text("登录账号有误，请重新输入！");
+          setTimeout("$('.wefafa_share_password_error').hide()",2000);
+          return false;
+        }
+        $(".wefafa_share_account_error").hide();
+     });
+     
+     //关闭用户账号出错提示
+     $(".wefafa_alert_account_close").live("click",function(){
+       $(this).parent().hide();
+       $("#text_fafa_account").focus();
+     });
+     
+     //校验密码
+     $("#_password").live("blur",function(){
+       $(".wefafa_share_password_error").show();
+       if(this.value==""){
+         $("#span_password_error").text("登录密码不允许为空！");
+         setTimeout("$('.wefafa_share_password_error').hide()",3000);
+       }
+       else
+         $(".wefafa_share_password_error").hide();
+     });
+     
+     //注册
+     $("#wefafa_register").live("click",function(){
+        window.open("https://www.wefafa.com");
+     });
+
+     function checkIntegrality(e_source) 
+     {
+  	    var usr = $("#_username").val();
+  	    var pTmp = document.getElementsByName("_password");
+  	    var pwd = "";
+  	    for(var i=0;i<pTmp.length;i++)
+  	    {
+  	     if(pTmp[i].type=="password")
+  	     {
+  	         pwd = pTmp[i].value;
+  	         break;
+  	     }
+  	    }
+	      if( usr == "登录帐号/手机号" )
+	      {
+	        $('p#p_user').text ("{% trans %}登录帐号不能为空！{% endtrans %}！");
+		      $('#nameerror').slideDown(showTime,callback2);	    
+	        $("#_username").focus();
+	        return false;
+	      }
+	      else if(usr == "")
+	      {
+	        $('p#p_user').text ("请输入登录帐号！");
+			    $('#nameerror').slideDown(showTime,callback2);
+	      }
+
+        if(pwd=="" || pwd=="登录密码")
+        {
+        	if(e_source=="" || e_source=="pwd"){
+            $('p#p_pwd').text ("登录密码不能为空！");
+            $('#pwderror').slideDown(showTime,callback3);
+          }
+	      $('input[name="_password"]:text').focus();
+        return false; 
+        }
+        $('input[name="_password"]:text').remove();
+        document.getElementById('wefafa_share_login').innerHTML="登录中...";
+        document.getElementById('wefafa_share_login').onclick = null;        
+        document.getElementById("form1").action="{{ path('JustsyBaseBundle_sharelogincheck')}}";//
+        document.getElementById("form1").submit();
+        return true;
+     }
+     
+     //登录
+     $("#wefafa_share_login").live("click",function(){
+       checkIntegrality('');
+     });
+   });
+   
+</script>

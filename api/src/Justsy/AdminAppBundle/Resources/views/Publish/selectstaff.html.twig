@@ -1,0 +1,75 @@
+<style type="text/css">
+	.select_status
+	{
+		 border: 1px solid #0088cc;
+    color: #cc3300;
+    font-weight: bold;
+	}
+	.mb_seluser { float:left;width:100%;}
+</style>
+
+<div class="mb_seluser">
+	<div class="selresult">
+		<button class="btn btn-default" onclick="$(this).parent().siblings('.selcontent').toggleClass('show')">选择人员范围</button>
+		<span class="result"></span>
+	</div>
+	<div class="selcontent" style="margin-top:5px; display:none;">
+		<ul class="list-group">
+		  <li class="list-group-item">
+		  	<button class="btn btn-default btn-sm" id="btn_zzjg" onclick="mb_seluser.selected(this);">组织机构</button>
+		  	<span id="sel_zzjg"></span>
+		  	<div class="popover" style="top:10px; left:90px; max-width: none;">
+		  	  <h3 class="popover-title">请选择组织机构
+				<span class="glyphicon glyphicon-remove pull-right" style="cursor:pointer;" onclick="$(this).parents('.popover').toggleClass('show')"></span>
+				<input type="text" class="form-control input-sm" placeholder="过滤" style="float: right; margin: -7px 150px 0px 0px; width: 135px;" onkeyup="mb_seluser.txfilterzzjg_OnChange(this)">
+		  	  </h3>
+		      <div class="popover-content">
+		        <ul id="treezzjg" class="ztree" style="max-height:300px; width:100%; min-width: 400px; background-color:white; border:none;"></ul>
+		      </div>
+		    </div>
+		  </li>
+		  <li class="list-group-item">		  	
+		  	<button class="btn btn-default btn-sm" id="btn_zjwd" onclick="mb_seluser.selected(this);">职级维度</button>
+		  	<span id="sel_zjwd"></span>
+		  	<div class="popover" style="top:-41px; left:90px;">
+		  	  <h3 class="popover-title">请选择职级维度
+				<span class="glyphicon glyphicon-remove pull-right" style="cursor:pointer;" onclick="$(this).parents('.popover').toggleClass('show')"></span>
+		  	  </h3>
+		      <div class="popover-content">
+		        <ul id="treezjwd" class="ztree" style="width:100%;border:none;min-width:250px;overflow-x:hidden;overflow-y:auto;max-height:300px;background-color:white;"></ul>
+		      </div>
+		    </div>
+		  </li>
+		  <li class="list-group-item">
+		  	<button class="btn btn-default btn-sm" id="btn_ryfl" onclick="mb_seluser.selected(this);">人员分类</button>
+		  	<span id="sel_ryfl"></span>
+		  	<div class="popover" style="top:-92px; left:90px;">
+		  	  <h3 class="popover-title">请选择人员分类
+				<span class="glyphicon glyphicon-remove pull-right" style="cursor:pointer;" onclick="$(this).parents('.popover').toggleClass('show')"></span>
+		  	  </h3>
+		      <div class="popover-content">
+		        <ul id="treeryfl" class="ztree" style="max-height:300px;width:100%;min-width:250px;background-color:white;border:none;"></ul>
+		      </div>
+		    </div>
+		  </li>
+		  <li class="list-group-item">
+			<table style="width: 100%">
+				<tr>
+					<td style="width: 70px;text-align: center">员工号</td>
+					<td><textarea id="sel_ygh" class="form-control" placeholder="以英文;或,或回车分隔多个员工号" style="margin-bottom: 5px" onchange="mb_seluser.displayResult()"></textarea></td>
+				</tr>
+				<tr>
+					<td style="width: 70px;text-align: center">排除<br>员工号</td>
+					<td><textarea id="sel_noygh" class="form-control" placeholder="以英文;或,或回车分隔多个员工号" onchange="mb_seluser.displayResult()"></textarea></td>
+				</tr>
+			</table>
+		  </li>
+		</ul>
+	</div>
+	<div class="divclear"></div>
+</div>
+
+<script type="text/javascript">
+  var mb_seluser_urls = {	deptquery :"{{path('JustsyAdminAppBundle_mb_msgpush_depart')}}"};
+</script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/selectstaff.js')}}"></script>

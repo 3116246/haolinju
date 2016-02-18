@@ -1,0 +1,268 @@
+<script src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/editor/xheditor-1.1.13-zh-cn.min.js" type="text/javascript"></script>
+<script src="{{asset('bundles/fafatimewebase/js/faapishare.js')}}" type="text/javascript"></script>
+<script src="{{asset('bundles/fafatimewebase/js/ZeroClipboard.js')}}" type="text/javascript"></script>
+<div class="memberbox" style="height:30px">
+	      <input class="search-circles-input" style="float:left;width:300px" maxlength="30" id="docSearchCondition" type="text">
+	      <div class="circles-search-box" style="float:left;position: relative;right:0px;left:-2px">
+	        <input id="btnDocSearch" class=" circlessearch" name="input" value="搜索文档" type="button">
+	      </div>  
+</div>
+<div class="memberbox" id="doc_tools_main" style="height:20px">
+    <span class="doc_tools_cdir" title="在当前文件夹下创建新的子文件夹">创建文件夹</span>
+    <span class="doc_tools_upload" title="上传新的文件到当前文件夹">
+					<div style="display:{{ mode!="select" ? "block" : "none" }}">
+						<span id="addFile"  class="uploadbutton" style="overflow:hidden;display: block;width: 55px;">
+						              <form style="margin:0px" id="mgr_upload_file" name="mgr_upload_file"  method="post" enctype="multipart/form-data">
+						              <input type="hidden" id="uploadSourcePage" name="uploadSourcePage" value="dir">
+						              <input type="hidden" id="hpost_to_group" name="hpost_to_group">
+						              <input type="hidden" id="hpost_to_dir" name="hpost_to_dir">
+						              <span id="mgr_upload_file_sel" style="cursor:pointer;display: inline-block;position: relative;width: 122px;">
+						              <input tabindex="-1" name="filedata" hidefocus="hidefocus" onchange="fileSelect_ext('{{ path('JustsyBaseBundle_documnet_upload',{'network_domain':this.network_domain})}}')" id="filedata" size="0" style="cursor: pointer;left: 0;filter:alpha(opacity = 0);opacity:0;-moz-opacity:0;position: absolute;top: 0;z-index: 1000002; width:70px;outline: none;" multiple="" type="file">
+						              上传文件
+					                </span>
+					              <span  id="mgr_upload_file_ing" style="display:none;position: relative;width:122px;"><img width=16 height=16 src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}"><a>上传中...</a></span>
+					              </form>
+			     </span>  
+			     <script type="text/javascript">
+//			       $("#addFile").mousemove(function (e) 
+//			       {
+//			          //var e = e || window.event;
+//			          var offsetA = $(this).offset();
+//			          var newX = e.clientX - offsetA.left  - 50;
+//			          var newY = e.clientY - offsetA.top - 20;
+//			          $(this).find("input:file").css("left", browser.firefox ? "-160px":newX+"px");
+//			          $(this).find("input:file").css("top",  browser.firefox ? "-4px":newY+"px");
+//			       });
+			     </script>
+			   </div>     
+    </span>
+    <span class="doc_tools_cfile" title="创建新的文档">创建文档</span>
+</div>
+<div>
+	<div id="docshowlist" class="modal docshowlist" fileurl="{{ path('JustsyBaseBundle_documnet_getfilelist',{'network_domain':this.network_domain})}}" dirurl="{{ path('JustsyBaseBundle_documnet_getdirlist',{'network_domain':this.network_domain})}}" >
+	    <div class="dirlist doc_window_title"><span>&nbsp;&nbsp;路径：</span><span class="dirsplit">/</span><span dir_id="" class="dirpath">文档库</span><span id='middlepath'></span><span class='dir_tools_refresh' style='float:right' title="刷新当前文件夹"></span><span title="返回上一级文件夹" class='dir_tools_returnup' style='float:right'></span></div>
+	    <div class="dirlisttitle">
+	        <span class="doc_info_name" style="border:0px;">&nbsp;&nbsp;名称</span>
+	        <span class="doc_info_owner" style="color:#000000;">&nbsp;&nbsp;类型</span>
+	        <span class="doc_info_cdate" style="color:#000000;">&nbsp;&nbsp;创建时间</span>
+	    </div>
+	    <div id="con_mgr_two1" class="doc_display_con_area">
+	    
+	    </div>
+	</div>
+	<div class="modal doc_attributes" id="doc_attributes" url="{{ path('JustsyBaseBundle_documnet_getfileshare',{'network_domain':this.network_domain})}}" data-backdrop=false show=false>
+	      <div class="doc_window_title">
+	      	<span>&nbsp;&nbsp;属性</span>
+	      </div>
+		    <div id="attributes_list"  >
+		       <div id="attributes_list_hint" style="height:210px;line-height:210px;text-align:center">选择目录/文档可查看详细属性</div>
+		       <div id="attributes_list_content" style="height:210px;display:none;overflow:hidden">
+		           <div id="docinfo_name"><span style="display: block;float: left;text-align: right;width: 60px;padding-left:2px">名称：</span><span style="text-overflow: ellipsis;white-space: nowrap;display: block;float: left;overflow: hidden;width: 156px;"></span></div>
+		           <div id="docinfo_owner"><span style="display: block;float: left;text-align: right;width: 60px;padding-left:2px">创建者：</span><span style="text-overflow: ellipsis;white-space: nowrap;display: block;float: left;overflow: hidden;width: 156px;"></span></div>
+		           <div id="docinfo_date"><span style="display: block;float: left;text-align: right;width: 60px;padding-left:2px">创建时间：</span><span style="text-overflow: ellipsis;white-space: nowrap;display: block;float: left;overflow: hidden;width: 156px;"></span></div>
+		           <div style="height:5px"><hr style="margin:0px;width:220px;float:left"></div>
+		           <div><span style="padding-left:2px;cursor:default">共享设置</span><span></span></div>
+		           <div id="docinfo_share" style="width:195px;height: 115px;overflow:auto"></div>
+		       </div>
+		    </div>
+	</div>
+	<div class="modal doc_comment" id="doc_comment" active='0' isdir='' isfile='' objectid='' data-backdrop=false show=false>
+	      <div class="doc_window_title">
+	      	<span>&nbsp;&nbsp;评论<span class='comfor'></span></span><span style='float:right;margin-right:5px;'><img onclick='changeComCard()' style='width:24px;height:24px;margin-bottom:4px;margin-right:2px;cursor:pointer;' src='{{asset('bundles/fafatimewebase/images/goback.png')}}' title='返回'/><a id='com_put' href='javascript:;'>发表</a></span>
+	      </div>
+		    <div class="comment_list"  >
+		      <div class='com_content'><span id='com_note'>选择目录/文档可发表评论</span><div style='display:none;' id='conv_div'>
+		      	<div style='display:none;' class='com_5'><font style='color:#bbb'>最新评论:</font><a style='color:#0078b4;' href='javascript:;' onclick='getMoreCom()'>更多>>></a></div><div id='conv_containter'><div id='conv_content'></div></div></div></div>
+		      <div class='com_write'>
+		      <div class='com_write_title'></div>
+		      <textarea maxlength='50' placeholder='写下你想说的!'>
+		      		
+		      </textarea>
+		      <div class='sta'>还能输入字符数:<span class='com_letter'>50</span>
+		      	<input class='doc_md_content_right_btn' type='button' value='提交' style='float:right;margin-right:4px;' onclick='submitCom()'/></div>
+		    </div>
+		    </div>
+	</div>
+</div>
+<div class="doc_open modal" id="doc_open" url="{{ path('JustsyBaseBundle_documnet_view_mgr',{'network_domain':this.network_domain})}}" data-backdrop=false style="overflow:hidden;display:none;height: 500px;margin-left: -400px;margin-top: -250px;width: 800px;" show=false>
+      <div class="doc_window_title">
+      	<span style="height:28px;float:left">&nbsp;&nbsp;文件查看</span><span title="关闭窗口" style="height:28px;float:right;cursor:pointer;margin-right: 5px;" onclick="$('.doc_open').hide();$('#filefrm')[0].src='about:blank'">×</span>
+      </div>
+	    <div style="float:left;width:595px;height:464px;overflow:auto;margin-left:5px;margin-top:5px">
+	      <iframe id="filefrm" name="filefrm" style="height:457px;width:593px" frameborder='no' border='0' marginwidth='0' marginheight='0'></iframe>
+	    </div>
+	    <div style="float:left;width:198px;height:469px;border-left:1px solid #ccc">
+	        <div class="doc_open_file_download" style="width:198px;text-align:center;border-bottom:1px solid #ccc;float:left;">[<a id="download_to_location" href="javascipt:void(0)"><u>下载到本地</u></a>]</div>
+	        <div class="doc_file_addr_copy" style="height:28px;width:198px;text-align:center;border-bottom:1px solid #ccc;float:left;">
+	            <input type=text id="file_addr_text" readOnly style="cursor: default;width:120px;margin: 3px;padding:0 3px 0 0;background:#ccc;float:left">	
+	            <div id="d_clip_container" style="position:relative;margin-top: 2px;width:60px;float:left"><div id="d_clip_button" class="my_clip_button"><b>复制地址</b></div></div>
+				  </div>
+	        <div id='allcontent' style="width:198px;float:left;"><span style='margin-left:70px;' id='com_all_note'></span><div>
+	        	<div style='display:none;' class='com_all'><font style='color:#bbb'>所有评论:</font><a style='color:#0078b4;' href='javascript:;'>我要评论</a></div>
+	        	<div id='content_list'></div>
+	        	</div></div>
+	    </div>	    
+</div>
+<div class="doc_createDir modal" id="doc_createDir" data-backdrop=false style="display:none;height: 129px;margin-left: -110px;margin-top: -60px;width: 220px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;创建新文件夹</span>
+      </div>
+	    <div>
+	      <div class="doc_md_content_left_icon"></div>
+	      <div class="doc_md_content_right">
+	          <div><span>名称：</span><input type="text" maxlength="12" style="width:100px;margin-bottom: 0;padding: 0;"></div>
+	          <div style="margin-left: 20px;margin-top: 10px;"><span id="saveDir" url="{{ path('JustsyBaseBundle_documnet_savedir',{'network_domain':this.network_domain})}}" editurl="{{ path('JustsyBaseBundle_documnet_savedir',{'network_domain':this.network_domain})}}" class="doc_md_content_right_btn">确定</span><span id="cancelDir" class="doc_md_content_right_btn">取消</span></div>
+	          <div class="savehint" style="height:20px;width:100%;float:left"></div>
+	      </div>	      
+	    </div>
+</div>
+<div class="doc_deleteconfirm modal" checkfileurl="{{ path('JustsyBaseBundle_documnet_filedel_chk')}}" checkdirurl="{{ path('JustsyBaseBundle_documnet_dirdel_chk')}}" id="doc_delete" data-backdrop=false style="display:none;height: 129px;margin-left: -110px;margin-top: -60px;width: 220px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;删除文件夹</span>
+      </div>
+	    <div>
+	      <div class="doc_rd_deleteconfirm_left"></div>
+	      <div class="doc_rd_deleteconfirm_right">
+	          <div class="doc_rd_deleteconfirm_text"></div>
+	          <div style="margin-left: 20px;margin-top: 10px;float:left"><span id="deleteDoc" deletefileurl="{{ path('JustsyBaseBundle_documnet_del')}}" deletedirurl="{{ path('JustsyBaseBundle_documnet_deletedir')}}" class="doc_md_content_right_btn">确定</span><span id="cancelDelete" class="doc_md_content_right_btn">取消</span></div>
+	          <div class="deletehint" style="margin-left: 70px;height:20px;width:130px;float:left"></div>
+	      </div>	      
+	    </div>
+</div>
+<div class="doc_publish modal" id="doc_publish" data-backdrop=false style="overflow:hidden;display:none;height: 195px;margin-left: -210px;margin-top: -90px;width: 420px;" show=false>
+      <div class="doc_window_title">
+      	<span>&nbsp;&nbsp;分享到</span>
+      </div>
+	    <div>
+	      <div class="doc_doc_publish_content_right">
+		        <div style="margin-bottom: 0px;margin-top: 10px;" class="input_con_area text_div" id="con_one1">
+		                 <textarea placeholder="说说分享感言吧！" style="height: 56px;border-bottom: 1px solid #CCCCCC;border-radius:0px 0px 0px 0px" class="text_input userAutoTips FaceAutoTips" rows="" cols="" id="doc_publish_remark"></textarea>
+		        </div>	          
+	          <div style="margin-left: 10px;margin-top: 10px;height: 30px;">
+		            <div class="docpublishcirclelist postselect" style="line-height: 17px; display:block;float:left;width:146px">
+						  		<ul dropdownlist="1" style="list-style: none outside none;height: 22px;float:left;width:130px;margin: 0;">		
+						  			  <li style="float:left"><a href="javascript:void(0);" style="width: 129px; float: left;"><div class="postto icon16"></div><span class="circle_list_item" id="spost_to_circle_name">全部成员</span></a>
+						  				<ul id="doc_publish_circle_list" class="doc_publish_post_list" style="width:146px">
+						  					<li style="background-color:#99CCCC; text-align:center; color:#fff;">分享到 …</li>
+						  				</ul>
+						  			</li>
+						  		</ul>
+						  		<span style="margin-top: 2px;display:block;width:16px;height: 16px;float:right;background: url('/bundles/fafatimewebase/images/qz_arrow.png') no-repeat 0 0"></span>
+						    </div>
+		            <div class="docpublishgrouplist postselect" style="line-height: 17px; display:block;float:left;width:100px">
+						  		<ul dropdownlist="1" style="list-style: none outside none;height: 22px;float:left;width:82px;margin: 0;">		
+						  			  <li style="float:left"><a href="javascript:void(0);" style="width: 100px; float: left;"><div class="postto_group icon16"></div><span class="group_list_item" id="spost_to_group_name">全部成员</span></a>
+						  				<ul id="doc_publish_group_list" class="doc_publish_post_list" style="width:100px">
+						  					<li style="background-color:#99CCCC; text-align:center; color:#fff;">分享到 …</li>
+						  					<li group_id="" ><a href="javascript:void(0);" style="width: 100px; float: left;"><div class="postto_group icon16"></div><span class='group_list_item'>全部成员</span></a></li>
+						  				</ul>
+						  			</li>
+						  		</ul>
+						  		<span style="margin-top: 2px;display:block;width:16px;height: 16px;float:right;background: url('/bundles/fafatimewebase/images/qz_arrow.png') no-repeat 0 0"></span>
+						    </div>						    
+	              <span id="savePublish" url="{{ path('JustsyBaseBundle_documnet_filepublish',{'network_domain':this.network_domain})}}" class="doc_md_content_right_btn">确定</span><span id="cancelPublish" class="doc_md_content_right_btn">取消</span>
+	          </div>
+	          <div class="publishsavehint" style="height:20px;width:70%;float:right"></div>
+	      </div>
+	    </div>
+</div>
+<div id='doc_create_content' class="modal doc_create_content" style="display:none;z-index:10000;">
+      <div class="doc_window_title">
+      	<span style="height:28px;float:left">&nbsp;&nbsp;创建新文本文档</span><span title="关闭窗口" style="height:28px;float:right;cursor:pointer;margin-right: 5px;" onclick="$('#doc_create_content').hide();newDoc_Input.setSource('')">×</span>
+      </div>
+      <form id="frm_newdoc" name="frm_newdoc" method="post" action="{{ path('JustsyBaseBundle_documnet_savenewdoc',{'network_domain':this.network_domain})}}">
+      <input id="newdoc_content" name="newdoc_content" type="hidden">
+      <input id="newdoc_parent_dir" name="newdoc_parent_dir" type="hidden">
+      <div style="line-height: 28px;height:28px;float:left;"><span>&nbsp;&nbsp;文档名称：</span><input type="text" id="newdoc_name" name="newdoc_name" maxlength=32 style="width:200px;padding:0px;margin:0px"></div>
+      <div style="float:left;height:390px">
+          <textarea id="doc_create_input"></textarea>
+      </div>
+      <div style="margin-top:5px;float: left;margin-left: 220px;">
+      <span id="saveNewDoc" class="doc_md_content_right_btn">保存</span><span id="cancelNewDoc" onclick="$('#doc_create_content').hide();newDoc_Input.setSource('')" class="doc_md_content_right_btn">取消</span><span id="save_new_doc_hint"></span>
+      </div>
+      </form>
+</div>
+<div id="doc_tools" style="backgrorund:#ddf3fe">
+   <div class="doc_tools_rename" title="重命名"></div>
+   <div class="doc_tools_open" title="打开"></div>
+   <div class="doc_tools_download" title="下载到本地"></div>
+   <div class="doc_tools_share" title="共享设置"></div>
+   <div class="doc_tools_publish" title="分享到"></div>
+   <div class="doc_tools_delete" title="删除"></div>
+</div>
+<div id="deptlist" style="position:absolute;top:30px;left:1px;width:180px;display:none;z-index:1080;">
+            <div style='display:none' class="zTreeDemoBackground"><img  src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16">正在加载数据...</div>
+            <div id="deptdiv" style="display:none" isload="0" class="zTreeDemoBackground" url="{{ path('JustsyBaseBundle_account_deptquery', {'network_domain' : this.network_domain})}}">
+               <ul id="depttree" class="ztree"></ul>	
+            </div>
+</div>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Document.js') }}"></script>
+<script type="text/javascript">
+
+var path="{{path}}",mode="{{mode}}",newDoc_Input=null,clip = null;
+{%for item in this.circles_array %}
+   circles.push({"circle_id":"{{item["circle_id"]}}","circle_name":"{{item["circle_name"]}}"});
+{%endfor%}
+{%for item in this.groups_array %}
+   groups.push({"group_id":"{{item["group_id"]}}","group_name":"{{item["group_name"]}}","circle_id":"{{item["circle_id"]}}"});
+{%endfor%}
+//g_curr_circle_id
+$(document).ready(function() {    
+				{%if(mode!="select")%}
+				  //LoadJs.load("{{asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}");
+				  $("#doc_attributes").show();
+				  $("#doc_comment").show();
+				  newDoc_Input=$('#doc_create_input').xheditor({ plugins:null, width: '600px', height: '320px', skin: "o2007silver", forcePtag: false,  sourceMode: false });
+        
+				  Account.login_account = "{{account}}";
+				  Account.deptClick=Account.deptCheck=function(treeId, treeNode){
+				     //单击部门节点时触发该处理过程
+				     if($(".dept_list .t[val='"+treeNode.id+"']").length==0){
+					     $(".select_dept").hide();
+							 $(".dept_list").append("<span class='t' val='"+treeNode.id+"'>"+treeNode.name+"<span onclick='deptRe(event,this)' class='c'>×</span></span>");
+							 setGDLayout($(".dept_list")[0],$('.share_dept_div')[0]);
+						 }
+				  };
+          Account.loadDept(true);	
+          
+				{%else%}
+				  $("#doc_tools_main").hide();
+				  $(".twomain").css("width","730px");
+				  $(".twocenter").css({"width":"520px","overflow":"auto","height": "400px"});
+				  $("#docshowlist").css({"min-height":"340px"});
+				  $(".doc_display_con_area").css("min-height","200px");
+				  $(".menuother").css("margin-top","0px");
+				{%endif%}
+				shareSetUrl="{{path('JustsyBaseBundle_document_share_set',{'network_domain':this.network_domain})}}";
+				getPersonUrl="{{path('JustsyBaseBundle_document_getperson',{'network_domain':this.network_domain})}}";
+				putComUrl="{{path('JustsyBaseBundle_document_publishconv',{'network_domain':this.network_domain})}}";
+				getcomUrl="{{path('JustsyBaseBundle_document_getconv',{'network_domain':this.network_domain})}}"; 
+				var groupid="{{ group_id }}";  
+				if(groupid!="") groupid = "g"+groupid;
+        init("{{path('JustsyBaseBundle_documnet_del')}}","{{path('JustsyBaseBundle_document_getdg',{'network_domain':this.network_domain})}}", groupid, "{{ group_name }}");
+        $('#doc_publish_remark').maxlength({maxCharacters:200,status:true});
+});  
+
+		
+		function Clipboardinit() {
+		  ZeroClipboard.setMoviePath("{{asset('bundles/fafatimewebase/js/ZeroClipboard.swf')}}");
+			clip = new ZeroClipboard.Client();
+			clip.setHandCursor( true );
+			
+			clip.addEventListener('load', function (client) {
+				//debugstr("Flash movie loaded and ready.");
+			});
+			
+			clip.addEventListener('mouseOver', function (client) {
+				// update the text on mouse over
+				clip.setText( $('#file_addr_text').val() );
+			});
+			
+			clip.addEventListener('complete', function (client, text) {
+				 $("#d_clip_button").text("已复制");
+				 setTimeout(function(){$("#d_clip_button").html("<b>复制地址</b>")},2000);
+			});
+			
+			clip.glue( 'd_clip_button', 'd_clip_container' );
+		}
+</script>

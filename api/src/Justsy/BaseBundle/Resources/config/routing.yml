@@ -1,0 +1,2239 @@
+##########################################################
+# 所有路由名称在定义时皆应与路由相关，避免重名
+# 如：
+# JustsyBaseBundle_component_cinputarea_publishTrend:
+#     pattern:  /component/cinputarea/publishtrend
+##########################################################
+#
+#--------------------公共页面--------------------------------------
+
+JustsyBaseBundle_pub_corp:
+    pattern:  /publicpage/corp
+    defaults: { _controller: JustsyBaseBundle:Home:corp}
+
+JustsyBaseBundle_pub_jobs:
+    pattern:  /publicpage/jobs
+    defaults: { _controller: JustsyBaseBundle:Home:jobs}
+
+JustsyBaseBundle_pub_license:
+    pattern:  /publicpage/license
+    defaults: { _controller: JustsyBaseBundle:Home:license}
+
+JustsyBaseBundle_pub_abouts:
+    pattern:  /publicpage/abouts
+    defaults: { _controller: JustsyBaseBundle:Home:abouts}
+
+JustsyBaseBundle_pub_contact:
+    pattern:  /publicpage/contact
+    defaults: { _controller: JustsyBaseBundle:Home:contact}
+
+#---------------------注册-----------------------------------------
+JustsyBaseBundle_register:
+    pattern:  /register/{name}
+    defaults: { _controller: JustsyBaseBundle:Register:index,name:null}
+    requirements:
+      name: ~(check)
+
+JustsyBaseBundle_regpage:
+    pattern:  /register/reg
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:wefafareg}
+
+JustsyBaseBundle_update_adv:
+    pattern:  /updateto/adv
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:toAdv}
+
+JustsyBaseBundle_check:
+    pattern:  /register/check
+    defaults: { _controller: JustsyBaseBundle:Register:check}
+
+JustsyBaseBundle_Code:
+    pattern:  /register/code
+    defaults: { _controller: JustsyBaseBundle:Register:Code}
+
+JustsyBaseBundle_ename:
+    pattern:  /register/ename
+    defaults: { _controller: JustsyBaseBundle:Register:ename}
+
+JustsyBaseBundle_mailtype:
+    pattern:  /register/mailtype
+    defaults: { _controller: JustsyBaseBundle:Register:mailtype}
+
+JustsyBaseBundle_search_ename:
+    pattern:  /register/search
+    defaults: { _controller: JustsyBaseBundle:Register:search}
+
+JustsyBaseBundle_save:
+  pattern: /register/apply/{account}
+  defaults: { _controller: JustsyBaseBundle:Register:apply,account:null }
+
+JustsyBaseBundle_reg_getimserver:
+    pattern:  /register/getimserver
+    defaults: { _controller: JustsyBaseBundle:Register:getIMServer}
+
+JustsyBaseBundle_apply:
+    pattern:  /register/{email},{ename}
+    defaults: { _controller: JustsyBaseBundle:Register:apply,email:null,ename:null}
+
+JustsyBaseBundle_top_staff:
+    pattern:  /register/staff/top
+    defaults: { _controller: JustsyBaseBundle:Register:getRegPer}
+
+JustsyBaseBundle_reg_getjid:
+    pattern:  /register/jid/get/{email}
+    defaults: { _controller: JustsyBaseBundle:Register:getJid}
+
+JustsyBaseBundle_reg_getjidmobile:
+    pattern:  /register/jid/getbymobile/{mobile}
+    defaults: { _controller: JustsyBaseBundle:Register:getJidMobile}
+
+JustsyBaseBundle_reg_getemail:
+    pattern:  /register/email/get/{jid}
+    defaults: { _controller: JustsyBaseBundle:Register:getEmail}
+
+JustsyBaseBundle_reg_getmobile:
+    pattern:  /register/mobile/get/{jid}
+    defaults: { _controller: JustsyBaseBundle:Register:getMobile}
+
+JustsyBaseBundle_create_active_url:
+    pattern:  /register/create/activeurl/{account}
+    defaults: { _controller: JustsyBaseBundle:Register:caUrl}
+#找回密码
+JustsyBaseBundle_reg_retrievepwd:
+  pattern:  /register/pwd/retrieve
+  defaults: { _controller: JustsyBaseBundle:Register:retrievePwd }
+#手机找回密码获取验证码
+JustsyBaseBundle_ret_getmobilecode:
+  pattern:  /register/mobile/mobilecode
+  defaults: { _controller: JustsyBaseBundle:Register:getMobileCode }
+
+#找回密码(以手机验证码方式)
+JustsyBaseBundle_interface_update_pwdbymobile:
+  pattern:  /interface/update/pwdbymobile
+  defaults: { _controller: JustsyBaseBundle:Register:updatePassByMobile} 
+
+#找回密码(以手机验证码方式)
+JustsyBaseBundle_reg_update_pwdbymobile:
+  pattern:  /register/update/pwdbymobile
+  defaults: { _controller: JustsyBaseBundle:Register:updatePassByMobile}   
+
+JustsyBaseBundle_reg_retrievepwd_3g:
+  pattern:  /register/pwd/retrieve/3g
+  defaults: { _controller: JustsyBaseBundle:Register:retrievePwd_3G }
+#保存找回密码申请
+JustsyBaseBundle_reg_saveretrievereq:
+  pattern:  /register/pwd/saveretrievereq
+  defaults: { _controller: JustsyBaseBundle:Register:saveRetrieveReq }
+
+JustsyBaseBundle_reg_saveretrievereq_3g:
+  pattern:  /register/pwd/saveretrievereq/3g
+  defaults: { _controller: JustsyBaseBundle:Register:saveRetrieveReq_3G }
+#找回密码
+JustsyBaseBundle_reg_resetpwd:
+  pattern:  /register/pwd/reset/{para}
+  defaults: { _controller: JustsyBaseBundle:Register:resetPwd,para:null }
+
+#找回密码保存
+JustsyBaseBundle_reg_resetpwdsave:
+  pattern:  /register/pwd/resetsave
+  defaults: { _controller: JustsyBaseBundle:Register:resetPwdSave }
+
+#检查账号及验证码
+JustsyBaseBundle_reg_checkAccountAndCode:
+  pattern:  /register/pwd/checkaccount
+  defaults: { _controller: JustsyBaseBundle:Register:checkAccountAndCode }
+
+#-----------------------------身份认证------------------------------------
+JustsyBaseBundle_identify_auth_eno:
+  pattern:  /{network_domain}/identify/auth/eno
+  defaults: {_controller: JustsyBaseBundle:IdentifyAuth:EnoAuth}
+JustsyBaseBundle_identify_auth_user:
+  pattern: /{network_domain}/identify/auth/user
+  defaults: {_controller: JustsyBaseBundle:IdentifyAuth:UserAuth}
+JustsyBaseBundle_identify_get_post_members:
+  pattern: /identify/get/post
+  defaults: {_controller: JustsyBaseBundle:IdentifyAuth:getPostMembers}
+JustsyBaseBundle_identify_save_enoauth:
+  pattern: /identify/save/enoauth
+  defaults: {_controller: JustsyBaseBundle:IdentifyAuth:SaveEnoAuth}
+JustsyBaseBundle_identify_save_userauth:
+  pattern: /identify/save/userauth
+  defaults: {_controller: JustsyBaseBundle:IdentifyAuth:SaveUserAuth}
+JustsyBaseBundle_identify_user_agree:
+  pattern: /identify/user/agree
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:UserAgree}
+JustsyBaseBundle_identify_apply_success:
+  pattern: /identify/apply/success
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:apply_success}
+JustsyBaseBundle_identify_save_log:
+  pattern: /identify/save/log
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:saveLog}
+JustsyBaseBundle_identify_save_creden:
+  pattern: /identify/save/creden
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:saveCrenditial}
+JustsyBaseBundle_auth_comment:
+  pattern: /identify/auth/comment
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:getComment}
+JustsyBaseBundle_identify_get_selected_members:
+  pattern: /identify/get/selected
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:getSelectedMembers}
+JustsyBaseBundle_identify_get_n_members:
+  pattern: /identify/get/n
+  defaults: {_controller:JustsyBaseBundle:IdentifyAuth:getNMembers}
+
+#---------------------群组相关-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/group/find              对于非特定的群组的路由
+#  /{network_domain}/group/{group_id}        对于特定群组的默认路由
+#  /{network_domain}/group/{group_id}/info   对于特定群组的特定路由
+#  /{network_domain}/group/{group_id}/save   对于特定群组的特定路由
+#群组首页
+JustsyBaseBundle_group:
+  pattern:  /{network_domain}/group/index/{group_id}
+  defaults: { _controller: JustsyBaseBundle:Group:index,network_domain:null,group_id:null }
+#检查是否重名
+JustsyBaseBundle_checkgroupname:
+  pattern:  /group/checkgroupname
+  defaults: { _controller: JustsyBaseBundle:Group:checkGroupName }
+#创建群组
+JustsyBaseBundle_group_create:
+  pattern:  /{network_domain}/group/create
+  defaults: { _controller: JustsyBaseBundle:Group:createIndex,network_domain:null }
+#创建群组保存
+JustsyBaseBundle_group_createsave:
+  pattern:  /{network_domain}/group/createsave
+  defaults: { _controller: JustsyBaseBundle:Group:createSave,network_domain:null }
+JustsyBaseBundle_group_save_logo:
+  pattern: /group/savelog
+  defaults: {_controller:JustsyBaseBundle:Group:savelogo}
+#查找群组
+JustsyBaseBundle_group_search:
+  pattern:  /{network_domain}/group/search
+  defaults: { _controller: JustsyBaseBundle:Group:searchIndex,network_domain:null }
+#查找群组结果
+JustsyBaseBundle_group_searchresult:
+  pattern:  /{network_domain}/group/searchresult
+  defaults: { _controller: JustsyBaseBundle:Group:search,network_domain:null }
+#查找群组会话
+JustsyBaseBundle_group_convers:
+  pattern: /{network_domain}/group/convers/{type},{groupid}
+  defaults: { _controller: JustsyBaseBundle:Group:getGroupConvers,network_domain:null,type:all,groupid:null }
+JustsyBaseBundle_group_convers_pc:
+  pattern: /{network_domain}/group/convers/pc/{type},{groupid}
+  defaults: {_controller:JustsyBaseBundle:Group:getGroupConversPc,network_domain:null,type:all,groupid:null}
+#查找群组未读会话数
+JustsyBaseBundle_group_getunreadconversnum:
+  pattern: /{network_domain}/group/getunreadconversnum
+  defaults: { _controller: JustsyBaseBundle:Group:getUnreadGroupConversNum}
+#检查被邀请的帐号是否已经加入本群
+JustsyBaseBundle_group_checkinvmail:
+  pattern: /group/checkinvmail
+  defaults: { _controller: JustsyBaseBundle:Group:checkInvMail }
+#测试用
+JustsyBaseBundle_circle_ceshi:
+  pattern: /circle/ceshi
+  defaults: {_controller:JustsyBaseBundle:Circle:ceshi}
+#获取群组所在圈子的人员
+JustsyBaseBundle_group_getmember:
+  pattern: /group/getmember
+  defaults: { _controller: JustsyBaseBundle:Group:getMember }
+#收到邀请加入群组
+JustsyBaseBundle_group_invjoin:
+  pattern: /group/join/{para}
+  defaults: { _controller: JustsyBaseBundle:Group:invJoin,para:null }
+#添加成员
+JustsyBaseBundle_group_addmember:
+  pattern: /group/addmember
+  defaults: { _controller: JustsyBaseBundle:Group:addGroupMember }
+#申请加入群组
+JustsyBaseBundle_group_applyjoin:
+  pattern: /group/applyjoin
+  defaults: { _controller: JustsyBaseBundle:Group:applyJoinGroup }
+JustsyBaseBundle_group_applycancel:
+  pattern: /group/applycancel/{groupid}
+  defaults: { _controller: JustsyBaseBundle:Group:applyCancelGroup }
+#同意加入群组
+JustsyBaseBundle_group_agreejoin:
+  pattern: /group/agreejoin/{para}
+  defaults: { _controller: JustsyBaseBundle:Group:agreeJoinGroup,para:null }
+#PC端-群组动态列表管理
+JustsyBaseBundle_group_pcsync_trendlist:
+  pattern: /api/group/trendlist/pcsync
+  defaults: { _controller: JustsyBaseBundle:Group:trendListForPC}
+#退出群组
+JustsyBaseBundle_group_quitgroup:
+  pattern:  /group/quit/{group_id}
+  defaults: { _controller: JustsyBaseBundle:Group:quitGroup }
+
+JustsyBaseBundle_getgroupcard:
+  pattern:  /group/getgroupcard
+  defaults: { _controller: JustsyBaseBundle:Group:getGroupCard }
+
+#未用 确认后删除
+JustsyBaseBundle_group_check:
+    pattern:  /group/check
+    defaults: { _controller: JustsyBaseBundle:Group:check}
+#未用 确认后删除
+JustsyBaseBundle_group_info:
+    pattern:  /group/info
+    defaults: { _controller: JustsyBaseBundle:Group:info}
+#未用 确认后删除
+JustsyBaseBundle_group_update:
+    pattern:  /group/update/{groupid}
+    defaults: { _controller: JustsyBaseBundle:Group:update,groupid:null}
+
+#---------------------圈子管理相关-----------------------------------------
+JustsyBaseBundle_circle:
+    pattern:  /circle
+    defaults: { _controller: JustsyBaseBundle:Circle:index}
+JustsyBaseBundle_circle_get_invite:
+    pattern: /circle/get/invite
+    defaults: {_controller:JustsyBaseBundle:Circle:getInviteMember}
+JustsyBaseBundle_circle_get_mind_word:
+    pattern: /circle/get/mind/word
+    defaults: {_controller:JustsyBaseBundle:Circle:getMindWord}
+
+JustsyBaseBundle_circle_check:
+    pattern:  /circle/check
+    defaults: { _controller: JustsyBaseBundle:Circle:check}
+
+JustsyBaseBundle_circle_update:
+    pattern:  /circle/update/{circleid}
+    defaults: { _controller: JustsyBaseBundle:Circle:update,circleid:null}
+
+JustsyBaseBundle_circle_info:
+    pattern:  /circle/info
+    defaults: { _controller: JustsyBaseBundle:Circle:info}
+
+JustsyBaseBundle_circle_getcirclecard:
+    pattern:  /circle/getcirclecard
+    defaults: { _controller: JustsyBaseBundle:Circle:getCircleCard}
+
+JustsyBaseBundle_circle_addmember:
+    pattern:  /{network_domain}/addmember/{account}
+    defaults: { _controller: JustsyBaseBundle:Circle:addCircle}
+
+JustsyBaseBundle_circle_recommendlist:
+    pattern:  /circle/getrecommendlist
+    defaults: { _controller: JustsyBaseBundle:Circle:recommendlist}
+
+JustsyBaseBundle_circle_default:
+  pattern:  /circle/default
+  defaults: { _controller: JustsyBaseBundle:Circle:default}
+JustsyBaseBundle_circle_parameter:
+  pattern:  /circle/setpara
+  defaults: { _controller: JustsyBaseBundle:Circle:setpara}
+
+JustsyBaseBundle_circle_savephoto:
+  pattern:  /circle/savephoto
+  defaults: { _controller: JustsyBaseBundle:Circle:savePhoto}
+#获得引导时人脉数据
+JustsyBaseBundle_circle_getConnection:
+  pattern:  /circle/getConnection
+  defaults: { _controller: JustsyBaseBundle:Circle:getConnection}
+#获得引导时取部门名称或部门下人员
+JustsyBaseBundle_circle_getdepart:
+  pattern:  /circle/getdepart
+  defaults: { _controller: JustsyBaseBundle:Circle:getdepart}
+
+#查找圈子首页
+JustsyBaseBundle_circle_search:
+  pattern:  /circle/search/{network_domain},{account}
+  defaults: { _controller: JustsyBaseBundle:Circle:searchIndex,network_domain:null,account:null }
+JustsyBaseBundle_circle_get_circles:
+  pattern: /circle/get/list
+  defaults: {_controller:JustsyBaseBundle:Circle:getCircles}
+#申请加入圈子
+JustsyBaseBundle_circle_apply_join:
+  pattern:  /circle/applyjoin
+  defaults: { _controller: JustsyBaseBundle:Circle:applyJoin }
+#取消加入圈子申请
+JustsyBaseBundle_circle_apply_cancel:
+  pattern:  /circle/applycancel/{circleid}
+  defaults: { _controller: JustsyBaseBundle:Circle:applyCancel }
+#搜索圈子
+JustsyBaseBundle_circle_find:
+  pattern:  /circle/find/{network_domain}
+  defaults: { _controller: JustsyBaseBundle:Circle:find,network_domain:null }
+#检查邀请帐号是否已经加入了圈子
+JustsyBaseBundle_circle_checkinvmail:
+  pattern:  /circle/checkinvmail
+  defaults: { _controller: JustsyBaseBundle:Circle:checkInvMail }
+#根据帐号查找人员
+JustsyBaseBundle_circle_querystaff:
+  pattern:  /circle/querystaff
+  defaults: { _controller: JustsyBaseBundle:Circle:queryStaff }
+#拒绝加入圈子
+JustsyBaseBundle_circle_refusejoincircle:
+  pattern:  /circle/refusejoincircle
+  defaults: { _controller: JustsyBaseBundle:Circle:refuseJoin }
+
+#获得圈子成员
+JustsyBaseBundle_circle_getcirclemember:
+  pattern:  /circle/getcirclemember
+  defaults: { _controller: JustsyBaseBundle:Circle:getCircleMember }
+
+#---------------------活动-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/together/XXX
+JustsyBaseBundle_together:
+    pattern:  /{network_domain}/together
+    defaults: { _controller: JustsyBaseBundle:Together:index}
+
+JustsyBaseBundle_together_getTop:
+    pattern:  /{network_domain}/together/getTop
+    defaults: { _controller: JustsyBaseBundle:Together:getTop}
+
+JustsyBaseBundle_together_getSigne:
+    pattern:  /together/getSigne
+    defaults: { _controller: JustsyBaseBundle:Together:getSigne}
+
+#JustsyBaseBundle_together_getReply:
+#    pattern:  /together/getReply
+#    defaults: { _controller: JustsyBaseBundle:Together:getReply}
+#
+#JustsyBaseBundle_together_ReplyPage:
+#    pattern:  /together/ReplyPage
+#    defaults: { _controller: JustsyBaseBundle:Together:ReplyPage}
+
+JustsyBaseBundle_together_pageControl:
+    pattern:  /together/pageControl
+    defaults: { _controller: JustsyBaseBundle:Together:pageControl}
+
+JustsyBaseBundle_together_getAllTogether:
+    pattern:  /{network_domain}/getAllTogether
+    defaults: { _controller: JustsyBaseBundle:Together:getAllTogether}
+
+#-------------------------------------------------------------
+#PC端回话模块路由设置    开始
+#-------------------------------------------------------------
+
+JustsyBaseBundle_cinputarea_index_pc:
+    pattern: /{network_domain}/index/pc/{name}
+    defaults: {_controller:JustsyBaseBundle:CInputArea:indexpc,name:foo}
+    
+JustsyBaseBundle_cinputarea_index_friend:
+    pattern: /cinputarea/friend/index
+    defaults: {_controller:JustsyBaseBundle:CInputArea:indexfriend}    
+
+JustsyBaseBundle_enterprise_getallconvpc:
+    pattern:  /enthome/getallconvpc/{class}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getAllConvPc,class:conv}
+
+#-------------------------------------------------------------
+#PC端回话模块路由设置    结束
+#-------------------------------------------------------------
+
+#---------------------个人基本信息-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/user/find              对于非特定的用户的路由
+#  /{network_domain}/user/{login_account}        对于特定用户的默认路由
+#  /{network_domain}/user/{login_account}/info   对于特定用户的特定路由
+#  /{network_domain}/user/{login_account}/save   对于特定用户的特定路由
+JustsyBaseBundle_account_basic:
+    pattern:  /{network_domain}/user/account/{basic}
+    defaults: { _controller: JustsyBaseBundle:Account:basic, basic:basic}
+    requirements:
+        basic: basic
+JustsyBaseBundle_account_circle:
+    pattern:  /{network_domain}/user/account/circle
+    defaults: { _controller: JustsyBaseBundle:Account:circle}
+
+JustsyBaseBundle_account_group:
+    pattern:  /{network_domain}/user/account/group
+    defaults: { _controller: JustsyBaseBundle:Account:group}
+
+JustsyBaseBundle_account_setcircle:
+    pattern:  /user/account/setcircle
+    defaults: { _controller: JustsyBaseBundle:Account:setcircle}
+
+JustsyBaseBundle_account_setgroup:
+    pattern:  /user/account/setgroup
+    defaults: { _controller: JustsyBaseBundle:Account:setgroup}
+
+JustsyBaseBundle_account_savebasic:
+    pattern:  /{network_domain}/user/account/savebasic
+    defaults: { _controller: JustsyBaseBundle:Account:saveBasic}
+
+JustsyBaseBundle_account_detail:
+    pattern:  /{network_domain}/user/account/detail
+    defaults: { _controller: JustsyBaseBundle:Account:detail}
+
+JustsyBaseBundle_account_depart:
+    pattern:  /user/account/depart
+    defaults: { _controller: JustsyBaseBundle:Account:UpDepart}
+
+JustsyBaseBundle_account_detail_search:
+    pattern:  /{network_domain}/user/account/detail/search
+    defaults: { _controller: JustsyBaseBundle:Account:search}
+
+JustsyBaseBundle_account_savedetail:
+    pattern:  /{network_domain}/user/account/savedetail
+    defaults: { _controller: JustsyBaseBundle:Account:saveDetail}
+
+JustsyBaseBundle_account_pwd:
+    pattern:  /{network_domain}/user/account/pwd
+    defaults: { _controller: JustsyBaseBundle:Account:pwd}
+
+JustsyBaseBundle_account_checkpwd:
+    pattern:  /{network_domain}/user/account/checkpwd
+    defaults: { _controller: JustsyBaseBundle:Account:checkPwd}
+
+JustsyBaseBundle_account_updatepwd:
+    pattern:  /{network_domain}/user/account/updatepwd
+    defaults: { _controller: JustsyBaseBundle:Account:updatePwd}
+
+JustsyBaseBundle_account_preference:
+    pattern:  /{network_domain}/user/account/preference
+    defaults: { _controller: JustsyBaseBundle:Account:preference}
+
+JustsyBaseBundle_account_savepreference:
+    pattern:  /{network_domain}/user/account/savepreference
+    defaults: { _controller: JustsyBaseBundle:Account:savePreference}
+
+JustsyBaseBundle_account_mylevel:
+    pattern:  /{network_domain}/user/account/mylevel
+    defaults: { _controller: JustsyBaseBundle:Account:mylevel}
+
+JustsyBaseBundle_account_levelrule:
+    pattern:  /{network_domain}/user/account/levelrule
+    defaults: { _controller: JustsyBaseBundle:Account:levelrule}
+
+JustsyBaseBundle_account_leveldesc:
+    pattern:  /user/account/leveldesc
+    defaults: { _controller: JustsyBaseBundle:Account:LevelDesc}
+
+JustsyBaseBundle_account_mypointshis:
+    pattern:  /{network_domain}/user/account/mypointshis
+    defaults: { _controller: JustsyBaseBundle:Account:myPointsHis}
+
+JustsyBaseBundle_account_mobilebind:
+    pattern:  /{network_domain}/user/account/mobilebind
+    defaults: { _controller: JustsyBaseBundle:Account:mobilebind}
+
+JustsyBaseBundle_account_mobilebindforpc:
+    pattern:  /fafadev/user/account/mobilebindforpc
+    defaults: { _controller: JustsyBaseBundle:Account:mobilebindforpc}
+
+JustsyBaseBundle_account_savemobilebind:
+    pattern:  /{network_domain}/user/account/savemobilebind
+    defaults: { _controller: JustsyBaseBundle:Account:savemobilebind}
+
+JustsyBaseBundle_account_mobileunbind:
+    pattern:  /{network_domain}/user/account/mobileunbind
+    defaults: { _controller: JustsyBaseBundle:Account:mobileunbind}
+
+JustsyBaseBundle_account_savemobileunbind:
+    pattern:  /{network_domain}/user/account/savemobileunbind
+    defaults: { _controller: JustsyBaseBundle:Account:savemobileunbind}
+
+JustsyBaseBundle_account_getmobilevaildcode:
+    pattern:  /{network_domain}/user/account/getmobilevaildcode
+    defaults: { _controller: JustsyBaseBundle:Account:getmobilevaildcode}
+
+JustsyBaseBundle_account_importemployee:
+    pattern:  /{network_domain}/user/account/importemployee
+    defaults: { _controller: JustsyBaseBundle:Account:importEmployee}
+
+JustsyBaseBundle_account_importemployeesave:
+    pattern:  /active/user/account/importemployeesave
+    defaults: { _controller: JustsyBaseBundle:Account:importActiveSave}
+
+JustsyBaseBundle_account_mployeemgr:
+    pattern:  /{network_domain}/user/account/employeemgr
+    defaults: { _controller: JustsyBaseBundle:Account:employeemgr}
+
+JustsyBaseBundle_account_deptquery:
+    pattern:  /{network_domain}/user/account/mydepts
+    defaults: { _controller: JustsyBaseBundle:Account:myDepts}
+JustsyBaseBundle_account_deptsave:
+    pattern:  /{network_domain}/user/account/deptsave
+    defaults: { _controller: JustsyBaseBundle:Account:deptsave}
+JustsyBaseBundle_account_deptdel:
+    pattern:  /{network_domain}/user/account/deptdel
+    defaults: { _controller: JustsyBaseBundle:Account:deptdel}
+
+JustsyBaseBundle_account_movetodept:
+    pattern:  /{network_domain}/user/account/movedept
+    defaults: { _controller: JustsyBaseBundle:Account:changeStaffDept}
+
+JustsyBaseBundle_account_chkdeptemp:
+    pattern:  /{network_domain}/user/account/chkdeptemp
+    defaults: { _controller: JustsyBaseBundle:Account:chkDeptEmp}
+JustsyBaseBundle_account_getdeptemp:
+    pattern:  /{network_domain}/user/account/getdeptemp
+    defaults: { _controller: JustsyBaseBundle:Account:getDeptEmp}
+JustsyBaseBundle_account_searchemp:
+    pattern:  /{network_domain}/user/account/searchemp
+    defaults: { _controller: JustsyBaseBundle:Account:searchEmp}
+
+JustsyBaseBundle_account_updateLastLogintime:
+    pattern:  /user/account/updateLastLogintime
+    defaults: { _controller: JustsyBaseBundle:Account:updateLastLogin}
+####获取个人资料页面模板-可编辑的。专门为PC端提供
+JustsyBaseBundle_account_pcsync_editphoto:
+    pattern:  /api/account/pcsync/photo/edit
+    defaults: { _controller: JustsyBaseBundle:Account:photoEditForPc}
+
+####编辑个人资料。专门为PC端提供
+JustsyBaseBundle_account_pcsync:
+    pattern:  /api/account/pcsync
+    defaults: { _controller: JustsyBaseBundle:Account:pcSync}
+JustsyBaseBundle_account_pcsyncsave:
+    pattern:  /user/account/savepcsync
+    defaults: { _controller: JustsyBaseBundle:Account:savePcSync}
+####单独保存头像。只支持通过头像编辑组件保存
+JustsyBaseBundle_account_savephoto:
+    pattern:  /{network_domain}/user/account/savephoto
+    defaults: { _controller: JustsyBaseBundle:Account:savePhoto}
+####编辑个人个性签名。专门为PC端提供
+JustsyBaseBundle_account_descsync:
+    pattern:  /api/account/descsync
+    defaults: { _controller: JustsyBaseBundle:Account:saveselfdesc}
+
+#---------------------首页-----------------------------------------
+JustsyBaseBundle_home_micromessage:
+    pattern:  /home/micromessage
+    defaults: { _controller: JustsyBaseBundle:Home:micromessage}
+
+#---------------------登录-----------------------------------------
+JustsyBaseBundle_login:
+    pattern:  /login/{name}
+    defaults: { _controller: JustsyBaseBundle:Login:login,name:null}
+
+JustsyBaseBundle_newlogin:
+    pattern:  /home
+    defaults: { _controller: JustsyBaseBundle:Login:newlogin}
+
+JustsyBaseBundle_default:
+    pattern:  /default
+    defaults: { _controller: JustsyBaseBundle:Login:default}
+
+
+JustsyBaseBundle_logout:
+    pattern:  /logout/{name}
+    defaults: { _controller: JustsyBaseBundle:Login:logout,name:null}
+
+JustsyBaseBundle_login_check:
+    pattern:  /login_check/{name}
+    defaults: { _controller: JustsyBaseBundle:Login:login_check,name:null }
+##loginAndRef
+JustsyBaseBundle_login_ref:
+    pattern:  /login_ref
+    defaults: { _controller: JustsyBaseBundle:Login:loginAndRef}
+#---------------------激活-----------------------------------------
+JustsyBaseBundle_active_reject:
+    pattern:  /active/reg/reject/{str}
+    defaults: { _controller: JustsyBaseBundle:Active:reject,str:null}
+
+JustsyBaseBundle_active_agree:
+    pattern:  /active/reg/agree/{str}
+    defaults: { _controller: JustsyBaseBundle:Active:agree,str:null}
+
+JustsyBaseBundle_active_reg_s1:
+    pattern:  /active/reg/step1/{account}
+    defaults: { _controller: JustsyBaseBundle:Active:activeRegStep1,account:null}
+
+JustsyBaseBundle_active_reg_s2:
+    pattern:  /active/reg/step2
+    defaults: { _controller: JustsyBaseBundle:Active:activeRegStep2}
+
+JustsyBaseBundle_invitation_staff:
+    pattern:  /invitation/staff
+    defaults: { _controller: JustsyBaseBundle:Active:invStaff}
+JustsyBaseBundle_invitation_staff_save:
+    pattern:  /invitation/staff/save
+    defaults: { _controller: JustsyBaseBundle:Active:invStaffSave}
+
+JustsyBaseBundle_active_end:
+    pattern:  /active/end/{type}
+    defaults: { _controller: JustsyBaseBundle:Active:activeEnd,type:reg }
+
+JustsyBaseBundle_active_save:
+    pattern:  /active/save/{type}
+    defaults: { _controller: JustsyBaseBundle:Active:activeSave,type:reg }
+
+#精简化激活 
+JustsyBaseBundle_active_mindosave:
+  pattern:  /api/employee/register
+  defaults: { _controller: JustsyBaseBundle:Active:EmployeeRegister }
+      
+#简化激活保存
+JustsyBaseBundle_active_dosave:
+  pattern:  /active/dosave
+  defaults: { _controller: JustsyBaseBundle:Active:doSave }
+#人员导入时设置密码页面
+JustsyBaseBundle_empimport_setpass:
+  pattern:  /active/empimport
+  defaults: { _controller: JustsyBaseBundle:Active:importactive }
+#检测企业简称
+JustsyBaseBundle_active_checkeshort:
+  pattern:  /active/checkeshort
+  defaults: { _controller: JustsyBaseBundle:Active:checkeshort }
+
+JustsyBaseBundle_active_inv_s1:
+  pattern: /active/inv/step1/{account},{invacc}
+  defaults: { _controller: JustsyBaseBundle:Active:activeInvStep1}
+
+JustsyBaseBundle_active_inv_s2:
+  pattern: /active/inv/step2
+  defaults: { _controller: JustsyBaseBundle:Active:activeInvStep2}
+
+JustsyBaseBundle_active_checkstaffname:
+  pattern: /active/checkstaffname
+  defaults: { _controller: JustsyBaseBundle:Active:checkStaffName }
+
+JustsyBaseBundle_active_checkenterprisename:
+  pattern: /active/checkenterprisename
+  defaults: { _controller: JustsyBaseBundle:Active:checkEnterpriseName }
+
+JustsyBaseBundle_active_checkcirclename:
+  pattern: /active/checkcirclename
+  defaults: { _controller: JustsyBaseBundle:Active:checkCircleName }
+
+JustsyBaseBundle_active_getattenmember:
+  pattern: /active/getattenmember
+  defaults: { _controller: JustsyBaseBundle:Active:getStaff }
+
+JustsyBaseBundle_active_checkinvmail:
+  pattern: /active/checkinvmail
+  defaults: { _controller: JustsyBaseBundle:Active:checkMail }
+JustsyBaseBundle_active_searchbyname:
+  pattern: /active/searchbyname
+  defaults: {_controller: JustsyBaseBundle:Active:searchByEname}
+JustsyBaseBundle_active_checkename:
+  pattern: /active/check/name/{ename}
+  defaults: {_controller:JustsyBaseBundle:Active:checkEname,ename:null}
+
+
+#---------------------邀请-----------------------------------------
+#初始页面
+JustsyBaseBundle_invite:
+  pattern: /invite/index/{network_domain}
+  defaults: { _controller: JustsyBaseBundle:Invite:index,network_domain:null }
+#根据帐号查询人员姓名
+JustsyBaseBundle_invite_invnickname:
+  pattern:  /invite/invnickname
+  defaults: { _controller: JustsyBaseBundle:Invite:invNickName }
+#发送邀请
+JustsyBaseBundle_invite_sendinvitation:
+  pattern:  /invite/sendinvitation
+  defaults: { _controller: JustsyBaseBundle:Invite:sendInvitation }
+#已发出邀请
+JustsyBaseBundle_invite_sended:
+  pattern:  /invite/sended/{network_domain}
+  defaults: { _controller: JustsyBaseBundle:Invite:sended,network_domain:null }
+#已发出邀请列表
+JustsyBaseBundle_invite_sended_list:
+  pattern:  /invite/sendedlist/{pageindex}
+  defaults: { _controller: JustsyBaseBundle:Invite:sendedList,pageindex:1 }
+#已收到邀请
+JustsyBaseBundle_invite_recved:
+  pattern:  /invite/recved/{network_domain}
+  defaults: { _controller: JustsyBaseBundle:Invite:recved,network_domain:null }
+#重新发送邀请
+JustsyBaseBundle_invite_resend:
+  pattern:  /invite/resend
+  defaults: { _controller: JustsyBaseBundle:Invite:reSendInvitation }
+#删除邀请
+JustsyBaseBundle_invite_del:
+  pattern:  /invite/del
+  defaults: { _controller: JustsyBaseBundle:Invite:delInvitation }
+#同意加入圈子
+JustsyBaseBundle_invite_agreejoincircle:
+  pattern:  /invite/agreejoincircle/{para}
+  defaults: { _controller: JustsyBaseBundle:Invite:agreeJoinCircle,para:null }
+#获取邀请数
+JustsyBaseBundle_invite_getinvcount:
+  pattern:  /invite/getinvcount
+  defaults: { _controller: JustsyBaseBundle:Invite:getInvCount }
+#拒绝邀请
+JustsyBaseBundle_invite_refuse:
+  pattern:  /invite/refuse
+  defaults: { _controller: JustsyBaseBundle:Invite:refuse }
+
+#---------------------圈子主页-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/XXX           对于特定的圈子的路由
+JustsyBaseBundle_home:
+    pattern:  /home/{name}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:home, name:foo}
+
+JustsyBaseBundle_enterprise_home:
+    pattern:  /{network_domain}/home/{name}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:index, network_domain: fafacn.com, name:foo}
+
+JustsyBaseBundle_enterprise_home_forpc:
+    pattern:  /{network_domain}/homeforpc
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:indexpc, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_right:
+    pattern:  /{network_domain}/right
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:right, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_quitcircle:
+    pattern:  /{network_domain}/quitcircle
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:quitCircle, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_quitentp:
+    pattern:  /{network_domain}/quitentp
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:quitEntp, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_gettipdownload:
+    pattern:  /{network_domain}/gettipdownload
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getTipDownload, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_settipdownload:
+    pattern:  /{network_domain}/settipdownload
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:setTipDownload, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_tipinvite:
+    pattern:  /{network_domain}/tipinvite
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:tipInvite, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_staff_invite:
+    pattern:  /{network_domain}/staffinvite
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:staffInvite, network_domain: fafacn.com}
+
+JustsyBaseBundle_enterprise_getallconv:
+    pattern:  /enthome/getallconv/{class}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getAllConv,class:conv}
+
+JustsyBaseBundle_enterprise_getattenconv:
+    pattern:  /enthome/getattenconv
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getAttenConv}
+
+JustsyBaseBundle_enterprise_getpublishconv:
+    pattern:  /enthome/getpublishconv
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getPublishConv}
+
+JustsyBaseBundle_enterprise_getallconvunread:
+    pattern:  /enthome/getallconvunread
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:getAllConvUnread}
+JustsyBaseBundle_enterprise_getallconvunread_pc:
+    pattern: /enthome/getallconvunread/pc
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:getAllConvUnreadPc}
+
+JustsyBaseBundle_enterprise_getattenconvunread:
+    pattern:  /enthome/getattenconvunread
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getAttenConvUnread}
+
+JustsyBaseBundle_enterprise_getpublishconvunread:
+    pattern:  /enthome/getpublishconvunread
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getPublishConvUnread}
+JustsyBaseBundle_enterprise_getofficialconv:
+    pattern:  /{network_domain}/enthome/getofficialconv
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:getOfficialConv}
+
+JustsyBaseBundle_enterprise_showofficialconv:
+    pattern: /{network_domain}/enthome/showofficialconv
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:showOfficialConv}
+
+JustsyBaseBundle_enterprise_getatmenum:
+    pattern:  /enthome/getatmenum
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getAtMeNum}
+
+JustsyBaseBundle_enterprise_getreplymenum:
+    pattern:  /enthome/getreplymenum
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getReplyMeNum}
+
+JustsyBaseBundle_enterprise_getunreadcircleconversnum:
+    pattern:  /enthome/getunreadcircleconversnum
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getUnreadCircleConversNum}
+
+JustsyBaseBundle_enterprise_getunreadgroupconversnum:
+    pattern:  /enthome/getunreadgroupconversnum
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getUnreadGroupConversNum}
+
+JustsyBaseBundle_enterprise_getonenearconv:
+    pattern:  /enthome/getonenearconv
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:getOneNearConv}
+JustsyBaseBundle_enterprise_gettopconv:
+    pattern: /enthome/gettopconv
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:getTopConv}
+JustsyBaseBundle_enterprise_gettopconv_pc:
+    pattern: /enthome/gettopconv/pc
+    defaults: {_controller:JustsyBaseBundle:EnterpriseHome:getTopConvPc}
+
+JustsyBaseBundle_view_oneconv:
+    pattern:  /conv/{conv_root_id}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getOneConv}
+
+JustsyBaseBundle_view_getoneconvcopylist:
+    pattern:  /conv_copylist/{conv_root_id}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:getOneConvCopyList}
+
+#---------------------主页搜索-----------------------------------------
+JustsyBaseBundle_all_search:
+    pattern:  /{network_domain}/search/{name}
+    defaults: { _controller: JustsyBaseBundle:SearchEdit:search, name:foo}
+
+JustsyBaseBundle_search_relation:
+    pattern:  /myrelation/query
+    defaults: { _controller: JustsyBaseBundle:SearchEdit:myrelation}
+
+#---------------------公共组件-----------------------------------------
+JustsyBaseBundle_viewimage:
+    pattern:  /viewimage/{id}
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:viewImage, id:0}
+
+JustsyBaseBundle_my_trend:
+    pattern:  /trend/query/my
+    defaults: { _controller: JustsyBaseBundle:SearchEdit:mytrend, name:foo}
+
+JustsyBaseBundle_searchedit_query:
+    pattern:  /searchedit/query/{name}
+    defaults: { _controller: JustsyBaseBundle:SearchEdit:query, name:foo}
+
+JustsyBaseBundle_component_cperbaseinfo:
+    pattern:  /component/cperbaseinfo/{name}
+    defaults: { _controller: JustsyBaseBundle:CPerBaseInfo:index, name:foo}
+
+JustsyBaseBundle_component_cinputarea_publishTrend:
+    pattern:  /component/cinputarea/publishtrend
+    defaults: { _controller: JustsyBaseBundle:CInputArea:publishTrend}
+
+JustsyBaseBundle_component_cinputarea_publishAsk:
+    pattern:  /component/cinputarea/publishask
+    defaults: { _controller: JustsyBaseBundle:CInputArea:publishAsk}
+
+JustsyBaseBundle_component_cinputarea_publishTogether:
+    pattern:  /component/cinputarea/publishtogether
+    defaults: { _controller: JustsyBaseBundle:CInputArea:publishTogether}
+
+JustsyBaseBundle_component_cinputarea_publishVote:
+    pattern:  /component/cinputarea/publishvote
+    defaults: { _controller: JustsyBaseBundle:CInputArea:publishVote}
+
+JustsyBaseBundle_component_cinputarea_publishOfficialTrend:
+    pattern:  /component/cinputarea/publishofficialtrend
+    defaults: { _controller: JustsyBaseBundle:CInputArea:publishOfficialTrend}
+
+JustsyBaseBundle_component_cinputarea_loadfaceemote:
+    pattern:  /component/cinputarea/loadfaceemote
+    defaults: { _controller: JustsyBaseBundle:CInputArea:loadFaceEmote}
+
+JustsyBaseBundle_component_cinputarea_loadfaceemotejson:
+    pattern:  /component/cinputarea/loadfaceemotejson
+    defaults: { _controller: JustsyBaseBundle:CInputArea:loadFaceEmoteJson}
+
+JustsyBaseBundle_component_cinputarea_querycirclestaff100:
+    pattern:  /component/cinputarea/querycirclestaff100
+    defaults: { _controller: JustsyBaseBundle:CInputArea:queryCircleStaff100}
+
+JustsyBaseBundle_component_cinputarea_queryattips:
+    pattern:  /component/cinputarea/queryattips
+    defaults: { _controller: JustsyBaseBundle:CInputArea:queryAtTips}
+
+JustsyBaseBundle_component_cdisparea_getnewoneconv:
+    pattern:  /component/cdisparea/getnewoneconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getNewOneConv}
+JustsyBaseBundle_component_cdisparea_getnewoneconv_pc:
+    pattern: /component/cdisparea/getnewoneconv/pc
+    defaults: {_controller:JustsyBaseBundle:CDisplayArea:getNewOneConvPc}
+
+JustsyBaseBundle_component_cdisparea_deltrend:
+    pattern:  /component/cdisparea/deltrend
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:delTrend}
+
+JustsyBaseBundle_component_cdisparea_delask:
+    pattern:  /component/cdisparea/delask
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:delAsk}
+
+JustsyBaseBundle_component_cdisparea_deltogether:
+    pattern:  /component/cdisparea/deltogether
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:delTogether}
+
+JustsyBaseBundle_component_cdisparea_delvote:
+    pattern:  /component/cdisparea/delvote
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:delVote}
+
+JustsyBaseBundle_component_cdisparea_delreply:
+    pattern:  /component/cdisparea/delreply
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:delReply}
+
+JustsyBaseBundle_component_cdisparea_likeconv:
+    pattern:  /component/cdisparea/likeconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:likeConv}
+
+JustsyBaseBundle_component_cdisparea_unlikeconv:
+    pattern:  /component/cdisparea/unlikeconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:unlikeConv}
+
+JustsyBaseBundle_component_cdisparea_get_conv_byid:
+    pattern: /{network_domain}/component/cdisparea/getconv/byid
+    defaults: {_controller:JustsyBaseBundle:CDisplayArea:getConvById}
+
+JustsyBaseBundle_component_cdisparea_replyconv:
+    pattern:  /component/cdisparea/replyconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:replyConv}
+JustsyBaseBundle_component_cdisparea_replyconv_pc:
+    pattern:  /component/cdisparea/replyconvpc
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:replyConvPc}
+
+JustsyBaseBundle_component_cdisparea_vote:
+    pattern:  /component/cdisparea/vote
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:vote}
+
+JustsyBaseBundle_component_cdisparea_getvote:
+    pattern:  /component/cdisparea/vote/{conv_root_id}
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getVote}
+
+JustsyBaseBundle_component_cdisparea_getcopytemplate:
+    pattern:  /component/cdisparea/getcopytemplate
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getCopyTemplate}
+
+JustsyBaseBundle_component_cdisparea_getcopytemplatepc:
+    pattern:  /component/cdisparea/getcopytemplatepc
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getCopyTemplatePc}
+
+JustsyBaseBundle_component_cdisparea_getconvlimit:
+    pattern:  /component/cdisparea/getconvlimit
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getConvLimit}
+
+JustsyBaseBundle_component_cdisparea_getgroupbycircleandgroupname:
+    pattern:  /component/cdisparea/getgroupbycircleandgroupname
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getGroupByCircleAndGroupName}
+
+JustsyBaseBundle_component_cdisparea_copyconv:
+    pattern:  /component/cdisparea/copyconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:copyConv}
+
+JustsyBaseBundle_component_cdisparea_attenconv:
+    pattern:  /component/cdisparea/attenconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:attenConv}
+
+JustsyBaseBundle_component_cdisparea_unattenconv:
+    pattern:  /component/cdisparea/unattenconv
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:unattenConv}
+
+JustsyBaseBundle_component_cdisparea_jointogether:
+    pattern:  /component/cdisparea/jointogether
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:joinTogether}
+
+JustsyBaseBundle_component_cdisparea_unjointogether:
+    pattern:  /component/cdisparea/unjointogether
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:unjoinTogether}
+
+JustsyBaseBundle_component_cdisparea_getlabel:
+    pattern:  /component/cdisparea/getlabel
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getLabel}
+
+JustsyBaseBundle_component_cdisparea_savelabel:
+    pattern:  /component/cdisparea/savelabel
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:saveLabel}
+
+JustsyBaseBundle_component_cdisparea_getreply:
+    pattern:  /component/cdisparea/getreply
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getReply}
+
+JustsyBaseBundle_component_cdisparea_getcopylist:
+    pattern:  /component/cdisparea/getcopylist
+    defaults: { _controller: JustsyBaseBundle:CDisplayArea:getCopyList}
+JustsyBaseBundle_component_cdisparea_convtop:
+    pattern: /component/cdisparea/convtop
+    defaults: {_controller:JustsyBaseBundle:CDisplayArea:convTop}
+
+JustsyBaseBundle_component_cdisparea_convhide:
+    pattern: /component/cdisparea/convhide
+    defaults: {_controller:JustsyBaseBundle:CDisplayArea:convHide}
+
+JustsyBaseBundle_component_cavatareditor_index:
+    pattern:  /register/cavatareditor/index/{name}
+    defaults: { _controller: JustsyBaseBundle:CAvatarEditor:index, name: foo}
+
+JustsyBaseBundle_component_cavatareditor_saveavatar:
+    pattern:  /register/cavatareditor/saveavatar
+    defaults: { _controller: JustsyBaseBundle:CAvatarEditor:saveAvatar}
+
+JustsyBaseBundle_component_cavatareditor_getfileinfo:
+    pattern:  /register/cavatareditor/getFileInfo/{size}
+    defaults: { _controller: JustsyBaseBundle:CAvatarEditor:getFileInfo}
+
+JustsyBaseBundle_component_onlinelist_getfriendlist:
+    pattern:  /component/onlinelist/getfriendlist
+    defaults: { _controller: JustsyBaseBundle:OnlineList:getFriendList}
+
+JustsyBaseBundle_component_onlinelist_getonlinelist:
+    pattern:  /component/onlinelist/getonlinelist
+    defaults: { _controller: JustsyBaseBundle:OnlineList:getOnlineList}
+
+#邀请同事公共组件
+#加入企业
+JustsyBaseBundle_component_invstaff:
+  pattern:  /component/invstaff/enterprise/{id},{gname}
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:invStaff,id:null,gname:null }
+#邀请人员加入圈子弹出窗口
+JustsyBaseBundle_component_invintocircle:
+  pattern:  /component/invstaff/circle/{network_domain}
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:invIntoCircle,network_domain:null }
+#查询人员邀请加入圈子 #不用
+JustsyBaseBundle_component_invcirclequery:
+  pattern:  /component/invstaff/invcirclequery
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:invCircleQuery }
+#邀请人员加入圈子-发送邀请消息
+JustsyBaseBundle_component_invcirclesendmsg:
+  pattern:  /component/invstaff/invcirclesendmsg
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:invCircleSendMsg }
+#同意加入圈子
+JustsyBaseBundle_component_agreejoincircle:
+  pattern:  /component/invstaff/agreejoincircle/{para}
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:agreeJoinCircle,para:null }
+#邀请未激活同事列表
+JustsyBaseBundle_component_invunactivelist:
+  pattern:  /component/invstaff/unactivelist
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:getUnActiveStaff }
+#邀请删除未激活的同事
+JustsyBaseBundle_component_invdelstaff:
+  pattern:  /component/invstaff/delstaff
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:delStaff }
+#重新邀请未激活的同事
+JustsyBaseBundle_component_invreinvite:
+  pattern:  /component/invstaff/reinvite
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:reInvite }
+#邀请同事组件保存
+JustsyBaseBundle_component_invstaffsave:
+  pattern:  /component/invstaffsave
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:invStaffSave }
+#根据帐号查询人员姓名
+JustsyBaseBundle_component_invnickname:
+  pattern:  /component/invnickname
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:invNickName }
+#发送邀请
+JustsyBaseBundle_component_sendcircleinvitation:
+  pattern:  /component/sendcircleinvitation
+  defaults: { _controller: JustsyBaseBundle:CInvStaff:sendCircleInvitation }
+
+#---------------------个人主页-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/user/find              对于非特定的用户的路由
+#  /{network_domain}/user/{login_account}        对于特定用户的默认路由
+#  /{network_domain}/user/{login_account}/info   对于特定用户的特定路由
+#  /{network_domain}/user/{login_account}/save   对于特定用户的特定路由
+
+#查看自己的主页
+JustsyBaseBundle_personal_home:
+  pattern: /{network_domain}/self
+  defaults: { _controller: JustsyBaseBundle:PersonalHome:home,network_domain:null }
+#获取自己的会话
+JustsyBaseBundle_personal_get_convers:
+  pattern: /{network_domain}/self/convers/{type}
+  defaults: {_controller: JustsyBaseBundle:PersonalHome:getConvers,type:all,network_domain:null}
+#获取自己的未读会话
+JustsyBaseBundle_personal_get_conversunread:
+  pattern: /{network_domain}/self/conversunread/{type}
+  defaults: {_controller: JustsyBaseBundle:PersonalHome:getConversUnread,type:all,network_domain:null}
+#访问他人主页
+JustsyBaseBundle_interviewee_home:
+  pattern: /{network_domain}/user/{account}
+  defaults: {_controller: JustsyBaseBundle:PersonalHome:interviewee,account:null}
+#获取访问者的会话
+JustsyBaseBundle_personal_get_conversvisitor:
+  pattern: /{network_domain}/user/convers/{type},{account}
+  defaults: { _controller: JustsyBaseBundle:PersonalHome:getConversVisitor,type:all,network_domain:null,account:null }
+
+JustsyBaseBundle_interviewee_outside:
+  pattern: /login/outside/personalhome
+  defaults: {_controller: JustsyBaseBundle:PersonalHome:intervieweeByOutside}
+
+JustsyBaseBundle_personal_group:
+  pattern: /{network_domain}/group/{groupid}
+  defaults: {_controller: JustsyBaseBundle:PersonalHome:group,groupid:null}
+
+##公共圈子
+JustsyBaseBundle_circle_10000:
+    pattern:  /circle10000
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:circle10000, network_domain:10000, name:foo}
+JustsyBaseBundle_circle_9999:
+    pattern: /circle9999
+    defaults: {_controller: JustsyBaseBundle:EnterpriseHome:circle9999,network_domain:9999,name:foo}
+
+#---------------------文档-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/documnet/XXX           对于特定的圈子的路由
+JustsyBaseBundle_documnet_mgr:
+  pattern:  /{network_domain}/documnet/mgr
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:index}
+JustsyBaseBundle_documnet_list:
+  pattern: /{network_domain}/documnet/list
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:list}
+JustsyBaseBundle_documnet_listjson:
+  pattern: /{network_domain}/documnet/listjson
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:listJson}
+JustsyBaseBundle_documnet_toplistjson:
+  pattern: /{network_domain}/documnet/toplistjson/{scope_type}
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:getTopNew,scope_type:1}
+JustsyBaseBundle_document_getdg:
+  pattern: /{network_domain}/document/getdg
+  defaults: {_controller:JustsyBaseBundle:DocumentMgr:getdg}
+JustsyBaseBundle_document_share_set:
+  pattern: /{network_domain}/document/share/set
+  defaults: {_controller:JustsyBaseBundle:DocumentMgr:shareSet}
+JustsyBaseBundle_document_getperson:
+  pattern: /{network_domain}/document/get/person
+  defaults: {_controller:JustsyBaseBundle:DocumentMgr:getPerson}
+JustsyBaseBundle_document_getconv:
+  pattern: /{network_domain}/document/get/conv
+  defaults: {_controller:JustsyBaseBundle:DocumentMgr:getConv}
+JustsyBaseBundle_document_publishconv:
+  pattern: /{network_domain}/document/publish/conv
+  defaults: {_controller:JustsyBaseBundle:DocumentMgr:publishConv}
+
+JustsyBaseBundle_documnet_getfilelist:
+  pattern: /{network_domain}/documnet/getfilelist
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:getFile}
+JustsyBaseBundle_documnet_getdirlist:
+  pattern: /{network_domain}/documnet/getdirlist
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:getDir}
+JustsyBaseBundle_documnet_savedir:
+  pattern: /{network_domain}/documnet/savedir
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:saveDir}
+JustsyBaseBundle_documnet_deletedir:
+  pattern: /documnet/dir/deletedir
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:delDir}
+JustsyBaseBundle_documnet_getfileshare:
+  pattern: /{network_domain}/documnet/getfileshare
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:getshareinfo}
+JustsyBaseBundle_documnet_saveshareinfo:
+  pattern: /{network_domain}/documnet/saveshareinfo
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:saveshareinfo}
+JustsyBaseBundle_documnet_delshareinfo:
+  pattern: /{network_domain}/documnet/delshareinfo
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:delshareinfo}
+JustsyBaseBundle_documnet_dirdel_chk:
+  pattern: /documnet/dirdelete_chk
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:checkDirByDel}
+JustsyBaseBundle_documnet_filedel_chk:
+  pattern: /documnet/filedelete_chk
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:checkFileByDel}
+
+JustsyBaseBundle_documnet_select:
+  pattern: /{network_domain}/documnet/select
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:select}
+JustsyBaseBundle_documnet_grouplist:
+  pattern: /{network_domain}/documnet/grouplist
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:grouplist}
+JustsyBaseBundle_documnet_upload:
+  pattern: /{network_domain}/documnet/upload
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:upload}
+JustsyBaseBundle_documnet_del:
+  pattern: /documnet/delete
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:delete}
+JustsyBaseBundle_documnet_filepublish:
+  pattern: /{network_domain}/documnet/filepublish
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:publishfile}
+JustsyBaseBundle_documnet_savenewdoc:
+  pattern: /{network_domain}/documnet/savenewdoc
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:savenewdoc}
+
+JustsyBaseBundle_documnet_view_mgr:
+  pattern: /{network_domain}/documnet/viewmgr
+  defaults: {_controller: JustsyBaseBundle:DocumentMgr:view}
+
+
+#---------------------成员-----------------------------------------
+#应以如下格式为例定义路由：
+#  /member/XXX                            对于非特定的圈子的路由
+#  /{network_domain}/member/XXX           对于特定的圈子的路由
+JustsyBaseBundle_member_main:
+  pattern: /{network_domain}/member/main
+  defaults: {_controller:JustsyBaseBundle:Member:memberMain}
+JustsyBaseBundle_member:
+  pattern: /{network_domain}/member
+  defaults: {_controller:JustsyBaseBundle:Member:member}
+JustsyBaseBundle_member_search:
+  pattern: /{network_domain}/member/search/{filtervalue}
+  defaults: {_controller:JustsyBaseBundle:Member:searchMember}
+JustsyBaseBundle_member_searchall:
+  pattern: /member/searchall/{filtervalue}
+  defaults: {_controller:JustsyBaseBundle:Member:searchAllMember}
+
+#提醒数据操作
+JustsyBaseBundle_remind_edit:
+  pattern: /remind/edit
+  defaults: {_controller:JustsyBaseBundle:Remind:editremind}
+
+#提醒数据显示
+JustsyBaseBundle_remind_hint:
+  pattern: /remind/hint
+  defaults: {_controller:JustsyBaseBundle:Remind:remindHint}
+
+
+#联系人初始页面
+JustsyBaseBundle_contact_index:
+  pattern: /contact/index
+  defaults: {_controller:JustsyBaseBundle:Contact:index,network_domain:null}
+#链接到推送消息页面
+JustsyBaseBundle_propelling_index:
+  pattern: /propelling/index
+  defaults: {_controller:JustsyBaseBundle:Contact:propelling_index,network_domain:null}
+
+#推送信息人员查询
+JustsyBaseBundle_propelling_staff_search:
+  pattern: /member/propelling/staff_search
+  defaults: {_controller:JustsyBaseBundle:Contact:SearchPropelling}
+#添加需要推送消息的人员
+JustsyBaseBundle_propelling_add:
+  pattern: /member/propelling/add
+  defaults: {_controller:JustsyBaseBundle:Contact:AddPropelling}
+#推送信息查询
+JustsyBaseBundle_propelling_message_search:
+  pattern: /member/propelling/message_search
+  defaults: {_controller:JustsyBaseBundle:Contact:SearchMessage}
+#删除推送消息
+JustsyBaseBundle_propelling_message_delete:
+  pattern: /member/propelling/message_delete
+  defaults: {_controller:JustsyBaseBundle:Contact:DeleteMessage}
+
+
+#联系人部门
+JustsyBaseBundle_member_depart:
+  pattern: /member/contact/department
+  defaults: {_controller:JustsyBaseBundle:Member:GetDepartMent}
+
+#获得我的联系人
+JustsyBaseBundle_member_searchcontact:
+  pattern: /member/contact/search
+  defaults: {_controller:JustsyBaseBundle:Member:SearchContact}
+#人脉请求
+JustsyBaseBundle_member_request:
+  pattern: /member/contact/request
+  defaults: {_controller:JustsyBaseBundle:Member:contactRequest}
+
+
+#---------------------消息-----------------------------------------
+#应以如下格式为例定义路由：
+#  /message/XXX                            对于非特定的圈子的路由
+#  /{network_domain}/message/XXX           对于特定的圈子的路由
+JustsyBaseBundle_message:
+  pattern: /{network_domain}/message
+  defaults: {_controller:JustsyBaseBundle:Message:index}
+JustsyBaseBundle_message_publishMsg:
+  pattern: /message/update
+  defaults: {_controller:JustsyBaseBundle:Message:update}
+
+JustsyBaseBundle_message_one:
+  pattern:  /{network_domain}/message/one/{msg_id}
+  defaults: {_controller:JustsyBaseBundle:Message:oneMsg,msg_id:null}
+JustsyBaseBundle_message_push:
+  pattern: /{network_domain}/message/push/{msg_id}
+  defaults: {_controller:JustsyBaseBundle:Message:pushMsg,msg_id:null}
+JustsyBaseBundle_message_getmsg:
+  pattern:  /{network_domain}/message/getmsg/{type}/{pageindex}
+  defaults: {_controller:JustsyBaseBundle:Message:getMsg,type:unread,pageindex:1}
+JustsyBaseBundle_message_getunreadcount:
+  pattern: /message/getunreadcount
+  defaults: {_controller:JustsyBaseBundle:Message:getUnreadCount}
+JustsyBaseBundle_message_delete:
+  pattern: /message/delete
+  defaults: {_controller:JustsyBaseBundle:Message:delete}
+#-------------------通知------------------------
+#应以如下格式定义路由:
+# /notice/XXX                             对于非特定的圈子的路由
+# /{network_domain}/notice/XXX            对于特定的圈子的路由
+JustsyBaseBundle_notice:
+  pattern: /{network_domain}/notice
+  defaults: {_controller:JustsyBaseBundle:Notice:index}
+JustsyBaseBundle_notice_push:
+  pattern: /{network_domain}/notice/push
+  defaults: {_controller:JustsyBaseBundle:Notice:pushNotice,network_domain:''}
+JustsyBaseBundle_notice_publish:
+  pattern: /{network_domain}/notice/publish
+  defaults: {_controller:JustsyBaseBundle:Notice:noticePublish,network_domain:''}
+JustsyBaseBundle_notice_show:
+  pattern: /{network_domain}/notice/show/{type}/{pageindex}
+  defaults: {_controller:JustsyBaseBundle:Notice:noticeShow,type:unread,pageindex:1}
+JustsyBaseBundle_notice_one:
+  pattern: /{network_domain}/notice/one/{bulletin_id}
+  defaults: {_controller:JustsyBaseBundle:Notice:oneNotice,bulletin_id:null}
+JustsyBaseBundle_notice_getunreadcount:
+  pattern: /{network_domain}/notice/getunreadcount
+  defaults: {_controller:JustsyBaseBundle:Notice:getUnreadCount}
+
+#--------------------------通讯录-------------------------------------
+#应以如下格式为例定义路由:
+#  /addrlist/XXX                          对于非特定的圈子的路由
+#  /{network_domain}/addrlist/XXX         对于特定的圈子的路由
+JustsyBaseBundle_addrlist:
+  pattern:  /{network_domain}/addrlist/index
+  defaults: {_controller:JustsyBaseBundle:AddrList:index}
+JustsyBaseBundle_addrlist_view:
+  pattern: /addrlist/view
+  defaults: {_controller:JustsyBaseBundle:AddrList:view}
+JustsyBaseBundle_addrlist_edit:
+  pattern: /addrlist/edit
+  defaults: {_controller:JustsyBaseBundle:AddrList:edit}
+JustsyBaseBundle_addrlist_update:
+  pattern: /addrlist/update
+  defaults: {_controller:JustsyBaseBundle:AddrList:update}
+JustsyBaseBundle_addrlist_searchinfo:
+  pattern: /addrlist/searchinfo
+  defaults: {_controller:JustsyBaseBundle:AddrList:searchinfo}
+JustsyBaseBundle_addrlist_invite:
+  pattern: /addrlist/invite
+  defaults: {_controller:JustsyBaseBundle:AddrList:invite}
+JustsyBaseBundle_addrlist_addtype:
+  pattern: /addrlist/addtype
+  defaults: {_controller:JustsyBaseBundle:AddrList:addType}
+JustsyBaseBundle_addrlist_intro:
+  pattern: /addrlist/intro
+  defaults: {_controller:JustsyBaseBundle:AddrList:intro}
+JustsyBaseBundle_addrlist_one:
+  pattern: /addrlist/one
+  defaults: {_controller:JustsyBaseBundle:AddrList:oneAddr}
+JustsyBaseBundle_addrlist_type_delete:
+  pattern: /addrlist/type/delete
+  defaults: {_controller:JustsyBaseBundle:AddrList:delType}
+JustsyBaseBundle_addrlist_type_change_name:
+  pattern: /addrlist/type/change/name
+  defaults: {_controller:JustsyBaseBundle:AddrList:changeName}
+
+#------------------------个人收藏----------------------------------
+#应以如下格式为例定义路由:
+# /{network_domain}/collect/XXX        对于特定的圈子的路由
+# /collect/XXX                         对于非特定的圈子的路由
+JustsyBaseBundle_collect:
+  pattern: /{network_domain}/collect
+  defaults: {_controller:JustsyBaseBundle:Collect:index}
+JustsyBaseBundle_collect_pc:
+  pattern: /{network_domain}/collect/pc
+  defaults: {_controller:JustsyBaseBundle:Collect:indexpc}
+
+#------------------------@提到我的----------------------------------
+#应以如下格式为例定义路由:
+# /{network_domain}/at/XXX        对于特定的圈子的路由
+# /at/XXX                         对于非特定的圈子的路由
+JustsyBaseBundle_at:
+  pattern: /{network_domain}/at
+  defaults: {_controller:JustsyBaseBundle:AtMe:index}
+JustsyBaseBundle_at_pc:
+  pattern: /{network_domain}/at/pc
+  defaults: {_controller:JustsyBaseBundle:AtMe:indexpc}
+
+#------------------------评论/回复----------------------------------
+JustsyBaseBundle_reply_in:
+  pattern: /{network_domain}/reply/in
+  defaults: {_controller:JustsyBaseBundle:Reply:in}
+JustsyBaseBundle_reply_out:
+  pattern: /{network_domain}/reply/out
+  defaults: {_controller:JustsyBaseBundle:Reply:out}
+#------------------------我的人脉关系管理----------------------------------
+#attentype:关系类型
+#   atten_me:关注我的(粉丝)
+#   me_atten:我关注的
+JustsyBaseBundle_relation_atten:
+  pattern: /{network_domain}/relation/atten/{attentype}
+  defaults: {_controller:JustsyBaseBundle:PersonalHome:relationAtten}
+JustsyBaseBundle_relation_atten_me:
+  pattern: /{network_domain}/relation/atten_me
+  defaults: {_controller:JustsyBaseBundle:PersonalHome:relationAttenMe}
+JustsyBaseBundle_relation_me_atten:
+  pattern: /{network_domain}/relation/me_atten
+  defaults: {_controller:JustsyBaseBundle:PersonalHome:relationMeAtten}
+
+#---------------------人员关注-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/emp/XXX           对于特定的圈子的路由
+JustsyBaseBundle_component_emp_attention:
+  pattern: /component/emp/attention/{attenaccount}
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:attention}
+JustsyBaseBundle_component_emp_cancelattention:
+  pattern: /component/emp/cancelattention/{attenaccount}
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:cancelAttention}
+JustsyBaseBundle_component_emp_releaseattention:
+  pattern: /login/emp/releaseattention/{attenaccount}
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:releaseTogetherAttention}
+JustsyBaseBundle_component_emp_myattention:
+  pattern: /component/emp/myattention/{account}/{topCount}
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:queryAttention,topCount:-1}
+JustsyBaseBundle_component_emp_attentionmy:
+  pattern: /component/emp/attentionmy/{account}/{topCount}
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:queryAttentionThis,topCount:-1}
+
+JustsyBaseBundle_component_emp_getaccount:
+  pattern: /component/emp/queryaccount/{empname}
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:queryAccount}
+
+JustsyBaseBundle_component_emp:
+  pattern: /component/emp/info
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:index}
+
+JustsyBaseBundle_component_emp_contact:
+  pattern: /component/contact/info
+  defaults: {_controller:JustsyBaseBundle:EmployeeCard:contact}
+
+JustsyBaseBundle_publicpage_error:
+  pattern: /publicpage/error
+  defaults: {_controller:JustsyBaseBundle:Error:index}
+
+JustsyBaseBundle_publicpage_success:
+  pattern: /publicpage/success
+  defaults: {_controller:JustsyBaseBundle:Error:success}
+#同意加入圈子
+JustsyBaseBundle_publicpage_agreejoincircle:
+  pattern:  /publicpage/agreejoincircle/{para}
+  defaults: { _controller: JustsyBaseBundle:Circle:agreeJoin,para:null }
+
+#########
+# 应用中心路由
+#########
+
+JustsyBaseBundle_appcenter_index:
+  pattern: /{network_domain}/appcenter/{appid}
+  defaults: {_controller:JustsyBaseBundle:AppCenter:index}
+
+JustsyBaseBundle_appcenter_auth:
+  pattern: /api/appcenterauth
+  defaults: {_controller:JustsyBaseBundle:AppCenter:auth}
+
+JustsyBaseBundle_appcenter_auth_auth:
+  pattern: /api/appcenterauth/auth
+  defaults: {_controller:JustsyBaseBundle:AppCenter:authProc}
+
+JustsyBaseBundle_appcenter_openidbind:
+  pattern: /api/openid/bind
+  defaults: {_controller:JustsyBaseBundle:AppCenter:openidBind}
+
+JustsyBaseBundle_account_getinfobyapp:
+  pattern: /user/appcenterauth/info
+  defaults: {_controller:JustsyBaseBundle:AppCenter:getOpenidInf}
+
+JustsyBaseBundle_appcenter_getApps:
+  pattern: /{network_domain}/apps/get
+  defaults: {_controller:JustsyBaseBundle:AppCenter:getApps}
+
+####专门为应用中心主页提供
+JustsyBaseBundle_wefafaheader_forappcenter:
+  pattern: /wefafa/header
+  defaults: {_controller:JustsyBaseBundle:AppCenter:getWefafaHeader}
+####专门为应用跳转提供
+JustsyBaseBundle_jump_forappcenter:
+  pattern: /wefafa/app/jump
+  defaults: {_controller:JustsyBaseBundle:AppCenter:appJump}
+
+############
+#反馈模块
+###########
+JustsyBaseBundle_feedback_save:
+  pattern: /{network_domain}/feedback/save
+  defaults: {_controller:JustsyBaseBundle:Feedback:save}
+#---------------------公用接口-----------------------------------------
+#应以如下格式为例定义路由：
+#  /api/XXX
+#发送短信接口
+JustsyBaseBundle_api_sms:
+  pattern:  /api/sms/{mobiles},{msg}
+  defaults: { _controller: JustsyBaseBundle:SendSMS:sendSMS }
+JustsyBaseBundle_api_addrlist_add:
+  pattern: /api/addrlist/add/{addr_account},{typeid},{editType}
+  defaults: {_controller:JustsyBaseBundle:AddrList:edit,typeid:'M001',editType:'add'}
+#------------------------企业设置-----------------------------------------
+JustsyBaseBundle_enterprise_setting_mgr_employee_two:
+    pattern:  /{network_domain}/enterpriseSetting/two/employee
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:employeemgr}
+JustsyBaseBundle_enterprise_setting_mar_employee_edit:
+    pattern: /{network_domain}/enterpriseSetting/two/edit
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:employeeEdit}
+JustsyBaseBundle_enterprise_setting_save_mstyle:
+    pattern:  /{network_domain}/enterpriseSetting/two/savemstyle
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:saveMstyle}
+JustsyBaseBundle_enterprise_setting_getusers_turnon:
+    pattern:  /{network_domain}/enterpriseSetting/two/getusers
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getOnUsersOfFunction}
+JustsyBaseBundle_enterprise_setting_priv_controll:
+    pattern:  /enterpriseSetting/two/privcontroll
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:privControll}
+JustsyBaseBundle_enterprise_setting_add_employee_noactive:
+    pattern:  /enterpriseSetting/two/addemployee
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:addEmployee}
+JustsyBaseBundle_enterprise_setting_import_employee:
+    pattern:  /{network_domain}/enterpriseSetting/two/import
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:importEmployee}
+JustsyBaseBundle_enterprise_setting_add_role:
+    pattern:  /{network_domain}/enterpriseSetting/add/role
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:addRole}
+JustsyBaseBundle_enterprise_setting_edit_role:
+    pattern:  /{network_domain}/enterpriseSetting/edit/role
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:editRole}
+JustsyBaseBundle_enterprise_setting_del_role:
+    pattern:  /{network_domain}/enterpriseSetting/del/role
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:delRole}
+JustsyBaseBundle_enterprise_setting_get_customrole:
+    pattern:  /{network_domain}/enterpriseSetting/get/role
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getRoles}
+JustsyBaseBundle_enterprise_setting_set_role_staff:
+    pattern:  /{network_domain}/enterpriseSetting/setrolestaff
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:setUserRole}
+JustsyBaseBundle_enterprise_setting_set_staff_role:
+    pattern:  /{network_domain}/enterpriseSetting/setstaffrole
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:setRoleStaff}
+JustsyBaseBundle_enterprise_setting_set_get_privbyrole:
+    pattern:  /{network_domain}/enterpriseSetting/get/privbyrole
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getPrivByRole}
+JustsyBaseBundle_enterprise_setting_set_get_rolebystaff:
+    pattern:  /{network_domain}/enterpriseSetting/get/rolebystaff
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getRoleByStaff}
+JustsyBaseBundle_enterprise_setting_set_get_staffbyrole:
+    pattern:  /{network_domain}/enterpriseSetting/get/staffbyrole
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getStaffByRole}
+JustsyBaseBundle_enterprise_setting_set_get_staffs:
+    pattern:  /{network_domain}/enterpriseSetting/get/staffs
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getStaffs}
+JustsyBaseBundle_enterprise_setting_plus_bind:
+    pattern:  /{network_domain}/enterpriseSetting/plus/bind
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:bindIndex}
+JustsyBaseBundle_enterprise_setting_get_bindlist:
+    pattern:  /enterpriseSetting/get/bindlist
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSettingTwo:getBindList}
+JustsyBaseBundle_enterprise_setting_basic:
+    pattern:  /{network_domain}/enterpriseSetting/basic
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:basic}
+JustsyBaseBundle_ldap_data:
+    pattern: /{network_domain}/enterpriseSetting/ldap
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:ldapData}
+JustsyBaseBundle_save_ldap_data:
+    pattern: /enterpriseSetting/ldap/save
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:saveLdapData}
+
+JustsyBaseBundle_syncstafforg_data:
+    pattern: /{network_domain}/enterpriseSetting/syncstafforg
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:syncstafforgData}
+JustsyBaseBundle_syncstafforg_save:
+    pattern: /enterpriseSetting/savesyncstafforg
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:savesyncstafforgData}
+
+JustsyBaseBundle_syncdbstafforg_data:
+    pattern: /{network_domain}/enterpriseSetting/syncdbstafforg
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:syncdatabasestafforgData}
+JustsyBaseBundle_syncdbstafforg_save:
+    pattern: /enterpriseSetting/savedbsyncstafforg
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:savedatabasesync}
+
+JustsyBaseBundle_enterprise_setting_save_log:
+    pattern: /enterpriseSetting/save/log
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:saveEnoLog}
+JustsyBaseBundle_enterprise_setting_provincelist:
+    pattern:  /enterpriseSetting/provincelist
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:getProvinceList}
+JustsyBaseBundle_enterprise_setting_citylist:
+    pattern:  /enterpriseSetting/citylist
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:getCityList}
+JustsyBaseBundle_enterprise_setting_arealist:
+    pattern:  /enterpriseSetting/arealist
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:getAreaList}
+JustsyBaseBundle_enterprise_setting_microaccount:
+    pattern:  /{network_domain}/enterpriseSetting/microaccount
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microaccount}
+
+JustsyBaseBundle_enterprise_setting_microitem:
+    pattern:  /{network_domain}/enterpriseSetting/microitem
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microitem}
+
+JustsyBaseBundle_enterprise_setting_microfans:
+    pattern:  /{network_domain}/enterpriseSetting/microfans
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microfans}
+
+JustsyBaseBundle_enterprise_setting_microfanslist:
+    pattern:  /{network_domain}/enterpriseSetting/microfanslist
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microfanslist}
+
+JustsyBaseBundle_enterprise_setting_microaccount_search:
+    pattern:  /enterpriseSetting/microaccount_search
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microaccount_search}
+
+JustsyBaseBundle_enterprise_setting_microaccount_add:
+    pattern:  /{network_domain}/enterpriseSetting/microaccount_add
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microaccount_add}
+
+JustsyBaseBundle_enterprise_setting_add_micro_count:
+    pattern:  /{network_domain}/enterpriseSetting/add_micro_count
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:add_micro_quantity}
+
+JustsyBaseBundle_enterprise_setting_getmicroaccount:
+    pattern:  /enterpriseSetting/getmicroaccount
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:getmicroaccount}
+
+JustsyBaseBundle_enterprise_setting_change_micro_fans:
+    pattern:  /enterpriseSetting/change_micro_fans
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:change_micro_fans}
+
+JustsyBaseBundle_enterprise_setting_get_micro_fans:
+    pattern:  /enterpriseSetting/get_micro_fans
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:get_micro_fans}
+
+JustsyBaseBundle_enterprise_setting_check_micro_number:
+    pattern:  /enterpriseSetting/check_micro_number
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:check_micro_number}
+
+JustsyBaseBundle_enterprise_setting_check_micro_name:
+    pattern:  /enterpriseSetting/check_micro_name
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:check_micro_name}
+
+JustsyBaseBundle_enterprise_setting_change_micro_logo:
+    pattern:  /enterpriseSetting/change_micro_logo
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:change_micro_logo}
+
+JustsyBaseBundle_enterprise_setting_savemicroaccount:
+    pattern:  /{network_domain}/enterpriseSetting/savemicroaccount
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:savemicroaccount}
+
+JustsyBaseBundle_enterprise_mc_savegroup:
+    pattern:  /{network_domain}/microaccount/savegroup
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:saveGroup}
+JustsyBaseBundle_enterprise_mc_removegroup:
+    pattern:  /{network_domain}/microaccount/removegroup
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:removeGroup}
+JustsyBaseBundle_enterprise_mc_getgrouplist:
+    pattern:  /{network_domain}/microaccount/getgrouplist
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:getGrouplist}
+JustsyBaseBundle_enterprise_mc_updategroup:
+    pattern:  /{network_domain}/microaccount/updategroup
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:updateGroup}
+JustsyBaseBundle_enterprise_mc_checkgroupname:
+    pattern:  /{network_domain}/microaccount/checkgroupname
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:checkgroupname}
+JustsyBaseBundle_enterprise_mc_getgroupmemberlist:
+    pattern:  /{network_domain}/microaccount/getmemberlist
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:getMemberList}
+JustsyBaseBundle_enterprise_mc_assigngroup:
+    pattern:  /{network_domain}/microaccount/assignmemebr
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:assignGroupMember}
+JustsyBaseBundle_enterprise_mc_movergroup:
+    pattern:  /{network_domain}/microaccount/movememebr
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:moveGroupMember}
+
+JustsyBaseBundle_enterprise_setting_delmicroaccount:
+    pattern:  /{network_domain}/enterpriseSetting/delmicroaccount
+    defaults: { _controller:JustsyBaseBundle:MicroAccount:microaccount_delete}
+
+JustsyBaseBundle_enterprise_setting_savebasic:
+    pattern:  /{network_domain}/enterpriseSetting/savebasic
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:saveBasic}
+
+
+JustsyBaseBundle_enterprise_setting_mgr_dept:
+    pattern:  /{network_domain}/enterpriseSetting/deptMgr
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:deptmgr}
+
+JustsyBaseBundle_enterprise_setting_mgr_employee:
+    pattern:  /{network_domain}/enterpriseSetting/employeeMgr
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:employeemgr}
+
+JustsyBaseBundle_enterprise_setting_detail:
+    pattern:  /{network_domain}/enterpriseSetting/detail
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:detail}
+
+JustsyBaseBundle_enterprise_setting_savedetail:
+    pattern:  /{network_domain}/enterpriseSetting/savedetail
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:saveDetail}
+JustsyBaseBundle_enterprise_setting_enterprisetag:
+    pattern:  /{network_domain}/enterpriseSetting/enterprisetag
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:tag}
+JustsyBaseBundle_enterprise_setting_enterprisesavetag:
+    pattern:  /{network_domain}/enterpriseSetting/enterprisesavetag
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:savetag}
+JustsyBaseBundle_enterprise_setting_enterprisedeltag:
+    pattern:  /{network_domain}/enterpriseSetting/enterprisedeltag
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:deltag}
+JustsyBaseBundle_enterprise_setting_checkename:
+    pattern:  /enterpriseSetting/checkename
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:checkEname}
+JustsyBaseBundle_enterprise_setting_checkeshortname:
+    pattern:  /enterpriseSetting/checkeshortname
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:checkEshortname}
+JustsyBaseBundle_circle_setting_query_enterprise_manager:
+    pattern:  /enterpriseSetting/query_enterprise_manager
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:queryEnterprisemanager}
+JustsyBaseBundle_enterprise_setting_online_service:
+    pattern:  /{network_domain}/enterpriseSetting/online_service
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:online_service}
+JustsyBaseBundle_enterprise_setting_online_service_query:
+    pattern:  /enterpriseSetting/online_service_query
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:online_service_query}
+JustsyBaseBundle_enterprise_setting_online_service_new_public_account:
+    pattern:  /{network_domain}/enterpriseSetting/online_service_new_public_account
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:new_public_account}
+JustsyBaseBundle_enterprise_setting_online_service_save_public_account:
+    pattern:  /enterpriseSetting/online_service_save_public_account
+    defaults: { _controller:JustsyBaseBundle:EnterpriseSetting:save_public_account}
+JustsyBaseBundle_enterprise_manager_setting:
+    pattern:  /{network_domain}/enterpriseSetting/manager_setting
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:manager_setting}
+JustsyBaseBundle_enterprise_setting_savemanager_setting:
+   pattern:   /{network_domain}/enterpriseSetting/savemanager_setting
+   defaults:  {_controller:JustsyBaseBundle:EnterpriseSetting:savemanager_setting}
+JustsyBaseBundle_enterprise_setting_save_default_words:
+   pattern:   /{network_domain}/enterpriseSetting/save_default_words
+   defaults:  {_controller:JustsyBaseBundle:EnterpriseSetting:save_default_words}
+#------------------------圈子设置-----------------------------------------
+JustsyBaseBundle_circle_setting_circle:
+    pattern:  /{network_domain}/CircleSetting/circle
+    defaults: { _controller:JustsyBaseBundle:CircleSetting:circle}
+JustsyBaseBundle_circle_save_logo:
+    pattern: /circle/save/logo
+    defaults: {_controller:JustsyBaseBundle:Circle:saveLogo}
+JustsyBaseBundle_circle_setting_savecircle:
+    pattern:  /{network_domain}/CircleSetting/savecircle
+    defaults: { _controller:JustsyBaseBundle:CircleSetting:saveCircle}
+JustsyBaseBundle_circle_setting_checkcirclename:
+    pattern:  /{network_domain}/CircleSetting/checkcirclename
+    defaults: { _controller:JustsyBaseBundle:CircleSetting:checkCirclename}
+JustsyBaseBundle_circle_setting_query_circle_manager:
+    pattern:  /CircleSetting/query_circle_manager
+    defaults: { _controller:JustsyBaseBundle:CircleSetting:queryCirclemanager}
+#------------------------群组设置-----------------------------------------
+JustsyBaseBundle_group_setting_group:
+    pattern:  /{network_domain}/GroupSetting/group
+    defaults: { _controller:JustsyBaseBundle:GroupSetting:group}
+JustsyBaseBundle_group_setting_save_logo:
+    pattern: /group/save/logo
+    defaults: {_controller:JustsyBaseBundle:GroupSetting:saveLogo}
+JustsyBaseBundle_group_setting_savegroup:
+    pattern:  /{network_domain}/GroupSetting/savegroup
+    defaults: { _controller:JustsyBaseBundle:GroupSetting:saveGroup}
+JustsyBaseBundle_group_setting_checkgroupname:
+    pattern:  /{network_domain}/GroupSetting/checkgroupname
+    defaults: { _controller:JustsyBaseBundle:GroupSetting:checkGroupname}
+#------------------------个人日志-----------------------------------------
+#个人日志首页
+JustsyBaseBundle_journal_index:
+  pattern:  /{network_domain}/journal/index
+  defaults: { _controller: JustsyBaseBundle:Journal:index }
+JustsyBaseBundle_journal_content:
+  pattern:  /{network_domain}/journal/content
+  defaults: {_controller:JustsyBaseBundle:Journal:content,network_domain:null}
+JustsyBaseBundle_journal_title:
+  pattern:  /{network_domain}/journal/title
+  defaults: {_controller:JustsyBaseBundle:Journal:title,network_domain:null}
+JustsyBaseBundle_journal_update:
+  pattern:  /{network_domain}/journal/update
+  defaults: {_controller:JustsyBaseBundle:Journal:update,network_domain:null}
+JustsyBaseBundle_journal_delete:
+  pattern:  /{network_domain}/journal/delete
+  defaults: {_controller:JustsyBaseBundle:Journal:delete,network_domain:null}
+JustsyBaseBundle_journal_search:
+  pattern:  /{network_domain}/journal/search
+  defaults: {_controller:JustsyBaseBundle:Journal:search,network_domain:null}
+JustsyBaseBundle_journal_startbell:
+  pattern:  /journal/start
+  defaults: {_controller:JustsyBaseBundle:Journal:startBell}
+#------------------------计划任务-----------------------------------------
+#计划任务首页
+JustsyBaseBundle_persontask_index:
+  pattern:  /{network_domain}/persontask/index
+  defaults: {_controller:JustsyBaseBundle:PersonTask:index}
+JustsyBaseBundle_persontask_table:
+  pattern:  /{network_domain}/persontask/table
+  defaults: {_controller:JustsyBaseBundle:PersonTask:search}
+#本周计划
+JustsyBaseBundle_persontask_next7daystask:
+  pattern:  /{network_domain}/persontask/next7daystask
+  defaults: {_controller:JustsyBaseBundle:PersonTask:next7daystask,network_domain:null}
+JustsyBaseBundle_persontask_update:
+  pattern:  /{network_domain}/persontask/update
+  defaults: {_controller:JustsyBaseBundle:PersonTask:update,network_domain:null}
+JustsyBaseBundle_persontask_getOneTaskContent:
+  pattern:  /{network_domain}/persontask/getOneTaskContent
+  defaults: {_controller:JustsyBaseBundle:PersonTask:get_one_task_content,network_domain:null}
+JustsyBaseBundle_persontask_delete:
+  pattern:  /{network_domain}/persontask/delete
+  defaults: {_controller:JustsyBaseBundle:PersonTask:delete,network_domain:null}
+JustsyBaseBundle_persontask_state_setting:
+  pattern:  /{network_domain}/persontask/stateSetting
+  defaults: {_controller:JustsyBaseBundle:PersonTask:state_setting,network_domain:null}
+#------------------------帮助-----------------------------------------
+#帮助首页
+JustsyBaseBundle_help_index:
+  pattern:  /help/index/{id}
+  defaults: { _controller: JustsyBaseBundle:Help:index,id:null }
+#帮助问题列表
+JustsyBaseBundle_help_list:
+  pattern:  /help/list/{type},{pageindex}
+  defaults: { _controller: JustsyBaseBundle:Help:getList, type:null,pageindex:1 }
+#显示帮助
+JustsyBaseBundle_help_show:
+  pattern:  /help/show/{id}
+  defaults: { _controller: JustsyBaseBundle:Help:show, id:null }
+#帮助－－微应用
+JustsyBaseBundle_help_microapp:
+  pattern:  /help/microapp
+  defaults: { _controller: JustsyBaseBundle:Help:microapp }
+
+#---------------------------------webim消息记录----------------------------------
+JustsyBaseBundle_wechatmsg:
+  pattern: /wechatmsg/index
+  defaults: {_controller:JustsyBaseBundle:WeChatMsg:index}
+
+JustsyBaseBundle_writemsg:
+  pattern: /wechatmsg/writemsg
+  defaults: {_controller:JustsyBaseBundle:WeChatMsg:writemsg}
+
+JustsyBaseBundle_searchmsg:
+  pattern: /wechatmsg/searchmsg
+  defaults: {_controller:JustsyBaseBundle:WeChatMsg:searchmsg}
+
+JustsyBaseBundle_deleteById:
+  pattern: /wechatmsg/deleteById
+  defaults: {_controller:JustsyBaseBundle:WeChatMsg:deleteById}
+
+JustsyBaseBundle_paging:
+  pattern: /wechatmsg/paging
+  defaults: {_controller:JustsyBaseBundle:WeChatMsg:paging}
+
+JustsyBaseBundle_export:
+  pattern: /wechatmsg/export
+  defaults: {_controller:JustsyBaseBundle:WeChatMsg:export}
+
+JustsyBaseBundle_wefafaShare:
+  pattern: /share/wefafaShare
+  defaults: {_controller:JustsyBaseBundle:Share:wefafaShare}
+
+JustsyBaseBundle_share:
+  pattern: /share/index
+  defaults: {_controller:JustsyBaseBundle:Share:index}
+
+JustsyBaseBundle_sharelogin:
+  pattern: /share/sharelogin
+  defaults: {_controller:JustsyBaseBundle:Share:sharelogin}
+
+JustsyBaseBundle_sharelogincheck:
+    pattern:  /share/sharelogin_check/{name}
+    defaults: { _controller: JustsyBaseBundle:Share:login_check,name:null }
+
+JustsyBaseBundle_upload:
+    pattern:  /upload/index/
+    defaults: { _controller: JustsyBaseBundle:Upload:index }
+
+JustsyBaseBundle_department:
+    pattern:  /department/index/
+    defaults: { _controller: JustsyBaseBundle:Department:index }
+
+#---------------------人脉圈子主页-----------------------------------------
+#应以如下格式为例定义路由：
+#  /{network_domain}/XXX           对于特定的圈子的路由
+
+JustsyBaseBundle_friendcircle_getallconv:
+    pattern:  /friendcircle/getallconv/{class}
+    defaults: { _controller: JustsyBaseBundle:FriendCircle:getAllConv,class:conv}
+JustsyBaseBundle_friendcircle_getallconvunread:
+    pattern:  /friendcircle/getallconvunread
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:getAllConvUnread}
+JustsyBaseBundle_friendcircle_get_recom_contacts:
+    pattern:  /friendcircle/recom/contacts
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:getRecomContacts}
+JustsyBaseBundle_friendcircle_recom_account_page:
+    pattern: /friendcircle/recom/account/page
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:RemAccounts}
+JustsyBaseBundle_friendcircle_recom_eno_get:
+    pattern: /friendcircle/rcom/eno/get
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:getRecomEno}
+JustsyBaseBundle_friendcircle_recommend:
+    pattern: /friendcircle/recommend
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:recommend}
+JustsyBaseBundle_friendcircle_recommend_get:
+    pattern: /friendcircle/recommend/get
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:getRecommend}
+JustsyBaseBundle_friendcircle_usertag:
+    pattern: /friendcircle/usertag
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:UserTag}
+JustsyBaseBundle_friendcircle_friendevent:
+    pattern: /friendcircle/friendevent
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:FriendEvent}
+JustsyBaseBundle_friendcircle_get_supper:
+    pattern: /friendcircle/get/supper
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:getSupperUser}
+JustsyBaseBundle_friendcircle_supper_user:
+    pattern: /friendcircle/supper/user
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:SupperUser}
+JustsyBaseBundle_friendcircle_recom_eno:
+    pattern: /friendcircle/recom/eno
+    defaults: {_controller:JustsyBaseBundle:FriendCircle:RemEnterprise}
+#-----------------------标签--------------------------
+JustsyBaseBundle_tag_user_get:
+    pattern: /friendcircle/label/user/get
+    defaults: {_controller:JustsyBaseBundle:WeTags:getUserTag}
+JustsyBaseBundle_tag_user_add:
+    pattern: /friendcircle/label/user/add
+    defaults: {_controller:JustsyBaseBundle:WeTags:addUserTag}
+JustsyBaseBundle_tag_user_edit:
+    pattern: /friendcircle/label/user/edit
+    defaults: {_controller:JustsyBaseBundle:WeTags:editUserTag}
+JustsyBaseBundle_tag_user_del:
+    pattern: /friendcircle/label/user/del
+    defaults: {_controller:JustsyBaseBundle:WeTags:delUserTag}
+
+#----------------------企业查询关注推荐-------------------------------------------------
+JustsyBaseBundle_enterprise_index:
+  pattern: /enterprise/index
+  defaults: {_controller:JustsyBaseBundle:Enterprise:index}
+JustsyBaseBundle_enterprise_search:
+  pattern: /enterprise/search
+  defaults: {_controller:JustsyBaseBundle:Enterprise:search}
+JustsyBaseBundle_enterprise_atten:
+  pattern: /enterprise/atten
+  defaults: {_controller:JustsyBaseBundle:Enterprise:atten}
+JustsyBaseBundle_enterprise_get_card:
+  pattern: /enterprise/get/card
+  defaults: {_controller:JustsyBaseBundle:Enterprise:getEnterpriseCard}
+
+
+#微应用管理
+JustsyBaseBundle_micro_app_list:
+    pattern:  /{network_domain}/microapp/list
+    defaults: { _controller: JustsyBaseBundle:MicroApp:list}
+JustsyBaseBundle_micro_app_item:
+    pattern:  /{network_domain}/microapp/item
+    defaults: { _controller: JustsyBaseBundle:MicroApp:item}
+JustsyBaseBundle_micro_app_resetpwd:
+    pattern:  /{network_domain}/microapp/resetpwd
+    defaults: {_controller:JustsyBaseBundle:MicroApp:resetMicroPwd}
+JustsyBaseBundle_micro_app_add:
+    pattern:  /{network_domain}/microapp/add
+    defaults: { _controller: JustsyBaseBundle:MicroApp:add}
+JustsyBaseBundle_micro_app_save:
+    pattern:  /{network_domain}/microapp/save
+    defaults: { _controller: JustsyBaseBundle:MicroApp:save}
+JustsyBaseBundle_micro_app_atten:
+    pattern:  /{network_domain}/microapp/atten
+    defaults: { _controller: JustsyBaseBundle:MicroApp:atten}
+JustsyBaseBundle_micro_app_change_atten:
+    pattern:  /microapp/change/atten
+    defaults: { _controller: JustsyBaseBundle:MicroApp:changeatten}
+JustsyBaseBundle_micro_app_staff:
+    pattern:  /{network_domain}/microapp/staff
+    defaults: { _controller: JustsyBaseBundle:MicroApp:staff}
+JustsyBaseBundle_micro_app_webizproxy:
+    pattern:  /{network_domain}/microapp/webizproxy
+    defaults: { _controller: JustsyBaseBundle:MicroApp:webizproxy}
+
+#weibo/callback
+JustsyBaseBundle_weibo_callback:
+    pattern:  /api/weibo/callback
+    defaults: { _controller: JustsyBaseBundle:Login:weibocallback}
+JustsyBaseBundle_weibo_sina_authorize:
+    pattern:  /weibo/sina/authorize
+    defaults: {_controller:JustsyBaseBundle:SinaWeibo:authorize}
+JustsyBaseBundle_weibo_tencent_authorize:
+    pattern:  /weibo/tencent/authorize
+    defaults: {_controller:JustsyBaseBundle:TencentWeibo:authorize}
+JustsyBaseBundle_enterprisesetting_weibo_mgr:
+    pattern: /{network_domain}/enterpriseSetting/weibo/mgr
+    defaults: {_controller:JustsyBaseBundle:EnterpriseSetting:weiboMgr}
+
+JustsyBaseBundle_weibo_fanslist:
+    pattern:  /api/weibo/fans/get
+    defaults: { _controller: JustsyBaseBundle:SinaWeibo:getlist}
+
+JustsyBaseBundle_weibo_getfans:
+    pattern:  /api/weibo/fans/sync
+    defaults: { _controller: JustsyBaseBundle:SinaWeibo:getfansBySina}
+
+JustsyBaseBundle_mul_account_bind:
+    pattern:  /api/mul/account/bind
+    defaults: { _controller: JustsyBaseBundle:AccountBind:save}
+JustsyBaseBundle_mul_account_unbind:
+    pattern:  /api/mul/account/unbind
+    defaults: { _controller: JustsyBaseBundle:AccountBind:unbind}
+
+JustsyBaseBundle_mapp:
+    pattern:  /mapp/index
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:mapp }
+
+JustsyBaseBundle_applist:
+    pattern:  /mapp/applist
+    defaults: { _controller: JustsyBaseBundle:AppCenter:getAppList }
+
+#保存应用图标Logo
+JustsyBaseBundle_app_savephotor:
+    pattern:  /mapp/applist/savephoto
+    defaults: { _controller: JustsyBaseBundle:AppCenter:savePhoto }
+
+JustsyBaseBundle_appelayout:
+    pattern:  /mapp/applist/layout
+    defaults: { _controller: JustsyBaseBundle:AppCenter:appEditLayout }
+
+#编辑应用
+JustsyBaseBundle_appedit:
+    pattern:  /mapp/applist/edit
+    defaults: { _controller: JustsyBaseBundle:AppCenter:editApps }
+
+##删除应用 
+JustsyBaseBundle_appdelete:
+    pattern:  /mapp/applist/delete
+    defaults: { _controller: JustsyBaseBundle:AppCenter:deleteApps }
+
+#应用基本信息
+JustsyBaseBundle_basic:
+    pattern:  /mapp/applist/basic
+    defaults: { _controller: JustsyBaseBundle:AppCenter:getBasic }
+
+JustsyBaseBundle_basic_resetpass:
+    pattern:  /mapp/aconfiga/{appid}/resetpass
+    defaults: { _controller: JustsyBaseBundle:AppCenter:resetpass }
+
+JustsyBaseBundle_mappconfig_appbizproxyurl:
+    pattern:  /mapp/aconfiga/appbizproxyurl
+    defaults: { _controller: JustsyBaseBundle:AppCenter:appbizproxyurl }
+
+JustsyBaseBundle_basic_updateconfigfile:
+    pattern:  /mapp/aconfiga/{appid}/updateconfigfile
+    defaults: { _controller: JustsyBaseBundle:AppCenter:updateconfigfile }
+
+JustsyBaseBundle_basic_saveresfile:
+    pattern:  /mapp/aconfiga/{appid}/saveresfile
+    defaults: {_controller: JustsyBaseBundle:AppCenter:saveResFile}
+
+JustsyBaseBundle_basic_getres:
+    pattern:  /mapp/aconfiga/getres
+    defaults: {_controller: JustsyBaseBundle:AppCenter:getRes}
+
+JustsyBaseBundle_basic_delres:
+    pattern:  /mapp/aconfiga/delres
+    defaults: {_controller: JustsyBaseBundle:AppCenter:delRes}    
+
+JustsyBaseBundle_mappconfig:
+    pattern:  /mapp/aconfiga
+    defaults: { _controller: JustsyBaseBundle:MappConfig:index }
+
+#获得组件    
+JustsyBaseBundle_mappconfig_component:
+    pattern:  /mapp/aconfiga/component
+    defaults: { _controller: JustsyBaseBundle:MappConfig:getComponent }
+
+JustsyBaseBundle_mappconfig_uploadPortalsfile:
+    pattern:  /mapp/configa/uploadportals
+    defaults: { _controller: JustsyBaseBundle:MappConfig:uploadPortalsFile }
+    
+JustsyBaseBundle_mappconfig_getportalsfile:
+    pattern:  /mapp/configa/getportalsfile
+    defaults: { _controller: JustsyBaseBundle:MappConfig:getPortalsFile }
+
+###portal高级定制页面
+JustsyBaseBundle_mappconfig_portaladv:
+    pattern:  /mapp/configa/portaladv
+    defaults: { _controller: JustsyBaseBundle:MappConfig:portaladv }
+JustsyBaseBundle_mappconfig_portaladvsave:
+    pattern:  /mapp/configa/portaladvsave
+    defaults: { _controller: JustsyBaseBundle:MappConfig:portaladvsave }
+
+###应用高级定制页面
+#JustsyBaseBundle_mappconfig_appsadv:
+#    pattern:  /mapp/configa/appsadv
+#    defaults: { _controller: JustsyBaseBundle:MappConfig:appsadv }
+    
+##发布门户首页配置
+JustsyBaseBundle_mappconfig_protalpublish:
+    pattern:  /mapp/configa/protalpublish
+    defaults: { _controller: JustsyBaseBundle:MappConfig:publishProtalConfig }
+#发布应用配置
+JustsyBaseBundle_mappconfig_publish:
+    pattern:  /mapp/configa/publish
+    defaults: { _controller: JustsyBaseBundle:MappConfig:publishConfig }
+
+JustsyBaseBundle_mapp_publish:
+    pattern:  /mapp/configa/apppublish
+    defaults: { _controller: JustsyBaseBundle:MappConfig:appPublish }
+
+JustsyBaseBundle_mappconfig_compentedit:
+    pattern:  /mapp/configa/compentedit
+    defaults: { _controller: JustsyBaseBundle:MappConfig:compentedit }
+
+JustsyBaseBundle_mappconfig_compentattributeedit:
+    pattern:  /mapp/configa/compentattributeedit/{component}
+    defaults: { _controller: JustsyBaseBundle:MappConfig:componentAttrEdit }    
+
+#获得发布历史
+JustsyBaseBundle_mapp_publish_history:
+    pattern:  /mapp/configa/apppublish/history
+    defaults: { _controller: JustsyBaseBundle:MappConfig:getPublishHistory }
+
+#获得门户首页
+JustsyBaseBundle_mapp_portalshome:
+    pattern:  /mapp/configa/portals/home
+    defaults: { _controller: JustsyBaseBundle:MappConfig:portalsHome }
+#获得门户首页用户    
+JustsyBaseBundle_mapp_portalsstaff:
+    pattern:  /mapp/configa/portals/staff
+    defaults: { _controller: JustsyBaseBundle:MappConfig:protalsStaff }
+
+#应用资源维护    
+JustsyBaseBundle_mappconfig_resourcemgr:
+    pattern:  /mapp/configa/resourcemgr/{appid}
+    defaults: { _controller: JustsyBaseBundle:MappConfig:resourcemgr }
+    
+JustsyBaseBundle_mappconfig_getadv:
+    pattern: /mapp/configa/getadv
+    defaults: {_controller:JustsyBaseBundle:MappConfig:getAdvRes}
+JustsyBaseBundle_mappconfig_setadv:
+    pattern: /mapp/configa/setadv
+    defaults: {_controller:JustsyBaseBundle:MappConfig:setAdvRes}
+JustsyBaseBundle_mappconfig_deladv:
+    pattern: /mapp/configa/deladv
+    defaults: {_controller:JustsyBaseBundle:MappConfig:delAdvRes}
+JustsyBaseBundle_mappconfig_publishportal:
+    pattern: /mapp/configa/publish/portal
+    defaults: {_controller:JustsyBaseBundle:MappConfig:publishPortal}
+JustsyBaseBundle_mappconfig_checkpublishportal:
+    pattern: /mapp/configa/publish/portal/check
+    defaults: {_controller:JustsyBaseBundle:MappConfig:checkPublishPortal}
+JustsyBaseBundle_mappconfig_publishportaldown:
+    pattern: /mapp/download/{eno}
+    defaults: {_controller:JustsyBaseBundle:MappConfig:publishPortalDown}
+#组件图片文件上传
+JustsyBaseBundle_mappconfig_component_fileupload:
+   pattern: /mapp/configa/component/fileupload/{appid}
+   defaults: {_controller:JustsyBaseBundle:MappConfig:component_imgupload}
+#组件布局    
+JustsyBaseBundle_mappconfig_componentlayout:
+    pattern:  /mapp/aconfiga/componentlayout
+    defaults: { _controller: JustsyBaseBundle:MappConfig:getComponentlayout }     
+#导出配置    
+JustsyBaseBundle_mappconfig_export:
+    pattern:  /mapp/aconfiga/export
+    defaults: { _controller: JustsyBaseBundle:MappConfig:exportConfigure }
+#获得应用角色用户
+JustsyBaseBundle_mappconfig_roleaccount_get:
+    pattern:  /mapp/aconfiga/getroleaccount
+    defaults: { _controller: JustsyBaseBundle:MappConfig:getRoleAccount }
+#获得待添加的用户、开发者、组织机构、角色
+JustsyBaseBundle_mappconfig_getaccount:
+    pattern:  /mapp/aconfiga/getaccount
+    defaults: { _controller: JustsyBaseBundle:MappConfig:getAccount}        
+#保存应用角色用户
+JustsyBaseBundle_mappconfig_roleaccount_save:
+    pattern:  /mapp/aconfiga/saveroleaccount
+    defaults: { _controller: JustsyBaseBundle:MappConfig:saveRoleAccount }
+#删除应用权限用户
+JustsyBaseBundle_mappconfig_roleaccount_remove:
+    pattern:  /mapp/aconfiga/removeRole
+    defaults: { _controller: JustsyBaseBundle:MappConfig:removeRole}    
+#申请参与开发
+JustsyBaseBundle_mappconfig_roleaccount_apply:
+    pattern:  /mapp/aconfiga/apply
+    defaults: { _controller: JustsyBaseBundle:MappConfig:applyJoinApp }
+#批量注册    
+JustsyBaseBundle_batch_register:
+    pattern:  /batch/register
+    defaults: { _controller: JustsyBaseBundle:Register:batchindex} 
+
+###
+# this route must be the last
+#  why?
+###
+JustsyBaseBundle_enterprise:
+    pattern:  /{network_domain}/{name}
+    defaults: { _controller: JustsyBaseBundle:EnterpriseHome:index, name:foo}
+
+#移动门户首页
+JustsyBaseBundle_mobile_portal:
+    pattern:  /mobile/portal/index
+    defaults: { _controller: JustsyBaseBundle:MobilePortal:index }
+
+#移动应用首页
+JustsyBaseBundle_app_index:
+    pattern:  /app/new/index
+    defaults: { _controller: JustsyBaseBundle:AppCenter:newindex }    
+
+#权限管理    
+JustsyBaseBundle_role_manager:
+    pattern:  /role/manager/index
+    defaults: { _controller: JustsyBaseBundle:SystemRole:index }        

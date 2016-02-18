@@ -1,0 +1,85 @@
+{% set foo=1 %}
+{% set count=0 %}
+{% set pagecount=text.pagecount %}
+<div style="float:left;width:180px">
+			<div style="background-color:#a4dcf9; height:28px; padding-left:27px;">			
+				<span style="font-size:14px; font-weight:bold; height:28px; line-height:28px; color:#555">我的圈子</span>
+			</div>
+      <div class="grouplist">
+        <ul class="nav nav-list">
+          {% for circle in circles %}
+             <li>
+               <a id="{{circle['circle_id']}}" href="javascript:loadCirlceMember('{{circle['network_domain']}}');"><i class="icon-group"></i>{{ circle["circle_name"] }}</a>
+             </li>
+          {% endfor %}
+        </ul>
+      </div> 	
+</div>
+<div style="float:right;;width:400px">
+		<table id="{{text.pagecount}}" class="table">
+		          <tr>
+		            <td></td>
+		            <td><h5>成员</h5></td>
+		            <td></td>
+		            <td><h5>加入时间</h5></td>
+		            <td style="text-align:center;"><h5>关注</h5></td>
+		          </tr>
+							{% for account in text.accounts %}
+								<tr>
+								      <td><input type="checkbox" name="selectfalg" text="{{account["nick_name"]}}<{{account["login_account"]}}>"></td>
+											<td width=50 height=55>
+											 <img src="{{text.photo_url}}{{account['photo_path']}}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" style="width:48px;height:48px">
+											</td>
+											<td align=left width=120>
+											 <div><img src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width=12 heigth=12>&nbsp;<a style='cursor:pointer;color:#1A65A5' class="employee_name" login_account="{{account["login_account"]}}">{{account["nick_name"]}}</a></div>
+											 <div style="color:#666666;padding-left:16px">{{account["duty"]}}</div>
+											</td>
+											<td>
+											 {{account["register_date"]}}
+											</td>
+											<td width=80>
+											   {%if(account["attention"]>-1)%}
+											   <a class="attention" login_account="{{account["login_account"]}}" state="{{account["attention"]}}"></a>
+											   {%endif%}
+											</td>
+							</tr>
+							{% endfor %}
+		</table>
+		
+		{%if(pagecount>0)%}
+			<div class="pagination" style="text-align:right">
+			<ul>
+			{%for i in 1..pagecount %}
+			  <li><a {%if(pageno==i)%} class='active' {%endif%} href='javascript:getMemeberPage({{i-1}})'>{{(i)}}</a></li>
+			{%endfor%}
+		</ul>
+		</div>
+		{%endif%}
+<div>		
+<script type="text/javascript">
+var currentSelectedFileID = "";
+var currentSelectedFileName = "";
+ 
+ bindTable();
+ Employees.attentionBind();
+function bindTable()
+{
+	$(".table").live("click",function(e){
+		 var event = e||window.event;
+		 var src = event.target||event.srcElement;
+	   while(src.tagName!="HTML")
+	   {       
+	       if(src.tagName=="TR")
+	       {
+	       	  if(currentSelectedFileID!="") $("#"+currentSelectedFileID)[0].style.backgroundColor="#ffffff";
+	       	  currentSelectedFileID = src.id;
+	       	  currentSelectedFileName = src.getAttribute("text");
+	       	  src.style.backgroundColor="#c0c0c0";
+	          break;
+	       }
+	       src = src.parentNode;
+	   }
+	});
+}
+
+</script>

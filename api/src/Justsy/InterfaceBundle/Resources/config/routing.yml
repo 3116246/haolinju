@@ -1,0 +1,842 @@
+JustsyInterfaceBundle_logincheck:
+    pattern:  /interface/logincheck
+    defaults: { _controller: JustsyInterfaceBundle:System:logincheck }
+#获取客户端时间与服务器时间差值
+JustsyInterfaceBundle_getserverdifftime:
+    pattern:  /interface/getserverdifftime
+    defaults: { _controller: JustsyInterfaceBundle:System:getServerDiffTime }
+#根据姓名查询联系人staff
+JustsyInterfaceBundle_nametostaffs:
+    pattern:  /interface/nametostaffs
+    defaults: { _controller: JustsyInterfaceBundle:System:nameToStaffs }
+#根据邮箱查询联系人staff
+JustsyInterfaceBundle_emailtostaffs:
+    pattern:  /interface/emailtostaffs
+    defaults: { _controller: JustsyInterfaceBundle:System:emailToStaffs }
+#根据手机号查询联系人staff
+JustsyInterfaceBundle_mobiletostaffs:
+    pattern:  /interface/mobiletostaffs
+    defaults: { _controller: JustsyInterfaceBundle:System:mobileToStaffs }
+
+#模糊查询联系人staff列表
+JustsyInterfaceBundle_baseinfo_searchstaffs:
+    pattern:  /interface/baseinfo/searchstaffs
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:searchstaffs }
+
+#获取所在企业指定人员的openid信息    
+JustsyInterfaceBundle_getuseropenid:
+    pattern:  /interface/openid/{account}
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getuseropenid}
+
+JustsyInterfaceBundle_baseinfo_getcircles:
+    pattern:  /interface/baseinfo/getcircles
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getcircles }
+
+JustsyInterfaceBundle_baseinfo_getgroups:
+    pattern:  /interface/baseinfo/getgroups
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getgroups }
+
+JustsyInterfaceBundle_baseinfo_getstaffcard:
+    pattern:  /interface/baseinfo/getstaffcard
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getstaffcard }
+JustsyInterfaceBundle_baseinfo_getrostercard:
+    pattern:  /interface/baseinfo/getrostercard
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getfriendcard }    
+    
+#关注人员
+JustsyInterfaceBundle_baseinfo_attenstaff:
+    pattern:  /interface/baseinfo/attenstaff
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:attenstaff }
+#取消关注人员
+JustsyInterfaceBundle_baseinfo_cancelattenstaff:
+    pattern:  /interface/baseinfo/cancelattenstaff
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:cancelattenstaff }
+#关注人员列表
+JustsyInterfaceBundle_baseinfo_attenstafflist:
+    pattern:  /interface/baseinfo/attenstafflist
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:attenstafflist }
+#获取我的粉丝列表
+JustsyInterfaceBundle_baseinfo_fansstafflist:
+    pattern:  /interface/baseinfo/fansstafflist
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:fansstafflist }
+#获取人员列表关注数、粉丝数
+JustsyInterfaceBundle_baseinfo_totalnum:
+    pattern:  /interface/baseinfo/totalnum
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:stafflisttotalnum }    
+#关注人员版本
+JustsyInterfaceBundle_baseinfo_attenstafflistversion:
+    pattern:  /interface/baseinfo/attenstafflistversion
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:attenstafflistversion }
+#圈子人员列表
+JustsyInterfaceBundle_baseinfo_circlestaff:
+    pattern:  /interface/baseinfo/circlestaff
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:circlestaff }
+#圈子人员列表 只返回前20条
+JustsyInterfaceBundle_baseinfo_circlestafflimit:
+    pattern:  /interface/baseinfo/circlestafflimit
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:circlestafflimit }
+#圈子人员版本
+JustsyInterfaceBundle_baseinfo_circlestaffversion:
+    pattern:  /interface/baseinfo/circlestaffversion
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:circlestaffversion }
+#获取所属企业部门
+JustsyInterfaceBundle_baseinfo_getdepartment:
+    pattern:  /interface/baseinfo/getdepartment
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getDepartment }
+#获取所属企业人员
+JustsyInterfaceBundle_baseinfo_getenostaff:
+    pattern:  /interface/baseinfo/getenostaff
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getenostaff }
+#获取企业组织部门树
+JustsyInterfaceBundle_baseinfo_getenotree:
+    pattern:  /interface/baseinfo/getenotree
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getenotree }
+
+#查询当前登录人同企业联系人
+JustsyInterfaceBundle_baseinfo_enterprisestaffs:
+    pattern:  /interface/baseinfo/enterprisestaffs
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:enterprisestaffs }
+    
+JustsyInterfaceBundle_baseinfo_getstaffpresence:
+    pattern:  /interface/roster/getpresence
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getstaffpresence }
+JustsyInterfaceBundle_baseinfo_getuser_directory:
+    pattern: /interface/baseinfo/getuserdir
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getCurrUserDir}
+JustsyInterfaceBundle_baseinfo_getshare_directory:
+    pattern: /interface/baseinfo/getsharedir
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getShareDir}
+JustsyInterfaceBundle_baseinfo_getuserfiles:
+    pattern: /interface/baseinfo/get/userfiles
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getUserFiles}
+JustsyInterfaceBundle_baseinfo_getsharefiles:
+    pattern: /interface/baseinfo/get/sharefiles
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getShareFiles}
+
+#5.16  修改个人头像
+JustsyInterfaceBundle_baseinfo_modifyavatar:
+    pattern: /interface/baseinfo/modifyavatar
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:modifyavatar}
+#5.17  修改人员名片
+JustsyInterfaceBundle_baseinfo_modifystaffinfo:
+    pattern: /interface/baseinfo/modifystaffinfo
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:modifystaffinfo}
+#5.18  获取部门
+JustsyInterfaceBundle_baseinfo_getdepts:
+    pattern: /interface/baseinfo/getdepts
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getdepts}
+
+#5.26 绑定手机号发送验证码
+JustsyInterfaceBundle_baseinfo_getmobilevaildcode:
+    pattern: /interface/baseinfo/getmobilevaildcode
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getmobilevaildcode}
+
+#5.27 绑定手机号
+JustsyInterfaceBundle_baseinfo_savemobilebind:
+    pattern: /interface/baseinfo/savemobilebind
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:savemobilebind}
+
+#5.28 修改密码
+JustsyInterfaceBundle_baseinfo_updatepassword:
+    pattern: /interface/baseinfo/updatepassword
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:updatepassword}
+
+#5.37   上传头像或logo
+JustsyInterfaceBundle_baseinfo_uploadheadimageorlogo:
+    pattern: /interface/baseinfo/uploadheadimageorlogo
+    defaults: {_controller:JustsyInterfaceBundle:BaseInfo:uploadheadimageorlogo}
+
+#5.29 获取验证码
+JustsyInterfaceBundle_findpwd:
+    pattern:  /interface/validcode
+    defaults: { _controller: JustsyInterfaceBundle:System:validcode }
+
+#5.30 重置密码
+JustsyInterfaceBundle_resetpwd:
+    pattern:  /interface/resetpwd
+    defaults: { _controller: JustsyInterfaceBundle:System:resetpwd }
+##内部接口。上传文件到圈子
+JustsyInterfaceBundle_fileupload:
+    pattern:  /interface/fileupload
+    defaults: { _controller: JustsyInterfaceBundle:System:fileupload }
+##内部接口。上传文件
+JustsyInterfaceBundle_send_fileupload:
+    pattern:  /interface/sendfile
+    defaults: { _controller: JustsyInterfaceBundle:System:sendfile }
+##外部接口。上传文件
+JustsyInterfaceBundle_sendapi_fileupload:
+    pattern:  /api/send/file
+    defaults: { _controller: JustsyInterfaceBundle:System:sendfile }
+##外部接口
+JustsyInterfaceBundle_getfile_hashvalue:
+    pattern:  /api/getfile/{hashvalue}
+    defaults: { _controller: JustsyInterfaceBundle:System:getfile }
+
+JustsyInterfaceBundle_convinfo_newconvtrend:
+    pattern:  /interface/convinfo/newconv/trend
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:newConvTrend }
+
+JustsyInterfaceBundle_convinfo_newconvask:
+    pattern:  /interface/convinfo/newconv/ask
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:newConvAsk }
+
+JustsyInterfaceBundle_convinfo_newconvtogether:
+    pattern:  /interface/convinfo/newconv/together
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:newConvTogether }
+
+JustsyInterfaceBundle_convinfo_newconvvote:
+    pattern:  /interface/convinfo/newconv/vote
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:newConvVote }
+
+JustsyInterfaceBundle_convinfo_getconvs:
+    pattern:  /interface/convinfo/getconvs
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getConvs }
+
+JustsyInterfaceBundle_convinfo_getunreadconvnum:
+    pattern:  /interface/convinfo/getunreadconvnum
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getUnreadConvNum }
+
+JustsyInterfaceBundle_convinfo_getunreadcircleconvnum:
+    pattern:  /interface/convinfo/getunreadcircleconvnum
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getUnreadCircleConversNum }
+
+JustsyInterfaceBundle_convinfo_getunreadgroupconvnum:
+    pattern:  /interface/convinfo/getunreadgroupconvnum
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getUnreadGroupConversNum }
+
+JustsyInterfaceBundle_convinfo_getunreadconv:
+    pattern:  /interface/convinfo/getunreadconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getUnreadConv }
+    
+JustsyInterfaceBundle_convinfo_getoneconv:
+    pattern:  /interface/convinfo/getoneconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getOneConv }
+
+JustsyInterfaceBundle_convinfo_delconvtrend:
+    pattern:  /interface/convinfo/delconv/trend
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:delConvTrend }
+
+JustsyInterfaceBundle_convinfo_delconvask:
+    pattern:  /interface/convinfo/delconv/ask
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:delConvAsk }
+
+JustsyInterfaceBundle_convinfo_delconvtogether:
+    pattern:  /interface/convinfo/delconv/together
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:delConvTogether }
+
+JustsyInterfaceBundle_convinfo_delconvvote:
+    pattern:  /interface/convinfo/delconv/vote
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:delConvVote }
+
+JustsyInterfaceBundle_convinfo_delconvreply:
+    pattern:  /interface/convinfo/delconv/reply
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:delConvReply }
+
+JustsyInterfaceBundle_convinfo_likeconv:
+    pattern:  /interface/convinfo/likeconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:likeConv }
+
+JustsyInterfaceBundle_convinfo_unlikeconv:
+    pattern:  /interface/convinfo/unlikeconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:unlikeConv }
+
+JustsyInterfaceBundle_convinfo_replyconv:
+    pattern:  /interface/convinfo/replyconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:replyConv }
+
+JustsyInterfaceBundle_convinfo_vote:
+    pattern:  /interface/convinfo/vote
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:vote }
+
+JustsyInterfaceBundle_convinfo_getconvlimit:
+    pattern:  /interface/convinfo/getconvlimit
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getConvLimit }
+
+JustsyInterfaceBundle_convinfo_copy:
+    pattern:  /interface/convinfo/copy
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:copy }
+
+JustsyInterfaceBundle_convinfo_attenconv:
+    pattern:  /interface/convinfo/attenconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:attenConv }
+
+JustsyInterfaceBundle_convinfo_unattenconv:
+    pattern:  /interface/convinfo/unattenconv
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:unattenConv }
+
+JustsyInterfaceBundle_convinfo_jointogether:
+    pattern:  /interface/convinfo/jointogether
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:joinTogether }
+
+JustsyInterfaceBundle_convinfo_unjointogether:
+    pattern:  /interface/convinfo/unjointogether
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:unjoinTogether }
+
+JustsyInterfaceBundle_convinfo_getreply:
+    pattern:  /interface/convinfo/getreply
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getReply }
+
+JustsyInterfaceBundle_convinfo_getuserconvs:
+    pattern:  /interface/convinfo/getuserconvs
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getUserConvs }
+
+JustsyInterfaceBundle_convinfo_getattenconvs:
+    pattern:  /interface/convinfo/getattenconvs
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getAttenConvs }
+
+JustsyInterfaceBundle_convinfo_getatmeunreadnum:
+    pattern:  /interface/convinfo/getatmeunreadnum
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getAtmeUnreadNum }
+
+JustsyInterfaceBundle_convinfo_getatmeconvs:
+    pattern:  /interface/convinfo/getatmeconvs
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getAtmeConvs }
+
+JustsyInterfaceBundle_convinfo_getprivateconvs:
+    pattern:  /interface/convinfo/getprivateconvs
+    defaults: { _controller: JustsyInterfaceBundle:ConvInfo:getPrivateConvs }
+
+JustsyInterfaceBundle_bulletin_unreadnum:
+    pattern:  /interface/bulletin/unreadnum
+    defaults: { _controller: JustsyInterfaceBundle:Bulletin:getUnreadNum }
+
+JustsyInterfaceBundle_bulletin_getunread:
+    pattern:  /interface/bulletin/getunread
+    defaults: { _controller: JustsyInterfaceBundle:Bulletin:getUnread }
+
+JustsyInterfaceBundle_bulletin_get:
+    pattern:  /interface/bulletin/get
+    defaults: { _controller: JustsyInterfaceBundle:Bulletin:getBulletin }
+
+JustsyInterfaceBundle_bulletin_push:
+    pattern:  /interface/bulletin/push
+    defaults: { _controller: JustsyInterfaceBundle:Bulletin:pushBulletin }
+
+JustsyInterfaceBundle_msg_unreadnum:
+    pattern:  /interface/msg/unreadnum
+    defaults: { _controller: JustsyInterfaceBundle:Message:getUnreadNum }
+
+JustsyInterfaceBundle_msg_getunread:
+    pattern:  /interface/msg/getunread
+    defaults: { _controller: JustsyInterfaceBundle:Message:getUnread }
+
+JustsyInterfaceBundle_msg_get:
+    pattern:  /interface/msg/get
+    defaults: { _controller: JustsyInterfaceBundle:Message:getMessage }
+
+JustsyInterfaceBundle_msg_push:
+    pattern:  /interface/msg/push
+    defaults: { _controller: JustsyInterfaceBundle:Message:pushMessage }
+
+JustsyInterfaceBundle_mobileregister_checkmail:
+    pattern:  /interface/mobileregister/checkmail
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:checkmail }
+
+JustsyInterfaceBundle_mobileregister_getenterprise:
+    pattern:  /interface/mobileregister/getenterprise
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:getEnterprise }
+    
+JustsyInterfaceBundle_mobileregister_register:
+    pattern:  /interface/mobileregister/register
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:register }
+    
+JustsyInterfaceBundle_mobileregister_getregisterinfo:
+    pattern:  /interface/mobileregister/getregisterinfo
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:getRegisterInfo }
+
+JustsyInterfaceBundle_mobileregister_active:
+    pattern:  /interface/mobileregister/active
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:active }
+    
+JustsyInterfaceBundle_goto_appcenter:
+    pattern:  /goto/appcenter/{appid}
+    defaults: { _controller: JustsyInterfaceBundle:AppCenter:autoin }    
+
+#审批
+JustsyInterfaceBundle_mobileregister_approve:
+    pattern:  /interface/mobileregister/approve
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:approve }
+    
+#取通讯录分类
+JustsyInterfaceBundle_addresslist_getaddrtype:
+    pattern:  /interface/addresslist/getaddrtype
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:getAddrType }
+#新增联系人分类
+JustsyInterfaceBundle_addresslist_insertaddrtype:
+    pattern:  /interface/addresslist/insertaddrtype
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:insertAddrType }
+#新增联系人分类
+JustsyInterfaceBundle_addresslist_updateaddrtype:
+    pattern:  /interface/addresslist/updateaddrtype
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:updateAddrType }
+#删除联系人分类
+JustsyInterfaceBundle_addresslist_deladdrtype:
+    pattern:  /interface/addresslist/deladdrtype
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:delAddrType }
+#获取组织机构版本
+JustsyInterfaceBundle_addresslist_getorgversion:
+    pattern:  /interface/addresslist/getorgversion
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:getOrgVersion }
+#获取组织机构版本
+JustsyInterfaceBundle_addresslist_getorgcontactlist:
+    pattern:  /interface/addresslist/getorgcontactlist
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:getOrgContactList }    
+#获取联系人数据
+JustsyInterfaceBundle_addresslist_getcontactlist:
+    pattern:  /interface/addresslist/getcontactlist
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:getContactList }
+#收藏联系人
+JustsyInterfaceBundle_addresslist_storecontact:
+    pattern:  /interface/addresslist/storecontact
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:storeContact }
+#取消收藏联系人
+JustsyInterfaceBundle_addresslist_unstorecontact:
+    pattern:  /interface/addresslist/unstorecontact
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:unstoreContact }
+#新增联系人
+JustsyInterfaceBundle_addresslist_insertcontact:
+    pattern:  /interface/addresslist/insertcontact
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:insertContact }
+#修改联系人
+JustsyInterfaceBundle_addresslist_updatecontact:
+    pattern:  /interface/addresslist/updatecontact
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:updateContact }
+#上传联系人
+JustsyInterfaceBundle_addresslist_uploadcontact:
+    pattern:  /interface/addresslist/uploadcontact
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:uploadContact }
+#删除联系人
+JustsyInterfaceBundle_addresslist_delcontact:
+    pattern:  /interface/addresslist/delcontact
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:delContact }
+#获取联系人分类最大时间
+JustsyInterfaceBundle_addresslist_getaddrlisttypemaxtime:
+    pattern:  /interface/addresslist/getaddrlisttypemaxtime
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:getAddrlistTypeMaxTime }
+#获取联系人最大时间
+JustsyInterfaceBundle_addresslist_getcontactsmaxtime:
+    pattern:  /interface/addresslist/getcontactsmaxtime
+    defaults: { _controller: JustsyInterfaceBundle:AddressList:getContactsMaxTime }
+
+#手机号绑定
+JustsyInterfaceBundle_mobilebind_getvaildcode:
+    pattern:  /interface/mobilebind/getvaildcode
+    defaults: { _controller: JustsyBaseBundle:Account:getmobilevaildcode, network_domain:fafacn.com }
+JustsyInterfaceBundle_mobilebind_save:
+    pattern:  /interface/mobilebind/save
+    defaults: { _controller: JustsyBaseBundle:Account:savemobilebind, network_domain:fafacn.com }
+JustsyInterfaceBundle_mobilebind_remove:
+    pattern:  /interface/mobilebind/remove
+    defaults: { _controller: JustsyBaseBundle:Account:savemobileunbind, network_domain:fafacn.com }
+
+########会议管理相关接口############
+#获得单条会议室记录
+JustsyInterfaceBundle_meetingroom_getMeetingRoom:
+    pattern:  /interface/meetingroom/getMeetingRoom
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:getMeetingRoom}
+
+#获得企业会议室记录
+JustsyInterfaceBundle_meetingroom_getAllMeetingRoom:
+    pattern:  /interface/meetingroom/getAllMeetingRoom
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:getAllMeetingRoom}
+#上传会议LOGO接口
+JustsyInterfaceBundle_meetingroom_fileupload:
+    pattern:  /interface/meetingroom/fileupload
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:FileUpload}
+#添加会议
+JustsyInterfaceBundle_meetingroom_insert:
+    pattern:  /interface/meetingroom/insert
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:Insert}
+#修改会议室
+JustsyInterfaceBundle_meetingroom_update:
+    pattern:  /interface/meetingroom/update
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:Update}
+#修改会议室状态
+JustsyInterfaceBundle_meetingroom_changestatus:
+    pattern:  /interface/meetingroom/changestatus
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:ChangeStatus}
+
+#删除指定会议室
+JustsyInterfaceBundle_meetingroom_delete:
+    pattern:  /interface/meetingroom/delete
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:Delete} 
+#获取会议室最近开会记录
+JustsyInterfaceBundle_meetingroom_getrecently:
+    pattern:  /interface/meetingroom/getrecently
+    defaults: { _controller: JustsyInterfaceBundle:MeetingRoom:GetRecently} 
+
+    ########会议计划/日程管理相关接口############
+    
+    #根据日程/计划主键获取会议计划
+JustsyInterfaceBundle_meetingplan_getbyid:
+    pattern:  /interface/meetingplan/getbyid
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:GetById} 
+
+#根据群组主键查询下次要开例会
+JustsyInterfaceBundle_meetingplan_getbygroupid:
+    pattern:  /interface/meetingplan/getbygroupid
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:GetByGroupId} 
+    
+    #根据群组主键查询例会历史记录
+JustsyInterfaceBundle_meetingplan_gethistorymeeting:
+    pattern:  /interface/meetingplan/gethistorymeeting
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:GetHistoryMeeting} 
+
+#判断会议时间是否已被使用
+JustsyInterfaceBundle_meetingplan_isUse:
+    pattern:  /interface/meetingplan/isUse
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:GetByWhere}    
+    
+    #添加一条会议计划(非例会)
+JustsyInterfaceBundle_meetingplan_addsingleton:
+    pattern:  /interface/meetingplan/addsingleton
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:AddSingleton} 
+   
+   #添加一条会议计划(例会)
+JustsyInterfaceBundle_meetingplan_addregular:
+    pattern:  /interface/meetingplan/addregular
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:AddRegular} 
+    
+    #修改一条会议计划
+JustsyInterfaceBundle_meetingplan_update:
+    pattern:  /interface/meetingplan/update
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:Update} 
+    
+    #删除一条会议计划
+JustsyInterfaceBundle_meetingplan_delete:
+    pattern:  /interface/meetingplan/delete
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:Delete}
+    
+ #开始结束会议调用接口
+JustsyInterfaceBundle_meetingplan_startendplan:
+    pattern:  /interface/meetingplan/startendplan
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:StartEndPlan}
+    
+ #结束会议调用接口
+JustsyInterfaceBundle_meetingplan_endplan:
+    pattern:  /interface/meetingplan/endplan
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:EndPlan}
+
+#开始会议调用接口
+JustsyInterfaceBundle_meetingplan_startplan:
+    pattern:  /interface/meetingplan/startplan
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:StartPlan}
+   #删除指定会议计划指定成员接口
+JustsyInterfaceBundle_meetingplan_delbystaffid:
+    pattern:  /interface/meetingmember/delbystaffid
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:DelByStaffId}
+
+#根据群组主键删除会议计划
+JustsyInterfaceBundle_meetingplan_delplan:
+    pattern:  /interface/meetingplan/delplan
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:DelPlan} 
+
+#根据会议id判断会议是否存在
+JustsyInterfaceBundle_meetingplan_existsmeeting:
+    pattern:  /interface/meetingplan/exists_meeting
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:ExistsMeeting}
+
+JustsyInterfaceBundle_meetingplan_getplanid:
+    pattern:  /interface/meetingplan/getplanid
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:GetPlanidByGroupId} 
+
+JustsyInterfaceBundle_meetingplan_getplanygroupid:
+    pattern:  /interface/meetingplan/getplanbygroupid
+    defaults: { _controller: JustsyInterfaceBundle:MeetingPlan:GetPlanByGroupid} 
+
+  ########会议计划/日程相关人员管理############
+#添加成员接口(非例会/例会)
+JustsyInterfaceBundle_meetingmember_add:
+    pattern:  /interface/meetingmember/add
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:Add} 
+ #修改成员接口 parameter形式
+JustsyInterfaceBundle_meetingmember_update:
+    pattern:  /interface/meetingmember/update
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:Update} 
+#删除所有成员接口
+JustsyInterfaceBundle_meetingmember_delete:
+    pattern:  /interface/meetingmember/delete
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:Delete} 
+
+#删除临时成员接口
+JustsyInterfaceBundle_meetingmember_delbystafftype:
+    pattern:  /interface/meetingmember/delbystafftype
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:DelByStaffType} 
+ #获取成员接口  
+JustsyInterfaceBundle_meetingmember_getstaff:
+    pattern:  /interface/meetingmember/getstaff
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:GetStaff}
+ #根据会议计划ID获得参会成员及主持人  
+JustsyInterfaceBundle_meetingmember_getmemberandmaster:
+    pattern:  /interface/meetingmember/getmemberandmaster
+    defaults: { _controller: JustsyInterfaceBundle:MeetingMember:GetMemberAndMaster}    
+    
+#获取用户可访问应用列表
+JustsyInterfaceBundle_appcenter_get_userapp:
+    pattern: /interface/appcenter/getuserapp
+    defaults: {_controller:JustsyInterfaceBundle:AppCenter:getAppsBy}
+
+
+#美邦
+JustsyInterfaceBundle_mblive_getmliveproductlist100:
+    pattern: /interface/mblive/getmliveproductlist100
+    defaults: {_controller:JustsyInterfaceBundle:ConvInfo:getMLiveProductList100}
+    
+#公众号接口
+
+#获取当前登录人企业的所有公众号
+JustsyInterfaceBundle_microaccount_list:
+    pattern: /interface/microaccount/getlist
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:getmicroaccount} 
+#新增公众号接口 对外
+JustsyInterfaceBundle_microaccount_add:
+    pattern: /interface/microaccount/add
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:Add_MicroAccount}  
+#新增公众号分组
+JustsyInterfaceBundle_microgroup_add:
+    pattern: /interface/microgroup/add
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:Add_MicroGroup}
+#获取当前登录人所有关注的公众号
+JustsyInterfaceBundle_microaccount_attenlist:
+    pattern: /interface/microaccount/getattenlist
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:getattenmicroaccount}
+#根据帐号获取公众号信息
+JustsyInterfaceBundle_microaccount_querybynumber:
+    pattern: /interface/microaccount/querybynumber
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:getquerybynumber}
+#获取当前登录人所有关注的公众号
+JustsyInterfaceBundle_microaccount_checkatten:
+    pattern: /interface/microaccount/checkatten
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:microaccountcheckatten}
+#关注指定的公众号
+JustsyInterfaceBundle_micraccount_atten:
+    pattern: /interface/microaccount/atten
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:attenmicroaccount}
+#取消关注指定的公众号
+JustsyInterfaceBundle_micraccount_cancle:
+    pattern: /interface/microaccount/cancel
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:cancelatten}
+#查询公众号，并返回粉丝数最多的前50个号。可按帐号精确查询，也可把名称模糊查询
+JustsyInterfaceBundle_micraccount_query:
+    pattern: /interface/microaccount/query
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:query}
+#向好友发送邀请，关注指定的公众号    
+JustsyInterfaceBundle_micraccount_invite:
+    pattern: /interface/microaccount/invite
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:invite}
+
+JustsyInterfaceBundle_micraccount_invite_agree:
+    pattern: /interface/microaccount/agreeinvite
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:agreeinvite}
+
+JustsyInterfaceBundle_micraccount_manager_agree_invite:
+    pattern: /interface/microaccount/manageragreeinvite
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:manageragreeinvite}
+    
+JustsyInterfaceBundle_micraccount_invite_reject:
+    pattern: /interface/microaccount/rejectinvite
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:rejectinvite}            
+       
+JustsyInterfaceBundle_micraccount_getmessagelist:
+    pattern: /interface/microaccount/getmessagelist
+    defaults: {_controller:JustsyInterfaceBundle:MicroMessage:getMicroMessage}
+
+JustsyInterfaceBundle_UpdateEnterpriseData:
+    pattern:  /interface/updateenterprisedata
+    defaults: { _controller: JustsyInterfaceBundle:EnterpriseData:UpdateEnterpriseData }
+
+JustsyInterfaceBundle_OperateEnterpriseData:
+    pattern:  /interface/operateenterprise
+    defaults: { _controller: JustsyInterfaceBundle:EnterpriseData:OperateEnterpriseData }
+
+#手机号注册
+JustsyInterfaceBundle_mobileregister_mobilenumreg:
+    pattern:  /interface/mobileregister/mobilenumreg
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:mobilenumreg }
+
+#手机号激活
+JustsyInterfaceBundle_mobileregister_mobilenumactive:
+    pattern:  /interface/mobileregister/mobilenumactive
+    defaults: { _controller: JustsyInterfaceBundle:MobileRegister:mobilenumactive }
+
+    
+#人员-角色发生更改
+
+JustsyInterfaceBundle_Rbac_addstaffrole:
+    pattern:  /api/http/addstaffrole
+    defaults: { _controller: JustsyInterfaceBundle:Rbac:InsertStaffRole }
+JustsyInterfaceBundle_Rbac_updstaffrole:
+    pattern:  /api/http/updstaffrole
+    defaults: { _controller: JustsyInterfaceBundle:Rbac:UpdateStaffRole }
+JustsyInterfaceBundle_Rbac_delstaffrole:
+    pattern:  /api/http/delstaffrole
+    defaults: { _controller: JustsyInterfaceBundle:Rbac:DeleteStaffRole }
+JustsyInterfaceBundle_Rbac_getcustomroles:
+    pattern:  /interface/rbac/get/custom/roles
+    defaults: {_controller:JustsyInterfaceBundle:Rbac:getCustomRoles}
+#身份认证
+JustsyInterfaceBundle_IdentifyAuth_send_apply:
+  pattern: /interface/identify/send/apply
+  defaults: {_controller:JustsyInterfaceBundle:IdentifyAuth:SaveApply}
+JustsyInterfaceBundle_IdentifyAuth_eno_auth:
+  pattern: /interface/identify/eno/auth
+  defaults: {_controller:JustsyInterfaceBundle:IdentifyAuth:SaveEnoAuth}
+#推荐
+JustsyInterfaceBundle_get_recom_circle:
+  pattern: /interface/get/recom/circle
+  defaults: {_controller:JustsyInterfaceBundle:Circle:getRecomCircle}
+JustsyInterfaceBundle_get_recom_user:
+  pattern: /interface/get/recom/user
+  defaults: {_controller:JustsyInterfaceBundle:User:getRecomUser}
+JustsyInterfaceBundle_circle_top_user:
+  pattern: /interface/circle/top/user
+  defaults: {_controller:JustsyInterfaceBundle:Circle:getTopByCircle}
+JustsyInterfaceBundle_circle_join:
+  pattern: /interface/circle/join
+  defaults: {_controller:JustsyInterfaceBundle:Circle:joinCircle}
+JustsyInterfaceBundle_user_atten:
+  pattern: /interface/user/atten
+  defaults: {_controller:JustsyInterfaceBundle:User:attenUser}
+JustsyInterfaceBundle_user_unatten:
+  pattern: /interface/user/unatten
+  defaults: {_controller:JustsyInterfaceBundle:User:unAttenUser}
+JustsyInterfaceBundle_circle_getmember:
+  pattern: /interface/circle/members
+  defaults: {_controller:JustsyInterfaceBundle:Circle:getMemberByCircle}
+JustsyInterfaceBundle_usertag_get:
+  pattern: /interface/get/usertag
+  defaults: {_controller:JustsyInterfaceBundle:User:getUserTag}
+JustsyInterfaceBundle_checkusertag_version:
+  pattern: /interface/check/usertag/version
+  defaults: {_controller:JustsyInterfaceBundle:User:checkTagVersion}
+JustsyInterfaceBundle_userauth_get_authlist:
+  pattern: /interface/auth/getuser
+  defaults: {_controller:JustsyInterfaceBundle:IdentifyAuth:getAuthUsers}
+JustsyInterfaceBundle_circle_get:
+  pattern: /interface/circle/get
+  defaults: {_controller:JustsyInterfaceBundle:Circle:getCircles}
+#5.3.3  新建圈子
+JustsyInterfaceBundle_circle_createcircle:
+  pattern: /interface/circle/createcircle
+  defaults: {_controller:JustsyInterfaceBundle:Circle:createcircle}
+#5.3.1  取圈子邀请成员
+JustsyInterfaceBundle_circle_getcircleinvitestaff:
+  pattern: /interface/circle/getcircleinvitestaff
+  defaults: {_controller:JustsyInterfaceBundle:Circle:getcircleinvitestaff}
+#5.3.2  取圈子类型
+JustsyInterfaceBundle_circle_getcricletype:
+  pattern: /interface/circle/getcricletype
+  defaults: {_controller:JustsyInterfaceBundle:Circle:getcricletype}
+#5.38 修改圈子logo
+JustsyInterfaceBundle_circle_modifycirclelogo:
+  pattern: /interface/circle/modifycirclelogo
+  defaults: {_controller:JustsyInterfaceBundle:Circle:modifycirclelogo}
+#5.39   修改圈子基本信息
+JustsyInterfaceBundle_circle_modifycircle:
+  pattern: /interface/circle/modifycircle
+  defaults: {_controller:JustsyInterfaceBundle:Circle:modifycircle}
+#5.40   退出圈子
+JustsyInterfaceBundle_circle_exitcircle:
+  pattern: /interface/circle/exitcircle
+  defaults: {_controller:JustsyInterfaceBundle:Circle:exitcircle}
+#   邀请成员加入圈子
+JustsyInterfaceBundle_circle_invitedmemebers:
+  pattern: /interface/circle/invitedmemebers
+  defaults: {_controller:JustsyInterfaceBundle:Circle:invitedmemebers}
+
+##群组相关
+##
+JustsyInterfaceBundle_group_get_info:
+  pattern: /interface/group/getinfo
+  defaults: {_controller:JustsyInterfaceBundle:Group:getGroupInfo}
+#5.4.2  新建群组
+JustsyInterfaceBundle_group_creategroup:
+  pattern: /interface/group/creategroup
+  defaults: {_controller:JustsyInterfaceBundle:Group:creategroup}
+#5.4.1  取群组邀请成员
+JustsyInterfaceBundle_group_getgroupinvitestaff:
+  pattern: /interface/group/getgroupinvitestaff
+  defaults: {_controller:JustsyInterfaceBundle:Group:getgroupinvitestaff}
+#5.41   修改群组logo
+JustsyInterfaceBundle_group_modifygrouplogo:
+  pattern: /interface/group/modifygrouplogo
+  defaults: {_controller:JustsyInterfaceBundle:Group:modifygrouplogo}
+#5.42   修改群组基本信息
+JustsyInterfaceBundle_group_modifygroup:
+  pattern: /interface/group/modifygroup
+  defaults: {_controller:JustsyInterfaceBundle:Group:modifygroup}
+#5.43   退出群组
+JustsyInterfaceBundle_group_exitgroup:
+  pattern: /interface/group/exitgroup
+  defaults: {_controller:JustsyInterfaceBundle:Group:exitgroup}
+#  邀请成员加入群组
+JustsyInterfaceBundle_group_invitedmemebers:
+  pattern: /interface/group/invitedmemebers
+  defaults: {_controller:JustsyInterfaceBundle:Group:invitedmemebers}
+##客户端设置针对圈子/群组不在提醒新动态##
+##  
+JustsyInterfaceBundle_newtrend_hint_set:
+  pattern: /interface/hintset/newtrend
+  defaults: {_controller:JustsyInterfaceBundle:BaseInfo:hintset}
+
+# 评论。业务系统中对业务数据进行评论
+JustsyInterfaceBundle_app_replyadd:
+  pattern: /interface/app/reply/add
+  defaults: {_controller:JustsyInterfaceBundle:ConvInfo:appReplyConv}
+
+# 评论。获取业务系统中对业务数据评论列表
+JustsyInterfaceBundle_app_replylist:
+  pattern: /interface/app/reply/list
+  defaults: {_controller:JustsyInterfaceBundle:ConvInfo:getAppReplyConv}
+
+# 收藏。业务系统中对业务数据进行收藏
+JustsyInterfaceBundle_app_collectadd:
+  pattern: /interface/app/collect/add
+  defaults: {_controller:JustsyInterfaceBundle:ConvInfo:appCollectConv}
+
+# 收藏。获取业务系统中对业务数据收藏列表
+JustsyInterfaceBundle_app_collectlist:
+  pattern: /interface/app/collect/list
+  defaults: {_controller:JustsyInterfaceBundle:ConvInfo:getAppCollectConv}
+
+# 收藏。取消业务系统中对业务数据收藏
+JustsyInterfaceBundle_app_collectcancel:
+  pattern: /interface/app/collect/cancel
+  defaults: {_controller:JustsyInterfaceBundle:ConvInfo:cancelAppCollectConv}
+#获取当前用户朋友openid的字符串
+JustsyInterfaceBundle_basicinfo_friendlist:
+  pattern: /interface/basic/friendlist
+  defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getFriendOpenidList}
+#获取当前用户粉丝openid的字符串
+JustsyInterfaceBundle_basicinfo_fanslist:
+  pattern: /interface/basic/fanslist
+  defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getFansOpenidList}
+#获取当前用户关注openid的字符串
+JustsyInterfaceBundle_baseinfo_attenlist:
+  pattern: /interface/basic/attenlist
+  defaults: {_controller:JustsyInterfaceBundle:BaseInfo:getAttenList}
+
+JustsyInterfaceBundle_api_sendsharemsg:
+    pattern:  /interface/app/sendsharemsg
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:sendsharemsg }
+
+
+
+JustsyInterfaceBundle_api_getstaffattr:
+    pattern:  /interface/get/staff/attrs
+    defaults: { _controller: JustsyInterfaceBundle:BaseInfo:getAttrlistByAttr }
+
+############SOAP服务转接接口#################
+JustsyInterfaceBundle_soap_crvhr:
+    pattern:  /interface/soap/crv/hr
+    defaults: { _controller: JustsyInterfaceBundle:SoapCrvHr:getSoapData }
+
+#统一数据接口
+JustsyInterfaceBundle_dataaccess_inf:
+    pattern:  /interface/dataaccess
+    defaults: { _controller: JustsyInterfaceBundle:DataInterface:dataAccess }
+
+#统一数据接口(内部使用)
+JustsyInterfaceBundle_data_access:
+    pattern:  /interface/data_access
+    defaults: { _controller: JustsyInterfaceBundle:DataInterface:getDataAccess }    

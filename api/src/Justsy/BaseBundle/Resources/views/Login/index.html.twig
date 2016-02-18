@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8">
+	<title>
+	{% block title %}Wefafa，企业协作网络{% endblock %} 
+	</title>	
+   <meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业协作网络。" />
+  <meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/default.css') }}" />
+	<link rel="stylesheet" type="text/css" href="http://webim.fafatime.com/bundles/fafawebimimonlineservice/css/message.css" />
+	{% block stylesheets %}{% endblock %}
+	<script src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/bootstrap.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/component.js') }}"></script>
+	<script src="{{ asset('bundles/fafatimewebase/js/slides.jquery.js') }}"></script>
+	
+	<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+	
+<!--banner-->
+<!-- 解决IE6不缓存背景图片的问题-->
+<!--[if IE 6]>
+<script type="text/javascript">
+document.execCommand("BackgroundImageCache", false, true);
+</script>
+<![endif]-->
+</head>
+<body id="mainbody">
+<div class="top">
+  <div class="header" style="width:969px; margin:auto;"> 
+    <!--logo 开始-->
+    <div class="logo"><img src="{{ asset('bundles/fafatimewebase/images/logo.jpg') }}" width="139" height="82" /></div>
+    <!--logo 结束--> 
+    <!--nav 开始-->
+    <div class="nav"> 
+    	<a href="#">首页</a> 
+    	<a href="/prointro.htm" >产品介绍</a> 
+    	<a href="{{ path('JustsyBaseBundle_home_micromessage') }}">企业微信</a> 
+    	<a href="http://www.fafatime.com/downcenter" target="_blank">下载</a> 
+    	<a href="#">开放平台</a> </div>
+    <!--nav 结束--> 
+    <!--登陆 开始-->
+    <div class="land"> 
+    	<a href="{{ path('JustsyBaseBundle_default') }}"><img src="{{ asset('bundles/fafatimewebase/images/land.jpg')}}" width="56" height="31" /></a> 
+    </div>
+    <!--登陆 结束--> 
+  </div>
+</div>
+<div class="clear"></div>
+<!--banner--> 
+<script>
+	//保证导航栏背景与图片轮播背景一起显示
+	$("#mainbody").removeClass();
+	$("#mainbody").addClass("index_bg05");
+</script> 
+<script>
+	$(function(){
+		//滚动Banner图片的显示
+		$('#slides').slides({
+			preload: false,
+			preloadImage: '/images/loading.gif',
+			effect: 'fade',
+			slideSpeed: 400,
+			fadeSpeed: 100,
+			play: 3000,
+			pause: 100,
+			hoverPause: true
+		});
+        	//$('#js-news').ticker();
+    	});
+</script>
+
+<script type="text/javascript">
+		var cacheAccount=new Array();
+		var showTime = 0;
+		var errorlist={
+		   "error01":"您输入的邮件地址不正确，请检查。",
+		   "error03":"该邮箱已被注册，请直接登录。",
+		   "error0401":"您的信息已提交，正在审批中，若需修改您的注册信息，<br/>请继续，否则请耐心等待审批邮件通知。",
+		   "error0402":"您的注册申请总次数已超过10次，已被禁止注册。<br/>请<a href='mailto:admin@fafatime.com'>与我们联系</a>完成注册工作。",
+		   "error0403":"您提交的注册信息已经审批通过，请登录MAIL查收邮件，并根据邮件提示内容开始启用微发发。若未收到，请点击请求再次发送",
+		   "error05":"该邮件地址已经被系统列入黑名单，点击查看详细信息。"
+	  };
+	  
+		$(document).ready(function(){
+       //绑定邮箱联想
+       $("#txtmail").typeahead(
+       {
+		      menu : '<ul class="typeahead dropdown-menu" style="margin-left:-55px;min-width:249px;margin-top:0px;"></ul>',
+	        source : {{domain|raw}},
+	        matcher: function(item)
+	        {
+	  	      if(this.query.indexOf("@")==-1) return true;
+	  	      return item.toLowerCase().indexOf(this.query.split("@")[1].toLowerCase())>-1;
+	        },
+	        highlighter:function(item)
+	        {
+	  	       if(this.query.indexOf("@")>0) return this.query.split("@")[0]+"@"+ item;
+	  	       return this.query+"@"+ item;
+	        },
+	        updater : function(item)
+			    {
+			  	  var email = this.query.indexOf("@")>0?this.query.split("@")[0]+"@"+ item:this.query+"@"+ item;
+			  	  return email;
+			    }
+       });
+       
+       $("#txtmail").live("keypress",function(event){
+       	 if(event.keyCode==13)
+       	   submit_mail();
+       });
+    });
+
+    function submit_mail()
+    {
+	    var mails = $.trim($("#txtmail").val());
+	    if( mails=='请输入邮箱地址' || mails=='')
+	    { 
+		    $('p#email_err').text ("邮箱地址不能为空！");
+		    $('#emailerror').slideDown(showTime,callback1);
+	      $('#txtmail').focus();
+	      return false;
+	    }
+	    //判断邮件的正确性
+	    if(!validEmails(mails))
+	    {
+		    $('p#email_err').text ("邮箱地址格式错误！");
+		    $('#emailerror').slideDown(showTime,callback1);
+	      $('#txtmail').focus();
+	      return false;
+	    }
+	    else
+	    {
+	      if (typeof(mails) == 'undefined')
+	      return false;
+	      var date = readCooke(mails);
+	      if ( date!=null)
+	      {
+	      	 var date1 = new Date(date);
+	      	 if ( ((new Date().getTime()-date1.getTime())/1000)<60)
+	      	 {
+	      	 	  $('p#email_err').html("请检查你的邮箱，勿频繁注册！");
+	      	 	  $('div#emailerror').attr("class","alert alert-error");	      	 	  
+	      	 	  $('div#emailerror').slideDown(showTime,callback1);
+	            $('#txtmail').focus();
+	      	 	  return false;
+	      	 }
+	      	 else
+	      	 	  writeCooke(mails);
+	      }
+	      $.post("{{ path('JustsyBaseBundle_mailtype')}}",
+	        "id="+mails,
+	        function(result){
+	          var jsondata = result ;
+	          if (jsondata["succeed"])
+	          {
+	             window.location.href = "{{path('JustsyBaseBundle_save')}}/"+mails;
+	          }
+	          else
+	          {
+	          	var tx = errorlist[jsondata.msg];
+	            $('p#email_err').html (tx);
+	            if(jsondata.msg!=null && (jsondata.msg=="error0401" ||jsondata.msg=="error0402" ||jsondata.msg=="error0403"))
+                $('div#emailerror').attr("class","alert alert-error-length");
+              else
+              	$('div#emailerror').attr("class","alert alert-error");
+		          $('div#emailerror').slideDown(showTime,callback1);
+	            $('#txtmail').focus();          
+	           return false;
+	          }
+	        }
+	      );
+	    }
+    }
+  
+	  function validEmails(mail)
+	  {
+	    var reg = /^[a-zA-Z0-9]+[a-zA-Z0-9_-]*(\.[a-zA-Z0-9_-]+)*@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*\.([a-zA-Z]+){2,}$/;
+	    return reg.test(mail);
+	  }
+  
+	  function callback1() 
+	  {
+	  	setTimeout(function() { 
+				$( "#emailerror:visible" ).removeAttr( "style" ).fadeOut();
+			}, 2000 );
+	  }
+	  
+	  
+	  function writeCooke(email)
+    {
+		   var exdate=new Date();
+		   exdate.setDate(exdate.getDate() + 1);		   
+		   document.cookie = email + "=" + escape(new Date()) +";expires="+exdate.toGMTString();
+    }
+       
+   //读取cooke
+   function readCooke(email)
+   {
+     var result = null;
+     if (document.cookie.length>0)
+     {
+       var c_start = document.cookie.indexOf(email + "=")
+       if (c_start >-1)
+       { 
+         c_start = c_start + email.length + 1;
+         var c_end=document.cookie.indexOf(";",c_start)
+         if (c_end==-1) c_end = document.cookie.length
+         result = unescape(document.cookie.substring(c_start,c_end)); 
+       }
+       else
+       	 writeCooke(email);
+     }
+     return result; 
+   } 
+   
+</script>
+
+<div style=" background:#00a9d9; height:401px; ">
+  <div id="slides" class="banner"  >
+  	
+  
+  <div class="input" style="float:right;width:350px;height:85px;">
+		<div style="float:left;width:100%;">
+			<img src="{{ asset('bundles/fafatimewebase/images/jr.jpg') }}" style="width:144px;height:39px;" /> 
+		</div>
+		<div style="float:left;width:100%;height:45px;">
+			   <div class="register_ico"></div>
+	       <input type="text" name="txtmail" id="txtmail" maxlength="32" value="" placeholder="请输入邮箱地址" tabindex="1" autocomplete="off" />
+	    	 <div id="emailerror" class="alert alert-error" style="display:none;left:52px;">
+				     <strong>错误！</strong> <p id="email_err"></p>
+				  </div>
+	    	<img src="/bundles/fafatimewebase/images/mfzc.jpg" onclick="submit_mail();" style="cursor: pointer; float: left; margin-left: 5px; width: 86px; height: 45px;" id="btnregister">
+	  </div>
+   </div>   
+    <div class="bannerImg">    
+      <div class="slides_container" >
+        <div id="banner_pic_1">
+        	<img  src="{{ asset('bundles/fafatimewebase/images/1.jpg') }}" style="width:960px;height:400px;" />
+        </div>
+        <div style="DISPLAY: none" id="banner_pic_2">
+        	 <img  src="{{ asset('bundles/fafatimewebase/images/2.jpg') }}" style="width:960px;height:400px;" />
+        </div>
+	     <div style="DISPLAY: none" id="banner_pic_2">
+	     	  <img  src="{{ asset('bundles/fafatimewebase/images/3.jpg') }}" style="width:960px;height:400px;" />
+	     </div>
+	     <div style="DISPLAY: none" id="banner_pic_2">
+	     	 <img  src="{{asset('bundles/fafatimewebase/images/4.jpg')}}" style="width:960px;height:400px;" />
+	     </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--图片滚动--> 
+<!--content 开始-->
+<div class="content"> 
+  <!--3张图片 开始-->
+  <div class="second_img">
+    <div class="img">
+      <div class="height_192"> <a class="cc" href="#">
+      	 <img src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_03.jpg')}}" width="307" height="192" class="aa" /> 
+      	 <img src="{{asset('bundles/fafatimewebase/images/3.png')}}" class="bb" width="305" height="185" /> </a> </div>
+      <div> <a class="c_a" href="" ><span class="c_3e3a39 wz">3分钟短片</span><span class="c_898989 wz">带您了解Wefafa</span></a> </div>
+    </div>
+    <div class="img">
+      <div class="height_192"> <a class="cc" href="#"> 
+      	 <img src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_05.jpg')}}" width="307" height="192" class="aa" />
+      	 <img src="{{asset('bundles/fafatimewebase/images/5.png')}}" class="bb" width="303" height="185" /> </a> </div>
+      <div> <a class="c_a" href="" ><span class="c_3e3a39 wz">5分钟实践</span><span class="c_898989 wz">快速掌握Wefafa</span></a> </div>
+    </div>
+    <div class="img">
+      <div class="height_192"> <a class="cc" href="#"> 
+      	 <img src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_07.jpg')}}" width="307" height="192" class="aa" /> 
+      	 <img src="{{asset('bundles/fafatimewebase/images/6.png')}}" class="bb" width="301" height="186" /> </a> </div>
+      <div> <a class="c_a" href="" ><span class="c_3e3a39 wz">真正跨平台</span><span class="c_898989 wz">下载Wefafa客户端</span></a> </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <!--3张图片 结束--> 
+  <!--图片滚动 开始-->
+  <div class="width_960 m_t60"> 
+    <!--title 开始-->
+    <div class="title">
+      <div class="fl"> 他们都在使用Wefafa，随时随地办公协作！ </div>
+      <div class="fr"><img src="{{asset('bundles/fafatimewebase/images/xinlang_img.jpg')}}" class="wb" />
+      	 <a href="http://weibo.com/u/3763692261" class="gz">微博关注</a> </div>
+    </div>
+    <!--title 结束-->
+    <div class="blk_18 "> <a class="LeftBotton" onmousedown="ISL_GoUp_1()" onmouseup="ISL_StopUp_1()" onmouseout="ISL_StopUp_1()" href="javascript:void(0);" target="_self"> </a>
+      <div class="pcont" id="ISL_Cont_1">
+        <div class="ScrCont">
+          <div id="List1_1"> 
+            <!-- piclist begin --> 
+            <a class="pl" href="#" > <img style="cursor:default;" src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_02.jpg')}}" /> </a> 
+            <a class="pl" href="#" > <img style="cursor:default;" src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_04.jpg')}}" /> </a> 
+            <a class="pl" href="#" > <img style="cursor:default;" src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_06.jpg')}}" /> </a>
+            <a class="pl" href="#" > <img style="cursor:default;" src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_08.jpg')}}" /> </a> 
+            <a class="pl" href="#" > <img style="cursor:default;" src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_10.jpg')}}" /> </a>
+            <a class="pl" href="#" > <img style="cursor:default;" src="{{asset('bundles/fafatimewebase/images/WEFAFA-WUI-indexfinal-2013-9-3_12.jpg')}}" /> </a> 
+            
+            <!-- piclist end --> 
+          </div>
+          <div id="List2_1"> </div>
+        </div>
+      </div>
+      <a class="RightBotton" onmousedown="ISL_GoDown_1()" onmouseup="ISL_StopDown_1()" onmouseout="ISL_StopDown_1()" href="javascript:void(0);" target="_self"> </a> </div>
+  </div>
+  <script type="text/javascript">
+                            var Speed_1 = 10; //速度(毫秒)
+                            var Space_1 = 20; //每次移动(px)
+                            var PageWidth_1 = 162 * 6; //翻页宽度
+                            var interval_1 = 5000; //翻页间隔时间
+                            var fill_1 = 0; //整体移位
+                            var MoveLock_1 = false;
+                            var MoveTimeObj_1;
+                            var MoveWay_1="right";
+                            var Comp_1 = 0;
+                            var AutoPlayObj_1=null;
+                            function GetObj(objName){if(document.getElementById){return eval('document.getElementById("'+objName+'")')}else{return eval('document.all.'+objName)}}
+                            function AutoPlay_1(){clearInterval(AutoPlayObj_1);AutoPlayObj_1=setInterval('ISL_GoDown_1();ISL_StopDown_1();',interval_1)}
+                            function ISL_GoUp_1(){if(MoveLock_1)return;clearInterval(AutoPlayObj_1);MoveLock_1=true;MoveWay_1="left";MoveTimeObj_1=setInterval('ISL_ScrUp_1();',Speed_1);}
+                            function ISL_StopUp_1(){if(MoveWay_1 == "right"){return};clearInterval(MoveTimeObj_1);if((GetObj('ISL_Cont_1').scrollLeft-fill_1)%PageWidth_1!=0){Comp_1=fill_1-(GetObj('ISL_Cont_1').scrollLeft%PageWidth_1);CompScr_1()}else{MoveLock_1=false}
+                            AutoPlay_1()}
+                            function ISL_ScrUp_1(){if(GetObj('ISL_Cont_1').scrollLeft<=0){GetObj('ISL_Cont_1').scrollLeft=GetObj('ISL_Cont_1').scrollLeft+GetObj('List1_1').offsetWidth}
+                            GetObj('ISL_Cont_1').scrollLeft-=Space_1}
+                            function ISL_GoDown_1(){clearInterval(MoveTimeObj_1);if(MoveLock_1)return;clearInterval(AutoPlayObj_1);MoveLock_1=true;MoveWay_1="right";ISL_ScrDown_1();MoveTimeObj_1=setInterval('ISL_ScrDown_1()',Speed_1)}
+                            function ISL_StopDown_1(){if(MoveWay_1 == "left"){return};clearInterval(MoveTimeObj_1);if(GetObj('ISL_Cont_1').scrollLeft%PageWidth_1-(fill_1>=0?fill_1:fill_1+1)!=0){Comp_1=PageWidth_1-GetObj('ISL_Cont_1').scrollLeft%PageWidth_1+fill_1;CompScr_1()}else{MoveLock_1=false}
+                            AutoPlay_1()}
+                            function ISL_ScrDown_1(){if(GetObj('ISL_Cont_1').scrollLeft>=GetObj('List1_1').scrollWidth){GetObj('ISL_Cont_1').scrollLeft=GetObj('ISL_Cont_1').scrollLeft-GetObj('List1_1').scrollWidth}
+                            GetObj('ISL_Cont_1').scrollLeft+=Space_1}
+                            function CompScr_1(){if(Comp_1==0){MoveLock_1=false;return}
+                            var num,TempSpeed=Speed_1,TempSpace=Space_1;if(Math.abs(Comp_1)<PageWidth_1/2){TempSpace=Math.round(Math.abs(Comp_1/Space_1));if(TempSpace<1){TempSpace=1}}
+                            if(Comp_1<0){if(Comp_1<-TempSpace){Comp_1+=TempSpace;num=TempSpace}else{num=-Comp_1;Comp_1=0}
+                            GetObj('ISL_Cont_1').scrollLeft-=num;setTimeout('CompScr_1()',TempSpeed)}else{if(Comp_1>TempSpace){Comp_1-=TempSpace;num=TempSpace}else{num=Comp_1;Comp_1=0}
+                            GetObj('ISL_Cont_1').scrollLeft+=num;setTimeout('CompScr_1()',TempSpeed)}}
+                            function picrun_ini(){
+                            GetObj("List2_1").innerHTML=GetObj("List1_1").innerHTML;
+                            GetObj('ISL_Cont_1').scrollLeft=fill_1>=0?fill_1:GetObj('List1_1').scrollWidth-Math.abs(fill_1);
+                            GetObj("ISL_Cont_1").onmouseover=function(){clearInterval(AutoPlayObj_1)}
+                            GetObj("ISL_Cont_1").onmouseout=function(){AutoPlay_1()}
+                            AutoPlay_1();
+                            }
+                            </script> 
+  <script type="text/javascript">
+                            <!--
+                            picrun_ini()
+                            //-->
+                            </script> 
+  <!--图片滚动 结束--> 
+</div>
+<!--content 结束--> 
+<!--footer-->
+<div class="footer">
+  <!-- <div class="fl">Copyright © 2012 Justsy | 京ICP备12029244号 | 京公网安备 11010502022631</div>-->
+  <div class="fl">Copyright &copy; 2012 <a href="http://www.fafatime.com" target="_blank">Justsy</a>&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+  <div class="fr"> 
+  	<a href="/prointro.htm" target="_blank"> 产品介绍 </a>
+  	<a href="{{ path('JustsyBaseBundle_help_index') }}" target="_blank"> 使用帮助</a>
+  	<a href="http://www.fafatime.com/downcenter" target="_blank"> 软件下载</a>
+  	<a href="/corp.htm"> 商务合作</a><a href="/userlic.htm" target="_blank"> 隐私条款 </a><a href="/aboutus.htm" target="_blank"> 关于我们 </a></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+$(document).ready(function(){
+  $.get("{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}");
+  $.get("{{ asset('bundles/fafatimewebase/css/home.css')}}");
+  $.get("{{ asset('bundles/fafatimewebase/css/home_s1.css')}}");
+  $.get("{{ asset('bundles/fafatimewebase/js/wefafa_all.min.js')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/home_bg.jpg')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/homeicon.png')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/icon16.png')}}");
+  $.get("{{ asset('bundles/fafatimewebase/images/icon.png')}}");
+});
+</script>

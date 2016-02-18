@@ -1,0 +1,40 @@
+<p>当发送图文消息时，图片可预先通过本接口上传。</p>
+<h5>接口地址（HTTP请求方式：POST）</h5>
+<p>https://www.wefafa.com/api/http/uploadimage</p>
+<h5>参数列表</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>access_token</td>
+		<td>访问令牌，不能为空</td>
+	</tr>
+	<tr>
+		<td>filedata</td>
+		<td>文件上传流，不能为空</td>
+	</tr>
+	<tr>
+		<td>ishead</td>
+		<td>是否仅返回图片名称  可以为空  默认1 <br>
+0 否  成功返回image值为：图片URL完整地址 <br>
+1 是  成功返回image值为：图片名称 <br>
+</td>
+	</tr>
+</table>
+<h5>返回数据</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>上传成功时返回：{"returncode" : "0000","fileid":"图片名称"}</td>
+	</tr>
+	<tr>
+		<td>token过期：{ "returncode": "0001", "msg": "访问令牌已过期。" }</td>
+	</tr>
+	<tr>
+		<td>发送失败时返回：{“returncode” : “9999”,”msg”:”错误消息内容”}</td>
+	</tr>
+</table>

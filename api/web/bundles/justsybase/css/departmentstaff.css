@@ -1,0 +1,253 @@
+.staff_body_area{
+	width:268px;
+	height:260px;
+	font-family: "Arial","宋体","Helvetica","Verdana","sans-serif";
+  font-size:12px;
+}
+
+.staff_search_area{
+  height:30px;
+  line-height:30px;
+  padding-left:5px;
+}
+
+.staff_search_textbox{
+	border: 1px solid #0088CC;
+  height:18px;
+  line-height:15px;
+  width:180px;
+  position:relative;
+  float:left;
+  top:4px;
+}
+
+
+/*人员选择面板*/
+.staff_select_panel{
+	background-color:white;
+	display:none;
+  height:17px;
+  line-height:17px;
+  margin-left: -180px;
+  margin-top:6px;
+  *margin-top:3px;
+  position:absolute;
+  width:165px;
+  overflow:hidden;
+}
+
+.staff_list_body_area{
+	width:252px;
+	height:228px;
+	border:1px solid #0088cc;
+	margin-left:5px;
+	display:none;
+	position:relative;
+	float:left;
+}
+
+.staff_list_left{
+  border-right: 1px solid #0088CC;
+  height: 228px;
+  width:70px;
+  position:relative;
+  float:left;
+}
+
+.staff_letter_div{
+  padding-top: 3px;
+  width:72px;
+}
+
+.staff_letter_style{
+	cursor: pointer;
+  float: left;
+  height:20px;
+  line-height:20px;
+  font-weight:bold;
+  color: #0088CC;
+  margin-left:2px;
+  margin-top:2px;
+  position:relative;
+  text-align:center;
+  width:21px;
+}
+.staff_search_loadding{
+	height:228px;
+	width:181px;
+	line-height:228px;
+	display:none;
+}
+
+.staff_image_loadding{
+	 width:32px;
+	 height:32px;
+}
+
+.staff_list_area{
+  height: 228px;
+  text-align:center;
+  width:181px;
+  position:relative;
+  float:left;
+
+}
+
+.staff_list_area ul{
+	position:relative;
+	float:left;
+  list-style: none outside none;
+  padding-left:0px;
+  margin-top:0px;
+  width:181px;height:228px;
+  *margin-left:-2px;
+  overflow-x:hidden;
+  overflow-y:auto;
+  
+}
+
+.staff_list_area li{
+	height:25px;
+  line-height:25px;
+  list-style:none outside none;
+  padding-top:1px;
+  padding-left:5px;
+  position:relative;
+  text-align:left;
+  cursor:default;
+}
+
+.staff_list_area li:hover{
+	background-color: #0088cc;
+  color: white;
+}
+
+.fafa_common_down{
+	background-image: url("../images/WebIM_Buttons.png");
+  background-position: -102px -172px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width:16px;height:16px;
+  margin-left:-18px;   
+  margin-top:7px;
+  position:relative;
+  float:left;
+}
+
+.staff_button{
+	background: url("../images/homeicon.png") no-repeat scroll -352px -220px transparent;
+  border:0 none;
+  color:#FFFFFF;
+  display: inline-block;
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+  width:58px;
+  cursor:pointer;
+}
+
+/*部门样式*/
+.department_search_textbox {
+	 border:1px solid #0088CC;
+   height:18px;
+   line-height: 15px;
+   width:125px;
+   position:relative;
+   float:left;
+   top:4px;
+}
+
+.department_body_area{
+	width:200px;
+	height:260px;
+	font-family: "Arial","宋体","Helvetica","Verdana","sans-serif";
+  font-size:12px;
+}
+
+.department_list_body_area{
+	width:185px;
+	height:228px;
+	border:1px solid #0088cc;
+	margin-left:5px;
+	display:none;
+	position:relative;
+	float:left;
+}
+
+.department_select_panel {
+	display:none;
+  height:20px;
+  line-height: 20px;
+  margin-left: -125px;
+  margin-top: 4px;
+  position: absolute;
+  width: 108px;
+  overflow:hidden;
+  max-width: 108px;
+}
+
+.department_loading{
+	height: 228px;width:100%;
+  line-height: 228px;
+  text-align:center;
+	display: none;
+}
+
+.group_window{
+  width:255px;
+	font-family: "宋体","Arial","Helvetica","Verdana","sans-serif";
+  font-size:12px;
+  position:relative;
+  float:left;
+}
+
+.group_title{
+	border-bottom: 1px solid #0088CC;
+  width:252px;height:20px;
+  line-height:20px;
+  position:relative;
+  float:left;
+  margin-top:5px;
+}
+
+.group_select_title{
+   background-color: white;
+   border-left:1px solid #0088CC;
+   border-radius: 5px 5px 0 0;
+   border-right: 1px solid #0088CC;
+   border-top: 1px solid #0088CC;
+   color:black;
+   float: left;
+   font-weight:bold;
+   text-align: center;
+   width:65px;
+   cursor:default;
+}
+
+.group_noselect_title{
+   background-color: white;
+   color: #747D67;
+   float: left;
+   font-weight:bold;
+   text-align: center;
+   width:65px;
+   cursor:pointer;
+}
+
+.group_staff_area{
+	margin-top:6px;
+	display:none;
+	position:relative;
+	float:left;	
+}
+.group_select_panel {
+	height:20px;
+  line-height:20px;
+  margin-left:68px;
+  margin-top:-23px;
+  overflow:hidden;
+  position:relative;
+  float:left;
+  width:160px;
+  display:block;
+}

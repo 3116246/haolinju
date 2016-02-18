@@ -1,0 +1,387 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block stylesheets %}  
+<style type="text/css">
+.preview_fake{ /* 该对象用于在IE下显示预览图片 */
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=scale);
+.}
+.alert {
+  padding: 5px 10px 5px 10px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  color: #c09853;
+  line-height:20px;
+  position:absolute
+}
+.alert-error {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+}
+.reg_input_parent{position:relative;z-index:0}
+.reg_alert{display:none;z-index:100;position:absolute;top:33px;width:292px;left:83px}
+.reg_alert_closebtn{cursor:pointer;background:url({{asset('bundles/fafatimewebase/images/icon_close_normal.png')}}); float:right; width:16px; height:16px;}
+.reg_alert_closebtn:hover {cursor:pointer;background:url({{asset('bundles/fafatimewebase/images/icon_close_hover.png')}}); float:right; width:16px; height:16px;}
+.reg_alert div{font-weight:bold}
+.reg_alert .alert_content{float:left;width:100%;height:100%}
+
+ul.contentright{ width:310px;list-style:none; padding-top:5px;clear:both;}
+ul.contentright li{ width:48px; float:left; margin-right:12px;list-style:none; margin-bottom:20px;}
+ul.contentright li span.text{ display:block;height:18px; width:48px; text-align:center; line-height:18px;}
+ul.contentright li img{ width:48px;height:48px;}
+ul.contentright li span.text a{color:#0067a8;}
+ul.contentright li span.text a:hover{color:#0067a8; text-decoration:underline;}
+</style>
+{% endblock %}
+
+{% block main_content_left %}
+{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_group.html.twig' with {"this" : this,'network_domain' : curr_network_domain}%}
+{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}
+
+{% block main_content_center %}
+{%if IsBeyondCreateGroup%}
+<div>抱歉，您目前最多只能创建 &nbsp;<span>{{CountCreateGroup}}</span>&nbsp;个群组。</div>
+{%else%}
+<div >
+  <form id="contentForm" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_group_createsave',{'network_domain':curr_network_domain}) }}" >
+  <input type="hidden" id="circleId" name="circleId" value="{{ this.circleId }}">
+  <input type="hidden" id="invs" name="invs" />
+  
+    <div class="grade-title circles-title">创建群组</div>
+    <div class="circles-photo" style="z-index:1">
+			  <div class=" rightdetail_photo" style="top:100px;right:220px">
+			    <div  style="width:120px; height:122px;line-height: 120px;border:#ccc solid 1px;text-align:center;" id="preview_fake" onclick="editHead()">
+			         <img style="width:120px; height:120px;border:0px;cursor:pointer" title="更改群组LOGO" id="preview" src='{{ asset('bundles/fafatimewebase/images/1_120.jpg') }}'> 
+			    </div>
+			    <div class="alllist">
+			      <br>上传群组图片，更具吸引力！<br> 
+			      <a show=false href="javascript:editHead()"  >上传群组LOGO！</a>
+			      <span><img id='loadlog' style='width:12px;height:12px;display:none;' src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/></span>			      
+			    </div>
+			  </div>    	
+     </div>
+ 
+    <div class="control-group input-list reg_input_parent">
+      <label class="all-lable">群组名称：</label>
+      <input class="all-input" maxlength="20" id="gname" name="gname" type="text" {% if this.isCreate=="0" %} disabled="true" {% endif %} value="{{ this.gname }}">
+      <img style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"><span class="hint-msg" style="color:red;"></span>
+    </div>
+    <div class="control-group input-list"><label class="all-lable">群组分类：</label>
+      <select name="classify" id="classify" class="all-input" style="width: 314px;"></select>
+    </div>
+    <div class="control-group input-list reg_input_parent" style="width:350px">
+      <label class="all-lable">群组描述：</label>
+      <textarea class="input-xlarge" maxlength="80" style="width:300px" rows="4" id="des" name="des">{{ this.des }}</textarea>
+      <span class="alert reg_alert alert-error" style="display:none"><div>错误!<div class="reg_alert_closebtn"></div></div><span class="alert_content"></span></span>
+	    <img style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16">
+    </div>
+    <div class="control-group  createbox clearfix"><label class="all-lableone">成员加入方式：
+      <input type="radio" name="radjoin" value="0" style="margin:0" checked="true">任何人均可申请加入
+      &nbsp;&nbsp;<input type="radio" name="radjoin" value="1" style="margin:0" >仅由成员邀请加入
+      </label>
+    </div>
+    {%if circleId!='9999'%}    
+    <div class="control-group input-list reg_input_parent">
+      <label class="all-lable">邀请成员：</label>
+      <span id="changeAtten" style="cursor:pointer">换一组</span>
+      <ul class="contentright clearfix" id="attenMember" style="margin-left:85px">
+        <!-- 成员循环 -->
+      </ul>
+    </div>
+		{%endif%}
+    {% if this.isCreate=="1" %}
+    <div class="createinputlist"><input id="btnSubmit" type="button" class="createinput" value="创建群组" disabled="true"></div>
+    {% endif %}
+  </div>
+  </form>
+  <div class="modal" data-backdrop=false style="display:none;width:530px;margin-left: -265px;" show=false class="invitedphoto clearfix" id="invitedphoto">
+    <div class="modal-body" style="height:400px">{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}</div>
+    <div class="modal-footer"><span><img class='modal_savelog' style='display:none;width:16px;height:16px;margin-right:5px;' src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}"/></span><a class=btn href="javascript:saveHead()">确定</A><span class=btn><a data-dismiss="modal">关闭</a></span></div>
+  </div>
+</div>
+{%endif%}
+{% endblock %}
+
+{% block javascripts %}
+{%if IsBeyondCreateGroup%}
+{%else%}
+<script type="text/javascript">
+var jso = {{members|raw}};
+var grouptype = {{grouptype|raw}};
+var page = 0;
+var arrAtten = [];
+var btnSubmit = $("#btnSubmit");
+var ipts = $(".all-input,.radio-input,.createinput,.input-xlarge");
+var gnameChanged = false;
+var isValid = false;
+var fileurl="{{fileurl}}";
+var save_photo_url="{{path('JustsyBaseBundle_group_save_logo')}}";
+var hintMsg = 
+{
+  "gname01":"群组名称为必填项！",
+  "gname02":"群组名称重复，请更换！"
+};
+var uploadObj = null;
+function savePhoto(){
+		$("#loadlog").show();
+		$.post(save_photo_url,{},function(d){
+			$("#loadlog").hide();
+			if(d.s=='1'){
+				$('#preview').attr("Src",fileurl+d.fileid);
+			}
+			else{
+				
+			}
+		});
+	}
+$(document).ready(function()
+{
+	if(jso==null || jso.length==0){
+		$("label.all-lable").hide();
+		$("#changeAtten").hide();
+	}
+  addAttenMember(jso);
+  $("#changeAtten").click(function()
+  {
+    var n = $("#changeAtten");
+    if ({{ pages }}<1 || n.attr("isclick")=="1") return;
+    n.attr("isclick","1");
+    getAttenMember();
+  });
+  var obj = $($("#invitedphoto .modal-body")[0].children[0].children[0]);
+  var obj_ff = obj.find("embed");
+  uploadObj = document.all==null? obj_ff : obj;
+  uploadObj.css({"height":"380px","width":"500px"});
+  ipts.blur(function()
+  {
+    var pn = $(this).parent();
+    if ($(this).is("#gname"))
+    {
+      if (this.value.length==0)
+      {
+        setErrInfo(pn,hintMsg.gname01);
+      }
+      else
+      {
+        if (gnameChanged)
+        {
+          setCheckInfo(pn);
+          checkGroupName(this.value,pn);
+        }
+        else
+        {
+          clearErrInfo(pn);
+        }
+      }
+    }
+  }).keypress(function(ev)
+  {
+    //enter->tab
+    var key = ev.which;
+    if (key==13)
+    {
+      ev.preventDefault();
+      if ($(this).is(btnSubmit))
+      {
+        submitForm(this);
+        return;
+      }
+      focusMoveToNext(ipts,this);
+    }
+  }).change(function()
+  {
+    if ($(this).is("#gname"))
+    {
+      gnameChanged = true;
+    }
+    else if ($(this).attr("type")=="radio")
+    {
+      $("#joinMethod").val(this.value);
+    }
+  });
+  
+  $(".reg_alert_closebtn").click(function()
+  {
+  	  $(this).parent().parent().hide();
+  });
+  //submit
+  btnSubmit.click(function()
+  {
+    submitForm(this);
+  });
+  //grouptype
+  if(grouptype!=null)
+  {
+    for(var i=0;i<grouptype.length; i++)
+    {
+      $("#classify").append("<option value='"+grouptype[i].typename+"'>"+grouptype[i].typename+"</option>");
+    }
+  }
+});
+//显示错误信息
+function setErrInfo(pn, info)
+{
+  isValid = false;
+  pn.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/error.png') }}");
+  pn.find(".hint-msg").text(info);
+}
+//清除错误信息
+function clearErrInfo(pn)
+{
+  isValid = true;
+  pn.find(".hint-msg").text("");
+  pn.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/ok.png') }}");
+  pn.find("img").show();
+}
+//后台检查
+function setCheckInfo(pn)
+{
+  isValid = false;
+  pn.find(".hint-msg").text("");
+  pn.find("img").attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif') }}");
+  pn.find("img").show();
+}
+//设置submit键
+function enableSubmit()
+{
+  btnSubmit.attr("disabled",!isValid);
+}
+//提交
+function submitForm(btn)
+{
+  btn.disabled = true;
+  var invs = "";
+  $.each(arrAtten,function(i,n)
+  {
+    invs += n + ",";
+  });
+  $("#invs").val(invs);
+  $("#contentForm").submit();
+}
+//检查是否重名
+function checkGroupName(gname, pn)
+{
+  var circleId = $("#circleId").val();
+  $.post("{{path('JustsyBaseBundle_checkgroupname')}}",{gname:gname,circleId:circleId},function(data) 
+  {
+    if (gname == data)
+    {
+      setErrInfo(pn,hintMsg.gname02);
+    }
+    else
+    {
+      clearErrInfo(pn);
+    }
+    gnameChanged = false;
+    enableSubmit();
+  },"text");
+}
+
+function editHead()
+{
+			  $("#invitedphoto").modal("show");
+}
+//保存图标
+function saveHead()
+{
+	$(".modal_savelog").show();
+  uploadObj[0].doSave();
+}
+//图标保存成功回调
+function avatar_success()
+{
+	$(".modal_savelog").hide();
+  $("#invitedphoto").modal("hide");	
+  var circlesdownphoto = $(".circles-downphoto");
+  circlesdownphoto.html( "<a data-toggle=\"modal\" show=false href=\"#invitedphoto\"><img id='img1' width='120px' height='120px' src='{{path('JustsyBaseBundle_component_cavatareditor_getfileinfo',{'size':'120'})}}'/></a>");
+	savePhoto();
+}
+//生成邀请对象
+function addAttenMember(json)
+{
+  if (json == null) return;
+  var pn = $("#attenMember");
+  for(var i=0; i< json.length; i++)
+  {
+    var s='<li class="list" style="text-align: center;"><a><img src="';
+    if (json[i].photo_path==null || json[i].photo_path=='')
+    {
+      s+="{{ asset('bundles/fafatimewebase/images/tx.jpg') }}";
+    }
+    else
+    {
+      s+=json[i].photo_path;
+    }
+    var cls = "unjoin";
+    var txt = "加入";
+    if ($.inArray(json[i].login_account,arrAtten)>=0)
+    {
+      cls = "joined";
+      txt = "已加入";
+    }
+    s+='" width="60" height="60" title="'+json[i].nick_name+'" style="cursor:pointer"></a>';
+    s+='<span class="text" style="cursor:pointer;white-space: nowrap;width:50px;text-overflow: ellipsis; overflow: hidden; display: block;" title="'+json[i].nick_name+'"><a>'+json[i].nick_name+'</a></span>';
+    s+='<span class="join"><a class="'+cls+'" style="color:#888;cursor:pointer;">'+txt+'</a></span>';
+    s+='<span><input type="hidden" value="'+json[i].login_account+'" /></span>';
+    pn.append(s);
+  }
+  //增加点击事件
+  var attList = $(".list");
+  $.each(attList,function(i,n)
+  {
+    $(n).find("a").bind("click",function()
+    {
+
+      var acc = $(n).find("input").val();
+      var a = $($(n).find("a")[2]);
+      if (a.text() == "加入")
+      {
+        a.text("已加入");
+        a.attr("class","joined");
+        arrAtten.push(acc);
+      }
+      else
+      {
+        a.text("加入");
+        a.attr("class","unjoin");
+        arrAtten = $.grep(arrAtten,function(n,i)
+        {
+          return !(acc==n);
+        });
+      }
+    });
+  });
+}
+//获取关注人员
+function getAttenMember()
+{
+  var circleId = "{{ this.circleId }}";
+  var account = "{{ app.user.username }}";
+  page++;
+  $.post("{{path('JustsyBaseBundle_group_getmember')}}",
+    {circleId:circleId,account:account,page:page},
+    function(data) 
+    {
+      if (data.cnt > 0)
+      {
+        $("#attenMember").empty();
+        addAttenMember(data.json);
+        page = data.page;
+      }
+      else
+      {
+        page = 0;
+      }
+      $("#changeAtten").attr("isclick","0");
+    },"json");
+}
+</script>
+{%endif%}
+{% endblock %}

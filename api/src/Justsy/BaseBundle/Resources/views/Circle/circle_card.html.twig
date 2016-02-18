@@ -1,0 +1,47 @@
+<div id="circle_card_detail" style="width:411px;height:265px;cursor:default;">
+  <div class="circle_card_detail_title"><a class="circle_card_detail_close" data-dismiss="modal">×</a></div>
+  <div class="circle_card_leftlayout"> 
+     <span class="circlephoto">
+     <a href="javascript:void(0)"><img style="border:1px solid #EEEEEE;width:90px;height:90px" src="{% if we_circle is defined %}{{ FILE_WEBSERVER_URL }}{{ we_circle["logo_path_big"] }}{% else %}{{ asset('bundles/fafatimewebase/images/default_circle.png') }}{% endif %}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/default_circle_big.png') }}'">
+     </a>
+     </span>
+     <div style="padding-top: 3px;"></div>
+		 <div class="myNums" style="margin-bottom:0px">
+		     <input type="hidden" class="circle_id" value="{{ we_circle["network_domain"] }}">
+		    {%if(circle_join)%}
+		      <div id="btn_circle_apply" onclick="right_applyAddCircle(this)">立即申请加入</div>
+		    {%endif%}			  
+		 </div>     
+  </div>
+  <div class="circle_card_baseinfo" >
+      <div class="circlename">{{ we_circle is defined ? we_circle["circle_name"] : "圈子已不存在" }}</div>
+      <div style="text-align:left;">
+        <div style="width: 100%; float: left; text-align: center; margin-bottom: 20px; margin-top: 5px;font-weight: 700;font-size: 14px;">成员总数：{{detail["member_cnt"]}}</div>
+        <div style="width: 210px; float: left;margin-left: 40px;white-space: nowrap;text-overflow: ellipsis; overflow: hidden;">创 建 人：{{ we_circle is defined ? we_circle["create_staff_name"] : "无" }}({{we_circle["create_staff_ename"]}})</div>
+        <div style="width: 100%; float: left;margin-left: 40px;">创建日期：{{ we_circle is defined ? we_circle["create_date_d"] : "无" }}</div>
+        <div style="margin-left: 40px;height: 20px; position: relative; width: 100%;"><div style="float: left;">推荐指数：</div><div style="float: left;" data-average="{{detail["circle_recommend"]}}" data-id=1 class="starts" ></div></div>
+      </div>
+  </div>
+  <div style="clear:both;"></div>
+  <div class="emp_card_detail_desc" style="background-color:#fff;color:#000;height: 52px;margin-top:0px"> 
+  	<div style="float: left; height: 25px; width: 100%;"><span style="float: left; display: block; margin-left: 15px;">活跃成员</span><hr style="float: left; margin-top: 15px; width: 329px;"></div>
+  	<div style="float: left; width: 100%; height: 27px; line-height: 27px;margin-left: 15px;color: #666666;">
+  	{%if detail["member_top5"]|length>0%}
+       {% for staff in detail["member_top5"] %}
+           <span style="color:#0061D9;margin-right: 15px;">{{staff["nick_name"]}}</span>
+       {% endfor %}
+  	{%else%}
+  	   <span style="color:#CCCCCC">&nbsp;&nbsp;暂时还没比较活跃的成员</span>
+  	{%endif%}
+  	</div>
+  </div>  
+  <div class="emp_card_detail_desc">&nbsp;&nbsp;{{ we_circle is defined ? we_circle["circle_desc"] : "暂无简介！" }}</div> 
+</div>
+<script type="text/javascript">
+	$("#btn_circle_apply_disble").mouseover(function(){
+		$("#circle_apply_renzheng").show();
+	}).mouseout(function(){
+		$("#circle_apply_renzheng").hide();
+	});
+  $(".starts").jRating({bigStarsPath:"{{ asset('bundles/fafatimewebase/js/starts/icons/stars.png')}}",length : 5,type:'big',isDisabled:true,decimalLength:0,step:true,rateMax:5});
+</script>

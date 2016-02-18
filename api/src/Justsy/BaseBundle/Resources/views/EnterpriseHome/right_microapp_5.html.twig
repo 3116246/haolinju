@@ -1,0 +1,32 @@
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">企业微应用</span>
+  </div>
+  <div class="rightbox-context">
+    <table>
+    	{% set hasIsFunctionManagerEn = (app.user.IsFunctionManagerEn() and app.user.is_in_manager_circles(curr_network_domain)) %}
+    	{% for micro_item in listMA %}
+    	<tr class="recomcircleitem">
+    		<td width="30px"><img class="circleicon" src="{{micro_item["logo_path_big"]}}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/default_micro_head.png") }}'"/></td>
+    		<td>
+    			{% if hasIsFunctionManagerEn %}
+    			<a class="cirlcename" href="{{ path("JustsyBaseBundle_micro_app_list", {'network_domain' : curr_network_domain}) }}?clicknumber={{micro_item["number"]}}" style="width:120px;" title="{{micro_item["name"]}}">{{micro_item["name"]}}</a>
+    			{% else %}
+    			<a class="cirlcename" href="javascript:;" onclick='$(".tipcreatemicroapp").show()' style="width:120px;" title="{{micro_item["name"]}}">{{micro_item["name"]}}</a>
+    			{% endif %}
+    		</td>
+    		<td><img src="{{ asset("bundles/fafatimewebase/images/invest_friend.png") }}" alt=""/> {{micro_item["fans_count"]}}</td>
+    	</tr>
+    	{% endfor %}
+    </table>
+    <div class="recomcircleitem" style="color:#888;">
+      还可以创建{{ micro_app_cancount }}个微应用 
+      {% if (hasIsFunctionManagerEn) %}
+      <a href="{{path('JustsyBaseBundle_micro_app_add',{'network_domain' : curr_network_domain})}}" class="btnAddCircle" style="float:right;">创建<span/></a>
+      {% else %}
+      <a title="仅企业管理员才有权限管理企业微应用" href="#" class="btnAddCircle" style="float:right;background-color:#C9DEE7;" onclick='$(".tipcreatemicroapp").show()'>创建<span/></a>
+      <div class="tipcreatemicroapp" style="display:none;">仅企业管理员才有权限管理微应用</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

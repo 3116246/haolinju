@@ -1,0 +1,76 @@
+<div type='copy' class="topiclayout convbox" conv_id='{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' style='z-index:{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' top='' hide=''>
+    <span class=" portrait"><img style="height: 36px;width: 36px;" src="{{ ds["we_convers_list"]["rows"][0]["photo_url"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span>
+    <span class="topicdetail convdetail">
+        <span class='conv_header'>
+            <span style='*float:left;'>
+                <a href="#" class="employee_name post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}" eshortname="{{ ds["we_convers_list"]["rows"][0]["eshortname"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a>
+            </span>
+            <span class="comefrom">{{ ds["we_convers_list"]["rows"][0]["post_date_d"] }}</span>
+        </span>
+        <p class="news news_maxheight"><span class="conv_content" style="font-size:12px;">{{ this.replaceFaceEmote(ds["we_convers_list"]["rows"][0]["conv_content"])|raw|nl2br }}</span></p>
+        <div class="copybox clearfix copyconv_d">
+            <span class="copyboxpart"></span> 
+            {% if ds["we_convers_list_copy"]["recordcount"] == 0 %}
+            该动态已被原作者删除
+                {% else %}
+            <span class="repost"><a href="#" class="employee_name" login_account="{{ ds["we_convers_list_copy"]["rows"][0]["login_account"] }}" eshortname="{{ ds["we_convers_list_copy"]["rows"][0]["eshortname"] }}">{{ ds["we_convers_list_copy"]["rows"][0]["nick_name"] }}</a>：<span>{{ this.replaceFaceEmote(ds["we_convers_list_copy"]["rows"][0]["conv_content"])|raw|nl2br }}</span></span>
+                {% include 'JustsyBaseBundle:CDisplayArea:attachs_copy.html.twig' with {'ds': ds, 'this' : this} %}
+                {% set we_convers_like_copy_roots = this.filterLikeRows(ds["we_convers_list_copy"]["rows"][0]["conv_root_id"], ds["we_convers_like_copy"]["rows"]) %}
+                {% include 'JustsyBaseBundle:CDisplayArea:like.html.twig' with {'we_convers_likes' : we_convers_like_copy_roots} %}
+            <div class="topicfunction">
+                <span class="functiontext">
+                    <a target="_blank" href="{{ path('JustsyBaseBundle_view_getoneconvcopylist', {'conv_root_id' : ds["we_convers_list_copy"]["rows"][0]["conv_root_id"]})}}"><span>转发{%if(ds["we_convers_list_copy"]["rows"][0]["copy_num"]>0)%}(<span class="copynum">{{ ds["we_convers_list_copy"]["rows"][0]["copy_num"]|number_format }}</span>){%endif%}</span></a>
+                    <a><span>收藏{%if(ds["we_convers_list_copy"]["rows"][0]["atten_num"]>0)%}({{ ds["we_convers_list_copy"]["rows"][0]["atten_num"]|number_format }}){%endif%}</span></a>
+                    <a target="_blank" href="{{ path('JustsyBaseBundle_view_oneconv', {'conv_root_id' : ds["we_convers_list_copy"]["rows"][0]["conv_root_id"]})}}"><span>评论{%if(ds["we_convers_list_copy"]["rows"][0]["reply_num"]>0)%}({{ ds["we_convers_list_copy"]["rows"][0]["reply_num"]|number_format }}){%endif%}</span></a>
+                </span>
+                <span class="comefrom">{{ ds["we_convers_list_copy"]["rows"][0]["post_date_d"] }}</span>
+                  {% if ds["we_convers_list"]["rows"][0]["comefrom"] != "00" %}
+                <span class="comefromleft">来自{{ ds["we_convers_list"]["rows"][0]["comefrom_d"] }}</span>
+            {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% include 'JustsyBaseBundle:CDisplayArea:attachs.html.twig' with {'ds': ds, 'this' : this} %}
+        {% include 'JustsyBaseBundle:CDisplayArea:cc.html.twig' %}
+        {% set we_convers_like_roots = this.filterLikeRows(ds["we_convers_list"]["rows"][0]["conv_root_id"], ds["we_convers_like"]["rows"]) %}
+        {% include 'JustsyBaseBundle:CDisplayArea:like.html.twig' with {'we_convers_likes' : we_convers_like_roots} %}
+        {% include 'JustsyBaseBundle:CDisplayArea:label_pc.html.twig' %}
+    </span>
+    <div class="topicfunction">  
+   {% if ds["we_convers_list"]["rows"][0]["comefrom"] != "00" %}
+            <span class="comefromleft">来自{{ ds["we_convers_list"]["rows"][0]["comefrom_d"] }}</span>
+            {% endif %}
+            <span class="functiontext">
+                <span title='更多操作' style='*margin-top:5px;' class='moreoper'></span>
+                <ul class='convoper' style="background-color:#FFF;z-index:1000;display:none;width:85px;list-style:none outside none;margin:0;padding:0;top:32px;right:5px;position:absolute;background-color:#FFF;z-index:10;">
+				      		{% if ds["we_convers_list"]["rows"][0]["login_account"] == app.user.username %}<li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                            <span style="cursor:pointer;"><span  onclick="DelTrend(this, '{{ path("JustsyBaseBundle_component_cdisparea_deltrend") }}', '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}', '{{ asset("bundles/fafatimewebase/images/loading.gif") }}')">删除</span></span></li>{% endif %}
+                        <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                            <span>
+				        {% if we_convers_like_roots|length > 0 and we_convers_like_roots[0]["like_staff"] == app.user.username %}
+                                    <span style="cursor:pointer;"  likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="UnLikeConv(this, '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}')">取消赞</span>
+				        {% else %}
+                                    <span style="cursor:pointer;"  likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="LikeConv(this, '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}')">赞</span>
+				      {% endif %}<img class="liking" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"/></span>
+                            </li>
+                            <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                <span onclick="{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "UnAttenConv_OnClick_Pc(this)" : "AttenConv_OnClick_Pc(this)" }}"
+                                      attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                      attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+                                      unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span style="cursor:pointer;" class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></span>
+                            </li>
+                        </ul>
+                        <a href="javascript:void(0)"><span onclick="ReplyLink_OnClick(this)">评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+				      	{% if ds["we_convers_list_copy"]["recordcount"] > 0 %}
+                        <a href="javascript:void(0)" onclick="CopyConvPc_OnClick(this)" 
+                           copyid="{{ ds["we_convers_list_copy"]["rows"][0]["conv_root_id"] }}" 
+                           copylastid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+                           circle_id="{{ ds["we_convers_list_copy"]["rows"][0]["post_to_circle"] }}"
+                           group_id="{{ ds["we_convers_list_copy"]["rows"][0]["post_to_group"] }}"
+                           tplurl="{{ path("JustsyBaseBundle_component_cdisparea_getcopytemplate") }}"><span>转发{%if(ds["we_convers_list"]["rows"][0]["copy_num"]>0)%}(<span class="copynum">{{ ds["we_convers_list"]["rows"][0]["copy_num"]|number_format }}</span>){%endif%}</span></a>
+                {% endif %}
+                </span>
+                <div style="clear: both;"></div>
+            </div>
+         {% include 'JustsyBaseBundle:CDisplayArea:reply_pc.html.twig' with {'ds': ds, 'isask' : 0} %}
+        </div>

@@ -1,0 +1,60 @@
+{% extends 'JustsyBaseBundle:Reply:index.html.twig' %}
+
+{% block main_content_center %}
+<div style="width:100%">
+	<span style="display: inline-block;"><h3 class="bigtitletext">发出的评论/回复</h3></span>
+  <div style="float: right; margin-top: 10px;">
+    <form action="?" style="margin:0">
+  	<input type="text" name="q" value="{{ q }}" placeholder="搜索评论人、内容" style="clear: both; width: 120px; margin: 0px; height: 14px;">
+  	<input type="submit" value="搜索" class="comenter" style="width:58px;">
+  	</form>
+  </div>
+</div>
+<hr style="margin: 0px; width: 100%;">
+<div id="content_container" class="contentbox replylist">
+  {% if ds["we_convers_list"]["recordcount"] == 0 %}
+  <br/><p>还没有发出任何评论！</p>
+  {% else %} 
+  <input type="hidden" id="delreplyurl" value="{{ path("JustsyBaseBundle_component_cdisparea_delreply") }}" />
+    {% if ds["we_convers_list"]["recordcount"] < 100 %}
+  <div class="recordcount">共 {{ ds["we_convers_list"]["recordcount"] }} 条</div>
+    {% else %}
+  <div class="recordcount">查看超过 100 条以前的评论/回复，请使用搜索</div>
+    {% endif %}
+    {% for row in ds["we_convers_list"]["rows"] %}
+  <div class="replylist-item">
+    <input type="hidden" class="conv_id" value="{{ row["conv_id"] }}" />
+    <div class="headpic">
+      <a>
+        <img src="{{ FILE_WEBSERVER_URL }}{{ row["root_photo_path"] }}" title="{{ row["root_staff_name"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'">
+      </a>
+    </div>
+    <div>
+      <div>我{% if row["reply_to"]|length > 0 %} 对 <a href="#" class="employee_name" login_account="{{ row["reply_to"] }}">{{ row["reply_staff_name"] }}</a> 说{% endif %}：{{ this.replaceFaceEmote(row["conv_content"])|raw|nl2br }}</div>
+      <div><span class="reply_from">{% if row["reply_to"]|length > 0 %}回复{% else %}评论{% endif %}于 <a href="#" class="employee_name" login_account="{{ row["root_login_account"] }}">{{ row["root_staff_name"] }}</a> 的会话</span>：{{ this.replaceFaceEmote(row["root_conv_content"])|raw|nl2br }}</div>
+      <div>
+        <span class="functiontext">
+          <a href="{{ path('JustsyBaseBundle_view_oneconv', {'conv_root_id' : row["conv_root_id"]}) }}">查看</a><i class="line">|</i>
+          <a href="javascript:;" onclick="ReplyOut.DelReply(this)">删除</a>
+        </span>
+        <span class="reply_date">{{ row["post_date_d"] }}</span>
+        {% if row["comefrom"] != "00" %}
+        <span class="comefrom">来自{{ row["comefrom_d"] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% if ds["we_convers_list"]["recordcount"] > 10 %}
+<div class="pagination pagination-right">
+  <ul>
+    {% set pagenum = ((ds["we_convers_list"]["recordcount"] - 1) / pagesize + 1 - 0.5)|number_format %}
+    {% for i in 1..pagenum if loop.index0 < 10 %}
+    <li {{ pageindex == i ? 'class="active"' : ''}}><a href="?pageindex={{ i }}&q={{ q }}">{{ i }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock %}

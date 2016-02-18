@@ -1,0 +1,128 @@
+<p>向所有关注人员、指定分组或指定人员推送文本消息或交互式文本消息</p>
+<h5>接口地址（HTTP请求方式：POST）</h5>
+<p>https://www.wefafa.com/api/http/textmsg</p>
+<h5>参数列表</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>access_token</td>
+		<td>访问令牌，不能为空</td>
+	</tr>
+	<tr>
+		<td>micro_groupid</td>
+		<td>微应用分组ID，可以为空<br/>
+说明：如果micro_groupid和openid都不传，则向全体关注成员发送，如果openid属性存在有效帐号会优先发送，
+同时分组如果存在有效帐号会一并发送
+</td>
+	</tr>
+	<tr>
+		<td>openid</td>
+		<td>接收人登录帐号的openid集合，可以为空，
+多个用户帐号的openid使用逗号(,)分隔开
+</td>
+	</tr>
+	<tr>
+		<td>msg</td>
+		<td>消息内容对象 (JSON字符串，格式见下：msg属性说明)，不能为空
+</td>
+	</tr>
+</table>
+<h5>msg属性说明： JSON字符串</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>title</td>
+		<td>消息标题 不能为空</td>
+	</tr>
+	<tr>
+		<td>content</td>
+		<td>消息内容 不支持html标签 不能为空</td>
+	</tr>
+	<tr>
+		<td>buttons</td>
+		<td>交互按钮 支持1-3个交互按钮<br/> 
+JSON数组字符串<br/>
+可以为空(表示可以不传递此参数)<br/>
+</td>
+	</tr>
+</table>
+<h5>buttons属性说明：JSON数组字符串<small>（交互式消息说明详见业务代理文档）</small></h5>
+<table class="table table-bordered">
+	<tr>
+		<td>参数名</td>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>title</td>
+		<td>字符串，必填，按钮名称，2至5字</td>
+	</tr>
+	<tr>
+		<td>actionurl</td>
+		<td>字符串，可空，点击按钮后，业务代理调用的URL，当由外部插件程序调用时该值无效，该URL的返回值仅能为字符串，将直接发送至客户端展示给用户</td>
+	</tr>
+	<tr>
+		<td>androidpkg</td>
+		<td>字符串，可空，当需要由外部android程序进行按钮事件相关操作时可填写；当配置了android插件时，html插件配置无效</td>
+	</tr>
+	<tr>
+		<td>androidclass</td>
+		<td>字符串，可空，当需要由外部android程序进行按钮事件相关操作时可填写；当配置了android插件时，html插件配置无效</td>
+	</tr>
+	<tr>
+		<td>androiddownurl</td>
+		<td>字符串，可空，当检测到手机上未安装相关程序时，提示用户下载插件的地址；当配置了android插件时，html插件配置无效</td>
+	</tr>
+	<tr>
+		<td>hplugin_id</td>
+		<td>字符串，可空，html5插件ID，当需要由外部HTML5插件进行按钮相关操作时填写。该ID在一个微应用公众号的配置中应该唯一，客户端应根据该ID识别该插件</td>
+	</tr>
+	<tr>
+		<td>hplugin_ver</td>
+		<td>字符串，可空，html5插件版本，客户端应与本地已下载插件版本比对，若不同，应更新</td>
+	</tr>
+	<tr>
+		<td>hplugin_startpage</td>
+		<td>字符串，可空，当点击该按钮时，插件的起始页，不同的按钮事件可定义在同一个插件包中，但从不同的超始页进入</td>
+	</tr>
+	<tr>
+		<td>hplugin_downurl</td>
+		<td>字符串，可空，当检测到手机上未下载该插件包时，从该地址下载，该插件包仅支持zip格式</td>
+	</tr>
+</table>
+<h5>返回数据</h5>
+<table class="table table-bordered">
+	<tr>
+		<td>说明</td>
+	</tr>
+	<tr>
+		<td>发送成功时返回：{"returncode" : "0000"}</td>
+	</tr>
+    <tr>
+        <td>token过期：{ "returncode": "0001", "msg": "访问令牌已过期。" }</td>
+    </tr>
+	<tr>
+		<td>部分发送成功时返回：{"returncode" : "0000","nosend":"未发送的帐号集合"}</td>
+	</tr>
+	<tr>
+		<td>发送失败时返回：{“returncode” : “9999”,”msg”:”错误消息内容”}</td>
+	</tr>
+</table>
+<h5>案例</h5>
+<p>不带交互按钮：
+?micro_groupid=
+&amp;access_token=
+&amp;msg={"title":"","content":""}
+<br>
+带交互按钮：
+?micro_groupid=
+&amp;access_token=
+&amp;msg={"title":""
+,"content":""
+,"buttons":[{"title":"","actionurl":""}]
+}</p>

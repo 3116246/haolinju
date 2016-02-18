@@ -1,0 +1,407 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+{% block stylesheets %}
+ <link href="{{ asset('bundles/fafatimewebase/css/datepicker/base.css')}}"  type="text/css" rel="stylesheet">
+ <link href="{{ asset('bundles/fafatimewebase/css/datepicker/clean.css')}}" type="text/css" rel="stylesheet">
+ <link href="{{ asset('bundles/fafatimewebase/js/My97DatePicker/skin/WdatePicker.css')}}" type="text/css" rel="stylesheet">
+ <link href="{{ asset('bundles/fafatimewebase/js/My97DatePicker/skin/default/datepicker.css')}}" type="text/css" rel="stylesheet">
+ <style type="text/css"> 	
+ /*.twomainright{padding-top:0px;text-align:center;}*/
+ .L_T{float:left;width:100%}
+ .L_T_image{overflow:hidden;float:left;width:64px;height:64px;background-image:url({{asset('bundles/fafatimewebase/images/persontask.png')}});}
+ .L_T_name{color:#0088CC; margin-top:33px;margin-left:10px;font-family: 微软雅黑;font-size: 20px;font-weight: bold;}
+ .R_T{float:left;width:100%;height: 30px;padding-left: 20px;padding-top: 15px;}
+ 
+ .task_left{width:45%;height:auto;overflow:hidden;border:none;border-right:1px #ccc solid;margin-left:13px;padding-right:23px;float:left;}
+ #tab_container{width:100%;height:auto;}
+ #datepickerContainer{width:60%;float:left;overflow:hidden;}
+ .date_detail{width:30%;float:left;height:168px;overflow:hidden;}
+ .dete_detail p{text-align:center;margin:0px;padding:0px;}
+ .p1{font-size:100px;height:108px;overflow:hidden;text-align:center;vertical-align:middle;line-height:108px;;font-family:"Arial,Helvetica,sans-serif;"}
+ .p2{height:28%;overflow:hidden;text-align:center;font-size:22px;;font-family:"Arial,Helvetica,sans-serif;"}
+ .task_right{width:45%;height:auto;overflow:hidden;float:left;margin-left:10px;text-align:center;}
+
+ .control-group{width:250px;}
+ .control-label{width:80px;text-align:center;font-size:12px;font-family:"Arial,Helvetica,sans-serif;"}
+ .controls input,.controls textarea{width:145px;}
+ .controls textarea{height:40px;line-height:20px;}
+ .popover{width:350px;height:300px;}
+ .popover-inner{width:350px;height:290px;overflow:hidden;}
+ </style>
+{% endblock %}
+{% block main_content_left %}
+    {% render  "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}   
+{% block main_content_center%}
+<div style="width:100%;height: 70px;">
+   <div class="L_T">
+   	  <div class="L_T_image"></div>
+   		<div class="L_T_name">我的计划</div>
+   </div>
+   <div style="border-bottom: 1px solid #0088CC;height:5px;width:100%;float: left;"></div>
+</div>
+{#
+<div class="btn-group" style="margin-top:10px;margin-bottom:10px;text-align:center;">
+    <button class="btn btn-large btn-primary disabled" onclick="tab_toggle(0)">列表</button>
+    <button class="btn btn-large"  onclick="tab_toggle(1)">编辑</button>
+</div>
+#}
+<div id="tab0_content" style="margin-top:10px;">
+	<div class="task_left">
+		<div id="datepickerContainer"></div>
+		<div class="date_detail">
+			  <p class="p1">{{day}}</p>
+			  <p class="p2" id="now_time"></p>
+	  </div>
+		<div id="table_container" style="clear:both;padding-top:3px;"></div>
+	</div>
+	<div class="task_right" id="task_right">
+	</div>
+	<form method="post" id="new_task_form"  class="form-horizontal" style="display:none;">
+		<div style="display:none;">
+		 	  <label></label><input type="text" id="task_id" value=""/>
+		</div>
+	  <div class="control-group">
+		      <label class="control-label" for="content">计划内容:</label>
+		      <div class="controls">
+		     	    <textarea class="input-xlarge" id="content" name="content" style="width:200px;" rows="4" ></textarea>
+		     	</div>
+     </div>
+	  <div class="control-group"">
+      		<label class="control-label" for="start_time">开始时间:</label>
+		      <div class="controls">
+		     	    <input type="text" class="input-xlarge Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="" id="start_time" name="start_time" maxlength="20" >
+		     	</div>
+     </div>
+     <div class="control-group" >
+      		<label class="control-label" for="end_time">结束时间:</label>
+		      <div class="controls">
+		     	    <input type="text" class="input-xlarge Wdate" 
+		     	    onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" value="" id="end_time" name="end_time" maxlength="20" >
+		     	</div>
+     </div>
+     <div class="form-actions" style="padding-left:90px;padding-top: 0px;">
+   	     <input id="btnSave" onclick="update_task()" type="button"  style="width:138px;margin-top:20px;" class="inputsmall" value="保存">
+         <span id="hint" class="help-inline" style="width:172px;display:block;">
+             <a id="hint_msg" style="color:#db4800"></a>
+         </span>	
+    </div>
+</form>
+</div>
+<!--<div class="popover" id="alert_content" data-placement="top" data-content="  " on="off" style="width:60px;height:60px;background-color:red;display:none;"></div> -->
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		   start_clock();
+		   $("#alert_content").popover("hide");
+		   task_card.init();
+       $('#datepickerContainer').DatePicker({
+			  mode: 'single',
+			  inline: true,
+			  date: new Date(),
+			  onChange:function(date,el)
+			           {
+			           	var selected_date_year  =String(date.getFullYear());
+			           	var selected_date_month =String(date.getMonth()+1);
+			           	var selected_date_date  =String(date.getDate());
+			            if(selected_date_month.length<2)
+			            {
+			            	selected_date_month="0"+selected_date_month;
+			            }
+			            if(selected_date_date.length<2)
+			            {
+			            	selected_date_date="0"+selected_date_date;
+			            }
+			           	var selected_date=selected_date_year+"-"+selected_date_month+"-"+selected_date_date;
+			            view_title(selected_date);
+			           }
+			 });
+			 var now_date=new Date();
+			 var now_date_year  =String(now_date.getFullYear());
+			 var now_date_month =String(now_date.getMonth()+1);
+			 var now_date_date  =String(now_date.getDate());
+			 if(now_date_month.length<2)
+			 {
+			 	 now_date_month="0"+now_date_month;
+			 }
+			 if(now_date_date.length<2)
+			 {
+			 	 now_date_date="0"+now_date_date;
+			 }
+			 var now_date_string=now_date_year+"-"+now_date_month+"-"+now_date_date;
+			 view_title(now_date_string);
+			 LoadComponent("task_right","{{path('JustsyBaseBundle_persontask_next7daystask',{'network_domain':curr_network_domain})}}");
+	});
+	function view_title(search_date)
+	{
+	 	 $("#table_container").empty();
+	 	 LoadComponent("table_container","{{path('JustsyBaseBundle_persontask_table',{'network_domain':curr_network_domain})}}?search_date="+search_date);
+	}
+	function tab_toggle(inde)
+	{
+		var $e=$("button").eq(inde);
+		$e.siblings().removeClass("btn-primary")
+		       .removeClass("disabled");
+		$e.addClass("btn-primary")
+		       .addClass("disabled");
+		if(0==inde)
+		{
+			$("#tab0_content").show();
+			$("#tab1_content").hide();
+		}
+		if(1==inde)
+		{
+			$("#tab0_content").hide();
+			$("#tab1_content").show();
+		}
+	}
+
+	function start_clock()
+	{
+		get_time();
+		setInterval(get_time,1000);
+	}
+	function get_time()
+	{
+		var now=new Date();
+		var now_hour=now.getHours();
+		var now_min =now.getMinutes();
+		now_hour=String(now_hour);
+		now_min=String(now_min);
+		if(now_hour.length<2)
+		{
+			now_hour="0"+now_hour;
+		}
+		if(now_min.length<2)
+		{
+			now_min="0"+now_min;
+		}
+		$("#now_time")[0].innerHTML=now_hour+":"+now_min;
+	}
+	var task_card={
+		$task_card:null,
+		settimeout_id:null,
+		cleartimeout_id:null,
+		get_content_url:"{{path('JustsyBaseBundle_persontask_getOneTaskContent',{'network_domain':curr_network_domain})}}",
+		delete_task_url:"{{path('JustsyBaseBundle_persontask_delete',{'network_domain':curr_network_domain})}}",
+		update_task_url:"{{path('JustsyBaseBundle_persontask_update',{'network_domain':curr_network_domain})}}",
+		state_setting  :"{{path('JustsyBaseBundle_persontask_state_setting',{'network_domain':curr_network_domain})}}",
+		task_id:null,
+		init:function()
+		{
+			task_card.$task_card=$("#alert_content");
+			task_card.$task_card.popover("hide");
+			$(".task_card").live({
+			click:function(){
+          if($("#alert_content").length>0)
+          {
+          	$("#tab0_content").append($("#new_task_form"));
+          	$("#new_task_form").hide();
+          	$("#alert_content").remove;
+          }
+           
+          $("<div>",{
+                    "id":"alert_content",
+                    "on":"off"
+          			}).appendTo($("#tab0_content"));
+         
+          var e=$(this);
+          var pos=task_card.get_position(e);
+          $("#alert_content").popover({"title":" "});
+          task_card.$task_card=$(".popover");
+          task_card.$task_card=$("#alert_content");
+          task_card.show(pos.x,pos.y,$(this).attr("id"));
+			}
+		  });
+		},
+	  show:function(x,y,id)
+	  {
+	  	if(false===task_card.get_task_content(id)) return;
+	  	task_card.$task_card.popover("show");
+	  	$(".popover").css({"left":x,"top":y});
+	  },
+	  hide:function()
+	  {
+	  	$("#task_card_content").html("");
+	  	task_card.$task_card.popover("hide");
+	  },
+	  get_position:function(e)
+	  {
+	  	var $e=$(e);
+	  	var orignal_x=$e.offset();
+	  	var orignal_y=$e.offset();
+	    var new_x=($e.offset().left+50)+"px";
+	  	var new_y=($e.offset().top-130)+"px";
+	  	return {"orignal_x":orignal_x,"orignal_y":orignal_y,"x":new_x,"y":new_y};
+	  },
+	  get_task_content:function(id)
+	  {
+      $.get(task_card.get_content_url,{"id":id},function(data){
+         if(data.length==0)
+         {
+         	return false;
+         }
+         $("h3.popover-title").html("<span onclick='close_pop()' style='width: 100%; height: 18px; line-height: 18px; text-align: right; position: absolute; right: 0px; top:0px;cursor:pointer;'>×</span>");
+         $("div.popover-content").html("");
+         $("div.popover-content").html(data);
+         task_card.$task_card.css({"display":"block"});
+      });
+	  }
+	};
+	function close_pop()
+	{
+		task_card.$task_card.popover("hide");
+		task_card.$task_card.attr("on","off");
+	  $("#tab0_content").append($("#new_task_form"));
+		$("#new_task_form").hide();
+	}
+	function delete_task(_id)
+	{
+		 if(!confirm("确定删除?"))
+		   return;
+	   $.post(task_card.delete_task_url,{"id":_id,"t":new Date().getTime()},function(json){
+	   	  if(json.success)
+	   	  {
+	   	  	close_pop();
+	   	  	get_table_page(1);
+		  	  get_right_page(1);
+	   	  }
+	   });
+	}
+	function new_task()
+	{
+		if($("#alert_content").length>0)
+       {
+       	$("#tab0_content").append($("#new_task_form"));
+       	$("#new_task_form").hide();
+        $("#alert_content").remove;
+       }
+    $("<div>",{
+         "id":"alert_content",
+         "on":"off",
+    }).appendTo($("#tab0_content"));
+    $("#alert_content").popover({"title":" "});
+    task_card.$task_card=$("#alert_content");
+		var pos=task_card.get_position($("#new_task_a"));
+		task_card.$task_card.popover("show");
+	  $(".popover").css({"left":pos.x,"top":pos.y});
+    $("h3.popover-title").html("添加新计划<span onclick='close_new_task_pop()' style='width: 100%; height: 18px; line-height: 18px; text-align: right; position: absolute; right: 0px; top:0px;cursor:pointer;margin-right:10px;margin-top:8px;font-size:25px;font-family:Arial,Helvetica,sans-serif;'>×</span>");
+    $("div.popover-content").html("");
+    $("div.popover-content").append($("#new_task_form"));
+    $("textarea#content,input#start_time,input#end_time").val("");
+    $("#new_task_form").show();
+	}
+	function close_new_task_pop()
+	{
+		close_pop();
+		task_card.$task_card.popover("hide");
+		$("#tab0_content").append($("#new_task_form"));
+		$("#new_task_form").hide();
+	}
+	function edit_task(id,content,start_time,end_time)
+	{
+	  $("h3.popover-title").html("添加新计划<span onclick='close_new_task_pop()' style='width: 100%; height: 18px; line-height: 18px; text-align: right; position: absolute; right: 0px; top:-3px;cursor:pointer;'>×</span>");
+    $("div.popover-content").html("");
+    $("div.popover-content").append($("#new_task_form"));
+    $("textarea#content").val("");
+    $("#start_time").val("");
+    $("#end_time").val("");
+    $("#new_task_form").show();
+	}
+	function update_task()
+	{
+		var content=$("textarea#content").val();
+		var start_time=$("#start_time").val();
+		var end_time=$("#end_time").val();
+		var pattern=/\s*\S{1,}\s*/;
+		if(!(pattern.test(content)&&start_time.length>8&&end_time.length>8))
+		{
+			$("#hint_msg").text("内容和时间格式不正确");
+			setTimeout('$("#hint_msg").text("")',2000);
+			return;
+		}
+		$.post(task_card.update_task_url,{"content":content,"start_time":start_time,"end_time":end_time},function(json){
+		  if(json.success)
+		  {
+		  	close_pop();
+		  	get_table_page(1);
+		  	get_right_page(1);
+		  }
+		  else
+		  {
+		  	$("#hint_msg").text("添加计划失败");
+		  	setTimeout('$("#hint_msg").text("")',2000);
+		  }
+		});
+	}
+	function edit_task_submit()
+	{
+		var task_id=$("#edit_task_id").val();
+		var content=$("textarea#edit_content").val();
+		var start_time=$("#edit_start_time").val();
+		var end_time=$("#edit_end_time").val();
+		var pattern=/\s*\S{1,}\s*/;
+		if(!(pattern.test(content)&&start_time.length>8&&end_time.length>8))
+		{
+			$("#edit_hint_msg").text("内容时间格式不正确");
+		  setTimeout('$("#edit_hint_msg").text("")',2000);
+		  return;
+		}
+		$.post(task_card.update_task_url,{"id":task_id,"content":content,"start_time":start_time,"end_time":end_time},function(json){
+		  if(json.success)
+		  {
+		  	close_pop();
+		  	get_table_page(1);
+		  	get_right_page(1);
+		  }
+		  else
+		  {
+		  	$("#edit_hint_msg").text("编辑计划失败");
+		    setTimeout('$("#edit_hint_msg").text("")',2000);
+		  }
+		});
+	}
+	function pop_tab(id)
+	{
+		var $e=$("#"+id);
+		$e.siblings().hide();
+		$("#edit_hint_msg").show();
+		$e.show();
+		$("ul.task_toolbar").show();
+	}
+	function save_state_setting(id)
+	{
+		var is_finish=$("input:radio:checked").val();
+		$.post(task_card.state_setting,{"id":id,"is_finish":is_finish,"t":new Date().getTime()},function(json){
+		   if(json.success)
+		   {
+		   	close_pop();
+		   	get_table_page(1);
+		  	get_right_page(1);
+		   }
+		   else
+		   {
+		   	$("#edit_hint_msg").text("设置状态失败");
+		    setTimeout('$("#edit_hint_msg").text("")',2000);
+		   }
+		})
+	}
+	function get_right_page(i)
+	{
+		var page_index=i;
+		LoadComponent("task_right", "{{ path('JustsyBaseBundle_persontask_next7daystask',{'network_domain':curr_network_domain})}}?pageindex="+page_index);
+	}
+	function get_table_page(i)
+	{
+		var page_index=i;
+		var now_date=$('#datepickerContainer').DatePickerGetDate();
+		var now_date_year=now_date[0].getFullYear();
+		var now_date_month=now_date[0].getMonth()+1;
+		var now_date_date=now_date[0].getDate();
+		var search_date=now_date_year+"-"+now_date_month+"-"+now_date_date;
+		LoadComponent("table_container", "{{ path('JustsyBaseBundle_persontask_table',{'network_domain':curr_network_domain})}}?pageindex="+page_index+"&search_date="+search_date);
+	}
+</script>
+{% endblock %}

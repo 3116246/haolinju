@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业协作网络。" />
+<meta property="wb:webmaster" content="e2fdb8d07a532c64"/>
+<meta name="keywords" content="Wefafa,企业社交,企业协作,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+<title>{% block title %}Wefafa，企业移动社会化协作，微应用平台{% endblock %}</title>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+{% block stylesheets %}{% endblock %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript">
+var g_resource_context = "{{ asset('bundles/../') }}";
+</script>
+{% block javascriptsref %}{% endblock %}
+</head>
+<body>
+<div class="main_head">
+  {% block main_head %}
+  <div style="border-bottom:2px solid #ccc;margin-bottom:4px;"><a style="color:black;font-size:16px;font-weight:bold;text-decoration:none;" href="https://www.wefafa.com">
+    <img style="width:120px; height:50px" src="{{ asset('bundles/fafatimewebase/images/wefafa_logo.png') }}" />
+    Wefafa，企业移动社会化协作，微应用平台
+  </a></div>
+  {% endblock %}
+</div>
+<div class="main_content">
+  {% block main_content %}
+  {% endblock %}
+</div>
+<div class="main_footer" style="border-top:1px dashed #ccc;">
+	Copyright &copy; 2012 <a href="http://www.fafatime.com" target="_blank">Justsy</a>&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631
+</div>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

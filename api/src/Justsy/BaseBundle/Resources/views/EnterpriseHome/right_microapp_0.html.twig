@@ -1,0 +1,17 @@
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">企业微应用</span>
+  </div>
+  <div class="rightbox-context">
+    <p style="color:black;">企业微应用是企业通过Wefafa移动应用平台自主开发的，用于企业现有信息系统实现快速移动社会化升级，让员工可以通过移动终端随时随地接入企业原有信息系统，实现移动办公和社会化沟通与协作的移动应用。</p>
+    <div class="recomcircleitem" style="color:#888;">
+      还可以创建{{ micro_app_cancount }}个微应用 
+      {% if (app.user.IsFunctionManagerEn() and app.user.is_in_manager_circles(curr_network_domain)) %}
+      <a href="{{path('JustsyBaseBundle_micro_app_add',{'network_domain' : curr_network_domain})}}" class="btnAddCircle" style="float:right;">创建<span/></a>
+      {% else %}
+      <a title="仅企业管理员才有权限管理企业微应用" href="#" class="btnAddCircle" style="float:right;background-color:#C9DEE7;" onclick='$(".tipcreatemicroapp").show()'>创建<span/></a>
+      <div class="tipcreatemicroapp" style="display:none;">仅企业管理员才有权限管理微应用</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

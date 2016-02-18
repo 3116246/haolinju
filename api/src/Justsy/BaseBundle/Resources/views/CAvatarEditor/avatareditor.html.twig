@@ -1,0 +1,25 @@
+<div>
+  <object id="_imageupload" name="_imageupload" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="https://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="530" height="480" align="middle">
+    <param name="allowScriptAccess" value="always" />
+    <!-- flash的地址 -->
+    <param name="movie" value="{{ asset('bundles/fafatimewebase/images/AvatarEditor.swf') }}"  />    
+    <param name="quality" value="high" />    
+    <param name="allowScriptAccess" value="sameDomain" />	
+	  <!-- 传参数的地方 -->  
+    <param name="FlashVars" value="uploadServerUrl={{ path("JustsyBaseBundle_component_cavatareditor_saveavatar") }}&defaultImg=1_120.jpg?id=faceid" />
+
+    <embed  id="_imageupload" name="_imageupload" src="{{ asset('bundles/fafatimewebase/images/AvatarEditor.swf') }}" 
+      quality="high" wmode="opaque" 
+      FlashVars="uploadServerUrl={{ path("JustsyBaseBundle_component_cavatareditor_saveavatar") }}&defaultImg=1_120.jpg?id=faceid" 
+      pluginspage="https://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" 
+      type="application/x-shockwave-flash" 
+      width="530" height="480"/>
+  </object>
+</div>
+
+<script type="text/javascript">
+//头像控件上传成功后回调函数，可自己定义
+//function avatar_success() 
+//{
+//}
+</script>

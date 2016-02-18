@@ -1,0 +1,44 @@
+<div id="component_userbasicinfo_attribute_list" style="cursor:default;color:rgb(153, 153, 153);float:left; margin:20px;">
+	<div class="component_tabs_colorRow">
+		 <span>样式名称：</span>
+		 <label>
+		 	  <input type="radio" style="float:left;" value="GRID3" name="liststyle" checked="checked"> 
+		 	  <span style="float:left;padding-left:5px;font-size:12px;">默认样式</span>
+		 </label>
+  </div>
+	<div class="component_tabs_colorRow">
+	  <span>字体颜色：</span>
+	  <span id="fontcolor" class="component_tabs_defaultcolor" onclick="showcolor(this)"></span>
+	  <span style="margin-left:55px;">背景颜色：</span>
+	  <span id="backgroudcolor" class="component_tabs_activecolor" onclick="showcolor(this)"></span>
+	</div>
+	<div class='component_color' style="margin-top:-10px;" ></div>
+  <span onclick="component_userbasicinfo.customize()" style="float:left;color:#0077cc;cursor:pointer;margin:20px 0px 0px 5px;">详细页面定制</span>
+</div>
+<script type="text/javascript">
+   var _class = "";
+   //显示控件
+	 function showcolor(ev){
+     componentColor.Init($(".component_color"));
+     componentColor.beforeColor = $(ev).css("background-color");
+   	 _class = $(ev).attr("class");
+   	 if ( _class == "component_tabs_defaultcolor"){
+   	 	  componentColor.setTitle("选择字体颜色");
+   	 	  $(".component_color").css("margin-left","70px");
+   	 }
+   	 else{
+   	 	 componentColor.setTitle("选择背景颜色");
+   	 	 $(".component_color").css("margin-left","235px");
+   	 }
+   	 $(".component_color").css("margin-top","122px");
+   	 componentColor.onSelected=function(vColorValue){   	 	 
+ 		   $("."+ _class).css("background-color",vColorValue);
+ 	   };
+ 	   componentColor.onMouseMove = function(color){
+ 	   	 $("."+ _class).css("background-color",color);
+ 	   };
+ 	   componentColor.onClose = function(beforecolor){
+ 	   	 $("."+ _class).css("background-color",beforecolor);	   	 
+ 	   };
+   }   
+</script>

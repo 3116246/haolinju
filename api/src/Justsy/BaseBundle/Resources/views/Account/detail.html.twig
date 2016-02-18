@@ -1,0 +1,261 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_detail %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">详细资料</div>
+<div class="rightdetail clearfix">
+  <style>
+  .controls-tip {position: absolute; color: #999; margin: 3px 8px;}
+  .controls textarea.input-xlarge {height: 56px;}
+  textarea:focus{
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    border-radius: 3px 3px 3px 3px;
+    border-color: rgba(82, 168, 236, 0.8);
+    color:#555555;
+  }
+  </style>
+  <form id="formdetails" class="form-horizontal" method="post">
+    <div class="control-group">
+        <label class="control-label" for="input01">登录帐号：</label>
+        <div class="controls">
+          <input type="text" class="input-xlarge" readOnly="true" value="{{account}}" id="txtmail" name="txtmail">
+        </div>
+    </div>   
+    <div class="control-group"> <label class="control-label" for="input01">出生日期：</label>
+      <div class="controls">
+        <input class="input-xlarge" style="width:80px;" type="text" id="dateYear" onkeypress="Account.inputPlusInteger(this);" maxlength="4" name="dateYear" value="{{year}}"> 年
+        <select class="span1" id="dateMonth" name="dateMonth" onChange="Account.load_day(this.value);">
+          <option value="1">01</option>
+          <option value="2">02</option>
+          <option value="3">03</option>
+          <option value="4">04</option>
+          <option value="5">05</option>
+          <option value="6">06</option>
+          <option value="7">07</option>
+          <option value="8">08</option>
+          <option value="9">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select> 月                    
+        <select class="span1" id="dateDay" name="dateDay">
+          <option value ="1">01</option>
+          <option value ="2">02</option>
+          <option value ="3">03</option>
+          <option value ="4">04</option>
+          <option value ="5">05</option>
+          <option value ="6">06</option>
+          <option value ="7">07</option>
+          <option value ="8">08</option>
+          <option value ="9">09</option>
+          <option value ="10">10</option>                
+          <option value ="11">11</option> 
+          <option value ="12">12</option> 
+          <option value ="13">13</option> 
+          <option value ="14">14</option> 
+          <option value ="15">15</option> 
+          <option value ="16">16</option>
+          <option value ="17">17</option>  
+          <option value ="18">18</option>  
+          <option value ="19">19</option>                                
+          <option value ="20">20</option>
+          <option value ="21">21</option>
+          <option value ="22">22</option>
+          <option value ="23">23</option>
+          <option value ="24">24</option>
+          <option value ="25">25</option>
+          <option value ="26">26</option>
+          <option value ="27">27</option>
+          <option value ="28">28</option>
+          <option value ="29">29</option>
+          <option value ="30">30</option>
+          <option value ="31">31</option>
+        </select> 日
+        <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+        <span class="help-inline" style="color:red"></span> 
+      </div>
+    </div> 
+		<div class="control-group" style="display:none;">
+				      <label class="control-label" for="report_object">汇报对象：</label>
+				      <div class="controls">
+				      	<div class="lib_notify ask_div1" style="width:284px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#report_object').focus()">
+						        <div id="InputNotifyArea_report_object" style="cursor: default;margin:0px;padding:0px;vertical-align:center;float:left;height:30px;line-height:30px;"> 
+						             {% if report_object|length>0 %}
+						              <span class="NotifyObj"><input  type="hidden" value="{{ report_object.login_account }}"><span class="NotifyPerson">{{ report_object.nick_name }}</span><span onclick="Account.NotifyClose_OnClick(this)" class="NotifyClose" >×</span></span>
+						             {% endif %}
+						        </div>
+						        <input type="text" placeholder="请输入邮箱帐号" class="input-xlarge"  id="report_object" name="txtreport_object"  data-provide="typehead" style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:60px;font-size:12px;float:left;background-color:inherit;">
+				        </div>
+				        <script type="text/javascript">
+				        	var q_path="{{path("JustsyBaseBundle_account_detail_search",{network_domain:curr_network_domain})}}";
+				        	var datasource=[];
+				        	$("#report_object").typeahead({
+				        	    source:Account.login_account_datasource,
+							  	    items:8,
+				        	    matcher:Account.login_account_matcher,
+				        	    sorter:Account.login_account_sorter,
+				        	    highlighter:Account.login_account_highlighter,
+				        	    updater:Account.report_object_login_account_updater
+				        	});
+				        	$("#report_object").bind("keyup", Account.txtNotify_OnKeyUp);
+				        </script>
+				      </div>
+		</div>
+		<div class="control-group" style="height:60px;display:none;">
+				      <label class="control-label" for="direct_manages">直接下属：</label>
+				      <div class="controls">
+				        <div class="lib_notify ask_div1" style="cursor: default;width:284px;height:30px;cursor:text;margin:0px;padding:0px;" onclick="$(this).children('#direct_manages').focus()">
+				        <div id="InputNotifyArea" style="background-color: #FFFFFF;float: left;height: 40px;left: 80px; margin: 0;overflow-y: auto;padding: 0; position: absolute;top: 205px;width: 286px;">
+				          {%if direct_manages|length==0%}
+				          <span class='nosetxiashu'>暂未设置任何下属。</span>
+				          {%endif%}
+				          {% for i in direct_manages%}
+				             <span class="NotifyObj"><input  type="hidden" value="{{i.login_account}}"><span class="NotifyPerson">{{i.nick_name}}</span><span class="NotifyClose" onclick="NotifyClose_OnClick(this)">×</span></span>
+				          {% endfor %}
+				        </div>
+				        <input type="text" placeholder="请输入邮箱帐号(可输入多个帐号)" class="input-xlarge"  id="direct_manages" name="txtdirect_manages"  data-provide="typehead"  style="margin:0px;border:none;vertical-align: top;border:0px; box-shadow:0;-moz-transition: border 0s linear 0s, box-shadow 0s linear 0s;box-shadow: 0 0px 0px rgba(0, 0, 0, 0) inset; width:180px;font-size:12px;float:left;background-color:inherit;">
+				        </div>				        
+				        <script type="text/javascript">
+				        	    $("#direct_manages").typeahead({
+				        	      source:    			Account.login_account_datasource,
+							  	      items:8,
+				        	      matcher:				Account.login_account_matcher,
+				        	      sorter:					Account.login_account_sorter,
+				        	      highlighter:		Account.login_account_highlighter,
+				        	      updater:				Account.direct_manages_login_account_updater
+				        	    });
+				        	$("#direct_manages").bind("keyup", txtNotify_OnKeyUp);
+				        </script>
+				      </div>
+		</div>
+				    <div class="control-group" style="display:none">  {#汇报对象#}
+      				<label class="control-label" for="txtname"></label>
+      				<div class="controls">
+		     	    <input type="text" class="input-xlarge" id="array_report_object" name="array_report_object">
+		     	    <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+		          <span class="help-inline" style="color:red"></span> 
+     					</div>
+    				</div>
+    				<div class="control-group" style="display:none">  {#总和所有的直接下属#}
+      				<label class="control-label" for="txtname"></label>
+      				<div class="controls">
+		     	    <input type="text" class="input-xlarge" id="array_direct_manages" name="array_direct_manages">
+		     	    <img  style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16"> 
+		          <span class="help-inline" style="color:red"></span> 
+     					</div>
+    				</div>
+    
+    <div class="control-group">
+      <label class="control-label" for="textarea">特　　长：</label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="txtspecialty" name="txtspecialty" maxlength="200" rows="2">{{specialty}}</textarea>
+        <span class="controls-tip">200字以内</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="textarea">兴趣爱好：</label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="txthobby" name="txthobby" maxlength="200" rows="2">{{hobby}}</textarea>
+        <span class="controls-tip">200字以内</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">工作电话：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{work_phone}}" maxlength="20" id="txtworkphone" name="txtworkphone"
+        onkeyup="value=value.replace(/[^(\d\-)]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
+        >
+      </div>
+    </div>
+   	<div>
+    	<div class="controlls" style="margin-top:-20px;padding-left:100px;margin-bottom:10px;color:#CCC;">如：0817-3252352 或 13548417283</div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="hometown">籍　　贯：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{hometown}}" id="hometown" name="txthometown" maxlength="20">
+      </div>
+    </div>	
+     <div class="control-group">
+      <label class="control-label" for="graduated">毕业院校：</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" value="{{graduated}}" id="graduated" name="txtgraduated" maxlength="32">
+      </div>
+    </div>	
+    <div class="control-group">
+      <label class="control-label" for="work_his">工作经历：</label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="txtwork_his" name="txtwork_his" maxlength="200" rows="2">{{work_his}}</textarea>
+        <span class="controls-tip">200字以内</span>
+      </div>
+    </div>
+    <span >{{msg}}</span>  
+      <button type="button" style="margin-left: 150px;" id="btnSave" onclick="submit_content();" class="inputsmall">保存</button>
+      <span id="hint" class="help-inline" style="width:172px;display:none;">
+             <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+             <a id="hint_msg" style="color:#db4800"></a>
+      </span>
+    </div>
+  </form>
+</div>
+<script language="javascript">
+  $(document).ready(function(){  
+	    $('#dateYear').focus();
+	    $("#dateMonth option[value='"+parseInt({{month}})+"']").attr("selected",true);
+	    $("#dateDay option[value='"+parseInt({{day}})+"']").attr("selected",true);
+	    
+	    $("#txtname").blur(function(){
+	    	  Account.checkName(this);
+	    });
+	    $("#dateYear").keyup(function(){
+	        Account.checkYear(this);
+	    });
+	    $("#dateYear").blur(function(){
+	       Account.checkYear(this);
+	    });	    
+	    $('#txtspecialty').maxlength({status:false});
+	    $('#txthobby').maxlength({status:false});
+	    $('#txtwork_his').maxlength({status:false});
+	    $(".controls .status").css({"background-color":"transparent","background-image":"none","color":"#00A8C6","font-size":"11px","height":"14px","line-height":"14px"});
+	});   
+   //提交数据
+   function submit_content()
+   {
+      if( !Account.checkYear($("#dateYear")[0])) return;
+      document.getElementById('btnSave').disabled = true;
+			$("#array_report_object").val($("#InputNotifyArea_report_object input[type=hidden]").val());
+		  var array_direct_manages=$.unique(
+		    $("#InputNotifyArea input").map(function(){return $(this).val();}).toArray()
+		  ).join(";");
+			$("#array_direct_manages").val(array_direct_manages);	     
+     $('#btnSave').text("提交中..."); 
+      $("form").ajaxSubmit({
+      	      dataType: 'json',//返回的数据类型
+              url: "{{ path('JustsyBaseBundle_account_savedetail', {'network_domain' : curr_network_domain})}}",//表单的action
+              method: 'post',
+              success:function(r){
+				         if(r.succeed)
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+				              $('#hint_msg').text('详细资料保存成功');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         else
+				         {
+				             	$('#hint').show();
+				              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+				              $('#hint_msg').text('详细资料保存失败');
+				              setTimeout("$('#hint').hide()",2000);
+				         }
+				         document.getElementById('btnSave').disabled = false;
+				         $('#btnSave').text("保存"); 
+			        }        
+      });      
+   }	
+ </script>
+{% endblock %}

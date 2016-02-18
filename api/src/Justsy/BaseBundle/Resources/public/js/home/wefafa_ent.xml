@@ -1,0 +1,2645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mapp xmlns="http://im.fafacn.com/namespace/mapp">
+  <basicinfo>
+      <appid>wefafa</appid>
+      <appname>wefafa</appname>
+      <apptype>portal</apptype>
+      <appversion>2015070901</appversion>
+      <approotid>index</approotid>
+  </basicinfo>
+  <datasource>
+      <dsitem>            <!-- 获取我的应用列表 -->
+          <dsid>10</dsid>
+          <dstype>REST</dstype>
+          <dscache>true</dscache>
+          <dsflush>false</dsflush>
+      </dsitem>
+  </datasource>
+  <style>
+    <!-- 默认样式 -->
+    .default_header {bgcolor:#00a9d9; width:100%; height:96;}
+    .default_body {bgcolor:#f9f9f9;}
+    .default_footer {bgcolor:#fcfcfc; alpha:95%; width:100%; height:108;}
+    .default_title {color:#ffffff; font-size:36; font-weight:bold; align:center;}
+    .default_iconfont_menu {width:60; height:60;color:#ffffff;font-size:48;align:right; margin-right:20;}
+    .default_text_menu {width:100; height:60;color:#ffffff;font-size:32;align:right; margin-right:20;}
+    .default_iconfont_back {align:left; width:100;height:60;font-size:48; color:#ffffff;}
+    .dividline_all {width:100%; height:1; bgcolor:#dfdfdd; }
+    .dividline_all_red {width:100%; height:1; bgcolor:#ee959a; }
+    .dividline_l20 {width:100%; height:1; bgcolor:#dfdfdd; margin-left:20;}
+    .dividline_l30 {width:100%; height:1; bgcolor:#dfdfdd;margin-left:30;}
+    .dividline_l30_r30 {width:100%; height:1; bgcolor:#dfdfdd; margin-left:30; margin-right:30;}
+    .dividline_l10_r10 {width:100%; height:1; bgcolor:#dfdfdd; margin-left:10; margin-right:10;}
+    .we_blue {bgcolor:#00a9d9;}
+    .we_green {bgcolor:#70b437;}
+    .we_yellow {bgcolor:#f7b52c;}
+    .we_gray {bgcolor:#92978f;}
+    <!-- 导航样式 -->
+    .nav_iconfont {color:#a9b7b7; font-size:54;}
+    .nav_iconfont_active {color:#00a9d9;}
+    .nav_textfont {color:#a9b7b7; font-size:22; padding-top:2;}
+    .nav_textfont_active {color:#00a9d9;}
+       <!-- 消息列表 -->
+    .msglist_item {bgcolor:#ffffff; height:137;}
+    .msglist_icon {width:96; height:96; margin-top:20; margin-bottom:20; margin-left:20; margin-right:20;radius:10;}
+    .msglist_title {color:#333333; font-size:32; margin-top:22; width:100%;}
+    .msglist_summary {color:#9b9b9b;font-size:28; margin-top:10; width:100%; padding-right:80;}
+    .msglist_date {color:#b2b2b2; font-size:24;margin-top:20; width:160; margin-right:20; text-align:right;}
+    <!-- 公众号列表 -->
+    .publist_item {bgcolor:#ffffff; height:121;}
+    .publist_icon {width:80; height:80; radius:80; margin-top:20; margin-bottom:20; margin-left:20; margin-right:20;}
+    .publist_title {color:#333333; font-size:32; width:100%; height:120;}
+    .grouplist_icon {width:80; height:80; margin-top:20; margin-bottom:20; margin-left:20; margin-right:20;}
+    <!-- 内容组样式 -->
+    .groupmain {margin-top:40;}
+    .groupitem_default {padding-left:30; height:96; bgcolor:#ffffff;}
+    .groupitem_default_title {color:#333333; font-size:32; margin-left:30;width:100%;}
+    .groupitem_default_name {color:#333333; font-size:32;width:154;}
+    .groupitem_default_tips {width:100%;font-size:28;color:#333333;}
+    .groupitem_default_tips_r {width:100%;font-size:28;color:#333333;text-align:right;margin-right:10;}
+    .groupitem_default_title_noicon {color:#000000; font-size:32; width:100%;}
+    .groupitem_default_iconfont {color:#ffffff; font-size:30; width:60; height:60;}
+    .groupitem_default_arrow {color:#c7c7cc;font-size:28;margin-right:30;}
+    .groupitem_myinfo_headpic {margin-top:24;margin-bottom:24; margin-right:30;width:120;height:120;}
+    .groupitem_myinfo {padding-left:30; height:170; bgcolor:#ffffff; width:100%;}
+    .groupitem_dropmenu {height:90; padding-left:30; padding-right:30;}
+    .groupitem_dropmenu_iconfont {color:#ffffff;font-size:48;}
+    .groupitem_dropmenu_textfont {color:#ffffff; font-size:32; padding-left:20;}
+    .groupitem_memo {padding-left:30; bgcolor:#ffffff;}
+    .groupitem_memo_text {color:#999999; font-size:24;margin-right:30;margin-bottom:20;height:72;}
+    .myinfo_value {color:#999999; font-size:24;margin-right:30;}
+    .myinfo_headpic {margin-top:24;margin-bottom:24; margin-right:30;width:120;height:120;}
+    <!-- 通讯录 -->
+    .groupitem_contact {bgcolor:#ffffff;}
+    .groupitem_contact_title {color:#000000; font-size:32;margin-left:20;}
+    .groupitem_contact_iconfont{color:#ffffff; font-size:52; width:84;height:84;radius:10;margin-top:13; margin-bottom:13;margin-left:20;}
+    .groupitem_contact_index{color:#868686;font-size:28; width:100%; height:40; margin-top:6;bgcolor:#ebebeb; padding-left:20;}
+    .listitem_contact_img {width:84; height:84;radius:10;margin-top:13; margin-bottom:13; margin-left:20;}
+    .groupitem_contact_name {color:#000000; font-size:32;margin-left:20; margin-top:12; width:100%;}
+    .listitem_contact_sign {color:#9b9b9b;font-size:24; margin-left:20; margin-top:2; width:100%; padding-right:80; width:100%;}
+    .groupitem_contact_source {color:#9b9b9b; font-size:24; margin-right:50; margin-top:40;}
+    <!-- 应用宫格样式 -->
+    .app_item{width:213;height:220;padding-top:20;text-align:center;}
+    .app_icon{width:120; height:120; radius:20;}
+    .app_text{color:#333333; font-size:28;margin-top:20;align:center;}
+    <!-- 首页菜单 -->
+    .menubody {width:340; bgcolor:#333333; margin-right:20; alpha:95%;}
+    .menuitem {height:100; padding-left:30;padding-right:30;}
+    .menuitem_iconfont {color:#ffffff; font-size:52;}
+    .menuitem_textfont {color:#ffffff;font-size:32; padding-left:30;}
+    .menuitem_dividline {width:100%; height:1;bgcolor:#222222;}
+    <!-- 标签样式 -->
+    .tabitem3 {padding-top:20; width:33.333%; bgcolor:#e8e8e8;}
+    .tab_textfont {font-size:30; color:#717171; padding-left:6;}
+    .tab_textfont_active{color:#00a9d9;}
+    .tab_iconfont{font-size:32; color:#717171; padding-left:10;}
+    .tab_iconfont_active {color:#00a9d9; }
+    .tabline {height:4;display:hidden; width:180; margin-top:12;}
+    .tabline_active {height:4; bgcolor:#00a9d9;margin-top:12;display:block; }
+    <!-- 标题栏提交按钮样式 -->
+    .button_submmit {color:#ffffff;font-size:36;align:right;margin-right:20; alpha:50%;}
+    .button_submmit_active {color:#ffffff;font-size:36;align:right; margin-right:20;alpha:100%;}
+    <!-- 发动态菜单宫格 -->
+    .popup_menu_icon{width:88; height:88;color:#ffffff;font-size:60;margin-top:20;radius:10;}
+    .popup_menu_text{color:#333333;font-size:26;margin-top:10;align:center;}
+    <!-- 公众号列表 -->
+    .publicmsglist_senddate {bgcolor:#c9c9c9;font-size:24; color:#ffffff; align:center; margin-top:30;
+    margin-left:100; padding-left:10; padding-right:10;padding-top:2; padding-bottom:4; radius:6;}
+    .publicmsglist_content {margin-left:30; margin-right:30;margin-top:30; margin-bottom:30; padding-left:30;
+    padding-top:30; padding-right:30; padding-bottom:30;bgcolor:#ffffff; border:1 #999999; radius:10;}
+    .publicmsglist_list_title {color:#000000; font-size:32;}
+    .publicmsglist_list_date {color:#b2b2b2; font-size:24; margin-top:20; }
+    .publicmsglist_list_img {margin-top:20;width:100%; height:300;}
+    .publicmsglist_list_summary {color:#9b9b9b; font-size:28; margin-top:20;width:100%;}
+    .publicmsglist_list_more {color:#000000; font-size:28; margin-top:60;}
+    .groupitem_circle{padding-left:30; height:120; bgcolor:#ffffff;}
+    .groupitem_circle_iconfont {color:#ffffff; font-size:36;width:72; height:72; radius:16;}
+    .groupitem_circle_img {width:72; height:72;radius:16;}
+    <!-- 登录页样式 -->
+    .default_login_header {bgcolor:#00a9d9; width:100%; height:50;}
+    .default_login_body {bgcolor:#00a9d9;}
+    .login_input_item {bgcolor:#ffffff;height:100;width:100%;}
+    .login_button_item {width:100%; height:100; margin-top:50;}
+    .login_reg_item {width:100%; height:80;}
+    .login_third_item {width:100%; height:120; margin-top:30;}
+    .login_input_icon {margin-left:20;font-size:48;color:#00a9d9;width:80;align:left;}
+    .login_input_arrow {margin-right:20;font-size:48;color:#00a9d9;width:60;align:right;}
+    .login_input_text {width:100%;height:100;font-size:32;}
+    .login_button
+    {width:100%;height:90;bgcolor:#ffffff;alpha:90%;font-size:32;color:#00a9d9;align:center;text-align:center;radius:10;}                    <!-- 注册页样式 -->
+    .reg_input_item {bgcolor:#ffffff;height:100;width:100%;}
+    .reg_input_text {width:100%;height:100;font-size:28;color:#cccccc;}
+    .reg_input_title{margin-left:30;font-size:32;color:#666666;width:120;}
+    .reg_input_vercode {align:right;margin-right:30;font-size:28; width:160; height:80;border:1
+    #00a9d9;color:#00a9d9;text-align:center;radius:10;}
+    .reg_check_item {width:100%;height:100;}
+    .reg_check_icon {margin-left:30; font-size:36; color:#42a40f;}
+    .reg_check_text1 {margin-left:10; font-size:28; color:#666666;}
+    .reg_check_text2 {font-size:28; color:#00a9d9;}
+    .reg_button_item {width:100%; height:120;}
+    .reg_button{width:100%;height:90;bgcolor:#00a9d9;alpha:90%;font-size:32;color:#ffffff;align:center;text-align:center;radius:10;}
+    .groupitem_home {padding-left:20; height:136; bgcolor:#ffffff;}
+    .groupitem_home_iconfont {color:#ffffff;font-size:50; width:96; height:96; radius:10;}
+    .groupitem_home_text {color:#333333; font-size:32;margin-left:20;width:100%;}
+    .joinent_input_item {width:100%; height:100;padding-top:30;bgcolor:#ffffff;}
+    .joinent_input_icon {font-size:36; color:#cccccc;margin-left:40;margin-right:20;}
+    .joinent_input_text {font-size:28; color:#cccccc;width:100%;}
+    .joinent_groupitem {padding-left:20; height:100; bgcolor:#ffffff;}
+    .joinent_groupitem_iconfont {color:#ffffff; font-size:36; width:60; height:60; radius:6;}
+    .joinent_item_title{width:100%; height:60; padding-left:20;font-size:24;color:#999999;bgcolor:#eeeeee;}
+    .search_title
+    {width:100%;height:60;margin-top:10;font-size:28;color:#ffffff;padding-left:0;padding-top:0;padding-bottom:0;}
+    .search_iconfont_back {align:left; width:100; height:96;font-size:48; color:#ffffff;}
+    .search_iconfont{width:48; height:48; margin-top:8; color:#ffffff;font-size:36;margin-right:20;}
+    .vertype_iconfont {color:#cccccc;}
+    .vertype_iconfont_active {color:#70b437;}
+    .join_text {width:100; height:56;
+    color:#ffffff;font-size:28;margin-right:20;margin-top:10;text-align:center;radius:6;bgcolor:#cccccc;}
+    .join_text_active {width:100; height:56;
+    color:#ffffff;font-size:28;margin-right:20;margin-top:10;text-align:center;radius:6;bgcolor:#70b437;}
+
+
+    .dividerline_h {width:8; height:24;bgcolor:#dfdfdd; margin-left:70;}
+    .dividerline_h2 {width:8; height:100;bgcolor:#dfdfdd; margin-left:70;}
+    .timeline_date {width:100; height:34; bgcolor:#00a9d9; text-align:center; color:#ffffff; font-size:20; radius:10;margin-left:20; margin-right:20;}
+    .timeline_sum {width:100%; height:34; font-size:28; color:#2ab222;}
+    .timeline_confirm {width:100;}
+    .timeline_dian {width:24; height:24; border:6 #00a9d9; radius:30; margin-left:61; margin-top:6;}
+    .timeline_time {width:70; height:40; font-size:24; color:#999999; margin-left:10; margin-top:-2;}
+    .timeline_title {width:100%; height:40; font-size:30; color:#333333;}
+    .timeline_add {width:100%; height:40; font-size:28; color:#999999;}
+    .timeline_memo {width:100%; height:40; font-size:28; color:#ff0000;}
+
+    .org_bar_text {font-size:30;color:#333333;margin-left:20;margin-right:20;height:84;}
+    .org_bar_text_active {color:#00a9d9;}
+    .orgitem_contact_iconfont{color:#cccccc;bgcolor:#f8f8f8; font-size:52; width:84;height:84;radius:10;margin-top:13; margin-bottom:13;margin-right:20;margin-left:20;}
+    .orgitem_contact_iconfont_active {color:#00a9d9;bgcolor:#f8f8f8; font-size:52; width:84;height:84;radius:10;margin-top:13; margin-bottom:13;margin-right:20;margin-left:20;}
+    .orgitem_contact_title {color:#cccccc; font-size:32; width:100%;margin-top:36;width:100%;}
+    .orgitem_contact_title_active {color:#00a9d9;}
+    <!-- 应用商城标签 -->
+    .tabitem_appstore {padding-top:20; width:25%; bgcolor:#f2f2f2;}
+    .tab_textfont_appstore {font-size:30; color:#858e99; padding-left:6;}
+    .tab_textfont_active_appstore{color:#00a9d9;}
+    .tab_iconfont_appstore{font-size:32; color:#858e99; padding-left:10;}
+    .tab_iconfont_active_appstore {color:#00a9d9; }
+    .tabline_appstore {height:5;display:hidden; width:180; margin-top:16;}
+    .tabline_active_appstore {height:5; bgcolor:#00a9d9;margin-top:12;display:block; }
+    .appstore_item {bgcolor:#ffffff; height:147;}
+    .appstore_icon {width:106; height:106; margin-top:20; margin-bottom:20; margin-left:20;margin-right:20; radius:20;}
+		.appstore_title {color:#333333; font-size:32; margin-top:20; width:100%;}
+		.appstore_downicon {width:80;height:80;color:#00a9d9;font-size:48;margin-top:30;margin-right:20;}
+		.appstore_type {width:24;height:24;font-size:16;bgcolor:#00a9d9;color:#ffffff;text-align:center;margin-top:2;margin-right:2;radius:24;}
+		.appstore_summary {color:#9b9b9b;font-size:24; width:100%;}
+		.appstore_downnum {font-size:20;width:100%;text-align:left;color:#cccccc;}
+    .appstore_opentext {width:90;height:50;border:1 #70b437;font-size:24;color:#999999;margin-right:20;margin-top:50;radius:6;text-align:center;}
+  	.appdetail_icon {width:120; height:120; margin-top:20; margin-bottom:20; margin-left:20; margin-right:20;radius:20;}
+  	.appdev_icon {width:76;height:76;radius:76;margin-top:20;margin-right:20;margin-left:20;margin-bottom:20;}
+  	.appdev_name {width:100%;font-size:28;color:#999999;margin-top:16;margin-bottom:5;}
+  	.appdev_follow {width:110;height:50;border:1 #999999;font-size:24;color:#999999;margin-right:30;margin-top:36;radius:6;text-align:center;}
+  	.appdetail_tab_text {font-size:30;color:#999999;width:180;height:60;radius:10;bgcolor:#fefefe;border:1 #dedede;}
+    .appdetail_tab_text_active {font-size:30;color:#ffffff;width:180;height:60;radius:10;bgcolor:#00a9d9;}
+
+    .switch { width:108; height:54; bgcolor:#bfbfbf; color:#ffffff; radius:54; margin-right:30; }
+    .switch_on { bgcolor:#70b437; }
+    </style>
+    <!-- 导航入口 -->
+    <function>
+        <functionid>index</functionid>
+        <functionname>首页</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <body class="default_body"/>
+            <footer class="default_footer">
+                <line class="dividline_all"/>
+                <nav>
+                    <navitem>
+                        <iconfont class="nav_iconfont" class_active="nav_iconfont_active">
+                            <fontid>&#xe609;</fontid>
+                            <fontid_active>&#xe60a;</fontid_active>
+                        </iconfont>
+                        <text class="nav_textfont" class_active="nav_textfont_active">首页</text>
+                        <click target="self">
+                            <functionid>home</functionid>
+                        </click>
+                    </navitem>
+                    <navitem>
+                        <iconfont class="nav_iconfont" class_active="nav_iconfont_active">
+                            <fontid>&#xe607;</fontid>
+                            <fontid_active>&#xe608;</fontid_active>
+                        </iconfont>
+                        <text class="nav_textfont" class_active="nav_textfont_active">通讯录</text>
+                        <click target="self">
+                            <functionid>addresslist</functionid>
+                        </click>
+                    </navitem>
+                    <navitem>
+                        <iconfont class="nav_iconfont" class_active="nav_iconfont_active">
+                            <fontid>&#xe612;</fontid>
+                            <fontid_active>&#xe613;</fontid_active>
+                        </iconfont>
+                        <text class="nav_textfont" class_active="nav_textfont_active">应用</text>
+                        <click target="self">
+                            <functionid>myapplist</functionid>
+                        </click>
+                    </navitem>
+                    <navitem>
+                        <iconfont class="nav_iconfont" class_active="nav_iconfont_active">
+                            <fontid>&#xe605;</fontid>
+                            <fontid_active>&#xe606;</fontid_active>
+                        </iconfont>
+                        <text class="nav_textfont" class_active="nav_textfont_active">发现</text>
+                        <click target="self">
+                            <functionid>discovery</functionid>
+                        </click>
+                    </navitem>
+                    <navitem>
+                        <iconfont class="nav_iconfont" class_active="nav_iconfont_active">
+                            <fontid>&#xe602;</fontid>
+                            <fontid_active>&#xe600;</fontid_active>
+                        </iconfont>
+                        <text class="nav_textfont" class_active="nav_textfont_active">我的</text>
+                        <click target="self">
+                            <functionid>myself</functionid>
+                        </click>
+                    </navitem>
+                </nav>
+            </footer>
+        </template>
+    </function>
+    <!-- 首页 -->
+    <function>
+        <functionid>home</functionid>
+        <functionname>首页</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <text class="default_title">首页</text>
+                <iconfont class="default_iconfont_menu">
+                    <fontid>&#xe60f;</fontid>
+                    <click target="dropmenu">
+                        <functionid>home_menu</functionid>
+                    </click>
+                </iconfont>
+            </header>
+            <body class="default_body">
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>MSGLIST</widgetname>
+                    <widgetcustom id="msglist_item">
+                        <list>
+                            <listitem class="msglist_item">
+                                <table columncount="3" rowcount="3">
+                                    <img id="headpic" class="msglist_icon" rowspan="2"/>
+                                    <text id="title" maxrow="1" class="msglist_title"/>
+                                    <text id="date" class="msglist_date"/>
+                                    <text id="summary" class="msglist_summary" maxrow="1" columnspan="2"/>
+                                    <line columnspan="3" class="dividline_all"/>
+                                </table>
+                            </listitem>
+                        </list>
+                    </widgetcustom>
+                    <widgetcustom id="mytask_item">
+                        <list>
+                            <listitem id="mytask_item" class="mytask_item">
+                                <table columncount="3" style="width:100%;height:136;bgcolor:#ffffff">
+                                    <img id="headpic" class="msglist_icon" rowspan="2">
+                                        http://182.92.11.9/getfile/5593ac00358a24290c8b4567
+                                    </img>
+                                    <text id="title" class="msglist_title">审批任务</text>
+                                    <text id="date" class="msglist_date">今天 15:32</text>
+                                    <text id="summary" class="msglist_summary" maxrow="1">加入企业申请</text>
+                                    <text id="applyuser"
+                                          style="font-size:28;width:160;text-align:right;margin-right:20;margin-top:10;color:#00a9d9">
+                                        李勋
+                                    </text>
+                                </table>
+                                <click>
+                                    <functionid>mytask</functionid>
+                                </click>
+                            </listitem>
+                        </list>
+                    </widgetcustom>
+                    <widgetcustom id="nodata">
+                        <nodata>
+                            <table columncount="1" style="margin-top:200;">
+                                <iconfont style="color:#cccccc;width:100%; text-align:center;font-size:100;">
+                                    <fontid>&#xe628;</fontid>
+                                </iconfont>
+                                <text
+                                    style="color:#bbbbbb; width:100%; height:60; text-align:center; font-size:32;">
+                                    没有任何消息！
+                                </text>
+                            </table>
+                        </nodata>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 通讯录 -->
+    <function>
+        <functionid>addresslist</functionid>
+        <functionname>通讯录</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <text class="default_title">通讯录</text>
+                <iconfont class="default_iconfont_menu">
+                    <fontid>&#xe603;</fontid>
+                    <click>
+                        <functionid>add_friend</functionid>
+                    </click>
+                </iconfont>
+            </header>
+            <body scroll="false">
+                <table columncount="1" style="bgcolor:#eeeeee;width:100%;height:90;">
+                    <text style="width:100%;margin-left:30;margin-right:30;padding-left:20;bgcolor:#ffffff;height:60;radius:20;font-size:24;color:#cccccc;margin-top:15;text-align:center;">搜索<click><functionid>search_friend</functionid></click></text>
+                    <iconfont style="margin-top:-45;align:center;font-size:30; color:#cccccc; width:100%;margin-right:80;">
+                        <fontid>&#xe69c;</fontid>
+                    </iconfont>
+                </table>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>FRIENDLIST</widgetname>
+                    <widgetcustom id="listheader">
+                        <group>
+                            <groupitem class="groupitem_contact" id="ORGLIST">
+                                <iconfont class="groupitem_contact_iconfont;we_blue">
+                                    <fontid>&#xe624;</fontid>
+                                </iconfont>
+                                <text class="groupitem_contact_title">组织机构</text>
+                                <click>
+                                    <functionid>orglist</functionid>
+                                </click>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem class="groupitem_contact" id="GROUPLIST">
+                                <iconfont class="groupitem_contact_iconfont;we_green">
+                                    <fontid>&#xe61d;</fontid>
+                                </iconfont>
+                                <text class="groupitem_contact_title">群聊</text>
+                                <click>
+                                    <functionid>grouplist</functionid>
+                                </click>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem class="groupitem_contact" id="PUBLICLIST">
+                                <iconfont class="groupitem_contact_iconfont;we_yellow">
+                                    <fontid>&#xe623;</fontid>
+                                </iconfont>
+                                <text class="groupitem_contact_title">公众号</text>
+                                <click>
+                                    <functionid>public</functionid>
+                                </click>
+                            </groupitem>
+                        </group>
+                    </widgetcustom>
+                    <widgetcustom id="listbody">
+                        <list>
+                            <listitem class="groupitem_contact">
+                                <table columncount="3">
+                                    <text id="groupindex" class="groupitem_contact_index" columnspan="3"/>
+                                    <line id="groupline" class="dividline_l20" columnspan="3"/>
+                                    <img id="contactimg" class="listitem_contact_img" rowspan="2"/>
+                                    <text id="contactname" class="groupitem_contact_name"/>
+                                    <iconfont id="contactsource" class="groupitem_contact_source" rowspan="2">
+                                        <fontid>&#xe687;</fontid>
+                                    </iconfont>
+                                    <text id="contactsign" class="listitem_contact_sign" maxrow="1"/>
+                                </table>
+                            </listitem>
+                        </list>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 应用中心 -->
+    <function>
+        <functionid>myapplist</functionid>
+        <functionname>应用中心</functionname>
+        <functiontype>1</functiontype>
+        <functiondata>
+            <dsitem>
+              <dsname>getmyapplist</dsname>
+              <dsid>10</dsid>
+              <params>
+                  <paramitem>
+                      <paramname>pageno</paramname>
+                      <paramvalue>0</paramvalue>
+                  </paramitem>
+              </params>
+            </dsitem>
+        </functiondata>
+        <template>
+            <header class="default_header">
+                <text class="default_title">应用</text>
+                <iconfont class="default_iconfont_menu">
+                    <fontid>&#xe60e;</fontid>
+                    <click>
+                        <functionid>appstore</functionid>
+                    </click>
+                </iconfont>
+            </header>
+            <body class="default_body">
+                <grid columncount="3">
+                    <dsname>getmyapplist</dsname>
+                    <griditem class="app_item">
+                        <img class="app_icon">{dsvalue:appicon}</img>
+                        <text class="app_text">{dsvalue:appname}</text>
+                        <click type="business">
+                            <params>
+                                <paramitem>
+                                    <paramname>appid</paramname>
+                                    <paramvalue>{dsvalue:appid}</paramvalue>
+                                </paramitem>
+                                <paramitem>
+                                    <paramname>appname</paramname>
+                                    <paramvalue>{dsvalue:appname}</paramvalue>
+                                </paramitem>
+                            </params>
+                        </click>
+                    </griditem>
+                </grid>
+            </body>
+        </template>
+    </function>
+    <!-- 发现 -->
+    <function>
+        <functionid>discovery</functionid>
+        <functionname>发现</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <text class="default_title">发现</text>
+            </header>
+            <body class="default_body">
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_circle">
+                        <iconfont class="groupitem_circle_iconfont;we_blue">
+                            <fontid>&#xe61f;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">同事圈</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>bloglist</functionid>
+                            <params>
+                                <paramitem>
+                                    <paramname>circleid</paramname>
+                                    <paramvalue>{constvalue:CIRCLEID}</paramvalue>
+                                </paramitem>
+                                <paramitem>
+                                    <paramname>circlename</paramname>
+                                    <paramvalue>同事圈</paramvalue>
+                                </paramitem>
+                            </params>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_circle">
+                        <iconfont class="groupitem_circle_iconfont;we_green">
+                            <fontid>&#xe620;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">朋友圈</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>bloglist</functionid>
+                            <params>
+                                <paramitem>
+                                    <paramname>circleid</paramname>
+                                    <paramvalue>9999</paramvalue>
+                                </paramitem>
+                                <paramitem>
+                                    <paramname>circlename</paramname>
+                                    <paramvalue>朋友圈</paramvalue>
+                                </paramitem>
+                            </params>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_l20"/>
+                    <groupitem class="groupitem_circle">
+                        <iconfont class="groupitem_circle_iconfont;we_yellow">
+                            <fontid>&#xe601;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">We广场</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>bloglist</functionid>
+                            <params>
+                                <paramitem>
+                                    <paramname>circleid</paramname>
+                                    <paramvalue>100001</paramvalue>
+                                </paramitem>
+                                <paramitem>
+                                    <paramname>circlename</paramname>
+                                    <paramvalue>We广场</paramvalue>
+                                </paramitem>
+                            </params>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_circle">
+                        <iconfont class="groupitem_circle_iconfont;we_blue">
+                            <fontid>&#xe686;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">邀请同事</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>invite_workmate</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_l20"/>
+                    <groupitem class="groupitem_circle">
+                        <iconfont class="groupitem_circle_iconfont;we_green">
+                            <fontid>&#xe69b;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">邀请朋友</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>invite</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_l20"/>
+                    <groupitem class="groupitem_circle">
+                        <iconfont class="groupitem_circle_iconfont;we_yellow">
+                            <fontid>&#xe61b;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">扫一扫</text>
+                        <click>
+                            <functionid>scancode</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+            </body>
+        </template>
+    </function>
+    <!-- 我的 -->
+    <function>
+        <functionid>myself</functionid>
+        <functionname>我的</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <text class="default_title">我的</text>
+            </header>
+            <body class="default_body" scroll="auto">
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_myinfo">
+                        <table columncount="4" rowcount="2">
+                            <img rowspan="2" class="groupitem_myinfo_headpic" bindid="header">{constvalue:HEADER}</img>
+                            <text style="font-size:32;color:#000000;width:100%;margin-top:40;" bindid="nickname">{constvalue:NICK_NAME}
+                            </text>
+                            <iconfont style="font-size:48;color:#999999; margin-right:10; margin-top:52;">
+                                <fontid>&#xe640;</fontid>
+                            </iconfont>
+                            <iconfont style="font-size:48;color:#999999; margin-top:52;">
+                                <fontid>&#xe615;</fontid>
+                            </iconfont>
+                            <text style="font-size:28;color:#999999; width:100%;" maxrow="1">{constvalue:ENAME}</text>
+                            <text columnspan="2" style="width:120"></text>
+                        </table>
+                        <click>
+                            <functionid>myinfo</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_default">
+                        <iconfont class="groupitem_default_iconfont;we_blue">
+                            <fontid>&#xe628;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">我的动态</text>
+                        <click>
+                            <functionid>myblog</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_l30_r30"/>
+                    <groupitem class="groupitem_default">
+                        <iconfont class="groupitem_default_iconfont;we_green">
+                            <fontid>&#xe629;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">我的收藏</text>
+                        <click>
+                            <functionid>myfav</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_l30_r30"/>
+                    <groupitem class="groupitem_default">
+                        <iconfont class="groupitem_default_iconfont;we_yellow">
+                            <fontid>&#xe62a;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">提到我的</text>
+                        <click>
+                            <functionid>atme</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_default">
+                        <iconfont class="groupitem_default_iconfont;we_blue">
+                            <fontid>&#xe61e;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">我的名片</text>
+                        <click>
+                            <functionid>mynamecard</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+                <group class="groupmain">
+                    <line class="dividline_all"/>
+                    <groupitem class="groupitem_default">
+                        <iconfont class="groupitem_default_iconfont;we_gray">
+                            <fontid>&#xe62b;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">设置</text>
+                        <click>
+                            <functionid>setting</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+            </body>
+        </template>
+    </function>
+    <!-- 审批任务 -->
+    <function>
+        <functionid>mytask</functionid>
+        <functionname>审批任务</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">我的审批任务</text><!--
+                <iconfont class="default_iconfont_menu">
+                    <fontid>&#xe60f;</fontid>
+                    <click target="dropmenu">
+                        <functionid>mytask_menu</functionid>
+                    </click>
+                </iconfont>-->
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>MYTASK</widgetname>
+                    <widgetcustom id="mytask_item">
+                        <list>
+                            <listitem id="mytask_item">
+                                <table columncount="4" style="width:100%; height:160;bgcolor:#ffffff;">
+                                    <img id="ent_logo"
+                                         style="width:120;height:120;radius:20;margin-left:20; margin-right:20;margin-top:20;margin-bottom:18"
+                                         rowspan="3">http://182.92.11.9/getfile/5593ac00358a24290c8b4567
+                                    </img>
+                                    <text id="ent_name" style="color:#333333; font-size:30; width:100%;" columnspan="2">
+                                        企业管理
+                                    </text>
+                                    <text id="apply_status"
+                                          style="color:#b2b2b2; font-size:24;width:200; margin-right:20; text-align:right;">
+                                        待审批
+                                    </text>
+                                    <text style="font-size:26;color:#333333;width:120;height:32;">申请人：</text>
+                                    <text id="apply_name" style="font-size:24;color:#666666;width:100%" maxrow="1">李勋
+                                    </text>
+                                    <text id="apply_data"
+                                          style="color:#b2b2b2; font-size:24;width:200; margin-right:20; text-align:right;">
+                                        今天
+                                        15:32
+                                    </text>
+                                    <text style="font-size:26;color:#999999;width:120;height:32;">节点名：</text>
+                                    <text id="apply_type" style="font-size:24;color:#333333;width:100%" maxrow="1"
+                                          columnspan="2">申请加入企业
+                                    </text>
+                                    <line class="dividline_all" columnspan="4"/>
+                                </table>
+                                <!-- <click><functionid>mytask_detail</functionid></click> -->
+                            </listitem>
+                        </list>
+                    </widgetcustom>
+                    <widgetcustom id="mytask_item_mune">
+                        <table id="mytask_item_mune" columncount="2" style="width:360; height:160;bgcolor:#ffffff;padding-top:20">
+                            <iconfont id="task_todo_yes"
+                                      style="width:180;height:160;bgcolor:#dfdfdd;font-size:60;color:#70b437">
+                                <fontid>&#xe6a5;</fontid>
+                                <click>
+                                    <functionid>task_todo_yes</functionid>
+                                </click>
+                            </iconfont>
+                            <iconfont id="task_todo_no"
+                                      style="width:180;height:160;bgcolor:#e00428;font-size:60;color:#ffffff;">
+                                <fontid>&#xe6a6;</fontid>
+                                <click>
+                                    <functionid>task_todo_no</functionid>
+                                </click>
+                            </iconfont>
+                        </table>
+                    </widgetcustom>
+                    <widgetcustom id="mytask_item_mune_del">
+                        <table id="mytask_item_mune_del" columncount="1" style="width:180; height:160;bgcolor:#ffffff;padding-top:20">
+                            <text  id="del" style="width:180;height:160;bgcolor:#e00428;font-size:60;color:#ffffff;text-align:center">删除</text>
+                        </table>
+                    </widgetcustom>
+                    <!--<text style="font-size:24;color:#cccccc;margin-top:20;margin-left:30;">向左滑动快速审批</text>-->
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 审批任务详细 -->
+    <function>
+        <functionid>mytask_detail</functionid>
+        <functionname>审批任务详细</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">审批任务</text>
+            </header>
+            <body>
+                <table columncount="4" style="width:100%; height:160;bgcolor:#ffffff;">
+                    <img id="ent_logo"
+                         style="width:120;height:120;radius:20;margin-left:20; margin-right:20;margin-top:20;margin-bottom:18"
+                         rowspan="3">http://182.92.11.9/getfile/5593ac00358a24290c8b4567
+                    </img>
+                    <text id="ent_name" style="color:#333333; font-size:30; width:100%;" columnspan="3">
+                        企业管理
+                    </text>
+                    <text style="font-size:26;color:#999999;width:120;height:32;">节点名：</text>
+                    <text id="apply_type" style="font-size:24;color:#333333;width:100%" maxrow="1"
+                          columnspan="2">申请加入企业
+                    </text>
+                </table>
+                <line class="dividerline_h" />
+                <table columncount="3">
+                    <text class="timeline_dian" />
+                    <text class="timeline_time">申请</text>
+                    <text class="timeline_title">申请人：李勋</text>
+                    <line class="dividerline_h2" rowspan="2" />
+                    <text class="timeline_time" />
+                    <text class="timeline_add" maxrow="1" >申请时间：7月6日 12:39</text>
+                    <text class="timeline_time" />
+                    <text class="timeline_memo">状态：审批中</text>
+                </table>
+            </body>
+            <footer class="default_footer">
+                <line class="dividline_all"/>
+                <table id="task_todo" columncount="2">
+                    <text id="yes" style="width:50%;height:96;font-size:32;text-align:center">同意<click><functionid>task_todo_yes</functionid></click></text>
+                    <text id="no" style="width:50%;height:96;font-size:32;text-align:center">驳回<click><functionid>task_todo_no</functionid></click></text>
+                </table>
+                <table id="task_todo_del" columncount="1">
+                    <text  id="del" style="width:100%;height:96;font-size:32;text-align:center">删除<click><functionid>task_todo_yes</functionid></click></text>
+                </table>
+            </footer>
+        </template>
+    </function>
+    <!-- 审批任务同意 -->
+    <function>
+        <functionid>task_todo_yes</functionid>
+        <functionname>审批任务同意</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">审批意见</text>
+                <text id="task_todo_yes_btn" class="default_text_menu">提交
+                </text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>TASK_TODO_YES</widgetname>
+                    <widgetcustom id="task_todo_yes">
+                        <table columncount="1">
+                            <input-textarea id="task_input" style="bgcolor:#ffffff;width:100%;height:300;font-size:28;">
+                                欢迎加入本企业！
+                            </input-textarea>
+                        </table>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 审批任务驳回 -->
+    <function>
+        <functionid>task_todo_no</functionid>
+        <functionname>审批任务驳回</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">审批意见</text>
+                <text id="task_todo_no_btn" class="default_text_menu">提交
+                </text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>TASK_TODO_NO</widgetname>
+                    <widgetcustom id="task_todo_no">
+                        <table columncount="1">
+                            <input-textarea id="task_input" style="bgcolor:#ffffff;width:100%;height:300;font-size:28;">
+                                您暂时不能加入本企业，有问题请联系管理员！
+                            </input-textarea>
+                        </table>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 设置 -->
+    <function>
+        <functionid>setting</functionid>
+        <functionname>设置</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">设置</text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;">
+                    <widgetname>SETTING</widgetname>
+                    <widgetcustom id="syssetting">
+                        <group class="groupmain">
+                            <line class="dividline_all"/>
+                            <groupitem class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">新消息提醒</text>
+                                <click>
+                                    <functionid>settin_notice</functionid>
+                                </click>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem id="setting_chat" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">聊天</text>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem id="setting_secrets" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">隐私</text>
+                            </groupitem>
+                            <line class="dividline_all"/>
+                        </group>
+                        <group class="groupmain">
+                            <line class="dividline_all"/>
+                            <groupitem id="setting_clearcache" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">清空数据缓存</text>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem id="setting_clearconfig" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">清空应用配置</text>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem id="setting_clearplugin" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">清空应用插件</text>
+                            </groupitem>
+                            <line class="dividline_all"/>
+                        </group>
+                        <group class="groupmain">
+                            <line class="dividline_all"/>
+                            <groupitem class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">关于</text>
+                                <click>
+                                    <functionid>aboutus</functionid>
+                                </click>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem id="setting_checkversion" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">检查更新</text>
+                            </groupitem>
+                            <line class="dividline_l20"/>
+                            <groupitem id="setting_logout" class="groupitem_default">
+                                <text class="groupitem_default_title_noicon">退出</text>
+                            </groupitem>
+                            <line class="dividline_all"/>
+                        </group>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function> 
+  <!-- 首页菜单 -->
+  <function>
+      <functionid>home_menu</functionid>
+      <functionname>首页菜单</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <body>
+              <group class="menubody">
+                  <groupitem class="menuitem">
+                      <iconfont class="menuitem_iconfont">
+                          <fontid>&#xe603;</fontid>
+                      </iconfont>
+                      <text class="menuitem_textfont">添加好友</text>
+                      <click>
+                          <functionid>add_friend</functionid>
+                      </click>
+                  </groupitem>
+                  <line class="menuitem_dividline"/>
+                  <groupitem class="menuitem">
+                      <iconfont class="menuitem_iconfont">
+                          <fontid>&#xe604;</fontid>
+                      </iconfont>
+                      <text class="menuitem_textfont">发起群聊</text>
+                      <click>
+                          <functionid>create_group</functionid>
+                      </click>
+                  </groupitem>
+                  <line class="menuitem_dividline"/>
+                  <groupitem class="menuitem">
+                      <iconfont class="menuitem_iconfont">
+                          <fontid>&#xe60d;</fontid>
+                      </iconfont>
+                      <text class="menuitem_textfont">公众号</text>
+                      <click>
+                          <functionid>public</functionid>
+                      </click>
+                  </groupitem>
+              </group>
+          </body>
+      </template>
+  </function>
+  <!-- 添加好友 -->
+  <function>
+      <functionid>add_friend</functionid>
+      <functionname>添加好友</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">添加好友</text>
+          </header>
+          <body>
+            <table columncount="1">
+                <group>
+                    <groupitem class="joinent_input_item">
+                        <iconfont class="joinent_input_icon">
+                            <fontid>&#xe69c;</fontid>
+                        </iconfont>
+                        <text class="joinent_input_text">手机号/姓名/邮箱地址</text>
+                        <click>
+                            <functionid>add_friend_search</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_l10_r10"/>
+                    <groupitem class="joinent_groupitem">
+                        <iconfont class="joinent_groupitem_iconfont;we_blue">
+                            <fontid>&#xe63a;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">手机通讯录</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>add_friend_contact</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                    <groupitem class="joinent_groupitem">
+                        <iconfont class="joinent_groupitem_iconfont;we_green">
+                            <fontid>&#xe624;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">组织机构</text>
+                        <iconfont class="groupitem_default_arrow">
+                            <fontid>&#xe615;</fontid>
+                        </iconfont>
+                        <click>
+                            <functionid>add_friend_org</functionid>
+                        </click>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                    <groupitem class="joinent_groupitem">
+                        <iconfont class="joinent_groupitem_iconfont;we_yellow">
+                            <fontid>&#xe61b;</fontid>
+                        </iconfont>
+                        <text class="groupitem_default_title">扫一扫</text>
+                    </groupitem>
+                    <line class="dividline_all"/>
+                </group>
+            </table>
+          </body>
+      </template>
+  </function>
+  <!-- 添加好友_搜索方式 -->
+  <function>
+      <functionid>add_friend_search</functionid>
+      <functionname>添加好友_搜索方式</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <table columncount="3">
+                  <iconfont class="search_iconfont_back" rowspan="2">
+                      <fontid>&#xe614;</fontid>
+                      <click target="back"/>
+                  </iconfont>
+                  <iconfont class="search_iconfont">
+                      <fontid>&#xe69c;</fontid>
+                  </iconfont>
+                  <input-text id="search_ent_input" class="search_title" placeholder="手机号/姓名"/>
+                  <line columnspan="2"
+                        style="width:100%; height:1;bgcolor:#ffffff;margin-bottom:10;margin-right:20;"/>
+              </table>
+          </header>
+          <body>
+              <widget type="system" style="width:100%; height:100%;">
+                  <widgetname>ADDFRIEND</widgetname>
+                  <widgetcustom id="search_list">
+                      <list>
+                          <listitem>
+                              <table columncount="3" style="width:100%; height:160;bgcolor:#ffffff;padding-top:20">
+                                  <img id="friend_headpic"
+                                       style="width:120;height:120;radius:20;margin-left:20; margin-right:20;margin-bottom:18">
+                                  </img>
+                                  <text id="friend_name" style="color:#333333; font-size:30; width:100%;">
+                                  </text>
+                                  <text id="friend_add" class="join_text" class_active="join_text_active">添加<click><functionid>add_submit</functionid></click></text>
+                                  <line class="dividline_all" columnspan="3"/>
+                              </table>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 发起群聊 -->
+  <function>
+      <functionid>create_group</functionid>
+      <functionname>发起群聊</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <body>
+              <widget type="system" style="height:100%; width:100%">
+                  <widgetname>CREATEGROUP</widgetname>
+                  <widgetcustom id="header">
+                      <header class="default_header">
+                          <iconfont id="back" class="default_iconfont_back">
+                              <fontid>&#xe614;</fontid>
+                              <click target="back"/>
+                          </iconfont>
+                          <text id="title" class="default_title"/>
+                          <text id="text_menu" class="default_text_menu"/>
+                      </header>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 公众号 -->
+  <function>
+      <functionid>public</functionid>
+      <functionname>公众号</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">公众号</text>
+          </header>
+          <body>
+            <widget type="system" style="width:100%;height:100%;">
+              <widgetname>PUBLICLIST</widgetname>
+              <widgetcustom id="publist_item">
+                  <list>
+                      <listitem class="publist_item">
+                        <table columncount="2">
+                          <img id="headpic" class="publist_icon"/>
+                          <text id="title" class="publist_title" maxrow="1" />
+                          <line columnspan="2" class="dividline_l20_r20"/>
+                        </table>
+                      </listitem>
+                  </list>
+              </widgetcustom>
+              <widgetcustom id="nodata">
+                  <nodata>
+                      <table columncount="1" style="margin-top:200;">
+                          <iconfont style="color:#cccccc;width:100%; text-align:center;font-size:100;">
+                              <fontid>&#xe628;</fontid>
+                          </iconfont>
+                          <text
+                              style="color:#bbbbbb; width:100%; height:60; text-align:center; font-size:32;">
+                              您还没有订阅任何公众号！
+                          </text>
+                      </table>
+                  </nodata>
+              </widgetcustom>
+            </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 公众号消息列表 -->
+  <function>
+      <functionid>system_publicmsglist</functionid>
+      <functionname>公众号消息列表</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <widget type="system">
+              <widgetname>PUBLICMSGLIST</widgetname>
+              <widgetcustom id="publicmsglist_single">
+                  <list id="list_single" class="publicmsglist_list">
+                      <listitem class="publicmsglist_list">
+                          <table columncount="1">
+                              <text id="publicmsglist_senddate" class="publicmsglist_senddate"/>
+                              <table columncount="1" class="publicmsglist_content">
+                                  <text id="publicmsglist_list_title" class="publicmsglist_list_title" maxrow="1"/>
+                                  <text id="publicmsglist_list_date" class="publicmsglist_list_date"/>
+                                  <img id="publicmsglist_list_img" class="publicmsglist_list_img"/>
+                                  <text id="publicmsglist_list_summary" class="publicmsglist_list_summary"
+                                        maxrow="3"/>
+                                  <text id="publicmsglist_list_more" class="publicmsglist_list_more">查看全文</text>
+                              </table>
+                          </table>
+                      </listitem>
+                  </list>
+              </widgetcustom>
+              <widgetcustom id="publicmsglist_multi"></widgetcustom>
+          </widget>
+      </template>
+  </function>
+  <!-- 首页其它结束 -->
+  <!-- 通讯录其它开始 -->
+  <!-- 搜索好友 -->
+  <function>
+      <functionid>search_friend</functionid>
+      <functionname>搜索好友</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <table columncount="3">
+                  <iconfont class="search_iconfont_back" rowspan="2">
+                      <fontid>&#xe614;</fontid>
+                      <click target="back"/>
+                  </iconfont>
+                  <iconfont class="search_iconfont">
+                      <fontid>&#xe69c;</fontid>
+                  </iconfont>
+                  <input-text id="search_input" class="search_title" placeholder="关键字"/>
+                  <line columnspan="2"
+                        style="width:100%; height:1;bgcolor:#ffffff;margin-bottom:10;margin-right:20;"/>
+              </table>
+          </header>
+          <body class="default_body">
+              <widget type="system" style="width:100%;height:100%;">
+                  <widgetname>SEARCH_FRIEND</widgetname>
+                  <widgetcustom id="nodata">
+                      <nodata>
+                          <text style="width:100%;font-size:30;color:#cccccc;text-align:center;margin-top:80;">可以搜索如下内容</text>
+                          <line style="width:420;height:1;bgcolor:#eeeeee;align:center;margin-top:30;margin-bottom:30;" />
+                          <table columncount="3" style="width:420;height:120;align:center;">
+                              <iconfont style="width:140;height:60;font-size:48;color:#cccccc;text-align:center;"><fontid>&#xe621;</fontid></iconfont>
+                              <iconfont style="width:140;height:60;font-size:48;color:#cccccc;text-align:center;"><fontid>&#xe622;</fontid></iconfont>
+                              <iconfont style="width:140;height:60;font-size:48;color:#cccccc;text-align:center;"><fontid>&#xe69e;</fontid></iconfont>
+                              <text style="width:140;height:50;font-size:24;text-align:center;color:#cccccc;">好友</text>
+                              <text style="width:140;height:50;font-size:24;text-align:center;color:#cccccc;">群组</text>
+                              <text style="width:140;height:50;font-size:24;text-align:center;color:#cccccc;">公众号</text>
+                          </table>
+                      </nodata>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 组织机构 -->
+    <function>
+        <functionid>orglist</functionid>
+        <functionname>组织机构</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">组织机构</text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>ORGLIST</widgetname>
+                    <widgetcustom id="org_bar">
+                        <table columncount="2" style="height:84;">
+                            <text id="bar_name" class="org_bar_text" class_active="org_bar_text_active"></text>
+                            <iconfont id="bar_more" style="font-size:36;color:#cccccc;width:60;margin-top:22;">
+                                <fontid>&#xe615;</fontid>
+                            </iconfont>
+                        </table>
+                    </widgetcustom>
+                    <widgetcustom id="org_item">
+                        <table columncount="3" style="bgcolor:#ffffff;">
+                            <line class="dividline_all" columnspan="3"/>
+                            <iconfont id="org_icon" class="orgitem_contact_iconfont" class_active="orgitem_contact_iconfont_active">
+                                <fontid>&#xe662;</fontid>
+                            </iconfont>
+                            <text id="org_name" class="orgitem_contact_title" class_active="orgitem_contact_title_active"></text>
+                            <iconfont class="groupitem_contact_arrow">
+                                <fontid>&#xe615;</fontid>
+                            </iconfont>
+                        </table>
+                    </widgetcustom>
+                    <widgetcustom id="contact_item">
+                        <table columncount="2" style="bgcolor:#ffffff;">
+                            <line class="dividline_all" columnspan="2"/>
+                            <img id="head_pic" class="listitem_contact_img"></img>
+                            <text id="name" class="groupitem_contact_name"></text>
+                        </table>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+  <!-- 群聊列表 -->
+  <function>
+      <functionid>grouplist</functionid>
+      <functionname>群聊</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">群聊</text>
+          </header>
+          <body>
+            <widget type="system" style="width:100%; height:100%;">
+              <widgetname>GROUPLIST</widgetname>
+              <widgetcustom id="grouplist_item">
+                  <list>
+                      <listitem class="publist_item">
+                        <table columncount="2">
+                          <img id="headpic" class="grouplist_icon"/>
+                          <text id="title" class="publist_title" maxrow="1" />
+                          <line columnspan="2" class="dividline_l20_r20"/>
+                        </table>
+                      </listitem>
+                  </list>
+              </widgetcustom>
+              <widgetcustom id="nodata">
+                  <nodata>
+                      <table columncount="1" style="margin-top:200;">
+                          <iconfont style="color:#cccccc;width:100%; text-align:center;font-size:100;">
+                              <fontid>&#xe628;</fontid>
+                          </iconfont>
+                          <text
+                              style="color:#bbbbbb; width:100%; height:60; text-align:center; font-size:32;">
+                              您还没有创建或加入任何群组！
+                          </text>
+                      </table>
+                  </nodata>
+              </widgetcustom>
+            </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 通讯录内容结束 -->
+  <!-- 应用内容开始 -->
+  <!-- 应用商店weappstore -->
+  <function>
+      <functionid>weappstore</functionid>
+      <functionname>应用商城</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">应用商城</text>
+          </header>
+          <body class="default_body">
+              <tabs>
+                  <tabitem class="tabitem_appstore">
+                      <text class="tab_textfont_appstore" class_active="tab_textfont_active_appstore">平台商城</text>
+                      <line class="tabline_appstore" class_active="tabline_active_appstore"/>
+                      <click>
+                          <functionid target="self">applist</functionid>
+                      </click>
+                  </tabitem>
+                  <tabitem class="tabitem_appstore">
+                      <text class="tab_textfont_appstore" class_active="tab_textfont_active_appstore">内部商店</text>
+                      <line class="tabline_appstore" class_active="tabline_active_appstore"/>
+                      <click>
+                          <functionid target="self">myapps</functionid>
+                      </click>
+                  </tabitem>
+                  <tabitem class="tabitem_appstore">
+                      <text class="tab_textfont_appstore" class_active="tab_textfont_active_appstore">下载排行</text>
+                      <line class="tabline_appstore" class_active="tabline_active_appstore"/>
+                      <click>
+                          <functionid target="self">bestapp</functionid>
+                      </click>
+                  </tabitem>
+                  <tabitem class="tabitem_appstore">
+                      <text class="tab_textfont_appstore" class_active="tab_textfont_active_appstore">应用分类</text>
+                      <line class="tabline_appstore" class_active="tabline_active_appstore"/>
+                      <click>
+                          <functionid target="self">classes</functionid>
+                      </click>
+                  </tabitem>
+              </tabs>
+          </body>
+      </template>
+  </function>
+  <!--应用列表-->
+  <function>
+    <functionid>applist</functionid>
+    <functionname>应用列表</functionname>
+    <functiontype>1</functiontype>
+    <functiondata>
+	    <dsitem>
+        <dsname>getweapps</dsname>
+        <dsid>64</dsid>
+            <params>
+                <paramitem>
+                    <paramname>pageno</paramname>
+                    <paramvalue>0</paramvalue>
+                </paramitem>
+            </params>
+	    </dsitem>
+    </functiondata>
+    <template>
+      <body>
+        <group style="width:100%;bgcolor:#ffffff;">
+					<groupitem style="margin-bottom:20;margin-top:20">
+			  	  <img style="width:240;height:140;align:left;margin-left:40;radius:16;">https://www.wefafa.com/getfile/55ae157cb94ab4b8318b4567</img>
+			  	  <text style="width:100%; height:100;" />
+			  	  <img style="width:240;height:140;align:right;margin-right:40;radius:16;">https://www.wefafa.com/getfile/55ae157fb94ab4e0318b4569</img>
+				  </groupitem>
+  				<line class="dividline_all" />
+        </group>
+        <widget type="system" style="height:100%; width:100%">
+          <widgetname>APPLIST</widgetname>
+          <widgetcustom id="list">
+              <list>
+                <dsname>getweapps</dsname>
+                <listitem id="listitem" class="appstore_item">
+                  <table columncount="8">
+				            <img class="appstore_icon" rowspan="3">{dsvalue:logo}</img>
+				            <text class="appstore_title" columnspan="6">{dsvalue:appname}</text>
+				            <span id="appdown" rowspan="3"></span>
+				            <text class="appstore_type">{dsvalue:show_type_name}</text>
+				            <text class="appstore_summary" columnspan="5" maxrow="1">{dsvalue:appdesc}</text>
+				            <ratingbar style="width:120;height:24;color:#d88f03;margin-right:2" number="5" disable="false" stepsize="0.5" columnspan="5">{dsvalue:starlevel}</ratingbar>
+            				<text class="appstore_downnum">({dsvalue:downloadnum})</text>
+                    <line columnspan="8" class="dividline_l20"/>
+                  </table>
+                  <click>
+                      <functionid>app_detail</functionid>
+                      <params>
+                          <paramitem>
+                              <paramname>appid</paramname>
+                              <paramvalue>{dsvalue:appid}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>logo</paramname>
+                              <paramvalue>{dsvalue:logo}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>appname</paramname>
+                              <paramvalue>{dsvalue:appname}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>show_type_name</paramname>
+                              <paramvalue>{dsvalue:show_type_name}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>appdeveloper</paramname>
+                              <paramvalue>{dsvalue:appdeveloper}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>downloadnum</paramname>
+                              <paramvalue>{dsvalue:downloadnum}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>is_subscribe</paramname>
+                              <paramvalue>{dsvalue:is_subscribe}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>sortid</paramname>
+                              <paramvalue>{dsvalue:sortid}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>version</paramname>
+                              <paramvalue>{dsvalue:version}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>starlevel</paramname>
+                              <paramvalue>{dsvalue:starlevel}</paramvalue>
+                          </paramitem>
+                      </params>
+                  </click>
+                </listitem>
+            </list>
+          </widgetcustom>
+          <widgetcustom id="appdown_icon">
+            <iconfont id="subscribe" class="appstore_downicon"><fontid>&#xe6a9;</fontid></iconfont>
+          </widgetcustom>
+          <widgetcustom id="appdown_text">
+            <text id="open" class="appstore_opentext">打开<click type="business">
+              <params>
+                  <paramitem>
+                      <paramname>appid</paramname>
+                      <paramvalue>{dsvalue:appid}</paramvalue>
+                  </paramitem>
+                  <paramitem>
+                      <paramname>appname</paramname>
+                      <paramvalue>{dsvalue:appname}</paramvalue>
+                  </paramitem>
+              </params></click></text>
+          </widgetcustom>
+        </widget>
+      </body>
+    </template>
+  </function>
+  <!--应用详细-->
+  <function>
+    <functionid>app_detail</functionid>
+    <functionname>应用详细</functionname>
+    <functiontype>1</functiontype>
+    <functiondata>
+      <dsitem>
+          <dsname>getentinfo</dsname>
+          <dsid>67</dsid>
+          <params>
+          <paramitem>
+              <paramname>eno</paramname>
+              <paramvalue>{paramvalue:appdeveloper}</paramvalue>
+          </paramitem>
+          </params>
+      </dsitem>
+      <dsitem>
+          <dsname>atten</dsname>
+          <dsid>65</dsid>
+          <params>
+              <paramitem>
+                  <paramname>eno</paramname>
+                  <paramvalue>{paramvalue:appdeveloper}</paramvalue>
+              </paramitem>
+          </params>
+      </dsitem>
+      <dsitem>
+          <dsname>unatten</dsname>
+          <dsid>66</dsid>
+          <params>
+              <paramitem>
+                  <paramname>eno</paramname>
+                  <paramvalue>{paramvalue:appdeveloper}</paramvalue>
+              </paramitem>
+          </params>
+      </dsitem>
+        <dsitem>
+            <dsname>getappinfo</dsname>
+            <dsid>64</dsid>
+            <params>
+                <paramitem>
+                    <paramname>mall_appid</paramname>
+                    <paramvalue>{paramvalue:appid}</paramvalue>
+                </paramitem>
+            </params>
+        </dsitem>
+    </functiondata>
+    <template>
+      <header class="default_header">
+        <iconfont class="default_iconfont_back">
+            <fontid>&#xe614;</fontid>
+            <click target="back"/>
+        </iconfont>
+        <text class="default_title">应用详细</text>
+      </header>
+      <body scroll="true">
+        <widget type="system" style="height:100%; width:100%">
+          <widgetname>APPDETAIL</widgetname>
+          <widgetcustom id="detail">
+          	<dsname>getentinfo</dsname>
+              <table columncount="1">
+                  <table columncount="8">
+						        <img class="appdetail_icon" rowspan="4">{paramvalue:logo}</img>
+						        <text class="appstore_title" columnspan="6">{paramvalue:appname}</text>
+						        <span id="appdown" rowspan="3"></span>
+						        <text class="appstore_summary" columnspan="6">{paramvalue:show_type_name}</text>
+						        <ratingbar style="width:120;height:24;color:#d88f03;margin-right:2" number="5" disable="false" stepsize="0.5" columnspan="5">{paramvalue:starlevel}</ratingbar>
+						        <text class="appstore_downnum">({paramvalue:downloadnum})</text>
+						        <line class="dividline_all" columnspan="8"/>
+                  </table>
+                  <table id="ent_info" columncount="3">
+                      <img id="ent_logo" class="appdev_icon" rowspan="2">{dsvalue:logo}</img>
+                      <text id="ent_name" class="appdev_name">开发者：{dsvalue:ename}</text>
+                      <text id="ent_atten" class="appdev_follow" rowspan="2">+ 关注</text>
+                      <text id="ent_count" class="appstore_summary" maxrow="1">粉丝数：{dsvalue:fanscount} ｜ 应用数：{dsvalue:appcount}</text>
+                      <line columnspan="3" class="dividline_all"/>
+                  </table>
+                  <table columncount="5" style="margin-top:20;">
+                      <text style="width:100;height:60;"/>
+                      <text class="appdetail_tab_text_active">应用介绍</text>
+                      <text style="width:100%;height:60;"/>
+                      <text class="appdetail_tab_text">相关评论<click><functionid>appdetail_commit</functionid>
+                          <params>
+                              <paramitem>
+                                  <paramname>appid</paramname>
+                                  <paramvalue>{paramvalue:appid}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>logo</paramname>
+                                  <paramvalue>{paramvalue:logo}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>appname</paramname>
+                                  <paramvalue>{paramvalue:appname}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>appdeveloper</paramname>
+                                  <paramvalue>{paramvalue:appdeveloper}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>downloadnum</paramname>
+                                  <paramvalue>{paramvalue:downloadnum}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>is_subscribe</paramname>
+                                  <paramvalue>{paramvalue:is_subscribe}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>sortid</paramname>
+                                  <paramvalue>{paramvalue:sortid}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>version</paramname>
+                                  <paramvalue>{paramvalue:version}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>starlevel</paramname>
+                                  <paramvalue>{paramvalue:starlevel}</paramvalue>
+                              </paramitem>
+                              <paramitem>
+                                  <paramname>show_type_name</paramname>
+                                  <paramvalue>{paramvalue:show_type_name}</paramvalue>
+                              </paramitem>
+                          </params>
+                      </click></text>
+                      <text style="width:100;height:60;"/>
+                  </table>
+                  <span id="app_preview" style="margin-top:20;margin-bottom:30;margin-right:20;width:100%;height:480;"/>
+                  <table id="detail_intro" columncount="5" style="margin-left:30;margin-bottom:30;margin-right:30;">
+                      <text style="font-size:24;font-weight:bold;color:#666666;">资费:</text>
+                      <text style="font-size:24;color:#666666;width:120;">免费</text>
+                      <text style="font-size:24;font-weight:bold;color:#666666;">版本:</text>
+                      <text style="font-size:24;color:#666666;width:100%">{dsvalue:version}</text>
+                      <text style="width:90;height:50;border:1 #70b437;font-size:24;color:#999999;margin-right:20;margin-top:10;radius:6;text-align:center;" rowspan="2">反馈</text>
+                      <text style="font-size:24;font-weight:bold;color:#666666;">类别:</text>
+                      <text style="font-size:24;color:#666666;width:120;">{dsvalue:show_type_name}</text>
+                      <text style="font-size:24;font-weight:bold;color:#666666;">时间:</text>
+                      <text style="font-size:24;color:#666666;width:100%;">{dsvalue:publishdate}</text>
+                  </table>
+                  <line class="dividline_l20_r20" />
+                  <text style="font-size:28;color:#666666;margin-left:30;margin-top:20;">应用介绍：</text>
+                  <text style="font-size:30;color:#666666;margin-left:20;">{dsvalue:appdesc}</text>
+              </table>
+          </widgetcustom>
+            <widgetcustom id="preview">
+                <dsname>getappinfo</dsname>
+                <img id="preview" style="width:320;height:480;margin-left:20;"></img>
+            </widgetcustom>
+          <widgetcustom id="appdown_icon">
+              <iconfont id="subscribe" class="appstore_downicon"><fontid>&#xe6a9;</fontid></iconfont>
+          </widgetcustom>
+          <widgetcustom id="appdown_text">
+              <text id="open" class="appstore_opentext">打开<click type="business">
+                      <params>
+                          <paramitem>
+                              <paramname>appid</paramname>
+                              <paramvalue>{paramvalue:appid}</paramvalue>
+                          </paramitem>
+                          <paramitem>
+                              <paramname>appname</paramname>
+                              <paramvalue>{paramvalue:appname}</paramvalue>
+                          </paramitem>
+                      </params>
+                  </click></text>
+          </widgetcustom>
+        </widget>
+      </body>
+    </template>
+  </function>
+  <!--应用相关评论-->
+    <function>
+        <functionid>appdetail_commit</functionid>
+        <functionname>相关评论</functionname>
+        <functiontype>1</functiontype>
+        <functiondata>
+            <dsitem>
+                <dsname>getappconvs</dsname>
+                <dsid>71</dsid>
+                <params>
+                    <paramitem>
+                        <paramname>mall_appid</paramname>
+                        <paramvalue>{paramvalue:appid}</paramvalue>
+                    </paramitem>
+                </params>
+            </dsitem>
+            <dsitem>
+                <dsname>convcount</dsname>
+                <dsid>76</dsid>
+                <params>
+                    <paramitem>
+                        <paramname>mall_appid</paramname>
+                        <paramvalue>{paramvalue:appid}</paramvalue>
+                    </paramitem>
+                </params>
+            </dsitem>
+            <dsitem>
+                <dsname>newconv</dsname>
+                <dsid>70</dsid>
+                <params>
+                    <paramitem>
+                        <paramname>mall_appid</paramname>
+                        <paramvalue>{paramvalue:appid}</paramvalue>
+                    </paramitem>
+                    <paramitem>
+                        <paramname>version</paramname>
+                        <paramvalue>{paramvalue:version}</paramvalue>
+                    </paramitem>
+                </params>
+            </dsitem>
+        </functiondata>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">应用评论</text>
+            </header>
+            <body>
+                <widget type="system" style="height:100%; width:100%">
+                    <widgetname>APPCONV</widgetname>
+                    <widgetcustom id="list">
+                    <list>
+                    <dsname>getappconvs</dsname>
+                        <listheader style="padding-left:30;padding-top:20;padding-right:30;">
+                            <table columncount="8">
+                                <img class="appdetail_icon" rowspan="4">{paramvalue:logo}</img>
+                                <text class="appstore_title" columnspan="6">{paramvalue:appname}</text>
+                                <span id="appdown" rowspan="3"></span>
+                                <text class="appstore_summary" columnspan="6">{paramvalue:show_type_name}</text>
+                                <ratingbar style="width:120;height:24;color:#d88f03;margin-right:2" number="5" disable="false" stepsize="0.5" columnspan="5">{paramvalue:starlevel}</ratingbar>
+                                <text class="appstore_downnum">({paramvalue:downloadnum})</text>
+                                <line class="dividline_all" columnspan="8"/>
+                            </table>
+                        </listheader>
+                        <listheader id="score_header" style="padding-left:30;padding-top:20;padding-right:30;">
+                            <dsname>convcount</dsname>
+                            <table columncount="3" style="width:100%">
+                                <table columncount="5" style="width:160;height:160;">
+                                    <text style="font-size:24;color:#999999;" columnspan="5">综合评分</text>
+                                    <text style="font-size:32;color:#333333;" columnspan="5">{dsvalue:score_avg}分</text>
+                                    <ratingbar style="width:120;height:24;color:#d88f03;margin-right:2" number="5" disable="false" stepsize="0.5" columnspan="5">{dsvalue:score_avg}</ratingbar>
+                                    <text style="font-size:24;color:#cccccc;" columnspan="5">{dsvalue:cnt}人评过</text>
+                                </table>
+                                <line style="width:1;height:120;margin-right:30;bgcolor:#eeeeee;margin-top:10;" />
+                                <table columncount="7" style="width:100%; height:160;margin-top:10;">
+                                    <ratingbar style="width:120;height:24;color:#d88f03;" number="5" disable="false" stepsize="0.5" columnspan="5">5</ratingbar>
+                                    <line style="bgcolor:#d88f03; margin-left:10; margin-top:10; width:180;height:3;" />
+                                    <line style="bgcolor:#cccccc; margin-top:10; width:20;height:3;" />
+
+                                    <ratingbar style="width:120;height:24;color:#d88f03;" number="5" disable="false" stepsize="0.5" columnspan="5">4</ratingbar>
+                                    <line style="bgcolor:#d88f03; margin-left:10; margin-top:10; width:60;height:3;" />
+                                    <line style="bgcolor:#cccccc; margin-left:-120; margin-top:10; width:140;height:3;" />
+
+                                    <ratingbar style="width:120;height:24;color:#d88f03;" number="5" disable="false" stepsize="0.5" columnspan="5">3</ratingbar>
+                                    <line style="bgcolor:#d88f03; margin-left:10; margin-top:10; width:40;height:3;" />
+                                    <line style="bgcolor:#cccccc; margin-left:-140; margin-top:10; width:160;height:3;" />
+
+                                    <ratingbar style="width:120;height:24;color:#d88f03;" number="5" disable="false" stepsize="0.5" columnspan="5">2</ratingbar>
+                                    <line style="bgcolor:#d88f03; margin-left:10; margin-top:10; width:20;height:3;" />
+                                    <line style="bgcolor:#cccccc; margin-left:-160; margin-top:10; width:160;height:3;" />
+
+                                    <ratingbar style="width:120;height:24;color:#d88f03;" number="5" disable="false" stepsize="0.5" columnspan="5">1</ratingbar>
+                                    <line style="bgcolor:#d88f03; margin-left:10; margin-top:10; width:10;height:3;" />
+                                    <line style="bgcolor:#cccccc; margin-left:-170; margin-top:10; width:170;height:3;" />
+                                </table>
+                            </table>
+                        </listheader>
+                        <listitem id="listitem" style="padding-left:30;padding-right:30;">
+                            <table columncount="1">
+                                <table columncount="3">
+                                    <img style="width:76;height:76;radius:76;margin-top:20;margin-right:20;margin-left:20;margin-bottom:20;" rowspan="2">{dsvalue:logo_path}</img>
+                                    <text style="width:100%;font-size:28;color:#999999;margin-top:20;margin-bottom:2">{dsvalue:nick_name}</text>
+                                    <text style="width:260;font-size:24;color:#999999;margin-top:22;">{dsvalue:post_date}</text>
+                                    <text class="msglist_summary" maxrow="1" columnspan="2">粉丝数：29</text>
+                                    <text style="font-size:30;color:#666666;" columnspan="3">{dsvalue:conv_content}</text>
+                                </table>
+                                <table columncount="7" style="margin-top:20;margin-bottom:10;">
+                                    <ratingbar style="width:120;height:24;color:#d88f03;margin-right:2" number="5" disable="false" stepsize="0.5" columnspan="5">{dsvalue:score1}</ratingbar>
+                                    <text style="font-size:20;width:100%;text-align:left;color:#cccccc;">(版本:{dsvalue:version})</text>
+                                    <text style="width:120;" />
+                                </table>
+                                <line class="dividline_all"/>
+                            </table>
+                        </listitem>
+                    </list>
+                    </widgetcustom>
+                </widget>
+            </body>
+            <footer id="conv_bar" style="width:100%;height:136;bgcolor:#efefef;">
+                <table columncount="7" style="width:100%;margin-left:20;margin-right:20;">
+                    <ratingbar id="score" style="width:300;height:60;color:#d88f03;" rating="1"  number="5" disable="true" stepsize="1" columnspan="5" ></ratingbar>
+                    <text style="font-size:30;color:#999999;width:100%;height:60;margin-left:10;">滑动星星评分</text>
+                    <text style="width:100" />
+                    <input-text id="content" style="font-size:28;color:#cccccc;border:1 #cccccc;radius:6;width:100%;height:66;padding-left:10;bgcolor:#ffffff;max_ems:200;" columnspan="6" placeholder="说说你对该应用的评价吧…"></input-text>
+                    <button id="commit" style="font-size:28;color:#ffffff;width:120; height:64; margin-left:20; bgcolor:#00a9d9; radius:6;padding-bottom:12;" value="提交" />
+                </table>
+            </footer>
+        </template>
+    </function>
+  <!-- 应用内容结束 -->
+  <!-- 圈子其它开始 -->
+  <!-- 圈子动态列表 -->
+  <function>
+      <functionid>bloglist</functionid>
+      <functionname>圈子动态列表</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">{paramvalue:circlename}</text>
+              <iconfont class="default_iconfont_menu">
+                  <fontid>&#xe675;</fontid>
+                  <click>
+                      <functionid>addblog</functionid>
+                      <params>
+                          <paramitem>
+                              <paramname>circleid</paramname>
+                              <paramvalue>{paramvalue:circleid}</paramvalue>
+                          </paramitem>
+                      </params>
+                  </click>
+              </iconfont>
+          </header>
+          <body>
+              <widget type="system" style="width:100%;height:100%;">
+                  <widgetname>WEIXINBLOG</widgetname>
+                  <widgetcustom id="convitem">
+                      <list>
+                          <listitem style="padding-top:20;">
+                              <table columncount="4">
+                                  <img id="cov_headpic" rowspan="6"
+                                       style="width:84;height:84;margin-right:20;margin-left:20;"/>
+                                  <text id="cov_username" style="color:#5e6e85;font-size:32; width:120;"/>
+                                  <text id="cov_memo" style="color:#999999;font-size:30;width:100%;"/>
+                                  <text style="width:120; display:none;"/>
+                                  <text id="cov_content" columnspan="3" maxrow="4"
+                                        style="color:#333333;font-size:30; width:100%;margin-bottom:18;margin-right:20;"/>
+                                  <span id="cov_attach" columnspan="3"
+                                        style="bgcolor:#eeeeee; padding-bottom:10;padding-top:10;padding-left:10;padding-right:10; width:100%;margin-bottom:18;margin-right:20;"/>
+                                  <text id="cov_date" style="color:#999999;font-size:24;width:200;margin-bottom:18;"/>
+                                  <text id="cov_source" style="color:#999999;font-size:24;width:100%"/>
+                                  <iconfont id="cov_commit"
+                                            style="font-size:40; width:60; color:#8494ae;align:right;width:120;">
+                                      <fontid>&#xe62f;</fontid>
+                                  </iconfont>
+                                  <group id="conv_group"
+                                         style="bgcolor:#eeeeee;width:100%;margin-bottom:18;margin-right:20;"
+                                         columnspan="3">
+                                      <span id="cov_like"
+                                            style="width:100%; padding-bottom:10;padding-top:10;padding-left:10;padding-right:10;"/>
+                                      <line id="conv_like_line" class="listdividline"/>
+                                      <span id="cov_comment"
+                                            style="width:100%; padding-bottom:10;padding-top:10;padding-left:10;padding-right:10;"/>
+                                  </group>
+                                  <line class="listdividline" columnspan="4"/>
+                              </table>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+                  <widgetcustom id="cov_attach_pic">
+                      <grid columncount="3">
+                          <griditem>
+                              <img id="attach_pic_url" style="margin-right:5;margin-bottom:5"/>
+                              <text id="attach_pic_name" maxrow="1"
+                                    style="font-size:30;color:#333333;margin-top:20;"/>
+                          </griditem>
+                      </grid>
+                  </widgetcustom>
+                  <widgetcustom id="cov_attach_share">
+                      <table columncount="2">
+                          <img id="attach_share_url"
+                               style="width:84;height:84; margin-right:10;margin-left:10;margin-top:10;margin-bottom:10;"/>
+                          <text id="attach_share_name" maxrow="2"
+                                style="font-size:30;color:#333333;margin-top:20; width:100%"/>
+                      </table>
+                  </widgetcustom>
+                  <widgetcustom id="cov_comment_1">
+                      <list>
+                          <listitem>
+                              <text id="cov_comment_userfrom" style="color:#5e6e85;font-size:30"/>
+                              <text style="color:#333333;font-size:30">：</text>
+                              <text id="cov_comment_content" style="width:100%;color:#333333;font-size:30"/>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+                  <widgetcustom id="cov_comment_2">
+                      <list>
+                          <listitem>
+                              <text id="cov_comment_userfrom" style="color:#5e6e85;font-size:30"/>
+                              <text style="width:36;color:#333333;font-size:30">对</text>
+                              <text id="cov_comment_userto" style="color:#5e6e85;font-size:30"/>
+                              <text style="color:#333333;font-size:30">说：</text>
+                              <text id="cov_comment_content" style="width:100%;color:#333333;font-size:30"/>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+                  <widgetcustom id="cov_like">
+                      <table columncount="2">
+                          <iconfont id="cov_comment_like"
+                                    style="color:#5e6e85;font-size:36; padding-right:10; padding-left:10;">
+                              <fontid>&#xe633;</fontid>
+                          </iconfont>
+                          <text id="cov_comment_username" style="width:100%;color:#5e6e85;font-size:30"/>
+                      </table>
+                  </widgetcustom>
+                  <widgetcustom id="cov_menu">
+                      <table columncount="3" style="bgcolor:#333333; padding-top:20;alpha:90%;">
+                          <table id="cov_menu_like" columncount="2" style="width:150;height:66;padding-left:10;">
+                              <iconfont style="font-size:36;color:#ffffff;width:60;">
+                                  <fontid>&#xe629;</fontid>
+                              </iconfont>
+                              <text id="cov_menu_like_txt" style="color:#ffffff;font-size:30; width:80">赞</text>
+                          </table>
+                          <line
+                              style="height:30;width:1;margin-left:10;margin-right:20;margin-top:8;bgcolor:#000000;"/>
+                          <table id="cov_menu_commit" columncount="2" style="width:150;height:66;">
+                              <iconfont style="font-size:36;color:#ffffff;width:60;">
+                                  <fontid>&#xe674;</fontid>
+                              </iconfont>
+                              <text style="color:#ffffff;font-size:30">评论</text>
+                          </table>
+                      </table>
+                  </widgetcustom>
+              <widgetcustom id="nodata">
+                  <nodata>
+                      <table columncount="1" style="margin-top:200;">
+                          <iconfont style="color:#cccccc;width:100%; text-align:center;font-size:100;">
+                              <fontid>&#xe628;</fontid>
+                          </iconfont>
+                          <text style="color:#bbbbbb; width:100%; height:60; text-align:center; font-size:32;">竟然还没人发内容，快快发一条吧！</text>
+                      </table>
+                  </nodata>
+              </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 发动态 -->
+  <function>
+      <functionid>addblog</functionid>
+      <functionname>发动态</functionname>
+      <functiontype>1</functiontype>
+      <template>
+      	<body>
+          <widget type="system">
+              <widgetname>ADDBLOG</widgetname>
+              <widgetcustom id="addblog_header">
+                  <header class="default_header">
+                      <text id="back" style="color:#ffffff;font-size:36;algin:left;margin-left:30;">取消</text>
+                      <text class="default_title"/>
+                      <text id="blog_submmit" class="button_submmit" class_active="button_submmit_active">发布</text>
+                  </header>
+              </widgetcustom>
+              <widgetcustom id="addblog_popup">
+                  <functiondata>
+                      <dsitem>
+                          <dsname>popup_menu</dsname>
+                          <dsvalue>
+                              <![CDATA[  {"status":"ok","count":4,"data":[  {"menuid":"addblogpopupidface","popup_menu_text":"表情","popup_menu_icon":"&#xe635;","appbgcolor":"#64bf02"},  {"menuid":"addblogpopupidpic","popup_menu_text":"图片","popup_menu_icon":"&#xe63c;","appbgcolor":"#6802bf"},  {"menuid":"addblogpopupidcamera","popup_menu_text":"拍照","popup_menu_icon":"&#xe63b;","appbgcolor":"#02bf7a"},  {"menuid":"addblogpopupidat","popup_menu_text":"提到","popup_menu_icon":"&#xe62a;","appbgcolor":"#0271bf"}  ]}  ]]></dsvalue>
+                      </dsitem>
+                  </functiondata>
+                  <grid columncount="4">
+                      <dsname>popup_menu</dsname>
+                      <griditem style="width:100%;align:center;">
+                          <iconfont id="popup_menu_icon" class="popup_menu_icon"/>
+                          <text id="popup_menu_text" class="popup_menu_text"/>
+                      </griditem>
+                  </grid>
+              </widgetcustom>
+          </widget>
+        </body>
+      </template>
+  </function>
+  <!-- 扫一扫 -->
+  <function>
+      <functionid>scancode</functionid>
+      <functionname>扫一扫</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">扫一扫</text>
+          </header>
+          <body>
+              <widget type="system">
+                  <widgetname>SCANCODE</widgetname>
+              </widget>
+          </body>
+      </template>
+  </function>
+    <!-- 邀请同事 -->
+    <function>
+        <functionid>invite_workmate</functionid>
+        <functionname>邀请同事</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">邀请同事</text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>INVITE_WORKMATE</widgetname>
+                    <widgetcustom id="invite_workmate_body">
+                        <table columncount="1">
+                            <group class="groupmain">
+                                <line class="dividline_all"/>
+                                <groupitem class="reg_input_item">
+                                    <text class="reg_input_title">邀请码</text>
+                                    <text id="inv_code" style="font-size:24;color:#cccccc; width:100%;">点击右侧按钮获取</text>
+                                    <text id="inv_code_button" class="reg_input_vercode">获取邀请码</text>
+                                </groupitem>
+                                <line class="dividline_all"/>
+                            </group>
+                            <text class="joinent_item_title">邀请方式(请先获取邀请码后，选择下述方式发送)</text>
+                            <group>
+                                <line class="dividline_all"/>
+                                <groupitem id="inv_phone_addr" class="groupitem_default">
+                                    <text class="groupitem_default_title_noicon">手机通讯录</text>
+                                    <iconfont class="groupitem_default_arrow">
+                                        <fontid>&#xe615;</fontid>
+                                    </iconfont>
+                                </groupitem>
+                                <line class="dividline_l30_r30"/>
+                                <groupitem id="inv_email" class="groupitem_default">
+                                    <text class="groupitem_default_title_noicon">电子邮箱</text>
+                                    <iconfont class="groupitem_default_arrow">
+                                        <fontid>&#xe615;</fontid>
+                                    </iconfont>
+                                </groupitem>
+                                <line class="dividline_all"/>
+                            </group>
+                            <text style="font-size:24;color:#cccccc;margin-top:20;align:center;">获得邀请码并成功加入的将成为您的同事。
+                            </text>
+                        </table>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 邀请朋友 -->
+    <function>
+        <functionid>invite</functionid>
+        <functionname>邀请朋友</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">邀请朋友</text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>INVITE_FRIEND</widgetname>
+                    <widgetcustom id="invite_friend_body">
+                        <table columncount="1">
+                            <group class="groupmain">
+                                <line class="dividline_all"/>
+                                <groupitem id="inv_phone_addr" class="groupitem_default">
+                                    <text class="groupitem_default_title_noicon">手机通讯录</text>
+                                    <iconfont class="groupitem_default_arrow">
+                                        <fontid>&#xe615;</fontid>
+                                    </iconfont>
+                                </groupitem>
+                                <line class="dividline_l30_r30"/>
+                                <groupitem id="inv_email" class="groupitem_default">
+                                    <text class="groupitem_default_title_noicon">电子邮箱</text>
+                                    <iconfont class="groupitem_default_arrow">
+                                        <fontid>&#xe615;</fontid>
+                                    </iconfont>
+                                </groupitem>
+                                <line class="dividline_all"/>
+                            </group>
+                            <text style="font-size:24;color:#cccccc;margin-top:20;align:center;">邀请加入Wefafa并与您成为好友
+                            </text>
+                        </table>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+    <!-- 邀请朋友 -->
+    <function>
+        <functionid>invite</functionid>
+        <functionname>邀请朋友</functionname>
+        <functiontype>1</functiontype>
+        <template>
+            <header class="default_header">
+                <iconfont class="default_iconfont_back">
+                    <fontid>&#xe614;</fontid>
+                    <click target="back"/>
+                </iconfont>
+                <text class="default_title">邀请</text>
+            </header>
+            <body>
+                <widget type="system" style="width:100%;height:100%;">
+                    <widgetname>INVITE_FRIEND</widgetname>
+                    <widgetcustom id="invite_friend_body">
+                        <table columncount="1">
+                            <group class="groupmain">
+                                <line class="dividline_all"/>
+                                <groupitem id="inv_phone_addr" class="groupitem_default">
+                                    <text class="groupitem_default_title_noicon">手机通讯录</text>
+                                    <iconfont class="groupitem_default_arrow">
+                                        <fontid>&#xe615;</fontid>
+                                    </iconfont>
+                                </groupitem>
+                                <line class="dividline_l30_r30"/>
+                                <groupitem id="inv_email" class="groupitem_default">
+                                    <text class="groupitem_default_title_noicon">电子邮箱</text>
+                                    <iconfont class="groupitem_default_arrow">
+                                        <fontid>&#xe615;</fontid>
+                                    </iconfont>
+                                </groupitem>
+                                <line class="dividline_all"/>
+                            </group>
+                            <text style="font-size:24;color:#cccccc;margin-top:20;align:center;">邀请加入Wefafa并与您成为好友
+                            </text>
+                        </table>
+                    </widgetcustom>
+                </widget>
+            </body>
+        </template>
+    </function>
+  <!-- 圈子内容结束 -->
+  <!-- “我的”内容开始 -->
+  <!-- 我的动态 -->
+  <function>
+      <functionid>myblog</functionid>
+      <functionname>我的动态</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">{paramvalue:circlename}</text>
+          </header>
+          <body scroll="false">
+              <widget type="system" style="width:100%;height:100%;">
+                  <widgetname>WEIXINBLOG</widgetname>
+                  <widgetcustom id="convitem">
+                      <list>
+                          <listitem style="padding-top:20;">
+                              <table columncount="4">
+                                  <img id="cov_headpic" rowspan="6"
+                                       style="width:84;height:84;margin-right:20;margin-left:20;"/>
+                                  <text id="cov_username" style="color:#5e6e85;font-size:32; width:120;"/>
+                                  <text id="cov_memo" style="color:#999999;font-size:30;width:100%;"/>
+                                  <text style="width:120; display:none;"/>
+                                  <text id="cov_content" columnspan="3" maxrow="4"
+                                        style="color:#333333;font-size:30; width:100%;margin-bottom:18;margin-right:20;"/>
+                                  <span id="cov_attach" columnspan="3"
+                                        style="bgcolor:#eeeeee; padding-bottom:10;padding-top:10;padding-left:10;padding-right:10; width:100%;margin-bottom:18;margin-right:20;"/>
+                                  <text id="cov_date" style="color:#999999;font-size:24;width:200;margin-bottom:18;"/>
+                                  <text id="cov_source" style="color:#999999;font-size:24;width:100%"/>
+                                  <iconfont id="cov_commit"
+                                            style="font-size:40; width:60; color:#8494ae;align:right;width:120;">
+                                      <fontid>&#xe62f;</fontid>
+                                  </iconfont>
+                                  <group id="conv_group"
+                                         style="bgcolor:#eeeeee;width:100%;margin-bottom:18;margin-right:20;"
+                                         columnspan="3">
+                                      <span id="cov_like"
+                                            style="width:100%; padding-bottom:10;padding-top:10;padding-left:10;padding-right:10;"/>
+                                      <line id="conv_like_line" class="listdividline"/>
+                                      <span id="cov_comment"
+                                            style="width:100%; padding-bottom:10;padding-top:10;padding-left:10;padding-right:10;"/>
+                                  </group>
+                                  <line class="listdividline" columnspan="4"/>
+                              </table>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+                  <widgetcustom id="cov_attach_pic">
+                      <grid columncount="3">
+                          <griditem>
+                              <img id="attach_pic_url" style="margin-right:5;margin-bottom:5"/>
+                              <text id="attach_pic_name" maxrow="1"
+                                    style="font-size:30;color:#333333;margin-top:20;"/>
+                          </griditem>
+                      </grid>
+                  </widgetcustom>
+                  <widgetcustom id="cov_attach_share">
+                      <table columncount="2">
+                          <img id="attach_share_url"
+                               style="width:84;height:84; margin-right:10;margin-left:10;margin-top:10;margin-bottom:10;"/>
+                          <text id="attach_share_name" maxrow="2"
+                                style="font-size:30;color:#333333;margin-top:20; width:100%"/>
+                      </table>
+                  </widgetcustom>
+                  <widgetcustom id="cov_comment_1">
+                      <list>
+                          <listitem>
+                              <text id="cov_comment_userfrom" style="color:#5e6e85;font-size:30"/>
+                              <text style="color:#333333;font-size:30">：</text>
+                              <text id="cov_comment_content" style="width:100%;color:#333333;font-size:30"/>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+                  <widgetcustom id="cov_comment_2">
+                      <list>
+                          <listitem>
+                              <text id="cov_comment_userfrom" style="color:#5e6e85;font-size:30"/>
+                              <text style="width:36;color:#333333;font-size:30">对</text>
+                              <text id="cov_comment_userto" style="color:#5e6e85;font-size:30"/>
+                              <text style="color:#333333;font-size:30">说：</text>
+                              <text id="cov_comment_content" style="width:100%;color:#333333;font-size:30"/>
+                          </listitem>
+                      </list>
+                  </widgetcustom>
+                  <widgetcustom id="cov_like">
+                      <table columncount="2">
+                          <iconfont id="cov_comment_like"
+                                    style="color:#5e6e85;font-size:36; padding-right:10; padding-left:10;">
+                              <fontid>&#xe633;</fontid>
+                          </iconfont>
+                          <text id="cov_comment_username" style="width:100%;color:#5e6e85;font-size:30"/>
+                      </table>
+                  </widgetcustom>
+                  <widgetcustom id="cov_menu">
+                      <table columncount="3" style="bgcolor:#333333; padding-top:20;alpha:90%;">
+                          <table id="cov_menu_like" columncount="2" style="width:150;height:66;padding-left:10;">
+                              <iconfont style="font-size:36;color:#ffffff;width:60;">
+                                  <fontid>&#xe629;</fontid>
+                              </iconfont>
+                              <text id="cov_menu_like_txt" style="color:#ffffff;font-size:30; width:80">赞</text>
+                          </table>
+                          <line
+                              style="height:30;width:1;margin-left:10;margin-right:20;margin-top:8;bgcolor:#000000;"/>
+                          <table id="cov_menu_commit" columncount="2" style="width:150;height:66;">
+                              <iconfont style="font-size:36;color:#ffffff;width:60;">
+                                  <fontid>&#xe674;</fontid>
+                              </iconfont>
+                              <text style="color:#ffffff;font-size:30">评论</text>
+                          </table>
+                      </table>
+                  </widgetcustom>
+                  <widgetcustom id="nodata">
+                      <nodata>
+                          <table columncount="1" style="margin-top:200;">
+                              <iconfont style="color:#cccccc;width:100%; text-align:center;font-size:100;">
+                                  <fontid>&#xe628;</fontid>
+                              </iconfont>
+                              <text style="color:#bbbbbb; width:100%; height:60; text-align:center; font-size:32;">竟然还没人发内容，快快发一条吧！</text>
+                          </table>
+                      </nodata>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 我的名片 -->
+  <function>
+      <functionid>mynamecard</functionid>
+      <functionname>我的名片</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">我的名片</text>
+          </header>
+          <body>
+              <widget type="system">
+                  <widgetname>MYNAMECARD</widgetname>
+                  <params>
+                      <paramitem type="const">
+                          <paramname>openid</paramname>
+                      </paramitem>
+                  </params>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 设置 -->
+  <function>
+      <functionid>setting</functionid>
+      <functionname>设置</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">设置</text>
+          </header>
+          <body scroll="true">
+              <widget type="system" style="width:100%;">
+                  <widgetname>SETTING</widgetname>
+                  <widgetcustom id="syssetting">
+                      <group class="groupmain">
+                          <line class="dividline_all"/>
+                          <groupitem class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">新消息提醒</text>
+                              <click>
+                                  <functionid>setting_notice</functionid>
+                              </click>
+                          </groupitem>
+                          <!--<line class="dividline_l20"/>
+                          <groupitem id="setting_chat" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">聊天</text>
+                          </groupitem>
+                          <line class="dividline_l20"/>
+                          <groupitem id="setting_secrets" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">隐私</text>
+                          </groupitem>-->
+                          <line class="dividline_all"/>
+                      </group>
+                      <group class="groupmain">
+                          <line class="dividline_all"/>
+                          <groupitem id="setting_clearcache" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">清空数据缓存</text>
+                          </groupitem>
+                          <line class="dividline_l20"/>
+                          <groupitem id="setting_clearconfig" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">清空应用配置</text>
+                          </groupitem>
+                          <line class="dividline_l20"/>
+                          <groupitem id="setting_clearplugin" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">清空应用插件</text>
+                          </groupitem>
+                          <line class="dividline_all"/>
+                      </group>
+                      <group class="groupmain">
+                          <line class="dividline_all"/>
+                          <groupitem class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">关于</text>
+                              <click>
+                                  <functionid>aboutus</functionid>
+                              </click>
+                          </groupitem>
+                          <line class="dividline_l20"/>
+                          <groupitem id="setting_checkversion" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">检查更新</text>
+                          </groupitem>
+                          <line class="dividline_l20"/>
+                          <groupitem id="setting_logout" class="groupitem_default">
+                              <text class="groupitem_default_title_noicon">退出</text>
+                          </groupitem>
+                          <line class="dividline_all"/>
+                      </group>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 个人信息 -->
+  <function>
+      <functionid>myinfo</functionid>
+      <functionname>个人信息</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">个人信息</text>
+          </header>
+          <body>
+              <group class="groupmain">
+                  <line class="dividline_all"/>
+                  <groupitem class="groupitem_myinfo">
+                      <text class="groupitem_default_title_noicon">头像</text>
+                      <img class="myinfo_headpic" bindid="header">{constvalue:HEADER}</img>
+                      <click type="native" bindid="header">
+                          <functionid>NATIVE_MODIFY_HEADER</functionid>
+                      </click>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">姓名</text>
+                      <text class="myinfo_value" bindid="nickname">{constvalue:NICK_NAME}</text>
+                      <click>
+                          <functionid>modifynickname</functionid>
+                      </click>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">性别</text>
+                      <text class="myinfo_value">{constvalue:GENDER}</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">二维码名片</text>
+                      <iconfont class="myinfo_value">
+                          <fontid>&#xe640;</fontid>
+                      </iconfont>
+                  </groupitem>
+                  <line class="dividline_all"/>
+              </group>
+              <group class="groupmain">
+                  <line class="dividline_all"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">部门</text>
+                      <text class="myinfo_value">{constvalue:DEPTNAME}</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">职务</text>
+                      <text class="myinfo_value">{constvalue:DUTY}</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">手机号</text>
+                      <text class="myinfo_value">{constvalue:MOBILE}</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">个性签名</text>
+                      <text class="myinfo_value">{constvalue:SELFDESC}</text>
+                      <click>
+                          <functionid>modi_selfdesc</functionid>
+                      </click>
+                  </groupitem>
+                  <line class="dividline_all"/>
+              </group>
+          </body>
+      </template>
+  </function>
+  <!-- 修改昵称 -->
+  <function>
+      <functionid>modifynickname</functionid>
+      <functionname>修改姓名</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">修改姓名</text>
+              <text id="nickname_save" class="button_submmit" class_active="button_submmit_active">保存</text>
+          </header>
+          <body >
+          	<input-text id="nickname" style="margin-left:30;margin-right:30;margin-top:20;font-size:30;color:#333333;" placeholder="请输入真实姓名"/>
+            <line class="dividline_l30_r30"/>
+              <!--
+              <button value="提交">
+                  <click type="submit" bindid="nickname">
+                      <dsid>27</dsid>
+                      <params>
+                          <paramitem>
+                              <paramname>nick_name</paramname>
+                              <paramvalue>{controlvalue:nickname}</paramvalue>
+                          </paramitem>
+                      </params>
+                      <updatevalue>{controlvalue:nickname}</updatevalue>
+                  </click>
+              </button>-->
+          </body>
+      </template>
+  </function>
+  <!-- 修改个性签名 -->
+  <function>
+      <functionid>modi_selfdesc</functionid>
+      <functionname>修改个性签名</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <body class="default_body">
+              <widget type="system" style="width:100%;height:100%;">
+                  <widgetname>MODISELFDESC</widgetname>
+                  <widgetcustom id="modi_selfdesc_header">
+                      <header class="default_header">
+                          <iconfont class="default_iconfont_back">
+                              <fontid>&#xe614;</fontid>
+                              <click target="back"/>
+                          </iconfont>
+                          <text class="default_title">个性签名</text>
+                          <text id="desc_save" class="button_submmit" class_active="button_submmit_active">保存
+                          </text>
+                      </header>
+                  </widgetcustom>
+                  <widgetcustom id="modi_selfdesc_body">
+                      <table columncount="1">
+                          <input-text id="desc_input"
+                                      style="margin-left:30;margin-right:30;margin-top:40;font-size:30;color:#333333;"
+                                      placeholder="请输入个性签名"/>
+                          <line class="dividline_l30_r30"/>
+                          <text style="margin-top:30; margin-left:50;font-size:24;color:#cccccc;">
+                              个性签名让你的同事、好友更了解你此刻的心情
+                          </text>
+                      </table>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 新消息提醒 -->
+  <function>
+      <functionid>setting_notice</functionid>
+      <functionname>新消息提醒</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">新消息提醒</text>
+          </header>
+          <body>
+              <widget style="width:100%;height:100%;">
+                  <widgetname>SETTING_NOTICE</widgetname>
+                  <widgetcustom id="body">
+                      <table columncount="1">
+                          <group class="groupmain">
+                              <line class="dividline_all"/>
+                              <groupitem class="groupitem_default">
+                                  <text class="groupitem_default_title_noicon">接收新消息通知</text>
+                                  <switch id="new_msg_notice" class="switch" class_active="switch_on"/>
+                              </groupitem>
+                              <line class="dividline_l30_r30"/>
+                              <groupitem class="groupitem_default">
+                                  <text class="groupitem_default_title_noicon">通知显示消息详情</text>
+                                  <switch id="new_msg_detail" class="switch" class_active="switch_on"/>
+                              </groupitem>
+                              <groupitem class="groupitem_memo">
+                                  <text class="groupitem_memo_text">若关闭，当收到Wefafa消息时，通知提示将不显示发送人和内容摘要</text>
+                              </groupitem>
+                              <line class="dividline_all"/>
+                          </group>
+                          <group class="groupmain">
+                              <line class="dividline_all"/>
+                              <groupitem class="groupitem_default">
+                                  <text class="groupitem_default_title_noicon">声音</text>
+                                  <switch id="voice" class="switch" class_active="switch_on"/>
+                              </groupitem>
+                              <line class="dividline_l30_r30"/>
+                              <groupitem class="groupitem_default">
+                                  <text class="groupitem_default_title_noicon">振动</text>
+                                  <switch id="vibrator" class="switch" class_active="switch_on"/>
+                              </groupitem>
+                              <line class="dividline_all"/>
+                          </group>
+                      </table>
+                  </widgetcustom>
+              </widget>
+          </body>
+      </template>
+  </function>
+  <!-- 关于 -->
+  <function>
+      <functionid>aboutus</functionid>
+      <functionname>关于</functionname>
+      <functiontype>1</functiontype>
+      <template>
+          <header class="default_header">
+              <iconfont class="default_iconfont_back">
+                  <fontid>&#xe614;</fontid>
+                  <click target="back"/>
+              </iconfont>
+              <text class="default_title">关于</text>
+          </header>
+          <body style="margin-top:30;">
+            <iconfont style="width:400; height:180;color:#00a9d9;font-size:130;margin-bottom:40;align:center">
+                <fontid>&#xe697;</fontid>
+            </iconfont>
+              <group class="groupmain">
+                  <line class="dividline_all"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">门户APP版本</text>
+                      <text class="myinfo_value">{constvalue:APPVERSION}</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">门户配置版本</text>
+                      <text class="myinfo_value">{constvalue:PORTALCONFIGVERSION}</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">服务协议</text>
+                  </groupitem>
+                  <line class="dividline_l30_r30"/>
+                  <groupitem class="groupitem_default">
+                      <text class="groupitem_default_title_noicon">隐私声明</text>
+                  </groupitem>
+                  <line class="dividline_all"/>
+              </group>
+            	<group class="groupmain">
+            	  <line class="dividline_all" />
+                <groupitem class="groupitem_default">
+                    <text class="groupitem_default_title_noicon">默认服务器</text>
+                    <text class="myinfo_value">{constvalue:DEFAULTSERVER}</text>
+                	<click><functionid>modi_default_server</functionid></click>
+                </groupitem>
+            	  <line class="dividline_all" />
+            	</group>
+          </body>
+      </template>
+  </function>
+  <!-- 修改服务器地址 -->
+  <function>
+      <functionid>modi_default_server</functionid>
+      <functionname>修改服务器地址</functionname>
+      <functiontype>1</functiontype>
+      <functiondata>
+        <dsitem>
+          <dsname>selectserver</dsname>
+          <dsvalue>
+            <![CDATA[  {"status":"ok","count":2,"data":[  {"id":"1","servername":"正式服务器","serverurl":"https://www.wefafa.com"},{"id":"2","servername":"POC服务器","serverurl":" http://182.92.11.9"}]}  ]]>
+          </dsvalue>
+        </dsitem>
+      </functiondata>
+      <template>
+        <header class="default_header">
+            <iconfont class="default_iconfont_back">
+                <fontid>&#xe614;</fontid>
+                <click target="back"/>
+            </iconfont>
+            <text class="default_title">默认服务器</text>
+        </header>
+        <body style="margin-top:30">
+            <widget style="width:100%; height:100%;">
+                <widgetname>MODI_DEFAULT_SERVER</widgetname>
+                <widgetcustom id="default_server">
+                    <list>
+                        <dsname>selectserver</dsname>
+                        <listitem style="width:100%; height:120;bgcolor:#ffffff;">
+                            <table columncount="2">
+                                <line class="dividline_all" columnspan="2"/>
+                                <text style="width:100%;height:39;font-size:32;color:#333333;margin-top:18;margin-left:30;">{dsvalue:servername}</text>
+                                <iconfont id="select_server"
+                                          style="font-size:48;align:right;margin-right:20;margin-top:32;"
+                                          class="vertype_iconfont"
+                                          class_active="vertype_iconfont_active" rowspan="2">
+                                    <fontid>&#xe619;</fontid>
+                                    <fontid_active>&#xe61a;</fontid_active>
+                                </iconfont>
+                                <text id="serverurl" style="width:100%;height:30;font-size:24;color:#cccccc;margin-left:30;margin-bottom:22;margin-top:10;"
+                                      maxrow="1">{dsvalue:serverurl}
+                                </text>
+                            </table>
+                        </listitem>
+                    </list>
+                </widgetcustom>
+            </widget>
+        </body>
+      </template>
+    </function>
+</mapp>

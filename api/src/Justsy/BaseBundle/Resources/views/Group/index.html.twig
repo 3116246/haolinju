@@ -1,0 +1,302 @@
+{% extends 'JustsyBaseBundle:EnterpriseHome:index.html.twig' %}
+{% block main_content_center %}
+<div style="height:75px;padding-top:10px">
+<table border=0 width=100%>
+  <tr>
+    <td width=50 height=55>
+      <img style="width:48px;height:48px" {% if this.photoPath %} src="{{ this.photoPath }}" {% else %} src="{{ asset('bundles/fafatimewebase/images/no_photo.png') }}" {% endif %}>
+    </td>
+  	<td align=left>
+      <div>        
+        <a style='cursor:pointer;color:#1A65A5;font-size:18px;font-weight:bold'>{{ this.gname }}</a>
+      </div>
+      <div style="color:#666666;padding-left:26px">{{ this.des }}</div>
+  	</td>							
+  </tr>
+</table>
+</div>
+{% render "JustsyBaseBundle:CInputArea:index" with {'network_domain':curr_network_domain,'name':'group','groupid':groupId,'publish':publish} %}
+ <div class="hometopic">
+	<div class="topicmenu" id="topicmenu">
+		<ul class="topic_top" id="menus">
+			<li style="width:463px;"><div class="line20"></div></li>
+			<li style="width:20px;"><a href="javascript:window.location.reload(true)" title="刷新"><div class="topic_flush"></div></a></li>
+			<li dropdownlist="1"><a href="#"><div class="topic_list" title="筛选动态列表"></div></a>
+				<ul class="topic_options">
+				<li class="topic_in"><a href="javascript:void(0)" targetid="two1" onclick="ConvFilter_OnClick(this)">全部动态</a></li>
+				<li><a href="javascript:void(0)" targetid="two2" onclick="ConvFilter_OnClick(this)">我关注的</a></li>
+				<li><a href="javascript:void(0)" targetid="two3" onclick="ConvFilter_OnClick(this)">我发布的</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>     
+  <div class="tabbox"  style="display:none">
+    <ul>
+      <li id="two1" onClick="setDisplayTab(this)" class="hover" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_group_convers',{ 'type':'all','groupid':groupId,'network_domain':curr_network_domain }) }}">全部</li>
+      <li id="two2" onClick="setDisplayTab(this)" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_group_convers',{ 'type':'atten','groupid':groupId,'network_domain':curr_network_domain }) }}">我的关注</li>
+      <li id="two3" onClick="setDisplayTab(this)" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_group_convers',{ 'type':'publish','groupid':groupId,'network_domain':curr_network_domain }) }}">我发布的</li>
+    </ul>
+  </div>
+  <div class="contentbox">
+    <div id="con_two1" class="display_con_area hover"></div>
+    <div id="con_two2" class="display_con_area" style="display:none"></div>
+    <div id="con_two3" class="display_con_area" style="display:none"></div>
+  </div>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EnterpriseHome.js') }}"></script>
+  <script type="text/javascript">
+  var  manager_trend=true;
+  $(document).ready(function()
+  {
+    $(".left-menu .active").attr("class","");
+    $(".left-menu li[id='left_group_{{groupId}}']").attr("class","active");
+    setDisplayTab(document.getElementById("two1"));
+    window.OnPublished = EnterpriseHome_OnPublished;
+    $(document).scroll(EnterpriseHome_Document_OnScroll);
+    window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000*60);
+  });
+  </script>
+</div>
+{% endblock %}
+
+{% block main_content_right %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">群组操作</span>
+  </div>
+  <div class="rightbox-context">
+    <ul>
+{% if this.is_create_staff==1%}
+    <li><a href="{{path('JustsyBaseBundle_group_setting_group',{network_domain:curr_network_domain})}}?group_id={{this.group_id}}">设置群组基础信息</a></li>
+{% endif %}
+    <li><a data-toggle="modal" show=false href="#dlgAddMember">邀请圈子成员加入群组</a></li>
+    <li><a href="{{ path("JustsyBaseBundle_documnet_mgr", {network_domain: curr_network_domain, group_id:this.group_id, group_name:this.gname}) }}">浏览群组文档</a></li>
+    <li><a data-toggle="modal" show="false" href="#dlgQuitGroup">{% if this.is_create_staff==1%}解散当前群组{%else%}退出当前群组{%endif%}</a></li>
+    <ul>
+  </div>
+</div>
+
+{% render "JustsyBaseBundle:EnterpriseHome:rightevent" with {'network_domain' : curr_network_domain, 'group_id':this.group_id} %}
+{% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {'network_domain' : curr_network_domain, 'scope_type':'2', 'scope_id':this.group_id} %}
+<div class="rightbox">
+  <div class="rightbox-title">
+    <span class="titletext">成员列表</span>
+  </div>
+  <div>
+		<table class="table">
+    {%for staff in members%}
+     <tr>
+     	  <td width=29px style='padding-left:5px'><img src="{{ staff['photo_path'] }}" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" style="width:24px;height:24px"></td>
+     	  <td style="vertical-align:middle"><a class="employee_name" login_account="{{staff["login_account"]}}">{{staff["nick_name"]}}</A>{%if(staff["login_account"]==this.createStaff)%}<img title="创建者" src="{{ asset('bundles/fafatimewebase/images/reg_title.png') }}" style="width:16px;height:16px"> {%endif%}</td>
+     </tr>
+    {%endfor%}
+    </table>
+  </div>
+</div>
+
+<div class="modal" data-backdrop=false id="dlgAddMember" style="display:none;width:620px;margin-left: -310px;" show=false>
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal" onclick="clearContent();">×</a>    
+  	<h5>添加成员</h5>  
+  </div>
+  <div class="modal-body">
+    <div class="lib_notify ask_div1" style="cursor: text; padding-top: 2px; padding-bottom: 1px; width: 565px; height: 100px;" onclick="$(this).children('#txtAddGroupMemberList').focus()">
+      <div id="InputNotifyAreaGroup"></div>
+      <input id="txtAddGroupMemberList" type="text" class="ask_input" style="width: 120px; margin: 0px; padding: 0px; vertical-align: top;">
+      <img src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}" width="16" height="16" id="loadingImg" style="display:none" />
+    </div>
+    <div><span id="inv-hint-msg" style="color:red;"></span></div>
+    <div>
+      <textarea class="input-xlarge" maxlength="200" style="width:565px;color:#B8B8B8" rows="4" id="txtPs"></textarea>
+    </div>
+    <div>
+      <span id="inv-hint-tip" style="color:blue"></span>
+    </div>
+  </div>
+  <div class="modal-footer">    
+  	<a id="btnSend" class="btn" disabled="true" >邀请</a>
+  	<a class="btn" data-dismiss="modal" onclick="clearContent();">关闭</a>   
+  </div>	
+</div>
+
+<div class="modal" id="dlgQuitGroup" style="display:none;width:400px;margin-left: -200px;" show="false">
+  <div class="modal-header">    
+  	<a class="close" data-dismiss="modal">×</a>    
+  	<h5>{% if this.is_create_staff==1%}解散{%else%}退出{%endif%}群组</h5>  
+  </div>
+  <div class="modal-body">
+    确认{% if this.is_create_staff==1%}解散{%else%}退出{%endif%}当前群组【{{ this.gname }}】吗？
+  </div>
+  <div class="modal-footer">    
+  	<a id="btnQuitGroup" class="btn">{% if this.is_create_staff==1%}解散{%else%}退出{%endif%}</a>
+  	<a class="btn" data-dismiss="modal">取消</a>   
+  </div>	
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+var hintMsg = 
+{
+  "inv_suc":"邀请已成功发出！",
+  "inv_err":"邀请发送失败！"
+};
+var defaultTxt1 = "待添加的邮箱地址";
+var defaultTxt2 = "想对好友说点什么吗？";
+var circle_members = {{circle_members|raw}};
+$(document).ready(function()
+{
+  var inarea = false;
+  $("#txtAddGroupMemberList").val(defaultTxt1).focus(function()
+  {
+    if (this.value==defaultTxt1)
+    {
+      this.value="";
+    }
+    else if (!inarea)
+    {
+      this.value=this.value;
+    }
+    $(this).css("color","black");
+  }).mouseenter(function()
+  {
+    inarea = true;
+  }).mouseleave(function()
+  {
+    inarea = false;
+  }).blur(function()
+  {
+    if (this.value=="")
+    {
+      this.value=defaultTxt1;
+      $(this).css("color","#B8B8B8");
+    }
+  });
+  
+  $("#txtPs").val(defaultTxt2).focus(function()
+  {
+    if (this.value==defaultTxt2)
+    {
+      this.value="";
+      $(this).css("color","black");
+    }
+  }).blur(function()
+  {
+    if (this.value=="")
+    {
+      this.value=defaultTxt2;
+      $(this).css("color","#B8B8B8");
+    }
+  });
+  
+  $("#txtAddGroupMemberList").typeahead(
+  {
+    source : function(query,process)
+    {
+      for (var i=0; i<circle_members.length; i++)
+      {
+        circle_members[i].index = i; 
+        circle_members[i].toString = function(){return this.index;};
+      }
+      process(circle_members); 
+    },
+    highlighter : function(item)
+    {
+      return "<span>"+item.nick_name+"("+item.login_account+")</span>";
+    },
+    matcher : function(item)
+    {
+      if (this.query) return ~item.login_account.toLowerCase().indexOf(this.query.toLowerCase()) || ~item.nick_name.toLowerCase().indexOf(this.query.toLowerCase());
+      else return true;
+    },
+    sorter : function(item)
+    {
+      return item;
+    },
+    updater : function(item)
+    {
+      var $InputNotifyArea = $("#InputNotifyAreaGroup");
+      var source = circle_members;
+      if ($("input[value='"+source[item].login_account+"']", $InputNotifyArea).length == 0)
+      {
+        $(GetNotifyTemplate(source[item].login_account, source[item].nick_name)).attr("fafa_jid",source[item].fafa_jid).appendTo($InputNotifyArea);
+        //$InputNotifyArea.append(GetNotifyTemplate(source[item].login_account, source[item].nick_name));
+      }
+      if ($(".NotifyObj").length>0) $("#btnSend").attr("disabled",false);
+      return "";
+    }
+  }).keyup(function(e)
+  {
+    if (e.keyCode == 8) // backspace
+    {
+      if ($(this).val() == "") $("#InputNotifyAreaGroup .NotifyObj:last").remove();
+      if ($(".NotifyObj").length==0) $("#btnSend").attr("disabled",true);
+    }
+    else if (e.keyCode == 13)
+    {
+      $(this).val("");
+    }
+  });
+  $(".NotifyClose").live("click",function()
+  {
+    if ($(".NotifyObj").length==0) $("#btnSend").attr("disabled",true);
+  });
+  //发送邀请
+  $("#btnSend").click(function()
+  {
+    var invs = $(".NotifyObj");
+    if (invs.length==0 || $("#btnSend").text()=="发送中...") return;
+    $("#btnSend").text("发送中...");
+    this.disabled = true;
+    var acts = [];
+    var invMsg = $("#txtPs").val();
+    invMsg = invMsg==defaultTxt2 ? "" : invMsg;
+    $.each(invs,function(i,n)
+    {
+      acts.push($(n).find("input").val()+","+$(n).attr("fafa_jid"));
+    });
+    $.post("{{path('JustsyBaseBundle_group_addmember')}}",
+        {acts:acts,groupId:"{{groupId}}",invMsg:invMsg,gname:"{{this.gname}}",
+        fafa_groupid:"{{this.fafa_groupid}}",network_domain:"{{curr_network_domain}}"},
+      function(data) 
+      {
+        if (data=="1")
+        {
+          $("#inv-hint-tip").text(hintMsg.inv_suc);
+          $("#InputNotifyAreaGroup").empty();
+          $("#txtAddGroupMemberList").val(defaultTxt1);
+          $("#txtPs").val(defaultTxt2);
+        }
+        else
+        {
+          $("#inv-hint-tip").text(hintMsg.inv_err);
+        }
+        $("#btnSend").text("邀请");
+        $("#btnSend").attr("disabled",true);
+      },"text");
+  });
+  
+  //退出群组
+  $("#btnQuitGroup").click(function(){
+    $(this).text("请稍候...").attr("disabled", true);
+    var Aurl = "{{ path("JustsyBaseBundle_group_quitgroup", {'group_id':groupId}) }}"
+    $.getJSON(Aurl, {t: new Date().getTime()}, function (data) 
+    {
+      //成功
+      if (data.success == "1")
+      {
+        window.location.href = "{{ path("JustsyBaseBundle_enterprise", {'network_domain':curr_network_domain}) }}";
+      }
+    });
+  });
+});
+function clearContent()
+{
+  $("#inv-hint-msg").text("");
+  $("#inv-hint-tip").text("");
+  $("#btnSend").attr("disabled",true);
+  $("#InputNotifyAreaGroup").empty();
+  $("#btnSend").text("邀请");
+}
+</script>
+{% endblock %}

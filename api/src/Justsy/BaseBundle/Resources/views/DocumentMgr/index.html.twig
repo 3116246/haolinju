@@ -1,0 +1,13 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+<div id="docGroupListCon">
+		{% render "JustsyBaseBundle:DocumentMgr:grouplist" with {"network_domain":this.network_domain} %}
+</div>   
+{% endblock %}
+
+{% block main_content_center%}
+<div id="docListCon">
+	  {% render "JustsyBaseBundle:DocumentMgr:list" with {"network_domain":this.network_domain, "group_id":group_id, "group_name":group_name} %}
+</div>
+{% endblock %}

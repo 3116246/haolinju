@@ -1,0 +1,74 @@
+
+<table class="Etable" style="width: 590px;">
+	<tbody>
+		<tr>
+			<td class="Etd_titleheader" align="center" style="border: 0px none;width:30px; height: 24px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+				<input class="fans_checkbox_all"  type="checkbox">
+			</td>
+			<td class="Etd_titleheader" align="center" style="border: 0px none;width:30px; height: 24px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+				&nbsp;
+			</td>
+			<td class="Etd_titleheader" align="center" style="border: 0px none;width:230px; height: 40px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+				姓名
+			</td>
+			<td class="Etd_titleheader" align="center" style="border: 0px none;width:180px; height: 40px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+				所属企业
+			</td>
+			<td class="Etd_titleheader" align="center" style="border: 0px none;width:120px; height: 40px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+				关注时间
+			</td> 
+		</tr>
+		{% for micro_fans_item in micro_fans_data %}
+			<tr action="none" style="height:34px;lin-height:34px;border-bottom : 1px solid #EEEEEE;">
+				<td class="Etd_titleheader" align="center" style="border: 0px none;width:30px; height: 24px;">
+				<input class="fans_checkbox" type="checkbox" login_account='{{micro_fans_item["login_account"]}}'>
+			  </td>
+				<td class="Etd_readonly" align="left" edit="0" style="text-align: center;">
+					<div  class="employee_name" login_account="{{micro_fans_item["login_account"]}}" >
+					{%if(micro_fans_item["photo_path"]=="")%}
+		      	<img width="24px" height="24px" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" src="{{ asset('bundles/fafatimewebase/images/no_photo.png') }}" >
+		      {%else%}
+		      	<img width="24px" height="24px" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" src='{{micro_fans_item["photo_path"]}}' >
+		      {%endif%}
+		    	</div>
+		    </td>
+				<td class="Etd_readonly" align="left" edit="0" title='{{micro_fans_item["nick_name"]}}' style="text-align: left;">
+					<div  class="textNoBR" style="overflow:hidden;height:23px;line-height:23px;">
+		      	{{micro_fans_item["nick_name"]}}(<span class="employee_name" style="color:blue;cursor:pointer" login_account="{{micro_fans_item["login_account"]}}" >{{micro_fans_item["login_account"]}}</span>)
+		    	</div>
+		    </td>
+		    <td class="Etd_readonly" align="left" edit="0" title='{{micro_fans_item["ename"]}}' style="text-align: left;">
+					<div class="textNoBR" style="overflow:hidden;height:23px;line-height:23px;">
+		      	{{micro_fans_item["ename"]}}
+		    	</div>
+		    </td>
+		    <td class="Etd_readonly" align="left" edit="0" style="text-align: center;">
+					<div class="textNoBR">
+		      	{{micro_fans_item["atten_date"]}}
+		    	</div>
+		    </td>
+		  </tr>
+		{% endfor %}
+	</tbody>
+</table> 
+{%if(micro_page_max_index>1)%}
+	<div class="pagination" style="text-align: right;width:98%;height: 18px;margin-top: 3px;">
+		<ul>
+			{%if(micro_pageindex==1)%}
+		  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">首页</a></li>
+		  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">上一页</a></li>
+		  {%else%}
+		  	<li><a id="a-home" class='active' style="line-height:20px" href='javascript:pagechange(1)'>首页</a></li>
+		  	<li><a id="a-prev" class='active' style="line-height:20px" href='javascript:pagechange(({{micro_pageindex}}-1))'>上一页</a></li>
+		  {%endif%}
+		  {%if(micro_pageindex<micro_page_max_index and micro_page_max_index>1 and micro_pageindex>0)%}
+		  	<li><a id="a-next" class='active' style="line-height:20px" href='javascript:pagechange(({{micro_pageindex}}+1))'>下一页</a></li>
+		  	<li><a id="a-last" class='active' style="line-height:20px" href='javascript:pagechange({{micro_page_max_index}})'>末页</a></li>
+		  {%else%}
+		  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">下一页</a></li>
+		  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">末页</a></li>
+		  {%endif%}
+		  <li><a class='active' style="line-height:20px">第{{micro_pageindex}}页/共{{micro_page_max_index}}页</a></li>
+		</ul>
+</div>
+{%endif%}

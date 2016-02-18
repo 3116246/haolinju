@@ -1,0 +1,414 @@
+{% extends 'JustsyBaseBundle::master_1.html.twig' %}
+
+{% block stylesheets %}
+ <link href="{{ asset('bundles/fafatimewebase/css/contacts.css')}}" type="text/css" rel="stylesheet">
+<style>
+	.circlesmain{
+		padding-left:20px;
+		padding-right:20px;
+		padding-top:20px;
+	}
+	.classname{
+		display:inline-block;
+		cursor:pointer;
+	}
+	.classifycheck{
+		color:#00a8e0;
+		font-weight:700;
+	}
+	.createcirclebnt{
+		width:80px;
+		height:35px;
+		border-radius:4px;
+		background-color:#f5b426;
+		float:left;
+		text-align:center;
+		vertical-align: middle;
+	}
+	.join:hover{background-color:#005b9b;
+		color:#FFF;
+		}
+	#createcircle{
+		font-size:13px;
+		font-weight:700;
+		color:#FFF;
+		line-height:32px;
+	}
+	.pagecurr{
+		background-color:#00AAD5;
+		color: #FFFFFF;
+	}
+	.pagec{
+    padding-left: 1px;
+    margin-left:5px;
+	}
+	.nottopage{
+		background-color:#c8c8c8;
+		color:#000000;
+	}
+	.pointc{
+		margin-left:5px;
+	}
+	.pointv{
+		font-size:5px;
+		color:#aaaaaa;
+		text-shadow:0 1px 0 #000000; 
+		position: relative;
+    top: -4px;
+    text-align:center;
+    display:inline-block;
+    text-indent:0px;
+	}
+	.pagev{
+		background-color: #e6e6e6;
+    border-radius: 4px 4px 4px 4px;
+    color:#000000;
+    cursor: pointer;
+    font-size: 11px;
+    padding:0 4px;
+    position: relative;
+    top: -4px;
+    height:20px;
+    line-height:21px;
+    text-align:center;
+    display:inline-block;
+    text-indent:0px;
+    border-bottom:1px solid #767877;
+    text-shadow:0 1px 0 #FFFFFF;
+	}
+</style>
+
+{% endblock %}
+
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/contacts.js') }}"></script>
+{% endblock %}
+
+{% block main_content %}
+	
+  <div class="contact_left_area">
+  	  <div class="menuber_menu" >
+  	  	<div style="float:left;margin-left:-20px;width:20px;border-bottom:1px solid #CACBCD;height:39px;"></div>
+  	  	<div class="navigation_menu_select" style="border-left:1px solid #cacbcd;" >
+  	  		<div class="navigation_menu_area"  style="width:80px;">
+	  	  	  <img src="{{asset('bundles/fafatimewebase/images/my_staff.jpg')}}" style="maring-left:10px;" />
+	  	  	  <span>联系人</span>
+  	  	  </div>
+  	  	</div>
+  	  	<div class="navigation_menu" style="border-left:none;display:none;border-right:1px solid #CACBCD;" >
+  	  		<div class="navigation_menu_area">
+	  	  	  <img src="{{asset('bundles/fafatimewebase/images/interest.jpg')}}" />
+	  	  	  <span>关注企业</span>
+  	  	  </div>
+  	   </div>
+  	  	<div class="navigation_menu" style="display:none;border-right:1px solid #CACBCD;">
+  	  		<div class="navigation_menu_area">
+	  	  	  <img src="{{asset('bundles/fafatimewebase/images/friends.jpg')}}" />
+	  	  	  <span>二度人脉</span>
+  	  	  </div>
+  	   </div>
+  	  <div class="navigation_menu" style="display:block;border-right:1px solid #CACBCD;" >
+  	  		<div class="navigation_menu_area">
+	  	  	  <img src="{{asset('bundles/fafatimewebase/images/propelling.jpg')}}"  />
+	  	  	  <span>信息群发</span>
+  	  	  </div>
+  	   </div>
+  	   <div class="navigation_menu" style="border-right:1px solid #CACBCD;display:none;">
+  	  		<div class="navigation_menu_area">
+	  	  	  <img src="{{asset('bundles/fafatimewebase/images/message_mode.jpg')}}" />
+	  	  	  <span>消息模板</span>
+  	  	  </div>
+  	   </div>
+  	   <div style="height:39px;float:left;border-bottom:1px solid #CACBCD;margin-right:-20px;width:390px;"></div>
+  	  </div>
+  	    	  
+  	  <div id="Left1" style="width:100%;margin-top:15px;display:block;">
+  	  	  <div style="margin-left:auto;margin-right:auto;line-height:48px;height:48px;width:150px;margin-top:150px;">
+  	  	     <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style="float:left;width:48px;height:48px;" />
+  	  	     <span style="float:left;padding-left:5px;">正在加载页面……</span>
+  	  	  </div>
+  	  </div>
+	  	<div id="Left2" style="width:100%;margin-top:15px;display:none;"> </div>
+	  	<div id="Left3" style="width:100%;margin-top:15px;display:none;"> </div>
+
+      <div style="float:left;margin-top:15px;width:645px;display:none;position:relative;" id="Left4">
+  	  	  <div style="margin-left:auto;margin-right:auto;line-height:48px;height:48px;width:150px;margin-top:150px;">
+  	  	     <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style="float:left;width:48px;height:48px;" />
+  	  	     <span style="float:left;padding-left:5px;">正在加载页面……</span>
+  	  	  </div>      	 
+      </div>
+  </div>
+   
+  <div class="contact_right_area">
+   	 <div style="float:left;margin-left:20px;margin-top:15px;">
+   	 	  <div style="width:100%;">
+   	 	  	<div style="float:left;border:1px solid #00ABD9;height:82px;width:82px;">
+            {% if photo_path=="" %}	  	
+               <img style="height:80px;width:80px;margin:1px;" src="{{asset('bundles/fafatimewebase/images/no_photo.png')}}"  />
+            {% else %}
+               <img style="height:80px;width:80px;margin:1px;" src="{{ photo_path }}" onerror="javascript:this.src='/bundles/fafatimewebase/images/no_photo.png';" />
+            {% endif %}
+   	 	    </div>   	 	  	
+   	 	  	<div style="float: left; height: 87px; margin-left:5px;width:90px;">
+   	 	  	 	 <div style="width:100%;">
+   	 	  	 	 	  <img src="{{asset('bundles/fafatimewebase/images/flag.png')}}" style="width:20px;height:20px;margin-top:-5px;" />
+   	 	  	 	 	  <span style="font-weight:bold;color:blue;font-size:14px;color:#3a589e;margin-left:-4px;" >{{ app.user.nick_name }}</span>
+   	 	  	 	 </div>    	  
+   	 	  	 	 <span  class="fafa_level_0 contact_staff_level" >{{ app.user.auth_level }}{{ app.user.vip_level }}</span>
+   	 	  	 	 <span style="text-align:center; display:block;height:18px;line-height:18px;" >{{ app.user.dept_name }}</span>
+   	 	  	 	 <span style="text-align: center; display:block;height:18px;line-height:18px;" >{{ app.user.duty }}</span>
+   	 	  	 	 
+   	 	  	 </div>
+   	 	  </div>
+   	 	  <div style="float: left; width:100%;margin: 6px 0px 20px;">
+   	 	  	  <div style="display:none;">
+	   	 	  	  <span class="member_staff_imgTag" style="background-color:#00A9DC;"></span>
+	   	 	  	  <span class="member_staff_imgTag" style="background-color:#00A9DC;" title="关注企业">
+	   	 	  	  	<span class="member_staff_imgTag_2"></span>
+	   	 	  	  </span>
+	   	 	  	  <span class="member_staff_imgTag" style="background-color:#00A9DC;" title="组织机构">
+	   	 	  	  	 <span class="member_staff_imgTag_3"></span>
+	   	 	  	  </span>
+	   	 	  	  <span class="member_staff_imgTag"></span>
+	   	 	  	  <span class="member_staff_imgTag"></span>
+	   	 	  	  <span class="member_staff_imgTag"></span>
+	   	 	  	  <span class="member_staff_imgTag"></span>
+	   	 	  	  <span class="member_staff_imgTag"></span>
+   	 	  	  </div>
+   	 	  </div>
+   	 	  
+   	 	 <div id="contact_request" style="float:left;width:100%;height:180px;">
+	        <div style="float:left;">
+	   	 	  	  <span style="background-color: rgb(77, 149, 187); width: 5px; float: left; height: 15px;"></span>
+	   	 	  	  <span style="font-weight: bold; float: left; font-size: 14px; padding-left: 8px; height: 15px; line-height: 15px;">人脉请求</span>
+	   	 	  </div>
+   	 	    <div class="member_line" style="color:red;width:220px;margin-top:5px;"></div>
+	   	 	  <div class="personal_relations_area">
+               <div style="margin:20px 0 0 8px;height:50px;line-height:50px;" >
+	   	 	  	      <img style="width:32px;height:32px;margin-left:10px;" src="/bundles/fafatimewebase/images/loading.gif">
+	   	 	  	      <span style='float:none;display:inline;color:#5A5A5A'>正在获得人脉请求信息...</span>
+	   	 	  	  </div>
+	   	 	  </div>
+	   	 </div>
+   	 	 <div id="remind_area">
+	   	 	  <div style="float:left;border-bottom:1px solid #BDBDBD;width:220px;padding-bottom:3px;margin-bottom:10px;">
+	   	 	  	  <span style="background-color: rgb(77, 149, 187); width: 5px; float: left; height: 15px;"></span>
+	   	 	  	  <span style="font-weight: bold; float: left; font-size: 14px; padding-left: 8px; height: 15px; line-height: 15px;">提醒</span>
+	   	 	  	  <img  id="displayRemind" src="{{asset('bundles/fafatimewebase/images/edit_add.png')}}" title='添加提醒' style="float:right;width:16px;height:16px;margin-right:15px;cursor:pointer;" />
+	   	 	  </div>
+	   	 	  <div id="remind_area_div" style="float:left;">
+             <img src="{{asset('bundles/fafatimewebase/images/loading.gif')}}" style="float:left;width:32px;height:32px;margin:30px 5px 0px 30px;"  />
+	   	 	  	 <span style="float:left;margin-top:35px;">正在获得提醒信息...</span>  
+	   	 	  </div>
+	   	 </div>   	 	
+   	 	 </div>    	 	  	     
+  </div>	 
+  
+  <div class="clearBoth"></div>
+  
+	<div class="member_add_group" id="panel_add_group">
+  	 <form id="from_AddType" method="post">
+      	 <span style="float:left;width:100%;margin-left:20px;margin-top:12px;">将人脉分组，便于以后快速查询</span>
+      	 <span style="float:left;margin-top:2px;margin-left:20px;">分组名称：</span>
+      	 <input type="text" class="text_AddType" placeholder="分组名称" style="width:100px;height:12px;line-height:12px;margin-top:2px;" name="typename"  id="searchCondition" maxlength="10" />
+         <div style="float:left;margin-top:-5px;margin-left:75px;line-height:18px;height:18px;width:150px;">
+      	 	   <img src="{{ asset('bundles/fafatimewebase/images/loadingsmall.gif')}}" id="loading1"  style="float:left;height:16px;width:16px;display:none;" />
+      	 	   <span class="member_subgroup_err" id="error1"></span>
+      	 </div>
+      	 <div style="float:left;width:150px;margin-left:80px;">
+      	 	 	 <span class="contact_button2" id="btnSave_subgroup">确&nbsp;定</span>
+      	     <span class="contact_button2" style ="margin-left:10px;" id="btnCancel_subgroup" >取&nbsp;消</span>
+      	 </div>	
+  	</form>
+  </div>
+  
+ <div class="remind_box" >
+ 	   <div class="remind_title">
+ 	   	   <span style="float:left;padding-left:8px;">提醒信息设置</span>
+ 	   	   <span id="close_remind" style="float:right;cursor:pointer;margin-right:20px;">×</span>
+ 	   	</div>
+     <form id="frmRemind" method="post">
+     	 <div style="display:none" id="fildes">
+     	 	  <input type="hidden" name="remindid" value="" />
+     	 	  <input type="hidden" name="week" id="week" />
+     	 	  <input type="hidden" name="remind_type" id="remind_type" />
+     	 	  <input type="hidden" name="send_type" id="send_type" />
+     	 	  <input type="hidden" name="remind_staffid" id="remind_staffid"/>
+     	 	  <input type="hidden" name="staff_type" id="staff_type"/>
+     	 	  <input type="hidden" name="remind_category" id="remind_category" value="0" />
+     	 </div>
+     	 
+     	 <div style="float:left;width:100%;height:25px;line-height:25px;margin-top:10px;">
+     	 	 <div style="float:left;width:70px;margin-left:40px;">提醒方式：</div>
+     	 	 <div style="float:left;">
+     	 	 	 <label class="remind_type_select" ><input name="remindtype" id="remind_type_date" checked="checked" type="radio" style="float:left;" />按日期提醒</label>
+     	 	    <label class="remind_type_default" style="margin-left:20px;"><input name="remindtype" id="remind_type_week" type="radio" style="float:left;" />按周提醒 </label>
+     	 	 </div>
+     	 </div>
+     	 
+     	 <div style="float:left;width:100%;height:22px;line-height:22px;margin-top:10px;">
+     	 	 <div style="float:left;width:70px;margin-left:40px;">提醒日期：</div>
+         <div style="float:left;">
+     	 	   <div style="display:block;float:left;+margin-left:4px;" id="remind_date">
+     	 	     <select style="width:85px;" class="combox_style" name="year" id="remind_year">
+     	 	     	  <option value="-1"></option>
+             </select><span class="remind_lable_date">年</span>
+             <select class="combox_style" id="remind_month" name="month"><option value="-1"></option>
+								<option value="01">1</option>
+								<option value="02">2</option>
+								<option value="03">3</option>
+								<option value="04">4</option>
+								<option value="05">5</option>
+								<option value="06">6</option>
+								<option value="07">7</option>
+								<option value="08">8</option>
+								<option value="09">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+             </select> 
+             <span class="remind_lable_date">月</span>
+             <select class="combox_style" name="day" id="remind_day">
+								<option value="-1"></option><option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option>
+								<option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option>
+								<option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
+								<option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
+								<option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option>
+								<option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>       	 
+             </select>
+             <span class="remind_lable_date">日</span>      	
+           </div>
+           <div style="float:left;display:none;font-size:12px;height:25px;margin-top:5px;" id="remind_week">
+            	 <label><input type="checkbox" value="1" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周一</span> </label>
+            	 <label><input type="checkbox" value="2" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周二</span> </label>
+            	 <label><input type="checkbox" value="3" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周三</span> </label>
+            	 <label><input type="checkbox" value="4" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周四</span> </label>
+            	 <label><input type="checkbox" value="5" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周五</span> </label>
+            	 <label><input type="checkbox" value="6" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周六</span> </label>
+            	 <label><input type="checkbox" value="7" style="float:left;+margin-top:-4px;" name="check_week"><span class="remind_lable_week">周日</span> </label>
+           </div>
+           <div style="float:left;">
+               <select style="width:50px;" name="hour" id="down_hour" class="combox_style">
+               	  <option value="-1"></option>
+               	  <option value="00">00</option>
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+               </select><span class="remind_lable_date">时</span>
+               <select style="width:50px;" name="minute" id="down_minute" class="combox_style">
+               	  <option value="-1"></option>
+               	  <option value="00">00</option>
+									<option value="05">05</option>
+									<option value="10">10</option>
+									<option value="15">15</option>
+									<option value="20">20</option>
+									<option value="25">25</option>
+									<option value="30">30</option>
+									<option value="35">35</option>
+									<option value="40">40</option>
+									<option value="45">45</option>
+									<option value="50">50</option>
+									<option value="55">55</option>
+               </select> <span class="remind_lable_date">分</span>
+           </div>                                                
+     	   </div>     	 	 
+     	 </div>
+     	 
+     	 <div style="float:left;width:100%;height:25px;line-height:25px;margin-top:10px;">
+     	 	 <div style="float:left;width:70px;margin-left:40px;">重复方式：</div>
+     	 	 <div style="float:left;" id="repeat">
+     	 	 	  <label class="remind_type_select" ><input name="remind_repeat" type="radio" style="float:left;" checked="checked" id="remind_repeat_single" />单次提醒</label>
+     	 	    <label class="remind_type_default" style="margin-left:32px;"><input name="remind_repeat" id="remind_repeat_more" type="radio" style="float:left;" />重复提醒 </label>
+     	 	    <span id="select_hint" style="float:left;display:none;color:red;font-weight:bold;margin:-3px 0px 0px 30px;">已指定到具体时点，不允许选择重复提醒！</span>
+     	 	 </div>
+     	 </div>
+     	 
+     	 <div style="float:left;width:100%;margin-top:10px;height:155px;line-height:155px;">
+     	 	  <div style="float:left;width:70px;margin-left:40px;" >提醒内容：</div>
+     	 	  <div style="float:left;+margin-left:2px;">
+     	 	 	  <textarea id="searchCondition" name="remind_content" class="remindContent" placeholder="请输入２００字内的提醒内容！" style="float:left;line-height:20px;width:465px;height:145px;" maxlength="200"></textarea>
+     	 	  </div>
+     	 </div>
+     	 
+     	 <div style="float:left;width:100%;height:25px;line-height:25px;margin-top:10px;">
+     	 	 <div style="float:left;width:70px;margin-left:40px;">提醒类型：</div>
+     	 	 <div style="float:left;">
+     	 	    <label style="float:left;font-size:12px;margin-top:2px;padding-right:20px;"><input type="checkbox" style="float:left;margin-top:3px;margin-right:5px;+margin-top:0px;" id="send_wefafa" value="2"><span class="remind_lable">Wefafa消息</span> </label>
+     	 	    <label style="float:left;font-size:12px;margin-top:2px;padding-right:20px;"><input type="checkbox" style="float:left;margin-top:3px;margin-right:5px;+margin-top:0px;" id="send_email" value="0"><span class="remind_lable">电子邮件</span> </label>
+     	 	    <label style="float:left;font-size:12px;margin-top:2px;padding-right:20px;" title="{{ app.user.mobile }}"><input type="checkbox" mobile="{{mobile}}" style="float:left;margin-top:3px;margin-right:5px;+margin-top:0px;" id="send_phone" value="1"><span class="remind_lable">短信</span></label>
+     	 	 </div>
+     	 	 <div id="input_mobile" style="display:none;width:200px;float:left;margin-left:15px;+margin-left:0px;">
+     	 	     <span style="float:left;">手机号码：</span>
+     	 	     <textarea id="searchCondition" name="remind_mobile" class="remind_mobile" placeholder="手机号码" style="float:left;width:120px;height:14px;line-height:14px;overflow:hidden;" maxlength="15"></textarea>
+     	 	 </div>
+     	 </div>
+       <div style="margin-top:10px;height:138px;line-height:138px;display:none;" class="remind_fileds_rows">
+     	 	  <div style="float:left;width:70px;">接收人员：</div>
+     	 	  <div style="border:1px solid #999999; float:left;height:135px;width:476px;"></div>
+     	 	  <img style="float:right;cursor:pointer;margin-right:38px;margin-top: -122px;" title="添加提醒人员" src="/bundles/fafatimewebase/images/edit_add.png" id="btnAddStaff">
+     	 </div>
+     	 
+       <div style="float:left;line-height:38px;height:38px;margin-top:5px;">
+     	 	 <div style="width:240px;padding-left:40px;float:left;">
+     	 	 	 <img id="img_hint_loadding" src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}" style="float:left;width:38px;height:38px;margin-right:5px;display:none;" />
+     	 	 	 <img id="img_remind_error" src="{{ asset('bundles/fafatimewebase/images/prompt.png')}}" style="float:left;width:26px;height:26px;margin-top:6px;margin-right:5px;display:none;" />
+     	 	 	 <span style="float:left;color:#FF0000;" id="span_remind_error">&nbsp;</span>
+     	 	 </div>
+     	 	 <span class="remind_button_edit">保存提醒</span>   
+     	 </div>
+   	 </form>
+ </div>
+ 
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	 
+	 $("#content").css("background-color","#ECF6F8");	  
+	 $(document).ready(function() {	 	
+
+	 	 	 	 
+	 	 $("#Left1").load("{{ path('JustsyBaseBundle_contact_index')}}?network_domain={{curr_network_domain}}",function(){
+		 	 Init.url_message = "{{ path('JustsyBaseBundle_propelling_index')}}?network_domain={{curr_network_domain}}";	 	 
+		 	 Init.propelling_staff_search="{{path('JustsyBaseBundle_propelling_staff_search')}}";
+		 	 Init.propelling_message_search="{{path('JustsyBaseBundle_propelling_message_search')}}";
+		 	 Init.url_addType = "{{path('JustsyBaseBundle_addrlist_addtype')}}";
+		 	 Init.url_addContact = "{{path('JustsyBaseBundle_addrlist_update')}}";
+		 	 Init.url_search = "{{path('JustsyBaseBundle_member_searchcontact')}}";
+		 	 Init.url_request = "{{path('JustsyBaseBundle_member_request')}}";
+		 	 Init.url_depart =  "{{path('JustsyBaseBundle_member_depart')}}";
+		 	 Init.url_hint =  "{{path('JustsyBaseBundle_remind_hint')}}";
+		 	 Init.url_remind = "{{ path('JustsyBaseBundle_remind_edit')}}";
+		 	 Init.url_propelling_add =  "{{ path('JustsyBaseBundle_propelling_add')}}";
+	 	 	 Loading_Letter();
+	 	   InitDate();
+	 	   //设置日期
+	 	   GetDepartMent();
+	 	   GetRecordCound(0,0,null,{{recordcount}});
+	 	   SearchContact(0,0,null,1);
+	 	   GetContactRequest(0);	 	 
+	 	   GetRemindHint(5);
+	 	  });
+	});	
+</script>
+{% endblock %}

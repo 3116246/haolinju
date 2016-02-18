@@ -1,0 +1,24 @@
+{% if this.collect_type=="03" %}
+  {% else %}
+    {% if this.recordcount == 0 %}
+  <br/><p>你还没有任何收藏呢！</p><p>快去收藏你感兴趣的，有价值的信息吧！</p>
+    {% else %}
+    	{% render 'JustsyBaseBundle:CDisplayArea:getConvPc' with {'conv_root_ids': this.conv_root_ids} %}
+    	{% if this.recordcount > 0 %}
+				<div class="pagination pagination-right">
+				  <ul>
+				    {% set pagenum = ((this.recordcount - 1) / this.pagesize + 1 - 0.5)|number_format %}
+				    {% for i in 1..pagenum if loop.index0 < 10 %}
+				    <li {{ this.pageindex == i ? 'class="active"' : ''}}><a onclick="$('#con_collect').html(null);LoadComponent('con_collect','{{path('JustsyBaseBundle_collect_pc',{'network_domain' : curr_network_domain})}}?collect_type=02&conv_type={{ this.conv_type }}&label_name={{ this.label_name }}&pageindex={{ i }}&q={{ this.q }}');" href="javascript:void(0);">{{ i }}</a></li>
+				    {% endfor %}
+				  </ul>
+				</div>
+			{% endif %}
+    {% endif %}
+	{% endif %}
+<script type="text/javascript">
+$('input[placeholder]').placeholder();
+$(document).ready(function(){
+	setContentHeight($("#contentbox"));
+});
+</script>

@@ -1,0 +1,13 @@
+{% extends 'JustsyBaseBundle:GroupSetting:group_master.html.twig' %}
+
+{% block menuitemactive_basic %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div>
+<div class="memberbox">群组列表<span class="membertitle"></span>
+</div>
+<div id="memebermain" class="memberlist">
+{% render 'JustsyBaseBundle:GroupSetting:main' with {"network_domain":curr_network_domain}%}
+</div>
+</div>
+{% endblock %}

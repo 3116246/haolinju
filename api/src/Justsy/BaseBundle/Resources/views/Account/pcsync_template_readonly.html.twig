@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>我的资料</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/css/home.css" type="text/css" rel="stylesheet">
+<link href="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/css/home_s1.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/js/jquery.js"></script>
+</head>
+<body style="margin:0px;background-color:#fff">
+<form id="formbasic"  method="post" class="form-horizontal">
+<div id="account_pcsync">
+  <div id="rightdetail_photo" >
+    <div class="allphoto" style="width:120px; height:120px;margin: 15px 25px 0;" id="preview_fake">
+         <img style="width:120px; height:120px;cursor:pointer" title="高清头像" onerror="this.src='{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/images/no_photo.png'" id="preview" src="<%PHOTO%>"> 
+    </div>
+    <div class="changeheader" style="height:10px"></div>
+    <div style="padding-left: 0px;"><a><span style="cursor:default" class="fafa_level_0" >LV<%WE_LEVEL%></span></a></div>
+    <div style="height: 10px;line-height: 10px;"></div>		
+    <div class="account_pcsync_menu_active" onclick="showBasic()">
+      <img src="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/images/mycard.png" style="vertical-align: middle;">&nbsp;<a href="javascript:void(0)">基本资料</a>
+    </div>
+    <div class="account_pcsync_menu" onclick="showDetail()">
+      <img src="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/images/fileicon.png" style="vertical-align: middle;">&nbsp;<a href="javascript:void(0)">详细资料</a>
+    </div>    		   
+  </div> 
+  <div id="rightdetail_left">
+	  	<div id="baseinfo">
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+			        <div class="controls">
+			          <%NICK_NAME%>
+			        </div>
+			    </div> 
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
+			        <%SEX%>
+			    </div>    
+			    <div class="control-group" style="width:100%;z-index: 1000;">
+			      <label for="input01">部门名称：</label>
+			      <div class="controls">
+			          <%DEPTNAME%>
+			     	</div>
+			    </div>      
+	    		<div class="control-group" style="width:100%">
+			        <label for="input01">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;务：</label>
+			        <div class="controls">
+			          <%DUTY%>
+			        </div>
+			    </div>			    
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+			        <div class="controls">
+			          <%EMAIL%>
+			        </div>
+			    </div> 
+			    <div class="control-group" style="width:100%"> <label for="input01">出生日期：</label>
+			    	<div class="controls">
+			    	    <%BIRTHDAY%>
+			      </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">&nbsp;手&nbsp;机&nbsp;号：</label>
+			        <div class="controls">			          
+			          <%MOBILE%>      
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">个性签名：</label>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txtself_desc" name="txtself_desc" readonly style="width:300px;overflow:auto;cursor: default;" rows="4" maxlength="60" ><%DESC%></textarea>
+			        </div>
+			    </div>
+	    </div>
+	    
+	    <div style="display:none" id="detailinfo">
+	    		<div class="control-group" style="width:50%">
+			        <label for="input01">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯：</label>
+			        <div class="controls">
+			          <%HOMETOWN%>
+			        </div>
+			    </div>
+					<div class="control-group" style="width:100%">
+					        <label for="input01">工作电话：</label>
+					        <div class="controls">			        	
+					          <%PHONE%>
+					        </div>
+					</div>			    
+	    		<div class="control-group" style="width:100%">
+			        <label for="input01">毕业院校：</label>
+			        <div class="controls">
+			          <%GRADUATED%>
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">个人特长：</label>
+			    </div>
+			    <div class="control-group" style="width:100%;height: 40px;">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txtspecialty" name="txtspecialty" readonly maxlength=200 style="cursor: default;width:300px;overflow:auto" rows="2" ><%SPECIALTY%></textarea>
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%;">
+			        <label for="input01">兴趣爱好：</label>
+			    </div>
+			    <div class="control-group" style="width:100%;height: 55px;">
+			        <div class="controls" style="left:0px">
+			        	<textarea id="txthobby" name="txthobby" readonly maxlength=200 style="cursor: default;width:300px;overflow:auto" rows="3" ><%HOBBY%></textarea>
+			        </div>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <label for="input01">工作经历：</label>
+			    </div>
+			    <div class="control-group" style="width:100%">
+			        <div class="controls" style="left:0px">			        	
+			        	<textarea id="txtwork_his" name="txtwork_his" readonly maxlength=200 style="cursor: default;width:300px;overflow:auto" rows="4" ><%WORK_HIS%></textarea>
+			        </div>
+			    </div>			    			    			    
+	    </div>
+  </div>
+  <div class="account_pcsync_footer">
+     <span id="info_btn_close" extend="fafa:win" action="close:window" class="btn_close account_pcsync_btn_bg">关闭</span> <span id="btnEdit" class="btn_save account_pcsync_btn_bg" extend="fafa:win">编辑资料</span>
+  </div>
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+  var uploadObj=null;
+  var submitFlag = false;
+  g_resource_context = "/";
+
+	function showBasic()
+	{
+		 $(".account_pcsync_menu_active").attr("class","account_pcsync_menu");
+		 $(".account_pcsync_menu:eq(0)").attr("class","account_pcsync_menu_active");
+		 $("#detailinfo").hide();
+	   $("#baseinfo").show();
+	}
+	function showDetail()
+	{
+		 $(".account_pcsync_menu_active").attr("class","account_pcsync_menu");
+		 $(".account_pcsync_menu:eq(1)").attr("class","account_pcsync_menu_active");
+		 $("#detailinfo").show();
+	   $("#baseinfo").hide();
+	}
+
+</script>

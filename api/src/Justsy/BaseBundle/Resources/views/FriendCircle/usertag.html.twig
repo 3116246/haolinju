@@ -1,0 +1,142 @@
+<div class="rightbox-title">
+<span class="titletext">我的标签</span>
+<span id="oper_tag" onclick="addtag(this)" k="0" style="margin-right: 8px;display: block; cursor: pointer; font-size: 12px; color: rgb(255, 0, 0); float: right; border-radius: 3px 3px 3px 3px; font-weight: 700; border: 1px solid rgb(213, 234, 165); padding-left: 4px; padding-right: 3px; height: 16px; line-height: 16px;" title="添加新标签">+</span>
+</div>
+<div id="adddiv" style="display:none;float: right; border: 1px solid rgb(204, 204, 204); padding-left: 5px; margin-bottom: 5px; margin-right: 5px;">
+	  <span class="topmenu_app_triangle" style="border-color: transparent transparent rgb(204, 204, 204); left: -10px; top: -10px;"></span>
+	  <span class="topmenu_app_triangle" style="border-color: transparent transparent rgb(255, 255, 255); left: 0px; top: -9px;"></span>
+    <div id='addtagp' style='padding-right:10px;padding-top:5px;*padding-bottom:15px;'>
+    <input id='textag' maxlength=5 type='text' placeholder="请输入小于5个字符" style='width:120px;float:left;padding:2px;'/>
+    <div onclick='savetag()' type='button' style='cursor: pointer; margin-left: 2px; width: 30px; float: left; border-radius: 3px 3px 3px 3px; border: 1px solid rgb(204, 204, 204); text-align: center; padding: 2px; line-height: 20px; margin-top: -5px;clear:right;clear:none\9;margin-top: 0px\9;'>确定</div><img class='loadbig' title='提交中...' style='float:left;width:16px;margin-left:2px;display:none;height:16px;margin-top:5px;' src="{{asset('bundles/fafatimewebase/images/loadingsmall.gif')}}"/>
+    </div>
+    <div id='tag_error' style='color:#CCC;font-size:12px;margin-top:2px;float:left;'></div>
+</div>
+<div style='float:left;'>
+<ul style="margin-left: 10px;">
+<li id='taglist' style="margin-right: 1px;display:block;float:none;list-style-type: none;">
+{%if count==0 %}
+<span id='notag'><a href='javascript:void(0)' style="color: #CCCCCC;cursor:default;" >您还没有添加标签</a></span>
+{%else%}
+{%for row in rows%}
+<span class='onetag' tag_id="{{row['tag_id']}}" style="display: block; float: left;margin-right:3px;margin-bottom:3px;white-space: nowrap;">
+	   <a title="查看同标签的TA" href="#" title="{{row['tag_desc']}}" style="display: block; float: left; padding-left: 3px;padding-right: 3px; border: 1px solid rgb(204, 204, 204); border-radius: 4px 4px 4px 4px;">{{row['tag_name']}}</a>
+	   <img class='deltag' title='删除' style='max-width:none;cursor:pointer;width:10px;height:10px;visibility:hidden;' src="{{asset('bundles/fafatimewebase/images/errow.gif')}}"/><img class='load' title='提交中...' style='max-width:none;width:10px;height:10px;display:none;' src="{{asset('bundles/fafatimewebase/images/loadingsmall.gif')}}"/>
+</span>
+{%endfor%}
+{%endif%}
+</li>
+</ul>
+</div>
+<script>
+	var del_tag_url="{{path('JustsyBaseBundle_tag_user_del')}}";
+	var add_tag_url="{{path('JustsyBaseBundle_tag_user_add')}}";
+	$(document).ready(function(){
+		checknum();
+		$(".onetag a").live('mouseover',function(event){
+			if(checkHover(event,this))
+			{
+				$(this).siblings('img.deltag').css('visibility','visible');
+			}
+		});
+		$(".onetag").live('mouseout',function(event){
+			if(checkHover(event,this))
+			{
+				$(this).find('img.deltag').css('visibility','hidden');
+			}
+		});
+		$("img.deltag").live('click',function(){
+			$this=$(this);
+			$this.hide();
+			$this.siblings('img.load').show();
+			$.post(del_tag_url,{tag_id:$this.parent().attr('tag_id'),tag_name:$this.siblings('a').text()},function(d){
+				$this.siblings('img.load').hide();
+				$this.show().css('visibility','hidden');
+				if(d.s=='1')
+				{
+					$this.parent().remove();
+					if($(".onetag").length==0)
+					$("#taglist").append("<span id='notag'><a href='javascript:void(0)' style='color: #CCCCCC;cursor:default;' >您还没有添加标签</a></span>");
+					checknum();
+				}
+				else{
+					alert(d.m);
+				}
+			});
+		});
+		$("#textag").keydown(function(event){
+			var e=event||window.event;
+			if(e.keyCode==13)
+			{
+				savetag();
+			}
+		});
+	});
+	function addtag(e)
+	{
+		$this=$("#adddiv");
+		if($(e).attr('k')=='0'){
+			$this.slideDown(200);
+			$("#oper_tag").text('-').attr({'k':'1','title':'收起'});
+			$("#textag").focus();
+			$("#notag").hide();
+		}
+		else{
+			$this.slideUp(200);
+			$("#oper_tag").text('+').attr({'k':'0','title':'添加新标签'});
+			$("#notag").show();
+		}
+	}
+	function checknum()
+	{
+		var $tags=$("span.onetag");
+		if($tags.length>=5){
+			$("#oper_tag").hide();
+			$("#adddiv").hide();
+			$("#oper_tag").text('+').attr({'k':'0','title':'添加新标签'});
+			return false;
+		}
+		else{
+			$("#oper_tag").show();
+			return true;
+		}
+	}
+	function savetag()
+	{
+		$e=$("#adddiv");
+		if($e.find("input[type='text']").val().length<2)
+		{
+			$("#tag_error").text('标签长度必须大于2').show();
+			setTimeout(function(){
+				$("#tag_error").hide().text('');
+			},2000);
+			return;
+		}
+		if(!checknum())return;
+		var tag_name=$e.find("input[type='text']").val();
+		var tag_desc='';
+		$e.find("input[type='text']").attr('disabled','disabled');
+		$(".loadbig").show();
+		$.post(add_tag_url,{'tag_name':tag_name},function(d){
+			$e.find("input[type='text']").attr('disabled',false);
+			$(".loadbig").hide();
+			if(d.s=='1')
+			{
+				var html="<span class='onetag' tag_id='"+d.tag_id+"' style='display: block; float: left;margin-right:3px;margin-bottom:3px'><a href='#' title='查看同标签的TA' style='display: block; float: left; padding-left: 3px;padding-right: 3px; border: 1px solid rgb(204, 204, 204); border-radius: 4px 4px 4px 4px;'>"+tag_name+"</a><img class='deltag' title='删除' style='cursor:pointer;width:10px;height:10px;visibility:hidden;' src='{{asset('bundles/fafatimewebase/images/errow.gif')}}'/><img class='load' title='提交中...' style='width:10px;height:10px;display:none;' src='{{asset('bundles/fafatimewebase/images/loadingsmall.gif')}}'/></span>";
+				if($(".onetag:last").length>0)
+					$(".onetag:last").after($(html));
+				else{
+					$("#notag").remove();
+					$("#taglist").append($(html));
+				}
+				$("#textag").val('');
+				checknum();
+			}
+			else{
+				$("#tag_error").text(d.m).show();
+				setTimeout(function(){
+					$("#tag_error").hide().text('');
+				},2000);
+			}
+		});
+	}
+</script>

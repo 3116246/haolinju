@@ -1,0 +1,37 @@
+{% extends 'JustsyBaseBundle::master_index.html.twig' %}
+{% block title %}微发发，启用前的设置{% endblock %}
+{% block stylesheets %}
+<style>
+#btnSubmit:hover{border: 2px solid #F8FC80;}
+</style>
+{% endblock %}
+{% block main_content %}
+<div align='center' style='margin-bottom:40px;'>
+<div style="background:url({{asset('bundles/fafatimewebase/images/activeback.jpg')}});width:960px;height:520px;box-shadow:0 2px 5px rgba(0, 0, 0, 0.3);border:1px solid #EEE;">
+<div style='float:left;height: 45px;padding-left: 20px;'><span style="color: #999999;font-size: 20px;font-weight: 700;line-height: 42px;">申请成功！</span></div>
+<div class="">
+	<div class="c_actsuc1" style='padding-left:0px;'>
+			<div class="c_act_t0" style='width:400px;padding-top:10px;'>
+				<p style="height:26px;color:#666; font-size:14px; font-weight:bold">{{desc}}</p>
+			</div>
+			<div class="c_act_t1" align='left'>
+					<div ><img src="{{ asset('bundles/fafatimewebase/images/we32.png') }}">&nbsp;<span style="position:absolute; font-size:18px; font-weight:bold; padding-top:5px;">Wefafa快速入门</span></div>
+					<div style="padding-left:40px;">
+						<li style='list-style:none outside none;'><a href="#" flag="1" title="完善您的部门、职务、头像、签名等个人信息，有助于你的同事，好友更方便找到您。点击快速进入">完善您的个人信息</a></li>
+						<li style='list-style:none outside none;'><a href="#" flag="2" title="邀请更多的同事或好友加入到您的圈子，与他们一起分享、沟通、协同工作。点击快速进入">邀请同事、好友加入圈子</a></li>
+						<li style='list-style:none outside none;'><a href="#" flag="3" title="您可以建立起自己的圈子，同现实中的工作圈子一样，邀请您的同事、合作伙伴或好友进入。点击快速进入">建立自己的圈子</a></li>
+						<li style='list-style:none outside none;'><a href="#" flag="4" title="在圈子里，允许创建多个群组，将与您经常联系的好友聚焦到一起，进行工作沟通、分享与协同工作。点击快速进入">建立工作群组</a></li>
+						<li style='list-style:none outside none;'><a href="http://www.fafatime.com/downcenter" title="使用FaFa客户端，不仅可以让您在无需打开浏览器即可实时接收到新动态，并且FaFa客户端提供强大的语音会议、语音对讲等功能。点击立即下载">下载FaFa客户端</a></li>
+					</div>
+  			</div>
+			</div>
+    	<div class="c_actenter">
+    		<input type="button" id="btnSubmit" value="返回首页" onclick="window.location.href='{{home}}'" class="btn btn-act" name="input">
+    	</div>
+	</div>
+	<div class="c_actsuc2">
+	</div>
+</div>
+</div>
+</div>
+{% endblock %}

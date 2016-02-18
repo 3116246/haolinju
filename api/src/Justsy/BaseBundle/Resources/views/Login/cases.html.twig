@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+<meta charset="utf-8">
+<title>移动信息化案例|Wefafa-移动信息化专家</title>
+<meta name="keywords" content="移动信息化案例，移动信息化，企业移动信息化，移动办公，企业移动办公，Wefafa "/>
+<meta name="description" content="Wefafa移动信息化应用平台案例，10+行业，5000+企业，100000+员工他们都在用wefafa移动应用平台工作。"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" /> 
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimewebase/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js" defer></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服" defer></script>
+	<script type="text/javascript">
+function cccc(id) { return document.getElementById(id); }
+function moveElement(elementID,final_x,final_y,interval) {
+  if (!document.getElementById) return false;
+  if (!document.getElementById(elementID)) return false;
+  var elem = document.getElementById(elementID);
+  if (elem.movement) {
+    clearTimeout(elem.movement);
+  }
+  if (!elem.style.left) {
+    elem.style.left = "0px";
+  }
+  if (!elem.style.top) {
+    elem.style.top = "0px";
+  }
+  var xpos = parseInt(elem.style.left);
+  var ypos = parseInt(elem.style.top);
+  if (xpos == final_x && ypos == final_y) {
+  return true;
+  }
+  if (xpos < final_x) {
+    var dist = Math.ceil((final_x - xpos)/10);
+    xpos = xpos + dist;
+  }
+  if (xpos > final_x) {
+    var dist = Math.ceil((xpos - final_x)/10);
+    xpos = xpos - dist;
+  }
+  if (ypos < final_y) {
+    var dist = Math.ceil((final_y - ypos)/10);
+    ypos = ypos + dist;
+  }
+  if (ypos > final_y) {
+    var dist = Math.ceil((ypos - final_y)/10);
+    ypos = ypos - dist;
+  }
+  elem.style.left = xpos + "px";
+  elem.style.top = ypos + "px";
+  var repeat = "moveElement('"+elementID+"',"+final_x+","+final_y+","+interval+")";
+  elem.movement = setTimeout(repeat,interval);
+}
+function classNormal(){
+ var caseadBtnList = cccc('casead_change_btn').getElementsByTagName('li');
+ for(var i=0; i<caseadBtnList.length; i++) {
+  caseadBtnList[i].className='';
+ }
+}
+function caseadChange() {
+ var caseadBtnList = cccc('casead_change_btn').getElementsByTagName('li');
+  caseadBtnList[0].onmouseover = function() {
+   moveElement('casead_change_list',0,0,5);
+   classNormal()
+   caseadBtnList[0].className='current'
+  }
+  caseadBtnList[1].onmouseover = function() {
+   moveElement('casead_change_list',-950,0,5);
+   classNormal()
+   caseadBtnList[1].className='current'
+  }
+  caseadBtnList[2].onmouseover = function() {
+   moveElement('casead_change_list',-1900,0,5);
+   classNormal()
+   caseadBtnList[2].className='current'
+  }
+  /*caseadBtnList[3].onmouseover = function() {
+   moveElement('casead_change_list',-2850,0,5);
+   classNormal()
+   caseadBtnList[3].className='current'
+  }*/
+}
+setInterval('autoCaseadChange()', 5000);
+var atuokey = false;
+function autoCaseadChange() {
+ cccc('casead_change').onmouseover = function(){atuokey = true}
+ cccc('casead_change').onmouseout = function(){atuokey = false}
+ if(atuokey) return;
+ var caseadBtnList = cccc('casead_change_btn').getElementsByTagName('li');
+ for(var i=0; i<caseadBtnList.length; i++) {
+  if (caseadBtnList[i].className == 'current') {
+   var currentNum = i;
+  }
+ }
+ if (currentNum==0 ){
+  moveElement('casead_change_list',-950,0,5);
+  classNormal()
+  caseadBtnList[1].className='current'
+ }
+ if (currentNum==1 ){
+  moveElement('casead_change_list',-1900,0,5);
+  classNormal()
+  caseadBtnList[2].className='current'
+ }
+ if (currentNum==2 ){
+  moveElement('casead_change_list',0,0,5);
+  classNormal()
+  caseadBtnList[0].className='current'
+ } /*
+ if (currentNum==3 ){
+  moveElement('casead_change_list',0,0,5);
+  classNormal()
+  caseadBtnList[0].className='current'
+ }*/
+}
+
+
+function classNormal2(){
+ var cusBtnList = cccc('cus_change_btn').getElementsByTagName('li');
+ for(var i=0; i<cusBtnList.length; i++) {
+  cusBtnList[i].className='';
+ }
+}
+function cusChange() {
+ var cusBtnList = cccc('cus_change_btn').getElementsByTagName('li');
+  cusBtnList[0].onmouseover = function() {
+   moveElement('cus_change_list',0,0,5);
+   classNormal2()
+   cusBtnList[0].className='cus_current'
+  }
+  cusBtnList[1].onmouseover = function() {
+   moveElement('cus_change_list',-970,0,5);
+   classNormal2()
+   cusBtnList[1].className='cus_current'
+  }
+  cusBtnList[2].onmouseover = function() {
+   moveElement('cus_change_list',-1940,0,5);
+   classNormal2()
+   cusBtnList[2].className='cus_current'
+  }
+  /*cusBtnList[3].onmouseover = function() {
+   moveElement('cus_change_list',-2910,0,5);
+   classNormal2()
+   cusBtnList[3].className='cus_current'
+  }*/
+}
+setInterval('autoCusChange()', 5000);
+var atuokey2 = false;
+function autoCusChange() {
+ cccc('cus_change').onmouseover = function(){atuokey2 = true}
+ cccc('cus_change').onmouseout = function(){atuokey2 = false}
+ if(atuokey2) return;
+ var cusBtnList = cccc('cus_change_btn').getElementsByTagName('li');
+ for(var i=0; i<cusBtnList.length; i++) {
+  if (cusBtnList[i].className == 'cus_current') {
+   var currentNum = i;
+  }
+ }
+ if (currentNum==0 ){
+  moveElement('cus_change_list',-970,0,5);
+  classNormal2()
+  cusBtnList[1].className='cus_current'
+ }
+ if (currentNum==1 ){
+  moveElement('cus_change_list',-1940,0,5);
+  classNormal2()
+  cusBtnList[2].className='cus_current'
+ }
+ if (currentNum==2 ){
+  moveElement('cus_change_list',0,0,5);
+  classNormal2()
+  cusBtnList[0].className='cus_current'
+ } 
+ /*
+ if (currentNum==3 ){
+  moveElement('cus_change_list',0,0,5);
+  classNormal2()
+  cusBtnList[0].className='cus_current'
+ }*/
+}
+
+window.onload=function(){
+ caseadChange();
+ cusChange();
+}
+</script>
+<body screen_capture_injected="true">
+<div class="nav clearfix" id="featop">
+	<div class="nav-content">
+		<h1 class="left" href="javascript:;">Wefafa移动应用平台</h1>
+		
+		<div class="right line-li">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case" class="hover">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+				<li class="we_btn"><a target="_blank" href="{{path('JustsyBaseBundle_default')}}">登录</a></li>                 
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="cases_ad">
+	<div class="cases_wrap">
+	</div>
+</div>
+<div class="cases_ad_title">10+行业，5000+企业，100000+员工</div> 
+<div style="height:410px; border-bottom:1px #EEEEEE solid">
+	<div class="cuswrap">		
+		<div class="casead_more">
+		</div>
+	</div>
+</div>
+<div style="height:450px; margin-top:10px">
+	<div class="cuswrap">
+		
+		<div id="cus_change">
+		<div class="cus_title">
+			<div style="float:left; width:100px;">
+				<h1 style="color:#00a5d3; padding-top:10px; font-size:20px; font-weight:bold">客户案例</h1>
+			</div>
+			<div style="float:right; padding-top:10px; padding-right:20px;"></div>
+			<div style="float:right; padding-right:20px;">
+				
+			</div>
+		</div>
+			<div id="cus_change_list" style="top: 0px; ">
+			  <ul>
+			  <li>
+			  	<span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">K-Touch/天语</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">高科技品牌企业</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">独立部署</p>
+					<p class="ptitle">主要应用：
+					  </p><ul class="cus_intro_detail">
+						<li>供应链协作</li>
+						<li>销售管理</li>
+						<li>公众号内刊</li>
+						<li>即时通讯</li>
+						<li>移动审批</li>
+						<li>移动会议</li>
+						<li>消息推送</li>
+						<li>企业文化建设</li>
+					  </ul>
+					<p></p>
+				</span>
+				<img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_1.png')}}" alt="">
+			  </li>
+			 <!-- <li><span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">上海美特斯邦威</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">快时尚服装品牌</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">独立部署</p>
+					<p class="ptitle">主要应用：
+					  </p><ul class="cus_intro_detail">
+						<li>零售店管理</li>
+						<li>企业内部协作</li>
+						<li>服装款式搭配</li>
+						<li>导购信息采集</li>
+						<li>业务系统对接</li>
+						<li>会员管理</li>
+						<li>消息推送</li>
+					  </ul>
+					<p></p>
+				</span><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_2.png')}}" alt=""></li>-->
+			  <li><span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">成都任我行股份有限公司</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">第三方软件企业</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">公有云</p>
+					<p class="ptitle">主要应用：
+					  </p><ul class="cus_intro_detail">
+						<li>微应用平台</li>
+						<li>消息推送</li>
+						<li>信息实时采集</li>
+						<li>开放Api</li>
+						<li>即时通讯</li>
+					  </ul>
+					<p></p>
+				</span><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_3.png')}}" alt=""></li>
+			  <li><span class="cus_intro">
+					<p class="ptitle">客户名称：</p><p class="pcon">成都万锦大酒店</p>
+					<p class="ptitle">客户类型：</p><p class="pcon">酒店行业客户</p>
+					<p class="ptitle">部署方式：</p><p class="pcon">公有云</p>
+					<p class="ptitle">主要应用：
+					  </p><ul class="cus_intro_detail">
+						<li>会员管理</li>
+						<li>在线客服</li>
+						<li>会员社交</li>
+						<li>内部沟通</li>
+						<li>移动审批</li>
+						<li>移动会议</li>
+						<li>消息推送</li>
+						<li>Wifi定位</li>
+					  </ul>
+					<p></p>
+				</span><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_4.png')}}" alt=""></li>
+			  </ul>
+			</div>
+			<div id="cus_change_btn">
+			  <ul>
+			  <li class="cus_current"><a href="#"><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_logo1.png')}}" alt=""></a></li>
+			  <!--<li class=""><a href="#"><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_logo2.png')}}" alt=""></a></li>-->
+			  <li class=""><a href="#"><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_logo3.png')}}" alt=""></a></li>
+			  <li class=""><a href="#"><img src="{{ asset('bundles/fafatimewebase/images/homepage/cus_logo4.png')}}" alt=""></a></li>
+			  </ul>
+			</div>
+		</div>
+	</div>	
+</div>
+<div class="cases_contact">帮您了解移动社会化趋势，助您决胜未来！<p style="font-size:18px; color:#666; font-weight:normal">更多行业，更多企业详细案例，请通过右侧在线客服联系索取。</p></div> 
+
+<!-- footer -->
+{% render "JustsyBaseBundle:Home:footer"%}
+<script type="text/javascript">
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+</script>
+<div class="backToTop" title="返回顶部" style="display: none;"></div><div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body>
+</html>

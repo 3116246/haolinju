@@ -1,0 +1,325 @@
+<link href="../assets/admin/pages/css/todo.css" rel="stylesheet" type="text/css"/>
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">系统参数维护</h3>
+<!-- END PAGE HEADER-->
+<div class="alert alert-danger display-hide" id="page_alert_info" style="display: none;">
+	<button data-close="alert" class="close"></button>
+	<label></label>
+</div>
+<div class="row">
+	<div class=" col-md-12 tab-content">
+		<div class="todo-content">
+			<div class="portlet light">
+				<div class="portlet-title">
+					<div class="caption">
+						<span class="caption-helper">系统参数可能会影响系统运行，请谨慎修改！</span>
+						<span class="caption-subject font-green-sharp bold uppercase"></span>
+					</div>								
+				</div>
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a data-toggle="tab" href="#tab_1_1" aria-expanded="true">接口服务参数</a>
+					</li>
+					<li class="">
+						<a data-toggle="tab" href="#tab_1_2" aria-expanded="false">PUSH服务参数</a>
+					</li>
+				</ul>
+				<div class='tab-content'>
+					<div id="tab_1_1" class="tab-pane fade active in">
+						<div class="portlet-body">
+							<div class="table-toolbar">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="btn-group">
+														<button class="btn green" id="btn_sys_save">
+														保存 <i class="fa fa-plus"></i>
+														</button>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="btn-group pull-right">
+													</div>
+												</div>
+											</div>
+							</div>
+							<div class="row" id="paramlist">	
+								<div>正在加载参数配置信息...</div>				
+							</div>
+							<div class="table-toolbar">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="btn-group">
+														<button class="btn green" id="btn_sys_save_2">
+														保存 <i class="fa fa-plus"></i>
+														</button>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="btn-group pull-right">
+													</div>
+												</div>
+											</div>
+							</div>					
+						</div>
+					</div>
+					<div id="tab_1_2" class="tab-pane fade">
+						<div class="portlet portlet-body">
+							<div class="table-toolbar">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="btn-group">
+														<button class="btn green" id="btn_push_save">
+														保存 <i class="fa fa-plus"></i>
+														</button>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="btn-group pull-right">
+													</div>
+												</div>
+											</div>
+							</div>
+							<div class="row" id="im_paramlist">	
+								<div>正在加载参数配置信息...</div>				
+							</div>
+							<div class="portlet-title">
+								<div class="caption">
+									<span class="caption-helper">IM服务模块列表</span>
+									<span class="caption-subject font-green-sharp bold uppercase"></span>
+								</div>
+								<div class="actions">
+									<div class="btn-group">
+										<a onclick="SysParam.pushcodeMgr()" href="javascript:;" class="btn green-haze btn-sm">消息推送类型维护</a>
+									</div>
+									<div style="margin-left: 30px;" class="btn-group">
+										<a onclick="SysParam.addModule(this)" href="javascript:;" class="btn green-haze btn-sm">注册新模块</a>
+									</div>
+								</div>
+							</div>
+							<div class="row" id="im_modulelist">	
+								<div>正在加载模块配置信息...</div>				
+							</div>
+							<div class="table-toolbar">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="btn-group">
+														<button class="btn green" id="btn_push_save_2">
+														保存 <i class="fa fa-plus"></i>
+														</button>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="btn-group pull-right">
+													</div>
+												</div>
+											</div>
+							</div>					
+						</div>					
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+<div class="clearfix"></div>
+<div id="newmodule-dlg" class="portlet box green hide">
+			<div class="portlet-title">
+				<div class="caption">
+				  <i class="fa fa-gift"></i><label>注册新的IM服务模块</label><label style="color: rgb(204, 204, 204); margin-left: 20px; font-size: 12px;">请确保已在IM服务器上发布了该模块</label>
+				</div>
+				<div class="tools">
+					<a title="" data-original-title="" href="javascript:;" class="remove">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<!-- BEGIN FORM-->
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div style="display: none;" class="alert alert-danger display-hide">
+							<button class="close" data-close="alert"></button>
+							<label></label>
+						</div>
+						<div style="display: none;" class="alert alert-success display-hide">
+							<button class="close" data-close="alert"></button>
+							<label></label>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">模块名称<span aria-required="true" class="required">* </span></label>
+							<div class="col-md-2">
+								<input type="text" class="form-control" id="modulename" placeholder="请输入" maxlength="50">
+							</div>
+							<label class="col-md-2 control-label">启动参数</label>
+							<div class="col-md-5">
+								<input type="text" class="form-control" id="start_value" placeholder="请输入" maxlength="300">
+							</div>						
+						</div>						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button onclick="SysParam.saveModule()" type="button" id="btn_save" class="btn blue">确定</button>
+								<button onclick="$('#newmodule-form').remove()" type="button" id="btn_cancel" class="btn default">取消</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- END FORM-->
+			</div>
+</div>
+<div id="pushcode-dlg" class="portlet box green hide">
+			<div class="portlet-title">
+				<div class="caption">
+				  <i class="fa fa-gift"></i><label>消息推送业务代码维护</label><label style="color: rgb(204, 204, 204); margin-left: 20px; font-size: 12px;">请确保已在IM服务器上发布了相应模块</label>
+				</div>
+				<div class="tools">
+					<a title="" data-original-title="" href="javascript:;" class="remove">
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<!-- BEGIN FORM-->
+				<form action="#" class="form-horizontal">
+					<div class="form-body">
+						<div style="display: none;" class="alert alert-danger display-hide">
+							<button class="close" data-close="alert"></button>
+							<label></label>
+						</div>
+						<div style="display: none;" class="alert alert-success display-hide">
+							<button class="close" data-close="alert"></button>
+							<label></label>
+						</div>						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button onclick="SysParam.savepushcode()" type="button" id="btn_save" class="btn blue">确定</button>
+								<button onclick="$('#pushcode-form').remove()" type="button" id="btn_cancel" class="btn default">取消</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- END FORM-->
+			</div>
+</div>
+<script src="jscript/sysparam.js" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+	SysParam.init({});
+});
+</script>
+<script type="text/html" id="paramlist-tmpl">
+<div class="box green col-md-12" >
+	<div class="portlet-body flip-scroll">
+		<table class="table table-bordered table-striped table-condensed flip-content">
+				<thead class="flip-content">
+									<tr>
+										<th width="20%">参数名称</th>
+										<th>参数值</th>
+									</tr>
+				</thead>
+				<tbody>
+					{{each data}}
+						<tr id="{{$value.type}}_{{$value.param_name}}" value="{{$value.param_value}}">
+										<td width="20%"  style="line-height: 32px;">{{$value.param_name}}</td>
+										<td>
+											<div>
+												<input  style="background-color: #fff" type="text" maxlength="150" placeholder="请输入参数值" value="{{$value.param_value}}" class="form-control form-control-solid placeholder-no-fix">
+												{{if $value.param_name=="imserver"}}
+												<label style="color: red; font-size: 11px;">修改该参数的IP时，务必同步修改PUSH服务参数中的ERLANG_NODE参数！</label>
+												{{/if}}
+												{{if $value.param_name=='database_host_im' || $value.param_name=='database_port_im' || $value.param_name=='database_name_im' || $value.param_name=='database_user_im' || $value.param_name=='database_password_im'}}
+												<label style="color: red; font-size: 11px;">修改该参数时，务必同步修改PUSH服务参数中的odbc_server参数！</label>
+												{{/if}}												
+											</div>
+										</td>									
+						</tr>
+					{{/each}}
+						
+				</tbody>
+		</table>
+	</div>
+</div>
+</script>
+<script type="text/html" id="im_paramlist-tmpl">
+<div class="box green col-md-12" >
+	<div class="portlet-body flip-scroll">
+		<table class="table table-bordered table-striped table-condensed flip-content">
+				<thead class="flip-content">
+									<tr>
+										<th width="20%">参数名称</th>
+										<th>参数值</th>
+									</tr>
+				</thead>
+				<tbody>
+					{{each data}}
+						{{if $value!=null}}
+						<tr id="{{$value.type}}_{{$value.param_name}}" value="{{$value.param_value}}">
+										<td width="20%"  style="line-height: 32px;">{{$value.param_name}}</td>
+										<td>
+											<div>
+												<input  style="background-color: #fff" type="text" maxlength="150" placeholder="请输入参数值" value="{{$value.param_value}}" class="form-control form-control-solid placeholder-no-fix">
+											</div>
+										</td>									
+						</tr>
+						{{/if}}
+					{{/each}}
+						
+				</tbody>
+		</table>
+	</div>
+</div>
+</script>
+<script type="text/html" id="im_modulelist-tmpl">
+<div class="box green col-md-12" >
+	<div class="portlet-body flip-scroll">
+		<table class="table table-bordered table-striped table-condensed flip-content">
+				<thead class="flip-content">
+									<tr>
+										<th width="20%">模块名称</th>
+										<th>启动参数</th>
+									</tr>
+				</thead>
+				<tbody>
+					{{each data}}
+						{{if $value!=null}}
+						<tr id="{{$value.module_name}}" value="{{$value.start_value}}">
+										<td width="20%"  style="line-height: 32px;">{{$value.module_name}}</td>
+										<td>
+											<div>
+												<input  style="background-color: #fff" type="text" maxlength="300" placeholder="请输入启动参数配置" value="{{$value.start_value}}" class="form-control form-control-solid placeholder-no-fix">
+											</div>
+										</td>									
+						</tr>
+						{{/if}}
+					{{/each}}
+						
+				</tbody>
+		</table>
+	</div>
+</div>
+</script>
+<script type="text/html" id="im_codelist-tmpl">
+{{each data}}
+						<div class="form-group">
+							<label class="col-md-2 control-label">模块名称<span aria-required="true" class="required">* </span></label>
+							<div class="col-md-2">
+								<input type="text" value="{{$value.module_name}}" class="form-control" placeholder="请输入" maxlength="50">
+							</div>
+							<label class="col-md-2 control-label">业务代码<span aria-required="true" class="required">* </span></label>
+							<div class="col-md-5">
+								<input type="text" value="{{$value.codes}}" class="form-control" placeholder="请输入" maxlength="500">
+							</div>
+						</div>
+{{/each}}
+<div class="form-group">
+							<label class="col-md-2 control-label">模块名称<span aria-required="true" class="required">* </span></label>
+							<div class="col-md-2">
+								<input type="text" value="" class="form-control" placeholder="请输入" maxlength="50">
+							</div>
+							<label class="col-md-2 control-label">业务代码<span aria-required="true" class="required">* </span></label>
+							<div class="col-md-5">
+								<input type="text" value="" class="form-control" placeholder="请输入" maxlength="500">
+							</div>
+</div>
+</script>

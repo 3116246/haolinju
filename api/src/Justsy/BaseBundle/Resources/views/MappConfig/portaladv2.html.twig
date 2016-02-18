@@ -1,0 +1,211 @@
+﻿<ul class='adv_ul'>
+<li tag='1' check='1' class='adv_i advi_selected'><div class='i_tag1_active'></div></div><span>名称图标</span></li>
+<li tag='2' class='adv_i'><div class='i_tag2'></div><span>启动图片</span></li>
+<li tag='3' class='adv_i'><div class='i_tag3'></div><span>引导图片</span></li>
+<li tag='4' class='adv_i'><div class='i_tag4'></div><span>Logo版权</span></li>
+<li tag='5' class='adv_i'><div class='i_tag5'></div><span>编译发布</span></li>
+<li class='adv_i'><div class='i_tag3'></div><a class="down_mapp"  style="float:left;color:#5A5A5A;" target="blank"  href="{{path('JustsyBaseBundle_mappconfig_publishportaldown', {'eno':eno})}}">应用下载</a></li>
+</ul>
+<div class="adv_card">
+	<div tag='1' style="font-weight: bold;">
+		<div class="application_line" style="margin-left:0px;width:500px;margin-bottom:10px;">
+	     	<span style="padding-right:5px;color: #666666;">应用名称</span>
+	     	<input class="adv_res" restype='appname' resid="" order="" type="text" value="Wefafa" style="width:250px;" maxlength="20"/>
+	  	</div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;margin-bottom:10px;overflow:hidden;height:auto;">
+	    	<span style="padding-right:5px;color:#666666;">应用图标</span>
+	     	<div class="appicons">
+		     	<div style="width: 120px; float: left;" class=''><div><img class="adv_res" restype='icon120' style="width:120px;height:120px;" resid="" order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg'  src="{{ asset('bundles/fafatimewebase/images/icons2/app120.png')}}" appicon=1 /></div><center><span>120*120&nbsp;Retina</span></center></div>
+		     	<div style="width: 58px; float: left; margin-left: 80px; margin-top: 60px;"><div><img class="adv_res" resid="" restype='icon58' style="width:58px;height:58px;" order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/icons2/app58.png')}}" appicon=1 /></div><center><span>58*58</span></center></div>
+		     	<div style="width: 60px; float: left; margin-top: 20px; clear: both; margin-left: 30px;"><div><img class="adv_res" resid="" style="width:60px;height:60px;" restype='icon60' order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/icons2/app60.png')}}" appicon=1 /></div><center><span>60*60</span></center></div>
+		     	<div style="width: 29px; float: left; margin-top: 40px; margin-left: 125px;"><div><img class="adv_res" restype='icon29' style="width:29px;height:29px;" resid="" order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/icons2/app29.png')}}" appicon=1 /></div><center><span>29*29</span></center></div>
+	     	</div>
+	     	<div>* 注：点击图标可以进行图标更换</div>
+	  	</div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px; border-top: 1px solid rgb(204, 204, 204); ">
+	     	<span class="btn save_appname" style="margin-left: 200px; width: 80px; margin-top: 20px;">保存</span>     	
+	  	</div>
+	</div>
+<div tag='2' style="display:none;">
+	<p>为了增强应用程序启动时的用户体验，您应该提供启动图像。</p>
+	<p>当用户在主屏幕上点击您的应用程序图标时，会立即显示这个启动图像。</p>
+	<p style="color:#ccc">*上传图片必须严格符合以下尺寸要求。</p>
+	<div>
+		<div style="float:left;"><center><span style="color: rgb(0, 0, 0);">iPhone4</span></center><center><span style="color:#ccc">640*960px</span></center><div><img style="width:160px;" title="点击可更换图片" class="adv_res" resid="" restype='start_iphone4' order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/icons2/pic_2_2.png')}}" /></div></div>
+		<div style="float:left;margin-left:20px;"><center><span style="color: rgb(0, 0, 0);">iPhone5</span></center><center><span style="color:#ccc">640*1136px</span></center><div><img style="width:160px;" title="点击可更换图片" class="adv_res" resid="" restype='start_iphone5' order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/icons2/pic_2_3.png')}}"/></div></div>
+		<div style="float:left;margin-left:20px;"><center><span style="color: rgb(0, 0, 0);">Andriod</span></center><center><span style="color:#ccc">720*1280px</span></center><div><img style="width:180px;" title="点击可更换图片" class="adv_res" resid="" restype='start_android' order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/icons2/pic_2_4.png')}}"/></div></div>
+	</div>
+	<div style="float: left; width: 100%; color: rgb(102, 102, 102);">* 注：点击图片可以进行更换</div>
+</div>
+<div tag='3' style="display:none;">
+	<p>引导图是应用程序在首次安装时加载的画面，最多可以放4幅图片。</p>
+	<p>通常引导图是用户介绍应用相关的功能及特点。</p>
+	<p>为适配不同的屏幕分辨率，您可以上传三种不同尺寸的引导图</p>
+	<ul class="fenbianlvs">
+		<li tag='1'><div class='lvs_div lvs_selected' check='1'>640*960px</div></li>
+		<li tag='2'><div class='lvs_div'>640*1136px</div></li>
+		<li tag='3'><div class='lvs_div'>720*1280px</div></li>
+	</ul>
+	<div style="margin-left:-30px;" class="guidecard" tag='1'>
+		<ul class="guide_ul">
+			<li><img restype="guide640_960" style="width:160px;height:240px;" class='adv_res' order="1" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg'  src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>1</span></center></li>
+			<li><img restype="guide640_960" style="width:160px;height:240px;" class='adv_res' order="2" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>2</span></center></li>
+			<li><img restype="guide640_960" style="width:160px;height:240px;" class='adv_res' order="3" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>3</span></center></li>
+			<li><img restype="guide640_960" style="width:160px;height:240px;" class='adv_res' order="4" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>4</span></center></li>
+			
+		</ul>
+	</div>
+	<div style="margin-left:-30px;display:none;" class="guidecard" tag='2'>
+		<ul class="guide_ul">
+			<li><img restype="guide640_1138" style="width:160px;height:240px;" class='adv_res' order="1" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>1</span></center></li>
+			<li><img restype="guide640_1138" style="width:160px;height:240px;" class='adv_res' order="2" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>2</span></center></li>
+			<li><img restype="guide640_1138" style="width:160px;height:240px;" class='adv_res' order="3" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>3</span></center></li>
+			<li><img restype="guide640_1138" style="width:160px;height:240px;" class='adv_res' order="4" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>4</span></center></li>
+		</ul>
+	</div>
+	<div style="margin-left:-30px;display:none;" class="guidecard" tag='3'>
+		<ul class="guide_ul">
+			<li><img restype="guide720_1280" style="width:160px;height:240px;" class='adv_res' order="1" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>1</span></center></li>
+			<li><img restype="guide720_1280" style="width:160px;height:240px;" class='adv_res' order="2" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>2</span></center></li>
+			<li><img restype="guide720_1280" style="width:160px;height:240px;" class='adv_res' order="3" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>3</span></center></li>
+			<li><img restype="guide720_1280" style="width:160px;height:240px;" class='adv_res' order="4" resid="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg' src="{{ asset('bundles/fafatimewebase/images/notulie.PNG')}}"/><center><span>4</span></center></li>
+		</ul>
+	</div>
+	<div style="float: left; width: 100%; color: rgb(102, 102, 102);">* 注：点击图片可以进行图片更换</div>
+</div>
+<div tag='4' style="display:none;">
+	<div style="margin-top: 20px; overflow: hidden;">
+		<div style="float:left;">
+			<p style="font-weight: 700; margin-bottom: 30px;">应用Logo</p>
+			<p style="margin: 0px; color: rgb(187, 187, 187);">长度不超过600px</p>
+			<p style="margin: 0px; color: rgb(187, 187, 187);">高度不超过200px</p>
+		</div>
+		<div style="float: left; margin-left: 120px;">
+			<div style="background-color: #0088cc; width:288px;"><center><img style="max-width:180px;max-height:80px;width:180px;height:80px;" restype="logo" resid="" class='adv_res' order="" data-toggle='modal' data-backdrop='static' href='#app_res_selecetDlg'  src="{{ asset('bundles/fafatimewebase/images/icons2/pic_4_2_logo.png')}}"/></center></div><center><span style='color:#CCC;'>（logo图片主要用于登录页、版权信息页、注册页等）</span></center>
+		</div>
+	</div>
+	<div  style="margin-top:50px">
+		<p style="font-weight: 700;">版权信息</p>
+		<div  style="overflow: hidden; margin-left: 60px;">
+			<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;">
+	     <span style="padding-right:5px;">企业名称：</span>
+	     <input type="text" style="margin-left:20px;width:250px;ime-mode:Disabled;"  class="sortid" readonly="readonly"  value="{{enoinfo['ename']}}" />
+	  	</div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;">
+	     <span style="padding-right:5px;">客户电话：</span>
+	     <input type="text" style="margin-left:20px;width:250px;ime-mode:Disabled;"  class="sortid" readonly="readonly"  value="{{enoinfo['telephone']}}" />
+	  	</div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;">
+	     <span style="padding-right:5px;">官方网站：</span>
+	     <input type="text" style="margin-left:20px;width:250px;ime-mode:Disabled;" readonly="readonly"  class="sortid"  value="{{enoinfo['ewww']}}" />
+	  	</div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;">
+	     <span style="padding-right:5px;">版权标识：</span>
+	     <input restype="identify" class='adv_res' resid="" order="" type="text" style="margin-left:20px;width:302px;ime-mode:Disabled;" maxlength="20"  class="sortid"  value="" />
+	  	</div>
+		</div>
+		<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px; border-top: 1px solid rgb(204, 204, 204); ">
+	     	<span class="btn save_identify" style="margin-left: 200px; width: 80px; margin-top: 20px;">保存</span>	    	
+	  	</div>
+	</div>
+</div>
+<div tag='5' style="display:none;">
+	<div style="overflow:hidden;margin-top: 20px; margin-left: 40px;">
+		<div class="android_tag tag_device_active">
+		<div style="width: 30px; height: 30px; background-image: url('/bundles/fafatimewebase/images/mapp_icons.png'); float: left; background-position: 0px -870px; margin-left: 10px; margin-top: 7px;"></div>
+		<div style="float: left; margin-left: 20px;"><p style="padding: 0px; margin: 0px;">Android</p><p style="margin: 0px;">v1.0.0</p></div></div>
+		<div class="ios_tag">
+		<div style="width: 30px; height: 30px; background-image: url('/bundles/fafatimewebase/images/mapp_icons.png'); float: left; background-position: -32px -870px; margin-left: 10px; margin-top: 7px;"></div>
+		<div style="float: left; margin-left: 20px;"><p style="padding: 0px; margin: 0px;">iPhone</p><p style="margin: 0px;">v1.0.0</p></div></div>
+	</div>
+	<div class='devicepublish' tag='1'>
+		<div class="divdeploying" style="margin-left:40px; display:none;">
+			<h1 style="font-size:14px; margin: 100px 0 20px 0;font-weight: bold;">正在编译发布中，发布完成大约需要10分钟，请耐心等待...</h1>
+			<div class="progress progress-striped active" style="width:60%;">
+			    <div class="bar" style="width: 60%;"></div>
+		    </div>
+		</div>
+		<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;margin-left: 40px;margin-top: 40px;">
+	     <span style="padding-right:5px;">版本号：</span>
+	     <input type="text" style="margin-left:20px;width:120px;ime-mode:Disabled;margin-left: 35px;width: 150px;" restype="androidversion" class='adv_res' value="1.0.0" resid="" order=""  maxlength="20" />
+	  </div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;margin-left: 40px;">
+	     <span style="padding-right:5px;">移动门户简介：</span>
+	     <div style="overflow: hidden; margin-top: 2px;width: 315px;">
+	     		<textarea restype="androiddesc" class='adv_res' resid="" order="" style="width: 300px; height: 180px;"></textarea>
+	     		<div><div tag="1" class="before_save">保存</div>
+	     			   <div device="android" class="after_publish {%if isCanPublish=='1'%}can_publish{%endif%}" role={{app.user.eno_level}}>
+	     			      <span>编译发布</span>	  
+	     			      <div class="popover fade top in" style="top:384px;left:808px;display:none;">
+	     			      	 <div class="arrow"></div>
+	     			      	 <div class="popover-inner" style="text-align:left;" >
+	     			      	 	 <h3 class="popover-title">提示</h3>
+	     			      	 	 <div class="popover-content">
+	     			      	 	 	 <p><h5 style="font-size:14px;font-weight: bold;">开始编译并发布，请确认！</h5><input type="button" onclick="PortaladvObj.publish_OnClick(this)" value="编译并发布" class="btn btn-primary"></p>
+	     			      	 	 </div>
+	     			      	 </div>
+	     			       </div>	     			      	   			    
+	     			   </div>
+	     	  </div>
+	     		<div style="overflow: hidden; float: left; background-color: rgb(204, 204, 204); margin-top: 10px; border: 1px solid rgb(0, 136, 204); border-radius: 4px; padding: 10px; width: 292px;{%if isCanPublish=='1'%}display:none;{%endif%}">
+	     		<p style="margin:0;">只有升级为付费会员企业才能使用自助编译发布功能。</p>
+	     		<p style="margin:0;">定制化属于自己企业形象标识的移动门户。</p>
+	     		<div style="width: 30px; height: 30px; float: left;"><div></div><div style="border: 1px solid rgb(0, 136, 204); color: rgb(255, 255, 255); float: right; padding: 6px 20px; margin-right: 40px;">升级会员</div></div>
+	     		</div>
+	     </div>
+	     <span class="tranparentspan" {% if isCanPublish=="1"%}style="display:none;"{%endif%}></span>
+	  	</div>
+	</div>
+	<div class='devicepublish' tag='2' style="display:none;">
+		<div class="divdeploying" style="margin-left:40px; display:none;">
+			<h1 style="font-size:14px; margin: 100px 0 20px 0;font-weight: bold;">正在编译发布中，发布完成大约需要10分钟，请耐心等待...</h1>
+			<div class="progress progress-striped active" style="width:60%;">
+			    <div class="bar" style="width: 60%;"></div>
+		    </div>
+		</div>
+		<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;margin-left: 40px;margin-top: 40px;">
+	     <span style="padding-right:5px;">版本号：</span>
+	     <input type="text" style="margin-left:20px;width:120px;ime-mode:Disabled;margin-left: 35px;width: 150px;" restype="iosversion" class='adv_res' resid="" order="" value="1.0.0" maxlength="20" />
+	  	</div>
+	  	<div class="application_line" style="margin-left:0px;width:500px;height:28px;margin-bottom:10px;margin-left: 40px;">
+	     <span style="padding-right:5px;">移动门户简介：</span>
+	     <div style="overflow: hidden; margin-top: 2px;width: 315px;">
+	     		<textarea restype="iosdesc" class='adv_res' resid="" order="" style="width: 300px; height: 180px;"></textarea>
+	     		<div><div tag="2" class="before_save">保存</div>
+	     			   <div device="ios" class="after_publish {%if isCanPublish=='1'%}can_publish{%endif%}" role={{app.user.eno_level}}>
+	     			   	  <span>编译发布</span>
+	     			   	  <div class="popover fade top in" style="top:384px;left:808px;display:none;">
+	     			      	 <div class="arrow"></div>
+	     			      	 <div class="popover-inner" style="text-align:left;" >
+	     			      	 	 <h3 class="popover-title">提示</h3>
+	     			      	 	 <div class="popover-content">
+	     			      	 	 	 <p><h5 style="font-size:14px;font-weight: bold;">开始编译并发布，请确认！</h5><input type="button" onclick="PortaladvObj.publish_OnClick(this)" value="编译并发布" class="btn btn-primary"></p>
+	     			      	 	 </div>
+	     			      	 </div>
+	     			       </div>	     			       
+	     			   </div></div>
+	     		<div style="overflow: hidden; float: left; background-color: rgb(204, 204, 204); margin-top: 10px; border: 1px solid rgb(0, 136, 204); border-radius: 4px; padding: 10px; width: 292px;{%if isCanPublish=='1'%}display:none;{%endif%}">
+	     		<p style="margin:0;">只有升级为付费会员企业才能使用自助编译发布功能。</p>
+	     		<p style="margin:0;">定制化属于自己企业形象标识的移动门户。</p>
+	     		<div style="width: 30px; height: 30px; float: left;"><div></div><div style="border: 1px solid rgb(0, 136, 204); color: rgb(255, 255, 255); float: right; padding: 6px 20px; margin-right: 40px;">升级会员</div></div>
+	     		</div>
+	     </div>
+	     <span class="tranparentspan" {% if isCanPublish=="1"%}style="display:none;"{%endif%}></span>
+	  	</div>
+	</div>
+</div>
+</div>
+<script style="text/javascript" language="javascript">
+	if(PortaladvObj){
+		PortaladvObj.init({
+			set_res_url:"{{path('JustsyBaseBundle_mappconfig_setadv')}}",
+			get_res_url:"{{path('JustsyBaseBundle_mappconfig_getadv')}}",
+			del_res_url:"{{path('JustsyBaseBundle_mappconfig_deladv')}}",
+			publish_url:"{{path('JustsyBaseBundle_mappconfig_publishportal')}}",
+			check_publish_url : "{{path('JustsyBaseBundle_mappconfig_checkpublishportal')}}",
+			publish_down_url : "{{path('JustsyBaseBundle_mappconfig_publishportaldown', {'eno':eno})}}",
+			web_file_path:"{{FILE_WEBSERVER_URL}}",
+			portalData:{{rows|raw}}
+		});
+	}
+</script>

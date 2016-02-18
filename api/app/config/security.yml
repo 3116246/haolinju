@@ -1,0 +1,159 @@
+security:
+    encoders:
+#        Symfony\Component\Security\Core\User\User: plaintext
+        Justsy\BaseBundle\Login\UserSession: sha512
+        
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+#        in_memory:
+#            users:
+#                user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+#                admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        user_provider:
+            id: we_user_provider
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js|upload)/
+            security: false
+
+        login:
+            pattern:  ^/login$
+            security: false
+
+        login_ref:
+            pattern:  ^/login_ref$
+            security: false
+
+        autologin:
+            pattern:  ^/mb/msgpush(/.*)*$
+            security: false             
+            
+        register:
+            pattern:  ^/register(/.*)*$
+            security: false
+            
+        active:
+            pattern:  ^/active(/.*)*$
+            security: false
+            
+        getfile:
+            pattern:  ^/getfile(/.*)*$
+            security: false     
+        uploadfile:
+            pattern:  ^/uploadfile(/.*)*$
+            security: false
+        deletefile:
+            pattern:  ^/deletefile(/.*)*$
+            security: false            
+        viewcred:
+            pattern:   ^/viewcred(/.*)$
+            security: false
+            
+        qr:
+            pattern:  ^/qr(/.*)*$
+            security: false
+            
+        api:
+            pattern:  ^/api(/.*)*$
+            security: false
+
+        publicpage:
+            pattern:  ^/app/check.php$
+            security: false
+
+        setupfile:
+            pattern:  ^/setupfile(/.*)*$
+            security: false
+
+        interface_logincheck:
+            pattern:  ^/interface/logincheck$
+            security: false
+            
+        interface_getserverdifftime:
+            pattern:  ^/interface/getserverdifftime$
+            security: false
+            
+        interface_emailtostaffs:
+            pattern:  ^/interface/emailtostaffs$
+            security: false
+            
+        interface_mobiletostaffs:
+            pattern:  ^/interface/mobiletostaffs$
+            security: false
+
+        interface_nametostaffs:
+            pattern:  ^/interface/nametostaffs$
+            security: false
+
+        interface_findpwd:
+            pattern:  ^/interface/validcode$
+            security: false
+
+        interface_resetpwd:
+            pattern:  ^/interface/resetpwd$
+            security: false
+            
+        interface_mobileregister:
+            pattern:  ^/interface/mobileregister(/.*)*$
+            security: false
+            
+        help:
+            pattern:  ^/help(/.*)*$
+            security: false  
+        home:
+            pattern:  ^/home(/.*)*$
+            security: false              
+        default:
+            pattern:  ^/default$
+            security: false                        
+        webim:
+            pattern:  ^/webim(/.*)*$
+            security: false
+        getfaces:
+            pattern:  ^/get/faces$
+            security: false
+        share_login:
+            pattern:  ^/share/sharelogin$
+            security: false
+        share:
+            pattern:  ^/share(/.*)*$
+            security: true
+            form_login:
+                check_path: /share/sharelogin_check
+                login_path: /share/sharelogin
+                use_forward: true
+            remember_me:
+              key: "%secret%"
+              lifetime: 604800  #auto login in 7 day
+              path: /
+              domain: ~
+
+        mca_public:  #micro check atten
+            pattern:  ^/microapp(/.*)*$
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            form_login:
+                check_path: /login_check
+                login_path: /login
+                use_forward: true
+            logout:
+                path:   /logout
+                target: /
+            remember_me:
+              key: "%secret%"
+              lifetime: 604800  #auto login in 7 day
+              path: /
+              domain: ~ # Defaults to the current domain from $_SERVER
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+.fafaocscontent{ padding-top:3px; padding-bottom:3px;}
+.fafaocscontent A:link{color: #0057a0;text-decoration: none;}
+.fafaocscontent A:visited{color: #0057a0;text-decoration: none;}
+.fafaocscontent A:hover{color: #0093d8;text-decoration: none;}
+.fafaocscontent A:active{color: #0057a0;text-decoration: none;}
+.fafaocscontent ul{ width:100%; list-style:none;margin:0px;padding:0px}
+.fafaocscontent li{ width:100%; list-style:none; height:28px; line-height:28px; border-bottom:#eee 1px solid; text-align:left;}
+.fafaocscontent li span.status{ float:left; display:block; padding-top:3px;}
+.fafaocscontent li span.phone{ float:left; display:block; padding-top:5px; padding-right:3px;}
+

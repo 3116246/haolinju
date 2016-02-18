@@ -1,0 +1,13 @@
+{% extends 'JustsyBaseBundle:Active:active_reg_step1.html.twig' %}
+{% block invite %}
+<div class="invitedright"><ul>
+  <li><span class="photo"><img src="{{photo}}" width="60" height="60" style="margin-left:5px"></span><span class="title"><b>{{nick}} <span style="color:#ff0000">邀请您加入FaFa社交网络</span></b></span>
+  <span class="text">在这里，您可以与您的同事分享动态、协同工作、实时沟通...</span></li></ul>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script language="javascript">
+$("#contentForm").attr("action","{{ path('JustsyBaseBundle_active_inv_s2') }}");
+</script>
+{% endblock %}

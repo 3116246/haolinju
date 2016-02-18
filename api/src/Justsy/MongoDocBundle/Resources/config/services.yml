@@ -1,0 +1,7 @@
+parameters:
+#    fa_fa_time_we_mongo_doc.example.class: Justsy\MongoDocBundle\Example
+
+services:
+#    fa_fa_time_we_mongo_doc.example:
+#        class: %fa_fa_time_we_mongo_doc.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,73 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_levelrule %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">等级规则</div>
+<div class="ruletitle">积分规则</div>
+<table width="100%" cellspacing="0" cellpadding="0" border="1" class="gradetable">
+  <tbody><tr>
+    <td width="25%" class="gradetd"><span class="tabletitle">项目</span></td>
+    <td width="25%" class="gradetd"><span class="tabletitle">积分</span></td>
+    <td width="25%" class="gradetd"><span class="tabletitle">项目</span></td>
+    <td width="25%" class="gradetd"><span class="tabletitle">积分</span></td>
+  </tr>
+  <tr>
+    <td class="gradetd">每日在线超过半小时</td>
+    <td class="gradetd">0.5</td>
+    <td class="gradetd">每日在线超过2小时（含半小时）</td>
+    <td class="gradetd">2</td>
+  </tr>
+   <tr>
+    <td class="gradetd">每日前5次 发贴</td>
+    <td class="gradetd">0.5</td>
+    <td class="gradetd">每日前5次 上传文档</td>
+    <td class="gradetd">0.5</td>
+  </tr>
+   <tr>
+    <td class="gradetd">每日前5次 评论/回答</td>
+    <td class="gradetd">0.1</td>
+    <td class="gradetd">每日前5次 投票</td>
+    <td class="gradetd">0.1</td>
+  </tr>
+   <tr>
+    <td class="gradetd">成功邀请他人加入微发发</td>
+    <td class="gradetd">2</td>
+    <td class="gradetd">关注他人</td>
+    <td class="gradetd">0.2</td>
+  </tr>
+  <tr>
+    <td class="gradetd">收藏</td>
+    <td class="gradetd">0.1</td>
+    <td class="gradetd">加入外部圈子</td>
+    <td class="gradetd">5</td>
+  </tr>
+  <tr>
+    <td class="gradetd">加入Wefafa</td>
+    <td class="gradetd">2</td>
+    <td class="gradetd"></td>
+    <td class="gradetd"></td>
+  </tr>
+</tbody></table>
+<div style=" padding-top:10px;" class="ruletitle">微发发等级与积分对应表 </div>
+<table width="100%" cellspacing="0" cellpadding="0" border="1" class="gradetable">
+  <tbody>
+    <tr>
+      <td width="16.67%" class="gradetd"><span class="tabletitle">等级</span></td>
+      <td width="16.67%" class="gradetd"><span class="tabletitle">积分</span></td>
+      <td width="16.67%" class="gradetd"><span class="tabletitle">等级</span></td>
+      <td width="16.67%" class="gradetd"><span class="tabletitle">积分</span></td>
+      <td width="16.67%" class="gradetd"><span class="tabletitle">等级</span></td>
+      <td width="16.67%" class="gradetd"><span class="tabletitle">积分</span></td>
+    </tr>
+    {% for i in 0..9 %}
+    <tr>
+      {% for j in 1..3 %}
+      <td class="gradetd"><b>{{ i*3+j }}</b></td>
+      <td class="gradetd">{{ ExperienceLevels[i*3+j] }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

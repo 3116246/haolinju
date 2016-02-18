@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Wefafa移动应用平台—企业移动门户|移动开发平台|移动信息化专家</title>
+<meta name="keywords" content="企业移动应用平台，移动开发平台，企业移动门户，移动信息化，移动信息化，移动中间件，企业移动互联，大数据，移动OA，移动CRM，Wefafa"/>
+<meta name="description" content="Wefafa移动应用平台，是一个集企业移动门户、快速开发平台和大数据消息网关于一体，帮助企业快速实现原有信息系统的移动化升级，助力企业低成本进入移动互联网时代的移动技术平台。Wefafa拥有国内目前唯一支持企业原有信息系统在保持私网IP、内网部署的物理安全环境中，仍然能够实现移动化访问的专利技术方案"/>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/carouFredSel.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/index.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/html5.js')}}"></script>
+<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" />
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js"></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服"></script>
+</head>
+<body>
+<div class="nav clearfix">
+	<div class="nav-content">
+		<h1 class="left" href="javascript:;">Wefafa移动应用平台</h1>		
+		<div class="right line-li">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}" class="hover" >首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+				<li class="we_btn"><a target="_blank" href="{{path('JustsyBaseBundle_default')}}">登录</a></li>              
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="header clearfix">
+	<div class="hd-c">
+		<div class="banner">
+			<ul>
+					<li class="pic-intro" >
+						<div class="text">
+							<a id="start_btn" class="start" target="_blank" href="{{path('JustsyBaseBundle_regpage')}}" title="注册Wefafa帐号"></a>
+						</div>
+						<div class="pic">
+							<img src="{{ asset('bundles/fafatimewebase/images/banner-a.png')}}" class="png-24" alt="banner" />
+						</div>
+					</li>
+					<li class="pic-intro" style="display: none;">
+						<div class="text">
+							<a id="start_btn" class="start"target="_blank" href="{{path('JustsyBaseBundle_regpage')}}"  title="注册Wefafa帐号"></a>
+						</div>
+						<div class="pic">
+							<img src="{{ asset('bundles/fafatimewebase/images/banner-b.png')}}" class="png-24" alt="banner" />
+						</div>
+					</li>
+					<li class="pic-intro" style="display: none;">
+						<div class="text">
+							<a id="start_btn" class="start" target="_blank" href="{{path('JustsyBaseBundle_regpage')}}"  title="注册Wefafa帐号"></a>
+						</div>
+						<div class="pic">
+							<img src="{{ asset('bundles/fafatimewebase/images/banner-c.png')}}" class="png-24" alt="banner" />
+						</div>
+					</li>
+			</ul>
+			<div class="frame">
+				<span class="changing-over">
+					<a href="javascript:;" class="now"></a>
+					<a href="javascript:;" ></a>
+					<a href="javascript:;" class="last"></a>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- trade -->
+<div class="content clearfix">
+		<div id="notice-panel">
+			<div style="width:700px; margin:0 auto; position:relative; color:#777777; font-weight:bold">
+			Wefafa移动应用平台，是经大量客户验证的，目前企业实现移动信息化的最佳途径！
+			</div>
+		</div>
+		<div class="value-content">
+			<dl class="clearfix">
+				<dd class="vborder">
+					<h3>最快实现方式</h3>		
+					<p>效率提升60%</p>			
+					<div class="fimg icon value_1"></div>
+					<ul>
+						<li>无需开发、测试、适配、发布手机端</li>
+						<li>全部信息系统只需一个统一移动门户</li>
+						<li>很多业务功能可直接在移动端使用</li>
+					</ul>
+				</dd>
+				<dd class="vborder">
+					<h3>最低成本支出</h3>		
+					<p>成本降低80%</p>			
+					<div class="fimg icon value_2"></div>
+					<ul>
+						<li>降低原生或中间件开发漫长的时间成本</li>
+						<li>只需专注于业务接口开发降低人力成本</li>
+						<li>主动推送、个性化定制等降低使用成本</li>
+					</ul>
+				</dd>
+				<dd>
+					<h3>最高安全保障</h3>		
+					<p>三重安全机制</p>			
+					<div class="fimg icon value_3"></div>
+					<ul>
+						<li>只需内网IP确保信息系统的物理安全</li>
+						<li>全程TLS加密确保信息传输的链路安全</li>
+						<li>内置移动设备管理确保客户端数据安全</li>
+					</ul>
+				</dd>
+			</dl>
+		</div>		
+		<div class="line"></div>
+		<div class="feature-content">
+			<dl class="clearfix">
+				<dd class="fun_1">
+					<h2>统一移动门户</h2>
+					<h3>只需一个移动APP，即可对接企业所有后端信息系统</h3>
+					<p>企业可以轻松建立自己的统一移动门户，将企业PC端所有后端信息系统集成到一个移动客户端上，实现单点登录，按需订阅，实时推送，信息找人，移动办公……移动门户内置企业微信、企业微博、组织机构、通讯录等沟通与协作功能。移动门户可以根据企业需求自主调整界面风格。</p>
+				</dd>
+			</dl>
+			<dl class="clearfix">
+				<dd class="fun_2_text">
+					<h2 class="t2">快速开发平台</h2>
+					<h3>手机端无需任何开发，即可实现企业原有信息系统移动化升级</h3>
+					<p class="t2">让应用开发者将所有精力专注于应用接口开发，而不需考虑手机端的功能实现。无论是通知公告、审批任务、LBS签到、现场图片采集等均只需通过快速开发平台配置与业务系统相关的接口即可轻松实现。企业业务流程不断变化，手机端应用功能总能实时响应业务需求的变化。</p>
+				</dd>
+				<dd class="fun_2">
+				</dd>
+			</dl>
+			<dl class="clearfix">
+			   <dd class="fun_3">
+					<h2>大数据消息网关</h2>
+					<h3>在内网环境下，打通后端信息系统与移动终端间的消息通道</h3>
+					<p>通过大数据消息网关及其部署在企业内网的业务代理，打通企业后端信息系统到移动终端间，基于移动互联网的安全消息通道，让企业原有信息系统无需配置外部IP地址，在防火墙内网即可实现移动信息化，不仅能确保企业核心业务系统的物理安全，还能兼顾与合作伙伴间的移动应用协作。</p>
+				</dd>			
+			</dl>
+		</div>
+</div>
+{% render "JustsyBaseBundle:Home:footer"%}
+<script type="text/javascript">
+    (function() {
+     var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+     .attr("title", $backToTopTxt).click(function() {
+         $("html, body").animate({ scrollTop: 0 }, 120);
+         }), $backToTopFun = function() {
+     var st = $(document).scrollTop(), winh = $(window).height();
+     (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+     //IE6下的定位
+     if (!window.XMLHttpRequest) {
+     $backToTopEle.css("top", st + winh - 166);    
+     }
+     };
+     $(window).bind("scroll", $backToTopFun);
+     $(function() { $backToTopFun(); });
+     })();
+</script><div class="backToTop" title="返回顶部" style="display: none;"></div>
+</body>
+</html>

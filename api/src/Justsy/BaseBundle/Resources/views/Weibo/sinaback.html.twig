@@ -1,0 +1,15 @@
+<html>
+<body>
+<div>
+{% if s=='1'%}
+帐号添加成功！
+<script language='javascript'>
+top.location.href=top.location.href;
+</script>
+{%else%}
+帐号添加失败！<br/>
+error:{{m}}
+{% endif%}
+</div>
+</body>
+</html>

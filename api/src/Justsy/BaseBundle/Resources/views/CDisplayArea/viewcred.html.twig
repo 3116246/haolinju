@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>欢迎查看企业证件</title>
+<script src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script src="{{ asset('bundles/fafatimewebase/js/jquery.rotate.1-1.js')}}"></script>
+</head>
+<body style="margin:0;">
+		<input type="button" onclick=" $('#img').rotateLeft(90);" value="向左转90度" />&nbsp;&nbsp;
+    <input type="button" onclick=" $('#img').rotateRight(90);" value="向右转90度" /></br>
+    <a style="display:inline-block;text-align:center; vertical-align:middle;">
+    <img src="{{ FILE_WEBSERVER_URL }}image/original/{{ id }}" id="img" style="width:auto;height:auto;vertical-align:middle;" />
+   </a>
+</body>
+</html>

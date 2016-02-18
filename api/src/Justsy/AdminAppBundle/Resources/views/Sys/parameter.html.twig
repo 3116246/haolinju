@@ -1,0 +1,176 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style type="text/css">
+  .parameter_area    { float:left;padding-top:20px;width:100%;cursor:default;}
+  .parameter_content { float:left;padding-left:30px;padding-top:10px;width:900px;}
+  .parameter_panel   { cursor:default;float:left;margin: 8px 0 0;padding: 0;}
+  .parameter_panel>div { float:left;height:30px;line-height:30px;margin-bottom:10px;width:100%;}
+  .parameter_title { color: #cc3300;font-size: 18px;font-weight: bold;padding-left: 10px;letter-spacing:10px;text-align: center;}
+  .parameter_hint  { color: #cc3300;float: left;height: 40px;line-height: 40px;max-width: 380px;padding-left: 30px;width: 380px;}
+  .parameter_botton { height: 40px;line-height: 40px;padding: 0 20px; }
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/parameter.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="parameter_area" >
+	<div class="mb_menu_area">
+		 <span onclick="parameter.toggle(this)" parameter_type="contract" class="mb_menu_active">合同提醒参数</span>
+		 <span onclick="parameter.toggle(this)" parameter_type="birthday" class="mb_menu">生日提醒参数</span>
+  </div>
+  <div class="parameter_content">
+  	<div id="paraneter_content1" para_type="contract">
+		  <div class="parameter_panel" id="parameter_type1">
+		  	 <div class="parameter_title" style="margin-bottom:20px;">合同到期提醒</div>
+		  	 <div style="padding-left:28px;">
+		  	 	  <span style="float:left;width:140px;">合同到期提前：</span>
+		  	 	  <input class="mb_textbox" id="text_number1" style="height:22px;line-height:22px;float:left;text-align:center;margin:6px 8px 0 0; width: 100px;">
+		  	 	  <select class="mb_combox" id="combox_unit1">
+		  	 	  	 <option value=""></option>
+		  	 	  	 <option value="day">天</option>
+		  	 	  	 <option value="moth">月</option>
+		  	 	  </select>
+		  	 	  <span>开始提醒。</span>
+		  	 </div>
+		  	 <div style="padding-left:28px;">
+		  	 	  <span style="float:left;width:140px;">提醒消息接收对象：</span>
+		  	 	  <label style="float:left;padding-right:20px;font-weight:100;">
+		  	 	      <input checked="checked" id="check_self1" type="checkbox" style="float:left;margin-top:10px;" /><span>签订合同人员</span>
+		  	 	  </label>
+		  	 	  <label style="float:left;padding-right:20px;font-weight:100;">
+		  	 	      <input type="checkbox" id="check_org1" style="float:left;margin-top:10px;" /><span>上级部门负责人</span>
+		  	 	  </label>
+		  	 	  <span style="float:left;">合同管理人员：</span>
+		  	 	  <input class="mb_textbox" disabled="disabled" style="height:22px;line-height:22px;float:left;width:295px;margin-top:6px;">
+		  	 </div>
+		  	 <div style="padding-left:28px;">
+		  	 	  <span style="float:left;width:140px;">合同到期提醒消息：</span>
+		  	 	  <input class="mb_textbox" id="text_sendmessage1" style="height:22px;line-height:22px;float:left;width:650px;margin-top:6px;">
+		  	 </div>
+		  	 <div style="padding-left:28px;" id="sendtype1">
+		  	 	 <span style="float:left;width:140px;">消息提醒方式：</span>
+		  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+		  	 	    <input type="checkbox" value="1" checked="checked" style="float:left;margin-top:10px;" />
+		  	 	    <span>IM消息</span>
+		  	 	 </label>
+		  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+		  	 	    <input type="checkbox" value="2" style="float:left;margin-top:10px;" />
+		  	 	    <span>手机短信</span>
+		  	 	 </label>
+		  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+		  	 	    <input type="checkbox" value="3" style="float:left;margin-top:10px;" />
+		  	 	    <span>电子邮件</span>
+		  	 	 </label>	  	 	 	  	 	 
+		  	 </div>
+		  </div>
+		  <div class="parameter_panel" id="parameter_type2">
+		  	 <div  class="parameter_title" style="margin-bottom:20px;">合同转正提醒</div>
+		  	 <div style="padding-left:28px;">
+		  	 	  <span style="float:left;width:140px;">合同转正提前：</span>
+		  	 	  <input class="mb_textbox" id="text_number2" style="height: 22px; line-height: 22px; float: left; text-align: center; margin:6px 8px 0 0; width:100px;">
+		  	 	  <select class="mb_combox" id="combox_unit2">
+		  	 	  	 <option value=""></option>
+		  	 	  	 <option value="day">天</option>
+		  	 	  	 <option value="moth">月</option>
+		  	 	  </select>
+		  	 	  <span>开始提醒。</span>
+		  	 </div>
+		  	 <div style="padding-left:28px;">
+		  	 	  <span style="float:left;width:140px;">提醒消息接收对象：</span>
+		  	 	  <label style="float:left;padding-right:20px;font-weight:100;">
+		  	 	      <input checked="checked" id="check_self2" type="checkbox" style="float:left;margin-top:10px;" /><span>签订合同人员</span>
+		  	 	  </label>
+		  	 	  <label style="float:left;padding-right:20px;font-weight:100;">
+		  	 	      <input type="checkbox" id="check_org2" style="float:left;margin-top:10px;" /><span>上级部门负责人</span>
+		  	 	  </label>
+		  	 	  <span style="float:left;">合同管理人员：</span>
+		  	 	  <input class="mb_textbox" disabled="disabled" style="height:22px;line-height:22px;float:left;width:295px;margin-top:6px;">
+		  	 </div>
+		  	 <div style="padding-left:28px;">
+		  	 	  <span style="float:left;width:140px;">合同转正提醒消息：</span>
+		  	 	  <input class="mb_textbox" id="text_sendmessage2" style="height:22px;line-height:22px;float:left;width:650px;margin-top:6px;">
+		  	 </div>
+		  	 <div style="padding-left:28px;" id="sendtype2">
+		  	 	 <span style="float:left;width:140px;">消息提醒方式：</span>
+		  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+		  	 	    <input type="checkbox" value="1" checked="checked" style="float:left;margin-top:10px;" />
+		  	 	    <span>IM消息</span>
+		  	 	 </label>
+		  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+		  	 	    <input type="checkbox" value="2" style="float:left;margin-top:10px;" />
+		  	 	    <span>手机短信</span>
+		  	 	 </label>
+		  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+		  	 	    <input type="checkbox" value="3" style="float:left;margin-top:10px;" />
+		  	 	    <span>电子邮件</span>
+		  	 	 </label>	  	 	 	  	 	 
+		  	 </div>	  	
+		  </div>	  
+		  <div style="float:left;height:40px;line-height:40px;margin-top:10px;">
+		 	  <div id="hint1" class="parameter_hint"></div>
+		 	  <span class="btnGreen parameter_botton" onclick="parameter.Save(1);">保存参数设置</span>
+		  </div>
+	  </div>
+	  <!--生日提醒-->
+	  <div class="parameter_panel" para_type="birthday" id="parameter_birthday" style="display:none;">
+	  	 <div  class="parameter_title" style="margin-bottom:20px;">员工生日提醒</div>
+	  	 <div style="padding-left:28px;">下月即将过生日的员工信息提醒。</div>
+	  	 <div style="padding-left:28px;">
+	  	 	  <span style="float:left;width:140px;">提醒消息接收对象：</span>
+	  	 	  <label style="float:left;padding-right:50px;font-weight:100;" >
+	  	 	      <input type="checkbox" id="check_org3" checked="checked" style="float:left;margin-top:10px;" />
+	  	 	      <span>部门负责人(接收部门下属员工的生日提醒)</span>
+	  	 	  </label>
+	  	 	  <label style="float:left;padding-right:20px;font-weight:100;">
+	  	 	      <input type="checkbox" id="check_self3" style="float:left;margin-top:10px;" /><span>生日员工(当天提醒)</span>
+	  	 	  </label>	  	 	  
+	  	 </div>
+	  	 <div style="padding-left:28px;">
+	  	 	  <span style="float:left;width:140px;">生日提醒消息：</span>
+	  	 	  <input class="mb_textbox" id="text_sendmessage3" style="height:22px;line-height:22px;float:left;width:650px;margin-top:6px;">
+	  	 </div>
+	  	 <div style="padding-left:28px;" id="sendtype3" >
+	  	 	 <span style="float:left;width:140px;">消息提醒方式：</span>
+	  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+	  	 	    <input type="checkbox" value="1"  checked="checked" style="float:left;margin-top:10px;" />
+	  	 	    <span>IM消息</span>
+	  	 	 </label>
+	  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+	  	 	    <input type="checkbox" value="2" style="float:left;margin-top:10px;" />
+	  	 	    <span>手机短信</span>
+	  	 	 </label>
+	  	 	 <label style="float:left;padding-right:50px;font-weight:100;" >
+	  	 	    <input type="checkbox" value="3" style="float:left;margin-top:10px;" />
+	  	 	    <span>电子邮件</span>
+	  	 	 </label>	  	 	 	  	 	 
+	  	 </div>	  	 
+	  	 <div style="float:left;height:40px;line-height:40px;margin-top:10px;">
+	  	 	  <div  class="parameter_hint" id="hint2"></div>
+	  	 	  <span onclick="parameter.Save(2);" class="btnGreen parameter_botton">保存参数设置</span>
+	  	 </div>
+	  </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	 parameter.save_url = "{{path('JustsyAdminAppBundle_mb_parameter_save')}}";
+	 parameter.view_url = "{{path('JustsyAdminAppBundle_mb_parameter_view')}}";
+	 parameter.view();
+</script>
+{% endblock %}

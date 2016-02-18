@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<link href="{{ asset('bundles/fafatimembapp/bootstrap-3.2.0-dist/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('bundles/fafatimembapp/css/base.css')}}" type="text/css" rel="stylesheet">
+	{% block stylesheets %}{% endblock %}
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/bootstrap-3.2.0-dist/js/bootstrap.min.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/base.js')}}"></script>
+	{% block javascriptsref %}{% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+	{% block body %}
+	{% endblock %}
+	</div>
+</div>
+<div class="loading" style="display:none;">
+    <div class="loadding-text">正在加载．．．．</div>
+    <div class="loadingImg"></div>
+</div>  
+</body>
+</html>
+
+{% block javascripts %}{% endblock %}

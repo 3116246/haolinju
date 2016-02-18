@@ -1,0 +1,186 @@
+.wefafa_share_body
+{
+   border : 1px solid #CCCCCC;
+    height: 320px;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -150px;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    width: 500px;
+    z-index: 10000;	
+}
+.wefafa_share_title
+{
+  background: url("../images/document_title_bg.jpg") repeat scroll 0 0 transparent;
+  border-bottom: 1px solid rgb(203, 203, 203);
+  height: 28px;
+  line-height: 28px;
+  cursor: default;
+  color: rgb(90, 90, 90);
+  font-family: 'ËÎÌו',Arial,Helvetica,sans-serif;
+  font-size: 12px;
+  text-align: left;
+}
+
+.wefafa_share_button
+{
+  background-color: rgb(0, 153, 68);
+  border:0 none;
+  color:white;
+  cursor:pointer;
+  display:inline-block;
+  font-size:14px;
+  font-weight:700;
+  height:30px;
+  line-height:30px;
+  margin-top:3px;
+  text-align:center;
+  vertical-align:baseline;
+  width:80px;
+}
+
+.wefafa_share_modal {
+    background-clip: padding-box;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    left:48%;
+    margin: -200px 0 0 -280px;
+    overflow: auto;
+    position: fixed;
+    top:50%;
+    width: 560px;
+    z-index: 1050;
+}
+
+.wefafa_share_forwards {
+    background: none repeat scroll 0 0 rgb(255, 255, 255);
+    border: 0px;
+    padding: 10px 10px 0;
+    width: 480px;
+    height:320px;
+}
+
+.wefafa_share_contentbox {
+  border-top: medium none;
+  clear: both;
+  margin-top: 0;
+  padding-top: 0;
+  color: rgb(90, 90, 90);
+  font-family: 'ËÎÌו',Arial,Helvetica,sans-serif;
+  font-size:12px;
+  line-height:22px;
+  text-align: left;
+}
+
+.wefafa_share_content
+{
+   background-color: rgb(238,238,238);
+   border: 1px solid silver;
+   border-radius: 3px 3px 3px 3px;
+   box-shadow: 0 0 0 transparent inset;
+   color: rgb(85, 85, 85);
+   display: inline-block;
+   font-size: 12px;
+   font-weight: normal;
+   height: 100px;
+   line-height: 20px;
+   margin-bottom: 4px;
+   overflow: auto;
+   resize: none;
+   transition: border 0s linear 0s, box-shadow 0s linear 0s;
+   vertical-align: top;
+   width: 480px;
+}
+
+textarea.input_share 
+{
+    background-color: rgb(255, 255, 255);
+    height: 132px;
+    width: 546px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    font-size: 12px;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+.wefafa_share_account_error
+{
+  display:none;
+  line-height:20px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.5); 
+  background-color:rgb(242,222,222);
+  border-color:rgb(238,211,215);
+  color: rgb(185,74,72);
+  margin-top: 28px;
+  left:179px;
+  position:absolute;
+  margin-top:28px;width:186px;
+}
+
+.wefafa_alert_account_close
+{
+  background: url("../images/icon_close_normal.png") repeat scroll 0 0 transparent;
+  cursor: pointer;
+  height:16px;width:16px;
+  margin-left: 155px;
+  margin-top: -18px;
+  position: absolute;
+}
+
+.wefafa_alert_account_close:hover
+{
+  background: url("../images/icon_close_hover.png") repeat scroll 0 0 transparent;
+}
+
+.wefafa_share_password_error
+{
+  display:none;
+  padding:5px 10px;
+  line-height:20px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.5); 
+  background-color:rgb(242,222,222);
+  border-color:rgb(238,211,215);
+  color: rgb(185,74,72);
+  left:108px;
+  position:absolute;
+  margin-top:28px;width:165px;
+  z-index: 1;
+}
+
+.wefafa_alert_password_close
+{
+  background: url("../images/icon_close_normal.png") repeat scroll 0 0 transparent;
+  cursor: pointer;
+  height:16px;width:16px;
+  margin-left: 172px;
+  margin-top: -18px;
+  position: absolute;
+}
+
+.wefafa_alert_password_close:hover
+{
+  background: url("../images/icon_close_hover.png") repeat scroll 0 0 transparent;
+}
+
+.wefafa_share_group
+{
+  color: rgb(0, 136, 204);
+  cursor: pointer;
+  font-style: italic;
+  font-size:14px;
+  font-weight:bold;  
+  text-decoration:none;
+}
+
+.wefafa_window_close
+{
+  cursor: pointer;
+  float: right;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 15px;
+}

@@ -1,0 +1,67 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style type="text/css">
+  .area_left { float:left;padding-top:20px;width:600px;margin-left:20px;cursor:default;}
+  .area_right { float:left;padding-top:20px;width:350px; margin-left:100px;cursor:default;display:none;}
+  .pagestyle { cursor:default;display:none;float:left;margin: 8px 0 0;padding: 0; }
+  .menu_staff { color: #0088cc;font-weight: bold;padding: 0 5px;}
+  .menu_bottom { float:left;display:none;}
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/menu.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="area_left" >
+	<div>
+		 <span>请输入用户账号或姓名：</span>
+		 <input type="text" class="mb_textbox" id="text_staff" onkeypress="if (event.keyCode==13) { menu.Search(1); }" placeholder="用户账号或姓名" style="width:340px;"/>
+		 <span class="btnGreen mb_button" onclick="menu.Search(1);" style="float:right;">查&nbsp;&nbsp;询</span>
+  </div>
+  <table align="center" style="width:600px;" class="mb_common_table" >
+	 	 <thead>
+   	 	  <tr>
+				  <td align="center" width="265">用户账号</td>
+					<td align="center" width="232">用户姓名</td>
+					<td align="center" width="102">设置权限</td>
+				</tr> 
+		 </thead>
+		 <tbody></tbody>
+  </table>
+  <div class="pagination pagestyle"></div>
+</div>
+<div class="area_right">
+  <span style="float:left;width:100%;">设置用户<span class='menu_staff'></span>菜单权限</span>
+	<ul id="tree_menu" class="ztree" style="float:left;max-height:100%;width:100%;background-color:white; border:none;"></ul>
+	<div class="menu_bottom">
+		 <span class="btnGreen mb_button" onclick="menu.Save();">保存</span>
+		 <span class="btnGreen mb_button" id="cleare_role" onclick="menu.cleareRole();">清除权限</span>
+		 <span class="btnGreen mb_button" onclick="$('.area_right').hide();">取消</span>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+  menu.search_url="{{path('JustsyAdminAppBundle_mb_sys_searchlist')}}";
+  menu.getmenu_url ="{{path('JustsyAdminAppBundle_mb_sys_getqxrymenu')}}";
+  menu.save_url= "{{path('JustsyAdminAppBundle_mb_sys_saveqxrymenu')}}";
+  menu.cleare_url="{{path('JustsyAdminAppBundle_mb_sys_clearrole')}}";
+  menu.Search(1);
+</script>
+{% endblock %}

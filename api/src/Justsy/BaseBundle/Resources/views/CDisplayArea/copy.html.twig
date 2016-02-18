@@ -1,0 +1,60 @@
+<div class="forwards">
+  <div class="forbox">
+    <ul>
+      <li style="color:#006caa;">转发到：</li>
+      <li id="for1" class="hover">我的主页</li>
+    </ul>
+  </div>
+  <div class="contentbox">
+    <div id="con_for1" class="hover">
+      <div class="oldconv_content" style="padding: 0 10px 0 10px;"></div>
+      <div class="detailinput">
+        <textarea id="copy_content" name="textarea" cols="" rows="" class="alltextarea userAutoTips FaceAutoTips" style="background-color:#fff;" onblur="copy_content_OnBlur(this)"></textarea>
+      </div>
+      <div class="favinput" style="text-align:right;padding:8px;">
+        <span>转发到：
+          <select id="copy_circle_sel" style="font-size:12px; margin: 0; width: 120px; _height: 20px;" 
+            onchange="copy_circle_sel_OnChange(this)" 
+            groupurl="{{ path("JustsyBaseBundle_component_cdisparea_getgroupbycircleandgroupname") }}"
+            allowurl="{{ path("JustsyBaseBundle_component_cdisparea_getconvlimit") }}">
+            <optgroup label="我的公司">
+              {% for a_network_domain in app.user.network_domains %}
+                {% if a_network_domain == app.user.edomain %}
+              <option value="{{ app.user.circle_ids[loop.index0] }}">{{ app.user.eshortname }}</option>
+                {% endif %}
+              {% endfor %}
+            </optgroup>
+            <optgroup label="外部圈子">
+              {% for a_network_domain in app.user.network_domains %}
+                {% if a_network_domain != app.user.edomain %}
+              <option value="{{ app.user.circle_ids[loop.index0] }}">{{ app.user.circle_names[loop.index0] }}</option>
+                {% endif %}
+              {% endfor %}              
+            </optgroup>
+          </select>
+          －
+          <span id="copy_group_sel">
+            <input id="hcopy_to_group" name="hcopy_to_group" type="hidden" value="ALL"/>
+            <img id="grouploading" src="{{ asset('bundles/fafatimewebase/images/loading.gif') }}">
+            <span id="acopy_to_group" onclick="acopy_to_group_OnClick()">全体成员</span>
+            <span id="bcancel_copy_to_group" onclick="bcancel_copy_to_group_OnClick()">×</span>
+            <input id="txtcopy_to_group" type="text" placeholder="请输入群组名称" onblur='$("#acopy_to_group").show();$(this).hide();if ($("#hcopy_to_group").val() != "ALL"){$("#bcancel_copy_to_group").show();}'>  
+          </span>
+          &nbsp;
+        </span>
+        <input id="btnCopyConv" name="input" type="button" class="comenter" value="转 发" disabled="disabled" onclick="btnCopyConv_OnClick(this)" copyurl="{{ path("JustsyBaseBundle_component_cdisparea_copyconv") }}" >
+      </div>
+      <div class="alert alert-error copyerrmsg" style="margin-bottom:8px; display: none;"></div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$("#txtcopy_to_group").typeahead({
+  source : txtcopy_to_group_source,
+  highlighter : txtcopy_to_group_highlighter, 
+  matcher : txtcopy_to_group_matcher,
+  sorter : txtcopy_to_group_sorter,
+  updater : txtcopy_to_group_updater
+});
+</script>

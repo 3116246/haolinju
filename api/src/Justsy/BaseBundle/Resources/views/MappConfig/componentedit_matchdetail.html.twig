@@ -1,0 +1,165 @@
+<div id="component_matchdetail_attribute_list" style="cursor:default;color:rgb(153, 153, 153);float:left;margin:10px 0 20px -5px;">
+	  <div class="component_goodsrow">
+	  	  <span>界面标题：</span>
+	  	  <input type="text" maxlength="20" id="text_title">
+	  </div>
+	  <div class="component_goodsrow">
+	  	  <span>详细数据获取接口地址：</span>
+	  	  <input type="text" maxlength="20" id="text_url">
+	  </div>	 
+	  <div class="component_goodsrow">
+	  	  <span>评论数据获取接口地址：</span>
+	  	  <input type="text" maxlength="20" id="text_comment_url">
+	  </div>	 
+	  <div class="component_goodsrow">
+	  	  <span>参数名称：</span>
+	  	  <input type="text" maxlength="20" id="text_para_code">
+	  </div>
+	  <div class="component_goodsrow">
+	  	  <span>搭配商品列表接口地址：</span>
+	  	  <input type="text" maxlength="20" id="text_list_url">
+	  </div>
+	  <div class="component_goodsrow">
+	  	  <span>商品列表接口参数：</span>
+	  	  <input type="text" maxlength="20" style="width:240px;" id="text_list_para">
+	  	  <span style="width:60px;color:#0077cc;cursor:pointer;" id="list_function" functionid=""
+	  	  	 onclick="component_matchdetail.customize(this)"
+	  	  	 target="self">详细功能</span>
+	  </div>
+	  <div style="height:20px;line-height:20px; margin-bottom: 0px; width: 100%; display: block; float: left;">
+	  	  <span style="float:left;padding-left:15px; font-weight:bold;color:#0088cc;">操作列表项</span>	  	 
+	  </div>
+	  
+	 <div style="width:100%;line-height:40px;" class="component_newslist_heard">
+		  	<span style="float: left; text-align: right; width:40px; margin-right: 25px;">序号</span>
+		  	<span style="float:left">操作图标</span>
+		  	<span style="float:left; margin-left: 18px;">操作名称</span>
+		  	<span style="float:left; margin-left: 78px;">所需参数</span>
+		  	<span style="float:right;margin-right:20px;">功能</span>
+	 </div>
+	 <div id="matchdetail_area"></div>
+	 <div class="component_nvar_bottom" id="addItem" style="margin-left:25px;display:none;">
+		 <span onclick="AddNewItem()" class="component_item_add"></span>
+		 <span style="color:#0077CC;">添加新项</span>
+	 </div>
+	 <div class="clearfix"></div>
+	 <!--用于填充matchdetail_area的空白行-->
+	 <div id="temp_item" style="display:none;">
+	 	 <span class="component_functionbar_delete">
+	     <span title="删除该项" onclick="component_matchdetail.remove(this);" class="component_tools_delete component_menuitem_delete"></span>
+	   </span>
+	   <span class="component_newslist_no">1</span> 
+	   <span class="component_matchdetail_icon">
+		   <img data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg" onclick="component_matchdetail.selectIcon(this)" title="点击更改图标" class="component_menuitem_img" style="margin-left:0px;border:1px solid;">
+	     <span title="取消图标" style="cursor:pointer;float:left;display:none;" class="icon-remove"></span>
+	   </span>
+	   <input type="text" maxlength="10" class="itemname" >  
+	   <input type="text" style="width:145px;margin-left:15px;" maxlength="100" class="parameter">
+	   <span class="component_nav_function match_detail" style="float:right;margin-left:0px;">详细定制</span>
+	 </div>
+	 
+</div>
+
+<script type="text/javascript">
+	 
+	 $(".component_matchdetail_rows").live("mouseover",function(){
+	 	  $(this).find(".component_menuitem_delete").show();
+	 });
+
+	 $(".component_matchdetail_rows").live("mouseout",function(){
+	 	  $(this).find(".component_menuitem_delete").hide();
+	 });	 
+	 
+	 $(".component_matchdetail_icon").live("mouseover",function(){
+	 	  var url = $(this).find("img").attr("src");
+	 	  if ( url!=null && url!="")
+	 	    $(this).find("span").show();
+	 });
+	 
+	 $(".component_matchdetail_icon").live("mouseout",function(){
+	 	 $(this).find("span").hide();
+	 });
+	 
+	 $(".icon-remove").live("click",function(){
+	 	  $(this).prev().removeAttr("src");
+	 });
+	 
+	 //添加空白项
+	 function AddNewItem(){
+	 	 var count = $("#matchdetail_area").children().length;
+   	 $("#temp_item .component_newslist_no").text(count+1);
+	 	 $("#temp_item .component_menuitem_img").attr("id","t"+Math.random().toString().replace(".",""));
+	 	 $("#temp_item .component_menuitem_img").removeAttr("src");
+	 	 $("#temp_item>input").attr("value","");
+   	 var html = $("#temp_item").html(); 
+   	 html = "<div class='component_matchdetail_rows' functionid='' target='self'>" + html + "</div>";
+   	 $("#matchdetail_area").append(html);
+   	 count = $("#matchdetail_area").children().length;   	
+   	 if ( count >= component_matchdetail.itemcount){
+   	 	 $("#addItem").hide();
+   	 }
+   	 else{
+   	 	 $("#addItem").show();
+   	 }
+	 }
+	 //绑定已有数据
+	 function BundleAttr(parameter){
+	 	 var attr = parameter.attrs;
+	 	 $("#text_title").val(attr.title);
+	 	 $("#text_url").val(attr.url);
+	 	 $("#text_comment_url").val(attr.comment_url);
+	 	 $("#text_para_code").val(attr.para_code);
+	 	 $("#text_list_url").val(attr.list.listurl);
+	 	 $("#text_list_para").val(attr.list.listurlpara);
+	 	 var func = attr.list.functionid;
+	 	 var functionid = func.text;
+	 	 if ( functionid==null || functionid=="")
+	 	   functionid = parameter.functionid+"-"+parameter.cindex+"-"+parameter.functionid +"-0";
+	 	 var _target = func.target;
+	 	 _target = (_target == null || _target=="") ? "self":_target;
+	 	 $("#list_function").attr("functionid",functionid);
+	 	 $("#list_function").attr("target",_target);
+	 	 var items =  attr.functionbar.items;
+	 	 if ( items == null || items.length==0){
+	 	 	 AddNewItem();
+	 	 }
+	 	 else{
+	 	 	 var htmls = new Array(),html="";
+	 	 	 for(var i=0;i<items.length;i++){
+	 	 	 	 $("#temp_item .component_newslist_no").text(i+1);	 	 	 	
+	 	 	 	 $("#temp_item .component_menuitem_img").attr("id","t"+Math.random().toString().replace(".",""));
+	 	 	 	 var imgsrc = items[i].icon;
+	 	 	 	 imgsrc = imgsrc == null ? "":imgsrc;
+	 	 	 	 if ( imgsrc != "")
+	 	 	 	   $("#temp_item .component_menuitem_img").attr("src",imgsrc);
+	 	 	 	 else
+	 	 	 	 	 $("#temp_item .component_menuitem_img").removeAttr("src");
+	 	 	 	 $("#temp_item .itemname").attr("value",items[i].text);
+	 	 	 	 $("#temp_item .parameter").attr("value",items[i].para);
+	 	 	 	 html = $("#temp_item").html();
+	 	 	 	 functionid = items[i].functionid.text;
+	 	 	 	 functionid = functionid==null ? "":functionid;
+	 	 	 	 _target = items[i].functionid.target;
+	 	 	 	 _target = _target==null ? "self":_target;
+   	     html = "<div class='component_matchdetail_rows' functionid='"+functionid+"' target='" + _target + "'>" + html + "</div>";
+   	     htmls.push(html);
+	 	 	 }
+	 	 	 if ( htmls.length>0)
+	 	 	   $("#matchdetail_area").html(htmls.join(''));
+	 	 	 $("#temp_item>input").attr("value","");
+	 	 	 if ( items.length < parseInt(component_matchdetail.itemcount))
+	 	 	   $("#addItem").show();
+	 	 	 else
+	 	 	 	 $("#addItem").hide();
+	 	 	   
+	 	 } 	 
+	 }
+   //页面定制
+   $("#component_matchdetail_attribute_list .match_detail").live("click",function(){
+   	 var functionid = $(this).parents(".component_matchdetail_rows").attr("functionid");
+   	 if ( functionid==null || functionid=="")
+   	 	 component_matchdetail.customizebyempty(this);
+   	 else
+   	 	 component_matchdetail.customize(this);
+   }); 	 
+</script>

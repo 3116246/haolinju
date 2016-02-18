@@ -1,0 +1,228 @@
+<div id="component_functionbar_attribute_list" style="cursor:default;color:rgb(153, 153, 153);float:left;margin-bottom:20px;">
+	<div class="component_tabs_colorRow">
+	  <span>字体颜色：</span>
+	  <span id="fontcolor" class="component_tabs_defaultcolor" onclick="showcolor(this)"></span>
+	  <span style="margin-left:55px;">背景颜色：</span>
+	  <span id="bgcolor" class="component_tabs_activecolor" onclick="showcolor(this)"></span>
+	</div>	
+	<div class="component_functionbar_position">
+		 <span>按钮位置：</span>
+		 <label>
+		 	  <input type="radio" style="float:left;" value="bottom" name="radio_position" id="radio_bottom" checked="checked"> 
+		 	  <span style="float:left;padding-left:5px;font-size:12px;">底部固定</span>
+		 </label>
+		 <label>
+		 	  <input type="radio" style="float:left;" value="relative" name="radio_position" id="radio_relative"> 
+		 	  <span style="float:left;padding-left:5px;font-size:12px;">样对位置</span>
+		 </label>		 
+  </div>  
+  <div class='component_color' style="margin-top:-10px;"></div>
+	<div style="float:left;width:100%">
+     <div style="height: 50px;line-height:50px; margin-bottom: 5px; width:460px; border-bottom: 1px solid #ddd;">
+			   <span style="margin-left:35px;">图标</span>
+			   <span style="margin-left:25px;">名称</span>
+			   <span style="margin-left:25px;">按钮样式</span>
+			   <span style="margin-left:5px;">排式方式</span>
+			   <span style="margin-left:5px;">数据接口</span>
+			   <span style="margin-left:50px;">参数</span>	       
+			   <span style="margin-left:35px;">功能</span>
+		 </div>
+		 <!--内容添加到userprofile_area处-->
+		 <div style="float:left;width:100%;" id="functionbar_area"></div>
+		 <div class="component_nvar_bottom" id="addItem" style="margin-left:25px;display:none;">
+			 <span onclick="AddNewItem()" class="component_item_add"></span>
+			 <span style="color:#0077CC;">添加新项</span>
+	   </div>
+	</div>
+	<!--每行数据样式-->
+	<div id="temp_item" style="display:none;">
+    <span class="component_functionbar_delete">
+      <span title="删除该项" onclick="component_functionbar.remove(this);" class="component_tools_delete component_menuitem_delete" style="margin-top:18px;"></span>
+    </span>		    
+    <span class="component_functionbar_icon">
+	     <img data-toggle="modal" data-backdrop="static" href="#app_res_selecetDlg" onclick="component_functionbar.selectIcon(this)" title="点击更改图标" style="margin-left:0px;border:1px solid #ccc;" class="component_menuitem_img">
+       <span title="取消图标" style="cursor:pointer;float:left;display:none;" class="icon-remove"></span>
+    </span>
+    <input type="text" maxlength="20" class="itemname">
+    <span class="component_functionbar_buttonstyle" id="style_1">
+    	 <label style="float:left;width:100%;">
+ 	       <input type="radio" name="bttonstyle" style="float:left;" value="none"  checked="checked"> 
+ 	       <span style="float:left;padding-left:5px;font-size:12px;">默认</span>
+       </label>
+       <label style="float:left;width:100%;">
+ 	       <input type="radio" name="bttonstyle" style="float:left;" value="bottom"> 
+ 	       <span style="float:left;padding-left:5px;font-size:12px;">底部</span>
+      </label>
+    </span>
+    <span class="component_functionbar_buttonstyle" id="style_2" style="margin-left:0px;">
+    	  <label style="float:left;width:100%;">
+ 	       <input type="radio" name="buttonAlign" style="float:left;" value="lr" checked="checked" /> 
+ 	       <span style="float:left;padding-left:5px;font-size:12px;">左右</span>
+       </label>
+       <label style="float:left;width:100%;">
+ 	       <input type="radio" name="buttonAlign" style="float:left;" value="uu" /> 
+ 	       <span style="float:left;padding-left:5px;font-size:12px;">上下</span>
+      </label>
+    </span>
+    <input type="text" style="width:85px;" maxlength="100" class="dataurl">
+    <input type="text" style="width:50px;margin-left:5px;" maxlength="100" class="para">
+    <span class="component_nav_function" onclick="component_functionbar.customize(this)" style="float:right;margin-left:0px;margin-top:-5px;">定制</span>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+	 
+	 $(".component_functionbar_rows").live("mouseover",function(){
+	 	 $(this).find(".component_menuitem_delete").show();
+	 });
+	 
+	 $(".component_functionbar_rows").live("mouseout",function(){
+	 	 $(this).find(".component_menuitem_delete").hide();
+	 });
+	 
+	 $(".component_functionbar_icon").live("mouseover",function(){
+	 	 var imgsrc = $(this).find("img").attr("src");
+	 	 if ( imgsrc !=null && imgsrc!="")
+	 	   $(this).find(".icon-remove").show();
+	 });
+	 $(".component_functionbar_icon").live("mouseout",function(){
+	 	 $(this).find(".icon-remove").hide();
+	 });
+	 
+	 $(".icon-remove").live("click",function(){
+	 	  $(this).prev().removeAttr("src");
+	 });
+	 	 
+	 //添加新项
+	 function AddNewItem(){
+	 	 $("#temp_item .component_menuitem_img").attr("id","bar_"+Math.random().toString().replace(".",""));
+	 	 $("#temp_item .component_menuitem_img").removeAttr("src");
+	 	 $("#temp_item>input").attr("value","");
+	 	  
+	 	 $("#temp_item #style_1 [type='radio']").attr("checked",false);
+	 	 $("#temp_item #style_1 [type='radio']").attr("name","check_"+Math.random().toString().replace(".",""));
+	 	 $("#temp_item #style_1 [type='radio']").eq(0).attr("checked",true);
+	 	 
+	 	 $("#temp_item #style_2 [type='radio']").attr("checked",false);
+	 	 $("#temp_item #style_2 [type='radio']").attr("name","check_"+Math.random().toString().replace(".",""));
+	 	 $("#temp_item #style_2 [type='radio']").eq(0).attr("checked",true);
+	 	 
+   	 var html = $("#temp_item").html(); 
+   	 html = "<div class='component_functionbar_rows' functionid='' target='self'>" + html + "</div>";
+   	 $("#functionbar_area").append(html);
+   	 //是否显示添加按钮   	 
+   	 var count = $("#functionbar_area").children().length;
+   	 if ( count >= component_functionbar.itemcount){
+   	 	 $("#addItem").hide();
+   	 }
+   	 else{
+   	 	 $("#addItem").show();
+   	 }
+	 };
+	 
+	 //绑定functionbar组件数据
+	 function BundleFunctionBar(attrs)
+	 {
+	 	  if ( attrs == null ){
+	 	  	 AddNewItem();
+	 	  }
+	 	  else {
+	 	  	if (attrs.color !=null)
+	 	  	  $("#fontcolor").css("background-color",attrs.color);
+	 	  	if (attrs.color!=null)
+	 	  	  $("#bgcolor").css("background-color",attrs.bgcolor);
+		 	  //设置位置
+		 	  var position = attrs.position;
+		 	  if ( position==null || position=="")
+		 	    $("#radio_bottom").attr("checked",true);
+		 	  else
+		 	    $(".component_functionbar_position [value='"+position+"']").attr("checked",true);
+		 	    
+		 	  var data = attrs.items;
+		 	  if ( data == null || data.length==0 ){
+		 	  	 AddNewItem();
+		 	  }
+		 	  else{
+		 	  	var htmls = new Array();
+		 	  	var temp = "",functionid="",html="";
+		 	  	for(var i=0;i<data.length;i++){
+		 	  		$("#temp_item .component_menuitem_img").attr("id","t"+Math.random().toString().replace(".",""));
+		 	  		temp = data[i].icon;
+		 	  		if ( temp == null || temp =="")
+	 	          $("#temp_item .component_menuitem_img").removeAttr("src");
+	 	        else
+	 	        	$("#temp_item .component_menuitem_img").attr("src",temp);
+	 	        temp = data[i].text;
+	 	        temp = (temp == null || temp == "") ? "":temp;
+	 	          $("#temp_item .itemname").attr("value",temp);
+	 	        temp = data[i].dataurl;
+	 	          temp = (temp == null || temp == "") ? "":temp;
+	 	        $("#temp_item .dataurl").attr("value",temp);
+	 	          temp = data[i].para;
+	 	        temp = (temp == null || temp == "") ? "":temp;
+	 	          $("#temp_item .para").attr("value",temp);
+	 	        //按钮样式
+	 	        temp = data[i].style;
+	 	        $("#temp_item #style_1 [type='radio']").attr("checked",false);
+	 	        $("#temp_item #style_1 [type='radio']").attr("name","check_"+Math.random().toString().replace(".",""));
+	 	        $("#temp_item #style_1 [type='radio']").eq(0).attr("checked",true);
+	 	        if (temp != null && temp =="bottom")
+              $("#temp_item #style_1 [type='radio']").eq(1).attr("checked",true);
+            else
+            	$("#temp_item #style_1 [type='radio']").eq(0).attr("checked",true);
+            //排列方式
+            temp = data[i].arrangement;
+            $("#temp_item #style_2 [type='radio']").attr("checked",false);
+	 	        $("#temp_item #style_2 [type='radio']").attr("name","check_"+Math.random().toString().replace(".",""));
+	 	        $("#temp_item #style_2 [type='radio']").eq(0).attr("checked",true);
+            if (temp != null && temp =="uu")
+              $("#temp_item #style_2 [type='radio']").eq(1).attr("checked",true);
+            else
+            	$("#temp_item #style_2 [type='radio']").eq(0).attr("checked",true);
+            var func = data[i].functionid;
+            functionid = func.text;
+            functionid = (functionid==null || functionid=="") ? "":functionid;
+            var _target = func.target;
+            _target = (_target==null || _target=="" || _target=="undefined") ? "blank":_target;
+            html = $("#temp_item").html();
+   	        html = "<div class='component_functionbar_rows' functionid='"+functionid+"' target='" + _target +"'>" + html + "</div>";
+   	        htmls.push(html);
+		 	  	}
+		 	  	if (htmls.length>0)
+		 	  	  $("#functionbar_area").append(htmls.join(''));
+		 	  	//是否显示添加按钮
+		   	  if ( data.length >= component_functionbar.itemcount)
+		   	 	  $("#addItem").hide();
+		   	  else
+		   	 	  $("#addItem").show();		 	  	  
+		 	  }
+		 	  
+	 	  }
+	 }
+	 
+   var _class = "";
+   //显示控件
+	 function showcolor(ev){
+     componentColor.Init($(".component_color"));
+     componentColor.beforeColor = $(ev).css("background-color");
+   	 _class = $(ev).attr("class");
+   	 if ( _class == "component_tabs_defaultcolor"){
+   	 	  componentColor.setTitle("选择字体颜色");
+   	 	  $(".component_color").css("margin-left","70px");
+   	 }
+   	 else{
+   	 	 componentColor.setTitle("选择背景颜色");
+   	 	 $(".component_color").css("margin-left","235px");
+   	 }
+   	 $(".component_color").css("margin-top","122px");
+   	 componentColor.onSelected=function(vColorValue){   	 	 
+ 		   $("."+ _class).css("background-color",vColorValue);
+ 	   };
+ 	   componentColor.onMouseMove = function(color){
+ 	   	 $("."+ _class).css("background-color",color);
+ 	   };
+ 	   componentColor.onClose = function(beforecolor){
+ 	   	 $("."+ _class).css("background-color",beforecolor);	   	 
+ 	   };
+   }   
+</script>

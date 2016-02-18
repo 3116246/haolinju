@@ -1,0 +1,7 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+{% block main_content_left %}
+<div class="othertitle">我的圈子信息</div>
+<ul class="left-menu">
+  <li {% block menuitemactive_detail %}{% endblock %}><a href="{{ path("JustsyBaseBundle_circle_setting_circle", {'network_domain' : curr_network_domain}) }}"><i class="menu-detail"></i>圈子资料</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,43 @@
+<erl>
+out(A) ->
+	IsSend =func_utils:replaceNull(request:getparameter(A,"send"),"send"),
+    IsSendMsg =func_utils:replaceNull(request:getparameter(A,"sendMsg"),"sendMsg"),  
+    IsSendMicroMsg =func_utils:replaceNull(request:getparameter(A,"sendMicroMsg"),"sendMicroMsg"),
+    IssendPresence =func_utils:replaceNull(request:getparameter(A,"sendPresence"),"sendPresence"),
+    IsSendRemind =func_utils:replaceNull(request:getparameter(A,"sendRemind"),"sendRemind"), 
+    IsRemoveRemind =func_utils:replaceNull(request:getparameter(A,"removeRemind"),"removeRemind"), 
+    IsSendBroadcast =func_utils:replaceNull(request:getparameter(A,"sendBroadcast"),"sendBroadcast"), 
+    IsRemoveBroadcast =func_utils:replaceNull(request:getparameter(A,"removeBroadcast"),"removeBroadcast"),
+
+	if 	IsSendMsg=/=[]->
+			spawn(service_api,sendMsg,[A]),
+			Payload = request:return(); 
+       	IsSendMicroMsg=/=[]->
+			spawn(service_api,sendMicroMsg,[A]),
+			Payload = request:return();	
+       	IssendPresence=/=[]->
+			spawn(service_api,sendPresence,[A]),
+			Payload = request:return();
+       	IsSend=/=[]->
+			spawn(service_api,send,[A]),
+			Payload = request:return();			
+		IsSendRemind=/=[]->
+			spawn(service_api,sendRemind,[A]),
+			Payload = request:return(); 
+		IsSendBroadcast=/=[]->
+			spawn(service_api,sendBroadcast,[A]),
+			Payload = request:return();
+		IsRemoveRemind=/=[]->
+			spawn(service_api,removeRemind,[A]),
+			Payload = request:return();	
+		IsRemoveBroadcast=/=[]->
+			spawn(service_api,removeBroadcast,[A]),
+			Payload = request:return();
+		true->
+			Payload=request:returnerror("error service name")
+	end,
+	[{status,200},
+		{content, "text/HTML;charset=utf-8",Payload}
+	].
+</erl>
+

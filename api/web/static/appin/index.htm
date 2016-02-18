@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Wefafa，企业移动社会化协作，微应用平台</title>	
+        <LINK rel="shortcut icon" href="/bundles/fafatimewebase/images/favicon.ico"> 
+        <script src="https://www.wefafa.com/bundles/fafatimewebase/js/jquery.js" type="text/javascript"></script>	
+        <script src="https://www.wefafa.com/bundles/fafatimewebase/js/HelpTree.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="/bundles/fafatimewebase/css/index.css" />
+        <style>
+        	@charset "utf-8";
+        	.down_ad {height:274px; background:#00aad9 }
+					.down_wrap { width:1000px; height:274px; margin:0 auto; clear:both; background:url(/bundles/fafatimewebase/images/homepage/down_ad.png) no-repeat;}
+					h1.down1{padding-left:20px; color:#fff;font-family:"微软雅黑"; letter-spacing:3px; font-size:32px; line-height:80px; padding-top:20px;}
+					h2.down2{padding-left:20px; color:#fff;font-family:"微软雅黑"; letter-spacing:2px; line-height:28px; width:320px}
+					.docs_wrap { width:1000px; height:274px; margin:0 auto; clear:both; background:url(/bundles/fafatimewebase/images/homepage/docs_ad.png) no-repeat;}
+        	a, a:visited, a:active {
+					    color: #0066CC;
+					    text-decoration: none;
+					}
+        	a:hover {
+					    color: #FF0000;
+					    text-decoration: underline;
+					}
+        	.wrap {
+					    clear: both;
+					    margin: 0 auto;
+					    width: 1000px;
+					}
+					h3.nav {
+					    font-size: 15px;
+					    font-weight: normal;
+					}
+        	h3.nav {
+					    display: block;
+					    float: right;
+					    font-size: 15px;
+					    font-weight: normal;
+					    margin-top: 36px;
+					    padding-right: 0;
+					}
+					h3.nav a:hover {
+					    color: #00A9D9;
+					}
+					h3.nav a.nav_now {
+					    color: #059BC6;
+					}
+					h3.nav a.titlelogin {
+					    background-color: #70B437;
+					    color: #FFFFFF;
+					    margin-left: 14px;
+					}
+					h3.nav a.titlereg {
+					    background-color: #F7B52C;
+					    color: #FFFFFF;
+					    margin-left: 14px;
+					}
+					h3.nav a {
+							font-family:"微软雅黑";
+					    color: #666666;
+					    display: block;
+					    float: left;
+					    padding: 4px 16px;
+					}
+					.head_l {
+					    float: left;
+					    height: 70px;
+					    padding-bottom: 5px;
+					    padding-left: 10px;
+					    padding-top: 10px;
+					    width: 300px;
+					}
+					.head_r {
+					    float: right;
+					    height: 85px;
+					    padding-right: 10px;
+					    width: 600px;
+					}
+        </style>
+        <script type="text/javascript">
+        	$(document).ready(function(){
+							$("div.help_main").css('margin-left',(($(window).width()-$("div.help_main").width())/2).toString()+"px");
+					});
+            $(function() {
+                $(".help_left_menu,.innerlink").HelpTree({
+                    click: function(a) {
+                        var ref = ($(a).attr("ref"));
+                        if (ref == "")
+                            return;
+                        var refs = ref.split("-");
+                        $(".help_right_title").text($(".help_left_menu a[ref='" + refs[0] + "']").text());
+                        if (refs.length == 1)
+                        {
+                            $(".help_right ul:eq(0)").load("/static/appin/" + refs[0] + "/index.htm");
+                        }
+                        else
+                        {
+                        	 var hash = window.location.hash.replace("#","");
+                        	 if(hash!="undefined")
+                        	 {
+                        	 			var cur= hash.split("-")[0];
+                        	 			if(refs[0]==cur) window.location.href = $(a).attr("href");
+                        	 			else
+                        	 			{
+                        	 			   	$(".help_right ul:eq(0)").load("/static/appin/" + refs[0] + "/index.htm",{},function(){
+                        	 			   		  window.location.href = "#"+ref;
+                        	 			   	});
+                        	 			}
+                        	 }
+                        	 else    window.location.href = $(a).attr("href"); 	    
+                       	}
+                    }
+                });
+                $(".help_right ul:eq(0)").load("/static/appin/quickin/index.htm");
+            });
+        </script>
+        <style>
+            .help_right_text p{text-indent: 2em;}
+        </style>
+    </head>
+    <body id="aboutus">
+        <div>
+        <div class="wrap">
+            <div class="head" style='height:85px;'>
+							<div class="head_l">
+								<a href="http://www.wefafa.com" class="welogo" title="Wefafa，移动社会化协作，微应用平台"><img src="/bundles/fafatimewebase/images/homepage/wefafa_logo.png" border="0"></a>
+							</div>
+						<div class="head_r">
+							<h3 class="nav"> <a href="/home">首页</a> <a href="/home?p=feature" >功能</a> <a href="/home?p=case">案例</a> <a href="/home?p=download">下载</a> <a class="nav_now" href="/static/appin/index.htm" target='_blank'>文档</a> <a class="titlelogin" href="/default"  target=_blank>登录</a> <a class="titlereg" href="/home?isreg=1">注册</a> </h3>
+						</div>
+						</div>
+					</div>
+            <div class="down_ad">
+							<div class="docs_wrap"><h1 class="down1">We开放平台</h1><h2 class="down2">让企业原有信息系统快速实现统一登录、状态感知、消息推送、移动业务处理及社会化分享等。</h2>
+							</div>	
+						</div>
+            <div class="help_main">
+                <div class="help_left">
+                    <div class="help_left_title"></div>
+                    <div class="help_left_menu">
+                        <ul>
+                            <li><a href="#" ref="quickin">快速接入</a></li>
+                            <ul show="true">
+                                <li><a href="#quickin-basic" ref="quickin-basic">中心简介</a></li>
+                                <li><a href="#quickin-flow" ref="quickin-flow">接入流程</a></li>
+                                <li><a href="#quickin-standard" ref="quickin-standard">应用注册</a></li>
+                                <li><a href="#quickin-dev" ref="quickin-dev">应用开发</a></li>
+                                <li><a href="#quickin-contact" ref="quickin-contact">联系我们</a></li>
+                            </ul>
+                            <li><a href="#" ref="apilist">API接口列表</a></li>
+                            <ul>
+                                <li><a href="#apilist-login" ref="apilist-login">用户登录</a></li>
+                                <li><a href="#apilist-auth" ref="apilist-auth">用户认证</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-auth1" ref="apilist-auth1">Web-Server应用授权</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-auth2" ref="apilist-auth2">Web-Client应用授权</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-auth3" ref="apilist-auth3">Native-App应用授权</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-auth4" ref="apilist-auth4">Access-Token获取</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-auth41" ref="apilist-auth41">Access-Token验证</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-auth5" ref="apilist-auth5">获取消息代理授权</a></li>
+                                <li><a href="#apilist-userinfo" ref="apilist-userinfo">用户信息</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-userinfo1" ref="apilist-userinfo1">我的基本信息</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-userinfo2" ref="apilist-userinfo2">员工/好友信息</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-userinfo3" ref="apilist-userinfo3">企业部门列表</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-userinfo4" ref="apilist-userinfo4">企业人员列表</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-userinfo5" ref="apilist-userinfo5">群组成员列表</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-userinfo6" ref="apilist-userinfo6">圈子成员列表</a></li>
+                                <li><a href="#apilist-status" ref="apilist-status">状态感知</a></li>
+                                <li><a href="#apilist-message" ref="apilist-message">消息推送</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-message1" ref="apilist-message1">发送消息-离线模式</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-message2" ref="apilist-message2">发送消息-在线模式</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-message21" ref="apilist-message21">发送群组消息</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-message22" ref="apilist-message22">发送圈子消息</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-message3" ref="apilist-message3">发送部门消息</a></li>
+                                <li><a href="#apilist-mobile" ref="apilist-mobile">手机绑定</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-mobile-getcode" ref="apilist-mobile-getcode">获取验证码</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-mobile-bind" ref="apilist-mobile-bind">绑定手机号</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-mobile-unbind" ref="apilist-mobile-unbind">解除手机绑定</a></li>
+                                <li><a href="#apilist-share" ref="apilist-share">数据分享</a></li>
+                                <li><a href="#apilist-document" ref="apilist-document">文档管理</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-document1" ref="apilist-document1">创建目录</a></li>
+                                <li style="margin-left:30px"><a href="#apilist-document2" ref="apilist-document2">文件上传</a></li>
+                            </ul>
+                            <li><a href="#" ref="webcomponent">Web开发组件</a></li>
+                            <ul>
+                            	  <li><a href="#webcomponent-webim" ref="webcomponent-webim">即时通信JS库</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim1" ref="webcomponent-webim1">连接服务器</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim0" ref="webcomponent-webim0">OAuth连接服务器</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim2" ref="webcomponent-webim2">断开连接</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim3" ref="webcomponent-webim3">收到消息处理</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim4" ref="webcomponent-webim4">收到IQ处理</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim5" ref="webcomponent-webim5">收到Presence处理</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim6" ref="webcomponent-webim6">获取联系人处理</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim7" ref="webcomponent-webim7">连接状态改变</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim8" ref="webcomponent-webim8">更改在线状态</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim9" ref="webcomponent-webim9">发送消息</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-webim10" ref="webcomponent-webim10">发送群消息</a></li>
+                                <li><a href="#webcomponent-status" ref="webcomponent-status">状态感知组件</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-status1" ref="webcomponent-status1">连接服务器</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-status2" ref="webcomponent-status2">感知帐号绑定</a></li>
+                            	  <li style="margin-left:30px"><a href="#webcomponent-status3" ref="webcomponent-status3">在线状态处理</a></li>                                
+                                <li><a href="#webcomponent-share" ref="webcomponent-share">数据分享组件</a></li>                                
+                            </ul>
+                            <li><a href="#" ref="pay">支付及结算</a></li>
+                            <li><a href="#" ref="protocol">相关协议</a></li>
+                            <li><a href="#" ref="faq">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="help_right">
+                    <div class="help_right_title">快速接入</div>
+                    <ul>
+
+                    </ul>
+                </div>
+                <div style="clear: both;font-size: 0;height: 0;line-height: 0;overflow: hidden; width: 100%;"></div>
+            </div>  	
+        </div>
+
+        <div class="footer">
+            <div class="wrap">
+                <div class="fl">Copyright &copy; 2012 <a href="http://www.fafatime.com" target="_blank">Justsy</a>&nbsp;&nbsp;<a href="#">京ICP备12029244号</a></div>
+                <div class="fr">
+                    <a href="/prointro.htm">产品介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/help.htm">使用帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.fafatime.com/downcenter">软件下载</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/corp.htm">商务合作</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/userlic.htm">服务与声明</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/aboutus.htm">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,95 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+<div class="left">
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+	  <div class="menuother">我的公告</div>
+    <ul class="left-menu">
+						{% if count!='0'%}
+						<li>
+							<a href="#" onclick="$('#messagebox').children().remove();LoadComponent('messagebox','{{path("JustsyBaseBundle_notice_push",{"network_domain":curr_network_domain})}}');">
+							<div class="homeleft_down_sub_icon leftmenu_icon7"></div>
+							<span class="homeleft_menu_sub_txt">发布公告</span>
+							</a>
+						</li>
+						{% endif %}
+						<li>
+							<a href="#" onclick="$('#messagebox').empty();LoadComponent('messagebox', '{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain})}}/0');">
+							<div class="homeleft_down_sub_icon leftmenu_icon6"></div>
+							<span class="homeleft_menu_sub_txt">未读公告</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="$('#messagebox').empty();LoadComponent('messagebox', '{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain})}}/1');">
+							<div class="homeleft_down_sub_icon leftmenu_icon5"></div>
+							<span class="homeleft_menu_sub_txt">已读公告</span>
+							</a>
+						</li>
+	</ul>
+	 </div>   
+{% endblock %}
+
+{% block main_content_center%}
+<div id="messagebox" getnoticeurl="{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain })}}"
+  detailurl="{{path('JustsyBaseBundle_notice_one',{'network_domain':curr_network_domain})}}"
+  pushurl="{{path("JustsyBaseBundle_notice_push",{"network_domain":curr_network_domain})}}">
+{% render 'JustsyBaseBundle:Notice:noticeShow' with{'network_domain':curr_network_domain,'type':'0','pageindex':'1'} %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+{#
+{% block main_content %}
+<div class="twomain">
+{% block main_content_left %}
+<div class="left">
+		<div class="myinfo">{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		</div>
+		<div style="height:30px;"></div>
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+  <div style="background-color:#a4dcf9; height:28px; padding-left:27px;">			
+	  <span style="font-size:14px; font-weight:bold; height:28px; line-height:28px; color:#555">我的公告</span>
+  </div>
+  <div class="homeleft_group">
+	<ul>
+						{% if count!='0'%}
+						<li>
+							<a href="#" onclick="$('#content_container').children().remove();LoadComponent('content_container','{{path("JustsyBaseBundle_notice_push",{"network_domain":curr_network_domain})}}');$('#title').text('发布公告');">
+							<div class="homeleft_down_sub_icon leftmenu_icon7"></div>
+							<span class="homeleft_menu_sub_txt">发布公告</span>
+							</a>
+						</li>
+						{% endif %}
+						<li>
+							<a href="#" onclick="$('#content_container').children().remove();LoadComponent('content_container', '{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain})}}/unread');$('#title').text('未读公告');">
+							<div class="homeleft_down_sub_icon leftmenu_icon6"></div>
+							<span class="homeleft_menu_sub_txt">未读公告</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" onclick="$('#content_container').children().remove();LoadComponent('content_container', '{{path("JustsyBaseBundle_notice_show",{"network_domain":curr_network_domain})}}/readed');$('#title').text('已读公告');">
+							<div class="homeleft_down_sub_icon leftmenu_icon5"></div>
+							<span class="homeleft_menu_sub_txt">已读公告</span>
+							</a>
+						</li>
+	</ul>
+  </div>
+          </div>
+{% endblock %}
+{% block main_content_center%}
+<div class="mid">
+<div style="width:100%"><span id="title" style="font-size:18px;color:#1a65a5">未读公告</span></div><hr/>
+<div id="content_container" class="contentbox">
+	{% render 'JustsyBaseBundle:Notice:noticeShow' with{'network_domain':curr_network_domain,'type':'unread','pageindex':'1'} %}
+</div>
+</div>
+{% endblock%}
+	 <div class="clearBoth"></div>
+</div>
+{% endblock%}
+#}

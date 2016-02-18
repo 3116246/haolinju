@@ -1,0 +1,71 @@
+<td style="width:55px;"><image style="width:48px;height:48px;margin: 3px;" src="{{asset(item['photo_url'])?item['photo_url']:asset('bundles/fafatimewebase/images/reg_title.png')}}"/></td>
+	<td addr_id="{{item['id']}}" login_account="{{item['addr_account']}}" style="text-align:left;width:200px;">
+	 <ul class="name"><li style="margin-left:0px;"><a href="javascript:void();" style="{{item['addr_account']!=''?'color:#0088CC':''}}" class="name_unit">{{item['addr_name']}}</a>
+	    <input class="addr_account" type="hidden" value="{{item['addr_account']}}"/>
+		  <input type="hidden" class="id" value="{{item['id']}}"/>
+		  <input type="hidden" class="typeid" value="{{item['typeid']}}"/>
+		  <input type="hidden" class="mail" value="{{item['addr_mail']}}"/>
+		  <input type="hidden" class="jid" value="{{item['jid']}}"/>
+		  <input type="hidden" class="isInCard" value="{{item['isInCard']}}"/>
+		  <input type="hidden" class="mouse" value=""/></li>
+	  </ul>
+	  <ul style="float:right;width:80px;list-style:none outside none;margin-right:10px;">
+	  	{%if item['addr_account']==''%}
+		   {% if item['addr_mail']==''%}
+		   <li style="float:left;" id="{{item['id']}}"><a href="javascript:;" style="font-weight:bold;cursor:pointer;">邀请加入</a></li>
+		   {%else%}
+	  	<li style="float:left;" id="{{item['id']}}"><a href="javascript:;" onclick="invite.inviteuser(this,loading)" style="font-weight:bold;color:#0088CC;cursor:pointer;">邀请加入</a></li>
+	  	{%endif%}
+	  	{%endif%}
+	  </ul>
+	  <ul class="unit" style="margin-bottom:0"><li>{{item['addr_unit']}}</li>
+	  	</ul>
+	</td>
+	<td><div style="color:#7E7A7A;font-size: 12px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;width: 130px;">电话：<a style="color:#000;">{{item['addr_phone']}}</a></div></td>
+	<td><div style="color:#7E7A7A;font-size: 12px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;width: 130px;">手机：<a style="color:#000;">{{item['addr_mobile']}}</a></div></td>
+<td><div style="color:#7E7A7A;font-size: 12px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;width: 220px;">邮箱：<a style="color:#000;">{{item['addr_mail']}}</a></div></td>
+<script>
+	$(document).ready(function(){
+		$(".name_unit").mouseover(function(event){
+  	 if($(this).parent().siblings("li[type='bnt']").length>0)return;
+  	 var buttons=$(".buttons").html();
+  	 $(this).parent().parent().append(buttons);
+  	 var select_div=$(this).parent().siblings();
+  	 $(select_div).children(".card_addr").addClass('bnt_1');
+  	 $(select_div).children(".msg_addr").addClass('bnt_2');
+  	 $(select_div).children(".mail_addr").addClass('bnt_3');
+  	 if($("#typename .adrlist_active").attr('id')=='M001'){
+  	 	 $(select_div).children(".goCard").addClass('bnt_4');
+  	 	 $(select_div).children(".toCard,.share_addr").hide();
+  	 }
+  	 else{
+  	 	 $(select_div).children(".goCard").hide();
+  	 	 if($(this).siblings('.isInCard').val()=='yes'){
+  	 	 	  $(select_div).children(".toCard").addClass('bnt_5_grey');
+  	 	 }
+  	 	 else{
+  	 	 		$(select_div).children(".toCard").addClass('bnt_5');
+  	 	 }
+  	 	 $(select_div).children(".share_addr").addClass('bnt_6');
+  	 }
+  	 if($(this).siblings('.addr_account').val()==''){
+  	 		$(select_div).children("div").hide();
+  	 		$(select_div).children(".edit_addr,.delete_addr").css('display','block');	
+  	 }
+  	 select_div.children(".card_addr").attr('login_account',$(this).siblings('.addr_account').val());
+  	 $($(this).parent().parent()).mouseout(function(event){
+  	 	 if(checkHover(event,this)){
+  	 	 	if($(this).children().children('.bnt_load')[0])
+  	 	 	{
+  	 	 		$(this).children().children('.mouse').val('out');
+  	 	 		return;
+  	 	 	}
+			  var items=$(this).children("li[type='bnt']");    
+		    for(var i=0;i<items.length;i++){
+		   	  	$(items[i]).remove();
+			    }
+			   }
+  });
+	});
+});
+</script>

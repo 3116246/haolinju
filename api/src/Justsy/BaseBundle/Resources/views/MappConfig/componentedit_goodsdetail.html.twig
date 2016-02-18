@@ -1,0 +1,75 @@
+<div id="component_goodsdetail_attribute_list" style="cursor:default;color:rgb(153, 153, 153);float:left;margin:10px 0 20px -5px;">
+	 <div class="component_goodsrow">
+       <span>界面标题：</span>
+       <input type="text" maxlength="20" id="text_title">
+   </div>
+   <div class="component_goodsrow">
+       <span>详细数据获取接口地址：</span>
+       <input type="text" maxlength="200" id="text_url">
+   </div> 
+   <div class="component_goodsrow">
+       <span>价格数据获取接口地址：</span>
+       <input type="text" maxlength="200" id="text_price_url">
+    </div>
+   <div class="component_goodsrow">
+       <span>尺码数据获取接口地址：</span>
+       <input type="text" maxlength="200" id="text_spec_url">
+    </div>
+   <div class="component_goodsrow">
+       <span>颜色数据获取接口地址：</span>
+       <input type="text" maxlength="200" id="text_color_url">
+   </div>
+   <div class="component_goodsrow">
+       <span>库存数据获取接口地址：</span>
+       <input type="text" maxlength="200" id="text_stock_url">
+   </div>   
+   <div class="component_goodsrow">
+       <span>购买接口地址：</span>
+       <input type="text" maxlength="200" id="text_buy_url">
+   </div>  
+   <div class="component_goodsrow">
+       <span>加入购物车接口地址：</span>
+       <input type="text" maxlength="200" id="text_join_url">
+   </div>
+   <div class="component_goodsrow">
+       <span>商品评论地址：</span>
+       <input type="text" maxlength="200" id="text_comment_url">
+   </div> 
+   <div class="component_goodsrow">
+       <span>商品评论参数：</span>
+       <input type="text" maxlength="200" id="text_comment_para">
+   </div>    
+   <div class="component_goodsrow">
+       <span>商品收藏地址：</span>
+       <input type="text" maxlength="200" id="text_fav_url">
+   </div>   
+   <div class="component_goodsrow">
+       <span>商品收藏参数：</span>
+       <input type="text" maxlength="200" id="text_fav_para">
+   </div>
+	 <div class="clearfix"></div>
+</div>
+
+<script type="text/javascript">
+	 //绑定已有数据
+	 function BundleAttr(attr){
+	 	 $("#text_title").val(attr.title);
+	 	 $("#text_url").val(attr.url);
+	 	 $("#text_price_url").val(attr.price_url);
+	 	 $("#text_spec_url").val(attr.spec_url);
+	 	 $("#text_color_url").val(attr.color_url);
+	 	 $("#text_stock_url").val(attr.stock_url);
+	 	 $("#text_buy_url").val(attr.buy_url);
+	 	 $("#text_join_url").val(attr.join_url);
+	 	 var comment = attr.comment.attrs;
+	 	 if ( comment!= null){
+	 	   $("#text_comment_url").val(comment.url==null ? "":comment.url);
+	 	   $("#text_comment_para").val(comment.para == null ? "":comment.para);
+	   }
+	   var fav = attr.fav.attrs;
+	   if ( fav!=null){
+	   	 $("#text_fav_url").val(fav.url==null ? "" :fav.url);
+	   	 $("#text_fav_para").val(fav.para==null ? "":fav.para);
+	   }
+	 }
+</script>

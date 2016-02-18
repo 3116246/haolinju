@@ -1,0 +1,31 @@
+{
+    "name": "doctrine/mongodb-odm-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Doctrine MongoDB Bundle",
+    "keywords": ["persistence", "mongodb", "symfony"],
+    "homepage": "http://www.doctrine-project.org",
+    "license": "MIT",
+    "authors": [
+        {"name": "Bulat Shakirzyanov", "email": "mallluhuct@gmail.com"},
+        {"name": "Kris Wallsmith", "email": "kris@symfony.com"},
+        {"name": "Jonathan H. Wage", "email": "jonwage@gmail.com"}
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "doctrine/mongodb-odm": "1.0.0-BETA5",
+        "symfony/symfony": "2.0.*"
+    },
+    "require-dev" : {
+        "doctrine/doctrine-fixtures-bundle": "2.0.*"
+    },
+    "suggest" : {
+        "doctrine/doctrine-fixtures-bundle" : "Load data fixtures"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Symfony\\Bundle\\DoctrineMongoDBBundle": ""
+        }
+    },
+    "target-dir" : "Symfony/Bundle/DoctrineMongoDBBundle"
+}

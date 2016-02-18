@@ -1,0 +1,73 @@
+<style type="text/css">
+	.task_card_pop{width:320px;height:250px;text-align:center;}
+	.task_toolbar ul{list-style:none outside none;margin-left:0px;background-color:red;height:24px;}
+	.task_toolbar li{list-style:none outside none;float:left;width:atuo;height:20px;line-height:20px;text-align:left;margin-right:5px;margin-left:0px;}
+	.task_toolbar li a{color:#0088CC;cursor:pointer;}
+	.task_card_content{width:275px;height:215px;overflow-x:hide;overfolow-y:scroll;border:#ccc solid 1px;word-wrap:break-word;word-break:normal;text-indent:5px;margin:0 auto;}
+	#pop3{height:88px;padding-top:80px;padding-bottom:40px;}
+	#pop3 ul{list-style:none outside none;margin-left:0px;height:20px;text-align:center;width:120px;margin:0 auto;}
+	#pop3 ul li{list-style:none outside none;float:left;width:atuo;height:20px;line-height:20px;text-align:center;width:60px;}
+	#pop3 input{margin-bottom: 8px;} 
+</style>
+<div class="task_card_pop">
+	 <div class="task_card_id" style="display:none;">{{ id }}</div>
+	 <div class="task_card_title" style="display:none;">{{ title }}</div>
+   <ul class="task_toolbar" style="height:24px;">
+   	 <li><a href="#" onclick="pop_tab('task_card_content')">查看</a></li>
+     <li><a href="#" onclick="pop_tab('pop1')">编辑</a></li>
+     <li><a href="#" onclick="pop_tab('pop2')">提醒设置</a></li>
+     <li><a href="#" onclick="pop_tab('pop3')">完成状态设置</a></li>
+     <li><a href="#" onclick="delete_task('{{id}}')">删除</a></li>
+   </ul>
+   <div id="task_card_content" class="task_card_content">
+   	 {{start_time|raw}}-{{end_time|raw}}
+   	<p style="text-align:left;text-indent:15px;">
+   		{{content|raw}}
+   	</p>
+   	 
+   </div>
+   <!-- 编辑 -->
+   <div id="pop1" class="task_card_content"  style="display:none;">
+   	 	<form method="post" id="edit_task_form"  class="form-horizontal" style="padding-top:5px;padding-bottom:5px; height: 218px;">
+				<div style="display:none;">
+				 	  <label></label><input type="text" id="edit_task_id" value="{{id}}"/>
+				</div>
+			  <div class="control-group">
+				      <label class="control-label" for="content">计划内容:</label>
+				      <div class="controls">
+				     	    <textarea class="input-xlarge" id="edit_content" name="edit_content" rows="4">{{content|raw}}</textarea>
+				     	</div>
+		     </div>
+			  <div class="control-group"">
+		      		<label class="control-label" for="start_time">开始时间:</label>
+				      <div class="controls">
+				     	    <input type="text" class="input-xlarge Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{{start_time}}" id="edit_start_time" name="edit_start_time" maxlength="20" >
+				     	</div>
+		     </div>
+		     <div class="control-group" >
+		      		<label class="control-label" for="end_time">结束时间:</label>
+				      <div class="controls">
+				     	    <input type="text" class="input-xlarge Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{{end_time}}" id="edit_end_time" name="edit_end_time" maxlength="20" >
+				     	</div>
+		     </div>
+		     <div class="form-actions" style="padding-left:40px;padding-top: 0px;">
+		   	     <input id="edit_btnSave" onclick="edit_task_submit()" type="button"  style="width:138px" class="inputsmall" value="保存">
+		         <span id="edit_hint" class="help-inline" style="width:172px;display:block;">
+		             <a style="color:#db4800"></a>
+		         </span>	
+		    </div>
+			</form>
+   </div>
+   <!-- 设置提醒 -->
+   <div id="pop2" class="task_card_content"  style="display:none;">
+   </div>
+   <!-- 完成状态设置 -->
+   <div id="pop3" class="task_card_content" style="display:none;">
+   	  <ul>
+   	    <li><input type="radio" name="is_finish" value="1" {% if is_finish== 1%} checked="checked" {% endif %}><span>完成</span></li>
+   	    <li><input type="radio" name="is_finish" value="0" {% if is_finish== 0%} checked="checked" {% endif %}><span>进行中</span></li>
+   	  </ul>
+   	  <button onclick="save_state_setting('{{id}}')">保存</button>
+   </div>
+   <div id="edit_hint_msg" style="width:279px;height:20px;line-height:20px;text-align:center;margin:0 auto;color:#db4800;"></div>
+</div>

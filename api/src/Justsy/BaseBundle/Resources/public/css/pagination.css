@@ -1,0 +1,68 @@
+﻿.pagecurr
+{
+    background-color: #00AAD5;
+    color: #FFFFFF;
+}
+.pagec
+{
+    padding-left: 1px;
+    margin-left: 5px;
+}
+.nottopage
+{
+    background-color: #c8c8c8;
+    color: #000000;
+}
+.pointc
+{
+    margin-left: 5px;
+}
+.pointv
+{
+    font-size: 6px;
+    position: relative;
+    top: -4px;
+    text-align: center;
+    display: inline-block;
+    text-indent: 0px;
+}
+/*
+.pagev
+{
+    background-color: #e6e6e6;
+    border-radius: 4px 4px 4px 4px;
+    color: #000000;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px;
+    position: relative;
+    top: -4px;
+    text-align: center;
+    display: inline-block;
+    text-indent: 0px;
+    border-bottom: 1px solid #767877;
+}
+*/
+.pagev
+{
+    padding: 2px 8px;    
+}
+.redirect_bnt
+{
+}
+.gotopage
+{
+    border-radius: 12px;
+    color: #000;
+    cursor: pointer;
+    font-size: 12px;
+    height: 12px;
+    line-height: 12px;
+    padding: 2px 5px;
+    text-decoration: none;
+    width: 15px;    
+}
+.gotopage:hover
+{
+    color:#0088CC;
+}

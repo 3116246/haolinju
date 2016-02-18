@@ -1,0 +1,181 @@
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>系统登录</title>
+</head>
+<body style="background-color: #f3f3f3">
+<form id='loginform' method='post' action="">
+	<input type='hidden' id='appid' name='appid' value='{{appid}}'/>
+	<input type='hidden' id='openid' name='openid' value='{{openid}}'/>
+	<input type='hidden' id='ssomodule' name='ssomodule' value='{{ssomodule}}'/>
+	<input type='hidden' id='token' name='token' value=''/>
+	<input type='hidden' id='encrypt' name='encrypt' value='0'/>
+</form>
+<div style="width: 100%; text-align: center; height: 640px; margin-top: 180px; color: red; font-size: 14px;display:none" id="hint">
+	<span id="hinttext">正在进入应用...</span><br><br>
+	<span style="border: 1px solid rgb(102, 102, 102); border-radius: 3px; padding: 5px; background-color: green; color: rgb(255, 255, 255); cursor: pointer;" id="resetbindBtn" onclick="rebind()">重新绑定</span>
+</div>
+<div style="text-align: center; display: block; line-height: 40px; margin: 10px; border-radius: 5px; border: 1px solid rgb(204, 204, 204); padding: 15px; background-color: rgb(255, 255, 255); height: 200px;" id="bind">
+	<div style="border-bottom: 1px solid rgb(204, 204, 204); font-size: 14px; color: rgb(102, 102, 102);">授权移动门户访问该应用并绑定帐号</div>
+	<div style="display: block; float: left; width: 100%;">
+		<span style="display: block; float: left; font-size: 12px; color: rgb(102, 102, 102);">应用帐号</span><span style="display: block; float: left; margin-left: 10px; margin-top: 8px;"><input type="text" id="bind_account" style="height:30px;line-height:30px" maxlength=32></span>
+	</div>
+	<div style="display: block; float: left; width: 100%;">
+		<span style="display: block; float: left; font-size: 12px; color: rgb(102, 102, 102); margin-left: 25px;">密码</span><span style="display: block; float: left; margin-top: 8px; margin-left: 10px;"><input type="password" style="height:30px;line-height:30px" maxlength=32 id="bind_pass"></span>
+	</div>
+	<div style="display: block; float: left; width: 100%; font-size: 12px; color: red;" id="msg">{{errormsg}}</div>
+	<div style="display: block; float: left; width: 100%;">
+		<span onclick="bindaccount()" id="bindBtn" style="border: 1px solid rgb(204, 204, 204); font-size: 14px; padding: 5px 15px; background-color: green; color: rgb(255, 255, 255); cursor: pointer;">确定</span>
+	</div>
+</div>
+</body>
+</html>
+<script language='javascript' type='text/javascript'>
+var hint = document.getElementById("hint");
+var hinttext = document.getElementById("hinttext");
+var bind = document.getElementById("bind");
+var timer = null,isrebind=false,isbinding = false,isStartLogin=false;
+var serverurl= "";//getQueryString("server");
+function $(id)
+{
+	return document.getElementById(id);
+}
+function rebind()
+{
+	clearTimeout(timer);
+	hint.style.display="none";
+	bind.style.display="";
+	isrebind = true;
+}
+function bindaccount()
+{
+	if(isbinding) return;
+	var v_a = $("bind_account").value.replace(/ /g,"");
+	if(v_a=="")
+	{
+		$("msg").innerHTML = "应用帐号不能为空";
+		return;
+	}
+	var v_p = $("bind_pass").value.replace(/ /g,"");  //绑定时可以不指定密码，只绑定帐号
+	if(v_p!="")
+	{
+		v_p = "," + v_p;
+	}
+	$("msg").innerHTML = "正在绑定帐号...";
+	isbinding = true;
+	$("bindBtn").style.color="#999";
+	$("bindBtn").style.backgroundColor="#ccc";
+	//if(serverurl==null || serverurl=="")
+  	//	serverurl= "http://182.92.11.9";
+  	window.location.href=serverurl+"/api/http/sso/bind/"+$("openid").value+"/"+$("appid").value+
+		"?auth=" + v_a+v_p;
+		/*
+	var script = document.createElement('script');
+	script.id= "bindAync";
+	script.src = serverurl+"/api/http/sso/bind/"+$("openid").value+"/"+$("appid").value+
+		"?auth=" + v_a+v_p; 
+	document.body.appendChild(script); 	*/
+	isrebind=false;
+}
+
+function callbind(data)
+{
+	isbinding=false;
+	$("msg").innerHTML = "";
+	$("bindBtn").style.color="#ffffff";
+	document.body.removeChild($("bindAync"));
+	if(data!=null && data["error"]==null)
+	{
+		hint.style.display="";
+		bind.style.display="none";
+		hinttext.innerHTML = "绑定成功！正在登入应用...";
+		token();
+	}
+	else
+	{
+		$("msg").innerHTML = data["error"];
+	}
+}
+
+function getQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]); return null;
+}
+
+function token()
+{
+	if(isrebind) return;
+	isStartLogin=true;
+	//$("appid").value=getQueryString("appid");
+  	//$("openid").value=getQueryString("openid");
+  	//$("ssomodule").value=getQueryString("ssomodule");
+  	//$("encrypt").value=getQueryString("encrypt");	
+  	//if(serverurl==null || serverurl=="")
+  	//	serverurl=  "http://182.92.11.9";
+	var script = document.createElement('script');
+	script.id= "ssoAync";
+	script.src = serverurl+"/api/http/sso/token?jsoncallback=getToken&appid="+
+		$("appid").value+"&openid="+
+		$("openid").value+"&ssomodule="+
+		$("ssomodule").value;  
+	document.body.appendChild(script); 
+}
+
+function getToken(data)
+{
+	isStartLogin=false;
+	if(isrebind) return;
+	if(data["error"]!=null)
+	{
+		if(data["error"]=="not bind")
+		{
+			hint.style.display="none";
+			bind.style.display="";
+			return;
+		}
+		hinttext.innerHTML = data["error"];
+	}
+	else
+	{
+		$("token").value = data["access_token"]||data["token"];
+		login();
+	}
+}
+  
+function login()
+{
+	isStartLogin=true;
+	$("resetbindBtn").style.display="none";
+  	//var serverurl=getQueryString("server");
+  	//if(serverurl==null || serverurl=="")
+  	//	serverurl= "http://182.92.11.9";
+  	$("loginform").action =serverurl +"/api/http/sso/login";
+  	$("loginform").submit();
+}
+function checkLoginStatus()
+{
+	if(isStartLogin)
+	{
+		//直接认为登录异常了
+		$("resetbindBtn").style.display="none";
+		hinttext.innerHTML = "登入失败:应用服务器超时";
+		isStartLogin=false;
+		return;
+	}
+	setTimeout(function(){
+  		checkLoginStatus();
+  	},10*1000);
+}
+/*
+window.onload=function(){
+	timer=setTimeout(function(){
+		token();
+	},500);
+	//10秒检查login是否成功，没有成功则认为登录发生错误
+  	setTimeout(function(){
+  		checkLoginStatus();
+  	},10*1000);
+};
+*/
+</script>

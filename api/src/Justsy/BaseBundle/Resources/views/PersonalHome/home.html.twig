@@ -1,0 +1,66 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' %}
+		<div class="menuother">群组</div>
+    <ul class="left-menu">
+      {% for group in this.groups %}
+      <li><a href="{{ path('JustsyBaseBundle_personal_group',{'network_domain':curr_network_domain,'groupid':group['group_id']})}}" ><i class="menu-group"></i>{{ group["group_name"] }}</a></li>
+      {% endfor %}
+      <li><a href="#"><i class="menu-search"></i>查找群组</a></li>
+      <li><a href="{{ path('JustsyBaseBundle_group',{'network_domain':curr_network_domain}) }}"><i class="menu-create"></i>创建群组</a></li>
+    </ul>
+{% endblock %}
+
+{% block main_content_center %}
+  {% render "JustsyBaseBundle:CInputArea:index" with {'name' : 'foo','network_domain':curr_network_domain} %}
+     <div class="hometopic">
+			<div class="topicmenu" id="topicmenu">
+				<ul class="topic_top" id="menus">
+					<li style="width:463px;"><div class="line20"></div></li>
+					<li style="width:20px;"><a href="#" title="刷新"><div class="topic_flush"></div></a></li>
+					<li dropdownlist="1"><a href="#"><div class="topic_list" title="筛选动态列表"></div></a>
+						<ul class="topic_options">
+							<li class="topic_in"><a href="javascript:void(0);">全部动态</a></li>
+							<li><a href="javascript:void(0);">我关注的</a></li>
+							<li><a href="javascript:void(0);">我发布的</a></li>
+							<li><a href="javascript:void(0);">我喜欢的</a></li>
+						</ul>
+					</li>
+					
+				</ul>
+			</div>     
+      <div class="tabbox"  style="display:none">
+        <ul>
+          <li id="two1" onClick="setDisplayTab(this)" class="hover" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_personal_get_convers',{ 'type':'all' }) }}?network_domain={{this.network_domain}}">全部</li>
+          <li id="two2" onClick="setDisplayTab(this)" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv') }}" loadurl="{{ path('JustsyBaseBundle_personal_get_convers',{ 'type':'atten' }) }}?network_domain={{this.network_domain}}">我的关注</li>
+          </ul>
+      </div>
+      <div class="contentbox">
+        <div id="con_two1" class="display_con_area hover"></div>
+        <div id="con_two2" class="display_con_area" style="display:none"></div>
+      </div>
+      <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/EnterpriseHome.js') }}"></script>
+      <script type="text/javascript">
+      $(document).ready(function()
+      {
+        setDisplayTab(document.getElementById("two1"));
+        window.OnPublished = EnterpriseHome_OnPublished;
+        $(document).scroll(EnterpriseHome_Document_OnScroll);
+        //window.setTimeout(EnterpriseHome_GetConvUnreadCount_Timeout, 1000*60);
+      });
+      </script>
+    </div>
+{% endblock %}
+
+{% block main_content_right %}
+  <A href="{{path('JustsyBaseBundle_invitation_staff')}}?network_domain={{curr_network_domain}}"><div class="invitetitle" style="cursor:hand"></div></A>
+  <div class="rightbox"></div>
+  <div class="menutitle">最新活动</div>
+  <div class="rightbox"></div>
+  <div class="menutitle">最新文件</div>
+  <div class="rightbox">
+    {% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {"network_domain":this.network_domain,"scope_type" : ""} %}
+  </div>
+{% endblock %}

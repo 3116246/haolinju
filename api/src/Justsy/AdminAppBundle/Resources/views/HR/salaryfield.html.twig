@@ -1,0 +1,202 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pageControl.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/salary.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block javascriptsref %}
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/pageControl.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/salary.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container salary_area">
+  <div class="containerBox" style="padding:15px 10px;">
+  	  <div class="salary_title">
+  			 <img class="logo" src="{{ asset('bundles/fafatimembapp/images/toplogo.png') }}" >
+  			 <span>工资字段维护</span>
+  			 <div class="salary_addarea" onclick="salaryFields.show();">
+  			 	  <span class="salary_addfield"></span>
+  			 	  <span style="float:left;padding-left:5px;">添加工资项</span>
+  			 </div>
+  			 <div id="updatecontent"></div>
+  		</div>
+  		<div style="float:left;margin-top:10px;width:100%;">
+	  		<div style="width:855px;" class="mb_table" >
+	  	   	 <table border='1' align='center' class="mb_tables">
+	  	   	 	 <thead>
+		  	   	 	  <tr class="mb_tables_title">
+								  <td width="120">工资大类</td>
+								  <td width="280">工资项目</td>
+								  <td width="280">对应SAP工资项目</td>
+								  <td width="85" >工资项编码</td>
+								  <td >操&nbsp;作</td>
+								</tr> 
+						 </thead>
+						 <tbody>
+						</tbody>
+           </table> 
+	      </div>
+      </div>
+            	   
+	</div>
+	<!--添加工资字段项-->
+	<div  class="dialogBox " id="salaryfield_area" style="display:none;">
+		<div class="background"></div>
+    <div style="width:650px;top:20px;left:-50px;" class="dialog">
+    	<div class="title">新增工资字段项</div> 
+      <span title="关闭" onclick="$('#salaryfield_area').hide();" class="close-tip-icon"></span>
+      <div class="content" style="min-height:150px;overflow:hidden;padding:10px;cursor:default;">
+      	 <div class="salary_content">
+      	 	  <div class="salary_menu_area">
+      	 	  	 <span class="salary_menu_active" onclick="salaryFields.toggle(this)" salarytype="bigitem">工资项目大类</span>
+      	 	  	 <span class="salary_menu" onclick="salaryFields.toggle(this)" salarytype="subitem">工资项目子类</span>
+      	 	  	 <div class="salary_addarea" style="margin-top: -2px; margin-right: 0px;" onclick="salaryFields.additem();">
+      	 	  	 	  <span class="salary_addfield"></span>
+      	 	  	 	  <span>添加项目</span>
+      	 	  	 </div>
+      	 	  </div>
+      	 	  <div class="salary_filed_area" state="bigitem" style="display:block;">
+      	 	  	<div class="salary_field_row" style="height: 25px; line-height: 25px; margin-top:2px;">
+      	 	  	 	  <span style="float: left; text-align: center; width: 80px;">排序号</span>
+      	 	  	 	  <span style="float: left; text-align:center; width: 120px">工资项目</span>
+      	 	  	 	  <span style="float: left; text-align:center; width: 165px">工资项目说明</span>
+      	 	  	</div>
+      	 	  	<div id="Content1" style="float:left;height:270px;overflow:auto;"></div>
+      	 	  </div>
+      	 	  <div class="salary_filed_area" state="subitem">
+      	 	  	 <div class="salary_field_row" style="height: 25px; line-height: 25px; margin-top:2px;">
+      	 	  	 	  <span style="float: left; text-align: center; width: 60px;">排序号</span>
+      	 	  	 	  <span style="float: left; text-align:center; width: 120px">工资项目</span>
+      	 	  	 	  <span style="float: left; text-align:center; width: 120px">对应SAP工资项目</span>
+      	 	  	 	  <span style="float:left;text-align:center;width:85px;">工资项编码</span>
+      	 	  	 	  <select class="salary_select" onchange="salaryFields.selectcombox()">
+      	 	  	 	  	{% for datarow in data %}
+      	 	  	 	  	   <option value="{{datarow['id']}}">{{datarow['codename']}}</option>
+      	 	  	 	  	{% endfor %}
+      	 	  	 	  </select>
+      	 	  	 </div>      	 	  	 
+      	 	  	 <div style="float:left;height:270px;overflow:auto;" id="Content2"></div>
+      	 	  </div>
+      	 </div>
+      </div>
+      <div class="operation" style="padding:10px;height: 52px;">
+      	 <div class="salary_hint"></div>
+      	 <div>
+	          <button onclick="salaryFields.Save();" class="btn btnGreen" style="float:left;width:80px;">确&nbsp;定</button>    
+	          <button onclick="$('#salaryfield_area').hide();" class="btn btnGreen" style="float:left;width:80px;">取&nbsp;消</button>
+         </div>
+      </div>
+    </div>
+  </div>
+
+	<!--修改工资字段值-->
+	<div  class="dialogBox " id="salaryfield_edit" style="display:none;">
+		<div class="background"></div>
+    <div style="width:500px;top:65px;left:-50px;" class="dialog">
+    	<div class="title">修改工资字段项</div> 
+      <span title="关闭" onclick="$('#salaryfield_edit').hide();" class="close-tip-icon"></span>
+      <div class="content" style="height:240px;overflow:hidden;padding:10px;cursor:default;">
+  	 	  <div class="salary_menu_area">
+  	 	  	 <span class="salary_menu_active" onclick="salaryFields.edit_toggle(0);">工资项目子类</span>
+  	 	  	 <span class="salary_menu" onclick="salaryFields.edit_toggle(1);">工资项目大类</span>
+  	 	  </div>
+  	 	  <div id="updatecontent" style="float: left; padding: 10px 50px 10px 50px">
+  	 	  	 <!--工资大类-->
+  	 	  	 <div id="salary_big" style="float:left;margin-top:50px;">
+  	 	  	 	 <div class="salary_field_row">
+  	 	  	 	 	 <span class="salary_itemfield">排序号：</span>
+  	 	  	 	 	 <input style="width:200px;" class="sort">
+  	 	  	 	 </div>
+  	 	  	 	 <div class="salary_field_row">
+  	 	  	 	 	 <span class="salary_itemfield" >工资项目：</span>
+  	 	  	 	 	 <input style="width:200px;" class="itemname">
+  	 	  	 	 </div>
+  	 	  	 </div>
+  	 	  	 <!--工资小类-->
+  	 	  	 <div id="salary_sub" style="float:left;margin-top:25px;">
+  	 	  	 	 <div class="salary_field_row">
+  	 	  	 	 	 <span class="salary_itemfield">排序号：</span>
+  	 	  	 	 	 <input style="width:200px;" class="sort">
+  	 	  	 	 </div>
+  	 	  	 	 <div class="salary_field_row">
+  	 	  	 	 	 <span class="salary_itemfield" >工资项目：</span>
+  	 	  	 	 	 <input style="width:200px;" class="itemname">
+  	 	  	 	 </div>
+  	 	  	 	 <div class="salary_field_row">
+  	 	  	 	 	 <span class="salary_itemfield" >SAP工资项目：</span>
+  	 	  	 	 	 <input style="width:200px;" class="sapitem">
+  	 	  	 	 </div>
+  	 	  	 	 <div class="salary_field_row">
+  	 	  	 	 	 <span class="salary_itemfield" >工资项编码：</span>
+  	 	  	 	 	 <input style="width:200px;" class="fieldcode">
+  	 	  	 	 </div>     	 	  	 	 
+           </div>
+  	 	  </div>
+      </div>
+      <div class="operation" style="padding:10px;height: 52px;">
+      	 <div class="salary_hint" style="width:165px;padding-left:0px;font-size:12px;"></div>
+      	 <div>
+	          <button onclick="salaryFields.update();" class="btn btnGreen" style="float:left;width:80px;">确&nbsp;定</button>    
+	          <button onclick="$('#salaryfield_edit').hide();" class="btn btnGreen" style="float:left;width:80px;">取&nbsp;消</button>
+         </div>
+      </div>
+    </div>
+  </div>
+  
+  <!--删除工资项-->
+	<div  class="dialogBox " id="salaryfield_dele" style="display:none;">
+		<div class="background"></div>
+    <div style="width:400px;top:100px;left:-50px;" class="dialog">
+    	<div class="title">删除工资字段项</div> 
+      <span title="关闭" onclick="$('#salaryfield_dele').hide();" class="close-tip-icon"></span>
+      <div class="content" style="height:120px;overflow:hidden;padding:10px;cursor:default;">
+         <div style="float: left; width: 100%; margin-top: 10px;">
+	      	 <label style="float: left; margin-left: 80px;">
+	 	         <input type="radio" checked="checked" style="float:left;" id="del_big" name="radio_item"> 
+	 	  	     <span class="component_navtype">删除工资大类</span>
+	 	       </label>
+	 	       <span style="float: left; width: 100%; text-align: center; font-weight: 100;">将同时删除下面所属工资小类</span>
+ 	       </div>
+      	 <label style="float:left;margin-left:80px;">
+ 	         <input type="radio" name="radio_item" id="del_sub" style="float:left;" checked="checked"> 
+ 	  	     <span class="component_navtype">删除工资小类</span>
+ 	       </label>
+         <div id = "del_hint" style="float:left;width:100%;padding-left:10px;color:#cc3300;"></div>
+      </div>
+      <div class="operation" style="padding:10px 0px;height:52px;">
+	       <button onclick="salaryFields.DeleteField();" class="btn btnGreen" style="float:left;width:80px;margin-left:110px;">确&nbsp;定</button>    
+	       <button onclick="$('#salaryfield_dele').hide();" class="btn btnGreen" style="float:left;width:80px;">取&nbsp;消</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	 $(document).ready(function(){
+		 salaryFields.icon.error = "{{ asset('bundles/fafatimeweopenapi/images/error.png')}}";
+		 salaryFields.icon.warning = "{{ asset('bundles/fafatimeweopenapi/images/zq.png')}}";
+		 salaryFields.icon.success = "{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}";
+		 salaryFields.icon.loading =  "{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}";
+	   salaryFields.update_url = "{{path('JustsyAdminAppBundle_mb_updatefield')}}";
+	   salaryFields.getFields_url = "{{path('JustsyAdminAppBundle_mb_salary_getfields')}}";
+	   salaryFields.delet_url = "{{path('JustsyAdminAppBundle_mb_salary_deletfield')}}";
+	   salaryFields.LoadFields();
+   });
+</script>
+
+{% endblock %}

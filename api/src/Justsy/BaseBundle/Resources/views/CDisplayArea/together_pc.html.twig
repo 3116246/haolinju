@@ -1,0 +1,95 @@
+<div type='together' conv_id='{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' style='z-index:{{ds["we_convers_list"]["rows"][0]["conv_id"]}}' top='' hide='' class="convbox">
+    <span class='conv_header'>
+        <span style='*float:left;'>
+            <a href="#" class="post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a>
+        </span>
+        <span class="comefrom">{{ ds["we_convers_list"]["rows"][0]["post_date_d"] }}</span>
+        <!--<div style="clear: both;"></div>-->
+    </span><br/>
+    <div class="activity convdetail">
+        <div class="topiclayout"> 
+            <span style='top:-15px;' class=" portrait"><img style="height: 36px;width: 36px;" src="{{ ds["we_convers_list"]["rows"][0]["photo_url"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span> 
+            <span class=" date"><span class="month">{{ ds["we_together"]["rows"][0]["will_date"]|date("m")|number_format }}月</span><span class="day">{{ ds["we_together"]["rows"][0]["will_date"]|date("d")|number_format }}</span></span>
+            <span class="topicdetail">
+                <div class="activityarrow"><span class="activityicon"></span><p style="text-indent:-20px;*text-indent:0px;"><span class="conv_content conv_title" style="font-size:12px;">{{ ds["we_together"]["rows"][0]["title"] }}</span></p></div>
+            </span>
+            <span class="activiybox">
+                <p class="time">活动时间：{{ ds["we_together"]["rows"][0]["will_date"]|date("Y年m月d日 H点i分") }}</p>
+      {% if ds["we_together"]["rows"][0]["will_dur"] %}
+                <p class="time">预计持续：{{ ds["we_together"]["rows"][0]["will_dur"] }}</p>
+      {% endif %}
+                <p class="time">活动地点：{{ ds["we_together"]["rows"][0]["will_addr"] }}</p>
+                <hr style="height: 1px; margin: 0px;"/>
+                <p class=" activities">{{ this.replaceFaceEmote(ds["we_together"]["rows"][0]["together_desc"])|raw|nl2br }}</p>
+                <div style="width:346px;height:200px;border:1px solid #ccc;display:none" class="fafa-map" point="{{ds["we_together"]["rows"][0]["will_addr_map"]}}" id="together_id_{{ ds["we_together"]["rows"][0]["together_id"] }}"></div>
+            </span>
+    {% include 'JustsyBaseBundle:CDisplayArea:attachs.html.twig' with {'ds': ds, 'this' : this} %}
+    {% include 'JustsyBaseBundle:CDisplayArea:cc.html.twig' %}
+            <p class="sponsor"><a href="#" class="employee_name post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a> 发起</p>
+            <div class="together_staffs_outbox" style="display:{{ ds["we_together_staff"]["rows"]|length > 0 ? "block" : "none" }};">
+                <div class="together_staffsbox"> 
+                    <span class="together_staffsboxpart" style="color: #999;">参与人员：</span>
+        {% for item in ds["we_together_staff"]["rows"] %}
+                    <span class="together_staff" staff="{{ item["login_account"] }}"><a class="employee_name" login_account="{{ item["login_account"] }}" href="#">{{ item["nick_name"] }}</a></span> 
+        {% endfor %}
+                    </div>
+                </div>
+    {% include 'JustsyBaseBundle:CDisplayArea:label_pc.html.twig' %}
+            </div>
+        </div>
+        <div class="topicfunction">
+             {% if  ds["we_convers_list"]["rows"][0]["comefrom"] != "00" %}
+                <span class="comefromleft">来自{{ ds["we_convers_list"]["rows"][0]["comefrom_d"] }}</span>
+  {% endif %} 
+                <span class="functiontext">
+     {% set hasjoined = 0 %}
+    {% for row in ds["we_together_staff"]["rows"] %}
+      {% if row["login_account"] == app.user.username %}
+        {% set hasjoined = 1 %}
+      {% endif %}
+    {% endfor %}
+                    <span title='更多操作' style='*margin-top:5px;' class='moreoper'></span>
+                    <ul class='convoper' style="background-color:#FFF;z-index:1000;display:none;width:85px;list-style:none outside none;margin:0;padding:0;top:32px;right:5px;position:absolute;background-color:#FFF;z-index:10;">
+      		{% if ds["we_convers_list"]["rows"][0]["login_account"] == app.user.username %}<li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                <span style="cursor:pointer;"><span  onclick="DelTrend(this, '{{ path("JustsyBaseBundle_component_cdisparea_deltrend") }}', '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}', '{{ asset("bundles/fafatimewebase/images/loading.gif") }}')">删除</span></span></li>{% endif %}
+                           {%if trend%}
+                            <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                <span style="cursor:pointer;" onclick="{{ hasjoined != 1 ? "JoinTogether_OnClick(this)" : "UnJoinTogether_OnClick(this)" }}"
+                                      together_id="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                      joinurl="{{ path("JustsyBaseBundle_component_cdisparea_jointogether") }}"
+                                      unjoinurl="{{ path("JustsyBaseBundle_component_cdisparea_unjointogether") }}">{% if hasjoined != 1 %}我要参加{% else %}我要退出{% endif %}</span>
+                            </li>
+                            <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                <span onclick="{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "UnAttenConv_OnClick_Pc(this)" : "AttenConv_OnClick_Pc(this)" }}"
+                                      attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                      attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+                                      unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span style="cursor:pointer;" class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></span>
+                            </li>
+                            {%else%}
+                            <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                <span style="cursor:pointer;" title="您还未获取该功能使用权限"
+                                      together_id="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                      joinurl="{{ path("JustsyBaseBundle_component_cdisparea_jointogether") }}"
+                                      unjoinurl="{{ path("JustsyBaseBundle_component_cdisparea_unjointogether") }}">{% if hasjoined != 1 %}我要参加{% else %}我要退出{% endif %}</span>
+                            </li>
+                            <li style='height:22px;min-height:22px;padding:0;padding-top:2px;padding-bottom:2px;border:0;text-align:left;padding-left:15px;'>
+                                <span title="您还未获取该功能使用权限"
+                                      attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+                                      attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+                                      unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span ><span style="cursor:pointer;" class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></span>
+                            </li>
+                            {%endif%}
+                        </ul>
+                        {%if trend%}
+                        <a href="javascript:void(0)"><span  onclick="ReplyLink_OnClick(this)">评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+                    		{%else%}
+                    		<a href="javascript:void(0)"><span  title="您还未获取该功能使用权限">评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+                    		{%endif%}
+                    </span>
+                    <div style="clear: both;"></div>
+                </div>
+  {% include 'JustsyBaseBundle:CDisplayArea:reply_pc.html.twig' with {'ds': ds, 'isask' : 0} %}
+            </div>
+            <script type="text/javascript">
+                                fafaMap.AutoShow();
+                </script>

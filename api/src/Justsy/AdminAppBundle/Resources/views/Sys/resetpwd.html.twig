@@ -1,0 +1,124 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+{% block stylesheets %}
+	<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+	<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+	<style type="text/css">
+	  .reset_area {margin:50px auto 0;padding: 0;width:60%; }
+	  .reset_rows { float: left;line-height: 30px;margin: 10px 0;width: 370px;}
+    .reset_rows>span { float:left;width:95px;padding-right:5px;text-align:right;}
+	  .reset_title { border-bottom: 1px solid #0088cc;color: #0088cc;float: left;font-weight: bold;height:45px;padding-left: 20px;width:100%;cursor:default;}
+	  .reset_title>img { float:left;width:180px;padding-right:10px;}
+	  .reset_title>span{ float: left;font-size: 20px;letter-spacing: 5px;margin-top: 15px;text-shadow: 2px 0 1px #ccc;margin-left:10px;}
+	  .reset_content {float:left;width:100%;min-height:180px;padding-left:10px;}
+	  .reset_user_account { background-color: #fff;border: 1px solid #0088cc;float: left;height: 30px;width: 265px;}
+	  .reset_user_account>input { border:none;float:left;height:28px;padding-left:5px;padding-right:5px;width:220px;line-height:28px;}
+	  .reset_account_icon  { background-image: url("/bundles/fafatimembapp/images/homeicon.png");background-position: -224px -28px;float:left;height:20px;margin:5px;width: 20px; }
+	  .reset_password_icon { background-image: url("/bundles/fafatimembapp/images/document_icon.png");background-position: -214px -308px;float: left;height: 20px;margin: 5px;width: 20px;}
+	  .reset_hint         {float:left;width:100%;padding:10px;}
+	  .reset_account_info {float:left;height:50px;}
+	  .reset_account_info>img {float:left;width:48px;height:48px;border-radius:5px;}
+	  .reset_account_info>div {float:left;width:200px;height:100%;padding-left:5px;}
+	  .reset_account_name {float: left; width: 100%; display: block; font-weight: bold; line-height: 30px; height: 30px; font-size: 16px;}
+	  .reset_account_mobile { float: left; width: 100%; display: block; font-size: 12px;}
+	  .reset_user_hint1   { float:left;height: 30px;line-height: 30px;margin-left: 175px;max-width: 265px;width: 265px;}
+	  .reset_user_hint2   { float:left;height:30px;line-height:30px;padding-left:95px;width:100%;}
+	  .reset_button { float:left;margin-top: 10px;}	  	
+	  .reset_password_area { float:left;height:200px;padding:20px 0 0 100px;width: 100%;}
+	</style>
+{% endblock %}
+
+{% block javascriptsref %}
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/sysManage.js')}}"></script>
+{% endblock %}
+{% block body %}
+<div class="container" style="float:left;margin-top:10px;padding:0px;">
+  <div class="containerBox" style="margin:0px;max-height:500px;height:500px;">
+	  <div style="padding-left: 50px; padding-right: 50px;" class="search_area">
+ 	  	 <span class="mb_common_word">用户密码管理</span>	  	 
+ 	  </div>  	
+  	<div class="reset_area">
+	  	<div class="reset_content" id="content1">
+	  		 <div class="reset_rows" style="margin-top: 50px; margin-bottom: 5px; width: 100%; margin-left: 80px;">
+	  		 	 <span style="float:left;"> 用户账号：</span>
+	  		 	 <div class="reset_user_account" style="margin:0px;">
+		  		 	 <span class="reset_account_icon"></span>
+		  		 	 <input id="resetAccount" type="text" style="font-weight:bold;" onkeypress="if (event.keyCode==13){ResetPwd.searchAccount();}" />
+	  		   </div>
+	  		 </div>
+	  		 <div class="reset_user_hint1"></div>
+	  		 <span class="btnGreen" style="width:100px;float:left;margin:20px 0px 0px 260px;" onclick="ResetPwd.searchAccount();">下一步</span>
+	  	</div>
+	  	<div class="reset_content" id="content2" style="display:none;">
+	  		<div class="mb_menu_area">
+		      <span class="mb_menu_active" pwd_type="login"  onclick="ResetPwd.toggle(this)">重置用户登录密码</span>
+		      <span class="mb_menu"        pwd_type="salary" onclick="ResetPwd.toggle(this)">工资独立密码管理</span>
+        </div>
+	  		<div class="reset_password_area" flag="login">
+	  			<div class="reset_account_info"></div>
+	        <div class="reset_rows">
+		  		 	 <span style="float: left;"> 用户账号：</span>
+		  		 	 <div class="reset_user_account" style="margin:0px;background-color:#eeeeee;">
+			  		 	 <span class="reset_password_icon"></span>
+			  		 	 <span id="showaccount" style='font-weight: bold; font-size: 16px; float: left;'></span>
+		  		   </div>	  		 
+		  		</div>		
+	        <div class="reset_rows">
+		  		 	 <span style="float: left;"> 新密码：</span>
+		  		 	 <div class="reset_user_account" style="margin:0px;">
+			  		 	 <span class="reset_password_icon"></span>
+			  		 	 <input type="password" id="password1">
+		  		   </div>
+		  		</div>
+		  		<div class="reset_rows">
+		  		 	 <span style="float: left;"> 确认新密码：</span>
+		  		 	 <div class="reset_user_account" style="margin:0px;">
+			  		 	 <span class="reset_password_icon"></span>
+			  		 	 <input type="password" id="password2" onkeypress="if (event.keyCode==13){ResetPwd.resetPassword();}">
+		  		   </div>
+		  		</div>
+	        <div style="margin-top:0px;height:20px;line-height:20px;margin-bottom:0px;display:none;" class="reset_rows" id="defaultarea">
+		  		 	 <span>&nbsp;</span>
+		  		 	 <label style="font-weight:100;">
+		  		 	 	 <input type="checkbox" id="defaultcheck" onchange="ResetPwd.selectcheck()" style="float:left;margin-top:4px;" />
+		  		 	 	 <span style="float:left;padding-left:2px;">默认密码为(123456)！</span>
+		  		 	</label>
+		  		</div>
+		  		<div class="reset_user_hint2"></div>
+		  		<div class="reset_button" id="btnreset" style="margin-left:125px;">
+		  		  <span class="btnGreen" style="margin:auto;width:100px;" onclick="ResetPwd.resetPassword();">重置密码</span>
+		  		  <span class="btnGreen" style="margin:auto;width:100px;margin-left:10px;" onclick="ResetPwd.backstep();">返&nbsp;&nbsp;回</span>
+		  	  </div>
+	  	  </div>
+	  	  <div class="reset_password_area" flag="salary" style="display:none;">
+	  	  	 <span onclick="ResetPwd.clearPwd();" style="float:left;width:200px;margin:50px 0px 0px 50px;" class="btnGreen">清除工资独立登录密码</span>
+	  	  </div>	  	  
+	  	</div>
+	  	
+	  	
+  	</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	 ResetPwd.defaultHeader = "{{ asset('bundles/fafatimembapp/images/head.png')}}";
+	 ResetPwd.icon.error = "{{ asset('bundles/fafatimeweopenapi/images/error.png')}}";
+	 ResetPwd.icon.warning = "{{ asset('bundles/fafatimeweopenapi/images/zq.png')}}";
+	 ResetPwd.icon.success = "{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}";
+	 ResetPwd.icon.loading =  "{{ asset('bundles/fafatimeweopenapi/images/loadingsmall.gif')}}";
+	 ResetPwd.search_url = "{{path('JustsyAdminAppBundle_mb_reset_getaccount')}}";
+	 ResetPwd.reset_url  = "{{path('JustsyAdminAppBundle_mb_reset_password')}}";
+	 ResetPwd.clear_url = "{{path('JustsyAdminAppBundle_mb_salary_restart')}}";
+</script>
+
+{% endblock %}

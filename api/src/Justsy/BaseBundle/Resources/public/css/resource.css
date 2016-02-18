@@ -1,0 +1,28 @@
+.res_div{height:104px;padding-top:5px;border-top:1px dotted #CCC;}
+.res_nex_div{float:left;width: 20px;}
+.res_nex_div div{cursor:pointer;border-right: 15px solid rgb(204, 204, 204); border-left: 15px solid transparent; border-color: transparent rgb(204, 204, 204) transparent transparent; display: block; border-style: solid; border-width: 15px; position: relative; left: -12px; top: 25px;}
+.res_prev_div{float:right;width: 20px;}
+.res_prev_div div{border-left: 15px solid rgb(204, 204, 204); position: relative; border-color: transparent transparent transparent rgb(204, 204, 204); display: block; border-width: 15px; border-style: solid; top: 25px;cursor:pointer;}
+.res_div_hide{visibility:hidden;}
+.res_list{list-style:none outside none;margin:0;padding:0;float:left;max-width: 450px;height:104px;overflow:hidden;}
+.res_list li{float:left;width:60px;height:104px;margin-right:15px;}
+.res_list .res_list_div{width:100%;height:80px;border:1px solid #CCC;border-radius:4px;background-color:#d8d8d8;}
+.res_item_name{width:100%;height:30px;padding-top: 5px;text-align: center;color:#FFF;}
+.res_item_logo{width:100%;height:50px;}
+.res_item_logo img{width:24px;height:24px;left: 18px;position: relative;top: 5px;}
+.res_add_div{float:left;margin-right:5px;margin-top:2px;margin-bottom:2px;float:left;width:60px;height:80px;border:1px dotted #CCC;border-radius:4px;}
+.res_add_div img{width:24px;height:24px;left:18px;position:relative;top:30px;}
+.res_direct{width:100%;height:24px;}
+.res_direct img{height:16px;position:relative;left:22px;}
+.config_titles .title_1{cursor:pointer;}
+.config_titles .title_2{cursor:pointer;}
+.config_titles .title_3{cursor:pointer;}
+.selectedtitle{color:red;}
+.templatelist{height: 250px; border-radius: 4px; border: 1px dotted rgb(204, 204, 204); margin-top: 15px; margin-bottom: 10px; padding-left: 10px;overflow: auto;}
+.template_div{float: left; margin-right: 10px; border: 1px dotted rgb(204, 204, 204); border-radius: 4px; margin-top: 10px; width: 50px;}
+.template_img img{position: relative; left: 8px;}
+.selectedtemp{background-color:#DBEAF9;}
+.res_list .selectedres{background-color:#94ceed;}
+.delimg{display:none;background-image:url('/bundles/fafatimemobilplatform/images/error.gif');width:16px;height:16px;left: 42px;position: relative;top: -22px;}
+.config_titles{height:50px;}
+.res_item_name{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}

@@ -1,0 +1,79 @@
+<div class="topiclayout convbox">
+  <span class=" portrait"><img src="{{ ds["we_convers_list"]["rows"][0]["photo_url"] }}" onerror="this.src='{{ asset("bundles/fafatimewebase/images/no_photo.png") }}'"></span>
+  <span class="topicdetail convdetail">
+    <span>
+      <a href="#" class="employee_name post_staffname" login_account="{{ ds["we_convers_list"]["rows"][0]["login_account"] }}" eshortname="{{ ds["we_convers_list"]["rows"][0]["eshortname"] }}">{{ ds["we_convers_list"]["rows"][0]["nick_name"] }}</a>
+      <span class="fafa_level_{{css_level}} portrait_level" title="{{ds["we_convers_list"]["rows"][0]["we_level"]}} 级">{{ds["we_convers_list"]["rows"][0]["auth_level"]}}{{ds["we_convers_list"]["rows"][0]["vip_level"]}}</span>
+      {% if ds["we_convers_list"]["rows"][0]["isvip"] == "1" %}<img src="{{ asset("bundles/fafatimewebase/images/vip.png") }}" title="企业邮箱用户">{% endif %}
+    </span>
+    <p class="news news_maxheight">分享：{{ds["we_convers_list"]["rows"][0]["reason"]}}</p>
+    <div class="copybox clearfix copyconv_d">
+      <span class="copyboxpart"></span> 
+      {% if ds["we_convers_list"]["recordcount"] == 0 %}
+      该动态已被原作者删除
+      {% else %}
+      <span class="repost"><span>{{ this.replaceFaceEmote(ds["we_convers_list"]["rows"][0]["conv_content"])|raw|nl2br }}</span></span>
+      {% endif %}
+    </div>
+    {% include 'JustsyBaseBundle:CDisplayArea:attachs.html.twig' with {'ds': ds, 'this' : this} %}
+    {% set we_convers_like_roots = this.filterLikeRows(ds["we_convers_list"]["rows"][0]["conv_root_id"], ds["we_convers_like"]["rows"]) %}
+    {% include 'JustsyBaseBundle:CDisplayArea:like.html.twig' with {'we_convers_likes' : we_convers_like_roots} %}
+    {% include 'JustsyBaseBundle:CDisplayArea:label.html.twig' %}
+  </span>
+  {%if ds["we_convers_list"]["rows"][0]["link_url"]!=""%}
+  <p class="news news_maxheight" style="font-size: 12px;color: #999999;">原文链接：<a style='font-size: 12px;color:#5199CB' target=_blank href='{{ds["we_convers_list"]["rows"][0]["link_url"]}}'>查看原文</a></p>
+  {%endif%}
+  <div class="topicfunction">
+    <span class="functiontext">
+      {% if ds["we_convers_list"]["rows"][0]["login_account"] == app.user.username %}
+      <a href="javascript:void(0);"><span onclick="DelTrend(this, '{{ path("JustsyBaseBundle_component_cdisparea_deltrend") }}', '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}', '{{ asset("bundles/fafatimewebase/images/loading.gif") }}')">删除</span></a>｜
+      {% endif %}
+      <a href="javascript:void(0);">
+        {% if we_convers_like_roots|length > 0 and we_convers_like_roots[0]["like_staff"] == app.user.username %}
+        <span likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="UnLikeConv(this, '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}')">取消赞</span>
+        {% else %}
+        <span likeurl="{{ path("JustsyBaseBundle_component_cdisparea_likeconv") }}" unlikeurl="{{ path("JustsyBaseBundle_component_cdisparea_unlikeconv") }}" onclick="LikeConv(this, '{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}')">赞</span>
+        {% endif %}
+        <img class="liking" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+       {%if(trend)%}
+      {% if ds["we_convers_list"]["recordcount"] > 0 %}
+      <a href="javascript:void(0)" onclick="CopyConv_OnClick(this)" 
+        copyid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+        copylastid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+        circle_id="{{ ds["we_convers_list"]["rows"][0]["post_to_circle"] }}"
+        group_id="{{ ds["we_convers_list"]["rows"][0]["post_to_group"] }}"
+        tplurl="{{ path("JustsyBaseBundle_component_cdisparea_getcopytemplate") }}"><span>转发{%if(ds["we_convers_list"]["rows"][0]["copy_num"]>0)%}(<span class="copynum">{{ ds["we_convers_list"]["rows"][0]["copy_num"]|number_format }}</span>){%endif%}</span></a>｜
+      {% endif %}
+
+      <a href="javascript:void(0)" onclick="{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "UnAttenConv_OnClick(this)" : "AttenConv_OnClick(this)" }}"
+        attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+        attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+        unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span><span class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+
+      <a href="javascript:void(0)"><span onclick="ReplyLink_OnClick(this)">评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+      {%else%}
+        {% if ds["we_convers_list"]["recordcount"] > 0 %}
+      <a href="javascript:void(0)" title="您还未获取该功能使用权限"
+        copyid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+        copylastid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}" 
+        circle_id="{{ ds["we_convers_list"]["rows"][0]["post_to_circle"] }}"
+        group_id="{{ ds["we_convers_list"]["rows"][0]["post_to_group"] }}"
+        tplurl="{{ path("JustsyBaseBundle_component_cdisparea_getcopytemplate") }}"><span>转发{%if(ds["we_convers_list"]["rows"][0]["copy_num"]>0)%}(<span class="copynum">{{ ds["we_convers_list"]["rows"][0]["copy_num"]|number_format }}</span>){%endif%}</span></a>｜
+      {% endif %}
+      <a href="javascript:void(0)" title="您还未获取该功能使用权限"
+        attenid="{{ ds["we_convers_list"]["rows"][0]["conv_root_id"] }}"
+        attenurl="{{ path("JustsyBaseBundle_component_cdisparea_attenconv") }}"
+        unattenurl="{{ path("JustsyBaseBundle_component_cdisparea_unattenconv") }}"><span><span class="attentext">{{ ds["we_convers_list"]["rows"][0]["atten_id"] > 0 ? "取消收藏" : "收藏" }}</span>{%if(ds["we_convers_list"]["rows"][0]["atten_num"]>0)%}(<span class="attennum">{{ ds["we_convers_list"]["rows"][0]["atten_num"]|number_format }}</span>){%endif%}</span><img class="attening" src="{{ asset("bundles/fafatimewebase/images/loading.gif") }}" style="display:none; height: 20px; width: 20px;"></a>｜
+
+      <a href="javascript:void(0)" title="您还未获取该功能使用权限"><span >评论{%if(ds["we_convers_list"]["rows"][0]["reply_num"]>0)%}(<span class="replynum">{{ ds["we_convers_list"]["rows"][0]["reply_num"]|number_format }}</span>){%endif%}</span></a>
+      {%endif%}
+    </span>
+    <span class="comefrom">{{ ds["we_convers_list"]["rows"][0]["post_date_d"] }}</span> 
+    {% if ds["we_convers_list"]["rows"][0]["comefrom"] != "00" %}
+            {% if ds["we_convers_list"]["rows"][0]["comefrom_d"] != "" %}
+                <span class="comefrom">分享自：{{ ds["we_convers_list"]["rows"][0]["comefrom_d"] }}</span>
+            {% endif %}
+    {% endif %}
+  </div>
+  {% include 'JustsyBaseBundle:CDisplayArea:reply.html.twig' with {'ds': ds, 'isask' : 0,'trend':trend} %}
+</div>

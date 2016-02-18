@@ -1,0 +1,29 @@
+parameters:
+#    fa_fa_time_we_base.example.class: Justsy\BaseBundle\Example
+
+services:
+#    fa_fa_time_we_base.example:
+#        class: %fa_fa_time_we_base.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    we_data_access:
+        class: Justsy\BaseBundle\DataAccess\DataAccess
+        arguments: [@service_container, "default"]
+        scope: request
+    we_data_access_im:
+        class: Justsy\BaseBundle\DataAccess\DataAccess
+        arguments: [@service_container, "im"]
+        scope: request
+    we_data_access_test:
+        class: Justsy\BaseBundle\DataAccess\DataAccess
+        arguments: [@service_container, "test"]
+    we_data_access_wordpress:
+        class: Justsy\BaseBundle\DataAccess\DataAccess
+        arguments: [@service_container, "wordpress"]
+        scope: request        
+    we_user_provider:
+        class: Justsy\BaseBundle\Login\UserProvider
+        arguments: [@service_container]
+    we_sys_param:
+        class: Justsy\BaseBundle\DataAccess\SysParam
+        arguments: [@service_container]

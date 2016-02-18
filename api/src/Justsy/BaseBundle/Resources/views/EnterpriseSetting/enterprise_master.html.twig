@@ -1,0 +1,14 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+{% block stylesheets %}
+  <style type="text/css">
+  .control-label{width:100px;}
+  </style>
+{% endblock %}
+
+{% block main_content_left %}
+{%if app.user.eno_level=='S' %}
+{% include 'JustsyBaseBundle:EnterpriseSetting:master_menu1.html.twig' %}
+{%else%}
+{% include 'JustsyBaseBundle:EnterpriseSetting:master_menu2.html.twig' %}
+{%endif%}
+{% endblock %}

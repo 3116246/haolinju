@@ -1,0 +1,36 @@
+.salary_area { float: left; height: 450px;margin-top: 10px;max-height: 450px;min-height: 450px;padding: 0; }
+.salary_title { border-bottom: 1px solid #0088cc;color: #0088cc;cursor: default; float: left; font-weight: bold; height: 45px; padding-left: 20px;width: 100%; }
+.salary_title>img { float: left; padding-right: 10px; width: 180px; }
+.salary_title>span { display: block;float: left;font-size: 22px;letter-spacing: 5px;margin-top: 0;text-align: center;text-shadow: 2px 0 1px #ccc;width: 580px;}
+.salary_addarea { float: right;margin-right: 15px;margin-top: 5px;padding: 2px;color:#000000;font-weight:100;cursor:pointer; }
+.salary_addarea:hover { color:#0088cc; font-weight:bold; }
+.salary_addfield { background-image: url("/bundles/fafatimewebase/images/icon_add.png");background-repeat: no-repeat;float: left;height: 16px;margin-top: 3px;width: 16px;}
+.salary_content {	float:left;width:100%; }
+.salary_filed_area { 	float:left;width:100%;min-height:280px;display:none;padding-left:40px;cursor:default; }
+.salary_field_row { float: left;height:30px;line-height:30px;margin-bottom: 5px;width: 100%; }
+.salary_field_row>input { border: 1px solid #aba;float: left;height: 25px;margin-right: 5px;padding: 1px 5px; }
+.salary_menu_area {border-bottom: 1px solid #0088cc;float: left;height: 26px;margin-top: -5px;padding-left: 30px;width: 100%; }
+.salary_menu_active {	background-color: white;border-color: #0088cc;border-radius: 5px 5px 0 0;border-style: solid solid none;border-width: 1px;color: #0088cc;cursor: pointer;float: left;line-height: 25px;text-align: center;width: 110px;}
+.salary_menu{ color: #999999;cursor: pointer;float: left;line-height: 25px;text-align: center;width: 110px;}
+.salary_field_label { font-size: 12px; font-weight: 100; float: left; margin-left: 30px;margin-bottom:0px; }
+.salary_field_label>input { float:left;}
+.salary_field_label>span { float: left;margin-top: -5px;padding:0 15px 0 5px }
+.salary_select { border: 1px solid #0088cc;float: right;font-size: 12px;height: 22px;line-height: 20px;margin-right:25px;vertical-align: middle;width: 120px;margin-top:2px;}
+.salary_span {border: 1px solid #0088cc;float: left;height: 24px;line-height: 20px;padding: 0;text-align: center;width: 120px; }
+.salary_hint { float:left;height: 25px;line-height: 25px;margin-top: 4px;padding-left: 10px;width: 260px; }
+.salary_hint>img { float:left;margin-top:6px;}
+.salary_hint>span { float:left;padding-left:5px;}
+.salary_itemfield { float:left;width:110px;text-align:right;padding-right:5px;line-height:25px;}
+.upload_file_hint { float:left;cursor:default;height:20px;line-height:16px;margin-top:8px;padding-left: 5px;width: 240px; }
+.upload_file_hint>img { float: left;margin-top: 2px;padding-right: 2px; }
+.upload_file_hint>span { float:left;}
+.upload_file_addhint { color:#0088cc;cursor:pointer;padding:0px 5px;}
+.upload_file_addhint_content {  border-bottom: 1px solid #eee; float: left;height: 25px;line-height: 25px;padding-left: 5px;width: 100%;}
+.upload_file_area { border: 1px solid #0088cc;color: black;float: left;height: 28px;line-height: 24px;margin-top: 8px;padding-left: 10px;width: 100%;}
+.search_button { display: inline;float: left;height: 25px;line-height: 22px; padding: 0;width: 70px;}
+.salary_checkbox { float:left;font-weight: 100;margin-top: 10px;} 
+.salary_checkbox>input { float: left;margin-right: 5px;margin-top: 5px;}
+
+.version_type { float: left; height:20px; line-height: 16px; margin-top: 10px; }
+.version_type>img { float:left;width:15px;height:15px;margin-right:5px;display:none; }
+.version_type>span { float:left;padding-right:40px; }

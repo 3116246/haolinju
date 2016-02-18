@@ -1,0 +1,46 @@
+{% extends 'JustsyBaseBundle::master_pc.html.twig' %}
+
+{% block main_content %}
+   <div class="center" style="width:100%;padding: 0;">
+   <div id="circles_tools" style="position: relative;z-index:1;border-bottom:1px solid #ceeef7;padding-top:3px;height:25px;background: url('{{ asset('bundles/fafatimewebase/images/two_level_background.png')}}') repeat scroll 0 0 transparent;">
+		   <div class="circles" style="left:20px;top:-8px;">
+								      <ul id="pc_circles_menus" dropdownlist="0">
+											<li style="width:114px">
+												<a class="curcircle" href="#" hidefocus="true"><span class="topmenu_app_triangle moreoper" style="margin-top:4px;*margin-top:10px;display:none;" title="更多圈子"></span><span style="color:#5592CB" title="当前所在群组" class="curcircle_name color0">{{groupName}}</span></a>
+											</li>
+								        </ul>
+			</div>
+			<div style='margin-top:1px;*margin-top:2px;' class='Shome'><div style="display:none;" class='Smescommend'></div></div>
+			{%if publish%}
+			<div title="我要发布" style='margin-right:4px;' class='Sborder'><a style="width:100%;height:100%;" href='javascript:void(0);'><div edit='0' class='Sedit'></div></a></div>
+			{%else%}
+			<div title="您还没有权限使用发布功能" style='float:right;margin-right:8px;padding:2px;border-left:2px;border-top:2px;border-right:1px;border-bottom:1px;border-style:solid;border-color:#f1fcff;border-top-color:#fafeff;margin-right:4px;' ><a style="width:100%;height:100%;" href='javascript:void(0);'><div edit='0' class='Sedit'></div></a></div>
+			{%endif%}
+			<div title="刷新" class='Sborder'><a href='javascript:retry();'><div class='Srefresh'></div></a></div>
+		  <div style='display:none;' class='Sseparator'>|</div>
+			<div style='display:none;' title="我的收藏" class='Sborder'><a style="width:100%;height:100%;" href="{{path('JustsyBaseBundle_collect_pc',{'network_domain' : curr_network_domain})}}?trend={{trend}}"><div class='Smycollect'></div></a></div>
+			<div style='display:none;' title="提到我的" class='Sborder'><a style="width:100%;height:100%;" href="{{path('JustsyBaseBundle_at_pc',{'network_domain' : curr_network_domain})}}?trend={{trend}}"><div class='Satme'></div></a></div>   
+	</div>
+{% render "JustsyBaseBundle:CInputArea:indexpc" with {'network_domain':curr_network_domain,'name':'group','groupid':groupId,'trend':trend} %}
+<div class="hometopic" style="z-index:0;position: relative;">
+<div class="tabbox"  style="display:none">
+    <ul>
+      <li id="two1" onClick="setDisplayTab(this)" class="hover" onpublishurl="{{ path('JustsyBaseBundle_component_cdisparea_getnewoneconv_pc') }}?trend={{trend}}" loadurl="{{ path('JustsyBaseBundle_group_convers_pc',{ 'type':'all','groupid':groupId,'network_domain':curr_network_domain }) }}?trend={{trend}}">全部</li>
+    </ul>
+</div>
+<div class="contentbox" id="contentbox" style='z-index:0;padding-right:0px;*padding-right:20px;position: relative;padding-left: 5px;overflow-x:hidden;overflow-y:auto;'><div id="con_two1" class="display_con_area hover"></div></div>
+<script type="text/javascript">
+	manager_trend="{{trend}}";
+	$(document).ready(function()
+  {
+  	setContentHeight($("#contentbox"));
+    $("#menuPic li:gt(0)").remove();
+    $("#menuPic").css("width","160px");
+    setDisplayTab(document.getElementById("two1"));
+    window.OnPublished = EnterpriseHome_OnPublished;
+    $("#contentbox").scroll(EnterpriseHome_Document_OnScroll);
+  });
+</script>
+</div>
+</div>
+{%endblock%}

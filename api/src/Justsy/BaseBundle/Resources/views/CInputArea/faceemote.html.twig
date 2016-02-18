@@ -1,0 +1,12 @@
+{% for itemkey, itemvalue in this.FaceEmotes %}
+<li><a tabindex="-1" href="#" onclick="AddFaceEmote('{{ itemkey }}')"><img src="{{ asset('bundles/fafatimewebase/images/face/') }}{{ itemvalue }}" title="{{ itemkey }}"/></a></li>
+{% endfor %}
+<script type="text/javascript">
+  function AddFaceEmote(emotekey) 
+  {
+    var v = $("#Trend").val();
+    if (v != "" && v == $("#Trend").attr("placeholder")) v = "";
+    $("#Trend").val(v + "[" + emotekey + "]");
+    setPublishEnable();
+  }
+</script>

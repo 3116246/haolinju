@@ -1,0 +1,21 @@
+{% if this.recordcount == 0 %}
+  <br/><p>好像还没有人提到您呢！</p><p>快去联系你的朋友，开始精彩的互动人生吧！</p>
+    {% else %}
+    	{% render 'JustsyBaseBundle:CDisplayArea:getConvPc' with {'conv_root_ids': this.conv_root_ids} %}
+    	{% if this.recordcount > 0 %}
+				<div class="pagination pagination-right">
+				  <ul>
+				    {% set pagenum = ((this.recordcount - 1) / this.pagesize + 1 - 0.5)|number_format %}
+				    {% for i in 1..pagenum if loop.index0 < 10 %}
+				    <li {{ this.pageindex == i ? 'class="active"' : ''}}><a onclick="$('#con_collect').html(null);LoadComponent('con_atme','{{path('JustsyBaseBundle_at_pc',{'network_domain' : curr_network_domain})}}?conv_type={{ this.conv_type }}&pageindex={{ i }}&q={{ this.q }}');" href="javascript:void(0);">{{ i }}</a></li>
+				    {% endfor %}
+				  </ul>
+				</div>
+     {% endif %}
+    {% endif %}
+<script type="text/javascript">
+$('input[placeholder]').placeholder();
+$(document).ready(function(){
+	setContentHeight($("#contentbox"));
+});
+</script>

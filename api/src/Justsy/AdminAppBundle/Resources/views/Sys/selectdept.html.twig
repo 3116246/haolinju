@@ -1,0 +1,220 @@
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/TreeMark.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+
+<style stype="text/css">
+	#tree_dept_staff { background-color: white;border-color: #ccc;border-style: none solid none none;float: left;max-height: 395px;min-height: 395px;overflow: auto;padding: 0;width: 210px;}
+	#tree_depart 	{ background-color: white;border: none;display: block;height: 100%;margin-top: 5px;max-height: 382px;min-width: 300px;overflow-x: hidden;overflow-y: auto;padding-left: 20px;width: 100%;	}
+	.group_option_staff { border-color: #ccc;border-style: none none solid;border-width: 1px;float: left;height: 260px;margin-left: 10px;overflow-x: hidden;overflow-y: auto;padding: 5px;width: 422px;}
+  .group_option_staff>span { float:left;padding:0px 5px;cursor:pointer; }
+  .group_selected_staff { float: left;height: 135px;margin-left: 10px;overflow-x: hidden;overflow-y: auto;padding: 5px;width: 422px; }
+  .group_selected_staff>span { float:left;padding:0px 5px;cursor:pointer; }
+  .delete_lable { color: #0088cc;cursor: pointer;float: left;margin-top: 2px;text-align: center;width: 18px; }
+  .group_label_area { float:left;}
+  .group_label_area>span { float:left;cursor:pointer; }
+  .delete_lable_empty {	float:left;width:18px;height:12px;display:block;}
+  .gr_select_staff { border-bottom: 1px solid #ccc;float: left; padding: 10px 0 10px 20px;width: 435px; }
+</style>
+<ul id="tree_depart" class="ztree" ></ul>
+<div class="group_staff_box">
+   <ul id="tree_dept_staff" class="ztree" ></ul>   
+   <div>
+     <div class="gr_select_staff">
+         <span>用户账号/昵称：</span>
+         <input type="text" class="mb_textbox" id="text_search_staff" />
+         <span class="btnGreen group_button" onclick="search_staff();" 
+            style="padding:0px 15px;margin-left:30px;text-shadow:initial;">查&nbsp;&nbsp;询</span>
+     </div>
+	   <div class="group_option_staff"></div>
+	   <div class="pagination pagestyle" id="page_control" style="display:none;"></div>
+   </div>
+   <div class="group_selected_staff"></div>
+</div>
+<script type="text/javascript">
+   
+   var data_url = "{{path('JustsyInterfaceBundle_data_access')}}";   
+	 function selectstaff(evn)
+	 {
+	    var fafa_jid = $(evn).attr("fafa_jid");
+	    var login_account = $(evn).attr("login_account");
+	    if ( $(".group_selected_staff span[fafa_jid='"+fafa_jid+"']").length>0) return;
+	    var html = Array();
+	    html.push("<span onmouseout='moveout(this);' onmouseover='moveover(this);' class='group_label_area' login_account='"+login_account+"' fafa_jid='"+fafa_jid+"'>");
+	    html.push("<span>"+$(evn).text()+"</span>");
+	    html.push("<i onclick='removeItem(this);' title='移除账号' class='delete_lable_empty'></i></span>");
+	    $(".group_selected_staff").append(html.join(""));
+		  $(evn).remove();
+	 }
+	 
+	 function moveover(evn)
+	 {
+		 $(evn).find("i").addClass("glyphicon glyphicon-remove-circle delete_lable");
+	 } 
+	 function moveout (evn)
+	 {
+		$(evn).find("i").removeClass("glyphicon glyphicon-remove-circle delete_lable");
+	 }
+	 
+	 function removeItem(evn)
+	 {
+		 $(evn).parent().remove();
+	 }
+	 
+	 function search_staff()
+	 {
+	    var staff = $.trim($("#text_search_staff").val());
+	     var parameter = { "module":"staff","action":"search_staff","params":{"login_account":staff} };
+	    $.post(data_url,parameter,function(data){        	    
+            var html = Array();
+        		if (data.success){
+        			var staff = data.returndata;
+        			var row = null;
+        			for(var i=0;i<staff.length;i++)
+        			{
+        				row = staff[i];
+        				html.push("<span onclick='selectstaff(this);' login_account='"+row.login_account+"' fafa_jid='"+row.fafa_jid+"'>"+row.nick_name+"</span>");					
+        			}
+        			if ( html.length>0)
+        			  $(".group_option_staff").html(html.join(""));
+        			else{
+        				html.push("<span>未查询到人员</span>");
+        				$(".group_option_staff").html(html.join(""));
+        			}
+        		}    
+	    });
+   }
+   
+    //树对象
+    var ztreeObj =
+    {
+        tree_url:"{{path('JustsyAdminAppBundle_department_tree')}}",
+        getstaff_url:"{{path('JustsyAdminAppBundle_default_group_getstaff')}}",
+        //初始化数
+        init_zzjg : function () {
+        		var zTreeSetting = {
+        	    	check:{
+        	    		enable:true,
+        	    		chkboxType:{ "Y": "s", "N": "s"}
+        	    	},
+        	    	data:{
+        	    		simpleData:{
+        	    			enable:true
+        	    		}
+        	    	},
+        	    	callback: {
+        	    		beforeCheck:ztreeObj.zTreeBeforeCheck,
+        	    		onClick:ztreeObj.TreeClick
+        			  }
+        	  };
+        		var setting = {
+        	    	data:{
+        	    		simpleData:{
+        	    			enable:true
+        	    		}
+        	    	},
+        	    	callback: {
+        	    		onClick:ztreeObj.selectedClick
+        	      }
+        	  };
+            $.getJSON(ztreeObj.tree_url,{ t:new Date().getTime()}, 
+            	function(data, textStatus) {
+        			  $.fn.zTree.init($("#tree_depart"), zTreeSetting, data.datasource);
+        			  $.fn.zTree.init($("#tree_dept_staff"), setting, data.datasource);
+        			   var treeObj = $.fn.zTree.getZTreeObj("tree_depart");
+				         var nodes = treeObj.getNodes();
+				         if ( nodes.length>0)
+				            setMark(nodes[0].children);
+
+        			   treeObj = $.fn.zTree.getZTreeObj("tree_dept_staff");
+				         nodes = treeObj.getNodes();
+				         if ( nodes.length>0)
+				            setMark(nodes[0].children);
+              }    
+            );
+        },
+        zTreeBeforeCheck:function(treeId, treeNode){
+    		if ( treeNode.checked){
+    			if (treeNode.getParentNode()!=null && treeNode.getParentNode().checked)
+    			  return false;
+    		}
+	      },
+        TreeClick:function(event, treeId, treeNode)
+        {
+            var id = treeNode.id;
+            if ( !treeNode.isParent)
+            {
+                if ( treeNode.state == "0") return;
+                var parameter = {"deptid":treeNode.id};
+                $.getJSON(ztreeObj.tree_url,parameter,function(data) {
+                	  if (data.success)
+                	  {
+                	  	if (data.datasource.length==0)
+                	  	{
+                	  		treeNode.state = 0;
+                	  	}
+                	  	else
+                	  	{
+                 	    var treeObj = $.fn.zTree.getZTreeObj("tree_depart");
+                      treeObj.addNodes(treeNode,data.datasource);
+                      treeNode.state = 0;
+                      if ( treeNode.length>0) 
+                        setMark(treeNode.children);
+                    }
+                  }
+                });
+            }
+        },
+        selectedClick:function (event, treeId, treeNode) 
+        {
+            //读取下级部门数据记录
+            var id = treeNode.id;
+            if ( !treeNode.isParent)
+            {
+             	 if ( treeNode.state != "0")
+             	 {
+            	 	 var parameter = {"deptid":treeNode.id};
+            	 	 $.getJSON(ztreeObj.tree_url,parameter,function(data) {
+            	 	 	  if (data.success)
+            	 	 	  {
+            	 	 	  	if (data.datasource.length==0)
+            	 	 	  	{
+            	 	 	  		treeNode.state = 0;
+            	 	 	  	}
+            	 	 	  	else
+            	 	 	  	{
+            		 	 	    var treeObj = $.fn.zTree.getZTreeObj("tree_dept_staff");
+                        treeObj.addNodes(treeNode,data.datasource);
+                        treeNode.state = 0;
+                      }
+                    }
+            	 	 });
+               }
+            }
+            //是否已经读取部门下人员
+            if ( treeNode.readstate != "1")
+            {
+            	//读取下级人员
+            	$.post(ztreeObj.getstaff_url,{"deptid":id },function(data){
+            		var html = Array();
+            		if (data.success){
+            			var staff = data.list;
+            			var row = null;
+            			for(var i=0;i<staff.length;i++)
+            			{
+            				row = staff[i];
+            				html.push("<span onclick='selectstaff(this);' login_account='"+row.login_account+"' fafa_jid='"+row.fafa_jid+"'>"+row.nick_name+"</span>");					
+            			}
+            			if ( html.length>0)
+            			  $(".group_option_staff").html(html.join(""));
+            			else{
+            				html.push("<span>未查询到人员</span>");
+            				$(".group_option_staff").html(html.join(""));
+            			}
+            		}
+            	});
+            }
+        }     	      
+    }
+	 
+</script>

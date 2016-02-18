@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<title>移动门户管理系统</title>
+	<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+	<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet"> 
+	<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+	<link href="{{ asset('bundles/fafatimembapp/css/home.css')}}" type="text/css" rel="stylesheet"> 
+    <style text="text/css">
+        .err_area { border: 1px solid #0088cc;border-radius: 5px;cursor: default;height: 50px;margin: 200px auto 0;width: 270px; }
+        .err_area>img {float: left;margin-left: 10px;margin-right: 6px;margin-top: 6px;width: 35px;}
+        .err_msg { float: left;font-family: 微软雅黑;font-size: 15px;margin-left: 15px;margin-top: 8px;width: 185px; }
+        .err_msg>span { float:left;width:100%;}        
+    </style>	
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+          var time =5000,hander=null;
+          hander = setInterval(function()
+          {
+            if ( time==0)
+            {
+                clearInterval(hander);
+                window.location.href="{{JS_OPEN_API_URL}}/{{app.user.edomain}}";
+            }
+            else
+            {
+                time -= 1000;
+                if ( time>0)
+                   $("#date_time").text(time/1000);
+            }
+            
+          },1000);
+      });
+	</script>
+</head>
+<body>
+	<div id="topDiv">
+		<img class="logo" src="{{ asset('bundles/fafatimewebase/images/wefafa_logo1.png') }}">
+		<span class="title">移动门户管理系统</span>
+		<a class="item" href="{{ path('JustsyBaseBundle_logout') }}">退出登录</a>
+	</div>
+	<div id="mainDiv" style="overflow:hidden;"> 
+    <div class="err_area">
+        <img src="{{ asset('bundles/fafatimewebase/images/close.jpg')}}">
+        <div class="err_msg">
+            <span>您没有移动门户管理权限！</span>
+            <span style="color:#aaa;font-size:12px;padding-left:26px;margin-top:2px;">
+            <span style="padding:0px 5px;font-weight:bold;color:#0088cc;font-family:Arial;" id="date_time">5</span>秒后将自动进入主页</span>
+        </div>
+    </div>
+	</div>
+</body>
+</html>

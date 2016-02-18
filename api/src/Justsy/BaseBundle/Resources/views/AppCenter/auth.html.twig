@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}微发发，一个由工作圈子交织而成的企业社交网络{% endblock %}</title>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+<meta name="description" content="FaFa是一个依托于强大的FaFa即时消息平台、企业开放平台基础上的面向企业用户的社交网络平台。" />
+<meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件" />
+<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/Appcenter.js') }}"></script>
+</head>
+<body>
+<div class="modal" id="appAuth" url="{{c_url}}" data-backdrop=false style="width:450px;margin-left: -225px;height:300px;margin-top: -150px;" show=false>
+		    <div class="modal-header">
+		    	<h5><img src='{{ asset('bundles/fafatimewebase/images/wefafa_logo.png')}}' style="width:48px;vertical-align: middle;">&nbsp;&nbsp;用户认证及授权中心</h5>  
+		    </div>
+		    <div class="modal-body" style="padding:15px;">
+		        <div style="height: 50px;line-height: 50px;padding-left: 50px;">授权以下用户可以访问应用：{{appname}}</div>
+		    	  <form id="authFrm" name="authFrm" method="post" action="{{ path('JustsyBaseBundle_appcenter_auth_auth')}}">		    	      
+		    	      <div style="height: 40px;line-height: 40px;padding-left: 100px;"><span>帐号：</span><input id="u" name="u" type="text"></div>
+		    	      <div style="height: 40px;line-height: 40px;padding-left: 100px;"><span>密码：</span><input id="p" name="p" type="password"></div>
+		    	  </form>
+		    </div>  
+		    <div class="modal-footer">
+		      <img style="display:none" src="{{ asset('bundles/fafatimewebase/images/ok.png') }}" width="16" height="16">
+		      <span class="alert reg_alert alert-error" style="display:none">提交成功！</span>		    	
+		    	<a href="javascript:void(0);" onclick="AppCenter.Auth()" id="sendBtn" class="btn btn-primary" style="color:white;">确定</a>  
+		    	<A class=btn href="#" data-dismiss="modal" >关闭</A>   
+</div>
+</body>
+</html>

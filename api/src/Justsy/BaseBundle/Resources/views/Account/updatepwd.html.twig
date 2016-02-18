@@ -1,0 +1,205 @@
+{% extends 'JustsyBaseBundle:Account:account_master.html.twig' %}
+
+{% block menuitemactive_password %}class="active"{% endblock %}
+
+{% block main_content_center%}
+<div class="grade-title">密码修改</div>
+<div class="rightdetail clearfix">
+  <form id="formpwd" class="form-horizontal" method="post">
+    <fieldset>
+      <div id="pw0" class="control-group">
+        <label class="control-label" for="inputSuccess">原 密 码：</label>
+        <div  class="controls">
+          <input type="password" tabindex="1" class="input-xlarge" id="txtoldpwd" name="txtoldpwd" onblur="check_pwdinput(this.value);" onfocus="if(this.value=='') {$('#old_err').hide();}" onkeyup="if(this.value=='') {$('#old_err').hide();}" maxlength="16">
+          <span id="old_err" class="help-inline" style="width:172px;display:none;">
+             <img id= "old_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+             <a id="prompt_old" style="color:#db4800">密码正确</a>
+           </span>
+         </div>
+      </div>
+      <div id="pw1" class="control-group">
+        <label class="control-label" for="input01">新 密 码：</label>
+        <div class="controls">
+          <input type="password" tabindex="2" class="input-xlarge" id="txtnewpwd1" name="txtnewpwd1" onblur="pwd1_blur();" maxlength="16">
+           <span id="new_err1" class="help-inline" style="width:172px;display:none;">
+             <img id= "new_img1" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+             <a id="prompt_new1" style="color:#db4800"></a>
+           </span>
+        </div>
+      </div>              
+      <div id="pw2" class="control-group">
+        <label class="control-label" for="input01">确认密码：</label>
+        <div class="controls">
+          <input type="password" tabindex="3" class="input-xlarge" id="txtnewpwd2" name="txtnewpwd2" onblur="pwd2_blur();" maxlength="16">
+           <span id="new_err2" class="help-inline" style="width:172px;display:none;">
+             <img id= "new_img2" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+             <a id="prompt_new2" style="color:#db4800"></a>
+           </span>
+        </div>
+      </div>
+      <div class="control-group success">{{msg}}</div>
+      <div class="form-actions">
+        <input type="button" class="inputsmall" id="btnSave" disabled=true onclick="submit_pwd();" value="保存" style="width:138px">
+        <span id="hint" class="help-inline" style="width:172px;display:none;">
+             <img id="hint_img" src="{{ asset('bundles/fafatimewebase/images/ok.png')}}" width="16" height="16">
+             <a id="hint_msg" style="color:#db4800"></a>
+        </span>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<script type="text/javascript" > 
+   
+   $(document).ready(function()
+   {
+      $('#txtoldpwd').focus();
+      Account.enterNext("txtoldpwd","txtnewpwd1");
+      Account.enterNext("txtnewpwd1","txtnewpwd2");
+//      $("#txtnewpwd1").keyup(function(){$(this).triggerHandler("blur")});
+//      $("#txtnewpwd2").keyup(function(){$(this).triggerHandler("blur")});
+   })
+   
+   //检验密码正确性
+   function check_pwdinput(pwd)
+   {
+     $('#old_err').show();
+     if ( pwd == "")
+     {        
+//        $('#old_img').attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+//        $('#prompt_old').text('请输入原密码');
+        $('#old_img').hide();
+        $('#prompt_old').hide();
+        return false;
+     }
+     $('#prompt_old').text('');
+     $('#old_img').attr("src","{{ asset('bundles/fafatimewebase/images/loading.gif')}}");
+     var url = "{{ path('JustsyBaseBundle_account_checkpwd', {'network_domain' : curr_network_domain})}}";
+     $.post(url,"id="+pwd,function(data){
+           $('#old_err').show();
+           if ( data == "1")
+           {      
+              $('#old_img').attr("src","{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+              $('#prompt_old').text('');
+              $("#btnSave")[0].disabled = false;
+              return true;
+           }
+           else
+           {
+              $('#old_img').attr("src","{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+//              $('#txtoldpwd').focus();
+              $('#prompt_old').text('密码错误');
+              return false;
+           }
+     });　   
+   }
+   
+   function pwd1_blur()
+   {
+     var pwd = $("#txtnewpwd1")[0].value;
+     $('#new_err1').show();
+     if( pwd =='' || pwd.length < 6)
+     {        
+        $('#new_img1').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+        if (pwd=="")
+        {  
+          $('#new_err1').hide();
+          //$('#prompt_new1').text('请输入新密码');
+        }
+        else
+          $('#prompt_new1').text('密码长度不能小于6');
+//        $("#txtnewpwd1")[0].focus();
+        return false;
+     }
+     $('#new_img1').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+     $('#prompt_new1').text('');
+     return true;
+   }
+   
+  
+   function pwd2_blur()
+   {
+     var pwd = $("#txtnewpwd2")[0].value;
+     if(pwd.length < 6)
+     {
+        $('#new_err2').show();
+        $('#new_img2').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+        if (pwd=="")
+        {
+          $('#new_err2').hide();
+          //$('#prompt_new2').text('请确认新密码');
+        }
+        else
+          $('#prompt_new2').text('密码长度不能小于6');
+//        $("#txtnewpwd2")[0].focus();
+        return false;
+     }
+     else
+     {
+       return check_newpwd();
+     }
+   }
+   
+    //校验两次密码是否输入正确
+   function check_newpwd()
+   {
+      var pw1 = $('#txtnewpwd1').attr('value');
+      var pw2 = $('#txtnewpwd2').attr('value');
+      if (pw1=="" || pw2=="") return false;
+      if ( pw1.length<6 || pw2.length<6) return false;
+      if ( pw1 == pw2)
+      {
+         $('#pwd1').show();
+         $('#pwd2').show();
+         $('#new_img1').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+         $('#new_img2').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+         $('#prompt_new1').text('');
+         $('#prompt_new2').text('');
+         $('#txtresult').text('1');
+         return true;
+      }
+      else
+      {
+         $('#pwd1').hide();
+         $('#pwd2').show();
+         $('#new_err2').show();
+         $('#new_img2').show();
+         $('#prompt_new2').show();
+         $('#new_img2').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+         $('#prompt_new2').text('两次密码输入不一致');
+         $('#txtresult').text('0');      
+         return false;
+      }
+   }
+   
+   //提交数据
+   function submit_pwd()
+   {
+   	  if(document.getElementById('btnSave').disabled) return;
+      if(!pwd1_blur()) return;
+      if(!pwd2_blur()) return;
+      document.getElementById('btnSave').disabled = true;
+      document.getElementById('btnSave').value = "提交中...";
+      $.post("{{ path('JustsyBaseBundle_account_updatepwd', {'network_domain' : curr_network_domain})}}",
+         {txtoldpwd : $("#txtoldpwd").val() , txtnewpwd2 : $('#txtnewpwd2').val() },
+         function(r){
+         if(r.succeed)
+         {
+             	$('#hint').show();
+              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/ok.png')}}");
+              $('#hint_msg').text('密码修改成功');
+              setTimeout("$('#hint').hide()",2000);
+         }
+         else
+         {
+             	$('#hint').show();
+              $('#hint_img').attr('src',"{{ asset('bundles/fafatimewebase/images/errow.gif')}}");
+              $('#hint_msg').text('密码修改失败');
+              setTimeout("$('#hint').hide()",2000);
+         }
+         document.getElementById('btnSave').disabled = false;
+         document.getElementById('btnSave').value = "保存";         
+      });
+     
+   }
+</script>
+{% endblock %}

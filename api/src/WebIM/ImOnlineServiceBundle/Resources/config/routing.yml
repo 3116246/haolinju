@@ -1,0 +1,12 @@
+WebIMImOnlineServiceBundle_test:
+    pattern:  /ocs/test
+    defaults: { _controller: WebIMImOnlineServiceBundle:Default:test }
+WebIMImOnlineServiceBundle_getcount:
+    pattern:  /ocs/getcount
+    defaults: { _controller: WebIMImOnlineServiceBundle:Default:getCount }      
+WebIMImOnlineServiceBundle_style:
+    pattern:  /ocs/style
+    defaults: { _controller: WebIMImOnlineServiceBundle:Default:style }     
+WebIMImOnlineServiceBundle_style0:
+    pattern:  /ocs/style0
+    defaults: { _controller: WebIMImOnlineServiceBundle:Default:style0 }

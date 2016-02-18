@@ -1,0 +1,408 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>
+	{% block title %}Wefafa，企业协作网络{% endblock %} 
+	</title>	
+  <meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业协作网络。" />
+  <meta name="keywords" content="FaFa,企业社交平台,企业应用中心,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css') }}" />	
+	<script src="{{ asset('bundles/fafatimewebase/js/jquery.js') }}" type="text/javascript"></script>
+</head>
+{% block main_content %}
+<div style="height:60px;"></div>
+<div class="active_detailone active_detailone_box">
+	  <div style="font-weight:bold;height:50px;line-height:65px;font-size:14px;cursor:default;">
+	   	  <a href="{{ path('JustsyBaseBundle_login') }}">
+			     <img src="{{ asset('bundles/fafatimewebase/images/wefafa_logo.png') }}" style="width:75px;float:left;height:35px;margin-top:10px;" border="0">
+			  </a> &nbsp;Wefafa&nbsp;帐号服务中心
+	  </div>
+	  <div class="get-pass">
+		     <span class="step1_title" id="step1_title">1、请输入Wefafa帐号</span>
+		     <span class="step2_title" id="step2_title">2、选择找回密码方式 </span>
+		     <span class="step2_title" id="step3_title" style="float:right;">3、找回Wefafa密码</span>
+	  </div>
+    <div id="step1" style="width:750px;height:180px;margin-top:70px;">
+    	  <form id="form1" class="form-horizontal" method="post" action="{{ path('JustsyBaseBundle_reg_retrievepwd') }}" >
+				    <div class="step1_content">
+				    	<span style="display:block;float:left;width:100px;">Wefafa帐号：</span>
+				      <input type="text" class="RegFormIptone" style="height:22px;" id="login_account" tableindex="0" name="login_account" maxlength="32" value="{{login_account}}" />
+				    </div> 
+				    <div class="step1_content" >
+				    	<span style="display:block;float:left;width:100px;">验&nbsp;证&nbsp;码：</span>
+				      <input style="height:22px;" type="text" class="RegFormIptone" id="txt_code" name="txt_code" maxlength="32" />
+				    </div>
+				    <div class="step1_content" id="step_err" style="margin-left:260px;margin-top:-10px;height:70px;">
+				   	  <span style="line-height:24px;color:#999999;float:left;">请输入图中字符，不区分大小写。</span>   	  
+				         <img style="margin-top:24px;float:left;margin-left:-210px;" id="getCode" src="{{path('JustsyBaseBundle_Code')}}" title="看不清，点击换一张" align="absmiddle" alert="eee">
+				    </div>
+				    <div class="step1_content" id="step_err" style="margin-left:280px;margin-top:-5px;">
+					    <p class="step1_err">错误提示</p>
+			      </div>
+			      
+			      <div class="step1_content" id="step_err">
+					     <div id="btnStep" class="step_button" style="margin-left:170px;">
+					     	  <span>下&nbsp;一&nbsp;步</span>
+					     </div>
+			      </div>
+	      </form>
+    </div>
+   
+    <div id="step2" style="width:750px;height:180px;margin-top:25px;display:none;">
+    	 <div style="margin-left:5px;font-size:12px;">
+    	 	  你正在找回Wefafa帐号 <span id="span_account" style="color:red;margin-left:5px;font-weight:bold;"></span>&nbsp;密码。
+    	 	  <span id="changeAccount" style="color:blue;font-weight:bold;cursor:pointer;">换个帐号</span>
+    	 </div>
+    	 <div id="step_getpass_type" >
+    	 	  <img src="{{ asset('bundles/fafatimewebase/images/email.png') }}" style="width:16px;height:16px;float:left;" />
+    	 	  <span id="email_pass" style="font-size:14px;color:#1E50A2;cursor:pointer;font-weight:700;margin-left:5px;">通过电子邮件方式找回密码</span>
+    	 </div>
+    	 <div id="step_getpass_type" >
+    	 	  <img src="{{ asset('bundles/fafatimewebase/images/mobile.png') }}" style="width:16px;height:16px;float:left;" />
+    	 	  <span id="mobile_pass" style="font-size:14px;color:#1E50A2;cursor:pointer;font-weight:700;margin-left:5px;">通过手机短信验证码找回密码</span>
+    	 	  <br/>
+    	 	  <span id="mobile_enable" style="margin-left:10px;display:none;">帐号未绑定手机号码，您不能使用手机找回密码功能</span>
+    	 </div>
+    </div>
+    
+    <div id="step3" style="width: 750px; display:none;height: 300px;margin-top:15px;">
+    	 <div id="step_message" style="width: 100%; height: 300px;display:none;" ></div>
+    	 <div id="pwd_mobile">
+    	     <div class="step_mobile" style="border:none;margin-top:-15px;height:30px;line-height:30px;background-color:white;">
+    	 	      通过手机(<span id="mymobile" style="font-weight:bold;color:blue;"></span>)找回密码。请按以下步骤完成找回密码：
+    	     </div>
+		    	 <div class="step_mobile">
+		    	 	  <div style="float:left;width:200px;float:left;">
+				    	 	  <span style="float: left; margin-top: 12px; margin-left: 8px;">1、获取短信验证码 </span>
+				    	 	  <div id="getmobliecode" class="step_mobile_getcode">免费获取</div>
+				    	 	  
+		    	 	  </div>
+		    	 	  <span style="float:left;margin-top:38px;margin-left:-175px;color:#999999;" id="mobile_tip"></span>
+		    	 	  <span id="spanHint" style="color:#666666; margin-top:12px;float: left;margin-left:-5px;display:none;">
+		    	 	  	  还有&nbsp;<span id="timer_tip" style="color:red;font-weight:bold;"></span>&nbsp;秒可以再次获得手机验证码。
+		    	 	  </span>
+		    	 </div>
+		    	 <div class="step_mobile" style="height:225px;margin-top:10px;">
+		    	 	  <span style="float: left; margin-top: 5px; margin-left: 8px;">2、请输入短信内容中的验证码 </span>
+		    	 	  <div style="width:495px;margin-top:32px;margin-left:auto;margin-right: auto;">
+				    	 	  <div class="step_mobile_filed_item">
+				    	 	  	<span class="step_mobile_filedname">Wefafa帐号：</span>
+				    	 	  	<span id="wefafa_account" class="step_account_disble"></span>
+				    	 	  </div>
+				    	 	  <div class="step_mobile_filed_item">
+				    	 	  	<span class="step_mobile_filedname">短信验证码：</span>
+				    	 	  	<input type="txt"  id="txt_mobile_code" class="RegFormIptone" style="height:18px;width:200px;color: black;font-weight:600;font-size:14px;" maxlength="12" />
+				    	 	  	<span id="code_err" style='color:red;'></span>
+				    	 	  </div>
+				    	 	  <div class="step_mobile_filed_item">
+				    	 	  	<span class="step_mobile_filedname">新密码：</span>
+				    	 	  	<input type="password" class="RegFormIptone" style="height:18px;width:205px;color: black;font-weight:600;font-size:14px;" id="txtpass1" name="txtpass1" maxlength="16" />
+				    	 	  	<span id="newpass_err" style='color:red;'></span>
+				    	 	  </div>
+				    	 	  <div class="step_mobile_filed_item">
+				    	 	  	 <span class="step_mobile_filedname">确认密码：</span>
+				    	 	  	 <input type="password" class="RegFormIptone" style="height:18px;width:205px;color: black;font-weight:600;font-size:14px;" id="txtpass2" name="txtpass2" maxlength="16" />
+				    	 	  	 <span id="newpass_err2" style='color:red;'></span>
+				    	 	  </div>
+				    	 	  <div class="step_mobile_filed_item">
+				    	 	  	<span id="eer_message" style="float:left;color:red;font-weight:bold;margin-top:-3px;display:block;"></span>
+					    	 	  <div id="setPasWord" style="margin-left:150px;" class="step_button">重置密码</div>
+				    	 	</div>
+		    	 	  </div>
+		    	 </div> 
+    	 </div>
+    </div>
+</div>
+
+<div class="password_bottom">
+	<div class="wrap" style="line-height:30px;width:100%;">
+		<div class="fl">Copyright &copy; 2012 <a target="_blank" href="http://www.fafatime.com">Justsy</a>&nbsp;&nbsp;<a target="_blank" href="http://www.miibeian.gov.cn">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+		<div class="fr">
+		<a target="_blank" href="/prointro.htm">产品介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/help/index">使用帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.fafatime.com/downcenter">软件下载</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/corp.htm">商务合作</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/userlic.htm">服务与声明</a>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="/aboutus.htm">关于我们</a></div>
+  </div>
+</div>
+  
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+	  var timers = 120;
+	  var send_email = "";
+		$(document).ready(function()
+		{  
+		    $("#getCode").bind("click",function()
+		    {
+					 document.getElementById("form1").action="{{ path('JustsyBaseBundle_reg_retrievepwd')}}";
+		       document.getElementById("form1").submit();  
+		    });
+		
+		    $("#login_account").bind("keypress",function(event){
+		       if (event.keyCode==13)
+		    	   $("#txt_code").focus();
+		    	 $(".step1_err").hide();
+		    });      
+		
+		    $("#txt_code").bind("keypress",function(event){
+		    	if(event.keyCode==13)
+		    	{
+		    	  $(".step1_err").hide();
+		    	  NextStep();
+		    	}
+		    });  
+		    
+		    $("#changeAccount").bind("click",function(){
+		    	 $("#login_account").val("");
+		    	 $("#txt_code").val("");    	 
+		    	 $("#step1_title").css("color","white");
+		    	 $("#step2_title").css("color","#999999");
+		    	 $("#step1").show();
+		    	 $("#step2").hide();
+		    	 $(".get-pass").css("background-position","0 0");
+		    	 $("#login_account").focus();    	 
+		    });  
+		    
+		    //下一步
+		    $("#btnStep").bind("click",function(){
+		    	  NextStep();
+		    });    
+		    
+		    $("#btnStep").bind("mouseover",function(){
+		    	 $(this).css("background-position","-220px -413px");    	
+		    });
+		    
+		    $("#btnStep").bind("mouseout",function(){
+		    	$(this).css("background-position","-305px -413px");
+		    });
+		    
+		    //以电子邮件找回密码
+		    $("#email_pass").bind("click",function(){
+		    	 var _url = "{{ path('JustsyBaseBundle_reg_saveretrievereq')}}";
+					 $.post(_url,"login_account="+send_email,function(data){
+					     if(data.succeed)
+					     {
+					     	  $(".get-pass").css("background-position","0px -60px");
+					     	  $("#step1_title").css("color","#999999");
+					     	  $("#step2_title").css("color","#999999");
+					     	  $("#step3_title").css("color","white");			     	  
+					     	  $("#step2").hide();					     	  
+					     	  $("#pwd_mobile").hide();
+					      	$("#step_message").show();
+		    	 			  var html="<div class='regok' style='margin-top:50px;height:200px;'>"+
+					     	          " 	<h3>一封重置密码的邮件已发送至该邮箱：<b>"+send_email+"</b></h3><br>"+
+					     	          "  	<h3>请查收邮件并根据提示重新设置您的密码！</h3><br><br><br>"+
+					     	          "   <a class='btn-reg btn' style='width:110px;' href='"+data.mailaddr+"'>立即登录邮箱</a> "+
+					     	          "</div>";
+					      	$("#step_message").html(html);
+					     	 $("#step3").show();
+					     }
+					 });   	
+		    });
+		    
+		    //以手机短信方式找回密码
+		    $("#mobile_pass").bind("click",function(){
+		    	 if($(this).attr("state")=="1")
+		    	 {
+		    	 	  $("#step2").hide();
+		    	 	  $("#step3").show();
+		    	 	  var account = $("#login_account").val();
+		    	 	  $("#wefafa_account").text(account);
+		    	 	  $(".get-pass").css("background-position","0 -60px");
+		    	 	  $("#step2_title").css("color","#999999");
+		    	 	  $("#step3_title").css("color","white");
+		    	 	  $("#txt_mobile_code").focus();
+		    	 }
+		    });
+		
+		    $("#getmobliecode").bind("click",function(){
+		    	 $(this).hide();
+					 timers = 120;
+					 $("#spanHint").show();
+					 TimerHint();					 
+		    	 var account = $("#login_account").val();
+		       var _url = "{{ path('JustsyBaseBundle_ret_getmobilecode')}}";
+					 $.post(_url,"login_account="+ account,function(data){
+					 	   $("#mobile_tip").text(data.content);
+					 	   $("#mobile_tip").show();
+					 });
+		    });
+		
+		    $("#getmobliecode").bind("mouseover",function(){
+		    	 $(this).css("background-position","-352px -219px");    	
+		    });
+		    
+		    $("#getmobliecode").bind("mouseout",function(){
+		    	$(this).css("background-position","-352px -247px");
+		    });    
+		    
+		    $("#txt_mobile_code").bind("keypress",function(event){
+		    	 if (event.keyCode==13)
+		    	   $("#txtpass1").focus();
+		    	 $("#code_err").text("");
+		    	 $("#eer_message").text("");
+		    });
+		
+		    $("#txtpass1").bind("keypress",function(event){
+		    	if ( event.keyCode==13)
+		    	   $("#txtpass2").focus();
+		    	 $("#newpass_err").text("");
+		    	 $("#eer_message").text("");
+		    });
+		    
+		    $("#txtpass2").bind("keypress",function(event){
+		    	 if (event.keyCode==13)
+		    	    UpdatePWD();
+		    	 $("#newpass_err2").text("");
+		    	 $("#eer_message").text("");
+		    	 
+		    });        
+		    
+		    //重置密码
+		    $("#setPasWord").bind("click",function(){
+		    	UpdatePWD();
+		    });    
+		});
+
+    //下一步
+    function NextStep(){
+  	  var account = $("#login_account").val();
+  	  if ( account=="")
+  	  {
+  	     $(".step1_err").show();
+		   	 $(".step1_err").text("请输入你的Wefafa帐号！");
+		   	 $("#login_account").focus();
+		   	 return;
+  	  }
+  	  var code =  $("#txt_code").val().toUpperCase();
+  	  if ( code=="")
+  	  {
+  	     $(".step1_err").show();
+		   	 $(".step1_err").text("请输入图片上的验证码！");
+		   	 $("#txt_code").focus();
+		   	 return;
+  	  }
+  	  $("#span_account").text(account);
+  	   var _url = "{{ path('JustsyBaseBundle_reg_checkAccountAndCode')}}";
+		   $.post(_url,"login_account="+ account+"&code="+code,function(data){
+		     if(data.succeed)
+		     {
+		   	    if (!data.Exists)
+		   	    {
+		   	  	  $(".step1_err").show();
+		   	  	  $(".step1_err").text("你输入的帐号有误，请检查");
+		   	  	  $("#login_account").focus();
+		   	    }
+		   	    else
+		   	    {
+		   	        send_email = data.email;
+		   	  	    if(data.mobile=="")
+		   	  	    {
+    		   	  	  	 $("#mobile_pass").css("color","#999999");
+    		   	  	  	 $("#mobile_pass").css("cursor","default");
+    		   	  	  	 $("#mobile_pass").attr("state",0);
+    		   	  	  	 $("#mobile_enable").show();
+		   	  	    }
+		   	  	    else
+		   	  	    {
+    		   	  	     $("#mobile_pass").css("color","#1E50A2");
+    		   	  	  	 $("#mobile_pass").css("cursor","pointer");
+    		   	  	  	 $("#mobile_pass").attr("state",1);
+    		   	  	  	 $("#mobile_enable").hide();
+    		   	  	  	 $("#mymobile").text(data.mobile);
+		   	  	    }
+		   	  	    $("#step1").hide();
+		   	  	    $("#step1_title").css("color","#999999");
+	              $("#step2_title").css("color","white");
+	              $(".get-pass").css("background-position","0 center");
+	              $(".step1_err").hide();
+	              $("#step2").show();
+		   	    }
+		     }
+		     else
+		   	 {
+		   		 $(".step1_err").show();
+		   		 $(".step1_err").text("你输入的验证码有误，请检查");
+		   		 $("#txt_code").focus();
+		   	 }
+		   });
+    }
+    
+    //重置密码
+    function UpdatePWD(){
+    	 var active_code = $("#txt_mobile_code").val();
+    	 var pass1 = $("#txtpass1").val();
+    	 var pass2 = $("#txtpass2").val();    	 
+    	 if ( active_code == "")
+    	 {
+    	 	  $("#code_err").text("请输入短信验证码！");
+    	 	  $("#txt_mobile_code").focus();
+    	 	  return false;
+    	 }
+    	 else if (pass1=="")
+    	 {
+    	 	  $("#newpass_err").text("请输入新密码！");
+    	 	  $("#txtpass1").focus();
+    	 	  return false;
+    	 }
+    	 else if (pass2=="")
+    	 {
+    	 	  $("#newpass_err2").text("请输入确认密码！");
+    	 	  $("#txtpass2").focus();
+    	 	  return false;
+    	 }
+    	 else if ( pass1!=pass2)
+    	 {
+    	 	  $("#newpass_err2").text("两次密码不一致请重新输入！");
+    	 	  $("#txtpass1").focus();
+    	 	  return false;    	 	
+    	 }
+    	 else if ( pass1.length<6)
+    	 {
+    	 	  $("#newpass_err2").text("密码最小为六位！");
+    	 	  $("#txtpass1").focus();
+    	 	  return false;
+    	 }
+    	 else
+    	 {
+    	   var parameter = "login_account="+send_email+"&pwd="+
+    	                    pass1+"&active_code="+active_code;
+         var _url = "{{ path('JustsyBaseBundle_reg_update_pwdbymobile')}}";
+			   $.post(_url,parameter,function(data){
+			      if(data.succeed)
+			      {
+			      	$("#pwd_mobile").hide();
+			      	$("#step_message").show();
+    	        var html="<div style='padding-top:0px;font-weight:bold;width:60%;margin-top:80px;margin-left:200px;'>"+
+			     	           "  <div style='line-height:30px;height:30px;font-weight:bold;font-size:14px;'>恭喜，您的密码重置成功，请牢记您的新密码。</div>"+
+			     	           "  <div style='line-height:30px;font-size: 14px;font-weight:bold;height:30px;'>将于5秒后返回首页。</div>"+
+			     	           "  <div style='font-size:14px;font-weight:bold;margin-left:120px;height:80px;line-height:80px;'><a href='"+data.url+"'>返回首页</a></div> "+
+			     	           "</div>";
+			      	$("#step_message").html(html);
+			      	setTimeout(function()
+			      	{
+			      		 window.location.href=data.url;
+			      	},5000);
+			      }
+			      else
+			      {
+			      	 $("#eer_message").text(data.err);
+			      }
+			   });
+    	 } 
+    }
+    
+    function TimerHint()
+    {
+    	 timers = timers - 1;
+    	 $("#timer_tip").text(timers);
+    	 if(timers>0)
+    	   setTimeout(TimerHint,1000);
+    	 else
+    	 {
+    	 	 $("#getmobliecode").show();
+    	 	 $("#spanHint").hide();
+    	 }
+    }
+</script>
+{% endblock %}

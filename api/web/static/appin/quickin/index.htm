@@ -1,0 +1,159 @@
+<ul> 
+	<li><a href="#" name="quickin-basic" id="quickin-basic">中心简介</a></li> 
+	<div class="help_right_text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wefafa是一个由工作圈子交织而成的企
+业社交网络，包含企业即时通讯、企业协作网络和企业应用中心三大核心模块。Wefafa应用中心免费为广大的企业用户提供安全、便捷、透明的一站式应用挑选、订阅、管理、
+评价服务；为第三方软件提供商提供可靠、方便、高效的软件发布、销售、更新和推广平台。我们致力于打造国内第一家专业从事企业级应用的“淘宝”商城。减少应用采购的中间环
+节，透明化采购过程，最大限度的降低采购和销售成本。</div> 
+<li><a href="#" name="quickin-flow" id="quickin-flow">接入流程</a></li> 
+	<div class="help_right_text">企业应用接入分为以下两种方式：<br>
+		1、应用只调用Wefafa提供的开放API接口及组件，在企业内部独立运行，独立访问。用户需要记住且每次输入该应用的登录帐号和密码，如果是Web应用，还需要告知用户对应的应用访问地址。<br>
+		2、应用直接在Wefafa应用中心内运行，由于Wefafa采用了单点登录机制和OAuth2进行用户统一认证授权，所以用户只需进入Wefafa平台后，直接可进行应用访问和功能操作。<br>
+		<b>注意：使用第2种接入方式的应用，才会进入Wefafa应用商城，对所有Wefafa注册企业开放订阅。</b><br>
+		针对上面2种方式，它们接入流程是相同的，参考以下接入流程图：<br>
+		<img style="width:500px" src="/bundles/fafatimewebase/images/appin_flow.png">
+	</div> 
+<li><a href="#" name="quickin-standard" id="quickin-standard">应用注册</a></li> 
+<div class="help_right_text">企业注册成功后，您可以通过［应用注册］页面将需要接入Wefafa平台的企业内部应用进行登记。<br>
+	登记的内容包括：<br>
+	1、<b>应用名称。</b><br>
+	2、<b>应用地址。</b>仅Web应用才指定，由应用系统提供的有效URL地址。<br>
+	3、<b>帐号自动同步接口。</b>该接口是由应用系统提供的有效URL地址。<br>&nbsp;&nbsp;&nbsp;&nbsp;仅Web应用且应用有自己的帐号管理模块时才指定。当有新员工获得应用使用受权时，Wefafa平台自动将该员工的OpenID（参考 API接口列表.用户认证 节）、姓名信息推送到该地址。<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;业务应用总是应该对接收到的新员工帐号信息，根据实际的帐号管理逻辑（如数据库存储）进行处理。
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>详细信息参考：应用开发->基于Wefafa平台的用户管理</b><br>
+	4、<b>应用LOGO。</b><br>
+	5、<b>用户授权接口。</b>该接口是由应用系统提供的有效URL地址。<br>&nbsp;&nbsp;&nbsp;&nbsp;因为是企业应用，用户的应用权限管理非常重要，针对每一个用户，应用系统都应该使用自己的授权管理机制对其进行系统功能权限管理。<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;当用户取得应用使用授权后，Wefafa平台会立即通知应用管理员，对该帐号进行权限管理，这时Wefafa平台会自动为管理员跳转到该授权地址。
+	<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>详细信息参考：应用开发->基于Wefafa平台的用户管理</b><br>
+</div> 
+<li><a href="#" name="quickin-dev" id="quickin-dev">应用开发</a></li>
+ <div class="help_right_text">应用注册成功，并通过审核后，开发人员就可以基于Wefafa开放平台进行功能开发。<br><br>
+ 	<b>API接口的调用：</b>服务端程序或者支持HTTP协议请求的客服端本地程序才能调用API接口。在调用API接口之前，需要先获取当前用户的access_token（参考：基于Wefafa平台的用户认证及授权），并把该token与应用标识及用户标识一起作为参数与要调用的API接口一起发送给Wefafa平台。<br>
+ 	例如获取当前用户信息的接口及调用：https://www.wefafa.com/api/http/userinfo?Appid=ef24230943&Openid=sdkdhsfw2323osfwr&Access_token=s83sdtxo00sd<br><br>
+ 	<b>JS库的引用：</b>Wefafa平台提供的JS库包含完整的即时通讯连接、消息收发、好友获取以及企业信息等接口。开发者只需在页面上任意位置（推荐在head节中）引入下面的js连接：<br>
+ 	https://www.wefafa.com/bundles/fafatimeweopenapi/js/faapi.js?server=http://www.fafaim.com&v=2.0。<br>
+ 	其中server是IM即时通讯服务器地址，如果企业自主部署的Wefafa平台，需要把https://www.wefafa.com替换成实际的平台地址，把http://www.fafaim.com换成实际的IM服务器IP或域名；v为js库的版本，固定为2.0。<br><br>
+ 	<b>1、基于Wefafa平台的用户管理。</b><br>
+ 	作为企业级应用最基础的用户管理功能，在接入Wefafa平台后，其典型业务流程参考下图：<br>
+ 	<img style="width:500px" src="/bundles/fafatimewebase/images/user_flow.png"><br><br>
+ 	1.1、帐号同步处理。<br><br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当新用户申请使用系统时，Wefafa会通过帐号自动同步接口推送该用户的OpenID、姓名等信息到应用。以应用接口地址http://test.com/user/reg为例，
+ 	当用户“张信”（在Wefafa中的OpenID为6686a...781）申请使用系统CRM，Wefafa会提交请求http://test.com/user/reg?bindValue=u1jmBI0...iaxA到CRM应用，bindValue参数值是采用DES加密的密文，
+ 	应使用应用注册时获取到的Appkey对其进行解密，正确解密后的内容格式为：［企业号;用户信息］，其中用户信息采用json格式表示，其属性及说明参考以下表格：<br>
+ 	  <table border=0 cellspacing=0 cellpadding=0 style="width:500px">
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">name</td><td style="border: 1px solid rgb(204, 204, 204);">张信</td><td style="border: 1px solid rgb(204, 204, 204);">人员姓名</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">openid</td><td style="border: 1px solid rgb(204, 204, 204);">6686a...781</td><td style="border: 1px solid rgb(204, 204, 204);">人员在Wefafa中的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">identify</td><td style="border: 1px solid rgb(204, 204, 204);">manager｜user</td><td style="border: 1px solid rgb(204, 204, 204);">人员默认角色。<br>manager：系统管理员，推荐应用将管理员角色赋给此类帐号<br>user：一般用户，推荐应用将公共角色赋给此类帐号</td></tr>
+ 		</table>
+ 		<br>上面提到的推荐角色，是为了让用户能正常登录应用系统而需要赋予的默认角色/权限，应用的系统管理员应通过系统本身的权限管理进行重新设置。<br>
+ 		<b>Wefafa推荐：</b>对于已存在用户的原有系统，推荐的做法是在原有用户表上扩展一个字段存储OpenID，并通过页面将Wefafa用户手动关联到相应原有用户上。<br>
+ 		<b>Wefafa推荐：</b>对于全新的应用系统，推荐的做法是直接将OpenID作为用户在应用系统中的标识，并将整个关联过程在服务端自动实现。<br><br>
+ 	1.2、用户权限维护。<br><br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当用户取得应用系统的使用授权，一般情况下，用户已具有系统在同步帐号时赋予的默认权限（实际权限取决于应用系统在帐号同步时的实际处理），可以正常登录系统。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了让用户正确的使用应用系统，且拥有与自身角色相符的功能权限，Wefafa平台会主动通知应用系统管理员对该用户进行应用权限管理，并自动跳转到注册应用时指定的用户授权接口。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>注：用户的应用权限管理是属于应用系统的内部管理行为，与Wefafa无任何关联操作。</b><br>
+ 	<b>Wefafa推荐：</b>当给用户正确设置好权限后，应调用Wefafa平台的实时消息推送接口立即通知到用户。<br><br>
+ 	<b>2、基于Wefafa平台的用户认证及授权。</b><br>
+ 	Wefafa平台使用OAuth2.0协议进行用户的统一认证及授权。根据OAuth2.0的标准和应用类型不同，Wefafa平台支持以下三种方式进行用户的认证及授权：<br><br>
+ 	2.1、<b>Web-Server应用。</b><br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;（1）获取授权码：<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;获取授权码地址：http://app.wefafa.com/appcenter/oauth2/authorize。请求参数列表：<br>
+ 	  <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">例：00440</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">例：123456</td><td style="border: 1px solid rgb(204, 204, 204);">请求状态码。随机值。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址。如果指定时，则必须与注册时填写的地址同域。</td></tr>
+ 		</table> 	
+ 	&nbsp;&nbsp;&nbsp;&nbsp;Wefafa成功获取到授权码后，将自动定向到redirect_uri标识的地址（如果未指定，自动跳转到注册时填写所应用入口地址）。该授权码有效期为3分钟。返回值列表：<br>
+ 	 <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">例：xd32f...df3</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">例：123456</td><td style="border: 1px solid rgb(204, 204, 204);">请求时传入的应用状态码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">uid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">当前登录用户的Wefafa标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 		</table> 
+ 	&nbsp;&nbsp;&nbsp;&nbsp;（2）获取授权令牌access_token。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;获取授权码地址：http://app.wefafa.com/appcenter/oauth2/accesstoken。请求参数列表：<br>
+ 	  <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">code</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">第三步骤获取到的授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">grant_type</td><td style="border: 1px solid rgb(204, 204, 204);">authorization_code</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">uid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">用户标识。用户在Wefafa中的OpenID</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">请求状态码。由应用系统确定。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址。如果指定时，则必须与注册时填写的地址同域。</td></tr>
+ 		</table> 
+ 	<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;该接口以JSON格式返回如下结果：<br>
+ 	 <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">属性值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">token</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">token_type</td><td style="border: 1px solid rgb(204, 204, 204);">bearer</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效截止日期</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires_in</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效时长。固定为30天</td></tr>
+ 		</table>
+  	&nbsp;&nbsp;&nbsp;&nbsp;如果未指定access_token参数或为空或指定的令牌已无效时，Wefafa会自动重定向到用户认证及授权页面。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;<b>Wefafa推荐：</b>建议应用系统在得到最新的access_token后，将之存储在应用系统内或浏览器cookie中，以便用户可以在access_token有效期内直接调用API。<br><br>
+ 	2.2、<b>Web-Client应用。</b>通过浏览器或者JS脚本直接访问接口。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;对于此类访问，授权服务器将直接返回授权令牌，接口地址：http://app.wefafa.com/appcenter/oauth2/authorize。请求参数列表：<br>
+ 	  <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">例：00440</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">token</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">例：123456</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。随机值。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址。如果指定时，则必须与注册时填写的地址同域。</td></tr>
+ 		</table> 	
+ 	&nbsp;&nbsp;&nbsp;&nbsp;Wefafa成功获取到授权token后，将自动定向到redirect_uri标识的地址（如果未指定，自动跳转到注册时填写所应用入口地址），并将返回参数以#形式回传给页面,应用需要通过JS脚本获取回调页面#后面的参数及值。<br>返回值列表：<br>
+ 	 <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">access_token</td><td style="border: 1px solid rgb(204, 204, 204);">例：xd32f...df3</td><td style="border: 1px solid rgb(204, 204, 204);">授权码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">token_type</td><td style="border: 1px solid rgb(204, 204, 204);">bearer</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效截止日期</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">expires_in</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">本次获取token的有效时长。固定为2592000毫秒</td></tr>
+ 			<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">例：123456</td><td style="border: 1px solid rgb(204, 204, 204);">请求时传入的应用状态码</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">uid</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">当前登录用户的Wefafa标识</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">error</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误代码。发生错误时返回</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">msg</td><td style="border: 1px solid rgb(204, 204, 204);">&nbsp;&nbsp;</td><td style="border: 1px solid rgb(204, 204, 204);">错误信息。发生错误时返回</td></tr>
+ 		</table>
+ 	2.3、<b>Native Application应用。</b>本地客户端应用，同时应用无法与浏览器交互，但是支持嵌入浏览器。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;对于此类访问，要求应用将授权接口地址通过程序方式自动设置到内嵌浏览器，授权服务器将直接返回授权令牌，接口地址：http://app.wefafa.com/appcenter/oauth2/authorize。请求参数列表：<br>
+ 	  <table border=0 cellspacing=0 cellpadding=0 style="width:600px">
+ 	  	<tr><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数名</td><td style="width:120px;border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">参数值</td><td style="border: 1px solid rgb(204, 204, 204);background-color: rgb(153, 153, 153); color: rgb(255, 255, 255);">说明</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">appid</td><td style="border: 1px solid rgb(204, 204, 204);">例：00440</td><td style="border: 1px solid rgb(204, 204, 204);">应用注册时由Wefafa分配的唯一标识号</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">response_type</td><td style="border: 1px solid rgb(204, 204, 204);">token</td><td style="border: 1px solid rgb(204, 204, 204);">请求类型</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">state</td><td style="border: 1px solid rgb(204, 204, 204);">例：123456</td><td style="border: 1px solid rgb(204, 204, 204);">应用状态码。随机值。Wefafa返回时会原样返回，应用系统可根据该值对本次请求结果进行校验</td></tr>
+ 	  	<tr><td style="border: 1px solid rgb(204, 204, 204);">redirect_uri</td><td style="border: 1px solid rgb(204, 204, 204);">urn:ietf:oauth2:weop</td><td style="border: 1px solid rgb(204, 204, 204);">回调地址。此类应用固定使用。</td></tr>
+ 		</table> 
+ 		<br>
+ 		&nbsp;&nbsp;&nbsp;&nbsp;当访问令牌获取成功后，授权服务器自动回调到默认页面，同时将access_token码显示在页面上。应用程序需实现从页面中解析出令牌码。<br><br>
+ 	<b>3、基于Wefafa平台的消息推送。</b><br> 
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;Wefafa平台针对接入平台的所有应用，都提供了在应用系统中主动将消息推送到用户当前登录设备上的开放接口，同时对于特殊消息还可以采用离线消息推送。<br>
+ 	  根据消息重要性以及推送及时性（由应用系统本身对消息进行评估及定性），平台实现了以下三种消息推送方式：<br>
+ 	  （1）、普通消息。<br>
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;此类消息只要接收用户登录了至少一种设备时，可以立即收到消息；但当用户未登录任何设备时，该消息则针对该用户会自动丢弃。<br>
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;通过接口https://www.wefafa.com/api/http/sendpresence可推送此类消息，详细调用说明请参考：API接口列表.消息推送<br>
+ 	  （2）、离线消息。<br>
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;此类消息只要接收用户登录了至少一种设备时，可以立即收到消息；且用户未登录任何设备时，该消息也不会丢失，当用户任意设备登录成功时，会立即收到消息。<br>
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;通过接口https://www.wefafa.com/api/http/sendmsg可推送此类消息，详细调用说明请参考：API接口列表.消息推送<br> 	  
+ 	  （3）、定时消息。<br>
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;此类消息用于应用系统定时向用户推送相关消息。<br>
+ 	  &nbsp;&nbsp;&nbsp;&nbsp;通过接口https://www.wefafa.com/api/http/timerRemindTask可推送此类消息，详细调用说明请参考：API接口列表.消息推送<br>  
+ 	  以上消息推送API均提供了用于服务端或支持http协议的客户端应用调用的接口，同时也提供了用于Web前端脚本调用的JS库。<br><br>
+ 	<b>4、基于Wefafa平台的状态感知。</b><br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;状态感知功能暂时只针对Web应用开放，且暂时只支持企业内部员工的状态相互感知。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;只需在页面上任意位置（推荐在head节中）引入下面的js连接：https://www.wefafa.com/bundles/fafatimeweopenapi/js/fapresence.js。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;在正确使用该组件前，需要先完成用户的认证和授权，并将获取的access_token和用户标识opendid存储到当前域的cookie中，并以fa00440(00440应替换为实际的应用标识)为cookie名称，然后在需要感知用户状态的页面加载完成时连接服务器，参考以下代码：<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;$(document).ready(function(){ FaFaPresence.Connection(APPID)})，其中APPID为应用注册时分配的应用标识。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;该组件会自动订阅所在企业所有员工的在线状态感知。订阅成功后，企业员工的上下线、登录设备切换以及在线状态发生变化时，Wefafa平台都会主动将该员工的状态推送给当前用户并自动触发事件OnStateChange。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;开发人员需要在事件FaFaPresence.OnStateChange事件中处理该员工的状态变化。<br>组件详细说明请参考：前端组件列表.状态感知组件<br><br>
+ 	<b>5、基于Wefafa平台的企业内部分享。</b><br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;Wefafa企业分享提供了将应用中的内容、数据、报表等直接通过分享功能，向指定圈子、群组、全体员工或特定人员公布/上报，配合消息实时推送，实现随时报送、定时发布、自动发布、实时查看等特色功能。<br>
+ 	（1）、API接口调用<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;
+ 	（2）、前端JS组件调用<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;需在页面上任意位置（推荐在head节中）引入下面的js连接：https://www.wefafa.com/bundles/fafatimewebase/js/faapishare.js。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;组件自带3种大小的分享图标，可直接引入到页面控件中，同时也支持自定义分享控件，但需要自行实现其事件，并在事件中打开分享窗口。<br>
+ 	&nbsp;&nbsp;&nbsp;&nbsp;详细调用说明请参考：前端组件列表.企业分享组件<br>
+ </div>
+ </ul>

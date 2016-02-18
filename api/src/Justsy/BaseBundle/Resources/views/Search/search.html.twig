@@ -1,0 +1,42 @@
+{% extends 'JustsyBaseBundle::master3c.html.twig' %}
+
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+{% endblock %}
+
+{% block main_content_center %}
+  <div>
+  	<span style="display: inline-block;"><h3 class="bigtitletext">搜索结果</h3></span>
+  	<span>-</span>
+  	<span style="color: #006CAA; font-weight: bold;">{{q}}</span>
+  </div>
+  <hr style="margin: 0px; width: 100%;">
+  <div>
+    {% for row in ds["we_convers_list"]["rows"] %}
+    <div class="search_result_item">
+      <img class="headimg" src="{{row["photo_url"]}}" onerror="this.src='/bundles/fafatimewebase/images/no_photo.png'">  
+      <div>{%if row["conv_type_id"]=="00" %}<span class="conv_type_text">动态</span>{%elseif row["conv_type_id"]=="01"%}<span class="conv_type_text conv_type_text_01">提问</span>{%elseif row["conv_type_id"]=="02"%}<span class="conv_type_text conv_type_text_02">活动</span>{%elseif row["conv_type_id"]=="03"%}<span class="conv_type_text conv_type_text_03">投票</span>{%elseif row["conv_type_id"]=="05"%}<span class="conv_type_text conv_type_text_05">动态</span>{% endif %}<span class="conv_abbr_text"><a class="employee_name" login_account="{{row["login_account"]}}" target="_blank">{{row["nick_name"]}}</a></span></div>
+      <div>{{row["conv_content"]}}</div>
+      <div class="fun_area"><span class="post_date">{{row["post_date_d"]}}</span><a class="view_detail" target="_blank" href="{{ path('JustsyBaseBundle_view_oneconv', {'conv_root_id' : row["conv_id"]})}}">查看详细</a></div>
+    </div>
+    {% endfor %}
+    {%if(pagecount>1)%}
+    <div class="search_result_pager pagination pagination-right">
+    	<ul>
+    	  <li {{ pageindex == 1 ? 'class="disabled"' : "" }}><a {% if pageindex > 1 %}href="?q={{q}}&p={{pageindex-1}}"{%else%}href="#"{% endif %}>上一页</a></li>
+    	{% set pagestart = pageindex < 6 ? 1 : pageindex-5 %}
+    	{% set pageend = pagestart+9 > pagecount ? pagecount : pagestart+9 %}
+    	{%for i in pagestart..pageend %}
+    	  <li {{ pageindex == i ? 'class="active"' : "" }}><a href="?q={{q}}&p={{i}}">{{(i)}}</a></li>
+    	{%endfor%}
+    	  <li {{ pageindex == pagecount ? 'class="disabled"' : "" }}><a {% if pageindex < pagecount %}href="?q={{q}}&p={{pageindex+1}}"{%else%}href="#"{% endif %}>下一页</a></li>
+      </ul>
+    </div>
+    {%endif%}
+  </div>
+{% endblock %}
+
+{% block main_content_right %}
+  {% render "JustsyBaseBundle:DocumentMgr:getTopNew" with {'network_domain' : curr_network_domain,'scope_type':'1'} %}
+{% endblock %}

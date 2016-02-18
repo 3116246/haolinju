@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>注册——Wefafa移动应用平台</title>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/html5.js')}}"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" media="all" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/html5placeholder.jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+<link rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico')}}" />
+<script type="text/javascript" src="{{ JS_OPEN_API_URL}}/bundles/fafatimeweopenapi/js/faapi.js?server={{IM_SERVER}}&v=2.0"></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimchat/js/fachat_window.js" defer></script>
+<script type="text/javascript" src="{{WEBIM_URL}}/bundles/fafawebimimonlineservice/js/fafaonline9.js?acc=service@fafatime.com&orgid=100082&show=0|1|2&type=0&style=9&text=Wefafa客服" defer></script>
+</head>
+<div class="nav clearfix">
+	<div class="nav-content">
+		<h1 class="left" href="/"></h1>
+		<div class="right line-li">
+			<ul>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}">首页</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=feature">功能</a></li>
+                <li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=case">案例</a></li>
+				<li><a href="{{path('JustsyBaseBundle_newlogin')}}?p=download">下载</a></li>
+				<li><a href="#" class="hover">注册</a></li>                
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="Public-content clearfix">
+	<div class="Public">
+		<h1 class="Public-h2">欢迎注册Wefafa</h1>
+		<div class="Public-box clearfix">
+			<div class="reg-wrapper2">
+		<form id="regform" class="form-horizontal" action="" method="post">
+		  <div class="control-group">
+		    <label class="control-label" for="email">邮箱</label>
+		    <div class="controls">
+		      <input type="text" name="txtmail" id="txtmail" maxlength="32" placeholder="请输入邮箱地址" class="emailbox" autocomplete="off" onKeyPress="enter(event,'mail');"><br>
+		      <span class="maroon">*</span><span class="help-inline" style="padding: 0px; display: inline;">邮箱将与登录帐号绑定，请填写正确的邮箱</span>
+		      <div id="emailerror" class="alert alert-error" style="display: none; width: 260px; left: 120px; z-index: 10; top: 50px;">
+        		    <strong>错误！</strong> <p id="email_err">请检查！</p>
+          		</div>
+		    </div>
+		  </div><br>
+		  <div class="control-group">
+		    <label class="control-label" for="vcode">验证码</label>
+		    <div class="controls" >
+		      <input type="text" name="vcode" id="vcode" >
+				<div id="vcodeerror" class="alert alert-error" style="display: none; width: 260px; left: 120px; top: 50px; z-index: 10;">
+        		    <strong>错误！</strong> <p id="vcode_err">请输入验证码！</p>
+          		</div>
+		      	<br><img title="点击换一张图片" style="width:100px;height:50px;cursor:pointer" src="{{ JS_OPEN_API_URL}}/register/code" onclick="this.src='{{ JS_OPEN_API_URL}}/register/code?t='+(new Date()).getTime()">
+		      	<br><span class="maroon">*</span><span class="help-inline" style="padding: 0px; display: inline;">请输入图片中的验证码(不区分大小写)</span>
+		    </div>
+		  </div>
+		  <div class="control-group">
+		  	<div class="controls">
+			    <button type="button" id="btnregister" class="btn-register1" onclick="submit_mail()">马上注册</button>
+		  	</div>
+		  </div>
+		</form>
+		</div>
+		</div>
+	</div>
+</div>
+
+<!--footer开始 -->
+{% render "JustsyBaseBundle:Home:footer"%}
+</body>
+</html>
+<script type="text/javascript">
+var showTime=300;
+var errorlist={
+		 "error11":"您输入的验证码不正确！",
+		 "error01":"您输入的邮件地址不正确，请检查。",
+		 "error02":"该邮件地址为公共邮箱，请点击<a href='/register?type=0&mail=MAIL'>公共邮箱注册</a>。",
+		 "error03":"该邮箱已经被注册，请<b>直接登录</b>。",
+		 "error0401":"您的信息已提交，正在审批中，若需修改您的注册信息，请继续，否则请耐心等待审批邮件通知。",
+		 "error0402":"您的注册申请总次数已超过10次，已被禁止注册，请<a href='mailto:admin@fafatime.com'>与我们联系</a>完成注册工作。",
+		 "error0403":"您提交的注册信息已经审批通过，请登录MAIL查收邮件，并根据邮件提示内容开始启用微发发。若未收到，请点击请求再次发送",
+		 "error05":"该邮件地址已经被系统列入黑名单，点击查看详细信息。"
+	};
+function validEmail(b){var c=/^[a-zA-Z0-9]+[a-zA-Z0-9_-]*(\.[a-zA-Z0-9_-]+)*@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*\.([a-zA-Z]+){2,}$/;return c.test(b)}
+	$(document).ready(function(){
+		//绑定邮箱联想
+       $("#txtmail").typeahead(
+       {
+		      menu : '<ul class="typeahead dropdown-menu" style="min-width:240px;margin-top:0px;z-index:30000;"></ul>',
+	        source : {{domain|raw}},
+	        matcher: function(item)
+	        {
+	  	      if(this.query.indexOf("@")==-1) return true;
+	  	      return item.toLowerCase().indexOf(this.query.split("@")[1].toLowerCase())>-1;
+	        },
+	        highlighter:function(item)
+	        {
+	  	       if(this.query.indexOf("@")>0) return this.query.split("@")[0]+"@"+ item;
+	  	       return this.query+"@"+ item;
+	        },
+	        updater : function(item)
+			    {
+			  	  var email = this.query.indexOf("@")>0?this.query.split("@")[0]+"@"+ item:this.query+"@"+ item;
+			  	  return email;
+			    }
+       });
+       $("#txtmail").live("keypress",function(event){
+       	 if(event.keyCode==13)
+       	   setTimeout(function(){submit_mail();},200);
+       });
+	}); 
+function callback1() 
+{
+			setTimeout(function() {			 
+				$( "#emailerror:visible" ).fadeOut();
+				$( "#vcodeerror:visible" ).fadeOut();
+			}, 2000 );
+		
+}
+function submit_mail()
+  {
+  	if($("#btnregister")[0].disabled) return;//已提交到后台验证
+    var mails = document.getElementById('txtmail').value,vcode = $.trim($("#vcode").val());
+    mails = $.trim(mails);
+    if( mails=='请输入企业邮箱地址' || mails=='')
+    { 
+		$('p#email_err').text ("企业邮箱地址不能为空！");
+	    $('#emailerror').slideDown(showTime,callback1);
+      	$('#txtmail').focus();
+      	return false;
+    }
+    if( vcode=='')
+    {
+    	$('p#vcode_err').html ("请输入验证码！");
+	    $('#vcodeerror').slideDown(showTime,callback1);
+      	$('#vcode').focus();
+      	return false;
+    }    
+    //判断邮件的正确性
+    if(!validEmail(mails))
+    {
+	    $('p#email_err').text ("企业邮箱地址格式错误！");
+	    $('#emailerror').slideDown(showTime,callback1);
+      $('#txtmail').focus();
+      return false;
+    }
+    else
+    {
+      	if (typeof(mails) == 'undefined')
+	      	return false;
+	  	var date = readCooke(mails);
+	  	if ( date!=null)
+	  	{
+	      	 var date1 = new Date(date);
+	      	 if ( ((new Date().getTime()-date1.getTime())/1000)<60)
+	      	 {
+	      	 	  	$('p#email_err').html("请检查你的邮箱，勿频繁注册！");
+	      	 	  	$('div#emailerror').attr("class","alert alert-error");	      	 	  
+	      	 	  	$('div#emailerror').slideDown(showTime,callback1);
+	            	$('#txtmail').focus();
+	      	 	  	return false;
+	      	 }
+	      	 else
+	      	 	  	writeCooke(mails);
+	   	}
+      $("#btnregister")[0].disabled=true;
+      $("#btnregister")[0].innerHTML="提交中...";
+      $.getJSON("{{ JS_OPEN_API_URL}}/register/mailtype?jsoncallback=?",{"id":mails,"vcode":vcode},
+        function(result){
+          var jsondata = result ;
+          if (jsondata["succeed"])
+          {
+             window.location.href = "{{ JS_OPEN_API_URL}}/register/apply/"+mails;                       
+          }
+          else
+          {
+          	var tx = errorlist[jsondata.msg];
+          	if(jsondata.msg=="error02")
+          	  tx = tx.replace("MAIL",mails);
+          	if(jsondata.msg=="error11")
+          	{
+          		$('p#vcode_err').html (tx);
+				$('#vcodeerror').slideDown(showTime,callback1);
+      			$('#vcode').focus(); 
+      			document.cookie = mails + "=0;expires=0";
+          	}
+          	else
+          	{
+            	$('p#email_err').html (tx);
+	          	$('#emailerror').slideDown(showTime,callback1);
+            	$('#txtmail').focus();
+        	}
+			$("#btnregister")[0].disabled=false;
+			$("#btnregister")[0].innerHTML="马上注册";            
+          	 return false;
+          }
+        }
+      );
+    }
+  }	
+
+  function enter(e,ctr)
+  {
+  	return;
+    if (window.event) { e = event; e.which = e.keyCode; } else if (!e.which) e.which = e.keyCode;
+    var code = e.which; // 輸入鍵的 ASCII 碼。 
+    if(code==13)
+    {
+      if(ctr=="mail")
+      {
+      	if($("#btnregister")[0].disabled) return;//已提交到后台验证
+        submit_mail();
+      }
+      else
+      {
+        if (ctr == "username")
+        {
+          setTimeout(function () 
+          {
+            $("#_password").focus();
+          }, 100);
+        }
+        else 
+          checkIntegrality(ctr);
+      }
+    }
+  } 
+	function writeCooke(email)
+  	{
+	   var exdate=new Date();
+	   exdate.setDate(exdate.getDate() + 1);		   
+	   document.cookie = email + "=" + escape(new Date()) +";expires="+exdate.toGMTString();
+  	}
+     
+ 	//读取cooke
+ 	function readCooke(email)
+ 	{
+	   var result = null;
+	   if (document.cookie.length>0)
+	   {
+	     var c_start = document.cookie.indexOf(email + "=")
+	     if (c_start >-1)
+	     { 
+	       c_start = c_start + email.length + 1;
+	       var c_end=document.cookie.indexOf(";",c_start)
+	       if (c_end==-1) c_end = document.cookie.length
+	       result = unescape(document.cookie.substring(c_start,c_end)); 
+	     }
+	     else
+	     	 writeCooke(email);
+	   }
+	   return result; 
+ 	}  
+</script>	

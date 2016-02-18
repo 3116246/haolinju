@@ -1,0 +1,87 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style stype="text/css">
+	#tree_depart { border:none;height:440px;max-height:440px;overflow:auto;width:478px;background-color:#fff; }
+	#hint_content { background-color: #fff;cursor: default;font-size: 12px;line-height:24px;overflow: hidden;padding: 10px;}
+	.hint_bottom { background-color: transparent;height: 50px;margin-left: auto;margin-right: auto;padding: 10px 0;width: 150px; }
+	.message { float: left;margin-left: 10px;max-width: 220px;width:220px; height:26px;line-height:24px;}
+	.hint_message { color: #cc3300;float: left;height: 28px;line-height: 28px;margin-top: 12px;padding-left: 15px;width: 305px; }
+	.content_left,.content_right{ float:left;width:480px;height:485px; }
+  .content_middle { float: left;height: 485px;width: 40px;}
+  .select_icon_enable { background-image: url("/bundles/fafatimewebase/images/right_enable.png");background-repeat: no-repeat;float: left;height: 20px;margin-left: 10px;margin-top: 245px;width: 20px;cursor:pointer;}
+  .select_icon_hover { background-image: url("/bundles/fafatimewebase/images/right_hover.png");background-repeat: no-repeat;float: left;height: 20px;margin-left: 10px;margin-top: 245px;width: 20px;cursor:pointer;}
+  .gly_del { cursor: pointer;float: right;padding-top: 7px;}
+  .deptname { float:left;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;width:95%; }
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/friend.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="body_content"  style="padding-top: 50px;">
+	 <div class="content_left">
+	    <div class="option_area">
+	      <span style="margin-left:185px;">部门人员互为好友管理</span>
+	    </div>
+	    <div style="float: left;width:100%;margin-top:10px;line-height:25px;">
+	        <span style="float:left;padding:0px 10px;">部门名称：</span>
+	        <input type="text" style="float:left;width:300px;" placeholder="部门名称" onkeypress="if (event.keyCode==13) { Friend.search_tree(); }" id="txt_deptname" class="mb_textbox">
+	        <span class="mb_search_icon" onclick="Friend.search_tree();" style="margin-top:6px"></span>
+	    </div>
+      <ul id="tree_depart" class="ztree"></ul>
+   </div>
+   <div class="content_middle">
+     <span onmouseover="" onmouseout="" onclick="Friend.selecteddept();" class="select_icon_enable"></span>
+   </div>
+   
+   <div class="content_right" style="width: 450px;">
+      <div class="option_area">
+	      <span style="margin-left:185px;">已选择的部门</span>
+	    </div>
+      <ul class="common_ul">
+         
+      </ul>
+      <div style="float: left; width: 100%; height: 32px; line-height: 32px;">
+        <span class="message">&nbsp;</span>
+        <span style="float: left; padding: 2px 10px;" onclick="Friend.setFriend();" class="btn btnGray">确&nbsp;&nbsp;定</span>
+      </div>
+   </div>
+</div>
+
+<!--对话框-->
+<div style="display:none;" id="prompt" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:650px;left:-50px;top:100px;cursor:default;">
+    	<div class="title">提示！</div> 
+      <span class="close-tip-icon" onclick="$('#prompt').hide();" title="关闭"></span>
+      <div class="content" id="hint_content">
+      </div>
+      <div>
+         <span class="hint_message"></span>
+         <button class="btn btnGray" id="btnsetfriend" style="width:65px;margin:10px 0px;"  onclick="Friend.setFriend();">确&nbsp;定</button>
+      </div>
+      
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		Friend.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+		Friend.getdept_url = "{{path('JustsyAdminAppBundle_department_tree')}}";
+		Friend.load_tree("","");
+	});
+	
+</script>
+{% endblock %}

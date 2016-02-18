@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wefafa移动应用平台—企业移动门户|移动开发平台|移动信息化专家</title>
+<meta name="keywords" content="企业移动应用平台，移动开发平台，企业移动门户，移动信息化，移动信息化，移动中间件，企业移动互联，大数据，移动OA，移动CRM，Wefafa"/>
+<meta name="description" content="Wefafa移动应用平台，是一个集企业移动门户、快速开发平台和大数据消息网关于一体，帮助企业快速实现原有信息系统的移动化升级，助力企业低成本进入移动互联网时代的移动技术平台。Wefafa拥有国内目前唯一支持企业原有信息系统在保持私网IP、内网部署的物理安全环境中，仍然能够实现移动化访问的专利技术方案"/>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+<meta property="wb:webmaster" content="e2fdb8d07a532c64"/>
+{% block stylesheets %}
+    <link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/home/bootstrap.min.css')}}" media="all" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/home/home_style.css')}}" media="all" />
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/portal.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/department.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/TreeMark.js')}}"></script>    
+{% endblock %}
+
+<script  >
+    $.browser = {};
+    var browser = navigator.userAgent.toLowerCase();
+    $.browser.mozilla = /firefox/.test(browser);
+    $.browser.webkit = /webkit/.test(browser);
+    $.browser.opera = /opera/.test(browser);
+    $.browser.msie = /msie/.test(browser);
+</script>
+
+</head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"><i class="iconfont we-icon">&#xe670;</i>移动应用平台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a href="{{ JS_OPEN_API_URL}}/{{app.user.edomain}}" title="主页" target="_blank" ><i class="iconfont we-icon-home">&#xe628;</i></a></li>
+            <!--
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">圈子 <span class="caret"></span></a>          
+              <ul class="dropdown-menu menu-circle" role="menu">
+                <li><a href="#"><i class="iconfont we-icon-circle we-primary">&#xe673;</i>同事圈<span class="bubble-blue">99</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="iconfont we-icon-circle we-success">&#xe66b;</i>朋友圈</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="iconfont we-icon-circle we-warning">&#xe63a;</i>开发者社区<span class="bubble-blue">9</span></a></li>
+              </ul><span class="bubble" />
+            </li>
+            <li><a href="#">应用工厂</a></li>
+            <li><a href="#">框架文档</a></li>
+            -->
+          </ul>
+          <!--    
+          <form class="navbar-form navbar-left">
+            <input type="text" class="form-control" style="margin-left:60px;font-size:12px" placeholder="搜索...">
+          </form>
+          -->
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" title="邀请"><i class="iconfont we-icon-home">&#xe679;</i></a></li>
+            <li><a href="#" title="帮助"><i class="iconfont we-icon-home">&#xe67b;</i></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{staff}} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('JustsyBaseBundle_account_basic',{'network_domain':network_domain})}}">个人资料</a></li>
+                <li><a href="{{path('JustsyBaseBundle_account_pwd',{'network_domain':network_domain})}}">修改密码</a></li>
+                <li><a href="#">反馈</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('JustsyBaseBundle_logout')}}">退出登录</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="content-1" class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+              <li class="nav-header">前端定制</li>
+              <li><a id="portalpage" class="home_menu_item" url="{{path('JustsyBaseBundle_mobile_portal')}}" ><i class="iconfont we-icon-menu">&#xe63b;</i>移动门户</a></li>
+              <li><a class="home_menu_item" url="{{path('JustsyBaseBundle_app_index')}}" ><i class="iconfont we-icon-menu">&#xe62a;</i>移动应用</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+              <li class="nav-header">后端系统</li>
+              <li><a href="backend/system.html"><i class="iconfont we-icon-menu">&#xe66c;</i>业务系统</a></li>
+              <li><a href="backend/interface.html"><i class="iconfont we-icon-menu">&#xe652;</i>系统接口</a></li>
+              <li><a href="backend/datasource.html"><i class="iconfont we-icon-menu">&#xe688;</i>数据源</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+              <li class="nav-header">企业管理</li>
+              <li><a class="home_menu_item" url="{{ JS_OPEN_API_URL}}/mb/depart/index?type=1"><i class="iconfont we-icon-menu">&#xe673;</i>组织用户</a></li>
+              <li><a class="home_menu_item" url="{{ JS_OPEN_API_URL}}/mb/defaultgroup/index?type=1" ><i class="iconfont we-icon-menu">&#xe6af;</i>群组管理</a></li>
+              <li><a class="home_menu_item" url="{{JS_OPEN_API_URL}}/mb/service/index?type=1"><i class="iconfont we-icon-menu">&#xe69f;</i>公&nbsp;众&nbsp;号</a></li>
+              <li><a class="home_menu_item" url="{{path('JustsyBaseBundle_role_manager')}}"><i class="iconfont we-icon-menu">&#xe65d;</i>权限管理</a></li>
+            </ul>
+        </div>
+        <div id="Content_container" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2"></div>
+      </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+    var webserver_url = "";
+    var enterprise_name = "";
+    var enterprise_shortname = "";
+    var enterprise_eno = "";
+    var access_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+	  $(document).ready(function()
+	  {
+	      webserver_url = "{{webserver_url}}";
+	      enterprise_name = "{{ename}}";
+	      enterprise_shortname = "{{eshortname}}";
+	      enterprise_eno = "{{eno}}";
+	      var isadmin = "{{isAdmin}}";
+	      if ( isadmin==0)
+	      {
+	         notRole();
+	      }
+	      else
+	      {
+	         var url = $("#portalpage").attr("url");
+	         $("#portalpage").parents("li").attr("class","active");
+	         $("#Content_container").load(url);
+	      }
+	  });
+	  
+    function notRole()
+    {
+        var html = Array();
+        html.push("<div class='dialogBox' style='display:block;'>");
+        html.push("  <div class='background' style='opacity:0;'></div>");
+        html.push("</div>");
+        $("body").append(html.join(""));
+        $(".navbar-fixed-top").css("z-index",0);
+        html = [];
+        html.push("<div class='err_area'>");
+        html.push("  <img src='/bundles/fafatimewebase/images/close.jpg' />");
+        html.push("  <div class='err_msg'>");
+        html.push("   <span>您没有移动应用平台管理权限！</span>");
+        html.push("   <span style='color:#aaa;font-size:12px;padding-left:26px;margin-top:2px;'>");
+        html.push("   <span style='padding:0px 5px;font-weight:bold;color:#0088cc;font-family:Arial;' id='date_time'>5</span>秒后将自动进入主页</span>");
+        html.push("</div></div>");
+        $("#Content_container").html(html.join(""));
+        var time =5000,hander=null;
+        var hander = setInterval(function()
+        {
+            if ( time==0)
+            {
+                clearInterval(hander);
+                window.location.href="{{JS_OPEN_API_URL}}/{{app.user.edomain}}";
+            }
+            else
+            {
+                time -= 1000;
+                if ( time>0)
+                  $("#date_time").text(time/1000);
+            }
+        },1000);
+    }
+	  
+	  $(".home_menu_item").bind("click",function(){
+	      $(".home_menu_item").parents("li").removeClass("active");
+	      $(this).parents("li").attr("class","active");
+	      var url = $(this).attr("url");
+	      if ( url!=null && url!="")
+	      {
+	          var html = Array();
+	          html.push("<div class='loadding_page'>");
+	          html.push("  <img src='/bundles/fafatimewebase/images/loading.gif' /><span>页面加载中，请稍候……</span>");
+	          html.push("</div>");
+	          $("#Content_container").html(html.join(""));
+	          $("#Content_container").load(url);
+	      }
+	  });
+</script>

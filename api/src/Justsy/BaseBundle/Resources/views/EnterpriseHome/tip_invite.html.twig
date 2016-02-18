@@ -1,0 +1,25 @@
+{% if circle_staff_count <= 3 %}
+<a id="aTipInvite" data-toggle="modal" show="false" href="#dlgTipInvite"></a>
+<div id="showInviteDiv" style="display:none;z-index:10000;background-image:url('{{ asset('bundles/fafatimewebase/images/invit_bg.png')}}'); font-size: 12px;height: 70px;left: 50%;line-height: 18px;margin-left: 240px;padding-left: 10px;padding-right: 10px;padding-top: 40px;position: fixed;top: 30px; width: 220px;">
+		  	<a class="close"  style="font-size: 16px; margin-top: -25px;"  onclick="cancel()">×</a>    
+		  	<span style="cursor: default;float: left;width:220px">此圈子人烟稀少，快快邀请您的同事、合作伙伴加入，同大家一起体验全新的企业协作网络吧！</span> 
+		  	{% if (roster_invite) %}
+		  	<a id="btnTipInvite" style="float: right;cursor: pointer;position:relative;top:-12px;width:50px" >立即邀请</a>
+		  	{% else %}
+		  	<a href="javascript:;" title="未认证用户不能使用该功能" style="float: right;cursor: pointer;position:relative;top:-12px;width:50px" >立即邀请</a>
+		  	{% endif %}
+</div>
+<script type="text/javascript">
+function cancel()
+{
+    $("#showInviteDiv").remove();
+}
+$(document).ready(function(){
+  $("#btnTipInvite").click(function(){
+    window.location.href = "{{path('JustsyBaseBundle_invite',{'network_domain':curr_network_domain})}}";
+  });  
+  $("#showInviteDiv").show();
+  window.setTimeout(function(){cancel()},10000);
+});
+</script>
+{% endif %}

@@ -1,0 +1,613 @@
+{% set foo=1 %}
+{% set count=0 %}
+{% set pagecount=micro_fans_count %}
+{%if(micro_fans_max_count==0)%}
+	{%if(micro_concern_approval==1 and micro_type==0 and micro_use!="8")%}
+		<div style="border-bottom: 1px solid #CCCCCC;padding-bottom: 10px;padding-top: 10px;padding-left: 20px;">微应用帐号<b> {{micro_name}} </b>是企业<B>开放</b>的<b>内部</b>微应用帐号，可以一键添加所有员工。
+			<span id="akeyadd" onclick="akey_add()" class="micro_akeyadd">
+		    一键添加
+		  </span>
+		</div>
+	{%endif%}
+	{%if(txtsearch=="")%}
+		<span style="color: red; font-weight: bold; font-size: 16px;line-height: 200px; text-align: center; width: 100%; display: block; ">微应用帐号还没有被关注</span>
+	{%else%}
+		<span style="font-weight: bold; font-size: 16px;line-height: 200px; text-align: center; width: 100%;display: block;  ">没有搜索到满足条件的关注</span>
+	{%endif%}
+{%else%}
+  <div class="micro_group_panel" style="width:200px;margin-right:5px;cursor: inherit;">
+  	<div id="div_micro_group" style="cursor: inherit;">
+  	{%if(groupid==-1)%}
+  	<div class="micro_group_item_active" recount='{{micro_fans_all_count}}' groupid="-1" groupname="所有关注" micro_account='{{micro_account}}'><span onclick="group_name_sel(this)" style="display: block;
+    height: 28px;
+    line-height: 28px;
+    overflow: hidden;
+    position: absolute;cursor: pointer;
+    width: 175px;">所有关注({{micro_fans_all_count}})</span></div>
+  	{%else%}
+  	<div class="micro_group_item" recount='{{micro_fans_all_count}}' groupid="-1" groupname="所有关注" micro_account='{{micro_account}}'><span onclick="group_name_sel(this)" style="display: block;
+    height: 28px;
+    line-height: 28px;
+    overflow: hidden;
+    position: absolute;cursor: pointer;
+    width: 175px;">所有关注({{micro_fans_all_count}})</span></div>
+  	{%endif%}
+  		{%if(groupid==0)%}
+	  	<div class="micro_group_item_active" recount='{{micro_fans_ungrouped_count}}' groupid="0" groupname="未分组" micro_account='{{micro_account}}'><span onclick="group_name_sel(this)" style="display: block;
+    height: 28px;
+    line-height: 28px;
+    overflow: hidden;
+    position: absolute;cursor: pointer;
+    width: 175px;">未分组({{micro_fans_ungrouped_count}})</span></div>
+	  	{%else%}
+	  	<div class="micro_group_item" recount='{{micro_fans_ungrouped_count}}' groupid="" groupname="未分组" micro_account='{{micro_account}}'><span onclick="group_name_sel(this)" style="display: block;
+    height: 28px;
+    line-height: 28px;
+    overflow: hidden;
+    position: absolute;cursor: pointer;
+    width: 175px;">未分组({{micro_fans_ungrouped_count}})</span></div>
+	  	{%endif%}
+	  	{%for micro_fans_groupitem in micro_fans_groupdata%}
+	  	{%if(groupid==micro_fans_groupitem["id"])%}
+	  	<div class="micro_group_item_active" groupid='{{micro_fans_groupitem["id"]}}' recount="{{micro_fans_groupitem["re_count"]}}" groupname='{{micro_fans_groupitem["groupname"]}}' micro_account='{{micro_fans_groupitem["micro_account"]}}' >
+		  	<input class="updgroupname" type="text" value='{{micro_fans_groupitem["groupname"]}}' style="width: 100px; padding: 0px; margin: 0px;display:none;">
+		  	<span class="micro_group_item_name" style="position: absolute;display:block;overflow:hidden;width:125px;height:28px;line-height:28px;" onclick='group_name_sel(this)' title='{{micro_fans_groupitem["groupname"]}}({{micro_fans_groupitem["re_count"]}})'><span style="overflow: hidden; float: left; margin: 0px; padding: 0px; max-width: 105px; height: 28px; line-height: 28px; text-overflow: ellipsis; white-space: nowrap;">{{micro_fans_groupitem["groupname"]}}</span>({{micro_fans_groupitem["re_count"]}})</span>
+		  	<span title="编辑分组" class="micro_group_item_edit" onclick="edititem(this)" style="z-index:10000;cursor: pointer;">&nbsp;</span>
+		  	<span title="保存分组" class="micro_group_item_save" onclick="upditem(this)" style="display:none;z-index:9999;cursor: pointer;">&nbsp;</span>
+		  	<span title="删除分组" class="micro_group_item_delete" onclick="delitem(this)" style="cursor: pointer;">&nbsp;</span>
+		  	<span class="delmsg" style="display:none;"></span>
+	  	</div>
+	  	{%else%}
+	  	<div class="micro_group_item" groupid='{{micro_fans_groupitem["id"]}}' recount="{{micro_fans_groupitem["re_count"]}}" groupname='{{micro_fans_groupitem["groupname"]}}' micro_account='{{micro_fans_groupitem["micro_account"]}}'  onmouseover="item_mouseover(this)" onmouseout="item_mouseout(this)" style="cursor: inherit;">
+		  	<input class="updgroupname" type="text" value='{{micro_fans_groupitem["groupname"]}}' style="width: 100px; padding: 0px; margin: 0px;display:none;" maxlength="10">
+		  	<span class="micro_group_item_name" style="position: absolute;display:block;overflow:hidden;width:125px;height:28px;line-height:28px;cursor: pointer;" onclick='group_name_sel(this)' title='{{micro_fans_groupitem["groupname"]}}({{micro_fans_groupitem["re_count"]}})'><span style="overflow: hidden; float: left; margin: 0px; padding: 0px; max-width: 105px; height: 28px; line-height: 28px; text-overflow: ellipsis; white-space: nowrap;">{{micro_fans_groupitem["groupname"]}}</span>({{micro_fans_groupitem["re_count"]}})</span>
+		  	<span title="编辑分组" class="micro_group_item_edit" onclick="edititem(this)" style="display:none;z-index:10000;cursor: pointer;">&nbsp;</span>
+		  	<span title="保存分组" class="micro_group_item_save" onclick="upditem(this)" style="display:none;z-index:9999;cursor: pointer;">&nbsp;</span>
+		  	<span title="删除分组" class="micro_group_item_delete" onclick="delitem(this)" style="display:none;cursor: pointer;">&nbsp;</span>
+		  	<span class="delmsg" style="display:none;"></span>
+	  	</div>
+	  	{%endif%}
+	  	{%endfor%}
+  	</div>
+  	<div class="micro_group_add">
+			  <span id="micro_akeyadd" class="micro_akeyadd" onclick="$('#micro_group_name').val('');$(this).hide();$('#micro_group_add_div').show();$('#micro_group_add_cancel').show();">
+			    新建分组
+			  </span>
+	  		<div class="micro_group_add_div" style="margin-left:-8px;display:none" maxlength=10 id="micro_group_add_div" issubmit="0">
+	  		   	<input id="micro_group_name" type="text" value="" style="width: 100px; padding: 0px; margin: 0px;" maxlength="10"><span id="micro_group_add" class="micro_group_add_btn">保存</span><span id="micro_group_add_cancel" onclick="$('#micro_group_add_div').hide();$('.micro_akeyadd').show()" class="micro_group_add_btn">取消</span>
+	  		</div>
+  	</div>
+  </div>
+  <div style="float:left;width:590px;">
+  	<div class="micro_group_action">加入到分组：<select id="micro_group_list" style="width: 150px; height: 25px; margin: 0px;" disabled="disabled">
+  		<option value="" groupid="" groupname="" selected ="selected" >请选择</option>
+  		{%if(groupid > 0 )%}
+  		<option value='0' groupid='0' groupname='移出分组' micro_account='{{micro_account}}' >移出分组</option>
+  		{%endif%}
+  		{%for micro_fans_groupitem in micro_fans_groupdata%}
+  		{%if(groupid!=micro_fans_groupitem["id"])%}
+  		<option value='{{micro_fans_groupitem["id"]}}' groupid='{{micro_fans_groupitem["id"]}}' groupname='{{micro_fans_groupitem["groupname"]}}' micro_account='{{micro_fans_groupitem["micro_account"]}}' >{{micro_fans_groupitem["groupname"]}}</option>
+  		{%endif%}
+  		{%endfor%}
+  		</select><span id="move_msg" style="display:none;"></span>
+  	</div>
+  	<div id="micro_fans_list">
+			<table class="Etable" style="width: 590px;">
+				<tbody>
+					<tr>
+						<td class="Etd_titleheader" align="center" style="border: 0px none;width:30px; height: 24px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+							<input class="fans_checkbox_all"  type="checkbox">
+						</td>
+						<td class="Etd_titleheader" align="center" style="border: 0px none;width:30px; height: 24px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+							&nbsp;
+						</td>
+						<td class="Etd_titleheader" align="center" style="border: 0px none;width:230px; height: 40px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+							姓名
+						</td>
+						<td class="Etd_titleheader" align="center" style="border: 0px none;width:180px; height: 40px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+							所属企业
+						</td>
+						<td class="Etd_titleheader" align="center" style="border: 0px none;width:120px; height: 40px; background-image: url({{asset("bundles/fafatimewebase/images/mgr_employee_list_header_bg.jpg")}});">
+							关注时间
+						</td>
+					</tr>
+					{% for micro_fans_item in micro_fans_data %}
+						<tr action="none" style="height:34px;lin-height:34px;border-bottom : 1px solid #EEEEEE;">
+							<td class="Etd_titleheader" align="center" style="border: 0px none;width:30px; height: 24px;">
+							<input class="fans_checkbox" type="checkbox" login_account='{{micro_fans_item["login_account"]}}'>
+						  </td>
+							<td class="Etd_readonly" align="left" edit="0" style="text-align: center;">
+								<div  class="employee_name" login_account="{{micro_fans_item["login_account"]}}" >
+								{%if(micro_fans_item["photo_path"]=="")%}
+					      	<img width="24px" height="24px" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" src="{{ asset('bundles/fafatimewebase/images/no_photo.png') }}" >
+					      {%else%}
+					      	<img width="24px" height="24px" onerror="this.src='{{ asset('bundles/fafatimewebase/images/no_photo.png') }}'" src='{{micro_fans_item["photo_path"]}}' >
+					      {%endif%}
+					    	</div>
+					    </td>
+							<td class="Etd_readonly" align="left" edit="0" title='{{micro_fans_item["nick_name"]}}' style="text-align: left;">
+								<div  class="textNoBR" style="overflow:hidden;height:23px;line-height:23px;">
+					      	{{micro_fans_item["nick_name"]}}(<span class="employee_name" style="color:blue;cursor:pointer" login_account="{{micro_fans_item["login_account"]}}" >{{micro_fans_item["login_account"]}}</span>)
+					    	</div>
+					    </td>
+					    <td class="Etd_readonly" align="left" edit="0" title='{{micro_fans_item["ename"]}}' style="text-align: left;">
+								<div class="textNoBR" style="overflow:hidden;height:23px;line-height:23px;">
+					      	{{micro_fans_item["ename"]}}
+					    	</div>
+					    </td>
+					    <td class="Etd_readonly" align="left" edit="0" style="text-align: center;">
+								<div class="textNoBR">
+					      	{{micro_fans_item["atten_date"]}}
+					    	</div>
+					    </td>
+					  </tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{%if(micro_page_max_index>1)%}
+				<div class="pagination" style="text-align: right;width:98%;height: 18px;margin-top: 3px;">
+					<ul>
+						{%if(micro_pageindex==1)%}
+					  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">首页</a></li>
+					  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">上一页</a></li>
+					  {%else%}
+					  	<li><a id="a-home" class='active' style="line-height:20px" href='javascript:pagechange(1)'>首页</a></li>
+					  	<li><a id="a-prev" class='active' style="line-height:20px" href='javascript:pagechange(({{micro_pageindex}}-1))'>上一页</a></li>
+					  {%endif%}
+					  {%if(micro_pageindex<micro_page_max_index and micro_page_max_index>1 and micro_pageindex>0)%}
+					  	<li><a id="a-next" class='active' style="line-height:20px" href='javascript:pagechange(({{micro_pageindex}}+1))'>下一页</a></li>
+					  	<li><a id="a-last" class='active' style="line-height:20px" href='javascript:pagechange({{micro_page_max_index}})'>末页</a></li>
+					  {%else%}
+					  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">下一页</a></li>
+					  	<li><a class='active' href='javascript:void(0)' style="line-height:20px">末页</a></li>
+					  {%endif%}
+					  <li><a class='active' style="line-height:20px">第{{micro_pageindex}}页/共{{micro_page_max_index}}页</a></li>
+					</ul>
+			</div>
+		{%endif%}		
+		</div>
+  </div> 
+{%endif%}
+<div style="clear:both"></div>
+
+<div show="false" style="display:none;height: 139px; margin-left: -110px; margin-top: -60px; width: 300px;" 
+data-backdrop="false" id="div_fans_msg" class="doc_confirm modal">
+  <div class="doc_window_title">
+  	<span>&nbsp;&nbsp;确认消息</span>
+  </div>
+  <div>
+    <div class="doc_rd_confirm_left"></div>
+    <div style="text-align:center;" class="doc_rd_confirm_right">
+        <div style="height: 60px; line-height: 60px;" id="div_fans_msg_info" class="doc_rd_confirm_text">已勾选有成员,确认是否取消勾选?</div>
+        <div style="float: right; margin-right: 10px;"><span class="doc_md_content_right_btn" micro_id="" number="" id="div_fans_msg_delete">确定</span>
+        <span class="doc_md_content_right_btn" id="div_fans_msg_cancel">取消</span></div>
+        
+    </div>	      
+  </div>
+</div>
+ <div show="false" style="display:none;height: 139px; margin-left: -110px; margin-top: -60px; width: auto;" 
+ data-backdrop="false" id="div_fans_msg_ok" class="doc_confirm modal">
+  <div class="doc_window_title">
+  	<span>&nbsp;&nbsp;确认消息</span>
+  </div>
+  <div>
+    <div class="doc_rd_confirm_left"></div>
+    <div style="text-align:center;" class="doc_rd_confirm_right">
+        <div style="height: 60px; line-height: 60px; margin-left: 50px; margin-right: 50px;" 
+        id="div_fans_msg_info_ok" class="doc_rd_confirm_text">确定删除分组?</div>
+        <div style="float: right; margin-right: 10px; text-align: center;"><span class="doc_md_content_right_btn" micro_id="" number="" id="div_fans_msg_delete_ok">确定</span>
+        <span class="doc_md_content_right_btn" id="div_fans_msg_cancel_ok">取消</span></div>
+    </div>	      
+  </div>
+</div>
+<div show="false" style="display:none;height: 139px; margin-left: -110px; margin-top: -60px; width: auto;" 
+data-backdrop="false" id="div_fans_info" class="doc_confirm modal">
+  <div class="doc_window_title">
+  	<span>&nbsp;&nbsp;提示消息</span>
+  </div>
+  <div>
+    <div class="doc_rd_confirm_left"></div>
+    <div style="text-align:center;" class="doc_rd_confirm_right">
+        <div style="height: 60px; line-height: 60px; margin-left: 50px; margin-right: 50px;" 
+        id="div_fans_info_msg" class="doc_rd_confirm_text"></div>
+        <div style="float: right; margin-right: 10px;"><span class="doc_md_content_right_btn" micro_id="" number="" id="div_fans_info_ok">确定</span>
+        </div>
+        
+    </div>	      
+  </div>
+</div>
+<script type="text/javascript"> 
+	$(function(){
+	//$(".micro_group_item_edit").bind();
+	});
+	var pagechange=function(page_index){
+		var check_login_accounts=[];
+		$("input[class='fans_checkbox']").each(function(){ 
+			if($(this).attr("checked")) { 
+			  check_login_accounts.push($(this).attr("login_account"));
+			}
+		});
+		var micro_number='{{micro_account}}';
+			var micro_name='{{micro_name}}';
+			var micro_concern_approval='{{micro_concern_approval}}';
+			var micro_type='{{micro_type}}';
+			var page_size='{{micro_page_size}}';
+			var txtsearch='{{txtsearch}}';
+			var url_groupid='{{groupid}}';
+			
+		if(check_login_accounts==[]||$.trim(check_login_accounts)==""||check_login_accounts=="undefined"||check_login_accounts==null){
+			getMicroPage(micro_number,
+			micro_name,
+			micro_concern_approval,
+			micro_type,
+			txtsearch,page_size,page_index,url_groupid);
+		}else{
+			page_index_pagechange=page_index;
+			$("#div_fans_msg").show();
+			$("#div_fans_msg_info").text("已勾选有成员,确认是否取消勾选?");
+		}
+	};
+	var page_index_pagechange='{{micro_pageindex}}';
+	$("#div_fans_msg_delete").bind("click",function(){
+		var micro_number='{{micro_account}}';
+			var micro_name='{{micro_name}}';
+			var micro_concern_approval='{{micro_concern_approval}}';
+			var micro_type='{{micro_type}}';
+			var page_size='{{micro_page_size}}';
+			var txtsearch='{{txtsearch}}';
+			var url_groupid='{{groupid}}';
+			$("#div_fans_msg").hide();
+		getMicroPage(micro_number,
+				micro_name,
+				micro_concern_approval,
+				micro_type,
+				txtsearch,page_size,page_index_pagechange,url_groupid);
+	});
+	$("#div_fans_msg_cancel").bind("click",function(){
+		$("#div_fans_msg").hide();
+	});
+	var micro_page_max_index={{micro_page_max_index}};
+	//if(micro_page_max_index<2) $("#div_search").hide();
+	//else	$("#div_search").show();  
+		var move_account_group_re_url="{{path('JustsyBaseBundle_enterprise_mc_movergroup',{'network_domain' : curr_network_domain})}}"+"?r="+Math.random();
+	
+	var item_mouseover=function(zthis){
+		var span=$(zthis).find(".micro_group_item_edit");
+		var span_save=$(zthis).find(".micro_group_item_save");
+		var editobj,saveobj;
+
+		$.each(span_save,function(){
+			if($(this).attr("title")=="保存分组"){
+				saveobj=$(this);
+			}
+		});
+		$.each(span,function(){
+			if($(this).attr("title")=="编辑分组"){
+				editobj=$(this);
+			}
+		});
+		if(saveobj.css("display")=="none"){
+			editobj.show();
+			$(zthis).find(".micro_group_item_delete").show();
+		}
+	};
+	var item_mouseout=function(zthis){
+		var span=$(zthis).find(".micro_group_item_edit");
+		$.each(span,function(){
+			if($(this).attr("title")=="编辑分组"){
+				$(this).hide(); 
+			} 
+		});
+		$(zthis).find(".micro_group_item_delete").hide();
+	};
+	$("#div_fans_info_ok").bind("click",function(){
+		$("#div_fans_info").hide();
+	});
+	var save_group_url="{{path('JustsyBaseBundle_enterprise_mc_savegroup',{'network_domain' : curr_network_domain})}}";
+	var check_groupname_url="{{path('JustsyBaseBundle_enterprise_mc_checkgroupname',{'network_domain' : curr_network_domain})}}";
+	var revent=function(id) {
+		$(id).unbind("click");
+		//添加分组
+		$(id).bind("click",function(){
+			switch ($(this).attr("id")) {
+				case 'micro_group_add':
+					 var groupname=$.trim($("#micro_group_name").val());
+					 if(groupname==""){
+					 	$("#div_fans_info").show();
+					 	$("#div_fans_info_msg").text("微应用帐号分组名称不能为空");
+					 	//alert("微应用帐号分组名称不能为空");
+					 	return;
+					 }
+					 if(groupname.length > 10){
+					 	$("#div_fans_info").show();
+					 	$("#div_fans_info_msg").text("微应用帐号分组名称不能超过10个字");
+					 	//alert("微应用帐号分组名称不能超过10个字");
+					 	return;
+					 }
+					if($.trim($("#micro_group_add").text())=="保存"){
+						 $("#micro_group_add").text("保存中");
+						 $("#micro_group_add_cancel").hide();
+						 $.get(check_groupname_url,{micro_account:micro_account,name:name,newname:groupname,r:Math.random()},function(r){
+						 		if(r!=0){
+						 			$("#div_fans_info").show();
+					 				$("#div_fans_info_msg").text("微应用帐号分组已存在");
+						 			//alert("微应用帐号分组已存在");
+						 			$("#micro_group_add").text("保存");
+						 			$("#micro_group_add_cancel").show();
+						 		}else{ 
+								 		$.post(save_group_url,{micro_account:micro_account,name:groupname,r:Math.random()},function(r){ 
+										 	if(r.id!=-1){
+										 			$("#div_micro_group").append("<div class=\"micro_group_item\" groupid='"+r.id+"' recount='0' groupname='"+groupname+"' micro_account='"+micro_account+"' onmouseover=\"item_mouseover(this)\" onmouseout=\"item_mouseout(this)\" style=\"cursor: inherit;\">"+
+			  	"<span class=\"micro_group_item_name\" style=\"position: absolute;display:block;overflow:hidden;width:125px;height:28px;line-height:28px;cursor: pointer;\"  onclick='group_name_sel(this)' title='"+groupname+"(0)'><span style='overflow: hidden; float: left; margin: 0px; padding: 0px; max-width: 105px; height: 28px; line-height: 28px; text-overflow: ellipsis; white-space: nowrap;'>"+groupname+"</span>(0)</span>"+
+			  	"<input class=\"updgroupname\" type=\"text\" value='"+groupname+"' style=\"width: 100px; padding: 0px; margin: 0px;display:none;\"  maxlength=\"10\">"+
+			  	"<span title=\"编辑分组\" class=\"micro_group_item_edit\" onclick=\"edititem(this)\" style=\"display:none;z-index:10000;cursor: pointer;\">&nbsp;</span>"+
+			  	"<span title=\"保存分组\" class=\"micro_group_item_save\" onclick=\"upditem(this)\" style=\"display:none;z-index:9999;cursor: pointer;\">&nbsp;</span>"+
+			  	"<span title=\"删除分组\" class=\"micro_group_item_delete\" onclick=\"delitem(this)\" style=\"display:none;cursor: pointer;\">&nbsp;</span>"+
+			  	"<span class='delmsg' style=\"display:none;\"></span></div>");
+			  	$("#micro_group_list").append('<option value="'+r.id+'" groupid="'+r.id+'" groupname="'+groupname+'" >'+groupname+'</option>');
+										 		 $('#micro_group_add_div').hide();
+										 		 $('#micro_akeyadd').show();
+										 	}else{
+										 		alert("添加失败");
+										 	}
+										 	$('#micro_group_add').text("保存");
+										  $('#micro_group_add_div').attr("issubmit","0");
+										  $("#micro_group_add_cancel").show();
+										 	return;
+										 }); 
+						 		}
+						 		return;
+						 });
+					 }
+				break; 
+			}
+		}); 
+	};
+	//名称选中
+	var group_name_sel=function(zthis){
+		var delmsg=$(zthis).parent("div").find(".delmsg").text();
+		var savemsg=$(zthis).parent("div").find(".micro_group_add").text();
+		var micro_number='{{micro_account}}';
+		var micro_name='{{micro_name}}';
+		var micro_concern_approval='{{micro_concern_approval}}';
+		var micro_type='{{micro_type}}';
+		var pagesize='{{micro_page_size}}';
+		var txtsearch='';
+		var pageindex=1;
+		var groupid=$(zthis).parent("div").attr("groupid");
+		if(delmsg!="删除中"&&delmsg!="保存中"&&savemsg!="保存中"&&$(zthis).parent("div").attr("display")!="none"){
+			getMicroPage(micro_number,
+			micro_name,
+			micro_concern_approval,
+			micro_type,
+			txtsearch,pagesize,pageindex,groupid);
+		}
+	};
+	//修改分组
+	var upd_group_name="{{path('JustsyBaseBundle_enterprise_mc_updategroup',{'network_domain' : curr_network_domain})}}";
+	var upditem= function(zthis){
+		var txt=$(zthis).parent("div").find(".updgroupname"); 
+		var groupname=$.trim(txt.val());
+		 if(groupname==""){
+		 	$("#div_fans_info").show();
+			$("#div_fans_info_msg").text("微应用帐号分组名称不能为空");
+		 	//alert("微应用帐号分组名称不能为空");
+		 	return;
+		 }
+		 if(groupname.length > 10){
+		 	$("#div_fans_info").show();
+			$("#div_fans_info_msg").text("微应用帐号分组名称不能超过10个字");
+		 	//alert("微应用帐号分组名称不能超过10个字");
+		 	return;
+		 }
+		 var name=$(zthis).parent("div").attr("groupname");
+		 if(name==groupname){
+		 	$(zthis).parent("div").find(".micro_group_item_edit").show();
+			$(zthis).hide();
+		 	$(zthis).parent("div").find(".micro_group_item_delete").show();
+		 	$(zthis).parent("div").find(".micro_group_item_name").show();
+		 	$(zthis).parent("div").find(".updgroupname").hide();
+		 	return;
+		}
+		if($(zthis).attr("title")=="保存分组"){
+			$(zthis).attr("title","保存中")
+			$(zthis).parent("div").find(".delmsg").show();
+			$(zthis).parent("div").find(".delmsg").text("保存中");
+			$(zthis).parent("div").find(".micro_group_item_delete").hide(); 
+			$(zthis).parent("div").find(".micro_group_item_edit").hide();
+			$.get(check_groupname_url,{micro_account:micro_account,name:name,newname:groupname,r:Math.random()},function(r){
+			 		if(r!=0){
+			 			$("#div_fans_info").show();
+						$("#div_fans_info_msg").text("微应用帐号分组已存在");
+			 			//alert("微应用帐号分组已存在");
+			 			$(zthis).attr("title","保存分组")
+			 			$(zthis).parent("div").find(".micro_group_item_delete").show();
+			 			$(zthis).parent("div").find(".delmsg").hide();
+						$(zthis).parent("div").find(".delmsg").text("");
+			 		}else{ 
+			 			var groupid=$(zthis).parent("div").attr("groupid");
+			 			$.post(upd_group_name,{groupid:groupid,micro_account:micro_account,name:groupname,r:Math.random()},function(r){
+			 					if(r.id!=-1){
+			 						var item_name=groupname+"("+$(zthis).parent("div").attr("recount")+")";
+			 						$(zthis).parent("div").find(".micro_group_item_name").text(item_name);
+			 						$(zthis).parent("div").find(".micro_group_item_name").show();
+			 						$(zthis).parent("div").attr("groupname",groupname);
+			 						$(zthis).parent("div").find(".updgroupname").hide();
+			 						$(zthis).parent("div").find(".micro_group_item_edit").show();
+			 						$(zthis).hide();
+			 					}else{
+			 						$("#div_fans_info").show();
+									$("#div_fans_info_msg").text("保存失败");
+			 						//alert("保存失败");
+			 					}
+			 					$(zthis).attr("title","保存分组")
+			 					$(zthis).parent("div").find(".micro_group_item_delete").show();
+			 					$(zthis).parent("div").find(".delmsg").hide();
+								$(zthis).parent("div").find(".delmsg").text("");
+			 			});
+			 		} 
+			});
+		}
+	};
+	var edititem=function  (zthis) {
+			$("#div_micro_group").find(".delmsg").hide();
+			$("#div_micro_group").find(".micro_group_item_delete").hide();
+			$("#div_micro_group").find(".micro_group_item_edit").hide();
+			$("#div_micro_group").find(".updgroupname").hide();
+			$("#div_micro_group").find(".micro_group_item_name").show();
+			
+			 var itemdiv=$(zthis).parent("div");
+			 var groupname=itemdiv.attr("groupname");
+			 var groupid=itemdiv.attr("groupid");
+			 itemdiv.find(".updgroupname").show();
+			 //itemdiv.find(".micro_group_item_edit").show();
+			 itemdiv.find(".micro_group_item_save").show();
+			 $(zthis).hide();
+			 itemdiv.find(".micro_group_item_name").hide();
+			 itemdiv.find(".micro_group_item_delete").hide();
+	};
+	var itemdiv_ok=null;
+	//删除分组
+	var delitem=function(zthis){
+		if($.trim($("#micro_group_add").text())=="保存"){
+			 var itemdiv=$(zthis).parent("div");
+			 itemdiv_ok=itemdiv;
+			 var groupname=itemdiv.attr("groupname");
+			 var rcount=itemdiv.attr("recount");
+			 var isok=false;
+			 if(rcount>0){
+			 	$("#div_fans_msg_ok").show();
+			 	$("#div_fans_msg_info_ok").text('确定删除分组['+groupname+'],删除后该分组成员将会列入未分组?');
+			  //isok=confirm('确定删除分组['+groupname+'],删除后该分组成员将会列入未分组?');
+			 }else{
+			 	$("#div_fans_msg_ok").show();
+			 	$("#div_fans_msg_info_ok").text('确定删除分组['+groupname+']?');
+			 	//isok=confirm('确定删除分组['+groupname+']?');
+			 }
+		}
+	};
+	$("#div_fans_msg_delete_ok").bind("click",function(){
+		var itemdiv=itemdiv_ok;
+		if(itemdiv!=null){
+			try {
+				if($("#div_fans_msg_delete_ok").text()=="确定"){
+					$("#div_fans_msg_delete_ok").text("删除中");
+					$("#div_fans_msg_cancel_ok").hide();
+					var groupid=itemdiv.attr("groupid");
+					 var rcount=itemdiv.attr("recount");
+					var del_group_url="{{path('JustsyBaseBundle_enterprise_mc_removegroup',{'network_domain' : curr_network_domain})}}";
+					itemdiv.find(".micro_group_item_edit").hide();
+					itemdiv.find(".micro_group_item_delete").hide();
+					//itemdiv.find(".delmsg").show();
+					//itemdiv.find(".delmsg").text("删除中");
+					$.get(del_group_url,{groupid:groupid,rcount:rcount,r:Math.random()},function(r){
+						if(typeof(r)!="object")r=eval("("+r+")");
+							if(r.returncode==1){
+								var micro_number='{{micro_account}}';
+								var micro_name='{{micro_name}}';
+								var micro_concern_approval='{{micro_concern_approval}}';
+								var micro_type='{{micro_type}}';
+								var pagesize='{{micro_page_size}}';
+								var txtsearch='';
+								var pageindex='{{micro_pageindex}}';
+									getMicroPage(micro_number,
+							micro_name,
+							micro_concern_approval,
+							micro_type,
+							txtsearch,pagesize,pageindex,0);
+							return;
+								//itemdiv.remove();
+							}else{
+								$("#div_fans_msg_ok").show();
+			 					$("#div_fans_msg_info_ok").text('删除失败');
+								//alert("删除失败");
+								//itemdiv.find(".delmsg").text("");
+								//itemdiv.find(".delmsg").hide();
+								itemdiv.find(".micro_group_item_edit").show();
+								itemdiv.find(".micro_group_item_delete").show();
+							}
+					});
+				}
+			} catch (e) {}
+		}else{
+			$("#div_fans_msg_delete_ok").text("确定");
+			$("#div_fans_msg_cancel_ok").show();
+			$("#div_fans_msg_info_ok").text("删除对象不存在");
+		}
+	});
+	$("#div_fans_msg_cancel_ok").bind("click",function(){
+		$("#div_fans_msg_ok").hide();
+	});
+	$(function(){
+		revent("#micro_group_add","");
+		$("#micro_content").attr("micro_fans_groupid",'{{groupid}}');
+		//批量移动到指定分组
+		$("#micro_group_list").bind("change",function(){
+			var zthis=$(this);
+			var check_login_accounts=[];
+			$("input[class='fans_checkbox']").each(function(){ 
+				if($(this).attr("checked")) { 
+					check_login_accounts.push($(this).attr("login_account"));
+				}
+			});
+			var groupid=zthis.find("option:selected").attr("groupid");
+			var groupname=zthis.find("option:selected").attr("groupname");
+			check_login_accounts=check_login_accounts.join(",");
+			if(check_login_accounts!=""&&groupid!=""&&groupname!=""){
+				$("#move_msg").show();
+				$("#move_msg").text("正在移动数据")
+				zthis.attr("disabled","disabled");
+				var micro_number='{{micro_account}}';
+				var micro_name='{{micro_name}}';
+				var micro_concern_approval='{{micro_concern_approval}}';
+				var micro_type='{{micro_type}}';
+				var pagesize='{{micro_page_size}}';
+				var txtsearch='';
+				var pageindex='{{micro_pageindex}}';
+				var url_groupid='{{groupid}}';
+				$.post(move_account_group_re_url,{check_login_accounts:check_login_accounts,micro_account:micro_number,groupid:groupid,url_groupid:url_groupid,r:Math.random()},function(r){
+					if(r.returncode=="1"){
+						getMicroPage(micro_number,
+						micro_name,
+						micro_concern_approval,
+						micro_type,
+						txtsearch,pagesize,pageindex,url_groupid);
+					}else{
+						$("#move_msg").text("移动到关注["+groupname+"]失败")
+						zthis.removeAttr("disabled");
+					}
+				});
+			}
+		});
+		$(".fans_checkbox_all").bind("change",function(){
+			if($(this).attr("checked")) $(".Etable").find("[class='fans_checkbox']").attr("checked",true);
+			else $(".Etable").find("[class='fans_checkbox']").removeAttr("checked");
+			var ischeck=false;
+			$("input[class='fans_checkbox']").each(function(){ 
+				if($(this).attr("checked")){
+					ischeck=true;
+				}
+			});
+			if(!ischeck) $('#micro_group_list').attr({disabled: 'disabled'});
+			else $('#micro_group_list').removeAttr('disabled');
+		});
+		$(".fans_checkbox").bind("click",function(){
+			var ischeck=false;
+			$("input[class='fans_checkbox']").each(function(){ 
+			 	if(!$(this).attr("checked")){
+			 		$(".fans_checkbox_all").removeAttr("checked");
+			 		ischeck=true;
+			 	}
+			});
+			if(!ischeck)$(".fans_checkbox_all").attr("checked",true);
+			ischeck=false;
+			$("input[class='fans_checkbox']").each(function(){ 
+				if($(this).attr("checked")){
+					ischeck=true;
+				}
+			});
+			if(!ischeck) $('#micro_group_list').attr({disabled: 'disabled'});
+			else $('#micro_group_list').removeAttr('disabled');
+		});
+	});
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="user-scalable=no, width=320" /> 
+        <title>应用下载</title>
+
+		<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+		<link href="{{ asset('bundles/fafatimewebase/css/mapphome.css')}}?t=1" type="text/css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/fafatimewebase/css/index.css')}}" media="all" />
+
+		<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.qrcode.min.js')}}"></script>
+
+    </head>
+<body>
+<div id="topnav" class="topnav">
+  <div class="submenu">
+  	 <div class="submenu_left" style="line-height:42px; width:auto;margin-left: 10px;">
+		<div class="wefafalogo">
+		    <a href="#" onFocus="this.blur()" >{% render "JustsyBaseBundle:Common:getWefafaLogo" %}</a>
+		</div>
+		<p style="color:#fff; padding-left:80px; padding-top:2px; font-size:14px;font-family: microsoft yahei;">定制App下载－{{ ename }}</p>
+  	 </div>
+  	 <div class="submenu_center">
+    </div>   
+  </div>
+</div>
+<div style="height: 57px;"></div>
+<div id="content_template" class="homecontent">
+	<div class="down_nav">
+		<div class="down_navwrap">
+			<div class="downnav">				
+				<div class="downcon">
+					<div class="downnav_2 downclass"><h1 class="downh">Android</h1><p>版本：{{ advconfig["androidversion"] }}</p><p></p></div>
+					<div class="downbtn">{% if advconfig["androidapp"] is defined %}<a href="{{ FILE_WEBSERVER_URL}}{{ advconfig["androidapp"]}}"><div class="downimgclass downimg1">立即下载</div></a>{% else %}<a href="#"><div class="downimgclass downimg1" style="background: none repeat scroll 0 0 #EEEEEE;border-radius: 8px;color: #000000;cursor: not-allowed;">未发布</div></a>{% endif %}</div>
+					<div class="down2code"><div id="androidqrcode"></div></div>
+					<div class="downtext">
+					<h2 style="color:#f7b52c; line-height:36px"></h2>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+</body>
+</html>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#androidqrcode').qrcode({width: 200, height: 200, text: "{{url('JustsyBaseBundle_mappconfig_publishportaldown', {'eno':eno})}}"});
+});
+</script>

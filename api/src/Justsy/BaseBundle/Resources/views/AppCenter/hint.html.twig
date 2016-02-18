@@ -1,0 +1,44 @@
+{% extends 'JustsyBaseBundle::master2c.html.twig' %}
+
+{% block main_content_left %}
+		{% render "JustsyBaseBundle:CPerBaseInfo:index" with {"name" : "foo"} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu.html.twig' with {'network_domain' : curr_network_domain} %}
+		{% include 'JustsyBaseBundle:EnterpriseHome:leftmenu_download.html.twig' %}
+{% endblock %}
+
+{% block main_content_center%}
+<div id="onlineCS" style="display: block;position: relative; ">
+您的企业还未订阅该应用！有什么疑问可直接联系
+       <span fafa_online_user='10097' style="width: 60px;">&nbsp;客服服务</span>
+       <span fafa_online_user='10096' style="width: 60px;">&nbsp;产品经理</span>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="https://www.fafaim.com/bundles/fafawebimimonlineservice/js/fafaonline10.js?user={{app.user.getusername()}}&orgid=100082" type="text/javascript"></script> 
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	    if(g_curr_network_domain=="fafatime.com") return;
+	    //如果已经连接成功
+      if(typeof (FaFaMessage) != "undefined" && FaFaMessage._conn!=null && FaFaMessage._conn.sid!="")
+           FaFaMessage.SubscribeDept("v100082999");
+      else
+      {
+          subDept();
+      }
+	});
+	function subDept()
+	{
+          if(typeof (FaFaMessage) == "undefined")
+          {
+              setTimeout("subDept()",100);
+              return;
+          }
+	        FaFaMessage.ConnectionStateChange(function (status, info) {
+	            if (status == 5 ) {FaFaMessage.SubscribeDept("v100082999")}
+	        });
+	}
+</script>
+{% endblock %}
+				

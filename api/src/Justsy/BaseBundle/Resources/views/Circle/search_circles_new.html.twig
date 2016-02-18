@@ -1,0 +1,671 @@
+{% extends 'JustsyBaseBundle::master_1.html.twig' %}
+{%
+set IsJoin = app.user.IsExistsFunction("CIRCLE_JOIN_C")
+%}
+{% block javascriptsref %}
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/CircleCreate.js')}}"></script>
+{% endblock %}
+{% block stylesheets %}
+<style>
+	input:focus{}
+	.circlesmain{
+		padding-left:20px;
+		padding-right:20px;
+		padding-top:20px;
+	}
+	.classname{
+		display:inline-block;
+		cursor:pointer;
+	}
+	.classifycheck{
+		color:#00a8e0;
+		font-weight:700;
+	}
+	.createcirclebnt{
+		width:80px;
+		height:35px;
+		border-radius:4px;
+		background-color:#f5b426;
+		float:left;
+		text-align:center;
+		vertical-align: middle;
+	}
+	.join:hover{background-color:#005b9b;
+		color:#FFF;
+		}
+	#createcircle{
+		font-size:13px;
+		font-weight:700;
+		color:#FFF;
+		line-height:32px;
+	}
+	.pagecurr{
+		background-color:#00AAD5;
+		color: #FFFFFF;
+	}
+	.pagec{
+    padding-left: 1px;
+    margin-left:5px;
+	}
+	.nottopage{
+		background-color:#c8c8c8;
+		color:#000000;
+	}
+	.pointc{
+		margin-left:5px;
+	}
+	.pointv{
+		font-size:6px;
+		position: relative;
+    top: -4px;
+    text-align:center;
+    display:inline-block;
+    text-indent:0px;
+	}
+	.pagev{
+		background-color: #e6e6e6;
+    border-radius: 4px 4px 4px 4px;
+    color:#000000;
+    cursor: pointer;
+    font-size: 11px;
+    padding:2px;
+    position: relative;
+    top: -4px;
+    text-align:center;
+    display:inline-block;
+    text-indent:0px;
+    border-bottom:1px solid #767877;
+	}
+#searchCondition{
+    border:1px solid #0186a9;
+    border-radius:1px;
+    height: 18px;
+    line-height: 18px;
+    outline-style: none;
+    padding-left: 5px;
+    width: 290px;
+    float:left;
+    border-right:0px;
+}
+</style>
+{% endblock %}
+{% block main_content %}
+<!-- 右边开始 -->
+<div style="height:750px;" class="circlesmain">
+  <!--无加入圈子权限提示-->
+  {%if (not IsJoin)%}
+    <div id="invite_area" style="display:block;border: 1px solid #DCECF0;height: 30px;margin-bottom: 20px;width: 738px;">
+     <div class="rightbox-title">您还未通过身份认证，不能加入其他外部圈子！</div>
+  </div>
+  {%endif%}	
+  {%if app.user.IsExistsFunction("CIRCLE_S")%}
+  <div style="height:40px;">
+    <div style="width:363px;float:right;">
+      <input id="searchCondition" name="searchCondition" type="text">
+      <div id="bntSearch" style="float: left; -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; width: 58px; height: 26px; cursor: pointer; border-style: solid solid solid none; border-width: 1px 1px 1px 0px; border-color: rgb(1, 134, 169) rgb(1, 134, 169) rgb(1, 134, 169) -moz-use-text-color; border-image: none;">
+      	<center><img style='width:16px;height:16px;margin-top:5px;' src="{{asset('bundles/fafatimewebase/images/icon_search.png')}}"/></center>
+      </div>
+    </div>
+    {%if(createcircle)%}
+    <div class="createcirclebnt">
+       <a id="createcircle" href="#">创建圈子</a>
+    </div>
+    {%endif%}
+  </div>
+  {%endif%}
+  <div style="margin-top:20px;">
+    <div>
+    	{%set i=0%}
+      {% for c in circleclass %}
+      	{%set i=i+1%}
+        {% for cld in c.child if loop.index0<6 %}
+        <span class="classname" classify_id='{{cld.classify_id}}' onclick="searchbyclass(this)">{{ cld.classify_name }}</span>
+        <span>|</span>
+        {% endfor %}
+      {% endfor %}
+        <span class="classname classifycheck" classify_id='all' check='1' onclick="searchbyclass(this)">所有圈子</span>
+        <span style='display:none;' class="classname" classify_id='search' onclick="searchbyclass(this)">搜索结果</span>
+    </div>
+  </div>
+  <hr style="border:none;border-top:1px solid #CCC;"/>
+  <div id='resmes_circle' style='position: fixed;top: 40px;width: 920px;z-index: 100;background-color: #F8CB6A;margin-bottom:10px;border: 1px solid #CCCCCC;text-align: center;display:none;color:#0088CC'></div>
+  <div>
+  <div class="circlecontainer" check='1' classify='all' style="float:left;width:635px;">
+  <div style="width:100%;margin-top:0px;" class=" circlesclass-title"><span classify='all' class='circletype'>所有圈子</span><span class='circlenum' style='color:#CCC;'>(<span>{{circlenum}}</span>)</span><div class='pagecontainer' style="float:right;height:22px;"></div></div>
+  <div page='1' class="circlesclass-detail clearfix circleslist">
+  <!-- 推荐圈子循环开始 -->
+  {%set j=0%}
+    {% for recmd in circleindustry %}
+    {%set j=j+1%}
+    {% if j%3==0%} 
+    <div style="width:180px;height:138px;float:left;margin-right:0px;" class="commend-circles">
+    	{%else%}
+    	<div style="width:180px;height:138px;float:left;margin-right:20px;" class="commend-circles">
+    	{%endif%}
+    	<div style="width:100%;height:80px;">
+      <input type="hidden" value="{{ recmd.create_staff }}">
+      <input type="hidden" value="{{ recmd.circle_id }}">
+      <input type="hidden" value="{{ recmd.circle_name }}">
+      <dt style="width:76px;height:76px;"><img style="width:76px;height:76px;" onerror="this.src='{{asset('bundles/fafatimewebase/images/default_circle_big.png')}}'" {% if recmd.logo_path_big %} src="{{ recmd.logo_path_big }}" {% else %} src="{{ asset('bundles/fafatimewebase/images/default_circle_big.png') }}" {% endif %}></dt>
+      <dd>
+      <p circle_id="{{recmd.circle_id}}" class="commendname circle_name">{{ recmd.circle_name }}</p>
+      <p class="commendnameone">创始人：{{ recmd.nick_name }}</p>
+      <p class="commendnameone">成员数：{{ recmd.cnt }}</p>
+      {%if(IsJoin)%}
+      {% if recmd.isapply=="0"%}
+      <span class="join" onclick="wefafaWin.weconfirm(this,'圈子申请','是否确认加入该圈子？',applyAdd)" isjoin="{{ recmd.isjoin }}" style="cursor: pointer;position:inherit;font-weight:700;padding:3px;">
+        {% if recmd.isjoin=="0" %}
+        <span style="margin-right:3px;">+</span>申请加入
+        {% else %}已经加入
+        {% endif %}
+      </span>
+      {%else%}
+           <span class="join" style='cursor: default;color:#ccc;position:inherit;font-weight:700;padding:3px;'>申请中...</span>
+      {%endif%}      
+      {%endif%}
+      </dd>
+      </div>      
+      <div style="width:100%;margin-top:5px;height: 60px; overflow: hidden;">
+      	<p class='cdesc' style="margin:0px;line-height:15px;color:#7a7a7a;">{%if recmd.circle_desc==""%}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;暂无简介!{%else%}{{recmd.circle_desc}}{%endif%}</p>
+      </div>
+    </div>
+    {% endfor %}
+  <!-- 推荐圈子循环结束 -->
+  </div>
+</div>
+<div style="float:right;width:220px;">
+   <div style="width:100%" class=" commend-title">推荐圈子</div>
+  <div class="circlesclass-detail clearfix">
+  <!-- 行业圈子循环开始 -->
+    {% for indst in circlerecommend %}
+    <dl style="width:205px;border:none;border-bottom:1px dotted #CCC;margin-bottom:0px;" class=" commend-circles">
+      <input type="hidden" value="{{ indst.create_staff }}">
+      <input type="hidden" value="{{ indst.circle_id }}">
+      <input type="hidden" value="{{ indst.circle_name }}">
+      {%if(IsJoin)%}
+      <span class="join" onclick="wefafaWin.weconfirm(this,'圈子申请','是否确认加入该圈子？',applyAdd)" isjoin="{{ indst.isjoin }}" style="cursor: pointer;font-weight:700;">
+        {% if indst.isjoin=="0" %}<span style="margin-right:3px;">+</span>申请加入{% else %}已经加入{% endif %}
+      </span>
+      {%endif%}
+      <dt><img {% if indst.logo_path_big %} src="{{ indst.logo_path_big }}" {% else %} src="{{ asset('bundles/fafatimewebase/images/default_circle.png') }}" {% endif %} width="64" height="64"></dt>
+      <dd>
+      <p style="cursor:pointer;" circle_id="{{indst.circle_id}}" class="commendname circle_name">{{ indst.circle_name }}</p>
+      <p style="white-space: nowrap;text-overflow: ellipsis; overflow: hidden;width:95px;" class="commendnameone">创始人：{{ indst.nick_name }}</p>
+      <p class="commendnameone">成员数：{{ indst.cnt }}</p>
+      </dd>
+    </dl>
+    {% endfor %}
+   <!-- 行业圈子循环结束 -->
+  </div>
+</div>
+</div>
+</div>
+<div class="clearBoth" ></div>
+<!-- 右边结束 -->
+{% endblock %}
+
+{% block javascripts %}
+<script language="javascript">
+var get_circles_url="{{path('JustsyBaseBundle_circle_get_circles')}}";
+function searchbyclass(e)
+{
+	var $this=$(e);
+	if($this.attr('check')!='1'){
+		$this.siblings("span.classifycheck").removeClass("classifycheck").attr('check','0');
+		$this.addClass("classifycheck").attr('check','1');
+		$(".circlecontainer").hide().attr('check','0');
+		if($(".circlecontainer[classify='"+$this.attr('classify_id')+"']").length==0){
+			createContainer();
+			loadpage(1);
+		}
+		else{
+			$(".circlecontainer[classify='"+$this.attr('classify_id')+"']").show().attr('check','1');
+		}
+	}
+}
+function toomanyword($es, num)
+{
+    for (var i = 0; i < $es.length; i++) {
+        var $e = $($es[i]);
+        var str = $e.text();
+        var mat = str.match(/[a-zA-Z0-9]/g);
+        var letter = (mat == null ? 0 : mat.length);
+        if ((str.length - (letter / 2)) > num) {
+            $e.attr('title', str);
+            $e.text(str.substring(0, num - 2) + "…");
+        }
+    }
+}
+function createContainer(){
+	var html=[];
+	var checkc=$(".classname[check='1']");
+	html.push("<div class='circlecontainer' check='1' classify='"+checkc.attr('classify_id')+"' style='float:left;width:635px;'>");
+	html.push("<div style='width:100%;margin-top:0px;' class='circlesclass-title'><span classify='"+checkc.attr('classify_id')+"' class='circletype'>"+checkc.text()+"</span><span class='circlenum' style='color:#CCC;display:none;'>(<span></span>)</span><div class='pagecontainer' style='float:right;height:22px;'></div></div>");
+	//html.push("<div page='1' class='circlesclass-detail clearfix circleslist'></div>")
+	html.push("</div>");
+	$(".circlecontainer:last").after(html.join(''));
+	loadedpages.push({classify:checkc.attr('classify_id'),pages:[]});
+}
+function getCurrC()
+{
+	return $(".circlecontainer[check='1']");
+}
+Array.prototype.contains=function(v){
+	for(var i=0;i<this.length;i++){
+		if(v==this[i])
+			return true;
+	}
+	return false;
+}
+window.TCircles=new Array();
+TCircles.add=function(pagecount,container,pagesize,classify){
+	var thepagination=new Pagination();
+	thepagination.init({pagecount:pagecount,container:container,pagesize:pagesize});
+	thepagination.setDefault(1,null);
+	thepagination.addPageClick(loadpage);
+	thepagination.addPreClick(loadpage);
+	thepagination.addNexClick(loadpage);
+	this.push({'classify':classify,'pagination':thepagination});
+};
+window.loadedpages=[];
+loadedpages.contains=function(pageindex){
+	var classify=getCurrC().attr('classify');
+	for(var i=0;i<this.length;i++){
+		if(this[i].classify==classify){
+			if(this[i].pages.contains(pageindex))
+				return true;
+		}
+	}
+	return false;
+}
+loadedpages.del=function(classify){
+	var j=-1;
+	for(var i=0;i<this.length;i++){
+		if(this[i].classify==classify){
+			j=i;
+			break;
+		}
+	}
+	if(j> -1)
+		this.splice(j,1);
+}
+loadedpages.add=function(pageindex){
+	var classify=getCurrC().attr('classify');
+	for(var i=0;i<this.length;i++){
+		if(this[i].classify==classify){
+			this[i].pages.push(pageindex);
+		}
+	}
+}
+loadedpages.push({classify:'all',pages:[1]});
+function loadpage(pageindex){
+	var currC=getCurrC();
+	currC.find(".circleslist").hide();
+	if(loadedpages.contains(pageindex)){
+		currC.find(".circleslist[page='"+pageindex.toString()+"']").show();
+	}
+	else{
+		currC.append('<div page="'+pageindex.toString()+'" class="circlesclass-detail clearfix circleslist"></div>');
+		var e=currC.find(".circleslist[page='"+pageindex.toString()+"']");
+		LoadComponent_new(e,get_circles_url,getParas(pageindex),function(d){
+			if(curr_pagecount==0){
+				currC.append("<center><div>没有搜索到相关的圈子！</div></center>");
+				return;
+			}
+			if(currC.find('.pagecontainer').html()=='' || currC.find('.pagecontainer').html()==null){
+				TCircles.add(curr_pagecount,$(".circlecontainer[check='1'] .pagecontainer")[0],7,currC.attr('classify'));
+				currC.find(".circlenum").show().find('span').text(curr_circlenum);
+			}
+			loadedpages.add(d);
+		});
+	}
+}
+function getParas(pageindex)
+{
+	var currC=getCurrC();
+	searchby=currC.attr('classify')=='search'?$("#searchCondition").attr('keyword'):'';
+	classify=(currC.attr('classify')=='all' || currC.attr('classify')=='search')?'':currC.attr('classify');
+	return {'pageindex':pageindex,'classify':classify,'searchby':searchby};
+}
+function LoadComponent_new(Adivid, Aurl, data,callback)
+{
+  Adivid.append("<div class='urlloading'><div /></div>");
+  var pageindex=data.pageindex;
+  if(typeof(adividajax)!='undefined' && adividajax!=null)
+  {
+  	adividajax.abort();
+  }
+  var adividajax=Adivid.load(Aurl, $.extend({t: new Date().getTime()}, data),
+    function () 
+    {
+      Adivid.find(".urlloading").remove();
+      callback(pageindex);
+    });
+}
+$(document).ready(function()
+{
+	toomanyword($("p.cdesc"),50);
+	TCircles.add({{recommendpage}},$(".circlecontainer[check='1'] .pagecontainer")[0],7,'all');
+  $("#bntSearch").click(function()
+  {
+  	var keyword=$("#searchCondition").val();
+   	if(keyword=='')return;
+   	else if(keyword==$("#searchCondition").attr('keyword')){
+   		$(".classname[classify_id='search']").attr('check','0');
+   		searchbyclass($(".classname[classify_id='search']")[0]);
+   	}
+   	else{
+   		loadedpages.del('search');
+	   	$(".circlecontainer[classify='search']").remove();
+	   	$(".classname[classify_id='search']").attr('check','0');
+	   	$("#searchCondition").attr('keyword',keyword);
+	   	searchbyclass($(".classname[classify_id='search']")[0]);
+	  }
+   	return false;
+  });
+  $("#searchCondition").keydown(function(event){
+  	var ev=event||window.event;
+  	if(ev.keyCode==13){
+  		var keyword=$("#searchCondition").val();
+  		if(keyword=='')return;
+  		else if(keyword==$(this).attr('keyword')){
+  			$(".classname[classify_id='search']").attr('check','0');
+  			searchbyclass($(".classname[classify_id='search']")[0]);
+  		}
+  		else{
+  			loadedpages.del('search');
+	  		$(".circlecontainer[classify='search']").remove();
+	  		$(".classname[classify_id='search']").attr('check','0');
+	  		$(this).attr('keyword',keyword);
+	  		searchbyclass($(".classname[classify_id='search']")[0]);
+	  	}
+  		return false;
+  	}
+  });
+  $(".createcirclebnt").click(function(){
+  	CircleCreate.load({
+  		circle_default_logo:"{{ asset('bundles/fafatimewebase/images/default_circle_big.png') }}",
+			user_default_logo:"{{ asset('bundles/fafatimewebase/images/no_photo.png') }}",
+			formid:"div_create_circle_form",
+			saveUrl:"{{path('JustsyBaseBundle_circle_update')}}",
+			mainUrl:"{{path('JustsyBaseBundle_circle')}}",
+			re:this
+  	});
+  });
+});
+function applyAdd(n)
+{
+  n = $(n);
+  if(n.attr("isjoin")=="1" || n.attr("isapply")=="1" || n.attr("isclick")=="1") return;
+  n.attr("isclick","1");
+  var sr = "{{ asset('bundles/fafatimewebase/images/loadingsmall.gif') }}";
+  n.html('<img src="'+sr+'" class="joinimg" width="8" height="8"><span style="margin-right:3px;display:none;">+</span>申请加入');
+  var chs = n.parent().parent().find("input");
+  var createStaff = chs[0].value;
+  var circleId = chs[1].value;
+  var circleName = chs[2].value;
+  $.post("{{path('JustsyBaseBundle_circle_apply_join')}}",
+    {createStaff:createStaff,circleId:circleId,circleName:circleName},
+    function(data) 
+    {
+    	if(data=='-2'){
+    		$("#resmes_circle").text('申请失败：您加入的圈子过多，已达到了等级限制。').fadeIn(200);
+    		setTimeout(function(){
+    			$("#resmes_circle").hide(200);
+    		},5000);
+    		n.find("img").hide();
+	      n.find("span").show();
+	      n.attr("isclick","0");
+    		return;
+    	}
+    	if(data=='-3'){
+    		$("#resmes_circle").text('申请失败：该圈子已满员。').fadeIn(200);
+    		setTimeout(function(){
+    			$("#resmes_circle").hide(200);
+    		},5000);
+    		n.find("img").hide();
+	      n.find("span").show();
+	      n.attr("isclick","0");
+    		return;
+    	}
+    	if(data=='99999'){
+    		$("#resmes_circle").text('申请失败：您申请的圈子数已达到了最大数量限制。').fadeIn(200);
+    		setTimeout(function(){
+    			$("#resmes_circle").hide(200);
+    		},5000);
+    		n.find("img").hide();
+	      n.find("span").show();
+	      n.attr("isclick","0");
+    		return;
+    	}
+      n.removeAttr("onclick").attr("style","cursor: default;color:#ccc;font-weight:700;").html('申请中...');
+      n.attr("isclick","0");
+      n.attr("isapply","1");
+    },"text"
+  );
+}
+var Pagination=function(){
+	this.pagecount=0;//页数
+	this.pagesize=6;
+	this.maxsize=9;
+	this.container=null;//父容器
+	this.pageclickevent=[];//页码点击事件
+	this.preclickevent=[];//上一页点击事件
+	this.nexclickevent=[];//下一页点击事件
+	this.pointclickevent=[];//
+	this.currpage=0;
+	this.point=[];
+}
+Pagination.prototype={
+	setCount:function(pagecount){
+		this.pagecount=pagecount;
+	},
+	setContainer:function(container){
+		this.container=container;
+	},
+	addPageClick:function(func){
+		this.pageclickevent.push(func);
+	},
+	addPreClick:function(func){
+		this.preclickevent.push(func);
+	},
+	addNexClick:function(func){
+		this.nexclickevent.push(func);
+	},
+	addPointClick:function(func){
+		this.pointclickevent.push(func);
+	},
+	pageClick:function(pageindex){
+		for(var i=0;i<this.pageclickevent.length;i++){
+			this.pageclickevent[i].apply(this,[pageindex]);
+		}
+	},
+	preClick:function(pageindex){
+		for(var i=0;i<this.preclickevent.length;i++){
+			this.preclickevent[i].apply(this,[pageindex]);
+		}
+	},
+	nexClick:function(pageindex){
+		for(var i=0;i<this.nexclickevent.length;i++){
+			this.nexclickevent[i].apply(this,[pageindex]);
+		}
+	},
+	pointClick:function(){
+		
+	},
+	setDefault:function(pageindex,callback){
+		var thisindex=pageindex;
+		if(thisindex==this.currpage)return;
+		this.currpage=thisindex;
+		this.setCurrCss();
+		if(thisindex==this.pagecount || thisindex==1){
+			this.setNoPageCss();
+		}
+		if(callback!=null)
+		callback(thisindex);
+	},
+	setNoPageCss:function(){
+		var nopageCss={
+			'background-color':'#c8c8c8',
+			'color':'#000'
+		};
+		var pageCss={
+			'background-color':'#00AAD5',
+			'color':'#FFF'
+		};
+		$("span[pagination='pre'],span[pagination='nex']").css(pageCss);
+		$("span[pagination='"+(this.currpage==1?'pre':'nex')+"']").css(nopageCss);
+	},
+	setCurrCss:function(){
+		var currCss={
+			'background-color':'#00AAD5',
+			'color':'#FFF'
+		};
+		var notcurrCss={
+			'background-color':'#e6e6e6',
+			'color':'#000'
+		};
+		$("span[pagination='page']").css(notcurrCss);
+		$("span[pagination='page'][pageindex='"+this.currpage+"']").css(currCss);
+	},
+	resetPageList:function(){
+		var $p=$(this.container).find(".pagev[pageindex='"+this.currpage+"']").parent();
+			var $nex=$p.next();
+			var $pre=$p.prev();
+			var d='';
+			var notarr=[1,this.pagecount,this.currpage];
+			if($nex.attr('class')=='pointc'){
+				d='nex';
+				var html=[];
+				for(var i=1;i<=3;i++){
+					notarr.push(parseInt(this.currpage)+i);
+					html.push("<span class='pagec'><span  class='pagev' style='width:20px;' pagination='page' pageindex='"+(parseInt(this.currpage)+i).toString()+"'>"+(parseInt(this.currpage)+i).toString()+"</span></span>");
+					if($(".pagev[pageindex='"+(parseInt(this.currpage)+i+1).toString()+"']").length){
+						$nex.remove();
+						break;
+					}
+				}
+				$p.after(html.join(''));
+			}
+			if($pre.attr('class')=='pointc'){
+				d='pre';
+				var html=[];
+				for(var i=1;i<=3;i++){
+					notarr.push(parseInt(this.currpage)-i);
+					html.unshift("<span class='pagec'><span  class='pagev' style='width:20px;' pagination='page' pageindex='"+(parseInt(this.currpage)-i).toString()+"'>"+(parseInt(this.currpage)-i).toString()+"</span></span>");
+					if($(".pagev[pageindex='"+(parseInt(this.currpage)-i-1).toString()+"']").length){
+						$pre.remove();
+						break;
+					}
+				}
+				$p.before(html.join(''));
+			}
+			if(d!=''){
+				var n=$(this.container).find(".pagev[pageindex]").length-1;
+				var $lastpage=$(this.container).find(".pagev[pageindex]:last");
+				while(n>-1 && $(this.container).find(".pagev").length>this.maxsize){
+					$v=$(this.container).find(".pagev[pageindex]:eq("+n+")");
+					if(!notarr.contains(parseInt($v.attr('pageindex')))){
+						$v.parent().remove();
+					}
+					n--;
+				}
+				var $pages=$(this.container).find(".pagev[pageindex]");
+				for(var i=0;i<$pages.length;i++){
+					var thisindex=parseInt($($pages[i]).attr('pageindex'));
+					var nexindex=parseInt($($pages[i+1]).attr('pageindex'));
+					if(thisindex+1!=nexindex){
+						if($($pages[i]).parent().next().attr('class')=='pagec')
+						$($pages[i]).parent().after("<span class='pointc'><span class='pointv' pagination='point'>●●●</span></span>");
+					}
+				}
+				//while($(this.container).find(".pagev").length>this.maxsize){
+					
+//					if(d=='nex'){
+//						$v=$p.prev();
+//					}
+//					else{
+//						$v=$p.next();
+//					}
+//					if($v.attr('class')=='pagec')$v.remove();
+//					else
+//						break;
+//				}
+//				if(d=='nex'){
+//						$v=$p.prev();
+//						if($v.attr('class')=='pagec')
+//							$p.before("<span class='pointc'><span class='pointv' pagination='point'>●●●</span></span>");
+//					}
+//					else{
+//						$v=$p.next();
+//						if($v.attr('class')=='pagec')
+//						 $p.after("<span class='pointc'><span class='pointv' pagination='point'>●●●</span></span>");
+//					}	
+			}
+	},
+	init:function(paras){
+		this.pagecount=paras.pagecount;//页数
+		this.container=paras.container;//父容器
+		if(paras.pagesize)
+			this.pagesize=paras.pagesize;
+		var html=[];
+		if(this.pagecount>1){
+			html.push("<span class='operc'><span class='pagev' pagination='pre'>上一页</span></span>");
+		}
+		for(var i=1;i<=this.pagecount;i++){
+			if(i==this.pagesize && this.pagecount>this.pagesize)
+			{
+				html.push("<span class='pointc'><span class='pointv' pagination='point'>●●●</span></span>");
+				i=this.pagecount-1;
+				this.point.push(i);
+			}
+			else
+				html.push("<span class='pagec'><span  class='pagev' style='width:20px;' pagination='page' pageindex='"+i+"'>"+i+"</span></span>");
+		}
+		if(this.pagecount>1){
+			html.push("<span style='margin-left:5px;'  class='operc'><span  class='pagev' pagination='nex'>下一页</span></span>");
+		}
+		var $pages=$(html.join(''));
+		$(this.container).append($pages);
+		var _obj=this;
+		$(this.container).find("span[pagination='point']").live('click',function(){
+			
+		});
+		$(this.container).find("span[pagination='page']").live('click',function(){
+			var $this=$(this);
+			var thisindex=$this.attr('pageindex');
+			if(thisindex==_obj.currpage)return;
+			_obj.currpage=thisindex;
+			_obj.setCurrCss();
+			if(thisindex==_obj.pagecount || thisindex==1){
+				_obj.setNoPageCss();
+			}
+			_obj.pageClick(thisindex);
+			_obj.resetPageList();
+		});
+		$(this.container).find("span[pagination='pre']").live('click',function(){
+			var $this=$(this);
+			if(_obj.currpage==1)return;
+			_obj.currpage--;
+			_obj.setCurrCss();
+			if(_obj.currpage==1){
+				_obj.setNoPageCss();
+			}
+			_obj.preClick(_obj.currpage);
+			_obj.resetPageList();
+		});
+		$(this.container).find("span[pagination='nex']").live('click',function(){
+			var $this=$(this);
+			if(_obj.currpage==_obj.pagecount)return;
+			_obj.currpage++;
+			_obj.setCurrCss();
+			if(_obj.currpage==_obj.pagecount){
+				_obj.setNoPageCss();
+			}
+			_obj.nexClick(_obj.currpage);
+			_obj.resetPageList();
+		});
+	}
+}
+</script>
+{% endblock %}

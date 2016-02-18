@@ -1,0 +1,250 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimewebase/css/zTreeStyle/zTreeStyle.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style stype="text/css">
+    #hint_content { background-color: #fff;cursor: default;overflow: hidden;padding: 10px 25px; }
+    .member_basic {float:left;width:405px;}
+    .img_box {border: 1px solid #ccc;border-radius: 6px;float: right;height: 137px;width: 120px;}
+    .img_box > img { border: 1px solid #ccc;cursor: pointer;float: left;height: 100px;margin: 5px 0 5px 9px;width: 100px;}
+    .img_box > span {   background-color: #f3fdfe;border: 1px solid #b7d8e9;cursor: pointer;float: left;font-size: 12px;margin-left: 29px;padding: 0 8px;}
+    .fields_row { float:left;width:100%;margin-bottom:12px;width:100%;}
+    .fields_row>span {float:left;width:80px;}   
+    .text_area { border: 1px solid #aba;height: 25px;line-height: 25px;padding: 2px 5px; }
+    .option_area { border-top: 1px solid #ddd;float: left;height: 10px;position: relative;width: 100%; }
+    .option_area>span { background: linear-gradient(to right, rgb(237, 201, 103) 0px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0);color: #cc3300;float: left;margin-left:190px;margin-top: -12px;padding: 0 10px; }
+    .set_area { border: 1px solid #aba;float: left;height:70px;overflow: auto;width: 100%; }
+    .hint_text { float: left;height: 32px;line-height: 32px;margin-top: 10px;padding: 0 10px;width:260px;color:#cc3300; }
+    .selected_area { cursor: pointer;float: right;font-size: 18px;margin-right:5px;margin-top:-65px; }
+    .selected_area:hover { color:#0088cc;}
+    .selected_pic_box { border-radius: 5px;display: none;height:425px;left:278px;top:55px;width: 500px; }
+    .publish_area { float: left; width:750px; padding:20px 0px; }
+    .publish_content { float:left;border: 1px solid #ccc;height: 150px;line-height: 25px;padding: 2px 5px;resize: none;width:100%;margin-top:10px; }
+    .publish_icon { background-image: url("/bundles/fafatimewebase/images/home_icons.png");background-position: 5px 0;display: block;float: left;height: 20px;margin-right: 5px;margin-top: 4px;width: 30px; }
+    .publish_icon2 { background-image: url("/bundles/fafatimewebase/images/tit01_hover.jpg");background-position: 12px bottom;background-repeat: no-repeat;color: #006caa;float: left;font-size: 14px;height:10px;margin-left:-725px;margin-top: 1px;padding: 0;width:90px; }
+    .publish_bottom{ float:left;10px;width:100%; }
+    .publish_bottom>span { float:left;padding:2px 50px 0 2px;}
+    .ins_size {float:left;width:20px;height:16px; padding-right: 4px;cursor:pointer;margin-top:5px;}
+    .ins_face { background: url("/bundles/fafatimewebase/images/home_icons.png") no-repeat scroll 0 -720px rgba(0, 0, 0, 0); }
+    .ins_file {  background: url("/bundles/fafatimewebase/images/home_icons.png") no-repeat scroll 0 -740px rgba(0, 0, 0, 0);margin-top: 3px;padding-right: 4px; }
+    .button_publish_no { background-image: linear-gradient(to bottom, #bbb 0px, #bbb 100%);border: medium none;border-radius: 0;float: right;padding: 5px;width: 100px;cursor:default;color:#eee; }
+    .button_publish_yes {  background-image: linear-gradient(to bottom, #60b452 0px, #56a447 100%);border: medium none;border-radius: 0;color: #eee;float: right;padding: 5px;width: 100px; }
+    .publish_message { color: #cc3300;font-weight: bold;margin-left: 240px; }
+    .facemenu { padding:8px 0 8px 5px;position: relative;margin-top:-2px;width: 385px;}
+    .facemenu>li { float: left;}
+    .facemenu>li>img { margin:2px 5px; }
+    .facemenu>li:hover { cursor:pointer;background-color:#0088cc; }
+    .user_account { float: right;height: 45px;margin-top: -10px;width: 260px; }
+    .user_account>img { float: left;height: 45px;width: 45px; }
+    .user_account>span { float: left;font-size: 12px;font-weight:100; }
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.core-3.4.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.ztree.excheck-3.4.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/friend.js')}}"></script>
+{% endblock %}
+{% block body %}
+<div class="body_content" style="width:1000px;" >
+    {% if manager =="sys_manager" %}
+        <div id="search_body">
+            <div style="float:left;width:100%;">
+    		       <span>广播名称/帐号：</span>
+    		       <input type="text" style="width:218px;" placeholder="请输入广播名称或帐号" onkeypress="if (event.keyCode==13) { FriendCircle.search_broadcaster(1); }" id="textname" class="mb_textbox" />
+    		       <span style="margin-left:32px;padding:0px 12px;" onclick="FriendCircle.search_broadcaster(1);" class="btnGreen group_button">查&nbsp;&nbsp;询</span>
+    		       <div style="float:right;">
+    		         <span class="label bg-primary btnCreate" onclick="FriendCircle.viewCreateAccount('add');" style="float:left;cursor:pointer;">创建广播帐号</span>
+    		       </div>           
+            </div>
+            <div style="float:left;width:100%;margin-top:10px;height:455px;">              
+                <table align="center" class="mb_common_table" style="width:100%;margin-top:0px;">
+                    <thead>
+                        <tr>
+                            <td width="420" align="center">广播员帐号</td>
+                            <td width="420" align="center">广播名称</td>
+                            <td width="158" align="center">操&nbsp;&nbsp;作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" id="search_page" style="float:left;padding: 0px;margin:10px 0px 0px;display:none;"></div>
+        </div>
+    {% endif %}
+    
+    <div class="publish_area">
+       <div class="fields_row">
+         <div style="float: left; font-weight: bold; height: 25px; line-height: 25px; width: 100%; font-size: 15px;">
+            <span class="publish_icon"></span>
+            <dpan>发布广播</dpan>
+            <div class="user_account">
+                {% if head_img =="" %}
+                   <img src="/bundles/fafatimewebase/images/icons2/wefafa_my_active.png" />
+                {% else %}
+                  <img src="{{head_img}}" style="float:left;margin-right:10px;height:40px;width:40px;border-radius:20px;" />
+                {% endif %}
+               <span>广播帐号：<span style="color:#0088cc;">{{account}}</span></span>
+               <br/>
+               <span style="margin-top:-5px;">广播名称：<span style="color:#0088cc;">{{nick_name}}</span></span>
+            </div>
+        </div>
+         <div>
+             <textarea id="text_publish" placeholder="请在此处输入广播内容！" onkeyup="FriendCircle.setPublishEnable();" class="publish_content"></textarea>
+             <span class="publish_icon2"></span>
+         </div>
+         <div class="publish_bottom">
+            <i class="ins_face ins_size" onclick="FriendCircle.loadFace(this);" url="{{path('JustsyBaseBundle_component_cinputarea_loadfaceemotejson')}}" ></i><span>表情</span>
+            <span class="publish_message"></span>
+            <button id="btn_publish" class="button_publish_no" onclick="FriendCircle.publish(this);"  title="请输入广播内容！">发布广播</button>
+         </div>
+         <ul id="FaceEmote" class="dropdown-menu facemenu" onmouseup="$(this).hide();">
+         </ul>
+       </div>
+    </div>
+</div>
+
+<!--创建广播帐号-->
+<div style="display:none;" id="prompt" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:600px;left:-50px;top:45px;cursor:default;">
+    	<div class="title" style="height:30px;line-height:26px;">创建广播帐号</div> 
+      <span class="close-tip-icon" onclick="$('#prompt').hide();" title="关闭" style="top:9px;"></span>
+      <div class="content" id="hint_content">
+         <div class="member_basic">
+             <div class="fields_row">
+                 <span>广播名称：</span>
+                 <input type="text" id="text_name" style="width:315px;" class="mb_textbox" placeholder="广播名称" />
+            </div>
+             <div class="fields_row">
+                 <span>用户帐号：</span>
+                 <input type="text" id="textAccount" style="width:315px;" class="mb_textbox"  disabled="disabled"  placeholder="用户帐号" />
+             </div>
+             <div class="fields_row">
+                 <span>登录密码：</span>
+                 <input type="password" id="textpassword" style="width:315px;" class="mb_textbox" placeholder="登录密码" />
+             </div>
+             <div class="fields_row" style="margin-bottom:18px;">
+                 <span>确认密码：</span>
+                 <input type="password" id="textpassword2" style="width:315px;" class="mb_textbox" placeholder="登录密码" />
+             </div>             
+         </div>
+         <div class="img_box">
+	 	  	 	 <img  id="staff_image" fileid="" onclick="FriendCircle.selectedImg();" src="{{asset('bundles/fafatimewebase/images/no_photo.png')}}" title="上传群组Logo" data-toggle="modal" show=false />
+	 	  	 	 <span onclick="FriendCircle.selectedImg();">点击上传</span>
+    	 	 </div>
+    	 	 <div class="option_area">
+      		<span>发送范围</span>
+         </div>
+         <div class="fields_row" style="margin-bottom:2px;margin-top:-5px;">
+            <span style="width:100%;">组织机构：</span>
+            <div class="set_area" id="dept_area"></div>
+            <i onclick="FriendCircle.viewTree(this);" state="1" class="glyphicon glyphicon-plus-sign selected_area"></i>
+         </div>
+         <div class="fields_row" style="margin-bottom:0px;">
+            <span>人员范围：</span>
+            <div class="set_area" id="staff_area"></div>
+            <i onclick="FriendCircle.viewTree(this);" state="2" class="glyphicon glyphicon-plus-sign selected_area"></i>
+         </div>         
+      </div>
+      <div class="fields_row" style="margin-bottom:0px;">
+        <span class="hint_text" style="width:260px;"></span>
+        <button class="btn btnGray" id="btnsetfriend" style="margin: 10px 0px 10px 0px;"  onclick="FriendCircle.register();">确&nbsp;定</button>
+      </div>      
+    </div>
+</div>
+
+<!--选择组织机构-->
+<div style="display: none;" id="selectdept" class="dialogBox ">
+		<div class="background"></div>
+    <div class="dialog" style="width:665px;left:-50px;top:30px;cursor:default;">
+    	<div class="title">选择组织机构</div> 
+      <span class="close-tip-icon" onclick="$('#selectdept').hide();" title="关闭"></span>
+      <div class="content" style="cursor: default; overflow: hidden; background-color:#fff; padding: 0px 10px;height:398px;">
+    	 	  {% include 'JustsyAdminAppBundle:Sys:selectdept.html.twig' %}
+      </div>
+      <div style="padding:10px;height:50px;" class="operation">
+      	 <span class="group_hint"></span>
+         <button class="btn btnGreen default_button" style="width:70px;padding:4px;"  onclick="FriendCircle.selectdept();">确&nbsp;定</button>    
+         <button class="btn btnGray default_button" style="width:70px;padding:4px;"  onclick="$('#selectdept').hide();">取&nbsp;消</button>
+      </div>
+    </div>
+</div>
+
+<!--上传图片-->
+<div  class="modal selected_pic_box" data-backdrop="static" show=false style="overflow: hidden;" >
+  <div class="modal-body" style="padding:0px;width:100%;">
+  	{% render "JustsyBaseBundle:CAvatarEditor:index" with {"name" : "foo"} %}
+  </div>
+	<div class="modal-footer" style="position: relative; background-color: white; margin-top: -90px;">
+      <img id="uplod_loading" style="float:left;width:32px;height:32px;margin-left:20px;display:none;" src="{{ asset('bundles/fafatimewebase/images/loading.gif')}}">
+  	  <span class="upload_hint" style="float:left;margin-left:5px;margin-top:4px;color:#006BD9;" ></span>
+  	  <span style="padding:0px 15px;" onclick="FriendCircle.uploadfile();" class="btnGreen group_button">确&nbsp;&nbsp;定</span>
+  	  <span style="padding:0px 15px;" onclick="FriendCircle.window_close();" class="btnGray group_button">关&nbsp;&nbsp;闭</span>
+	</div>
+</div>
+
+<!--删除用户帐号-->
+<div style="display:none;z-index:99999;" id="delete_staff" class="dialogBox">
+    <div class="background"></div> 
+    <div style="width:450px; top:65px;" class="dialog">
+        <div class="title">确认消息</div>
+        <span title="关闭" onclick="$('#delete_staff').modal('hide');" style="display:block;" class="close-tip-icon"></span>
+        <div style="height:75px;line-height:40px;padding-left:100px;background-color:#fff;" class="content"></div>    
+        <div class="operation">
+          <button onclick="FriendCircle.delete_staff();" class="btn btnGreen">确定</button>
+          <button onclick="$('#delete_staff').modal('hide');" class="btn btnGreen">关闭</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    var uploadObj=null;	
+    $(document).ready(function(){
+        //$(".loading").remove();
+		    var obj = $($(".selected_pic_box .modal-body")[0].children[0].children[0]);
+        var obj_ff = obj.find("embed");
+        uploadObj = document.all==null? obj_ff : obj;
+        uploadObj.css({"height":"475px","width":"515px","margin-left":"-10px","margin-top":"-15px" });  
+        FriendCircle.url = "{{path('JustsyAdminAppBundle_department_tree')}}";
+        FriendCircle.identical_url = "{{path('JustsyInterfaceBundle_data_access')}}";
+        FriendCircle.getstaff_url = "{{path('JustsyAdminAppBundle_default_group_getstaff')}}"; 
+        //如果为系统管理员则加载广播员
+        if ("{{manager}}"=="sys_manager")
+        {
+            $(".publish_area").hide();
+            FriendCircle.search_broadcaster(1);
+        }                    
+    });
+    //上传默认群组logo
+    function avatar_success()
+    {
+        var url = "{{ path('JustsyAdminAppBundle_default_group_logo')}}";
+        $.post(url,{ "FriendCircle":FriendCircle.login_account },function(returndata){
+            if (returndata.success)
+            {
+              $(".selected_pic_box").modal("hide");
+              var getfile = "{{path('JustsyMongoDocBundle_getfile')}}"+"/";
+              var fileid = returndata.fileid;
+              $("#staff_image").attr("src",getfile + fileid);
+              $("#staff_image").attr("fileid",fileid);    	  
+             	$("#uplod_loading").hide();
+             	$(".upload_hint").text("");
+            }
+            else
+            {
+             $("#uplod_loading").attr("src","/bundles/fafatimewebase/images/errow.gif");
+             $("#uplod_loading").show();
+             $(".upload_hint").text("默认群组Logo上传失败");
+            }
+        });
+    }	
+</script>
+{% endblock %}

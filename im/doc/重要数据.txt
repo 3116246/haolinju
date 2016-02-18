@@ -1,0 +1,129 @@
+
+
+LicenseTool:cer.pfx:cdFaNi89Kt2u
+
+./tsung -f xmppLogin.xml start
+
+/usr/local/tsung/lib/tsung/bin/tsung_stats.pl
+
+
+192.168.101.129:
+
+/usr/lib/tsung/bin/tsung_stats.pl
+
+
+admin@justsy.com 10018-100000@justsy.com
+
+VPN帐号：krisli@justsy.com        密码：KrisLi123（注意大小写）
+
+服务器：
+
+1. 安装Apahce, PHP, Mysql, 以及php连接mysql库组件。
+yum -y install httpd php mysql mysql-server php-mysql
+
+2. 配置开机启动服务
+/sbin/chkconfig httpd on [设置apache服务器httpd服务开机启动]
+/sbin/chkconfig --add mysqld [在服务清单中添加mysql服务]
+/sbin/chkconfig mysqld on [设置mysql服务开机启动]
+
+/sbin/service httpd start [启动httpd服务,与开机启动无关]
+/sbin/service mysqld start [启动mysql服务,与开机无关]
+
+php组件：
+bz2
+calendar
+Core
+ctype
+curl  单独安装/配置安装
+date
+dom
+ereg
+exif
+fileinfo
+filter
+ftp
+gettext
+gmp
+hash
+iconv
+json
+libxml  单独安装/配置安装  yum install php-xsl
+mysql   
+mysqli
+openssl  单独安装/配置安装
+pcntl
+pcre
+PDO   单独安装/配置安装 yum install php-mysql
+pdo_mysql  单独安装/配置安装 yum install php-mysql
+pdo_sqlite  单独安装/配置安装 yum install php-mysql
+Phar
+readline
+Reflection
+session
+shmop
+SimpleXML
+sockets
+SPL
+sqlite3
+standard
+tokenizer
+wddx
+xml
+xmlreader
+xmlrpc 单独安装/配置安装 yum install php-xmlrpc
+xmlwriter
+xsl
+zip  单独安装/配置安装
+zlib
+imagick  	yum install ImageMagick
+			wget http://pecl.php.net/get/imagick-3.0.1.tgz
+			tar zxvf imagick-3.0.1.tgz
+			cd imagick-3.0.1
+			/usr/local/php/bin/phpize #根据自己的情况找到这个文件运行 find / -name phpize
+			./confgure --with-imagick=/usr/local/ImageMagick
+			make
+			make install
+
+mbstring
+mcrypt  yum install  mcrypt
+memcache yum install memcached
+mongo
+    yum install glibc.i686
+    yum install libstdc++.so.6
+	wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz
+
+自启动程序
+1、mysql    :
+2、apache   :httpd -k start
+3、mongodb  :/etc/init.d/mongod start
+4、memcached:memcached -d -c 10240 -m 1024 -u root
+
+
+编辑/etc/profile文件，添加CLASSPATH变量
+vi /etc/profile
+export PATH=\"/home/ap/justsy/php/bin:/opt/im/bin:$PATH\"
+source /etc/profile
+
+
+##查进程
+ps -ef|grep beam|grep -v grep
+
+
+
+开发组长工作职责
+
+1、进行需求分析和确认，明确需求、确定可行性。
+2、统一管理和监控小组开发任务。
+3、分配小组成员开发任务，管控成员开发进度。
+4、协调小组资源，负责和上级负责人、部门之间的沟通。
+5、完成重大、难点技术的研发、预研以及解决方案分析。
+6、按时保质完成上级分配的任务。
+7、完成开发过程中相关技术资料文档的编写。
+8、负责培养团队其他技术人员，提高团队整体技术水平。
+
+
+<message from=\"42170-100000@fafacn.com/FaFaIPhone\" to=\"41244-100000@fafacn.com\" id=\"1444909053173759\"><friend xmlns=\"http://im.fafacn.com/namespace/employee\" action=\"request\" desc=\"阿卡家,体验部门,体验部门\"/><delay xmlns=\"urn:xmpp:delay\" from=\"fafacn.com\" stamp=\"2015-10-15T11:37:33Z\">Offline Storage</delay><x xmlns=\"jabber:x:delay\" stamp=\"20151015T11:37:33\"/></message>
+
+
+df -hl 
+du -hl

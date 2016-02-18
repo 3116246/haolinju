@@ -1,0 +1,38 @@
+<html>
+<head>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/componentCreater.js')}}"></script>
+	<link href="{{ asset('bundles/fafatimewebase/css/componentCreater.css')}}" type="text/css" rel="stylesheet">
+<script type='text/javascript' language='javascript'>
+	function havetry(params)
+	{
+		var xmlobj='<mapp><basicinfo><appid>7ea2b5be1d1f11ab5b1aa15529dbb4ca</appid><appversion>1</appversion><appname>移动应用平台</appname><appicon>http://we.fafatime.com/getfile/5347bb4f7c274a1613000015</appicon><bindurl/><rootfunctionid>index</rootfunctionid></basicinfo><function><functionid>index</functionid><functionname>首页</functionname><functiontype>1</functiontype><template><tabs ><tabitem><itemname>页面一</itemname><itemicon>http://we.fafatime.com/getfile/5355fd9a7d274a4855000000</itemicon><itemicon_active>http://we.fafatime.com/getfile/5355fd9a7d274a4855000000</itemicon_active><template></template></tabitem><tabitem><itemname>页面二</itemname><itemicon>http://we.fafatime.com/getfile/535618097d274a0563000001</itemicon><itemicon_active>http://we.fafatime.com/getfile/535618097d274a0563000001</itemicon_active><template></template></tabitem></tabs></template></function><function><functionid>scan</functionid><functionname>扫描</functionname><functiontype>3</functiontype><native><type>scanbarcode</type><actionurl>http://we.fafatime.com/534ba34c7c274a1445000000</actionurl></native></function></mapp>';
+			appobj=new AppObj();
+			appobj.init({
+				device:'IOS',
+				p:$("#ceshi")[0],
+				xmlString:xmlobj,
+				ComponentSelected:function(params){
+					//console.info(params);
+				},
+				BeforeAddComponent:function(params){
+					console.info(params);
+				}
+			});
+			var arr=appobj.getLogs();
+			for(var i=0;i<arr.length;i++){
+			}
+	}
+</script>
+</head>
+<body>
+<div>
+	<select id="types">
+		<option value='component_content'>内容显示控件</option>
+	</select>
+</div>
+<div id="ceshi" style="border: 1px solid rgb(204, 204, 204); height: 480px; width: 320px;">
+</div>
+<div id="err"></div>
+</body>
+</html>

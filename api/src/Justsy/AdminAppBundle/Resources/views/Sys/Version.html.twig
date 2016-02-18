@@ -1,0 +1,150 @@
+{% extends 'JustsyAdminAppBundle::master.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/fafatimembapp/jquery-ui/css/jquery-ui-1.8.14.custom.css')}}" type="text/css" rel="stylesheet"> 
+<link href="{{ asset('bundles/fafatimeweopenapi/css/site.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/content.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/msg.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimeweopenapi/css/main.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/pagination.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/salary.css')}}" type="text/css" rel="stylesheet"/>
+<link href="{{ asset('bundles/fafatimembapp/css/common.css')}}" type="text/css" rel="stylesheet"/>
+<style type="text/css">
+	.edition_content { float:left;border:1px solid #aba;float:left;height:135px;line-height: 20px;padding: 5px;resize: none;width: 100%;}
+	.update_content { float: left;height:30px;line-height:30px;overflow:hidden;padding-left:5px;text-overflow: ellipsis;word-wrap: normal; }	
+	.header { float:right;margin-top:12px; }
+	.header > span{ float:left;width: 90px; line-height: 20px; }	
+	.ios_plist { background: linear-gradient(to right, #999 0px, #ddd 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0);border-radius: 5px;color: #0088cc;cursor: pointer;float: right;height: 20px;line-height: 20px;text-align: center;display:none;width: 150px; }
+  .ios_plist:hover { background:linear-gradient(to right, rgb(237, 201, 103) 10px, rgb(249, 237, 184) 90%) repeat-x scroll 0 0 rgba(0, 0, 0, 0); }
+  .setting_plist { float:left;display:none;width:100%; }
+  .set_plist { float:left;margin-top:8px;width:100%;display:none;}
+  .hint_message { cursor:default;color: #cc3300;float: left;height:30px;line-height:30px;text-align:left;width: 100%;}
+  .hint_message>img { float:left;width:30px;height:30px;}
+  .input_version { border: 1px solid #aba;font-weight: bold;margin-left: -6px;padding: 2px 5px;text-align: center;width: 50px;}
+  .upload_content { background-color: white;cursor: default;height:340px;}
+</style>
+{% endblock %}
+
+{% block javascriptsref %}
+
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/jquery-ui/js/jquery-ui-1.8.14.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/json2.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimeweopenapi/js/loader.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/ajaxfileupload.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/jquery.pagination.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimembapp/js/version.js')}}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="body_content">
+  <div class="containerBox" style="min-height:540px;">
+   	  <div class="search_area" style="padding-left:0px;">
+   	  	 <span class="mb_common_word">版本发布管理</span>
+   	  	 <div class="header">
+   	  	 	 <a href="{{download_url}}{{path('JustsyOpenAPIBundle_api_softdownload')}}" target="_blank">
+   	  	 	 	  <span style="width:90px;" class="btnGreen search_button">二维码下载</span>
+           </a>
+   	  	   <span onclick="Version.showupload();" style="margin-left:40px;" class="btnGreen search_button">上传安装包</span>
+   	  	 </div>
+   	  </div>
+   	  <div style="width:1000px;float:left;">
+   	  	<table align="center" class="mb_common_table">
+   	  		<thead>
+   	  			 <tr>
+							  <td width="150">上传日期</td>
+							  <td width="120">发布版本</td>
+							  <td width="442">发布信息描述</td>
+							  <td width="100">版本类型</td>
+							  <td width="85">发布人员</td>
+							  <td width="102">操&nbsp;作</td>
+						 </tr>
+   	  	 </thead>
+   	  	 <tbody>
+   	  	 </tbody>
+   	   </table>
+   	   <div id="Pagination" class="pagination" style="float: left; padding: 0px; margin: 8px 0px 0px;"></div>
+   	 </div>
+	</div>
+</div>
+
+	<!--上传安装包文件-->
+	<div  class="dialogBox " id="upload_file" style="display:none;">
+		<div class="background"></div>
+    <div style="width:650px;top:50px;left:-50px;" class="dialog">
+    	<div class="title">编辑版本发布信息</div> 
+      <span title="关闭" onclick="$('#upload_file').hide();" class="close-tip-icon"></span>
+	      <div class="content upload_content" style="overflow:hidden;padding:10px 50px 0px;height:336px;" >      	 
+	      	<form target="frm_import_submit" id="frm_import" action="{{path('JustsyAdminAppBundle_version_upload')}}" method="post" enctype="multipart/form-data">
+		        <span style="float:left;">请选择安装包文件：</span>
+		        <div class="upload_file_area">
+		        	<span class="filename"></span>
+		        	<div style="float:right;">
+			          <span class="mb_upload_fileIcon"></span>
+			     	    <input type="file" name="filedata" id="filedata" onchange="Version.change();" style="width:25px;margin-left:-25px;float:left;opacity:0;cursor:pointer;" >
+			     	  </div>
+		     	  </div>
+	          <div style="float:left;width:100%;margin-top: 10px;">
+		     	  	 <span style="padding-right: 10px">发布版本号：</span>
+		     	  	 <input type="text" maxlength=1 onpaste="enableNaN(this);" onkeyup="enableNaN(this);" class="input_version" id="version_1" name="version_1" />
+		     	  	 <input type="text" maxlength=3 onpaste="enableNaN(this);" onkeyup="enableNaN(this);" class="input_version" id="version_2" name="version_2" />
+		     	  	 <input type="text" maxlength=3 onpaste="enableNaN(this);" onkeyup="enableNaN(this);" class="input_version" id="version_3" name="version_3" />
+		     	  	 <input type="text" maxlength=3 onpaste="enableNaN(this);" onkeyup="enableNaN(this);" class="input_version" id="version_4" name="version_4" />
+		     	  </div>
+			     	  <span style="float:left;width:100%;margin:8px 0px;">版本发布信息：</span>
+			     	  <textarea class="edition_content" id="update_content" name="update_content"></textarea>	  
+			     	  <div class="version_type" style="width:100%;">
+			     	  	 <span style="padding-right:10px;">版本类型：</span>
+			     	  	 <img class="selected_icon" src="{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}" apptype="exe" />
+	     	  	 	   <span>PC版本</span>
+			     	  	 <img class="selected_icon" src="{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}" apptype="apk"  />
+	     	  	 	   <span >Android版本</span> 
+			     	  	 <img  class="selected_icon" src="{{ asset('bundles/fafatimeweopenapi/images/ok.gif')}}" apptype="ipa" />
+	     	  	 	   <span>IOS版本</span>
+	     	  	 	   <div class="ios_plist" title="如果您的IOS的*.plist文件在远程服务器,请点击设置" onclick="Version.viewplist();" >
+	     	  	 	   	 <label>
+	     	  	 	   	 	 <input id="check_plist" type="checkbox" />
+	     	  	 	   	 	 <span>远程*.plist文件</span>
+	     	  	 	   	 </label>
+	     	  	 	   </div>
+			     	  </div>
+			     	  <div class="set_plist" >
+			     	  	<span>远程*.plist地址：</span>
+			     	  	<input type="hidden" id="plist_url" name="plist_url" />
+			     	  	<input type="text"  id="plist_weburl"  class="mb_textbox" style="width:438px;">
+			     	  </div>
+			     	  <div class="hint_message"></div>
+		      </form>
+		      <iframe style="display:none" id="frm_import_submit" name="frm_import_submit" width=0 height=0></iframe>	  
+	      </div>
+	      <div class="operation" style="padding:10px;height:50px;">
+            <button onclick="Version.uploadFile();"  class="btnGreen search_button" style="float:left;width:80px;margin:2px 0px 0px 225px;">开始上传</button>
+            <button onclick="$('#upload_file').hide();" class="btnGreen search_button" style="float: left; width: 80px; margin: 2px 0px 0px 30px;">取&nbsp;消</button>
+            <div id="check_network" style="float:right;display:none;"></div>            
+	      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">	 
+    $(document).ready(function(){
+     Version.search_url = "{{path('JustsyAdminAppBundle_version_search')}}";
+     Version.delete_url = "{{path('JustsyAdminAppBundle_version_del')}}";
+     Version.SearchData(1);
+    });
+    //禁止输入非数字
+    function enableNaN(evn){
+        var val = $(evn).val();
+        $(evn).val(val.replace(/\D/g,''));
+        if ( $(evn).val().length==1)
+        {
+            $(evn).next().focus();
+        }        
+    }   
+</script>
+
+{% endblock %}

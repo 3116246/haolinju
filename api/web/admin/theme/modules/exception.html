@@ -1,0 +1,92 @@
+<!-- END PAGE HEADER-->
+<h3 class="page-title">App异常管理</h3>
+<div class="page-bar">
+	<div class="page-toolbar">
+			<form action="#" class="form-inline">
+				<div class="input-group input-large hide">
+					<input type="text" class="form-control" id="searchvalue" placeholder="请输入要查询的条件值">
+					<span class="input-group-btn">
+					<button type="button" class="btn blue" id="getstaff">
+					<span>
+					查询数据 </span>
+					<i class="m-icon-swapright m-icon-white"></i></button>
+					</span>
+				</div>				
+			</form>					
+	</div>
+</div>
+<div class=" col-md-10 alert alert-danger display-hide" id="page_alert_info" style="display: none;word-break: break-all;">
+	<button data-close="alert" class="close"></button>
+	<label></label>
+</div>
+<div class="row">
+	<div class=" col-md-12 tab-content">		
+		<div class="table-responsive">
+				<table class="table table-striped table-bordered table-advance table-hover" id="exceptionList">
+				<thead>
+				<tr>
+					<th>
+						 异常账号
+					</th>
+					<th>
+						 异常时间
+					</th>
+					<th>
+						 设备
+					</th>
+					<th >
+						 异常信息
+					</th>
+					<th>					
+					</th>				
+				</tr>
+				</thead>
+				<tbody>				
+				
+				</tbody>
+				</table>
+		</div>
+		
+		
+		
+	<div id="Pagination">
+        </div>
+
+<div class="clearfix"></div>
+
+<script type="text/javascript" src="jscript/exception.js"></script>
+
+<script>
+$(document).ready(function() {
+	Index.search.config(null);
+	/*
+	$("#searchvalue").on('keypress',function(evt){
+		if(evt.which==13) $("#getstaff").trigger('click');
+	});*/
+	ExceptionLogs.getExceptionList();
+
+});
+
+
+</script>
+<script type="text/html" id="exptionlist-tmpl">
+	{{each}}	
+	<tr style="vertical-align:middle;">
+					<td style="vertical-align: middle;">									
+						{{$value.report_staff}}
+					</td>					
+					<td style="vertical-align:middle;">
+						 {{$value.report_date}}
+					</td>
+					<td style="vertical-align:middle;">
+						 {{$value.report_device}}
+					</td>
+					<td style="vertical-align:middle;">
+						 <textarea style="width:300px;">{{$value.report_content}}</textarea>
+					</td>
+					<td style="vertical-align:middle;">
+						<a href="javascript:;" class="btn default" onclick="ExceptionLogs.del(this,'{{$value.report_id}}')"> 删除 </a>
+					</td>
+	</tr>
+	{{/each}}
+</script>

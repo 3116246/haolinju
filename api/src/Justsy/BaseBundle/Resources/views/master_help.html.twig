@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}Wefafa，企业移动社会化协作，微应用平台{% endblock %}</title>
+<LINK rel="shortcut icon" href="{{ asset('bundles/fafatimewebase/images/favicon.ico') }}"> 
+<meta name="description" content="Wefafa是一个由人们在工作之中形成的圈子交织而成的企业协作网络。" />
+<meta name="keywords" content="Wefafa,企业社交,企业协作,企业即时通讯,企业通讯软件,企业即时通讯软件,免费企业通讯软件,免费企业即时通讯,免费企业即时通讯软件,分享与参与,	内外部协作,知识积累,快速检索,应用中心" />
+<link href="{{ asset('bundles/fafatimewebase/css/bootstrap.min.css')}}" type="text/css" rel="stylesheet">
+<link href="{{ asset('bundles/fafatimewebase/css/home.css')}}" type="text/css" rel="stylesheet"> 
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fafatimewebase/js/bootstrap.js')}}"></script>
+</head>
+<body>
+<div id="topnav" class="topnav">
+  {% block main_topnav %}
+  <div class="submenu">
+    <div class="wefafalogo" style="padding-top:2px;">{% render "JustsyBaseBundle:Common:getWefafaLogo" %}</div> 
+    <span style="color: white; font-size: 24px; line-height: 40px;">{% block main_topnav_title %}{% endblock %}</span>
+  </div>
+  {% endblock %}
+</div>
+<div style="height:50px"></div>
+<div id="content" class="homecontent">
+  {% block main_content %}
+  {% endblock %}
+</div>
+<div id="footer" class="footer">
+	<div class="footertext">
+  	<div class="fl">Copyright &copy; 2012 <a href="http://www.fafatime.com" target="_blank">Justsy</a>&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn" target="_blank">京ICP备12029244号</a>&nbsp;&nbsp;京公网安备11010502022631</div>
+  	<div class="fr"> <a href="/prointro.htm" target="_blank">产品介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ path('JustsyBaseBundle_help_index') }}" target="_blank">使用帮助</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.fafatime.com/downcenter" target="_blank">软件下载</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/corp.htm" target="_blank">商务合作</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/userlic.htm" target="_blank">服务与声明</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/aboutus.htm" target="_blank">关于我们</a></div>
+  </div>
+</div>
+{% block javascripts %}{% endblock %}
+</body>
+</html>
